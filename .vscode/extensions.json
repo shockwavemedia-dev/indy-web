@@ -1,0 +1,10 @@
+{
+  "recommendations": [
+    "styled-components.vscode-styled-components",
+    "msjsdiag.vscode-react-native",
+    "esbenp.prettier-vscode",
+    "christian-kohler.path-intellisense",
+    "ecmel.vscode-html-css",
+    "dbaeumer.vscode-eslint"
+  ]
+}
