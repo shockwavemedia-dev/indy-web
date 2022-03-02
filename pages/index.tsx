@@ -1,9 +1,7 @@
-import { useRouter } from 'next/router'
+import Router from 'next/router'
 
 const Page = () => {
-  const router = useRouter()
-
-  router.push('/auth/login')
+  Router.push('/')
 
   return <></>
 }
