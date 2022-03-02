@@ -1,14 +1,11 @@
-import type { NextPage } from 'next'
-import Head from 'next/head'
+import { useRouter } from 'next/router'
 
-const Home: NextPage = () => {
-  return (
-    <>
-      <Head>
-        <title>Daily Press</title>
-      </Head>
-    </>
-  )
+const Page = () => {
+  const router = useRouter()
+
+  router.push('/auth/login')
+
+  return null
 }
 
-export default Home
+export default Page
