@@ -71,7 +71,7 @@ const Page = () => {
         </Button>
       </Row>
       <Row>
-        <Link href="/">Cancel</Link>
+        <Link href="/auth/login">Cancel</Link>
       </Row>
     </AuthForm>
   )
