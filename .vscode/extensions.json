@@ -1,9 +1,10 @@
 {
   "recommendations": [
-    "styled-components.vscode-styled-components",
-    "msjsdiag.vscode-react-native",
+    "bradlc.vscode-tailwindcss",
     "esbenp.prettier-vscode",
+    "csstools.postcss",
     "christian-kohler.path-intellisense",
+    "pkief.material-icon-theme",
     "ecmel.vscode-html-css",
     "dbaeumer.vscode-eslint"
   ]
