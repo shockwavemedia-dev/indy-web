@@ -5,7 +5,7 @@ const Page = () => {
 
   router.push('/auth/login')
 
-  return null
+  return <></>
 }
 
 export default Page
