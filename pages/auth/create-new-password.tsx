@@ -65,7 +65,7 @@ const Page = () => {
         />
       </Row>
       <Row marginBottom="20px" width="312px">
-        <Button>
+        <Button name="save-new-password">
           <FloppyDiskIcon /> Save New Password
         </Button>
       </Row>

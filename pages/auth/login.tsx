@@ -44,7 +44,7 @@ const Page = () => {
         <Link href="/auth/forgot-password">Forgot Password?</Link>
       </Row>
       <Row marginBottom="24px" width="312px">
-        <Button>
+        <Button name="login">
           Login
           <CaretRightIcon />
         </Button>

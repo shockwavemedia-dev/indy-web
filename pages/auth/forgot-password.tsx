@@ -34,7 +34,7 @@ const Page = () => {
         />
       </Row>
       <Row marginBottom="20px" width="312px">
-        <Button>
+        <Button name="restore-password">
           Restore Password
           <CaretRightIcon />
         </Button>

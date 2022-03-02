@@ -92,7 +92,7 @@ const Page = () => {
         <Checkbox label="Remember me" isChecked={isRememberMe} onTick={toggleRememberMe} />
       </Row>
       <Row marginBottom="24px" width="312px">
-        <Button>
+        <Button name="sign-up">
           Sign Up
           <CaretRightIcon />
         </Button>
