@@ -61,7 +61,6 @@ const Page = () => {
           label="Confirm Password"
           placeholder="Enter New Password"
           type={TextInputType.Password}
-          onChange={onPasswordChange}
           ref={passwordCheckRef}
         />
       </Row>
