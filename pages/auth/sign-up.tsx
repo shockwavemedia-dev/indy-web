@@ -1,112 +1,127 @@
+import { Form, Formik } from 'formik'
 import Head from 'next/head'
-import Image from 'next/image'
-import { ReactElement, useRef, useState } from 'react'
-import { AuthForm, PasswordStrengthMeter } from '../../components/Auth'
-import { Button } from '../../components/Common/Button'
-import { Checkbox } from '../../components/Common/Checkbox'
-import {
-  BriefcaseIcon,
-  CaretRightIcon,
-  EmailIcon,
-  LockIcon,
-  UserIcon,
-} from '../../components/Common/Icon'
-import { Link } from '../../components/Common/Link'
-import { Row } from '../../components/Common/Row'
-import { TextInput, TextInputType } from '../../components/Common/TextInput'
-import { AuthLayout } from '../../layouts/Auth'
-import DailyPressLogo from '../../public/images/daily-press-logo.png'
-import { useAppDispatch, useAppSelector } from '../../store/hooks'
-import { compute, passwordStrength } from '../../store/slices/PasswordStrength.slice'
+import { ReactElement } from 'react'
+import { PasswordStrengthMeter } from '../../components/Auth/Auth.component'
+import Button from '../../components/Common/Button.component'
+import Checkbox from '../../components/Common/Checkbox.component'
+import BriefcaseIcon from '../../components/Common/Icons/BriefcaseIcon'
+import CaretRightIcon from '../../components/Common/Icons/CaretRightIcon'
+import EmailIcon from '../../components/Common/Icons/EmailIcon'
+import LockIcon from '../../components/Common/Icons/LockIcon'
+import UserIcon from '../../components/Common/Icons/UserIcon'
+import Link from '../../components/Common/Link.component'
+import TextInput from '../../components/Common/TextInput.component'
+import AuthLayout from '../../layouts/Auth/Auth.layout'
+import { NextPageWithLayout } from '../_app'
 
-const Page = () => {
-  const passwordRef = useRef<HTMLInputElement>(null)
-  const passwordCheckRef = useRef<HTMLInputElement>(null)
-  const [isRememberMe, setRememberMe] = useState(false)
-
-  const dispatch = useAppDispatch()
-  const passwordStrengthValue = useAppSelector(passwordStrength)
-
-  function onPasswordChange() {
-    dispatch(compute(passwordRef.current!.value))
-  }
-
-  function toggleRememberMe() {
-    setRememberMe(!isRememberMe)
-  }
-
-  useState(() => {
-    dispatch(compute(''))
-  })
-
+const Page: NextPageWithLayout = () => {
   return (
-    <AuthForm width="652px">
+    <>
       <Head>
         <title>Daily Press - Sign Up</title>
       </Head>
-      <div className="logo">
-        <Image draggable={false} src={DailyPressLogo} alt="Daily Press" height={65} width={65} />
-      </div>
-      <div className="title">Welcome to Daily Press</div>
-      <div className="subtitle">Please sign up and start the adventure</div>
-      <Row columnGap="12px" marginBottom="18px">
-        <TextInput Icon={UserIcon} label="Full Name" placeholder="Enter Full Name" />
-        <TextInput Icon={BriefcaseIcon} label="Company Name" placeholder="Enter Company Name" />
-      </Row>
-      <Row columnGap="12px" marginBottom="18px">
-        <TextInput
-          Icon={EmailIcon}
-          label="Email"
-          placeholder="Enter Email"
-          type={TextInputType.Email}
-        />
-      </Row>
-      <Row columnGap="12px" marginBottom="8px">
-        <TextInput
-          Icon={LockIcon}
-          label="Password"
-          placeholder="Enter Password"
-          type={TextInputType.Password}
-          onChange={onPasswordChange}
-          ref={passwordRef}
-        />
-        <TextInput
-          Icon={LockIcon}
-          label="Confirm Password"
-          placeholder="Confirm Password"
-          type={TextInputType.Password}
-          ref={passwordCheckRef}
-        />
-      </Row>
-      <Row marginBottom="8px" spaced>
-        <PasswordStrengthMeter strength={passwordStrengthValue} />
-      </Row>
-      <Row marginBottom="24px" spaced className="password-standards">
-        Should be at least 8 symbols and contain
-        <br />
-        one small and one big character, special
-        <br />
-        character and number
-      </Row>
-      <Row marginBottom="32px" spaced>
-        <Checkbox label="Remember me" isChecked={isRememberMe} onTick={toggleRememberMe} />
-      </Row>
-      <Row marginBottom="24px" width="312px">
-        <Button name="sign-up">
-          Sign Up
-          <CaretRightIcon />
-        </Button>
-      </Row>
-      <Row columnGap="6px">
-        <span className="query">Already have an account?</span>
-        <Link href="/auth/login">Login</Link>
-      </Row>
-    </AuthForm>
+      <Formik
+        initialValues={{
+          'full-name': '',
+          'company-name': '',
+          email: '',
+          password: '',
+          'password-confirm': '',
+          'remember-me': false,
+        }}
+        onSubmit={() => {}}
+      >
+        {({ isSubmitting }) => {
+          return (
+            <Form className="flex w-full flex-col items-center">
+              <div className="mb-[18px] flex w-full space-x-[12px]">
+                <TextInput
+                  type="text"
+                  name="full-name"
+                  Icon={UserIcon}
+                  label="Full Name"
+                  placeholder="Enter Full Name"
+                />
+                <TextInput
+                  type="text"
+                  name="company-name"
+                  Icon={BriefcaseIcon}
+                  label="Company Name"
+                  placeholder="Enter Company Name"
+                />
+              </div>
+              <div className="mb-[18px] w-full">
+                <TextInput
+                  type="email"
+                  name="email"
+                  Icon={EmailIcon}
+                  label="Email"
+                  placeholder="Enter Email"
+                />
+              </div>
+              <div className="mb-[8px] flex w-full space-x-[12px]">
+                <TextInput
+                  type="password"
+                  name="password"
+                  Icon={LockIcon}
+                  label="Password"
+                  placeholder="Enter Password"
+                  disableAutoComplete
+                />
+                <TextInput
+                  type="password"
+                  name="password-confirm"
+                  Icon={LockIcon}
+                  label="Password"
+                  placeholder="Enter Password"
+                  disableAutoComplete
+                />
+              </div>
+              <div className="mr-auto mb-[8px] w-[50%]">
+                <PasswordStrengthMeter strength={0} />
+              </div>
+              <div className="mr-auto mb-[24px]">
+                <div className="word select-none font-inter text-[10px] font-normal text-darksilver">
+                  Should be at least 8 symbols and contain
+                  <br />
+                  one small and one big character, special
+                  <br />
+                  character and number
+                </div>
+              </div>
+              <div className="mr-auto mb-[32px]">
+                <Checkbox name="remember-me" label="Remember me" />
+              </div>
+              <div className="mb-[24px] flex w-[312px]">
+                <Button type="submit" name="sign-up" isSubmitting={isSubmitting}>
+                  <span>Sign Up</span>
+                  <CaretRightIcon />
+                </Button>
+              </div>
+              <div className="flex select-none items-center space-x-[6px]">
+                <div className="font-inter text-[14px] font-normal text-davysgrey">
+                  Already have an account?
+                </div>
+                <Link href="/auth/login">Login</Link>
+              </div>
+            </Form>
+          )
+        }}
+      </Formik>
+    </>
   )
 }
 
 Page.getLayout = function getLayout(page: ReactElement) {
-  return <AuthLayout>{page}</AuthLayout>
+  return (
+    <AuthLayout
+      title="Welcome to Daily Press"
+      subtitle="Please sign up and start the adventure"
+      className="w-[652px]"
+    >
+      {page}
+    </AuthLayout>
+  )
 }
 
 export default Page

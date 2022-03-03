@@ -11,3 +11,18 @@ body {
 * {
   box-sizing: border-box;
 }
+
+input,
+button,
+input:focus-visible,
+button:focus-visible {
+  border: none;
+  outline: none;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 22px white inset !important;
+}

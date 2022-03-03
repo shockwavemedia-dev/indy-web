@@ -1,83 +1,79 @@
+import { Form, Formik } from 'formik'
 import Head from 'next/head'
-import Image from 'next/image'
-import { ReactElement, useRef, useState } from 'react'
-import { AuthForm, PasswordStrengthMeter } from '../../components/Auth'
-import { Button } from '../../components/Common/Button'
-import { FloppyDiskIcon, LockIcon } from '../../components/Common/Icon'
-import { Link } from '../../components/Common/Link'
-import { Row } from '../../components/Common/Row'
-import { TextInput, TextInputType } from '../../components/Common/TextInput'
-import { AuthLayout } from '../../layouts/Auth'
-import DailyPressLogo from '../../public/images/daily-press-logo.png'
-import { useAppDispatch, useAppSelector } from '../../store/hooks'
-import { compute, passwordStrength } from '../../store/slices/PasswordStrength.slice'
+import { ReactElement } from 'react'
+import { PasswordStrengthMeter } from '../../components/Auth/Auth.component'
+import Button from '../../components/Common/Button.component'
+import FloppyDiskIcon from '../../components/Common/Icons/FloppyDiskIcon'
+import LockIcon from '../../components/Common/Icons/LockIcon'
+import Link from '../../components/Common/Link.component'
+import TextInput from '../../components/Common/TextInput.component'
+import AuthLayout from '../../layouts/Auth/Auth.layout'
+import { NextPageWithLayout } from '../_app'
 
-const Page = () => {
-  const newPasswordRef = useRef<HTMLInputElement>(null)
-  const passwordCheckRef = useRef<HTMLInputElement>(null)
-
-  const dispatch = useAppDispatch()
-  const passwordStrengthValue = useAppSelector(passwordStrength)
-
-  function onPasswordChange() {
-    dispatch(compute(newPasswordRef.current!.value))
-  }
-
-  useState(() => {
-    dispatch(compute(''))
-  })
-
+const Page: NextPageWithLayout = () => {
   return (
-    <AuthForm width="570px">
+    <>
       <Head>
         <title>Daily Press - Create New Password</title>
       </Head>
-      <div className="logo">
-        <Image draggable={false} src={DailyPressLogo} alt="Daily Press" height={65} width={65} />
-      </div>
-      <div className="title">Create New Password</div>
-      <div className="subtitle">Setup your new password</div>
-      <Row marginBottom="8px">
-        <TextInput
-          Icon={LockIcon}
-          label="New Password"
-          placeholder="Enter New Password"
-          type={TextInputType.Password}
-          onChange={onPasswordChange}
-          ref={newPasswordRef}
-        />
-      </Row>
-      <Row marginBottom="8px" spaced>
-        <PasswordStrengthMeter strength={passwordStrengthValue} />
-      </Row>
-      <Row marginBottom="18px" spaced className="password-standards">
-        Should be at least 8 symbols and contain one small and one big character,
-        <br />
-        special character and number
-      </Row>
-      <Row marginBottom="32px">
-        <TextInput
-          Icon={LockIcon}
-          label="Confirm Password"
-          placeholder="Enter New Password"
-          type={TextInputType.Password}
-          ref={passwordCheckRef}
-        />
-      </Row>
-      <Row marginBottom="20px" width="312px">
-        <Button name="save-new-password">
-          <FloppyDiskIcon /> Save New Password
-        </Button>
-      </Row>
-      <Row>
-        <Link href="/auth/login">Cancel</Link>
-      </Row>
-    </AuthForm>
+      <Formik
+        initialValues={{ email: '', password: '', 'password-confirm': '' }}
+        onSubmit={() => {}}
+      >
+        {({ isSubmitting }) => {
+          return (
+            <Form className="flex w-full flex-col items-center">
+              <div className="mb-[8px] w-full">
+                <TextInput
+                  type="password"
+                  name="password"
+                  Icon={LockIcon}
+                  label="Password"
+                  placeholder="Enter Password"
+                  disableAutoComplete
+                />
+              </div>
+              <div className="mr-auto mb-[8px]">
+                <PasswordStrengthMeter strength={0} />
+              </div>
+              <div className="mb-[18px] w-full">
+                <div className="word select-none font-inter text-[10px] font-normal text-darksilver">
+                  Should be at least 8 symbols and contain one small and one big character,
+                  <br />
+                  special character and number
+                </div>
+              </div>
+              <div className="mb-[32px] w-full">
+                <TextInput
+                  type="password"
+                  name="password-confirm"
+                  Icon={LockIcon}
+                  label="Confirm Password"
+                  placeholder="Enter Password"
+                  disableAutoComplete
+                />
+              </div>
+              <div className="mb-[20px] flex w-[312px]">
+                <Button type="submit" name="login" isSubmitting={isSubmitting}>
+                  <FloppyDiskIcon />
+                  <span>Save New Password</span>
+                </Button>
+              </div>
+              <Link href="/auth/login">Cancel</Link>
+            </Form>
+          )
+        }}
+      </Formik>
+    </>
   )
 }
 
 Page.getLayout = function getLayout(page: ReactElement) {
-  return <AuthLayout>{page}</AuthLayout>
+  return (
+    <AuthLayout title="Password reset" subtitle="Setup your new password" className="w-[570px]">
+      {page}
+    </AuthLayout>
+  )
 }
 
 export default Page
