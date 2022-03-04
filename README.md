@@ -11,15 +11,11 @@
 npm i -g yarn
 ```
 
-<br>
-
 ## 🔧 Installing Dependencies
 
 ```bash
 yarn
 ```
-
-<br>
 
 ## 🚀 Getting Started
 
