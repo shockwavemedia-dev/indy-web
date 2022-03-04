@@ -1,5 +1,10 @@
 const Page = () => {
-  return <></>
+  return {
+    redirect: {
+      destination: '/auth/login',
+      permanent: false,
+    },
+  }
 }
 
 export default Page

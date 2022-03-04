@@ -47,7 +47,13 @@ Page.getLayout = function getLayout(page: ReactElement) {
   return (
     <AuthLayout
       title="Forgot password?"
-      subtitle="Enter your email and we will send you\none-time link to reset password"
+      subtitle={
+        <>
+          Enter your email and we will send you
+          <br />
+          one-time link to reset password
+        </>
+      }
       className="w-[570px]"
     >
       {page}

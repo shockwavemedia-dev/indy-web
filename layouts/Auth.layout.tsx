@@ -9,7 +9,7 @@ const AuthLayout = ({
   className,
 }: {
   title: string
-  subtitle: string
+  subtitle: string | ReactElement
   children: ReactElement
   className: string
 }) => {
@@ -23,14 +23,7 @@ const AuthLayout = ({
         </div>
         <div className="select-none font-inter text-[28px] font-semibold">{title}</div>
         <div className="mb-[24px] select-none text-center font-inter text-[16px] font-normal text-darksilver">
-          {subtitle.split('\\n').map((e, i, { length }) => {
-            return (
-              <span key={i}>
-                {e}
-                {i + 1 !== length && <br />}
-              </span>
-            )
-          })}
+          {subtitle}
         </div>
         {children}
       </div>
