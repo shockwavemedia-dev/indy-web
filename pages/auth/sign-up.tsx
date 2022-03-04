@@ -102,7 +102,7 @@ const Page: NextPageWithLayout = () => {
                 <Checkbox name="rememberMe" label="Remember me" />
               </div>
               <div className="mb-[24px] flex w-[312px]">
-                <Button type="submit" name="sign-up" isSubmitting={isSubmitting}>
+                <Button type="submit" ariaLabel="Sign Up" isSubmitting={isSubmitting}>
                   <span>Sign Up</span>
                   <CaretRightIcon />
                 </Button>

@@ -44,7 +44,7 @@ const Page: NextPageWithLayout = () => {
                 <Link href="/auth/forgot-password">Forgot Password?</Link>
               </div>
               <div className="mb-[24px] flex w-[312px]">
-                <Button type="submit" name="login" isSubmitting={isSubmitting}>
+                <Button type="submit" ariaLabel="Login" isSubmitting={isSubmitting}>
                   <span>Login</span>
                   <CaretRightIcon />
                 </Button>

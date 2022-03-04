@@ -63,7 +63,7 @@ const Page: NextPageWithLayout = () => {
                 />
               </div>
               <div className="mb-[20px] flex w-[312px]">
-                <Button type="submit" name="login" isSubmitting={isSubmitting}>
+                <Button type="submit" ariaLabel="Save New Password" isSubmitting={isSubmitting}>
                   <FloppyDiskIcon />
                   <span>Save New Password</span>
                 </Button>

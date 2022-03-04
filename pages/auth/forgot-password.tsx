@@ -29,7 +29,7 @@ const Page: NextPageWithLayout = () => {
                 />
               </div>
               <div className="mb-[20px] flex w-[312px]">
-                <Button type="submit" name="login" isSubmitting={isSubmitting}>
+                <Button type="submit" ariaLabel="Restore Password" isSubmitting={isSubmitting}>
                   <span>Restore Password</span>
                   <CaretRightIcon />
                 </Button>
