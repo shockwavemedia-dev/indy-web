@@ -4,7 +4,6 @@
     "esbenp.prettier-vscode",
     "csstools.postcss",
     "christian-kohler.path-intellisense",
-    "pkief.material-icon-theme",
     "ecmel.vscode-html-css",
     "dbaeumer.vscode-eslint"
   ]
