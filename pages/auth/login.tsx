@@ -3,12 +3,12 @@ import Head from 'next/head'
 import { ReactElement } from 'react'
 import Button from '../../components/Common/Button.component'
 import Checkbox from '../../components/Common/Checkbox.component'
-import CaretRightIcon from '../../components/Common/Icons/CaretRightIcon'
-import EmailIcon from '../../components/Common/Icons/EmailIcon'
-import LockIcon from '../../components/Common/Icons/LockIcon'
+import CaretRightIcon from '../../components/Common/Icons/CaretRight.icon'
+import EmailIcon from '../../components/Common/Icons/Email.icon'
+import LockIcon from '../../components/Common/Icons/Lock.icon'
 import Link from '../../components/Common/Link.component'
 import TextInput from '../../components/Common/TextInput.component'
-import AuthLayout from '../../layouts/Auth/Auth.layout'
+import AuthLayout from '../../layouts/Auth.layout'
 import { NextPageWithLayout } from '../_app'
 
 const Page: NextPageWithLayout = () => {
@@ -17,7 +17,7 @@ const Page: NextPageWithLayout = () => {
       <Head>
         <title>Daily Press - Login</title>
       </Head>
-      <Formik initialValues={{ email: '', password: '', 'remember-me': false }} onSubmit={() => {}}>
+      <Formik initialValues={{ email: '', password: '', rememberMe: false }} onSubmit={() => {}}>
         {({ isSubmitting }) => {
           return (
             <Form className="flex w-full flex-col items-center">
@@ -40,7 +40,7 @@ const Page: NextPageWithLayout = () => {
                 />
               </div>
               <div className="mb-[32px] flex w-full justify-between">
-                <Checkbox name="remember-me" label="Remember me" />
+                <Checkbox name="rememberMe" label="Remember me" />
                 <Link href="/auth/forgot-password">Forgot Password?</Link>
               </div>
               <div className="mb-[24px] flex w-[312px]">

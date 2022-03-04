@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import { ReactElement } from 'react'
-import DailyPressLogo from '../../public/images/daily-press-logo.png'
+import DailyPressLogo from '../public/images/daily-press-logo.png'
 
 const AuthLayout = ({
   title,

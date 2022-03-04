@@ -1,20 +1,28 @@
 import { Form, Formik } from 'formik'
 import Head from 'next/head'
-import { ReactElement } from 'react'
-import { PasswordStrengthMeter } from '../../components/Auth/Auth.component'
+import { ReactElement, useEffect } from 'react'
+import PasswordStrengthMeter from '../../components/Auth/PasswordStrengthMeter.component'
 import Button from '../../components/Common/Button.component'
 import Checkbox from '../../components/Common/Checkbox.component'
-import BriefcaseIcon from '../../components/Common/Icons/BriefcaseIcon'
-import CaretRightIcon from '../../components/Common/Icons/CaretRightIcon'
-import EmailIcon from '../../components/Common/Icons/EmailIcon'
-import LockIcon from '../../components/Common/Icons/LockIcon'
-import UserIcon from '../../components/Common/Icons/UserIcon'
+import BriefcaseIcon from '../../components/Common/Icons/Briefcase.icon'
+import CaretRightIcon from '../../components/Common/Icons/CaretRight.icon'
+import EmailIcon from '../../components/Common/Icons/Email.icon'
+import LockIcon from '../../components/Common/Icons/Lock.icon'
+import UserIcon from '../../components/Common/Icons/User.icon'
 import Link from '../../components/Common/Link.component'
 import TextInput from '../../components/Common/TextInput.component'
-import AuthLayout from '../../layouts/Auth/Auth.layout'
+import AuthLayout from '../../layouts/Auth.layout'
+import useStore from '../../store/store'
 import { NextPageWithLayout } from '../_app'
 
 const Page: NextPageWithLayout = () => {
+  const passwordStrength = useStore(({ strength }) => strength)
+  const compute = useStore(({ compute }) => compute)
+
+  useEffect(() => {
+    compute('')
+  }, [])
+
   return (
     <>
       <Head>
@@ -22,14 +30,15 @@ const Page: NextPageWithLayout = () => {
       </Head>
       <Formik
         initialValues={{
-          'full-name': '',
-          'company-name': '',
+          fullName: '',
+          companyName: '',
           email: '',
           password: '',
-          'password-confirm': '',
-          'remember-me': false,
+          passwordConfirm: '',
+          rememberMe: false,
         }}
         onSubmit={() => {}}
+        validate={({ password }) => compute(password)}
       >
         {({ isSubmitting }) => {
           return (
@@ -37,14 +46,14 @@ const Page: NextPageWithLayout = () => {
               <div className="mb-[18px] flex w-full space-x-[12px]">
                 <TextInput
                   type="text"
-                  name="full-name"
+                  name="fullName"
                   Icon={UserIcon}
                   label="Full Name"
                   placeholder="Enter Full Name"
                 />
                 <TextInput
                   type="text"
-                  name="company-name"
+                  name="companyName"
                   Icon={BriefcaseIcon}
                   label="Company Name"
                   placeholder="Enter Company Name"
@@ -70,7 +79,7 @@ const Page: NextPageWithLayout = () => {
                 />
                 <TextInput
                   type="password"
-                  name="password-confirm"
+                  name="passwordConfirm"
                   Icon={LockIcon}
                   label="Password"
                   placeholder="Enter Password"
@@ -78,7 +87,7 @@ const Page: NextPageWithLayout = () => {
                 />
               </div>
               <div className="mr-auto mb-[8px] w-[50%]">
-                <PasswordStrengthMeter strength={0} />
+                <PasswordStrengthMeter strength={passwordStrength} />
               </div>
               <div className="mr-auto mb-[24px]">
                 <div className="word select-none font-inter text-[10px] font-normal text-darksilver">
@@ -90,7 +99,7 @@ const Page: NextPageWithLayout = () => {
                 </div>
               </div>
               <div className="mr-auto mb-[32px]">
-                <Checkbox name="remember-me" label="Remember me" />
+                <Checkbox name="rememberMe" label="Remember me" />
               </div>
               <div className="mb-[24px] flex w-[312px]">
                 <Button type="submit" name="sign-up" isSubmitting={isSubmitting}>

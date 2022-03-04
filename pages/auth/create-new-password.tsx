@@ -1,24 +1,33 @@
 import { Form, Formik } from 'formik'
 import Head from 'next/head'
-import { ReactElement } from 'react'
-import { PasswordStrengthMeter } from '../../components/Auth/Auth.component'
+import { ReactElement, useEffect } from 'react'
+import PasswordStrengthMeter from '../../components/Auth/PasswordStrengthMeter.component'
 import Button from '../../components/Common/Button.component'
-import FloppyDiskIcon from '../../components/Common/Icons/FloppyDiskIcon'
-import LockIcon from '../../components/Common/Icons/LockIcon'
+import FloppyDiskIcon from '../../components/Common/Icons/FloppyDisk.icon'
+import LockIcon from '../../components/Common/Icons/Lock.icon'
 import Link from '../../components/Common/Link.component'
 import TextInput from '../../components/Common/TextInput.component'
-import AuthLayout from '../../layouts/Auth/Auth.layout'
+import AuthLayout from '../../layouts/Auth.layout'
+import useStore from '../../store/store'
 import { NextPageWithLayout } from '../_app'
 
 const Page: NextPageWithLayout = () => {
+  const passwordStrength = useStore(({ strength }) => strength)
+  const compute = useStore(({ compute }) => compute)
+
+  useEffect(() => {
+    compute('')
+  }, [])
+
   return (
     <>
       <Head>
         <title>Daily Press - Create New Password</title>
       </Head>
       <Formik
-        initialValues={{ email: '', password: '', 'password-confirm': '' }}
+        initialValues={{ password: '', passwordConfirm: '' }}
         onSubmit={() => {}}
+        validate={({ password }) => compute(password)}
       >
         {({ isSubmitting }) => {
           return (
@@ -34,7 +43,7 @@ const Page: NextPageWithLayout = () => {
                 />
               </div>
               <div className="mr-auto mb-[8px]">
-                <PasswordStrengthMeter strength={0} />
+                <PasswordStrengthMeter strength={passwordStrength} />
               </div>
               <div className="mb-[18px] w-full">
                 <div className="word select-none font-inter text-[10px] font-normal text-darksilver">
@@ -46,7 +55,7 @@ const Page: NextPageWithLayout = () => {
               <div className="mb-[32px] w-full">
                 <TextInput
                   type="password"
-                  name="password-confirm"
+                  name="passwordConfirm"
                   Icon={LockIcon}
                   label="Confirm Password"
                   placeholder="Enter Password"

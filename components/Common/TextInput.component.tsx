@@ -1,6 +1,6 @@
 import { Field } from 'formik'
 import { ComponentType, useState } from 'react'
-import EyeOpenIcon from './Icons/EyeOpenIcon'
+import EyeOpenIcon from './Icons/EyeOpen.icon'
 
 const TextInput = ({
   type = 'text',
@@ -18,6 +18,10 @@ const TextInput = ({
   disableAutoComplete?: boolean
 }) => {
   const [isShowPassword, setShowPassword] = useState(false)
+
+  function toggleShowPassword() {
+    setShowPassword(!isShowPassword)
+  }
 
   return (
     <div className="flex w-full flex-col">
@@ -44,7 +48,7 @@ const TextInput = ({
         {type === 'password' && (
           <button
             className="mr-[10px] flex cursor-pointer justify-center bg-transparent p-0"
-            onClick={() => setShowPassword(!isShowPassword)}
+            onClick={toggleShowPassword}
           >
             <EyeOpenIcon />
           </button>

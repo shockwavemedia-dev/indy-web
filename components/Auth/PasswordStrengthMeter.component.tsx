@@ -1,4 +1,4 @@
-export const PasswordStrengthMeter = ({ strength }: { strength: number }) => {
+const PasswordStrengthMeter = ({ strength }: { strength: number }) => {
   function getStrengthText() {
     if (strength < 2) {
       return 'Very Weak'
@@ -36,3 +36,5 @@ export const PasswordStrengthMeter = ({ strength }: { strength: number }) => {
     </div>
   )
 }
+
+export default PasswordStrengthMeter

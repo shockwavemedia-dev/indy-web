@@ -1,5 +1,5 @@
 import { Field } from 'formik'
-import CheckIcon from './Icons/CheckIcon'
+import CheckIcon from './Icons/Check.icon'
 
 const Checkbox = ({ name, label }: { name: string; label: string }) => {
   return (
