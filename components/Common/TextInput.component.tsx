@@ -48,6 +48,7 @@ const TextInput = ({
         {type === 'password' && (
           <button
             className="mr-[10px] flex cursor-pointer justify-center bg-transparent p-0"
+            aria-label="Show Password"
             onClick={toggleShowPassword}
           >
             <EyeOpenIcon />
