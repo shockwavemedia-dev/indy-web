@@ -19,7 +19,7 @@ const TextInput = ({
 }) => {
   const [isShowPassword, setShowPassword] = useState(false)
 
-  function toggleShowPassword() {
+  const toggleShowPassword = () => {
     setShowPassword(!isShowPassword)
   }
 
@@ -51,6 +51,7 @@ const TextInput = ({
             aria-label="Show Password"
             onClick={toggleShowPassword}
             tabIndex={-1}
+            type="button"
           >
             <EyeOpenIcon />
           </button>

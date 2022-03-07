@@ -1,5 +1,5 @@
 const PasswordStrengthMeter = ({ strength }: { strength: number }) => {
-  function getStrengthText() {
+  const getStrengthText = () => {
     if (strength < 2) {
       return 'Very Weak'
     } else if (strength < 3) {

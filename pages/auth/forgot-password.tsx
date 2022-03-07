@@ -43,7 +43,7 @@ const Page: NextPageWithLayout = () => {
   )
 }
 
-Page.getLayout = function getLayout(page: ReactElement) {
+Page.getLayout = (page: ReactElement) => {
   return (
     <AuthLayout
       title="Forgot password?"

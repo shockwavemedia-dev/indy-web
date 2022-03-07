@@ -13,10 +13,10 @@ import { NextPageWithLayout } from '../_app'
 
 const Page: NextPageWithLayout = () => {
   const passwordStrength = useStore(({ strength }) => strength)
-  const compute = useStore(({ compute }) => compute)
+  const computePasswordStrength = useStore(({ computePasswordStrength }) => computePasswordStrength)
 
   useEffect(() => {
-    compute('')
+    computePasswordStrength('')
   }, [])
 
   return (
@@ -27,7 +27,7 @@ const Page: NextPageWithLayout = () => {
       <Formik
         initialValues={{ password: '', passwordConfirm: '' }}
         onSubmit={() => {}}
-        validate={({ password }) => compute(password)}
+        validate={({ password }) => computePasswordStrength(password)}
       >
         {({ isSubmitting }) => {
           return (
@@ -77,7 +77,7 @@ const Page: NextPageWithLayout = () => {
   )
 }
 
-Page.getLayout = function getLayout(page: ReactElement) {
+Page.getLayout = (page: ReactElement) => {
   return (
     <AuthLayout title="Password reset" subtitle="Setup your new password" className="w-[570px]">
       {page}

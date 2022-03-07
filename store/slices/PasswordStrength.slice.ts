@@ -3,13 +3,13 @@ import { State } from '../store'
 
 export interface PasswordStrengthSlice {
   strength: number
-  compute: (password: string) => void
+  computePasswordStrength: (password: string) => void
 }
 
-function createPasswordStrengthSlice(set: SetState<State>) {
+const createPasswordStrengthSlice = (set: SetState<State>) => {
   return {
     strength: 0,
-    compute(password: string) {
+    computePasswordStrength(password: string) {
       let computedStrength = 0
 
       if (password.length > 7) {

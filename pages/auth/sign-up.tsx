@@ -1,4 +1,4 @@
-import { Form, Formik } from 'formik'
+import { ErrorMessage, Form, Formik } from 'formik'
 import Head from 'next/head'
 import { ReactElement, useEffect } from 'react'
 import PasswordStrengthMeter from '../../components/Auth/PasswordStrengthMeter.component'
@@ -13,15 +13,34 @@ import Link from '../../components/Common/Link.component'
 import TextInput from '../../components/Common/TextInput.component'
 import AuthLayout from '../../layouts/Auth.layout'
 import useStore from '../../store/store'
+import { API_BASE_URL } from '../../utils/constants'
 import { NextPageWithLayout } from '../_app'
+
+interface SignUpFormValues {
+  fullName: string
+  companyName: string
+  email: string
+  password: string
+  passwordConfirmation: string
+  rememberMe: boolean
+}
 
 const Page: NextPageWithLayout = () => {
   const passwordStrength = useStore(({ strength }) => strength)
-  const compute = useStore(({ compute }) => compute)
+  const computePasswordStrength = useStore(({ computePasswordStrength }) => computePasswordStrength)
 
   useEffect(() => {
-    compute('')
+    computePasswordStrength('')
   }, [])
+
+  const formInitialValues: SignUpFormValues = {
+    fullName: '',
+    companyName: '',
+    email: '',
+    password: '',
+    passwordConfirmation: '',
+    rememberMe: false,
+  }
 
   return (
     <>
@@ -29,16 +48,11 @@ const Page: NextPageWithLayout = () => {
         <title>Daily Press - Sign Up</title>
       </Head>
       <Formik
-        initialValues={{
-          fullName: '',
-          companyName: '',
-          email: '',
-          password: '',
-          passwordConfirm: '',
-          rememberMe: false,
+        initialValues={formInitialValues}
+        onSubmit={signUp}
+        validate={({ password }) => {
+          computePasswordStrength(password)
         }}
-        onSubmit={() => {}}
-        validate={({ password }) => compute(password)}
       >
         {({ isSubmitting }) => {
           return (
@@ -51,6 +65,7 @@ const Page: NextPageWithLayout = () => {
                   label="Full Name"
                   placeholder="Enter Full Name"
                 />
+                <ErrorMessage name="fullName" />
                 <TextInput
                   type="text"
                   name="companyName"
@@ -79,7 +94,7 @@ const Page: NextPageWithLayout = () => {
                 />
                 <TextInput
                   type="password"
-                  name="passwordConfirm"
+                  name="passwordConfirmation"
                   Icon={LockIcon}
                   label="Password"
                   placeholder="Enter Password"
@@ -121,7 +136,7 @@ const Page: NextPageWithLayout = () => {
   )
 }
 
-Page.getLayout = function getLayout(page: ReactElement) {
+Page.getLayout = (page: ReactElement) => {
   return (
     <AuthLayout
       title="Welcome to Daily Press"
@@ -131,6 +146,50 @@ Page.getLayout = function getLayout(page: ReactElement) {
       {page}
     </AuthLayout>
   )
+}
+
+const signUp = async (signUpFormValues: SignUpFormValues) => {
+  // Temp Start
+  // Just here to make sign up work because it needs access token
+  const authRes = await fetch(`${API_BASE_URL}/authenticate`, {
+    method: 'POST',
+    body: JSON.stringify({
+      email: 'superadmin@dailypress.com',
+      password: 'letmein',
+    }),
+  })
+  const {
+    data: { access_token: accessToken },
+  } = await authRes.json()
+  // Temp End
+
+  const res = await fetch(`${API_BASE_URL}/v1/users/client`, {
+    method: 'POST',
+    headers: {
+      authorization: `Bearer ${accessToken}`,
+    },
+    body: JSON.stringify({
+      email: signUpFormValues.email,
+      password: signUpFormValues.password,
+      birth_date: '1993/02/02',
+      password_confirmation: signUpFormValues.passwordConfirmation,
+      contact_number: '123',
+      first_name: '123',
+      last_name: '123',
+      middle_name: '123',
+      gender: 'Male',
+      role: 'marketing',
+      client_id: 1,
+    }),
+  })
+
+  const { data } = await res.json()
+
+  if (data) {
+    alert('noice')
+  } else {
+    alert('not noice')
+  }
 }
 
 export default Page
