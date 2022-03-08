@@ -1,5 +1,5 @@
 import { SetState } from 'zustand'
-import { State } from '../store'
+import { State } from './store'
 
 export interface PasswordStrengthSlice {
   strength: number
