@@ -1,5 +1,7 @@
 import { ErrorMessage, Form, Formik } from 'formik'
+import { signIn } from 'next-auth/react'
 import Head from 'next/head'
+import { useRouter } from 'next/router'
 import { ReactElement, useEffect } from 'react'
 import PasswordStrengthMeter from '../../components/Auth/PasswordStrengthMeter.component'
 import Button from '../../components/Common/Button.component'
@@ -26,6 +28,7 @@ interface SignUpFormValues {
 }
 
 const SignUp: NextPageWithLayout = () => {
+  const { replace } = useRouter()
   const passwordStrength = useStore(({ strength }) => strength)
   const computePasswordStrength = useStore(({ computePasswordStrength }) => computePasswordStrength)
 
@@ -40,6 +43,62 @@ const SignUp: NextPageWithLayout = () => {
     password: '',
     passwordConfirmation: '',
     rememberMe: false,
+  }
+
+  const signUp = async (
+    signUpFormValues: SignUpFormValues,
+    { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
+  ) => {
+    setSubmitting(true)
+    // Temp Start
+    // Just here to make sign up work because it needs access token
+    const authRes = await fetch(`${API_BASE_URL}/authenticate`, {
+      method: 'POST',
+      body: JSON.stringify({
+        email: 'superadmin@dailypress.com',
+        password: 'letmein',
+      }),
+    })
+    const {
+      data: { access_token: accessToken },
+    } = await authRes.json()
+    // Temp End
+
+    const res = await fetch(`${API_BASE_URL}/v1/users/client`, {
+      method: 'POST',
+      headers: {
+        authorization: `Bearer ${accessToken}`,
+      },
+      body: JSON.stringify({
+        email: signUpFormValues.email,
+        password: signUpFormValues.password,
+        birth_date: '1993/02/02',
+        password_confirmation: signUpFormValues.passwordConfirmation,
+        contact_number: '123',
+        first_name: '123',
+        last_name: '123',
+        middle_name: '123',
+        gender: 'Male',
+        role: 'marketing',
+        client_id: 1,
+      }),
+    })
+
+    const { data } = await res.json()
+
+    if (data) {
+      const res = await signIn<'credentials'>('credentials', {
+        email: signUpFormValues.email,
+        password: signUpFormValues.password,
+        redirect: false,
+      })
+
+      if (!res?.error && res?.status === 200 && res.ok) {
+        replace('/dashboard')
+      }
+    }
+
+    setSubmitting(false)
   }
 
   return (
@@ -147,51 +206,5 @@ SignUp.getLayout = (page: ReactElement) => {
     </AuthLayout>
   )
 }
-
-const signUp = async (signUpFormValues: SignUpFormValues) => {
-  // Temp Start
-  // Just here to make sign up work because it needs access token
-  const authRes = await fetch(`${API_BASE_URL}/authenticate`, {
-    method: 'POST',
-    body: JSON.stringify({
-      email: 'superadmin@dailypress.com',
-      password: 'letmein',
-    }),
-  })
-  const {
-    data: { access_token: accessToken },
-  } = await authRes.json()
-  // Temp End
-
-  const res = await fetch(`${API_BASE_URL}/v1/users/client`, {
-    method: 'POST',
-    headers: {
-      authorization: `Bearer ${accessToken}`,
-    },
-    body: JSON.stringify({
-      email: signUpFormValues.email,
-      password: signUpFormValues.password,
-      birth_date: '1993/02/02',
-      password_confirmation: signUpFormValues.passwordConfirmation,
-      contact_number: '123',
-      first_name: '123',
-      last_name: '123',
-      middle_name: '123',
-      gender: 'Male',
-      role: 'marketing',
-      client_id: 1,
-    }),
-  })
-
-  const { data } = await res.json()
-
-  if (data) {
-    alert('noice')
-  } else {
-    alert('not noice')
-  }
-}
-
-SignUp.clientAuth = false
 
 export default SignUp

@@ -61,6 +61,4 @@ ForgotPassword.getLayout = (page: ReactElement) => {
   )
 }
 
-ForgotPassword.clientAuth = false
-
 export default ForgotPassword

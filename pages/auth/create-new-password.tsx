@@ -85,6 +85,4 @@ CreateNewPassword.getLayout = (page: ReactElement) => {
   )
 }
 
-CreateNewPassword.clientAuth = false
-
 export default CreateNewPassword

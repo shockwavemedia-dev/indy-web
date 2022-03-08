@@ -1,5 +1,6 @@
 import { Form, Formik } from 'formik'
-import { signIn } from 'next-auth/react'
+import { GetServerSideProps } from 'next'
+import { getSession, signIn } from 'next-auth/react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { ReactElement } from 'react'
@@ -20,12 +21,12 @@ interface SignInFormValues {
 }
 
 const Login: NextPageWithLayout = () => {
+  const { replace } = useRouter()
   const formInitialValues: SignInFormValues = {
     email: '',
     password: '',
     rememberMe: false,
   }
-  const { replace } = useRouter()
 
   const login = async (
     signInFormValues: SignInFormValues,
@@ -37,13 +38,12 @@ const Login: NextPageWithLayout = () => {
       email: signInFormValues.email,
       password: signInFormValues.password,
       redirect: false,
-      callbackUrl: '/dashboard',
     })
 
     setSubmitting(false)
 
     if (!res?.error && res?.status === 200 && res.ok) {
-      replace(res!.url || window.location.origin)
+      replace('/dashboard')
     }
   }
 
@@ -110,6 +110,19 @@ Login.getLayout = (page: ReactElement) => {
   )
 }
 
-Login.clientAuth = false
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  if (await getSession(context)) {
+    return {
+      redirect: {
+        permanent: false,
+        destination: '/dashboard',
+      },
+    }
+  }
+
+  return {
+    props: {},
+  }
+}
 
 export default Login

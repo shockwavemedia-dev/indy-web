@@ -1,10 +1,26 @@
-import { signOut } from 'next-auth/react'
+import { signOut, useSession } from 'next-auth/react'
+import { useRouter } from 'next/router'
 import { NextPageWithLayout } from '../_app'
 
 const Dashboard: NextPageWithLayout = () => {
-  return <button onClick={() => signOut()}>hehe</button>
-}
+  const { status } = useSession()
+  const { replace } = useRouter()
 
-Dashboard.clientAuth = true
+  if (status === 'loading') {
+    return null
+  }
+
+  if (status === 'unauthenticated') {
+    replace('/auth/login')
+    return null
+  }
+
+  return (
+    <>
+      <span>{status} - This is the Dashboard now </span>
+      <button onClick={() => signOut()}>Logout</button>
+    </>
+  )
+}
 
 export default Dashboard
