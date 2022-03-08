@@ -1,10 +1,9 @@
-const Page = () => {
-  return {
-    redirect: {
-      destination: '/auth/login',
-      permanent: false,
-    },
-  }
+import { NextPageWithLayout } from './_app'
+
+const Home: NextPageWithLayout = () => {
+  return null
 }
 
-export default Page
+Home.clientAuth = true
+
+export default Home

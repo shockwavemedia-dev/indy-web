@@ -9,7 +9,7 @@ import TextInput from '../../components/Common/TextInput.component'
 import AuthLayout from '../../layouts/Auth.layout'
 import { NextPageWithLayout } from '../_app'
 
-const Page: NextPageWithLayout = () => {
+const ForgotPassword: NextPageWithLayout = () => {
   return (
     <>
       <Head>
@@ -29,7 +29,7 @@ const Page: NextPageWithLayout = () => {
                 />
               </div>
               <div className="mb-[20px] flex w-[312px]">
-                <Button type="submit" ariaLabel="Restore Password" isSubmitting={isSubmitting}>
+                <Button type="submit" ariaLabel="Restore Password" disabled={isSubmitting}>
                   <span>Restore Password</span>
                   <CaretRightIcon />
                 </Button>
@@ -43,7 +43,7 @@ const Page: NextPageWithLayout = () => {
   )
 }
 
-Page.getLayout = (page: ReactElement) => {
+ForgotPassword.getLayout = (page: ReactElement) => {
   return (
     <AuthLayout
       title="Forgot password?"
@@ -61,4 +61,6 @@ Page.getLayout = (page: ReactElement) => {
   )
 }
 
-export default Page
+ForgotPassword.clientAuth = false
+
+export default ForgotPassword

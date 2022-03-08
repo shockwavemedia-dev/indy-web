@@ -11,7 +11,7 @@ import AuthLayout from '../../layouts/Auth.layout'
 import useStore from '../../store/store'
 import { NextPageWithLayout } from '../_app'
 
-const Page: NextPageWithLayout = () => {
+const CreateNewPassword: NextPageWithLayout = () => {
   const passwordStrength = useStore(({ strength }) => strength)
   const computePasswordStrength = useStore(({ computePasswordStrength }) => computePasswordStrength)
 
@@ -63,7 +63,7 @@ const Page: NextPageWithLayout = () => {
                 />
               </div>
               <div className="mb-[20px] flex w-[312px]">
-                <Button type="submit" ariaLabel="Save New Password" isSubmitting={isSubmitting}>
+                <Button type="submit" ariaLabel="Save New Password" disabled={isSubmitting}>
                   <FloppyDiskIcon />
                   <span>Save New Password</span>
                 </Button>
@@ -77,7 +77,7 @@ const Page: NextPageWithLayout = () => {
   )
 }
 
-Page.getLayout = (page: ReactElement) => {
+CreateNewPassword.getLayout = (page: ReactElement) => {
   return (
     <AuthLayout title="Password reset" subtitle="Setup your new password" className="w-[570px]">
       {page}
@@ -85,4 +85,6 @@ Page.getLayout = (page: ReactElement) => {
   )
 }
 
-export default Page
+CreateNewPassword.clientAuth = false
+
+export default CreateNewPassword

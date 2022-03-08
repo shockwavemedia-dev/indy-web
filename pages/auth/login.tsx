@@ -1,5 +1,7 @@
 import { Form, Formik } from 'formik'
+import { signIn } from 'next-auth/react'
 import Head from 'next/head'
+import { useRouter } from 'next/router'
 import { ReactElement } from 'react'
 import Button from '../../components/Common/Button.component'
 import Checkbox from '../../components/Common/Checkbox.component'
@@ -11,13 +13,46 @@ import TextInput from '../../components/Common/TextInput.component'
 import AuthLayout from '../../layouts/Auth.layout'
 import { NextPageWithLayout } from '../_app'
 
-const Page: NextPageWithLayout = () => {
+interface SignInFormValues {
+  email: string
+  password: string
+  rememberMe: boolean
+}
+
+const Login: NextPageWithLayout = () => {
+  const formInitialValues: SignInFormValues = {
+    email: '',
+    password: '',
+    rememberMe: false,
+  }
+  const { replace } = useRouter()
+
+  const login = async (
+    signInFormValues: SignInFormValues,
+    { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
+  ) => {
+    setSubmitting(true)
+
+    const res = await signIn<'credentials'>('credentials', {
+      email: signInFormValues.email,
+      password: signInFormValues.password,
+      redirect: false,
+      callbackUrl: '/dashboard',
+    })
+
+    setSubmitting(false)
+
+    if (!res?.error && res?.status === 200 && res.ok) {
+      replace(res!.url || window.location.origin)
+    }
+  }
+
   return (
     <>
       <Head>
         <title>Daily Press - Login</title>
       </Head>
-      <Formik initialValues={{ email: '', password: '', rememberMe: false }} onSubmit={() => {}}>
+      <Formik initialValues={formInitialValues} onSubmit={login}>
         {({ isSubmitting }) => {
           return (
             <Form className="flex w-full flex-col items-center">
@@ -44,7 +79,7 @@ const Page: NextPageWithLayout = () => {
                 <Link href="/auth/forgot-password">Forgot Password?</Link>
               </div>
               <div className="mb-[24px] flex w-[312px]">
-                <Button type="submit" ariaLabel="Login" isSubmitting={isSubmitting}>
+                <Button type="submit" ariaLabel="Login" disabled={isSubmitting}>
                   <span>Login</span>
                   <CaretRightIcon />
                 </Button>
@@ -63,7 +98,7 @@ const Page: NextPageWithLayout = () => {
   )
 }
 
-Page.getLayout = function getLayout(page: ReactElement) {
+Login.getLayout = (page: ReactElement) => {
   return (
     <AuthLayout
       title="Welcome to Daily Press"
@@ -75,4 +110,6 @@ Page.getLayout = function getLayout(page: ReactElement) {
   )
 }
 
-export default Page
+Login.clientAuth = false
+
+export default Login

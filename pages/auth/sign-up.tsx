@@ -25,7 +25,7 @@ interface SignUpFormValues {
   rememberMe: boolean
 }
 
-const Page: NextPageWithLayout = () => {
+const SignUp: NextPageWithLayout = () => {
   const passwordStrength = useStore(({ strength }) => strength)
   const computePasswordStrength = useStore(({ computePasswordStrength }) => computePasswordStrength)
 
@@ -117,7 +117,7 @@ const Page: NextPageWithLayout = () => {
                 <Checkbox name="rememberMe" label="Remember me" />
               </div>
               <div className="mb-[24px] flex w-[312px]">
-                <Button type="submit" ariaLabel="Sign Up" isSubmitting={isSubmitting}>
+                <Button type="submit" ariaLabel="Sign Up" disabled={isSubmitting}>
                   <span>Sign Up</span>
                   <CaretRightIcon />
                 </Button>
@@ -136,7 +136,7 @@ const Page: NextPageWithLayout = () => {
   )
 }
 
-Page.getLayout = (page: ReactElement) => {
+SignUp.getLayout = (page: ReactElement) => {
   return (
     <AuthLayout
       title="Welcome to Daily Press"
@@ -192,4 +192,6 @@ const signUp = async (signUpFormValues: SignUpFormValues) => {
   }
 }
 
-export default Page
+SignUp.clientAuth = false
+
+export default SignUp
