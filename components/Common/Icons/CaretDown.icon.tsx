@@ -8,13 +8,7 @@ const CaretDownIcon = ({ className }: { className?: string }) => {
       xmlns="http://www.w3.org/2000/svg"
       className={className}
     >
-      <path
-        d="M13 6L8 11L3 6"
-        stroke="#717583"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
+      <path d="M13 6L8 11L3 6" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   )
 }
