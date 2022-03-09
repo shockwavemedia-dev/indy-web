@@ -94,7 +94,7 @@ const SignUp: NextPageWithLayout = () => {
       })
 
       if (!res?.error && res?.status === 200 && res.ok) {
-        replace('/dashboard')
+        replace('admin/dashboard')
       }
     }
 
@@ -164,7 +164,7 @@ const SignUp: NextPageWithLayout = () => {
                 <PasswordStrengthMeter strength={passwordStrength} />
               </div>
               <div className="mr-auto mb-[24px]">
-                <div className="word select-none font-inter text-[10px] font-normal text-darksilver">
+                <div className="word select-none font-inter text-[10px] font-normal text-nevada">
                   Should be at least 8 symbols and contain
                   <br />
                   one small and one big character, special
@@ -178,11 +178,11 @@ const SignUp: NextPageWithLayout = () => {
               <div className="mb-[24px] flex w-[312px]">
                 <Button type="submit" ariaLabel="Sign Up" disabled={isSubmitting}>
                   <span>Sign Up</span>
-                  <CaretRightIcon />
+                  <CaretRightIcon className="stroke-white" />
                 </Button>
               </div>
               <div className="flex select-none items-center space-x-[6px]">
-                <div className="font-inter text-[14px] font-normal text-davysgrey">
+                <div className="font-inter text-[14px] font-normal text-emperor">
                   Already have an account?
                 </div>
                 <Link href="/auth/login">Login</Link>

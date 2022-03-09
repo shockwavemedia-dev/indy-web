@@ -43,7 +43,7 @@ const Login: NextPageWithLayout = () => {
     setSubmitting(false)
 
     if (!res?.error && res?.status === 200 && res.ok) {
-      replace('/dashboard')
+      replace('/admin/dashboard')
     }
   }
 
@@ -81,11 +81,11 @@ const Login: NextPageWithLayout = () => {
               <div className="mb-[24px] flex w-[312px]">
                 <Button type="submit" ariaLabel="Login" disabled={isSubmitting}>
                   <span>Login</span>
-                  <CaretRightIcon />
+                  <CaretRightIcon className="stroke-white" />
                 </Button>
               </div>
               <div className="flex select-none items-center space-x-[6px]">
-                <div className="font-inter text-[14px] font-normal text-davysgrey">
+                <div className="font-inter text-[14px] font-normal text-emperor">
                   {"Don't have an account?"}
                 </div>
                 <Link href="/auth/sign-up">Sign Up</Link>
@@ -115,7 +115,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     return {
       redirect: {
         permanent: false,
-        destination: '/dashboard',
+        destination: '/admin/dashboard',
       },
     }
   }
