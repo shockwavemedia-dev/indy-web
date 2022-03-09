@@ -23,8 +23,23 @@ const nextAuth = NextAuth({
 
         if (data.access_token) {
           return {
+            user: {
+              id: data.user.id,
+              email: data.user.email,
+              morphableType: data.user.morphable_type,
+              morphableId: data.user.morphable_id,
+              status: data.user.status,
+              firstName: data.user.first_name,
+              middleName: data.user.middle_name,
+              lastName: data.user.last_name,
+              contactNumber: data.user.contact_number,
+              gender: data.user.gender,
+              birthDate: data.user.birth_date,
+              emailVerifiedAt: data.user.email_verified_at,
+              createdAt: data.user.created_at,
+              updatedAt: data.user.updated_at,
+            },
             accessToken: data.access_token,
-            ...data.user,
           }
         }
 
@@ -36,12 +51,14 @@ const nextAuth = NextAuth({
     async jwt({ token, user }) {
       if (user) {
         token.accessToken = user.accessToken
+        token.user = user.user
       }
 
       return token
     },
     async session({ session, token }) {
       session.accessToken = token.accessToken
+      session.user = token.user
 
       return session
     },
