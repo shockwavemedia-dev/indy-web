@@ -18,9 +18,9 @@ const Button = ({
       type={type}
       aria-label={ariaLabel}
       disabled={disabled}
-      className={`flex h-[44px] flex-1 cursor-pointer select-none items-center justify-center space-x-[8px] rounded-[4px] font-inter text-[14px] font-medium 
-      ${isLight ? 'text-shark' : 'bg-shark text-white'}
-      `}
+      className={`flex h-[44px] flex-1 cursor-pointer select-none items-center justify-center space-x-[8px] rounded-[4px] font-inter text-[14px] font-medium ${
+        isLight ? 'text-shark' : 'bg-shark text-white'
+      }`}
     >
       {children}
     </button>
