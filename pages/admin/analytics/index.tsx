@@ -21,7 +21,7 @@ const Dashboard: NextPageWithLayout = () => {
   return (
     <>
       <Head>
-        <title>Daily Press - Marketing Planning</title>
+        <title>Daily Press - Analytics</title>
       </Head>
     </>
   )
