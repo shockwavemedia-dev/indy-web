@@ -90,8 +90,17 @@ const navigations: Array<Navigation> = [
 ]
 
 const AdminLayout = ({ children }: { children: ReactNode }) => {
-  const { pathname } = useRouter()
-  const { data: session } = useSession()
+  const { replace, pathname } = useRouter()
+  const { status, data: session } = useSession({
+    required: true,
+    onUnauthenticated() {
+      replace('/auth/login')
+    },
+  })
+
+  if (status === 'loading') {
+    return null
+  }
 
   return (
     <div className="flex min-h-screen bg-wildsand">

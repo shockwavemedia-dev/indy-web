@@ -1,29 +1,20 @@
-import { GetServerSideProps } from 'next'
-import { getSession } from 'next-auth/react'
+import { useSession } from 'next-auth/react'
+import { useRouter } from 'next/router'
 import { NextPageWithLayout } from './_app'
 
 const Home: NextPageWithLayout = () => {
+  const { replace } = useRouter()
+  const { status } = useSession()
+
+  if (status === 'unauthenticated') {
+    replace('/auth/login')
+  }
+
+  if (status === 'authenticated') {
+    replace('/admin/dashboard')
+  }
+
   return null
-}
-
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const session = await getSession(context)
-
-  if (session) {
-    return {
-      redirect: {
-        permanent: false,
-        destination: '/admin/dashboard',
-      },
-    }
-  }
-
-  return {
-    redirect: {
-      permanent: false,
-      destination: '/auth/login',
-    },
-  }
 }
 
 export default Home
