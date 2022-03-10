@@ -195,15 +195,6 @@ const AdminLayout = ({ children }: { children: ReactNode }) => {
   )
 }
 
-const JobsStatusCountCard = ({ value, description }: { value: number; description: string }) => {
-  return (
-    <div className="flex h-[73px] flex-1 flex-col items-center justify-center rounded-[4px] bg-woodsmoke">
-      <div className="font-inter text-[18px] font-semibold text-white">{value}</div>
-      <div className="font-inter text-[12px] font-normal text-santasgray">{description}</div>
-    </div>
-  )
-}
-
 const NavigationButton = ({
   navigation,
   isCurrentPath,
@@ -271,6 +262,15 @@ const ChildNavigationButtons = ({
           </div>
         )
       })}
+    </div>
+  )
+}
+
+const JobsStatusCountCard = ({ value, description }: { value: number; description: string }) => {
+  return (
+    <div className="flex h-[73px] flex-1 flex-col items-center justify-center rounded-[4px] bg-woodsmoke">
+      <div className="font-inter text-[18px] font-semibold text-white">{value}</div>
+      <div className="font-inter text-[12px] font-normal text-santasgray">{description}</div>
     </div>
   )
 }
