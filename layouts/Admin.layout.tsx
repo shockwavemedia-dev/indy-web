@@ -1,20 +1,18 @@
 import { signOut, useSession } from 'next-auth/react'
 import Image from 'next/image'
-import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { MouseEventHandler, ReactNode } from 'react'
+import { ReactNode } from 'react'
+import ChildNavigationButton from '../components/Admin/ChildNavigationButton.component'
+import FancyButton from '../components/Admin/FancyButton.component'
+import JobsStatusCountCard from '../components/Admin/JobsStatusCountCard.component'
+import NavigationButton from '../components/Admin/NavigationButton.component'
 import BellIcon from '../components/Common/Icons/Bell.icon'
 import CaretDownIcon from '../components/Common/Icons/CaretDown.icon'
 import CaretRightIcon from '../components/Common/Icons/CaretRight.icon'
 import MagnifyingGlassIcon from '../components/Common/Icons/MagnifyingGlass.icon'
+import { Navigation } from '../interfaces/Navigation.interface'
 import DailyPressLogoLight from '../public/images/daily-press-logo-light.png'
 import DummyAvatar from '../public/images/dummy-avatar.png'
-
-interface Navigation {
-  title: string
-  pathname?: string
-  children?: Array<Navigation>
-}
 
 const navigations: Array<Navigation> = [
   {
@@ -126,10 +124,17 @@ const AdminLayout = ({ children }: { children: ReactNode }) => {
               <div key={i} className="space-y-[20px]">
                 <NavigationButton navigation={navigation} isCurrentPath={isCurrentPath} />
                 {navigation.children && (
-                  <ChildNavigationButtons
-                    navigations={navigation.children}
-                    isCurrentPath={isCurrentPath}
-                  />
+                  <div className="space-y-[16px] pl-[38px]">
+                    {navigation.children?.map((navigationChild, i) => {
+                      return (
+                        <ChildNavigationButton
+                          key={i}
+                          navigation={navigationChild}
+                          isCurrentPath={isCurrentPath}
+                        />
+                      )
+                    })}
+                  </div>
                 )}
               </div>
             )
@@ -192,113 +197,6 @@ const AdminLayout = ({ children }: { children: ReactNode }) => {
         <div className="flex-1">{children}</div>
       </div>
     </div>
-  )
-}
-
-const NavigationButton = ({
-  navigation,
-  isCurrentPath,
-}: {
-  navigation: Navigation
-  isCurrentPath: boolean
-}) => {
-  return (
-    <div className="flex cursor-pointer items-center justify-end space-x-[12px]">
-      <div
-        className={`inline-block h-[20px] w-[20px] rounded-full ${
-          isCurrentPath ? 'bg-white' : 'bg-abbey'
-        }`}
-      />
-      {navigation.children ? (
-        <button
-          className={`font-400 flex flex-1 items-center justify-between font-inter text-[14px] ${
-            isCurrentPath ? 'text-white' : 'text-santasgray'
-          }`}
-        >
-          <div>{navigation.title}</div>
-          <CaretRightIcon className="stroke-stormgray" />
-        </button>
-      ) : (
-        <Link href={navigation.pathname || '#'} passHref>
-          <div
-            className={`font-400 flex-1 font-inter text-[14px] ${
-              isCurrentPath ? 'text-white' : 'text-santasgray'
-            }`}
-          >
-            {navigation.title}
-          </div>
-        </Link>
-      )}
-    </div>
-  )
-}
-
-const ChildNavigationButtons = ({
-  navigations,
-  isCurrentPath,
-}: {
-  navigations: Array<Navigation>
-  isCurrentPath: boolean
-}) => {
-  return (
-    <div className="space-y-[16px] pl-[38px]">
-      {navigations.map((navigation, i) => {
-        return (
-          <div key={i} className="flex cursor-pointer items-center space-x-[12px]">
-            <div
-              className={`inline-block h-[6px] w-[6px] rounded-full  ${
-                isCurrentPath ? 'bg-white' : 'bg-abbey'
-              }`}
-            />
-            <Link href={navigation.pathname || '#'} passHref>
-              <div
-                className={`font-400 flex-1 font-inter text-[14px] ${
-                  isCurrentPath ? 'text-white' : 'text-santasgray'
-                }`}
-              >
-                {navigation.title}
-              </div>
-            </Link>
-          </div>
-        )
-      })}
-    </div>
-  )
-}
-
-const JobsStatusCountCard = ({ value, description }: { value: number; description: string }) => {
-  return (
-    <div className="flex h-[73px] flex-1 flex-col items-center justify-center rounded-[4px] bg-woodsmoke">
-      <div className="font-inter text-[18px] font-semibold text-white">{value}</div>
-      <div className="font-inter text-[12px] font-normal text-santasgray">{description}</div>
-    </div>
-  )
-}
-
-const FancyButton = ({
-  title,
-  subtitle,
-  onClick,
-}: {
-  title: string
-  subtitle: string
-  onClick: MouseEventHandler<HTMLButtonElement>
-}) => {
-  return (
-    <button
-      className="flex flex-1 items-center space-x-[16px] rounded-[4px] border border-solid border-athensgray bg-white px-[24px] py-[20px]"
-      onClick={onClick}
-    >
-      <div className="min-h-[40px] min-w-[40px] rounded-[4px] bg-iron" />
-      <div>
-        <div className="text-left font-inter text-[16px] font-semibold text-shark line-clamp-1">
-          {title}
-        </div>
-        <div className="text-left font-inter text-[12px] font-normal text-stormgray line-clamp-1">
-          {subtitle}
-        </div>
-      </div>
-    </button>
   )
 }
 
