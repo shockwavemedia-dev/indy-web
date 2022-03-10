@@ -10,26 +10,21 @@ import EmailIcon from '../../components/Common/Icons/Email.icon'
 import LockIcon from '../../components/Common/Icons/Lock.icon'
 import Link from '../../components/Common/Link.component'
 import TextInput from '../../components/Common/TextInput.component'
+import { SignInForm } from '../../interfaces/SignInForm.interface'
 import AuthLayout from '../../layouts/Auth.layout'
 import { NextPageWithLayout } from '../_app'
-
-interface SignInFormValues {
-  email: string
-  password: string
-  rememberMe: boolean
-}
 
 const Login: NextPageWithLayout = () => {
   const { replace } = useRouter()
 
-  const formInitialValues: SignInFormValues = {
+  const formInitialValues: SignInForm = {
     email: '',
     password: '',
     rememberMe: false,
   }
 
   const login = async (
-    signInFormValues: SignInFormValues,
+    signInFormValues: SignInForm,
     { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
   ) => {
     setSubmitting(true)
