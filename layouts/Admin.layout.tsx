@@ -6,7 +6,7 @@ import ChildNavigationButton from '../components/Admin/ChildNavigationButton.com
 import FancyButton from '../components/Admin/FancyButton.component'
 import JobsStatusCountCard from '../components/Admin/JobsStatusCountCard.component'
 import NavigationButton from '../components/Admin/NavigationButton.component'
-import NewEventModal from '../components/Admin/NewEventModal.component copy 2'
+import NewEventModal from '../components/Admin/NewEventModal.component'
 import NewProjectBriefModal from '../components/Admin/NewProjectBriefModal.component'
 import SupportRequestModal from '../components/Admin/SupportRequest.component'
 import BellIcon from '../components/Common/Icons/Bell.icon'
