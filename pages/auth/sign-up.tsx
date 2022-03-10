@@ -13,19 +13,11 @@ import LockIcon from '../../components/Common/Icons/Lock.icon'
 import UserIcon from '../../components/Common/Icons/User.icon'
 import Link from '../../components/Common/Link.component'
 import TextInput from '../../components/Common/TextInput.component'
+import { SignUpForm } from '../../interfaces/SignUpForm.interface'
 import AuthLayout from '../../layouts/Auth.layout'
 import useStore from '../../store/store'
 import { API_BASE_URL } from '../../utils/constants'
 import { NextPageWithLayout } from '../_app'
-
-interface SignUpFormValues {
-  fullName: string
-  companyName: string
-  email: string
-  password: string
-  passwordConfirmation: string
-  rememberMe: boolean
-}
 
 const SignUp: NextPageWithLayout = () => {
   const { replace } = useRouter()
@@ -36,7 +28,7 @@ const SignUp: NextPageWithLayout = () => {
     computePasswordStrength('')
   }, [])
 
-  const formInitialValues: SignUpFormValues = {
+  const formInitialValues: SignUpForm = {
     fullName: '',
     companyName: '',
     email: '',
@@ -46,7 +38,7 @@ const SignUp: NextPageWithLayout = () => {
   }
 
   const signUp = async (
-    signUpFormValues: SignUpFormValues,
+    signUpFormValues: SignUpForm,
     { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
   ) => {
     setSubmitting(true)

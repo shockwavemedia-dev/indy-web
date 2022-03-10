@@ -7,6 +7,7 @@ import FloppyDiskIcon from '../../components/Common/Icons/FloppyDisk.icon'
 import LockIcon from '../../components/Common/Icons/Lock.icon'
 import Link from '../../components/Common/Link.component'
 import TextInput from '../../components/Common/TextInput.component'
+import { CreateNewPasswordForm } from '../../interfaces/CreateNewPasswordForm.interface'
 import AuthLayout from '../../layouts/Auth.layout'
 import useStore from '../../store/store'
 import { NextPageWithLayout } from '../_app'
@@ -19,13 +20,18 @@ const CreateNewPassword: NextPageWithLayout = () => {
     computePasswordStrength('')
   }, [])
 
+  const formInitialValues: CreateNewPasswordForm = {
+    password: '',
+    passwordConfirm: '',
+  }
+
   return (
     <>
       <Head>
         <title>Daily Press - Create New Password</title>
       </Head>
       <Formik
-        initialValues={{ password: '', passwordConfirm: '' }}
+        initialValues={formInitialValues}
         onSubmit={() => {}}
         validate={({ password }) => computePasswordStrength(password)}
       >
@@ -46,7 +52,7 @@ const CreateNewPassword: NextPageWithLayout = () => {
                 <PasswordStrengthMeter strength={passwordStrength} />
               </div>
               <div className="mb-[18px] w-full">
-                <div className="word text-nevada select-none font-inter text-[10px] font-normal">
+                <div className="word select-none font-inter text-[10px] font-normal text-nevada">
                   Should be at least 8 symbols and contain one small and one big character,
                   <br />
                   special character and number

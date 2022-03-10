@@ -6,16 +6,21 @@ import CaretRightIcon from '../../components/Common/Icons/CaretRight.icon'
 import EmailIcon from '../../components/Common/Icons/Email.icon'
 import Link from '../../components/Common/Link.component'
 import TextInput from '../../components/Common/TextInput.component'
+import { ForgotPasswordForm } from '../../interfaces/ForgotPasswordForm.interface'
 import AuthLayout from '../../layouts/Auth.layout'
 import { NextPageWithLayout } from '../_app'
 
 const ForgotPassword: NextPageWithLayout = () => {
+  const formInitialValues: ForgotPasswordForm = {
+    email: '',
+  }
+
   return (
     <>
       <Head>
         <title>Daily Press - Forgot Password</title>
       </Head>
-      <Formik initialValues={{ email: '' }} onSubmit={() => {}}>
+      <Formik initialValues={formInitialValues} onSubmit={() => {}}>
         {({ isSubmitting }) => {
           return (
             <Form className="flex w-full flex-col items-center">
