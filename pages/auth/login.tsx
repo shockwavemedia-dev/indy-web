@@ -1,6 +1,5 @@
 import { Form, Formik } from 'formik'
-import { GetServerSideProps } from 'next'
-import { getSession, signIn } from 'next-auth/react'
+import { signIn } from 'next-auth/react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { ReactElement } from 'react'
@@ -22,6 +21,7 @@ interface SignInFormValues {
 
 const Login: NextPageWithLayout = () => {
   const { replace } = useRouter()
+
   const formInitialValues: SignInFormValues = {
     email: '',
     password: '',
@@ -104,25 +104,11 @@ Login.getLayout = (page: ReactElement) => {
       title="Welcome to Daily Press"
       subtitle="Please log in to your account and start the adventure"
       className="w-[588px]"
+      needsAuth
     >
       {page}
     </AuthLayout>
   )
-}
-
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  if (await getSession(context)) {
-    return {
-      redirect: {
-        permanent: false,
-        destination: '/admin/dashboard',
-      },
-    }
-  }
-
-  return {
-    props: {},
-  }
 }
 
 export default Login
