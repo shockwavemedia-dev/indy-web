@@ -27,11 +27,17 @@ module.exports = {
       santasgray: '#A0A2AD',
       abbey: '#484A54',
       stormgray: '#717583',
+      frenchgray: '#B8BAC2',
+      manatee: '#888B99',
+      wildsand: '#F5F5F5',
+      black: '#000000',
+      iron: '#CFD1D6',
+      athensgray: '#E7E8EB',
     },
     content: {
       checkbox: 'url("/icons/checkbox.svg")',
       'checkbox-checked': 'url("/icons/checkbox-checked.svg")',
     },
   },
-  plugins: [],
+  plugins: [require('@tailwindcss/line-clamp')],
 }
