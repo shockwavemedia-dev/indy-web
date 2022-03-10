@@ -5,7 +5,17 @@ module.exports = {
     './layouts/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
-    extend: {},
+    extend: {
+      gridTemplateRows: {
+        14: 'repeat(14, minmax(0, 1fr))',
+        18: 'repeat(18, minmax(0, 1fr))',
+      },
+      gridRow: {
+        'span-7': 'span 7 / span 7',
+        'span-9': 'span 9 / span 9',
+        'span-11': 'span 11 / span 11',
+      },
+    },
     fontFamily: {
       inter: ['Inter'],
     },
@@ -33,6 +43,7 @@ module.exports = {
       black: '#000000',
       iron: '#CFD1D6',
       athensgray: '#E7E8EB',
+      tuna: '#33353C',
     },
     content: {
       checkbox: 'url("/icons/checkbox.svg")',

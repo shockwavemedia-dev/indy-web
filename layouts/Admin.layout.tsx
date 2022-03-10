@@ -106,8 +106,8 @@ const AdminLayout = ({ children }: { children: ReactNode }) => {
           />
         </div>
         <div className="mb-[28px] flex space-x-[12px]">
-          <JobsStatCard description="Pending Jobs" value={12} />
-          <JobsStatCard description="Jobs To Review" value={4} />
+          <JobsStatusCountCard value={12} description="Pending Jobs" />
+          <JobsStatusCountCard value={4} description="Jobs To Review" />
         </div>
         <div className="flex flex-col space-y-[20px]">
           {navigations.map((navigation, i) => {
@@ -180,13 +180,13 @@ const AdminLayout = ({ children }: { children: ReactNode }) => {
           />
         </div>
         <hr className="mb-[20px] border-t-athensgray" />
-        <div>{children}</div>
+        <div className="flex-1">{children}</div>
       </div>
     </div>
   )
 }
 
-const JobsStatCard = ({ description, value }: { description: string; value: number }) => {
+const JobsStatusCountCard = ({ value, description }: { value: number; description: string }) => {
   return (
     <div className="flex h-[73px] flex-1 flex-col items-center justify-center rounded-[4px] bg-woodsmoke">
       <div className="font-inter text-[18px] font-semibold text-white">{value}</div>

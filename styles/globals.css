@@ -26,3 +26,7 @@ input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
   -webkit-box-shadow: 0 0 0 22px white inset !important;
 }
+
+*::-webkit-scrollbar {
+  display: none;
+}
