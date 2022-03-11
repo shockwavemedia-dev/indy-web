@@ -2,6 +2,7 @@ import { Form, Formik } from 'formik'
 import { MouseEventHandler } from 'react'
 import { NewEventForm } from '../../interfaces/NewEventForm.interface'
 import Button from '../Common/Button.component'
+import FileInput from '../Common/FileInput.component'
 import CalendarIcon from '../Common/Icons/Calendar.icon'
 import LightbulbIcon from '../Common/Icons/Lightbulb.icon'
 import PencilIcon from '../Common/Icons/Pencil.icon'
@@ -62,6 +63,9 @@ const NewEventModal = ({
                         placeholder="Enter Task Description"
                         name="taskDescription"
                       />
+                    </div>
+                    <div className="mb-[32px]">
+                      <FileInput label="Upload Assets" name="assets" />
                     </div>
                     <div className="flex space-x-[12px]">
                       <Button ariaLabel="Cancel" isLight>
