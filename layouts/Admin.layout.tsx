@@ -180,10 +180,10 @@ const AdminLayout = ({ children }: { children: ReactNode }) => {
               </div>
             </div>
             <div className="flex items-center">
-              <button className="mr-[24px]">
+              <button className="mr-[24px]" name="Search">
                 <MagnifyingGlassIcon />
               </button>
-              <button className="relative mr-[32px]">
+              <button className="relative mr-[32px]" name="Notifications">
                 <BellIcon />
                 <div className="absolute top-[-2px] right-[-2px] h-[14px] w-[14px] rounded-full border border-solid border-wildsand bg-shark" />
               </button>
