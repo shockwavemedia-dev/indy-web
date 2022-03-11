@@ -11,7 +11,7 @@ const Dashboard: NextPageWithLayout = () => {
       <Head>
         <title>Daily Press - Marketing Planning</title>
       </Head>
-      <div className="mx-auto grid h-[1080px] w-[1100px] grid-cols-6 grid-rows-14 gap-[20px]">
+      <div className="mx-auto grid h-full w-[1100px] grid-cols-6 grid-rows-14 gap-[20px]">
         <Card title="Marketing Plan Calendar" className="col-span-4 row-span-5">
           <div></div>
         </Card>

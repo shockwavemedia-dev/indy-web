@@ -26,7 +26,6 @@ module.exports = {
       emperor: '#545454',
       mineshaft: '#1F1F1F',
       ebonyclay: '#1D212B',
-      ebonyclay: '#8F8F8F',
       transparent: 'transparent',
       gallery: '#ECECEC',
       red: '#E40808',

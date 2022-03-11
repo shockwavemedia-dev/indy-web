@@ -20,7 +20,7 @@ const Modal = ({
         <button className="absolute top-[24px] right-[24px]" onClick={onClose}>
           <CrossMarkIcon />
         </button>
-        <div className="font-inter text-[20px] font-semibold text-tuna">{title}</div>
+        <div className="mb-[18px] font-inter text-[20px] font-semibold text-tuna">{title}</div>
         {children}
       </div>
     </>
