@@ -79,7 +79,7 @@ const Login: NextPageWithLayout = () => {
                   <CaretRightIcon className="stroke-white" />
                 </Button>
               </div>
-              <div className="flex select-none items-center space-x-[6px]">
+              <div className="flex items-center space-x-[6px]">
                 <div className="font-inter text-[14px] font-normal text-emperor">
                   {"Don't have an account?"}
                 </div>

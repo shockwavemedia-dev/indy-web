@@ -132,7 +132,7 @@ const AdminLayout = ({ children }: { children: ReactNode }) => {
       />
       <div className="flex min-h-screen bg-wildsand">
         <div className="flex min-w-[300px] flex-col bg-codgray px-[24px] pt-[30px]">
-          <div className="mb-[24px] select-none">
+          <div className="mb-[24px]">
             <Image
               draggable={false}
               src={DailyPressLogoLight}

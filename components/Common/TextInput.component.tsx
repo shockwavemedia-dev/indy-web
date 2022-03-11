@@ -25,13 +25,10 @@ const TextInput = ({
 
   return (
     <div className="flex w-full flex-col">
-      <label
-        className="text-mineshaft mb-[8px] select-none font-inter text-[12px] font-normal"
-        htmlFor={name}
-      >
+      <label className="mb-[8px] font-inter text-[12px] font-normal text-mineshaft" htmlFor={name}>
         {label}
       </label>
-      <div className="border-ebonyclay flex h-[46px] items-center overflow-hidden rounded-[4px] border border-solid border-opacity-10 pl-[10px]">
+      <div className="flex h-[46px] items-center overflow-hidden rounded-[4px] border border-solid border-ebonyclay border-opacity-10 pl-[10px]">
         <Icon />
         <Field
           {...{

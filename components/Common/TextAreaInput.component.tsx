@@ -14,10 +14,7 @@ const TextAreaInput = ({
 }) => {
   return (
     <div className="flex w-full flex-col">
-      <label
-        className="mb-[8px] select-none font-inter text-[12px] font-normal text-mineshaft"
-        htmlFor={name}
-      >
+      <label className="mb-[8px] font-inter text-[12px] font-normal text-mineshaft" htmlFor={name}>
         {label}
       </label>
       <div className="flex h-[140px] items-start overflow-hidden rounded-[4px] border border-solid border-ebonyclay border-opacity-10 pl-[10px]">

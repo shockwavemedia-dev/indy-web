@@ -52,7 +52,7 @@ const CreateNewPassword: NextPageWithLayout = () => {
                 <PasswordStrengthMeter strength={passwordStrength} />
               </div>
               <div className="mb-[18px] w-full">
-                <div className="word select-none font-inter text-[10px] font-normal text-nevada">
+                <div className="word font-inter text-[10px] font-normal text-nevada">
                   Should be at least 8 symbols and contain one small and one big character,
                   <br />
                   special character and number

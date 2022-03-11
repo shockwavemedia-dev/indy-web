@@ -14,7 +14,7 @@ const PasswordStrengthMeter = ({ strength }: { strength: number }) => {
   }
 
   return (
-    <div className="flex select-none items-center space-x-[12px]">
+    <div className="flex items-center space-x-[12px]">
       <div className="flex space-x-[8px]">
         {[...Array(5)].map((_, i) => {
           let color = 'bg-gallery'
