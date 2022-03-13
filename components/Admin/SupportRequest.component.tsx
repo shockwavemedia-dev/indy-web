@@ -8,7 +8,7 @@ import TextAreaInput from '../Common/TextAreaInput.component'
 import TextInput from '../Common/TextInput.component'
 import Modal from './Modal.component'
 
-const NewEventModal = ({
+const SupportRequestModal = ({
   isVisible,
   onClose,
 }: {
@@ -64,4 +64,4 @@ const NewEventModal = ({
   )
 }
 
-export default NewEventModal
+export default SupportRequestModal
