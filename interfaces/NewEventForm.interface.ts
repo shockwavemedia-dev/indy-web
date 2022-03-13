@@ -1,6 +1,6 @@
 export interface NewEventForm {
   title: string
-  service: undefined
+  service: string
   date: string
   taskDescription: string
   assets: undefined

@@ -19,7 +19,7 @@ const NewEventModal = ({
 }) => {
   const formInitialValues: NewEventForm = {
     title: '',
-    service: undefined,
+    service: '',
     date: '',
     taskDescription: '',
     assets: undefined,
