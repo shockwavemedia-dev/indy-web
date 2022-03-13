@@ -130,7 +130,7 @@ const AdminLayout = ({ children }: { children: ReactNode }) => {
         isVisible={isSupportRequestModalVisible}
         onClose={toggleSupportRequestModal}
       />
-      <div className="flex min-h-screen bg-wildsand">
+      <div className="flex min-h-screen">
         <div className="flex min-w-[300px] flex-col bg-codgray px-[24px] pt-[30px]">
           <div className="mb-[24px]">
             <Image
@@ -170,7 +170,7 @@ const AdminLayout = ({ children }: { children: ReactNode }) => {
             })}
           </div>
         </div>
-        <div className="flex flex-1 flex-col p-[24px]">
+        <div className="flex flex-1 flex-col bg-wildsand p-[24px]">
           <div className="mb-[13px] flex items-center justify-between">
             <div className="flex items-center space-x-[12px]">
               <div className="font-inter text-[12px] font-medium text-manatee">Admin Panel</div>
