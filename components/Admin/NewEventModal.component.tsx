@@ -68,7 +68,7 @@ const NewEventModal = ({
                       <FileInput label="Upload Assets" name="assets" />
                     </div>
                     <div className="flex space-x-[12px]">
-                      <Button ariaLabel="Cancel" isLight>
+                      <Button ariaLabel="Cancel" isLight onClick={onClose}>
                         Cancel
                       </Button>
                       <Button ariaLabel="Submit" type="submit" disabled={isSubmitting}>
