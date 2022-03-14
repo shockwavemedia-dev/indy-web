@@ -4,8 +4,8 @@ import { NewEventForm } from '../../interfaces/NewEventForm.interface'
 import Button from '../Common/Button.component'
 import FileInput from '../Common/FileInput.component'
 import CalendarIcon from '../Common/Icons/Calendar.icon'
-import LightbulbIcon from '../Common/Icons/Lightbulb.icon'
 import PencilIcon from '../Common/Icons/Pencil.icon'
+import Select from '../Common/Select.component'
 import TextAreaInput from '../Common/TextAreaInput.component'
 import TextInput from '../Common/TextInput.component'
 import Modal from './Modal.component'
@@ -43,11 +43,14 @@ const NewEventModal = ({
                       />
                     </div>
                     <div className="mb-[24px] flex space-x-[12px]">
-                      <TextInput
+                      <Select
                         label="Service"
-                        Icon={LightbulbIcon}
                         placeholder="Select Service"
                         name="service"
+                        options={[
+                          { label: 'Hehe', value: 'hehe' },
+                          { label: 'Haha', value: 'haha' },
+                        ]}
                       />
                       <TextInput
                         label="Date"
