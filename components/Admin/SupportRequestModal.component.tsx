@@ -35,6 +35,7 @@ const SupportRequestModal = ({
                         Icon={LightbulbIcon}
                         placeholder="Select Department"
                         name="department"
+                        disableAutoComplete
                       />
                     </div>
                     <div className="mb-[24px]">

@@ -53,6 +53,7 @@ const NewEventModal = ({
                         Icon={PencilIcon}
                         placeholder="Enter Title"
                         name="title"
+                        disableAutoComplete
                       />
                     </div>
                     <div className="mb-[24px] flex space-x-[12px]">
@@ -72,6 +73,7 @@ const NewEventModal = ({
                         Icon={CalendarIcon}
                         placeholder="Enter Date"
                         name="date"
+                        disableAutoComplete
                       />
                     </div>
                     <div className="mb-[24px]">

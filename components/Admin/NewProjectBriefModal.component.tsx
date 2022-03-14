@@ -40,12 +40,14 @@ const NewProjectBriefModal = ({
                         Icon={LightbulbIcon}
                         placeholder="Select Service"
                         name="service"
+                        disableAutoComplete
                       />
                       <TextInput
                         label="Date"
                         Icon={CalendarIcon}
                         placeholder="Enter Date"
                         name="date"
+                        disableAutoComplete
                       />
                     </div>
                     <div className="mb-[24px]">
@@ -54,6 +56,7 @@ const NewProjectBriefModal = ({
                         Icon={PencilIcon}
                         placeholder="Enter Brief Name"
                         name="briefName"
+                        disableAutoComplete
                       />
                     </div>
                     <div className="mb-[24px]">

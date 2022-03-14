@@ -40,7 +40,7 @@ const TextInput = ({
           id={name}
           spellCheck={false}
           placeholder={placeholder}
-          autoComplete={disableAutoComplete ? (type === 'text' ? 'none' : 'new-password') : 'on'}
+          autoComplete={disableAutoComplete ? (type === 'text' ? 'off' : 'new-password') : 'on'}
         />
         {type === 'password' && (
           <button
