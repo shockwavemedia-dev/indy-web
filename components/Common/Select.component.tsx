@@ -1,10 +1,11 @@
-import { useState } from 'react'
+import { ComponentType, useState } from 'react'
 import ReactSelect, {
-  components,
+  components as Components,
   DropdownIndicatorProps,
   Options,
   SingleValue,
   StylesConfig,
+  ValueContainerProps,
 } from 'react-select'
 import { Option } from '../../interfaces/Option.interface'
 import CaretDownIcon from './Icons/CaretDown.icon'
@@ -12,11 +13,13 @@ import CaretDownIcon from './Icons/CaretDown.icon'
 const Select = ({
   label,
   name,
-  options,
+  Icon,
   placeholder,
+  options,
 }: {
   label: string
   name: string
+  Icon: ComponentType
   placeholder: string
   options: Options<Option>
 }) => {
@@ -37,32 +40,59 @@ const Select = ({
         ...base,
         font: '400 14px Inter',
         color: '#717583',
+        margin: '0 0 0 8px',
       }
     },
     control: (base) => {
       return {
         ...base,
-        borderColor: '#1D212B1A',
-        ':hover': {
-          borderColor: '#1D212B1A',
-        },
         height: '100%',
         boxShadow: 'none',
+        border: 'none',
       }
     },
     container: (base) => {
       return {
         ...base,
         height: '100%',
+        border: '1px solid #1D212B1A',
+        borderRadius: '4px',
+      }
+    },
+    valueContainer: (base) => {
+      return {
+        ...base,
+        display: 'flex',
+      }
+    },
+    input: (base) => {
+      return {
+        ...base,
+        margin: '0 0 0 8px',
+      }
+    },
+    singleValue: (base) => {
+      return {
+        ...base,
+        margin: '0 0 0 8px',
       }
     },
   }
 
   const DropdownIndicator = (props: DropdownIndicatorProps<Option, false>) => {
     return (
-      <components.DropdownIndicator {...props}>
+      <Components.DropdownIndicator {...props}>
         <CaretDownIcon className={`stroke-black ${props.selectProps.menuIsOpen && 'rotate-180'}`} />
-      </components.DropdownIndicator>
+      </Components.DropdownIndicator>
+    )
+  }
+
+  const ValueContainer = ({ children, ...props }: ValueContainerProps<Option, false>) => {
+    return (
+      <Components.ValueContainer {...props}>
+        <Icon />
+        <div className="grid items-center">{children}</div>
+      </Components.ValueContainer>
     )
   }
 
@@ -77,7 +107,7 @@ const Select = ({
         value={selectedOption}
         onChange={handleOnChange}
         options={options}
-        components={{ DropdownIndicator }}
+        components={{ DropdownIndicator, ValueContainer }}
         inputId={name}
       />
     </div>
