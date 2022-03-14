@@ -72,12 +72,15 @@ const Select = ({
       return {
         ...base,
         margin: '0 0 0 8px',
+        font: '400 14px Inter',
       }
     },
     singleValue: (base) => {
       return {
         ...base,
         margin: '0 0 0 8px',
+        color: '#000000',
+        font: '400 14px Inter',
       }
     },
   }
