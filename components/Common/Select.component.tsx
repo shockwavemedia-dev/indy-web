@@ -16,17 +16,20 @@ const Select = ({
   Icon,
   placeholder,
   options,
+  setFieldValue,
 }: {
   label: string
   name: string
   Icon: ComponentType
   placeholder: string
   options: Options<Option>
+  setFieldValue: (field: string, value: any, shouldValidate?: boolean) => void
 }) => {
   const [selectedOption, setSelectedOption] = useState<Option | null>(null)
 
   const handleOnChange = (option: SingleValue<Option>) => {
     setSelectedOption(option)
+    setFieldValue(name, option?.value)
   }
 
   const style: StylesConfig<Option, false> = {

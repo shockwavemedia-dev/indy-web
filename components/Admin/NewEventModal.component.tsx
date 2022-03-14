@@ -30,8 +30,20 @@ const NewEventModal = ({
     <>
       {isVisible && (
         <Modal title="New Event" onClose={onClose}>
-          <Formik initialValues={formInitialValues} onSubmit={() => {}}>
-            {({ isSubmitting }) => {
+          <Formik
+            initialValues={formInitialValues}
+            onSubmit={(
+              { service },
+              { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
+            ) => {
+              setSubmitting(true)
+
+              alert(JSON.stringify(service))
+
+              setSubmitting(false)
+            }}
+          >
+            {({ isSubmitting, setFieldValue }) => {
               return (
                 <Form>
                   <div className="flex w-[560px] flex-col">
@@ -53,6 +65,7 @@ const NewEventModal = ({
                           { label: 'Hehe', value: 'hehe' },
                           { label: 'Haha', value: 'haha' },
                         ]}
+                        setFieldValue={setFieldValue}
                       />
                       <TextInput
                         label="Date"
