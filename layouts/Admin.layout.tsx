@@ -131,7 +131,7 @@ const AdminLayout = ({ children }: { children: ReactNode }) => {
         onClose={toggleSupportRequestModal}
       />
       <div className="flex min-h-screen">
-        <div className="flex min-w-[300px] flex-col bg-codgray px-[24px] pt-[30px]">
+        <div className="flex min-w-[300px] flex-col bg-mineshaft px-[24px] pt-[30px]">
           <div className="mb-[24px]">
             <Image
               draggable={false}

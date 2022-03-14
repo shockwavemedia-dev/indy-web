@@ -24,7 +24,7 @@ const TextAreaInput = ({
         <Field
           {...{
             className:
-              'ml-[8px] border-none py-[14px] outline-none resize-none w-full h-full font-normal text-[14px] font-inter pr-[10px] placeholder-philippinegrey',
+              'ml-[8px] border-none py-[14px] outline-none resize-none w-full h-full font-normal text-[14px] font-inter pr-[10px] placeholder-stormgray',
           }}
           component="textarea"
           name={name}

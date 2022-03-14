@@ -33,7 +33,7 @@ const TextInput = ({
         <Field
           {...{
             className:
-              'ml-[8px] w-full h-full font-normal text-[14px] font-inter pr-[10px] placeholder-philippinegrey',
+              'ml-[8px] w-full h-full font-normal text-[14px] font-inter pr-[10px] placeholder-stormgray',
           }}
           type={isShowPassword ? 'text' : type}
           name={name}

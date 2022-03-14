@@ -31,7 +31,6 @@ module.exports = {
       red: '#E40808',
       schoolbusyellow: '#FFD800',
       lapalma: '#2CB117',
-      codgray: '#1F1F1F',
       woodsmoke: '#0F0F11',
       santasgray: '#A0A2AD',
       abbey: '#484A54',
