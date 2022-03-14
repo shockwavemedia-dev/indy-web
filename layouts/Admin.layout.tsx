@@ -8,7 +8,7 @@ import JobsStatusCountCard from '../components/Admin/JobsStatusCountCard.compone
 import NavigationButton from '../components/Admin/NavigationButton.component'
 import NewEventModal from '../components/Admin/NewEventModal.component'
 import NewProjectBriefModal from '../components/Admin/NewProjectBriefModal.component'
-import SupportRequestModal from '../components/Admin/SupportRequest.component'
+import SupportRequestModal from '../components/Admin/SupportRequestModal.component'
 import BellIcon from '../components/Common/Icons/Bell.icon'
 import CaretDownIcon from '../components/Common/Icons/CaretDown.icon'
 import CaretRightIcon from '../components/Common/Icons/CaretRight.icon'
