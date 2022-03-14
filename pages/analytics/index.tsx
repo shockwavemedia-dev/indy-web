@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import { ReactElement } from 'react'
-import AdminLayout from '../../../layouts/Admin.layout'
-import { NextPageWithLayout } from '../../_app'
+import AdminLayout from '../../layouts/Admin.layout'
+import { NextPageWithLayout } from '../_app'
 
 const Dashboard: NextPageWithLayout = () => {
   return (

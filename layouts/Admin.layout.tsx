@@ -20,7 +20,7 @@ import DummyAvatar from '../public/images/dummy-avatar.png'
 const navigations: Array<Navigation> = [
   {
     title: 'Dashboard',
-    pathname: '/admin/dashboard',
+    pathname: '/dashboard',
   },
   {
     title: 'Event Manager',
@@ -33,7 +33,7 @@ const navigations: Array<Navigation> = [
   },
   {
     title: 'Marketing Planning',
-    pathname: '/admin/marketing-planning',
+    pathname: '/marketing-planning',
   },
   {
     title: 'My Files',
@@ -72,7 +72,7 @@ const navigations: Array<Navigation> = [
   },
   {
     title: 'Analytics',
-    pathname: '/admin/analytics',
+    pathname: '/analytics',
     children: [
       {
         title: 'App',

@@ -11,7 +11,7 @@ const Home: NextPageWithLayout = () => {
   }
 
   if (status === 'authenticated') {
-    replace('/admin/dashboard')
+    replace('/dashboard')
   }
 
   return null

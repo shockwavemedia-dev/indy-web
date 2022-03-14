@@ -26,7 +26,7 @@ const AuthLayout = ({
     }
 
     if (status === 'authenticated') {
-      replace('/admin/dashboard')
+      replace('/dashboard')
       return null
     }
   }

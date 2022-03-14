@@ -86,7 +86,7 @@ const SignUp: NextPageWithLayout = () => {
       })
 
       if (!res?.error && res?.status === 200 && res.ok) {
-        replace('/admin/dashboard')
+        replace('/dashboard')
       }
     }
 
