@@ -11,6 +11,7 @@ declare module 'next-auth' {
 
   interface User {
     accessToken: string
+    accessTokenTtl: number
     user: CustomUser
   }
 }
@@ -18,6 +19,7 @@ declare module 'next-auth' {
 declare module 'next-auth/jwt' {
   interface JWT {
     accessToken: string
+    accessTokenTtl: number
     user: CustomUser
   }
 }

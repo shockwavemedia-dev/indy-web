@@ -1,6 +1,7 @@
 import camelcaseKeys from 'camelcase-keys'
 import NextAuth from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
+import { Authentication } from '../../../interfaces/Authentication.interface'
 import { API_BASE_URL } from '../../../utils/constants'
 
 const nextAuth = NextAuth({
@@ -22,12 +23,13 @@ const nextAuth = NextAuth({
 
         let { data } = await res.json()
 
-        data = camelcaseKeys(data, { deep: true })
+        const authentication: Authentication = camelcaseKeys(data, { deep: true })
 
-        if (data.accessToken) {
+        if (authentication.accessToken) {
           return {
-            user: data.user,
-            accessToken: data.accessToken,
+            user: authentication.user,
+            accessToken: authentication.accessToken,
+            accessTokenTtl: authentication.expiresIn,
           }
         }
 
@@ -39,6 +41,7 @@ const nextAuth = NextAuth({
     async jwt({ token, user }) {
       if (user) {
         token.accessToken = user.accessToken
+        token.accessTokenTtl = user.accessTokenTtl
         token.user = user.user
       }
 
