@@ -22,7 +22,7 @@ const nextAuth = NextAuth({
 
         let { data } = await res.json()
 
-        data = camelcaseKeys(data)
+        data = camelcaseKeys(data, { deep: true })
 
         if (data.accessToken) {
           return {
