@@ -1,3 +1,4 @@
+import camelcaseKeys from 'camelcase-keys'
 import NextAuth from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import { API_BASE_URL } from '../../../utils/constants'
@@ -19,7 +20,9 @@ const nextAuth = NextAuth({
           }),
         })
 
-        const { data } = await res.json()
+        let { data } = await res.json()
+
+        data = camelcaseKeys(data)
 
         if (data.accessToken) {
           return {
