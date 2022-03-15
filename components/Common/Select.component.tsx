@@ -16,13 +16,15 @@ const Select = ({
   Icon,
   placeholder,
   options,
+  isDisabled = false,
   setFieldValue,
 }: {
   label: string
   name: string
   Icon: ComponentType
   placeholder: string
-  options: Options<Option>
+  options: Options<Option> | undefined
+  isDisabled: boolean
   setFieldValue: (field: string, value: any, shouldValidate?: boolean) => void
 }) => {
   const [selectedOption, setSelectedOption] = useState<Option | null>(null)
@@ -83,6 +85,13 @@ const Select = ({
         font: '400 14px Inter',
       }
     },
+    option: (base) => {
+      return {
+        ...base,
+        color: '#000000',
+        font: '400 14px Inter',
+      }
+    },
   }
 
   const DropdownIndicator = (props: DropdownIndicatorProps<Option, false>) => {
@@ -115,6 +124,7 @@ const Select = ({
         options={options}
         components={{ DropdownIndicator, ValueContainer }}
         inputId={name}
+        isDisabled={isDisabled}
       />
     </div>
   )
