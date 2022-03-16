@@ -33,10 +33,7 @@ const TextInput = ({
           <Icon />
         </label>
         <Field
-          {...{
-            className:
-              'w-full h-full font-normal text-[14px] font-inter pr-[10px] placeholder-stormgray',
-          }}
+          className="h-full w-full pr-[10px] font-inter text-[14px] font-normal placeholder-stormgray"
           type={isShowPassword ? 'text' : type}
           name={name}
           id={name}

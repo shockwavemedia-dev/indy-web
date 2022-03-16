@@ -1,3 +1,4 @@
+import { Field } from 'formik'
 import { DragEvent, useRef, useState } from 'react'
 
 const FileInput = ({ label, name }: { label: string; name: string }) => {
@@ -53,7 +54,7 @@ const FileInput = ({ label, name }: { label: string; name: string }) => {
           </div>
         </div>
       </div>
-      <input className="hidden" type="file" name={name} id={name} multiple ref={fileInputRef} />
+      <Field className="hidden" type="file" name={name} id={name} multiple ref={fileInputRef} />
     </div>
   )
 }

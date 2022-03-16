@@ -22,10 +22,7 @@ const TextAreaInput = ({
           <Icon />
         </label>
         <Field
-          {...{
-            className:
-              'border-none py-[14px] outline-none resize-none w-full h-full font-normal text-[14px] font-inter pr-[10px] placeholder-stormgray',
-          }}
+          className="h-full w-full resize-none border-none py-[14px] pr-[10px] font-inter text-[14px] font-normal placeholder-stormgray outline-none"
           component="textarea"
           name={name}
           id={name}
