@@ -73,20 +73,20 @@ const navigations: Array<Navigation> = [
   {
     title: 'Analytics',
     pathname: '/analytics',
-    children: [
-      {
-        title: 'App',
-      },
-      {
-        title: 'Website',
-      },
-      {
-        title: 'ClevaQ',
-      },
-      {
-        title: 'Social Media Ads',
-      },
-    ],
+    // children: [
+    //   {
+    //     title: 'App',
+    //   },
+    //   {
+    //     title: 'Website',
+    //   },
+    //   {
+    //     title: 'ClevaQ',
+    //   },
+    //   {
+    //     title: 'Social Media Ads',
+    //   },
+    // ],
   },
 ]
 
