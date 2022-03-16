@@ -17,14 +17,14 @@ const TextAreaInput = ({
       <label className="mb-[8px] font-inter text-[12px] font-normal text-mineshaft" htmlFor={name}>
         {label}
       </label>
-      <div className="flex h-[140px] items-start overflow-hidden rounded-[4px] border border-solid border-ebonyclay border-opacity-10 pl-[10px]">
-        <div className="mt-[14px]">
+      <div className="flex h-[140px] items-start overflow-hidden rounded-[4px] border border-solid border-ebonyclay border-opacity-10">
+        <label htmlFor={name} className="h-full pt-[14px] pl-[10px] pr-[8px]">
           <Icon />
-        </div>
+        </label>
         <Field
           {...{
             className:
-              'ml-[8px] border-none py-[14px] outline-none resize-none w-full h-full font-normal text-[14px] font-inter pr-[10px] placeholder-stormgray',
+              'border-none py-[14px] outline-none resize-none w-full h-full font-normal text-[14px] font-inter pr-[10px] placeholder-stormgray',
           }}
           component="textarea"
           name={name}

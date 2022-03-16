@@ -28,12 +28,14 @@ const TextInput = ({
       <label className="mb-[8px] font-inter text-[12px] font-normal text-mineshaft" htmlFor={name}>
         {label}
       </label>
-      <div className="flex h-[46px] items-center overflow-hidden rounded-[4px] border border-solid border-ebonyclay border-opacity-10 pl-[10px]">
-        <Icon />
+      <div className="flex h-[46px] items-center overflow-hidden rounded-[4px] border border-solid border-ebonyclay border-opacity-10">
+        <label className="flex h-full items-center pl-[10px] pr-[8px]" htmlFor={name}>
+          <Icon />
+        </label>
         <Field
           {...{
             className:
-              'ml-[8px] w-full h-full font-normal text-[14px] font-inter pr-[10px] placeholder-stormgray',
+              'w-full h-full font-normal text-[14px] font-inter pr-[10px] placeholder-stormgray',
           }}
           type={isShowPassword ? 'text' : type}
           name={name}
