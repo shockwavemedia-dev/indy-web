@@ -8,7 +8,7 @@ import Link from '../../components/Common/Link.component'
 import TextInput from '../../components/Common/TextInput.component'
 import { ForgotPasswordForm } from '../../interfaces/ForgotPasswordForm.interface'
 import AuthLayout from '../../layouts/Auth.layout'
-import { NextPageWithLayout } from '../_app'
+import { NextPageWithLayout } from '../../types/NextPageWithLayout.type'
 
 const ForgotPassword: NextPageWithLayout = () => {
   const formInitialValues: ForgotPasswordForm = {

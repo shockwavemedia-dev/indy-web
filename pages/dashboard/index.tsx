@@ -3,7 +3,7 @@ import { ReactElement } from 'react'
 import Card from '../../components/Admin/Card.component'
 import CountCard from '../../components/Admin/CountCard.component'
 import AdminLayout from '../../layouts/Admin.layout'
-import { NextPageWithLayout } from '../_app'
+import { NextPageWithLayout } from '../../types/NextPageWithLayout.type'
 
 const Dashboard: NextPageWithLayout = () => {
   return (

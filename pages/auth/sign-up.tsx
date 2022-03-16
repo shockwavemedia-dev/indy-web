@@ -16,8 +16,8 @@ import TextInput from '../../components/Common/TextInput.component'
 import { SignUpForm } from '../../interfaces/SignUpForm.interface'
 import AuthLayout from '../../layouts/Auth.layout'
 import useStore from '../../store/store'
+import { NextPageWithLayout } from '../../types/NextPageWithLayout.type'
 import { API_BASE_URL } from '../../utils/constants'
-import { NextPageWithLayout } from '../_app'
 
 const SignUp: NextPageWithLayout = () => {
   const { replace } = useRouter()

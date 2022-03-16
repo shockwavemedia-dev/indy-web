@@ -12,7 +12,7 @@ import Link from '../../components/Common/Link.component'
 import TextInput from '../../components/Common/TextInput.component'
 import { SignInForm } from '../../interfaces/SignInForm.interface'
 import AuthLayout from '../../layouts/Auth.layout'
-import { NextPageWithLayout } from '../_app'
+import { NextPageWithLayout } from '../../types/NextPageWithLayout.type'
 
 const Login: NextPageWithLayout = () => {
   const { replace } = useRouter()

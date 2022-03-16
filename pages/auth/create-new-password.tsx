@@ -10,7 +10,7 @@ import TextInput from '../../components/Common/TextInput.component'
 import { CreateNewPasswordForm } from '../../interfaces/CreateNewPasswordForm.interface'
 import AuthLayout from '../../layouts/Auth.layout'
 import useStore from '../../store/store'
-import { NextPageWithLayout } from '../_app'
+import { NextPageWithLayout } from '../../types/NextPageWithLayout.type'
 
 const CreateNewPassword: NextPageWithLayout = () => {
   const passwordStrength = useStore(({ strength }) => strength)

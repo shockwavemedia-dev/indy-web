@@ -1,17 +1,8 @@
-import { NextPage } from 'next'
 import { SessionProvider } from 'next-auth/react'
-import type { AppProps } from 'next/app'
-import React, { ReactElement, ReactNode } from 'react'
+import React from 'react'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import '../styles/globals.css'
-
-export type NextPageWithLayout = NextPage & {
-  getLayout?: (page: ReactElement) => ReactNode
-}
-
-type AppPropsWithLayout = AppProps & {
-  Component: NextPageWithLayout
-}
+import { AppPropsWithLayout } from '../types/AppPropsWithLayout.type'
 
 const queryClient = new QueryClient()
 
