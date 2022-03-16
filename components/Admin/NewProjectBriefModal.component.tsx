@@ -30,7 +30,7 @@ const NewProjectBriefModal = ({
       {isVisible && (
         <Modal title="New Project Brief" onClose={onClose}>
           <Formik initialValues={formInitialValues} onSubmit={() => {}}>
-            {({ isSubmitting }) => {
+            {({ isSubmitting, setFieldValue }) => {
               return (
                 <Form>
                   <div className="flex w-[560px] flex-col">
@@ -68,7 +68,11 @@ const NewProjectBriefModal = ({
                       />
                     </div>
                     <div className="mb-[32px]">
-                      <FileInput label="Upload Assets" name="assets" />
+                      <FileInput
+                        label="Upload Assets"
+                        name="assets"
+                        setFieldValue={setFieldValue}
+                      />
                     </div>
                     <div className="flex space-x-[12px]">
                       <Button ariaLabel="Cancel" isLight onClick={onClose}>
