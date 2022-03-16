@@ -1,5 +1,6 @@
 import { Form, Formik } from 'formik'
 import { MouseEventHandler } from 'react'
+import snakecaseKeys from 'snakecase-keys'
 import { NewEventForm } from '../../interfaces/NewEventForm.interface'
 import Button from '../Common/Button.component'
 import FileInput from '../Common/FileInput.component'
@@ -22,7 +23,7 @@ const NewEventModal = ({
     service: [],
     date: '',
     taskDescription: '',
-    assets: undefined,
+    assets: [],
   }
 
   return (
@@ -33,11 +34,11 @@ const NewEventModal = ({
             initialValues={formInitialValues}
             onSubmit={(values, { setSubmitting }) => {
               setSubmitting(true)
-              alert(JSON.stringify(values))
+              console.log(snakecaseKeys(values, { deep: true }))
               setSubmitting(false)
             }}
           >
-            {({ isSubmitting, setFieldValue, values }) => {
+            {({ isSubmitting, setFieldValue, values: { service } }) => {
               return (
                 <Form>
                   <div className="flex w-[560px] flex-col">
@@ -51,10 +52,7 @@ const NewEventModal = ({
                       />
                     </div>
                     <div className="mb-[24px] flex space-x-[12px]">
-                      <SelectService
-                        selectedServices={values.service}
-                        setFieldValue={setFieldValue}
-                      />
+                      <SelectService selectedServices={service} setFieldValue={setFieldValue} />
                       <TextInput
                         label="Date"
                         Icon={CalendarIcon}
@@ -72,7 +70,11 @@ const NewEventModal = ({
                       />
                     </div>
                     <div className="mb-[32px]">
-                      <FileInput label="Upload Assets" name="assets" />
+                      <FileInput
+                        label="Upload Assets"
+                        name="assets"
+                        setFieldValue={setFieldValue}
+                      />
                     </div>
                     <div className="flex space-x-[12px]">
                       <Button ariaLabel="Cancel" isLight onClick={onClose}>
