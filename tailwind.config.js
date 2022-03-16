@@ -16,6 +16,9 @@ module.exports = {
         'span-11': 'span 11 / span 11',
       },
     },
+    boxShadow: {
+      'react-select': '0 0 0 1px #0000001a, 0 4px 11px #0000001a',
+    },
     fontFamily: {
       inter: ['Inter'],
     },
@@ -42,10 +45,7 @@ module.exports = {
       iron: '#CFD1D6',
       athensgray: '#E7E8EB',
       tuna: '#33353C',
-    },
-    content: {
-      checkbox: 'url("/icons/checkbox.svg")',
-      'checkbox-checked': 'url("/icons/checkbox-checked.svg")',
+      pattensblue: '#DEEBFF',
     },
   },
   plugins: [require('@tailwindcss/line-clamp')],
