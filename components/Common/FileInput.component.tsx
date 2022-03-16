@@ -42,6 +42,7 @@ const FileInput = ({ label, name }: { label: string; name: string }) => {
               className=" font-medium text-stormgray underline underline-offset-1"
               name="Browse Assets"
               onClick={handleFileBrowsing}
+              type="button"
             >
               browse it
             </button>
