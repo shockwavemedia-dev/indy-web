@@ -1,9 +1,8 @@
-import camelcaseKeys from 'camelcase-keys'
+import axios from 'axios'
 import { useSession } from 'next-auth/react'
 import { useState } from 'react'
 import { useQuery } from 'react-query'
 import { Service } from '../../interfaces/Service.interface'
-import { API_BASE_URL } from '../../utils/constants'
 import CaretDownIcon from '../Common/Icons/CaretDown.icon'
 import CheckIcon from '../Common/Icons/Check.icon'
 import LightbulbIcon from '../Common/Icons/Lightbulb.icon'
@@ -18,19 +17,16 @@ const SelectService = ({
   const [isServicesVisible, setServicesVisible] = useState(false)
   const { data: session } = useSession()
   const { data: services, isLoading } = useQuery('services', async () => {
-    const res = await fetch(
-      `${API_BASE_URL}/v1/clients/${session?.user.userType.clientId}/services`,
+    const { data } = await axios.get<Array<Service>>(
+      `/v1/clients/${session?.user.userType.clientId}/services`,
       {
-        method: 'GET',
         headers: {
           authorization: `Bearer ${session?.accessToken}`,
         },
       }
     )
 
-    const { data } = await res.json()
-
-    return camelcaseKeys(data, { deep: true }) as Array<Service>
+    return data
   })
 
   const toggleServices = () => {

@@ -1,8 +1,7 @@
-import camelcaseKeys from 'camelcase-keys'
+import axios from 'axios'
 import NextAuth from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import { Authentication } from '../../../interfaces/Authentication.interface'
-import { API_BASE_URL } from '../../../utils/constants'
 
 const nextAuth = NextAuth({
   providers: [
@@ -13,23 +12,18 @@ const nextAuth = NextAuth({
         password: { type: 'password' },
       },
       async authorize(credentials) {
-        const res = await fetch(`${API_BASE_URL}/authenticate`, {
-          method: 'POST',
-          body: JSON.stringify({
-            email: credentials?.email,
-            password: credentials?.password,
-          }),
+        const {
+          data: { accessToken, user, expiresIn },
+        } = await axios.post<Authentication>('/authenticate', {
+          email: credentials?.email,
+          password: credentials?.password,
         })
 
-        let { data } = await res.json()
-
-        const authentication: Authentication = camelcaseKeys(data, { deep: true })
-
-        if (authentication.accessToken) {
+        if (accessToken) {
           return {
-            user: authentication.user,
-            accessToken: authentication.accessToken,
-            accessTokenTtl: authentication.expiresIn,
+            user: user,
+            accessToken: accessToken,
+            accessTokenTtl: expiresIn,
           }
         }
 

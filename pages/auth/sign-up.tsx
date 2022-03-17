@@ -1,3 +1,4 @@
+import axios from 'axios'
 import { ErrorMessage, Form, Formik } from 'formik'
 import { signIn } from 'next-auth/react'
 import Head from 'next/head'
@@ -13,11 +14,11 @@ import LockIcon from '../../components/Common/Icons/Lock.icon'
 import UserIcon from '../../components/Common/Icons/User.icon'
 import Link from '../../components/Common/Link.component'
 import TextInput from '../../components/Common/TextInput.component'
+import { Authentication } from '../../interfaces/Authentication.interface'
 import { SignUpForm } from '../../interfaces/SignUpForm.interface'
 import AuthLayout from '../../layouts/Auth.layout'
 import useStore from '../../store/store'
 import { NextPageWithLayout } from '../../types/NextPageWithLayout.type'
-import { API_BASE_URL } from '../../utils/constants'
 
 const SignUp: NextPageWithLayout = () => {
   const { replace } = useRouter()
@@ -44,39 +45,35 @@ const SignUp: NextPageWithLayout = () => {
     setSubmitting(true)
     // Temp Start
     // Just here to make sign up work because it needs access token
-    const authRes = await fetch(`${API_BASE_URL}/authenticate`, {
-      method: 'POST',
-      body: JSON.stringify({
-        email: 'superadmin@dailypress.com',
-        password: 'letmein',
-      }),
-    })
     const {
-      data: { access_token: accessToken },
-    } = await authRes.json()
+      data: { accessToken },
+    } = await axios.post<Authentication>('/authenticate', {
+      email: 'superadmin@dailypress.com',
+      password: 'letmein',
+    })
     // Temp End
 
-    const res = await fetch(`${API_BASE_URL}/v1/users/client`, {
-      method: 'POST',
-      headers: {
-        authorization: `Bearer ${accessToken}`,
-      },
-      body: JSON.stringify({
+    const { data } = await axios.post(
+      '/v1/users/client',
+      {
         email: signUpFormValues.email,
         password: signUpFormValues.password,
-        birth_date: '1993/02/02',
-        password_confirmation: signUpFormValues.passwordConfirmation,
-        contact_number: '0906 345 6123',
-        first_name: 'Jake',
-        last_name: 'Havakian',
-        middle_name: 'Balibagtae',
+        birthDate: '1993/02/02',
+        passwordConfirmation: signUpFormValues.passwordConfirmation,
+        contactNumber: '0906 345 6123',
+        firstName: 'Jake',
+        lastName: 'Havakian',
+        middleName: 'Something',
         gender: 'Male',
         role: 'marketing',
-        client_id: 1,
-      }),
-    })
-
-    const { data } = await res.json()
+        clientId: 6,
+      },
+      {
+        headers: {
+          authorization: `Bearer ${accessToken}`,
+        },
+      }
+    )
 
     if (data) {
       const res = await signIn<'credentials'>('credentials', {
