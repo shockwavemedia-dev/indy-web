@@ -22,7 +22,7 @@ import { NextPageWithLayout } from '../../types/NextPageWithLayout.type'
 
 const SignUp: NextPageWithLayout = () => {
   const { replace } = useRouter()
-  const passwordStrength = useStore(({ strength }) => strength)
+  const passwordStrength = useStore(({ passwordStrength }) => passwordStrength)
   const computePasswordStrength = useStore(({ computePasswordStrength }) => computePasswordStrength)
 
   useEffect(() => {

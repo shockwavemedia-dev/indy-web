@@ -2,37 +2,37 @@ import { SetState } from 'zustand'
 import { State } from './store'
 
 export interface PasswordStrengthSlice {
-  strength: number
+  passwordStrength: number
   computePasswordStrength: (password: string) => void
 }
 
 const createPasswordStrengthSlice = (set: SetState<State>) => {
   return {
-    strength: 0,
-    computePasswordStrength(password: string) {
-      let computedStrength = 0
+    passwordStrength: 0,
+    computePasswordStrength: (password: string) => {
+      let computedPasswordStrength = 0
 
       if (password.length > 7) {
-        computedStrength++
+        computedPasswordStrength++
       }
 
       if (password.match(/[a-z]/)) {
-        computedStrength++
+        computedPasswordStrength++
       }
 
       if (password.match(/[A-Z]/)) {
-        computedStrength++
+        computedPasswordStrength++
       }
 
       if (password.match(/[\s`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/)) {
-        computedStrength++
+        computedPasswordStrength++
       }
 
       if (password.match(/[0-9]/)) {
-        computedStrength++
+        computedPasswordStrength++
       }
 
-      set(() => ({ strength: computedStrength }))
+      set(() => ({ passwordStrength: computedPasswordStrength }))
     },
   }
 }

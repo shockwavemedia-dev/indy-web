@@ -13,7 +13,7 @@ import useStore from '../../store/store'
 import { NextPageWithLayout } from '../../types/NextPageWithLayout.type'
 
 const CreateNewPassword: NextPageWithLayout = () => {
-  const passwordStrength = useStore(({ strength }) => strength)
+  const passwordStrength = useStore(({ passwordStrength }) => passwordStrength)
   const computePasswordStrength = useStore(({ computePasswordStrength }) => computePasswordStrength)
 
   useEffect(() => {
