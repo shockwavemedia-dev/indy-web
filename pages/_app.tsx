@@ -9,6 +9,7 @@ import { AppPropsWithLayout } from '../types/AppPropsWithLayout.type'
 import { API_BASE_URL } from '../utils/constants'
 
 axios.defaults.baseURL = API_BASE_URL
+
 axios.interceptors.request.use(
   (config) => {
     if (config.data) {
@@ -21,6 +22,7 @@ axios.interceptors.request.use(
     return Promise.reject(error)
   }
 )
+
 axios.interceptors.response.use(
   (response) => {
     if (response.data) {

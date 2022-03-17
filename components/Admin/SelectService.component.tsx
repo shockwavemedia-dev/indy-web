@@ -21,7 +21,7 @@ const SelectService = ({
       `/v1/clients/${session?.user.userType.clientId}/services`,
       {
         headers: {
-          authorization: `Bearer ${session?.accessToken}`,
+          Authorization: `Bearer ${session?.accessToken}`,
         },
       }
     )
@@ -35,7 +35,7 @@ const SelectService = ({
 
   return (
     <div className="flex w-full flex-col">
-      <label className="mb-[8px] font-inter text-[12px] font-normal text-mineshaft">Service</label>
+      <label className="mb-[8px] font-inter text-[12px] font-normal text-mineshaft">Services</label>
       <div className="relative flex w-full flex-col">
         <button
           className="flex h-[46px] cursor-default items-center overflow-hidden rounded-[4px] border border-solid border-ebonyclay border-opacity-10 px-[10px] focus-visible:border focus-visible:border-solid focus-visible:border-ebonyclay focus-visible:border-opacity-10"
@@ -97,7 +97,7 @@ const ServiceRow = ({
       selectedServices = selectedServices.filter(({ serviceId }) => serviceId !== service.serviceId)
     }
 
-    setFieldValue('service', selectedServices)
+    setFieldValue('services', selectedServices)
   }
 
   return (

@@ -1,7 +1,9 @@
 export interface NewEventForm {
-  title: string
-  service: Array<{ serviceId: number; extras: Array<string> }>
-  date: string
-  taskDescription: string
-  assets: Array<File>
+  requestedBy: number
+  clientId: number
+  subject: string
+  services: Array<{ serviceId: number; extras: Array<string> }>
+  duedate: string
+  description: string
+  attachment: Array<File>
 }

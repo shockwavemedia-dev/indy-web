@@ -1,6 +1,7 @@
+import axios from 'axios'
 import { Form, Formik } from 'formik'
+import { useSession } from 'next-auth/react'
 import { MouseEventHandler } from 'react'
-import snakecaseKeys from 'snakecase-keys'
 import { NewEventForm } from '../../interfaces/NewEventForm.interface'
 import Button from '../Common/Button.component'
 import FileInput from '../Common/FileInput.component'
@@ -18,61 +19,73 @@ const NewEventModal = ({
   isVisible: boolean
   onClose: MouseEventHandler<HTMLButtonElement>
 }) => {
+  const { data: session } = useSession()
+
   const formInitialValues: NewEventForm = {
-    title: '',
-    service: [],
-    date: '',
-    taskDescription: '',
-    assets: [],
+    requestedBy: session!.user.id,
+    clientId: session!.user.userType.clientId,
+    subject: '',
+    services: [],
+    duedate: '',
+    description: '',
+    attachment: [],
+  }
+
+  const handleFormSubmit = async (
+    values: NewEventForm,
+    { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
+  ) => {
+    setSubmitting(true)
+
+    await axios.post('/v1/tickets/event', values, {
+      headers: {
+        Authorization: `Bearer ${session?.accessToken}`,
+      },
+    })
+
+    setSubmitting(false)
   }
 
   return (
     <>
       {isVisible && (
         <Modal title="New Event" onClose={onClose}>
-          <Formik
-            initialValues={formInitialValues}
-            onSubmit={(values, { setSubmitting }) => {
-              setSubmitting(true)
-              console.log(snakecaseKeys(values, { deep: true }))
-              setSubmitting(false)
-            }}
-          >
-            {({ isSubmitting, setFieldValue, values: { service } }) => {
+          <Formik initialValues={formInitialValues} onSubmit={handleFormSubmit}>
+            {({ isSubmitting, setFieldValue, values: { services } }) => {
               return (
                 <Form>
                   <div className="flex w-[560px] flex-col">
                     <div className="mb-[24px]">
                       <TextInput
-                        label="Title"
+                        label="Subject"
                         Icon={PencilIcon}
-                        placeholder="Enter Title"
-                        name="title"
+                        placeholder="Enter Subject"
+                        name="subject"
                         disableAutoComplete
                       />
                     </div>
                     <div className="mb-[24px] flex space-x-[12px]">
-                      <SelectService selectedServices={service} setFieldValue={setFieldValue} />
+                      <SelectService selectedServices={services} setFieldValue={setFieldValue} />
                       <TextInput
-                        label="Date"
+                        label="Due Date"
                         Icon={CalendarIcon}
-                        placeholder="Enter Date"
-                        name="date"
+                        placeholder="Enter Due Date"
+                        name="duedate"
                         disableAutoComplete
                       />
                     </div>
                     <div className="mb-[24px]">
                       <TextAreaInput
-                        label="Task Description"
+                        label="Description"
                         Icon={PencilIcon}
-                        placeholder="Enter Task Description"
-                        name="taskDescription"
+                        placeholder="Enter Description"
+                        name="description"
                       />
                     </div>
                     <div className="mb-[32px]">
                       <FileInput
-                        label="Upload Assets"
-                        name="assets"
+                        label="Upload Attachments"
+                        name="attachment"
                         setFieldValue={setFieldValue}
                       />
                     </div>
