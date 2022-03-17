@@ -70,7 +70,7 @@ const SignUp: NextPageWithLayout = () => {
       },
       {
         headers: {
-          authorization: `Bearer ${accessToken}`,
+          Authorization: `Bearer ${accessToken}`,
         },
       }
     )
