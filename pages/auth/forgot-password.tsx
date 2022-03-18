@@ -21,49 +21,45 @@ const ForgotPassword: NextPageWithLayout = () => {
         <title>Daily Press - Forgot Password</title>
       </Head>
       <Formik initialValues={formInitialValues} onSubmit={() => {}}>
-        {({ isSubmitting }) => {
-          return (
-            <Form className="flex w-full flex-col items-center">
-              <div className="mb-[32px] w-full">
-                <TextInput
-                  type="email"
-                  name="email"
-                  Icon={EmailIcon}
-                  label="Email"
-                  placeholder="Enter Email"
-                />
-              </div>
-              <div className="mb-[20px] flex w-[312px]">
-                <Button type="submit" ariaLabel="Restore Password" disabled={isSubmitting}>
-                  <span>Restore Password</span>
-                  <CaretRightIcon className="stroke-white" />
-                </Button>
-              </div>
-              <Link href="/auth/login">Cancel</Link>
-            </Form>
-          )
-        }}
+        {({ isSubmitting }) => (
+          <Form className="flex w-full flex-col items-center">
+            <div className="mb-[32px] w-full">
+              <TextInput
+                type="email"
+                name="email"
+                Icon={EmailIcon}
+                label="Email"
+                placeholder="Enter Email"
+              />
+            </div>
+            <div className="mb-[20px] flex w-[312px]">
+              <Button type="submit" ariaLabel="Restore Password" disabled={isSubmitting}>
+                <span>Restore Password</span>
+                <CaretRightIcon className="stroke-white" />
+              </Button>
+            </div>
+            <Link href="/auth/login">Cancel</Link>
+          </Form>
+        )}
       </Formik>
     </>
   )
 }
 
-ForgotPassword.getLayout = (page: ReactElement) => {
-  return (
-    <AuthLayout
-      title="Forgot password?"
-      subtitle={
-        <>
-          Enter your email and we will send you
-          <br />
-          one-time link to reset password
-        </>
-      }
-      className="w-[570px]"
-    >
-      {page}
-    </AuthLayout>
-  )
-}
+ForgotPassword.getLayout = (page: ReactElement) => (
+  <AuthLayout
+    title="Forgot password?"
+    subtitle={
+      <>
+        Enter your email and we will send you
+        <br />
+        one-time link to reset password
+      </>
+    }
+    className="w-[570px]"
+  >
+    {page}
+  </AuthLayout>
+)
 
 export default ForgotPassword

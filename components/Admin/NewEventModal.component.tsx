@@ -31,7 +31,7 @@ const NewEventModal = ({
     attachment: [],
   }
 
-  const handleFormSubmit = async (
+  const handleSubmit = async (
     values: NewEventForm,
     { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
   ) => {
@@ -50,57 +50,55 @@ const NewEventModal = ({
     <>
       {isVisible && (
         <Modal title="New Event" onClose={onClose}>
-          <Formik initialValues={formInitialValues} onSubmit={handleFormSubmit}>
-            {({ isSubmitting, setFieldValue, values: { services } }) => {
-              return (
-                <Form>
-                  <div className="flex w-[560px] flex-col">
-                    <div className="mb-[24px]">
-                      <TextInput
-                        label="Subject"
-                        Icon={PencilIcon}
-                        placeholder="Enter Subject"
-                        name="subject"
-                        disableAutoComplete
-                      />
-                    </div>
-                    <div className="mb-[24px] flex space-x-[12px]">
-                      <SelectService selectedServices={services} setFieldValue={setFieldValue} />
-                      <TextInput
-                        label="Due Date"
-                        Icon={CalendarIcon}
-                        placeholder="Enter Due Date"
-                        name="duedate"
-                        disableAutoComplete
-                      />
-                    </div>
-                    <div className="mb-[24px]">
-                      <TextAreaInput
-                        label="Description"
-                        Icon={PencilIcon}
-                        placeholder="Enter Description"
-                        name="description"
-                      />
-                    </div>
-                    <div className="mb-[32px]">
-                      <FileInput
-                        label="Upload Attachments"
-                        name="attachment"
-                        setFieldValue={setFieldValue}
-                      />
-                    </div>
-                    <div className="flex space-x-[12px]">
-                      <Button ariaLabel="Cancel" isLight onClick={onClose}>
-                        Cancel
-                      </Button>
-                      <Button ariaLabel="Submit" type="submit" disabled={isSubmitting}>
-                        Submit
-                      </Button>
-                    </div>
+          <Formik initialValues={formInitialValues} onSubmit={handleSubmit}>
+            {({ isSubmitting, setFieldValue, values: { services } }) => (
+              <Form>
+                <div className="flex w-[560px] flex-col">
+                  <div className="mb-[24px]">
+                    <TextInput
+                      label="Subject"
+                      Icon={PencilIcon}
+                      placeholder="Enter Subject"
+                      name="subject"
+                      disableAutoComplete
+                    />
                   </div>
-                </Form>
-              )
-            }}
+                  <div className="mb-[24px] flex space-x-[12px]">
+                    <SelectService selectedServices={services} setFieldValue={setFieldValue} />
+                    <TextInput
+                      label="Due Date"
+                      Icon={CalendarIcon}
+                      placeholder="Enter Due Date"
+                      name="duedate"
+                      disableAutoComplete
+                    />
+                  </div>
+                  <div className="mb-[24px]">
+                    <TextAreaInput
+                      label="Description"
+                      Icon={PencilIcon}
+                      placeholder="Enter Description"
+                      name="description"
+                    />
+                  </div>
+                  <div className="mb-[32px]">
+                    <FileInput
+                      label="Upload Attachments"
+                      name="attachment"
+                      setFieldValue={setFieldValue}
+                    />
+                  </div>
+                  <div className="flex space-x-[12px]">
+                    <Button ariaLabel="Cancel" isLight onClick={onClose}>
+                      Cancel
+                    </Button>
+                    <Button ariaLabel="Submit" type="submit" disabled={isSubmitting}>
+                      Submit
+                    </Button>
+                  </div>
+                </div>
+              </Form>
+            )}
           </Formik>
         </Modal>
       )}

@@ -29,87 +29,67 @@ const Select = ({
 }) => {
   const [selectedOption, setSelectedOption] = useState<Option | null>(null)
 
-  const handleOnChange = (option: SingleValue<Option>) => {
+  const handleChange = (option: SingleValue<Option>) => {
     setSelectedOption(option)
     setFieldValue(name, option?.value)
   }
 
   const style: StylesConfig<Option, false> = {
-    indicatorSeparator: () => {
-      return {
-        display: 'none',
-      }
-    },
-    placeholder: (base) => {
-      return {
-        ...base,
-        font: '400 14px Inter',
-        color: '#717583',
-        margin: '0 0 0 8px',
-      }
-    },
-    control: (base) => {
-      return {
-        ...base,
-        height: '100%',
-        boxShadow: 'none',
-        border: 'none',
-      }
-    },
-    container: (base) => {
-      return {
-        ...base,
-        height: '100%',
-        border: '1px solid #1D212B1A',
-        borderRadius: '4px',
-      }
-    },
-    valueContainer: (base) => {
-      return {
-        ...base,
-        display: 'flex',
-      }
-    },
-    input: (base) => {
-      return {
-        ...base,
-        margin: '0 0 0 8px',
-        font: '400 14px Inter',
-      }
-    },
-    singleValue: (base) => {
-      return {
-        ...base,
-        margin: '0 0 0 8px',
-        color: '#000000',
-        font: '400 14px Inter',
-      }
-    },
-    option: (base) => {
-      return {
-        ...base,
-        color: '#000000',
-        font: '400 14px Inter',
-      }
-    },
+    indicatorSeparator: () => ({
+      display: 'none',
+    }),
+    placeholder: (base) => ({
+      ...base,
+      font: '400 14px Inter',
+      color: '#717583',
+      margin: '0 0 0 8px',
+    }),
+    control: (base) => ({
+      ...base,
+      height: '100%',
+      boxShadow: 'none',
+      border: 'none',
+    }),
+    container: (base) => ({
+      ...base,
+      height: '100%',
+      border: '1px solid #1D212B1A',
+      borderRadius: '4px',
+    }),
+    valueContainer: (base) => ({
+      ...base,
+      display: 'flex',
+    }),
+    input: (base) => ({
+      ...base,
+      margin: '0 0 0 8px',
+      font: '400 14px Inter',
+    }),
+    singleValue: (base) => ({
+      ...base,
+      margin: '0 0 0 8px',
+      color: '#000000',
+      font: '400 14px Inter',
+    }),
+    option: (base) => ({
+      ...base,
+      color: '#000000',
+      font: '400 14px Inter',
+    }),
   }
 
-  const DropdownIndicator = (props: DropdownIndicatorProps<Option, false>) => {
-    return (
-      <Components.DropdownIndicator {...props}>
-        <CaretDownIcon className={`stroke-black ${props.selectProps.menuIsOpen && 'rotate-180'}`} />
-      </Components.DropdownIndicator>
-    )
-  }
+  const DropdownIndicator = (props: DropdownIndicatorProps<Option, false>) => (
+    <Components.DropdownIndicator {...props}>
+      <CaretDownIcon className={`stroke-black ${props.selectProps.menuIsOpen && 'rotate-180'}`} />
+    </Components.DropdownIndicator>
+  )
 
-  const ValueContainer = ({ children, ...props }: ValueContainerProps<Option, false>) => {
-    return (
-      <Components.ValueContainer {...props}>
-        <Icon />
-        <div className="grid items-center">{children}</div>
-      </Components.ValueContainer>
-    )
-  }
+  const ValueContainer = ({ children, ...props }: ValueContainerProps<Option, false>) => (
+    <Components.ValueContainer {...props}>
+      <Icon />
+      <div className="grid items-center">{children}</div>
+    </Components.ValueContainer>
+  )
 
   return (
     <div className="flex w-full flex-col">
@@ -120,7 +100,7 @@ const Select = ({
         styles={style}
         placeholder={placeholder}
         value={selectedOption}
-        onChange={handleOnChange}
+        onChange={handleChange}
         options={options}
         components={{ DropdownIndicator, ValueContainer }}
         inputId={name}

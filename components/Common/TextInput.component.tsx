@@ -19,9 +19,7 @@ const TextInput = ({
 }) => {
   const [isShowPassword, setShowPassword] = useState(false)
 
-  const toggleShowPassword = () => {
-    setShowPassword(!isShowPassword)
-  }
+  const toggleShowPassword = () => setShowPassword(!isShowPassword)
 
   return (
     <div className="flex w-full flex-col">

@@ -57,16 +57,14 @@ const SelectService = ({
           }`}
         >
           <div className="max-h-[300px] overflow-y-auto py-[4px]">
-            {services?.map((service, i) => {
-              return (
-                <ServiceRow
-                  service={service}
-                  selectedServices={selectedServices}
-                  setFieldValue={setFieldValue}
-                  key={i}
-                />
-              )
-            })}
+            {services?.map((service, i) => (
+              <ServiceRow
+                service={service}
+                selectedServices={selectedServices}
+                setFieldValue={setFieldValue}
+                key={i}
+              />
+            ))}
           </div>
         </div>
       </div>
@@ -85,7 +83,7 @@ const ServiceRow = ({
 }) => {
   const [isServiceSelected, setServiceSelected] = useState(false)
 
-  const handleSelectService = () => {
+  const handleClick = () => {
     setServiceSelected(!isServiceSelected)
 
     if (!isServiceSelected) {
@@ -106,7 +104,7 @@ const ServiceRow = ({
         className="flex h-[33px] w-full cursor-default items-center justify-between py-[8px] px-[12px] hover:bg-pattensblue"
         type="button"
         name={service.serviceId.toString()}
-        onClick={handleSelectService}
+        onClick={handleClick}
       >
         <div>{service.serviceId}</div>
         <div
@@ -119,7 +117,7 @@ const ServiceRow = ({
       </button>
       {isServiceSelected &&
         service.extras?.map((extra, i) => {
-          const selectExtra = () => {
+          const handleSelectExtra = () => {
             const extras = selectedServices.find(
               ({ serviceId }) => serviceId === service.serviceId
             )!.extras
@@ -135,7 +133,7 @@ const ServiceRow = ({
             }
           }
 
-          return <ExtraRow extra={extra} selectExtra={selectExtra} key={i} />
+          return <ExtraRow extra={extra} selectExtra={handleSelectExtra} key={i} />
         })}
     </>
   )
@@ -144,7 +142,7 @@ const ServiceRow = ({
 const ExtraRow = ({ extra, selectExtra }: { extra: string; selectExtra: () => void }) => {
   const [isExtraSelected, setExtraSelected] = useState(false)
 
-  const handleSelectExtra = () => {
+  const handleClick = () => {
     setExtraSelected(!isExtraSelected)
     selectExtra()
   }
@@ -153,7 +151,7 @@ const ExtraRow = ({ extra, selectExtra }: { extra: string; selectExtra: () => vo
     <button
       className="flex h-[33px] w-full cursor-default items-center justify-between py-[8px] pl-[36px] pr-[12px] hover:bg-pattensblue"
       type="button"
-      onClick={handleSelectExtra}
+      onClick={handleClick}
     >
       <div>{extra}</div>
       <div

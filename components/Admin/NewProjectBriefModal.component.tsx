@@ -30,62 +30,56 @@ const NewProjectBriefModal = ({
       {isVisible && (
         <Modal title="New Project Brief" onClose={onClose}>
           <Formik initialValues={formInitialValues} onSubmit={() => {}}>
-            {({ isSubmitting, setFieldValue }) => {
-              return (
-                <Form>
-                  <div className="flex w-[560px] flex-col">
-                    <div className="mb-[24px] flex space-x-[12px]">
-                      <TextInput
-                        label="Service"
-                        Icon={LightbulbIcon}
-                        placeholder="Select Service"
-                        name="service"
-                        disableAutoComplete
-                      />
-                      <TextInput
-                        label="Date"
-                        Icon={CalendarIcon}
-                        placeholder="Enter Date"
-                        name="date"
-                        disableAutoComplete
-                      />
-                    </div>
-                    <div className="mb-[24px]">
-                      <TextInput
-                        label="Brief Name"
-                        Icon={PencilIcon}
-                        placeholder="Enter Brief Name"
-                        name="briefName"
-                        disableAutoComplete
-                      />
-                    </div>
-                    <div className="mb-[24px]">
-                      <TextAreaInput
-                        label="Content"
-                        Icon={PencilIcon}
-                        placeholder="Enter Content"
-                        name="content"
-                      />
-                    </div>
-                    <div className="mb-[32px]">
-                      <FileInput
-                        label="Upload Assets"
-                        name="assets"
-                        setFieldValue={setFieldValue}
-                      />
-                    </div>
-                    <div className="flex space-x-[12px]">
-                      <Button ariaLabel="Cancel" isLight onClick={onClose}>
-                        Cancel
-                      </Button>
-                      <Button ariaLabel="Submit" type="submit" disabled={isSubmitting}>
-                        Submit
-                      </Button>
-                    </div>
+            {({ isSubmitting, setFieldValue }) => (
+              <Form>
+                <div className="flex w-[560px] flex-col">
+                  <div className="mb-[24px] flex space-x-[12px]">
+                    <TextInput
+                      label="Service"
+                      Icon={LightbulbIcon}
+                      placeholder="Select Service"
+                      name="service"
+                      disableAutoComplete
+                    />
+                    <TextInput
+                      label="Date"
+                      Icon={CalendarIcon}
+                      placeholder="Enter Date"
+                      name="date"
+                      disableAutoComplete
+                    />
                   </div>
-                </Form>
-              )
-            }}
+                  <div className="mb-[24px]">
+                    <TextInput
+                      label="Brief Name"
+                      Icon={PencilIcon}
+                      placeholder="Enter Brief Name"
+                      name="briefName"
+                      disableAutoComplete
+                    />
+                  </div>
+                  <div className="mb-[24px]">
+                    <TextAreaInput
+                      label="Content"
+                      Icon={PencilIcon}
+                      placeholder="Enter Content"
+                      name="content"
+                    />
+                  </div>
+                  <div className="mb-[32px]">
+                    <FileInput label="Upload Assets" name="assets" setFieldValue={setFieldValue} />
+                  </div>
+                  <div className="flex space-x-[12px]">
+                    <Button ariaLabel="Cancel" isLight onClick={onClose}>
+                      Cancel
+                    </Button>
+                    <Button ariaLabel="Submit" type="submit" disabled={isSubmitting}>
+                      Submit
+                    </Button>
+                  </div>
+                </div>
+              </Form>
+            )}
           </Formik>
         </Modal>
       )}

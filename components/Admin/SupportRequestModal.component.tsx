@@ -25,39 +25,37 @@ const SupportRequestModal = ({
       {isVisible && (
         <Modal title="Support Request" onClose={onClose}>
           <Formik initialValues={formInitialValues} onSubmit={() => {}}>
-            {({ isSubmitting }) => {
-              return (
-                <Form>
-                  <div className="flex w-[560px] flex-col">
-                    <div className="mb-[24px]">
-                      <TextInput
-                        label="Department"
-                        Icon={LightbulbIcon}
-                        placeholder="Select Department"
-                        name="department"
-                        disableAutoComplete
-                      />
-                    </div>
-                    <div className="mb-[24px]">
-                      <TextAreaInput
-                        label="Message"
-                        Icon={PencilIcon}
-                        placeholder="Enter Message"
-                        name="message"
-                      />
-                    </div>
-                    <div className="flex space-x-[12px]">
-                      <Button ariaLabel="Cancel" isLight onClick={onClose}>
-                        Cancel
-                      </Button>
-                      <Button ariaLabel="Submit" type="submit" disabled={isSubmitting}>
-                        Submit
-                      </Button>
-                    </div>
+            {({ isSubmitting }) => (
+              <Form>
+                <div className="flex w-[560px] flex-col">
+                  <div className="mb-[24px]">
+                    <TextInput
+                      label="Department"
+                      Icon={LightbulbIcon}
+                      placeholder="Select Department"
+                      name="department"
+                      disableAutoComplete
+                    />
                   </div>
-                </Form>
-              )
-            }}
+                  <div className="mb-[24px]">
+                    <TextAreaInput
+                      label="Message"
+                      Icon={PencilIcon}
+                      placeholder="Enter Message"
+                      name="message"
+                    />
+                  </div>
+                  <div className="flex space-x-[12px]">
+                    <Button ariaLabel="Cancel" isLight onClick={onClose}>
+                      Cancel
+                    </Button>
+                    <Button ariaLabel="Submit" type="submit" disabled={isSubmitting}>
+                      Submit
+                    </Button>
+                  </div>
+                </div>
+              </Form>
+            )}
           </Formik>
         </Modal>
       )}

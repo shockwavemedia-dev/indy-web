@@ -73,20 +73,20 @@ const navigations: Array<Navigation> = [
   {
     title: 'Analytics',
     pathname: '/analytics',
-    // children: [
-    //   {
-    //     title: 'App',
-    //   },
-    //   {
-    //     title: 'Website',
-    //   },
-    //   {
-    //     title: 'ClevaQ',
-    //   },
-    //   {
-    //     title: 'Social Media Ads',
-    //   },
-    // ],
+    children: [
+      {
+        title: 'App',
+      },
+      {
+        title: 'Website',
+      },
+      {
+        title: 'ClevaQ',
+      },
+      {
+        title: 'Social Media Ads',
+      },
+    ],
   },
 ]
 
@@ -103,17 +103,13 @@ const AdminLayout = ({ children }: { children: ReactNode }) => {
   const [isNewProjectBriefModalVisible, setNewProjectBriefModalVisible] = useState(false)
   const [isSupportRequestModalVisible, setSupportRequestModalVisible] = useState(false)
 
-  const toggleNewEventModal = () => {
-    setNewEventModalVisible(!isNewEventModalVisible)
-  }
+  const toggleNewEventModal = () => setNewEventModalVisible(!isNewEventModalVisible)
 
-  const toggleNewProjectBriefModal = () => {
+  const toggleNewProjectBriefModal = () =>
     setNewProjectBriefModalVisible(!isNewProjectBriefModalVisible)
-  }
 
-  const toggleSupportRequestModal = () => {
+  const toggleSupportRequestModal = () =>
     setSupportRequestModalVisible(!isSupportRequestModalVisible)
-  }
 
   if (status === 'loading') {
     return null
@@ -154,15 +150,13 @@ const AdminLayout = ({ children }: { children: ReactNode }) => {
                   <NavigationButton navigation={navigation} isCurrentPath={isCurrentPath} />
                   {navigation.children && (
                     <div className="space-y-[16px] pl-[38px]">
-                      {navigation.children?.map((navigationChild, i) => {
-                        return (
-                          <ChildNavigationButton
-                            key={i}
-                            navigation={navigationChild}
-                            isCurrentPath={isCurrentPath}
-                          />
-                        )
-                      })}
+                      {navigation.children?.map((navigationChild, i) => (
+                        <ChildNavigationButton
+                          key={i}
+                          navigation={navigationChild}
+                          isCurrentPath={isCurrentPath}
+                        />
+                      ))}
                     </div>
                   )}
                 </div>

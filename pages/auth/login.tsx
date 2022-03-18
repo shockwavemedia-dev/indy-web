@@ -23,7 +23,7 @@ const Login: NextPageWithLayout = () => {
     rememberMe: false,
   }
 
-  const login = async (
+  const handleFormSubmit = async (
     signInFormValues: SignInForm,
     { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
   ) => {
@@ -47,63 +47,59 @@ const Login: NextPageWithLayout = () => {
       <Head>
         <title>Daily Press - Login</title>
       </Head>
-      <Formik initialValues={formInitialValues} onSubmit={login}>
-        {({ isSubmitting }) => {
-          return (
-            <Form className="flex w-full flex-col items-center">
-              <div className="mb-[18px] flex w-full">
-                <TextInput
-                  type="email"
-                  name="email"
-                  Icon={EmailIcon}
-                  label="Email"
-                  placeholder="Enter Email"
-                />
+      <Formik initialValues={formInitialValues} onSubmit={handleFormSubmit}>
+        {({ isSubmitting }) => (
+          <Form className="flex w-full flex-col items-center">
+            <div className="mb-[18px] flex w-full">
+              <TextInput
+                type="email"
+                name="email"
+                Icon={EmailIcon}
+                label="Email"
+                placeholder="Enter Email"
+              />
+            </div>
+            <div className="mb-[32px] flex w-full">
+              <TextInput
+                type="password"
+                name="password"
+                Icon={LockIcon}
+                label="Password"
+                placeholder="Enter Password"
+              />
+            </div>
+            <div className="mb-[32px] flex w-full justify-between">
+              <Checkbox name="rememberMe" label="Remember me" />
+              <Link href="/auth/forgot-password">Forgot Password?</Link>
+            </div>
+            <div className="mb-[24px] flex w-[312px]">
+              <Button type="submit" ariaLabel="Login" disabled={isSubmitting}>
+                <span>Login</span>
+                <CaretRightIcon className="stroke-white" />
+              </Button>
+            </div>
+            <div className="flex items-center space-x-[6px]">
+              <div className="font-inter text-[14px] font-normal text-emperor">
+                {"Don't have an account?"}
               </div>
-              <div className="mb-[32px] flex w-full">
-                <TextInput
-                  type="password"
-                  name="password"
-                  Icon={LockIcon}
-                  label="Password"
-                  placeholder="Enter Password"
-                />
-              </div>
-              <div className="mb-[32px] flex w-full justify-between">
-                <Checkbox name="rememberMe" label="Remember me" />
-                <Link href="/auth/forgot-password">Forgot Password?</Link>
-              </div>
-              <div className="mb-[24px] flex w-[312px]">
-                <Button type="submit" ariaLabel="Login" disabled={isSubmitting}>
-                  <span>Login</span>
-                  <CaretRightIcon className="stroke-white" />
-                </Button>
-              </div>
-              <div className="flex items-center space-x-[6px]">
-                <div className="font-inter text-[14px] font-normal text-emperor">
-                  {"Don't have an account?"}
-                </div>
-                <Link href="/auth/sign-up">Sign Up</Link>
-              </div>
-            </Form>
-          )
-        }}
+              <Link href="/auth/sign-up">Sign Up</Link>
+            </div>
+          </Form>
+        )}
       </Formik>
     </>
   )
 }
 
-Login.getLayout = (page: ReactElement) => {
-  return (
-    <AuthLayout
-      title="Welcome to Daily Press"
-      subtitle="Please log in to your account and start the adventure"
-      className="w-[588px]"
-      needsAuth
-    >
-      {page}
-    </AuthLayout>
-  )
-}
+Login.getLayout = (page: ReactElement) => (
+  <AuthLayout
+    title="Welcome to Daily Press"
+    subtitle="Please log in to your account and start the adventure"
+    className="w-[588px]"
+    needsAuth
+  >
+    {page}
+  </AuthLayout>
+)
 
 export default Login

@@ -25,9 +25,7 @@ const SignUp: NextPageWithLayout = () => {
   const passwordStrength = useStore(({ passwordStrength }) => passwordStrength)
   const computePasswordStrength = useStore(({ computePasswordStrength }) => computePasswordStrength)
 
-  useEffect(() => {
-    computePasswordStrength('')
-  }, [])
+  useEffect(() => computePasswordStrength(''), [])
 
   const formInitialValues: SignUpForm = {
     fullName: '',
@@ -38,7 +36,7 @@ const SignUp: NextPageWithLayout = () => {
     rememberMe: false,
   }
 
-  const signUp = async (
+  const handleFormSubmit = async (
     signUpFormValues: SignUpForm,
     { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
   ) => {
@@ -90,6 +88,8 @@ const SignUp: NextPageWithLayout = () => {
     setSubmitting(false)
   }
 
+  const handleValidate = ({ password }: { password: string }) => computePasswordStrength(password)
+
   return (
     <>
       <Head>
@@ -97,103 +97,97 @@ const SignUp: NextPageWithLayout = () => {
       </Head>
       <Formik
         initialValues={formInitialValues}
-        onSubmit={signUp}
-        validate={({ password }) => {
-          computePasswordStrength(password)
-        }}
+        onSubmit={handleFormSubmit}
+        validate={handleValidate}
       >
-        {({ isSubmitting }) => {
-          return (
-            <Form className="flex w-full flex-col items-center">
-              <div className="mb-[18px] flex w-full space-x-[12px]">
-                <TextInput
-                  type="text"
-                  name="fullName"
-                  Icon={UserIcon}
-                  label="Full Name"
-                  placeholder="Enter Full Name"
-                />
-                <ErrorMessage name="fullName" />
-                <TextInput
-                  type="text"
-                  name="companyName"
-                  Icon={BriefcaseIcon}
-                  label="Company Name"
-                  placeholder="Enter Company Name"
-                />
+        {({ isSubmitting }) => (
+          <Form className="flex w-full flex-col items-center">
+            <div className="mb-[18px] flex w-full space-x-[12px]">
+              <TextInput
+                type="text"
+                name="fullName"
+                Icon={UserIcon}
+                label="Full Name"
+                placeholder="Enter Full Name"
+              />
+              <ErrorMessage name="fullName" />
+              <TextInput
+                type="text"
+                name="companyName"
+                Icon={BriefcaseIcon}
+                label="Company Name"
+                placeholder="Enter Company Name"
+              />
+            </div>
+            <div className="mb-[18px] w-full">
+              <TextInput
+                type="email"
+                name="email"
+                Icon={EmailIcon}
+                label="Email"
+                placeholder="Enter Email"
+              />
+            </div>
+            <div className="mb-[8px] flex w-full space-x-[12px]">
+              <TextInput
+                type="password"
+                name="password"
+                Icon={LockIcon}
+                label="Password"
+                placeholder="Enter Password"
+                disableAutoComplete
+              />
+              <TextInput
+                type="password"
+                name="passwordConfirmation"
+                Icon={LockIcon}
+                label="Password"
+                placeholder="Enter Password"
+                disableAutoComplete
+              />
+            </div>
+            <div className="mr-auto mb-[8px] w-[50%]">
+              <PasswordStrengthMeter strength={passwordStrength} />
+            </div>
+            <div className="mr-auto mb-[24px]">
+              <div className="word font-inter text-[10px] font-normal text-nevada">
+                Should be at least 8 symbols and contain
+                <br />
+                one small and one big character, special
+                <br />
+                character and number
               </div>
-              <div className="mb-[18px] w-full">
-                <TextInput
-                  type="email"
-                  name="email"
-                  Icon={EmailIcon}
-                  label="Email"
-                  placeholder="Enter Email"
-                />
+            </div>
+            <div className="mr-auto mb-[32px]">
+              <Checkbox name="rememberMe" label="Remember me" />
+            </div>
+            <div className="mb-[24px] flex w-[312px]">
+              <Button type="submit" ariaLabel="Sign Up" disabled={isSubmitting}>
+                <span>Sign Up</span>
+                <CaretRightIcon className="stroke-white" />
+              </Button>
+            </div>
+            <div className="flex items-center space-x-[6px]">
+              <div className="font-inter text-[14px] font-normal text-emperor">
+                Already have an account?
               </div>
-              <div className="mb-[8px] flex w-full space-x-[12px]">
-                <TextInput
-                  type="password"
-                  name="password"
-                  Icon={LockIcon}
-                  label="Password"
-                  placeholder="Enter Password"
-                  disableAutoComplete
-                />
-                <TextInput
-                  type="password"
-                  name="passwordConfirmation"
-                  Icon={LockIcon}
-                  label="Password"
-                  placeholder="Enter Password"
-                  disableAutoComplete
-                />
-              </div>
-              <div className="mr-auto mb-[8px] w-[50%]">
-                <PasswordStrengthMeter strength={passwordStrength} />
-              </div>
-              <div className="mr-auto mb-[24px]">
-                <div className="word font-inter text-[10px] font-normal text-nevada">
-                  Should be at least 8 symbols and contain
-                  <br />
-                  one small and one big character, special
-                  <br />
-                  character and number
-                </div>
-              </div>
-              <div className="mr-auto mb-[32px]">
-                <Checkbox name="rememberMe" label="Remember me" />
-              </div>
-              <div className="mb-[24px] flex w-[312px]">
-                <Button type="submit" ariaLabel="Sign Up" disabled={isSubmitting}>
-                  <span>Sign Up</span>
-                  <CaretRightIcon className="stroke-white" />
-                </Button>
-              </div>
-              <div className="flex items-center space-x-[6px]">
-                <div className="font-inter text-[14px] font-normal text-emperor">
-                  Already have an account?
-                </div>
-                <Link href="/auth/login">Login</Link>
-              </div>
-            </Form>
-          )
-        }}
+              <Link href="/auth/login">Login</Link>
+            </div>
+          </Form>
+        )}
       </Formik>
     </>
   )
 }
 
-SignUp.getLayout = (page: ReactElement) => {
-  return (
-    <AuthLayout
-      title="Welcome to Daily Press"
-      subtitle="Please sign up and start the adventure"
-      className="w-[652px]"
-    >
-      {page}
-    </AuthLayout>
-  )
-}
+SignUp.getLayout = (page: ReactElement) => (
+  <AuthLayout
+    title="Welcome to Daily Press"
+    subtitle="Please sign up and start the adventure"
+    className="w-[652px]"
+  >
+    {page}
+  </AuthLayout>
+)
 
 export default SignUp
