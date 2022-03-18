@@ -1,16 +1,16 @@
 import { signOut, useSession } from 'next-auth/react'
 import Image from 'next/image'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { ReactNode, useState } from 'react'
-import ChildNavigationButton from '../components/Admin/ChildNavigationButton.component'
 import FancyButton from '../components/Admin/FancyButton.component'
 import JobsStatusCountCard from '../components/Admin/JobsStatusCountCard.component'
-import NavigationButton from '../components/Admin/NavigationButton.component'
 import NewEventModal from '../components/Admin/NewEventModal.component'
 import NewProjectBriefModal from '../components/Admin/NewProjectBriefModal.component'
 import SupportRequestModal from '../components/Admin/SupportRequestModal.component'
 import BellIcon from '../components/Common/Icons/Bell.icon'
 import CaretDownIcon from '../components/Common/Icons/CaretDown.icon'
+import CaretRightIcon from '../components/Common/Icons/CaretRight.icon'
 import CaretRightSmallIcon from '../components/Common/Icons/CaretRightSmall.icon'
 import MagnifyingGlassIcon from '../components/Common/Icons/MagnifyingGlass.icon'
 import { Navigation } from '../interfaces/Navigation.interface'
@@ -231,5 +231,66 @@ const AdminLayout = ({ children }: { children: ReactNode }) => {
     </>
   )
 }
+
+const NavigationButton = ({
+  navigation,
+  isCurrentPath,
+}: {
+  navigation: Navigation
+  isCurrentPath: boolean
+}) => (
+  <div className="flex cursor-pointer items-center justify-end space-x-[12px]">
+    <div
+      className={`inline-block h-[20px] w-[20px] rounded-full ${
+        isCurrentPath ? 'bg-white' : 'bg-abbey'
+      }`}
+    />
+    {navigation.children ? (
+      <button
+        className={`font-400 flex flex-1 items-center justify-between font-inter text-[14px] ${
+          isCurrentPath ? 'text-white' : 'text-santasgray'
+        }`}
+      >
+        <div>{navigation.title}</div>
+        <CaretRightIcon className="stroke-stormgray" />
+      </button>
+    ) : (
+      <Link href={navigation.pathname || '#'} passHref>
+        <div
+          className={`font-400 flex-1 font-inter text-[14px] ${
+            isCurrentPath ? 'text-white' : 'text-santasgray'
+          }`}
+        >
+          {navigation.title}
+        </div>
+      </Link>
+    )}
+  </div>
+)
+
+const ChildNavigationButton = ({
+  navigation,
+  isCurrentPath,
+}: {
+  navigation: Navigation
+  isCurrentPath: boolean
+}) => (
+  <div className="flex cursor-pointer items-center space-x-[12px]">
+    <div
+      className={`inline-block h-[6px] w-[6px] rounded-full  ${
+        isCurrentPath ? 'bg-white' : 'bg-abbey'
+      }`}
+    />
+    <Link href={navigation.pathname || '#'} passHref>
+      <div
+        className={`font-400 flex-1 font-inter text-[14px] ${
+          isCurrentPath ? 'text-white' : 'text-santasgray'
+        }`}
+      >
+        {navigation.title}
+      </div>
+    </Link>
+  </div>
+)
 
 export default AdminLayout
