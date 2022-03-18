@@ -9,12 +9,12 @@ const FileInput = ({
   name: string
   setFieldValue: (field: string, value: any, shouldValidate?: boolean) => void
 }) => {
-  const handleDrop = (files: Array<File>) => setFieldValue(name, files)
+  const dropFiles = (files: Array<File>) => setFieldValue(name, files)
 
   return (
     <div className="flex w-full flex-col">
       <label className="mb-[8px] font-inter text-[12px] font-normal text-mineshaft">{label}</label>
-      <Dropzone onDrop={handleDrop} noClick noKeyboard>
+      <Dropzone onDrop={dropFiles} noClick noKeyboard>
         {({ getRootProps, getInputProps, open, isDragActive }) => (
           <div
             {...getRootProps()}

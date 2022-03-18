@@ -23,14 +23,14 @@ const CreateNewPassword: NextPageWithLayout = () => {
     passwordConfirm: '',
   }
 
-  const handleValidate = ({ password }: { password: string }) => computePasswordStrength(password)
+  const validateForm = ({ password }: { password: string }) => computePasswordStrength(password)
 
   return (
     <>
       <Head>
         <title>Daily Press - Create New Password</title>
       </Head>
-      <Formik initialValues={formInitialValues} onSubmit={() => {}} validate={handleValidate}>
+      <Formik initialValues={formInitialValues} onSubmit={() => {}} validate={validateForm}>
         {({ isSubmitting }) => (
           <Form className="flex w-full flex-col items-center">
             <div className="mb-[8px] w-full">

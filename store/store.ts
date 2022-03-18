@@ -1,9 +1,8 @@
 import createStore from 'zustand'
-import createPasswordStrengthSlice, { PasswordStrengthSlice } from './createPasswordStrengthSlice'
+import { StoreState } from '../types/StoreState.type'
+import createPasswordStrengthSlice from './createPasswordStrengthSlice'
 
-export type State = PasswordStrengthSlice
-
-const useStore = createStore<State>((set) => ({
+const useStore = createStore<StoreState>((set) => ({
   ...createPasswordStrengthSlice(set),
 }))
 

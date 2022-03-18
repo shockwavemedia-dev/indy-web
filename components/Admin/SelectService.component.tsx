@@ -81,7 +81,7 @@ const ServiceRow = ({
 }) => {
   const [isServiceSelected, setServiceSelected] = useState(false)
 
-  const handleClick = () => {
+  const toggleService = () => {
     setServiceSelected(!isServiceSelected)
 
     if (!isServiceSelected) {
@@ -102,7 +102,7 @@ const ServiceRow = ({
         className="flex h-[33px] w-full cursor-default items-center justify-between py-[8px] px-[12px] hover:bg-pattensblue"
         type="button"
         name={service.serviceId.toString()}
-        onClick={handleClick}
+        onClick={toggleService}
       >
         <div>{service.serviceId}</div>
         <div
@@ -131,16 +131,16 @@ const ServiceRow = ({
             }
           }
 
-          return <ExtraRow extra={extra} selectExtra={handleSelectExtra} key={i} />
+          return <Extra extra={extra} selectExtra={handleSelectExtra} key={i} />
         })}
     </>
   )
 }
 
-const ExtraRow = ({ extra, selectExtra }: { extra: string; selectExtra: () => void }) => {
+const Extra = ({ extra, selectExtra }: { extra: string; selectExtra: () => void }) => {
   const [isExtraSelected, setExtraSelected] = useState(false)
 
-  const handleClick = () => {
+  const toggleExtra = () => {
     setExtraSelected(!isExtraSelected)
     selectExtra()
   }
@@ -149,7 +149,7 @@ const ExtraRow = ({ extra, selectExtra }: { extra: string; selectExtra: () => vo
     <button
       className="flex h-[33px] w-full cursor-default items-center justify-between py-[8px] pl-[36px] pr-[12px] hover:bg-pattensblue"
       type="button"
-      onClick={handleClick}
+      onClick={toggleExtra}
     >
       <div>{extra}</div>
       <div

@@ -31,7 +31,7 @@ const NewEventModal = ({
     attachment: [],
   }
 
-  const handleSubmit = async (
+  const submitForm = async (
     values: NewEventForm,
     { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
   ) => {
@@ -50,7 +50,7 @@ const NewEventModal = ({
     <>
       {isVisible && (
         <Modal title="New Event" onClose={onClose}>
-          <Formik initialValues={formInitialValues} onSubmit={handleSubmit}>
+          <Formik initialValues={formInitialValues} onSubmit={submitForm}>
             {({ isSubmitting, setFieldValue, values: { services } }) => (
               <Form>
                 <div className="flex w-[560px] flex-col">

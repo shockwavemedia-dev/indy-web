@@ -36,7 +36,7 @@ const SignUp: NextPageWithLayout = () => {
     rememberMe: false,
   }
 
-  const handleFormSubmit = async (
+  const submitForm = async (
     signUpFormValues: SignUpForm,
     { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
   ) => {
@@ -88,18 +88,14 @@ const SignUp: NextPageWithLayout = () => {
     setSubmitting(false)
   }
 
-  const handleValidate = ({ password }: { password: string }) => computePasswordStrength(password)
+  const validateForm = ({ password }: { password: string }) => computePasswordStrength(password)
 
   return (
     <>
       <Head>
         <title>Daily Press - Sign Up</title>
       </Head>
-      <Formik
-        initialValues={formInitialValues}
-        onSubmit={handleFormSubmit}
-        validate={handleValidate}
-      >
+      <Formik initialValues={formInitialValues} onSubmit={submitForm} validate={validateForm}>
         {({ isSubmitting }) => (
           <Form className="flex w-full flex-col items-center">
             <div className="mb-[18px] flex w-full space-x-[12px]">

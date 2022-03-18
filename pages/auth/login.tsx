@@ -23,7 +23,7 @@ const Login: NextPageWithLayout = () => {
     rememberMe: false,
   }
 
-  const handleFormSubmit = async (
+  const submitForm = async (
     signInFormValues: SignInForm,
     { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
   ) => {
@@ -47,7 +47,7 @@ const Login: NextPageWithLayout = () => {
       <Head>
         <title>Daily Press - Login</title>
       </Head>
-      <Formik initialValues={formInitialValues} onSubmit={handleFormSubmit}>
+      <Formik initialValues={formInitialValues} onSubmit={submitForm}>
         {({ isSubmitting }) => (
           <Form className="flex w-full flex-col items-center">
             <div className="mb-[18px] flex w-full">

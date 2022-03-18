@@ -12,7 +12,7 @@ const AuthLayout = ({
   needsAuth = false,
 }: {
   title: string
-  subtitle: string | ReactElement
+  subtitle: ReactElement | string
   children: ReactElement
   className: string
   needsAuth?: boolean
