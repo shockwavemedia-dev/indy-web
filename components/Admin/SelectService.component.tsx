@@ -29,9 +29,7 @@ const SelectService = ({
     return data
   })
 
-  const toggleServices = () => {
-    setServicesVisible(!isServicesVisible)
-  }
+  const toggleServices = () => setServicesVisible(!isServicesVisible)
 
   return (
     <div className="flex w-full flex-col">
