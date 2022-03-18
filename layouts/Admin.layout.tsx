@@ -11,7 +11,7 @@ import NewProjectBriefModal from '../components/Admin/NewProjectBriefModal.compo
 import SupportRequestModal from '../components/Admin/SupportRequestModal.component'
 import BellIcon from '../components/Common/Icons/Bell.icon'
 import CaretDownIcon from '../components/Common/Icons/CaretDown.icon'
-import CaretRightIcon from '../components/Common/Icons/CaretRight.icon'
+import CaretRightSmallIcon from '../components/Common/Icons/CaretRightSmall.icon'
 import MagnifyingGlassIcon from '../components/Common/Icons/MagnifyingGlass.icon'
 import { Navigation } from '../interfaces/Navigation.interface'
 import DailyPressLogoLight from '../public/images/daily-press-logo-light.png'
@@ -168,7 +168,7 @@ const AdminLayout = ({ children }: { children: ReactNode }) => {
           <div className="mb-[13px] flex items-center justify-between">
             <div className="flex items-center space-x-[12px]">
               <div className="font-inter text-[12px] font-medium text-manatee">Admin Panel</div>
-              <CaretRightIcon isSmall className="stroke-frenchgray" />
+              <CaretRightSmallIcon className="stroke-frenchgray" />
               <div className="font-inter text-[12px] font-semibold capitalize text-shark">
                 {pathname.split('/').pop()?.replace('-', ' ')}
               </div>
