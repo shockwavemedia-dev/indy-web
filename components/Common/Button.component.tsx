@@ -19,7 +19,7 @@ const Button = ({
     type={type}
     aria-label={ariaLabel}
     disabled={disabled}
-    className={`flex h-[44px] flex-1 cursor-pointer items-center justify-center space-x-[8px] rounded-[4px] font-inter text-[14px] font-medium ${
+    className={`flex h-11 flex-1 cursor-pointer items-center justify-center space-x-2 rounded font-inter text-sm font-medium ${
       isLight ? 'border border-solid border-tuna text-shark' : 'bg-shark text-white'
     }`}
     onClick={onClick}

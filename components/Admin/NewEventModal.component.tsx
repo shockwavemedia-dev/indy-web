@@ -53,8 +53,8 @@ const NewEventModal = ({
           <Formik initialValues={formInitialValues} onSubmit={submitForm}>
             {({ isSubmitting, setFieldValue, values: { services } }) => (
               <Form>
-                <div className="flex w-[560px] flex-col">
-                  <div className="mb-[24px]">
+                <div className="flex w-140 flex-col">
+                  <div className="mb-6">
                     <TextInput
                       label="Subject"
                       Icon={PencilIcon}
@@ -63,7 +63,7 @@ const NewEventModal = ({
                       disableAutoComplete
                     />
                   </div>
-                  <div className="mb-[24px] flex space-x-[12px]">
+                  <div className="mb-6 flex space-x-3">
                     <SelectService selectedServices={services} setFieldValue={setFieldValue} />
                     <TextInput
                       label="Due Date"
@@ -73,7 +73,7 @@ const NewEventModal = ({
                       disableAutoComplete
                     />
                   </div>
-                  <div className="mb-[24px]">
+                  <div className="mb-6">
                     <TextAreaInput
                       label="Description"
                       Icon={PencilIcon}
@@ -81,14 +81,14 @@ const NewEventModal = ({
                       name="description"
                     />
                   </div>
-                  <div className="mb-[32px]">
+                  <div className="mb-8">
                     <FileInput
                       label="Upload Attachments"
                       name="attachment"
                       setFieldValue={setFieldValue}
                     />
                   </div>
-                  <div className="flex space-x-[12px]">
+                  <div className="flex space-x-3">
                     <Button ariaLabel="Cancel" isLight onClick={onClose}>
                       Cancel
                     </Button>

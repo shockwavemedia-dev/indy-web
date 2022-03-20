@@ -27,8 +27,8 @@ const SupportRequestModal = ({
           <Formik initialValues={formInitialValues} onSubmit={() => {}}>
             {({ isSubmitting }) => (
               <Form>
-                <div className="flex w-[560px] flex-col">
-                  <div className="mb-[24px]">
+                <div className="flex w-140 flex-col">
+                  <div className="mb-6">
                     <TextInput
                       label="Department"
                       Icon={LightbulbIcon}
@@ -37,7 +37,7 @@ const SupportRequestModal = ({
                       disableAutoComplete
                     />
                   </div>
-                  <div className="mb-[24px]">
+                  <div className="mb-6">
                     <TextAreaInput
                       label="Message"
                       Icon={PencilIcon}
@@ -45,7 +45,7 @@ const SupportRequestModal = ({
                       name="message"
                     />
                   </div>
-                  <div className="flex space-x-[12px]">
+                  <div className="flex space-x-3">
                     <Button ariaLabel="Cancel" isLight onClick={onClose}>
                       Cancel
                     </Button>

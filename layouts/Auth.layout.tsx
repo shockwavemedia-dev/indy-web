@@ -34,13 +34,19 @@ const AuthLayout = ({
   return (
     <div className="flex min-h-screen flex-col bg-shark">
       <div
-        className={`m-auto flex flex-col items-center rounded-[4px] bg-white px-[88px] py-[60px] ${className}`}
+        className={`m-auto flex flex-col items-center rounded bg-white px-22 py-15 ${className}`}
       >
-        <div className="mb-[16px]">
-          <Image draggable={false} src={DailyPressLogo} alt="Daily Press" height={65} width={65} />
+        <div className="mb-4">
+          <Image
+            draggable={false}
+            src={DailyPressLogo}
+            alt="Daily Press"
+            height="65rem"
+            width="65rem"
+          />
         </div>
-        <div className="select-none font-inter text-[28px] font-semibold">{title}</div>
-        <div className="mb-[24px] text-center font-inter text-[16px] font-normal text-nevada">
+        <div className="select-none font-inter text-2.5xl font-semibold">{title}</div>
+        <div className="mb-6 text-center font-inter text-base font-normal text-nevada">
           {subtitle}
         </div>
         {children}

@@ -93,7 +93,7 @@ const Select = ({
 
   return (
     <div className="flex w-full flex-col">
-      <label className="mb-[8px] font-inter text-[12px] font-normal text-mineshaft" htmlFor={name}>
+      <label className="mb-2 font-inter text-xs font-normal text-mineshaft" htmlFor={name}>
         {label}
       </label>
       <ReactSelect

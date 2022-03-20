@@ -8,13 +8,10 @@ const Checkbox = ({ name, label }: { name: string; label: string }) => {
   const toggleCheckbox = () => setChecked(!isChecked)
 
   return (
-    <label
-      htmlFor={name}
-      className="flex items-center space-x-[12px] font-inter text-[14px] font-normal"
-    >
+    <label htmlFor={name} className="flex items-center space-x-3 font-inter text-sm font-normal">
       <Field type="checkbox" name={name} id={name} hidden onClick={toggleCheckbox} />
       <div
-        className={`flex min-h-[16px] min-w-[16px] items-center justify-center rounded-[4px] border border-solid border-mineshaft ${
+        className={`flex min-h-4 min-w-4 items-center justify-center rounded border border-solid border-mineshaft ${
           isChecked && 'bg-mineshaft'
         }`}
       >

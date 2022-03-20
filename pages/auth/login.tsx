@@ -50,7 +50,7 @@ const Login: NextPageWithLayout = () => {
       <Formik initialValues={formInitialValues} onSubmit={submitForm}>
         {({ isSubmitting }) => (
           <Form className="flex w-full flex-col items-center">
-            <div className="mb-[18px] flex w-full">
+            <div className="mb-4.5 flex w-full">
               <TextInput
                 type="email"
                 name="email"
@@ -59,7 +59,7 @@ const Login: NextPageWithLayout = () => {
                 placeholder="Enter Email"
               />
             </div>
-            <div className="mb-[32px] flex w-full">
+            <div className="mb-8 flex w-full">
               <TextInput
                 type="password"
                 name="password"
@@ -68,18 +68,18 @@ const Login: NextPageWithLayout = () => {
                 placeholder="Enter Password"
               />
             </div>
-            <div className="mb-[32px] flex w-full justify-between">
+            <div className="mb-8 flex w-full justify-between">
               <Checkbox name="rememberMe" label="Remember me" />
               <Link href="/auth/forgot-password">Forgot Password?</Link>
             </div>
-            <div className="mb-[24px] flex w-[312px]">
+            <div className="mb-6 flex w-78">
               <Button type="submit" ariaLabel="Login" disabled={isSubmitting}>
                 <span>Login</span>
                 <CaretRightIcon className="stroke-white" />
               </Button>
             </div>
-            <div className="flex items-center space-x-[6px]">
-              <div className="font-inter text-[14px] font-normal text-emperor">
+            <div className="flex items-center space-x-1.5">
+              <div className="font-inter text-sm font-normal text-emperor">
                 {"Don't have an account?"}
               </div>
               <Link href="/auth/sign-up">Sign Up</Link>
@@ -95,7 +95,7 @@ Login.getLayout = (page: ReactElement) => (
   <AuthLayout
     title="Welcome to Daily Press"
     subtitle="Please log in to your account and start the adventure"
-    className="w-[588px]"
+    className="w-147"
     needsAuth
   >
     {page}

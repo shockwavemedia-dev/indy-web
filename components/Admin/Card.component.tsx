@@ -10,9 +10,9 @@ const Card = ({
   className?: string
 }) => (
   <div
-    className={`flex flex-col rounded-[4px] border border-solid border-athensgray bg-white p-[24px] ${className}`}
+    className={`flex flex-col rounded border border-solid border-athensgray bg-white p-6 ${className}`}
   >
-    <div className="font-inter text-[18px] font-semibold text-shark">{title}</div>
+    <div className="font-inter text-lg font-semibold text-shark">{title}</div>
     {children}
   </div>
 )

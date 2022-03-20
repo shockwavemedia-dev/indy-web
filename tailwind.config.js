@@ -15,6 +15,57 @@ module.exports = {
         'span-9': 'span 9 / span 9',
         'span-11': 'span 11 / span 11',
       },
+      padding: {
+        2.5: '.625rem',
+        3.5: '.875rem',
+        7.5: '1.875rem',
+        9.5: '2.375rem',
+        15: '3.75rem',
+        22: '5.5rem',
+      },
+      margin: {
+        2.5: '.625rem',
+        4.5: '1.125rem',
+        7: '1.75rem',
+      },
+      fontSize: {
+        xxs: ['.625rem', '.75rem'],
+        '2.5xl': ['1.75rem', '2.125rem'],
+      },
+      width: {
+        78: '19.5rem',
+        140: '35rem',
+        142.5: '35.625rem',
+        147: '36.75rem',
+        163: '40.75rem',
+        275: '68.75rem',
+      },
+      height: {
+        1.5: '.375rem',
+        8.5: '2.125rem',
+        11.5: '2.875rem',
+        18.5: '4.625rem',
+        35: '8.75rem',
+        300: '75rem',
+      },
+      inset: {
+        0.5: '.125rem',
+      },
+      minWidth: {
+        4: '1rem',
+        10: '2.5rem',
+        75: '18.75rem',
+      },
+      minHeight: {
+        4: '1rem',
+        10: '2.5rem',
+      },
+      maxHeight: {
+        75: '18.75rem',
+      },
+      spacing: {
+        1.5: '.375rem',
+      },
     },
     boxShadow: {
       'react-select': '0 0 0 1px #0000001a, 0 4px 11px #0000001a',

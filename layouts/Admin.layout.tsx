@@ -127,8 +127,8 @@ const AdminLayout = ({ children }: { children: ReactNode }) => {
         onClose={toggleSupportRequestModal}
       />
       <div className="flex min-h-screen">
-        <div className="flex min-w-[300px] flex-col bg-mineshaft px-[24px] pt-[30px]">
-          <div className="mb-[24px]">
+        <div className="flex min-w-75 flex-col bg-mineshaft px-6 pt-7.5">
+          <div className="mb-6">
             <Image
               draggable={false}
               src={DailyPressLogoLight}
@@ -137,19 +137,19 @@ const AdminLayout = ({ children }: { children: ReactNode }) => {
               width={50}
             />
           </div>
-          <div className="mb-[28px] flex space-x-[12px]">
+          <div className="mb-7 flex space-x-3">
             <JobsStatusCountCard value={12} description="Pending Jobs" />
             <JobsStatusCountCard value={4} description="Jobs To Review" />
           </div>
-          <div className="flex flex-col space-y-[20px]">
+          <div className="flex flex-col space-y-5">
             {navigations.map((navigation, i) => {
               const isCurrentPath = navigation.pathname === pathname
 
               return (
-                <div key={i} className="space-y-[20px]">
+                <div key={i} className="space-y-5">
                   <NavigationButton navigation={navigation} isCurrentPath={isCurrentPath} />
                   {navigation.children && (
-                    <div className="space-y-[16px] pl-[38px]">
+                    <div className="space-y-4 pl-9.5">
                       {navigation.children?.map((navigationChild, i) => (
                         <ChildNavigationButton
                           key={i}
@@ -164,32 +164,32 @@ const AdminLayout = ({ children }: { children: ReactNode }) => {
             })}
           </div>
         </div>
-        <div className="flex flex-1 flex-col bg-wildsand p-[24px]">
-          <div className="mb-[13px] flex items-center justify-between">
-            <div className="flex items-center space-x-[12px]">
-              <div className="font-inter text-[12px] font-medium text-manatee">Admin Panel</div>
+        <div className="flex flex-1 flex-col bg-wildsand p-6">
+          <div className="mb-3.5 flex items-center justify-between">
+            <div className="flex items-center space-x-3">
+              <div className="font-inter text-xs font-medium text-manatee">Admin Panel</div>
               <CaretRightSmallIcon className="stroke-frenchgray" />
-              <div className="font-inter text-[12px] font-semibold capitalize text-shark">
+              <div className="font-inter text-xs font-semibold capitalize text-shark">
                 {pathname.split('/').pop()?.replace('-', ' ')}
               </div>
             </div>
             <div className="flex items-center">
-              <button className="mr-[24px]" name="Search">
+              <button className="mr-5" name="Search">
                 <MagnifyingGlassIcon />
               </button>
-              <button className="relative mr-[32px]" name="Notifications">
+              <button className="relative mr-8" name="Notifications">
                 <BellIcon />
-                <div className="absolute top-[-2px] right-[-2px] h-[14px] w-[14px] rounded-full border border-solid border-wildsand bg-shark" />
+                <div className="absolute -top-0.5 -right-0.5 h-3.5 w-3.5 rounded-full border border-solid border-wildsand bg-shark" />
               </button>
-              <div className="mr-[20px] flex items-center space-x-[12px]">
+              <div className="mr-5 flex items-center space-x-3">
                 <div className="flex">
                   <Image src={DummyAvatar} alt="Dummy" height={32} width={32} />
                 </div>
-                <div className="flex h-[36px] flex-col">
-                  <div className="font-inter text-[14px] font-medium text-shark">
+                <div className="flex h-9 flex-col">
+                  <div className="font-inter text-sm font-medium text-shark">
                     {session?.user.firstName} {session?.user.lastName}
                   </div>
-                  <div className="font-inter text-[12px] font-normal text-stormgray">
+                  <div className="font-inter text-xs font-normal text-stormgray">
                     Broncos Leagues Club
                   </div>
                 </div>
@@ -199,10 +199,10 @@ const AdminLayout = ({ children }: { children: ReactNode }) => {
               </button>
             </div>
           </div>
-          <div className="mb-[16px] font-inter text-[24px] font-semibold capitalize text-shark">
+          <div className="mb-4 font-inter text-2xl font-semibold capitalize text-shark">
             {pathname.split('/').pop()?.replace('-', ' ')}
           </div>
-          <div className="mb-[20px] flex space-x-[20px]">
+          <div className="mb-5 flex space-x-5">
             <FancyButton
               title="New Event"
               subtitle="Laborerivit rem cones mil"
@@ -224,7 +224,7 @@ const AdminLayout = ({ children }: { children: ReactNode }) => {
               onClick={toggleSupportRequestModal}
             />
           </div>
-          <hr className="mb-[20px] border-t-athensgray" />
+          <hr className="mb-5 border-t-athensgray" />
           <div className="flex-1">{children}</div>
         </div>
       </div>
@@ -239,15 +239,13 @@ const NavigationButton = ({
   navigation: Navigation
   isCurrentPath: boolean
 }) => (
-  <div className="flex cursor-pointer items-center justify-end space-x-[12px]">
+  <div className="flex cursor-pointer items-center justify-end space-x-3">
     <div
-      className={`inline-block h-[20px] w-[20px] rounded-full ${
-        isCurrentPath ? 'bg-white' : 'bg-abbey'
-      }`}
+      className={`inline-block h-5 w-5 rounded-full ${isCurrentPath ? 'bg-white' : 'bg-abbey'}`}
     />
     {navigation.children ? (
       <button
-        className={`font-400 flex flex-1 items-center justify-between font-inter text-[14px] ${
+        className={`font-400 flex flex-1 items-center justify-between font-inter text-sm ${
           isCurrentPath ? 'text-white' : 'text-santasgray'
         }`}
       >
@@ -257,7 +255,7 @@ const NavigationButton = ({
     ) : (
       <Link href={navigation.pathname || '#'} passHref>
         <div
-          className={`font-400 flex-1 font-inter text-[14px] ${
+          className={`font-400 flex-1 font-inter text-sm ${
             isCurrentPath ? 'text-white' : 'text-santasgray'
           }`}
         >
@@ -275,15 +273,15 @@ const ChildNavigationButton = ({
   navigation: Navigation
   isCurrentPath: boolean
 }) => (
-  <div className="flex cursor-pointer items-center space-x-[12px]">
+  <div className="flex cursor-pointer items-center space-x-3">
     <div
-      className={`inline-block h-[6px] w-[6px] rounded-full  ${
+      className={`inline-block h-1.5 w-1.5 rounded-full  ${
         isCurrentPath ? 'bg-white' : 'bg-abbey'
       }`}
     />
     <Link href={navigation.pathname || '#'} passHref>
       <div
-        className={`font-400 flex-1 font-inter text-[14px] ${
+        className={`font-400 flex-1 font-inter text-sm ${
           isCurrentPath ? 'text-white' : 'text-santasgray'
         }`}
       >

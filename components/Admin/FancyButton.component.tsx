@@ -10,15 +10,15 @@ const FancyButton = ({
   onClick: MouseEventHandler<HTMLButtonElement>
 }) => (
   <button
-    className="flex flex-1 items-center space-x-[16px] rounded-[4px] border border-solid border-athensgray bg-white px-[24px] py-[20px]"
+    className="flex flex-1 items-center space-x-4 rounded border border-solid border-athensgray bg-white px-6 py-5"
     onClick={onClick}
   >
-    <div className="min-h-[40px] min-w-[40px] rounded-[4px] bg-iron" />
+    <div className="min-h-10 min-w-10 rounded bg-iron" />
     <div>
-      <div className="text-left font-inter text-[16px] font-semibold text-shark line-clamp-1">
+      <div className="text-left font-inter text-base font-semibold text-shark line-clamp-1">
         {title}
       </div>
-      <div className="text-left font-inter text-[12px] font-normal text-stormgray line-clamp-1">
+      <div className="text-left font-inter text-xs font-normal text-stormgray line-clamp-1">
         {subtitle}
       </div>
     </div>

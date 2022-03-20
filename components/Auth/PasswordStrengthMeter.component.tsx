@@ -14,8 +14,8 @@ const PasswordStrengthMeter = ({ strength }: { strength: number }) => {
   }
 
   return (
-    <div className="flex items-center space-x-[12px]">
-      <div className="flex space-x-[8px]">
+    <div className="flex items-center space-x-3">
+      <div className="flex space-x-2">
         {[...Array(5)].map((_, i) => {
           let color = 'bg-gallery'
 
@@ -29,10 +29,10 @@ const PasswordStrengthMeter = ({ strength }: { strength: number }) => {
             }
           }
 
-          return <div key={i} className={`h-[6px] w-[24px] rounded-[24px] ${color}`} />
+          return <div key={i} className={`h-1.5 w-6 rounded-3xl ${color}`} />
         })}
       </div>
-      <div className="font-inter text-[10px] font-normal text-nevada">{getStrengthText()}</div>
+      <div className="font-inter text-xxs font-normal text-nevada">{getStrengthText()}</div>
     </div>
   )
 }
