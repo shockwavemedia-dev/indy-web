@@ -2,7 +2,7 @@ import { Form, Formik } from 'formik'
 import Head from 'next/head'
 import { ReactElement } from 'react'
 import Button from '../../components/Common/Button.component'
-import CaretRightIcon from '../../components/Common/Icons/CaretRight.icon'
+import CaretIcon from '../../components/Common/Icons/Caret.icon'
 import EmailIcon from '../../components/Common/Icons/Email.icon'
 import Link from '../../components/Common/Link.component'
 import TextInput from '../../components/Common/TextInput.component'
@@ -35,7 +35,7 @@ const ForgotPassword: NextPageWithLayout = () => {
             <div className="mb-5 flex w-78">
               <Button type="submit" ariaLabel="Restore Password" disabled={isSubmitting}>
                 <span>Restore Password</span>
-                <CaretRightIcon className="stroke-white" />
+                <CaretIcon className="stroke-white" />
               </Button>
             </div>
             <Link href="/auth/login">Cancel</Link>

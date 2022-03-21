@@ -13,7 +13,7 @@ const TextInput = ({
   type?: 'text' | 'email' | 'password'
   name: string
   label: string
-  Icon: ComponentType
+  Icon: ComponentType<{ className: string }>
   placeholder: string
   disableAutoComplete?: boolean
 }) => {
@@ -28,7 +28,7 @@ const TextInput = ({
       </label>
       <div className="flex h-11.5 items-center overflow-hidden rounded border border-solid border-ebonyclay border-opacity-10">
         <label className="flex h-full items-center pl-2.5 pr-2" htmlFor={name}>
-          <Icon />
+          <Icon className="stroke-black" />
         </label>
         <Field
           className="h-full w-full pr-2.5 font-inter text-sm font-normal placeholder-stormgray"

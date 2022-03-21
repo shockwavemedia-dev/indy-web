@@ -5,7 +5,7 @@ import { useRouter } from 'next/router'
 import { ReactElement } from 'react'
 import Button from '../../components/Common/Button.component'
 import Checkbox from '../../components/Common/Checkbox.component'
-import CaretRightIcon from '../../components/Common/Icons/CaretRight.icon'
+import CaretIcon from '../../components/Common/Icons/Caret.icon'
 import EmailIcon from '../../components/Common/Icons/Email.icon'
 import LockIcon from '../../components/Common/Icons/Lock.icon'
 import Link from '../../components/Common/Link.component'
@@ -75,7 +75,7 @@ const Login: NextPageWithLayout = () => {
             <div className="mb-6 flex w-78">
               <Button type="submit" ariaLabel="Login" disabled={isSubmitting}>
                 <span>Login</span>
-                <CaretRightIcon className="stroke-white" />
+                <CaretIcon className="stroke-white" />
               </Button>
             </div>
             <div className="flex items-center space-x-1.5">

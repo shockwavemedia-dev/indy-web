@@ -8,7 +8,7 @@ import PasswordStrengthMeter from '../../components/Auth/PasswordStrengthMeter.c
 import Button from '../../components/Common/Button.component'
 import Checkbox from '../../components/Common/Checkbox.component'
 import BriefcaseIcon from '../../components/Common/Icons/Briefcase.icon'
-import CaretRightIcon from '../../components/Common/Icons/CaretRight.icon'
+import CaretIcon from '../../components/Common/Icons/Caret.icon'
 import EmailIcon from '../../components/Common/Icons/Email.icon'
 import LockIcon from '../../components/Common/Icons/Lock.icon'
 import UserIcon from '../../components/Common/Icons/User.icon'
@@ -160,7 +160,7 @@ const SignUp: NextPageWithLayout = () => {
             <div className="mb-6 flex w-78">
               <Button type="submit" ariaLabel="Sign Up" disabled={isSubmitting}>
                 <span>Sign Up</span>
-                <CaretRightIcon className="stroke-white" />
+                <CaretIcon className="stroke-white" />
               </Button>
             </div>
             <div className="flex items-center space-x-1.5">
