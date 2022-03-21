@@ -9,6 +9,7 @@ import NavigationButton from '../components/Admin/NavigationButton.component'
 import NewEventModal from '../components/Admin/NewEventModal.component'
 import NewProjectBriefModal from '../components/Admin/NewProjectBriefModal.component'
 import SupportRequestModal from '../components/Admin/SupportRequestModal.component'
+import NewClientModal from '../components/Admin/NewClientModal.component'
 import BellIcon from '../components/Common/Icons/Bell.icon'
 import CaretDownIcon from '../components/Common/Icons/CaretDown.icon'
 import CaretRightSmallIcon from '../components/Common/Icons/CaretRightSmall.icon'
@@ -102,6 +103,7 @@ const AdminLayout = ({ children }: { children: ReactNode }) => {
   const [isNewEventModalVisible, setNewEventModalVisible] = useState(false)
   const [isNewProjectBriefModalVisible, setNewProjectBriefModalVisible] = useState(false)
   const [isSupportRequestModalVisible, setSupportRequestModalVisible] = useState(false)
+  const [isNewClientModalVisible, setNewClientModalVisible] = useState(false)
 
   const toggleNewEventModal = () => setNewEventModalVisible(!isNewEventModalVisible)
 
@@ -110,6 +112,8 @@ const AdminLayout = ({ children }: { children: ReactNode }) => {
 
   const toggleSupportRequestModal = () =>
     setSupportRequestModalVisible(!isSupportRequestModalVisible)
+
+  const toggleNewClientModal = () => setNewClientModalVisible(!isNewClientModalVisible)
 
   if (status === 'loading') {
     return null
@@ -126,6 +130,7 @@ const AdminLayout = ({ children }: { children: ReactNode }) => {
         isVisible={isSupportRequestModalVisible}
         onClose={toggleSupportRequestModal}
       />
+      <NewClientModal isVisible={isNewClientModalVisible} onClose={toggleNewClientModal} />
       <div className="flex min-h-screen">
         <div className="flex min-w-[300px] flex-col bg-mineshaft px-[24px] pt-[30px]">
           <div className="mb-[24px]">
@@ -216,7 +221,7 @@ const AdminLayout = ({ children }: { children: ReactNode }) => {
             <FancyButton
               title="Analytics"
               subtitle="Laborerivit rem cones mil"
-              onClick={() => {}}
+              onClick={toggleNewClientModal}
             />
             <FancyButton
               title="Support Request"
