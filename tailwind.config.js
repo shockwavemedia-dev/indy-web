@@ -18,6 +18,7 @@ module.exports = {
       padding: {
         2.5: '.625rem',
         3.5: '.875rem',
+        4.5: '1.125rem',
         7.5: '1.875rem',
         9.5: '2.375rem',
         15: '3.75rem',
@@ -27,12 +28,14 @@ module.exports = {
         2.5: '.625rem',
         4.5: '1.125rem',
         7: '1.75rem',
+        15.5: '3.875rem',
       },
       fontSize: {
         xxs: ['.625rem', '.75rem'],
         '2.5xl': ['1.75rem', '2.125rem'],
       },
       width: {
+        9.5: '2.375rem',
         78: '19.5rem',
         140: '35rem',
         142.5: '35.625rem',
@@ -45,6 +48,7 @@ module.exports = {
         8.5: '2.125rem',
         11.5: '2.875rem',
         18.5: '4.625rem',
+        30: '7.5rem',
         35: '8.75rem',
         300: '75rem',
       },
@@ -63,6 +67,7 @@ module.exports = {
       maxHeight: {
         75: '18.75rem',
       },
+      maxWidth: {},
       spacing: {
         1.5: '.375rem',
       },
@@ -72,9 +77,9 @@ module.exports = {
     },
     fontFamily: {
       inter: ['Inter'],
+      urbanist: ['Urbanist'],
     },
     colors: {
-      white: '#FFFFFF',
       shark: '#1F2024',
       nevada: '#6B6E75',
       emperor: '#545454',
@@ -97,6 +102,18 @@ module.exports = {
       athensgray: '#E7E8EB',
       tuna: '#33353C',
       pattensblue: '#DEEBFF',
+
+      onyx: '#32343D',
+      white: '#FFFFFF',
+      rhythm: '#8D8D7C',
+      waterloo: '#7C7C8D',
+      'bright-gray': '#E8E8EF',
+      'metallic-silver': '#ABABB9',
+      'cosmic-latte': '#FFF6EA',
+      'ghost-white': '#FAFAFC',
+      'jungle-green': '#2BB67D',
+      'lavender-gray': '#C5C5CC',
+      'deep-saffron': '#F3A02E',
     },
   },
   plugins: [require('@tailwindcss/line-clamp')],

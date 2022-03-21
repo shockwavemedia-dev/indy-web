@@ -4,41 +4,58 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { ReactNode, useState } from 'react'
 import FancyButton from '../components/Admin/FancyButton.component'
-import JobsStatusCountCard from '../components/Admin/JobsStatusCountCard.component'
+import JobsStatusCountCard from '../components/Admin/JobStatsCard.component'
 import NewEventModal from '../components/Admin/NewEventModal.component'
 import NewProjectBriefModal from '../components/Admin/NewProjectBriefModal.component'
 import SupportRequestModal from '../components/Admin/SupportRequestModal.component'
 import BellIcon from '../components/Common/Icons/Bell.icon'
+import BriefcaseIcon from '../components/Common/Icons/Briefcase.icon'
+import CalendarIcon from '../components/Common/Icons/Calendar.icon'
+import CaretIcon from '../components/Common/Icons/Caret.icon'
 import CaretDownIcon from '../components/Common/Icons/CaretDown.icon'
-import CaretRightIcon from '../components/Common/Icons/CaretRight.icon'
 import CaretRightSmallIcon from '../components/Common/Icons/CaretRightSmall.icon'
+import ChartIcon from '../components/Common/Icons/Chart.icon'
+import ClipboardIcon from '../components/Common/Icons/Clipboard.icon'
+import EmailIcon from '../components/Common/Icons/Email.icon'
+import EyeOpenIcon from '../components/Common/Icons/EyeOpen.icon'
+import FolderIcon from '../components/Common/Icons/Folder.icon'
 import MagnifyingGlassIcon from '../components/Common/Icons/MagnifyingGlass.icon'
+import MonitorIcon from '../components/Common/Icons/Monitor.icon'
+import NotepadIcon from '../components/Common/Icons/Notepad.icon'
+import PresentationChartIcon from '../components/Common/Icons/PresentationChart.icon'
 import { Navigation } from '../interfaces/Navigation.interface'
-import DailyPressLogoLight from '../public/images/daily-press-logo-light.png'
+import DailyPressLogo from '../public/images/daily-press-logo.png'
 import DummyAvatar from '../public/images/dummy-avatar.png'
 
 const navigations: Array<Navigation> = [
   {
+    Icon: ChartIcon,
     title: 'Dashboard',
     pathname: '/dashboard',
   },
   {
+    Icon: NotepadIcon,
     title: 'Event Manager',
   },
   {
+    Icon: MonitorIcon,
     title: 'Screen Manager',
   },
   {
+    Icon: EmailIcon,
     title: 'SMS Marketing',
   },
   {
+    Icon: CalendarIcon,
     title: 'Marketing Planning',
     pathname: '/marketing-planning',
   },
   {
+    Icon: FolderIcon,
     title: 'My Files',
   },
   {
+    Icon: ClipboardIcon,
     title: 'Service Request',
     children: [
       {
@@ -71,6 +88,7 @@ const navigations: Array<Navigation> = [
     ],
   },
   {
+    Icon: PresentationChartIcon,
     title: 'Analytics',
     pathname: '/analytics',
     children: [
@@ -127,42 +145,27 @@ const AdminLayout = ({ children }: { children: ReactNode }) => {
         onClose={toggleSupportRequestModal}
       />
       <div className="flex min-h-screen">
-        <div className="flex min-w-75 flex-col bg-mineshaft px-6 pt-7.5">
-          <div className="mb-6">
+        <div className="flex min-w-75 flex-col bg-white pt-6">
+          <div className="mb-5 pl-6">
             <Image
               draggable={false}
-              src={DailyPressLogoLight}
+              src={DailyPressLogo}
               alt="Daily Press"
-              height={50}
-              width={50}
+              height="50rem"
+              width="50rem"
             />
           </div>
-          <div className="mb-7 flex space-x-3">
-            <JobsStatusCountCard value={12} description="Pending Jobs" />
-            <JobsStatusCountCard value={4} description="Jobs To Review" />
+          <div className="mb-5 flex space-x-3 px-6">
+            <JobsStatusCountCard Icon={BriefcaseIcon} value={12} description="Pending Jobs" />
+            <JobsStatusCountCard Icon={EyeOpenIcon} value={4} description="Jobs To Review" />
           </div>
-          <div className="flex flex-col space-y-5">
-            {navigations.map((navigation, i) => {
-              const isCurrentPath = navigation.pathname === pathname
-
-              return (
-                <div key={i} className="space-y-5">
-                  <NavigationButton navigation={navigation} isCurrentPath={isCurrentPath} />
-                  {navigation.children && (
-                    <div className="space-y-4 pl-9.5">
-                      {navigation.children?.map((navigationChild, i) => (
-                        <ChildNavigationButton
-                          key={i}
-                          navigation={navigationChild}
-                          isCurrentPath={isCurrentPath}
-                        />
-                      ))}
-                    </div>
-                  )}
-                </div>
-              )
-            })}
-          </div>
+          {navigations.map((navigation, i) => (
+            <NavigationButton
+              key={i}
+              navigation={navigation}
+              isCurrentPath={navigation.pathname === pathname}
+            />
+          ))}
         </div>
         <div className="flex flex-1 flex-col bg-wildsand p-6">
           <div className="mb-3.5 flex items-center justify-between">
@@ -225,7 +228,7 @@ const AdminLayout = ({ children }: { children: ReactNode }) => {
             />
           </div>
           <hr className="mb-5 border-t-athensgray" />
-          <div className="flex-1">{children}</div>
+          {children}
         </div>
       </div>
     </>
@@ -233,59 +236,88 @@ const AdminLayout = ({ children }: { children: ReactNode }) => {
 }
 
 const NavigationButton = ({
-  navigation,
+  navigation: { Icon, title, pathname, children },
   isCurrentPath,
 }: {
   navigation: Navigation
   isCurrentPath: boolean
 }) => (
-  <div className="flex cursor-pointer items-center justify-end space-x-3">
-    <div
-      className={`inline-block h-5 w-5 rounded-full ${isCurrentPath ? 'bg-white' : 'bg-abbey'}`}
-    />
-    {navigation.children ? (
-      <button
-        className={`font-400 flex flex-1 items-center justify-between font-inter text-sm ${
-          isCurrentPath ? 'text-white' : 'text-santasgray'
+  <>
+    <div className="flex">
+      {isCurrentPath && <div className="rounded-r border-r-4 border-r-jungle-green" />}
+      <div
+        className={`flex w-full items-center justify-between py-3.5 pr-6 ${
+          isCurrentPath ? 'bg-ghost-white' : ''
         }`}
       >
-        <div>{navigation.title}</div>
-        <CaretRightIcon className="stroke-stormgray" />
-      </button>
-    ) : (
-      <Link href={navigation.pathname || '#'} passHref>
-        <div
-          className={`font-400 flex-1 font-inter text-sm ${
-            isCurrentPath ? 'text-white' : 'text-santasgray'
-          }`}
-        >
-          {navigation.title}
-        </div>
-      </Link>
-    )}
-  </div>
+        {children ? (
+          <button className={`flex items-center ${isCurrentPath ? 'ml-5' : 'ml-6'}`}>
+            {Icon && (
+              <Icon className={isCurrentPath ? 'stroke-jungle-green' : 'stroke-lavender-gray'} />
+            )}
+            <div
+              className={`ml-3 font-urbanist text-sm ${
+                isCurrentPath ? 'font-semibold text-jungle-green' : 'font-medium text-rhythm'
+              }`}
+            >
+              {title}
+            </div>
+          </button>
+        ) : (
+          <Link href={pathname || '#'} passHref>
+            <div
+              className={`flex w-fit cursor-pointer items-center space-x-3 ${
+                isCurrentPath ? 'ml-5' : 'ml-6'
+              }`}
+            >
+              {Icon && (
+                <Icon className={isCurrentPath ? 'stroke-jungle-green' : 'stroke-lavender-gray'} />
+              )}
+              <div
+                className={`font-urbanist text-sm font-semibold ${
+                  isCurrentPath ? 'font-semibold text-jungle-green' : 'font-medium text-rhythm'
+                }`}
+              >
+                {title}
+              </div>
+            </div>
+          </Link>
+        )}
+        {children && (
+          <CaretIcon
+            className={isCurrentPath ? 'stroke-jungle-green' : 'rotate-180 stroke-lavender-gray'}
+          />
+        )}
+      </div>
+    </div>
+    {children?.map((navigationChild, i) => (
+      <ChildNavigationButton key={i} navigation={navigationChild} isCurrentPath={isCurrentPath} />
+    ))}
+  </>
 )
 
 const ChildNavigationButton = ({
-  navigation,
+  navigation: { title, pathname },
   isCurrentPath,
 }: {
   navigation: Navigation
   isCurrentPath: boolean
 }) => (
-  <div className="flex cursor-pointer items-center space-x-3">
-    <div
-      className={`inline-block h-1.5 w-1.5 rounded-full  ${
-        isCurrentPath ? 'bg-white' : 'bg-abbey'
-      }`}
-    />
-    <Link href={navigation.pathname || '#'} passHref>
-      <div
-        className={`font-400 flex-1 font-inter text-sm ${
-          isCurrentPath ? 'text-white' : 'text-santasgray'
-        }`}
-      >
-        {navigation.title}
+  <div className="ml-15.5 py-2">
+    <Link href={pathname || '#'} passHref>
+      <div className="flex w-fit cursor-pointer items-center space-x-3">
+        <div
+          className={`inline-block h-1.5 w-1.5 rounded-full ${
+            isCurrentPath ? 'bg-jungle-green' : 'bg-lavender-gray'
+          }`}
+        />
+        <div
+          className={`font-urbanist text-sm ${
+            isCurrentPath ? 'font-medium text-onyx' : 'font-normal text-waterloo'
+          }`}
+        >
+          {title}
+        </div>
       </div>
     </Link>
   </div>
