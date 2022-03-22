@@ -55,6 +55,7 @@ module.exports = {
       height: {
         1.5: '.375rem',
         8.5: '2.125rem',
+        9.5: '2.375rem',
         11.5: '2.875rem',
         18.5: '4.625rem',
         30: '7.5rem',
@@ -66,13 +67,17 @@ module.exports = {
       },
       minWidth: {
         4: '1rem',
+        9.5: '2.375rem',
         10: '2.5rem',
+        11: '2.75rem',
         11.5: '2.875rem',
         75: '18.75rem',
       },
       minHeight: {
         4: '1rem',
+        9.5: '2.375rem',
         10: '2.5rem',
+        11: '2.75rem',
         11.5: '2.875rem',
       },
       maxHeight: {

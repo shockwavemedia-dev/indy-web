@@ -208,7 +208,7 @@ const AdminLayout = ({ children }: { children: ReactNode }) => {
           <div className="mb-6 flex space-x-6">
             <FancyButton
               Icon={
-                <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-honeydew">
+                <div className="flex min-h-11 min-w-11 items-center justify-center rounded-lg bg-honeydew">
                   <CalendarAddIcon className="stroke-jungle-green" />
                 </div>
               }
@@ -218,7 +218,7 @@ const AdminLayout = ({ children }: { children: ReactNode }) => {
             />
             <FancyButton
               Icon={
-                <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-alice-blue">
+                <div className="flex min-h-11 min-w-11 items-center justify-center rounded-lg bg-alice-blue">
                   <ClipboardCloseIcon className="stroke-bleu-de-france" />
                 </div>
               }
@@ -228,7 +228,7 @@ const AdminLayout = ({ children }: { children: ReactNode }) => {
             />
             <FancyButton
               Icon={
-                <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-cosmic-latte">
+                <div className="flex min-h-11 min-w-11 items-center justify-center rounded-lg bg-cosmic-latte">
                   <PresentationChartIcon className="stroke-deep-saffron" />
                 </div>
               }
@@ -238,7 +238,7 @@ const AdminLayout = ({ children }: { children: ReactNode }) => {
             />
             <FancyButton
               Icon={
-                <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-linen">
+                <div className="flex min-h-11 min-w-11 items-center justify-center rounded-lg bg-linen">
                   <LifeBuoyIcon className="fill-vivid-red-tangelo" />
                 </div>
               }
