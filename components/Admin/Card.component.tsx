@@ -9,10 +9,8 @@ const Card = ({
   children: ReactNode
   className?: string
 }) => (
-  <div
-    className={`flex flex-col rounded border border-solid border-athensgray bg-white p-6 ${className}`}
-  >
-    <div className="font-inter text-lg font-semibold text-shark">{title}</div>
+  <div className={`shadow flex flex-col rounded-xl bg-white p-6 ${className}`}>
+    <div className="font-urbanist text-base font-semibold text-onyx">{title}</div>
     {children}
   </div>
 )
