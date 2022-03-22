@@ -7,13 +7,21 @@ module.exports = {
   theme: {
     extend: {
       gridTemplateRows: {
+        13: 'repeat(13, minmax(0, 1fr))',
         14: 'repeat(14, minmax(0, 1fr))',
         18: 'repeat(18, minmax(0, 1fr))',
+        23: 'repeat(23, minmax(0, 1fr))',
+      },
+      gridTemplateColumns: {
+        14: 'repeat(14, minmax(0, 1fr))',
       },
       gridRow: {
         'span-7': 'span 7 / span 7',
+        'span-8': 'span 8 / span 8',
         'span-9': 'span 9 / span 9',
+        'span-10': 'span 10 / span 10',
         'span-11': 'span 11 / span 11',
+        'span-14': 'span 14 / span 14',
       },
       padding: {
         2.5: '.625rem',
@@ -42,7 +50,7 @@ module.exports = {
         142.5: '35.625rem',
         147: '36.75rem',
         163: '40.75rem',
-        275: '68.75rem',
+        270: '67.5rem',
       },
       height: {
         1.5: '.375rem',
@@ -51,7 +59,7 @@ module.exports = {
         18.5: '4.625rem',
         30: '7.5rem',
         35: '8.75rem',
-        300: '75rem',
+        262.5: '65.625rem',
       },
       inset: {
         0.5: '.125rem',
@@ -59,11 +67,13 @@ module.exports = {
       minWidth: {
         4: '1rem',
         10: '2.5rem',
+        11.5: '2.875rem',
         75: '18.75rem',
       },
       minHeight: {
         4: '1rem',
         10: '2.5rem',
+        11.5: '2.875rem',
       },
       maxHeight: {
         75: '18.75rem',
@@ -111,6 +121,7 @@ module.exports = {
       waterloo: '#7C7C8D',
       honeydew: '#E9FAF3',
       linen: '#FFF0E9',
+      magnolia: '#F9EFFF',
       'bright-gray': '#E8E8EF',
       'metallic-silver': '#ABABB9',
       'cosmic-latte': '#FFF6EA',
@@ -121,6 +132,7 @@ module.exports = {
       'vivid-red-tangelo': '#D25C2A',
       'bleu-de-france': '#2F96EB',
       'alice-blue': '#E9F5FF',
+      'purple-x11': '#A232E7',
     },
   },
   plugins: [require('@tailwindcss/line-clamp')],

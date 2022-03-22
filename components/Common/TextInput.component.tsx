@@ -26,7 +26,7 @@ const TextInput = ({
       <label className="mb-2 font-inter text-xs font-normal text-mineshaft" htmlFor={name}>
         {label}
       </label>
-      <div className="flex h-11.5 items-center overflow-hidden rounded border border-solid border-ebonyclay border-opacity-10">
+      <div className="h-11.5 flex items-center overflow-hidden rounded border border-solid border-ebonyclay border-opacity-10">
         <label className="flex h-full items-center pl-2.5 pr-2" htmlFor={name}>
           <Icon className="stroke-black" />
         </label>
@@ -47,7 +47,7 @@ const TextInput = ({
             tabIndex={-1}
             type="button"
           >
-            <EyeOpenIcon />
+            <EyeOpenIcon className="stroke-black" />
           </button>
         )}
       </div>
