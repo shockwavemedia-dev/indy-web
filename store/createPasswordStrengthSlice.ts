@@ -1,12 +1,7 @@
 import { SetState } from 'zustand'
-import { State } from './store'
+import { StoreState } from '../types/StoreState.type'
 
-export interface PasswordStrengthSlice {
-  passwordStrength: number
-  computePasswordStrength: (password: string) => void
-}
-
-const createPasswordStrengthSlice = (set: SetState<State>) => ({
+const createPasswordStrengthSlice = (set: SetState<StoreState>) => ({
   passwordStrength: 0,
   computePasswordStrength: (password: string) => {
     let computedPasswordStrength = 0

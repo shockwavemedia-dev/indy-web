@@ -13,7 +13,7 @@ const TextInput = ({
   type?: 'text' | 'email' | 'password'
   name: string
   label: string
-  Icon: ComponentType
+  Icon: ComponentType<{ className: string }>
   placeholder: string
   disableAutoComplete?: boolean
 }) => {
@@ -23,15 +23,15 @@ const TextInput = ({
 
   return (
     <div className="flex w-full flex-col">
-      <label className="mb-[8px] font-inter text-[12px] font-normal text-mineshaft" htmlFor={name}>
+      <label className="mb-2 font-inter text-xs font-normal text-mineshaft" htmlFor={name}>
         {label}
       </label>
-      <div className="flex h-[46px] items-center overflow-hidden rounded-[4px] border border-solid border-ebonyclay border-opacity-10">
-        <label className="flex h-full items-center pl-[10px] pr-[8px]" htmlFor={name}>
-          <Icon />
+      <div className="h-11.5 flex items-center overflow-hidden rounded border border-solid border-ebonyclay border-opacity-10">
+        <label className="flex h-full items-center pl-2.5 pr-2" htmlFor={name}>
+          <Icon className="stroke-black" />
         </label>
         <Field
-          className="h-full w-full pr-[10px] font-inter text-[14px] font-normal placeholder-stormgray"
+          className="h-full w-full pr-2.5 font-inter text-sm font-normal placeholder-stormgray"
           type={isShowPassword ? 'text' : type}
           name={name}
           id={name}
@@ -41,13 +41,13 @@ const TextInput = ({
         />
         {type === 'password' && (
           <button
-            className="mr-[10px] flex cursor-pointer justify-center bg-transparent p-0"
+            className="mr-2.5 flex cursor-pointer justify-center bg-transparent p-0"
             aria-label="Show Password"
             onClick={toggleShowPassword}
             tabIndex={-1}
             type="button"
           >
-            <EyeOpenIcon />
+            <EyeOpenIcon className="stroke-black" />
           </button>
         )}
       </div>

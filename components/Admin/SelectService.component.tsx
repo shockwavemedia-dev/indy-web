@@ -33,28 +33,28 @@ const SelectService = ({
 
   return (
     <div className="flex w-full flex-col">
-      <label className="mb-[8px] font-inter text-[12px] font-normal text-mineshaft">Services</label>
+      <label className="mb-2 font-inter text-xs font-normal text-mineshaft">Services</label>
       <div className="relative flex w-full flex-col">
         <button
-          className="flex h-[46px] cursor-default items-center overflow-hidden rounded-[4px] border border-solid border-ebonyclay border-opacity-10 px-[10px] focus-visible:border focus-visible:border-solid focus-visible:border-ebonyclay focus-visible:border-opacity-10"
+          className="flex h-11.5 cursor-default items-center overflow-hidden rounded border border-solid border-ebonyclay border-opacity-10 px-2.5 focus-visible:border focus-visible:border-solid focus-visible:border-ebonyclay focus-visible:border-opacity-10"
           name="Services"
           onClick={toggleServices}
           type="button"
         >
-          <div className="mr-auto flex items-center space-x-[8px]">
-            <LightbulbIcon />
-            <div className="mr-auto font-inter text-[14px] font-normal text-stormgray">
+          <div className="mr-auto flex items-center space-x-2">
+            <LightbulbIcon className="stroke-black" />
+            <div className="mr-auto font-inter text-sm font-normal text-stormgray">
               {isLoading ? 'Loading Services...' : 'Select Services'}
             </div>
           </div>
           <CaretDownIcon className="stroke-black" />
         </button>
         <div
-          className={`absolute top-full z-10 mt-[8px]  flex w-full flex-col overflow-hidden rounded-[4px] bg-white shadow-react-select ${
+          className={`absolute top-full z-10 mt-2 flex w-full flex-col overflow-hidden rounded bg-white shadow-react-select ${
             !isServicesVisible && 'invisible'
           }`}
         >
-          <div className="max-h-[300px] overflow-y-auto py-[4px]">
+          <div className="max-h-75 overflow-y-auto py-1">
             {services?.map((service, i) => (
               <ServiceRow
                 service={service}
@@ -81,7 +81,7 @@ const ServiceRow = ({
 }) => {
   const [isServiceSelected, setServiceSelected] = useState(false)
 
-  const handleClick = () => {
+  const toggleService = () => {
     setServiceSelected(!isServiceSelected)
 
     if (!isServiceSelected) {
@@ -99,18 +99,18 @@ const ServiceRow = ({
   return (
     <>
       <button
-        className="flex h-[33px] w-full cursor-default items-center justify-between py-[8px] px-[12px] hover:bg-pattensblue"
+        className="flex h-8.5 w-full cursor-default items-center justify-between py-2 px-3 hover:bg-pattensblue"
         type="button"
         name={service.serviceId.toString()}
-        onClick={handleClick}
+        onClick={toggleService}
       >
         <div>{service.serviceId}</div>
         <div
-          className={`flex min-h-[16px] min-w-[16px] items-center justify-center rounded-[4px] border border-solid border-mineshaft ${
+          className={`flex min-h-4 min-w-4 items-center justify-center rounded border border-solid border-mineshaft ${
             isServiceSelected ? 'bg-mineshaft' : 'bg-white'
           }`}
         >
-          {isServiceSelected && <CheckIcon />}
+          {isServiceSelected && <CheckIcon className="stroke-white" />}
         </div>
       </button>
       {isServiceSelected &&
@@ -131,33 +131,33 @@ const ServiceRow = ({
             }
           }
 
-          return <ExtraRow extra={extra} selectExtra={handleSelectExtra} key={i} />
+          return <Extra extra={extra} selectExtra={handleSelectExtra} key={i} />
         })}
     </>
   )
 }
 
-const ExtraRow = ({ extra, selectExtra }: { extra: string; selectExtra: () => void }) => {
+const Extra = ({ extra, selectExtra }: { extra: string; selectExtra: () => void }) => {
   const [isExtraSelected, setExtraSelected] = useState(false)
 
-  const handleClick = () => {
+  const toggleExtra = () => {
     setExtraSelected(!isExtraSelected)
     selectExtra()
   }
 
   return (
     <button
-      className="flex h-[33px] w-full cursor-default items-center justify-between py-[8px] pl-[36px] pr-[12px] hover:bg-pattensblue"
+      className="flex h-8.5 w-full cursor-default items-center justify-between py-2 pl-9 pr-3 hover:bg-pattensblue"
       type="button"
-      onClick={handleClick}
+      onClick={toggleExtra}
     >
       <div>{extra}</div>
       <div
-        className={`flex min-h-[16px] min-w-[16px] items-center justify-center rounded-[4px] border border-solid border-mineshaft ${
+        className={`flex min-h-4 min-w-4 items-center justify-center rounded border border-solid border-mineshaft ${
           isExtraSelected ? 'bg-mineshaft' : 'bg-white'
         }`}
       >
-        {isExtraSelected && <CheckIcon />}
+        {isExtraSelected && <CheckIcon className="stroke-white" />}
       </div>
     </button>
   )

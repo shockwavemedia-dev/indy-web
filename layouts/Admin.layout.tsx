@@ -1,45 +1,64 @@
 import { signOut, useSession } from 'next-auth/react'
 import Image from 'next/image'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { ReactNode, useState } from 'react'
-import ChildNavigationButton from '../components/Admin/ChildNavigationButton.component'
 import FancyButton from '../components/Admin/FancyButton.component'
-import JobsStatusCountCard from '../components/Admin/JobsStatusCountCard.component'
-import NavigationButton from '../components/Admin/NavigationButton.component'
+import JobsStatusCountCard from '../components/Admin/JobStatsCard.component'
 import NewEventModal from '../components/Admin/NewEventModal.component'
 import NewProjectBriefModal from '../components/Admin/NewProjectBriefModal.component'
 import SupportRequestModal from '../components/Admin/SupportRequestModal.component'
 import NewClientModal from '../components/Admin/NewClientModal.component'
 import BellIcon from '../components/Common/Icons/Bell.icon'
-import CaretDownIcon from '../components/Common/Icons/CaretDown.icon'
-import CaretRightSmallIcon from '../components/Common/Icons/CaretRightSmall.icon'
+import BriefcaseIcon from '../components/Common/Icons/Briefcase.icon'
+import CalendarIcon from '../components/Common/Icons/Calendar.icon'
+import CalendarAddIcon from '../components/Common/Icons/CalendarAdd.icon'
+import CaretIcon from '../components/Common/Icons/Caret.icon'
+import CaretSmallIcon from '../components/Common/Icons/CaretSmall.icon'
+import ChartIcon from '../components/Common/Icons/Chart.icon'
+import ClipboardIcon from '../components/Common/Icons/Clipboard.icon'
+import ClipboardCloseIcon from '../components/Common/Icons/ClipboardClose.icon'
+import EmailIcon from '../components/Common/Icons/Email.icon'
+import EyeOpenIcon from '../components/Common/Icons/EyeOpen.icon'
+import FolderIcon from '../components/Common/Icons/Folder.icon'
+import LifeBuoyIcon from '../components/Common/Icons/LifeBuoy.icon'
 import MagnifyingGlassIcon from '../components/Common/Icons/MagnifyingGlass.icon'
+import MonitorIcon from '../components/Common/Icons/Monitor.icon'
+import NotepadIcon from '../components/Common/Icons/Notepad.icon'
+import PresentationChartIcon from '../components/Common/Icons/PresentationChart.icon'
 import { Navigation } from '../interfaces/Navigation.interface'
-import DailyPressLogoLight from '../public/images/daily-press-logo-light.png'
+import DailyPressLogo from '../public/images/daily-press-logo.png'
 import DummyAvatar from '../public/images/dummy-avatar.png'
 
 const navigations: Array<Navigation> = [
   {
+    Icon: ChartIcon,
     title: 'Dashboard',
     pathname: '/dashboard',
   },
   {
+    Icon: NotepadIcon,
     title: 'Event Manager',
   },
   {
+    Icon: MonitorIcon,
     title: 'Screen Manager',
   },
   {
+    Icon: EmailIcon,
     title: 'SMS Marketing',
   },
   {
+    Icon: CalendarIcon,
     title: 'Marketing Planning',
     pathname: '/marketing-planning',
   },
   {
+    Icon: FolderIcon,
     title: 'My Files',
   },
   {
+    Icon: ClipboardIcon,
     title: 'Service Request',
     children: [
       {
@@ -72,6 +91,7 @@ const navigations: Array<Navigation> = [
     ],
   },
   {
+    Icon: PresentationChartIcon,
     title: 'Analytics',
     pathname: '/analytics',
     children: [
@@ -105,6 +125,8 @@ const AdminLayout = ({ children }: { children: ReactNode }) => {
   const [isSupportRequestModalVisible, setSupportRequestModalVisible] = useState(false)
   const [isNewClientModalVisible, setNewClientModalVisible] = useState(false)
 
+  const currentPath = pathname.split('/').pop()?.replace('-', ' ')
+
   const toggleNewEventModal = () => setNewEventModalVisible(!isNewEventModalVisible)
 
   const toggleNewProjectBriefModal = () =>
@@ -132,109 +154,198 @@ const AdminLayout = ({ children }: { children: ReactNode }) => {
       />
       <NewClientModal isVisible={isNewClientModalVisible} onClose={toggleNewClientModal} />
       <div className="flex min-h-screen">
-        <div className="flex min-w-[300px] flex-col bg-mineshaft px-[24px] pt-[30px]">
-          <div className="mb-[24px]">
+        <div className="flex min-w-75 flex-col bg-white pt-6">
+          <div className="mb-5 pl-6">
             <Image
               draggable={false}
-              src={DailyPressLogoLight}
+              src={DailyPressLogo}
               alt="Daily Press"
-              height={50}
-              width={50}
+              height="50rem"
+              width="50rem"
             />
           </div>
-          <div className="mb-[28px] flex space-x-[12px]">
-            <JobsStatusCountCard value={12} description="Pending Jobs" />
-            <JobsStatusCountCard value={4} description="Jobs To Review" />
+          <div className="mb-5 flex space-x-3 px-6">
+            <JobsStatusCountCard Icon={BriefcaseIcon} value={12} description="Pending Jobs" />
+            <JobsStatusCountCard Icon={EyeOpenIcon} value={4} description="Jobs To Review" />
           </div>
-          <div className="flex flex-col space-y-[20px]">
-            {navigations.map((navigation, i) => {
-              const isCurrentPath = navigation.pathname === pathname
-
-              return (
-                <div key={i} className="space-y-[20px]">
-                  <NavigationButton navigation={navigation} isCurrentPath={isCurrentPath} />
-                  {navigation.children && (
-                    <div className="space-y-[16px] pl-[38px]">
-                      {navigation.children?.map((navigationChild, i) => (
-                        <ChildNavigationButton
-                          key={i}
-                          navigation={navigationChild}
-                          isCurrentPath={isCurrentPath}
-                        />
-                      ))}
-                    </div>
-                  )}
-                </div>
-              )
-            })}
-          </div>
+          {navigations.map((navigation, i) => (
+            <NavigationButton
+              key={i}
+              navigation={navigation}
+              isCurrentPath={navigation.pathname === pathname}
+            />
+          ))}
         </div>
-        <div className="flex flex-1 flex-col bg-wildsand p-[24px]">
-          <div className="mb-[13px] flex items-center justify-between">
-            <div className="flex items-center space-x-[12px]">
-              <div className="font-inter text-[12px] font-medium text-manatee">Admin Panel</div>
-              <CaretRightSmallIcon className="stroke-frenchgray" />
-              <div className="font-inter text-[12px] font-semibold capitalize text-shark">
-                {pathname.split('/').pop()?.replace('-', ' ')}
+        <div className="flex flex-1 flex-col bg-ghost-white p-6">
+          <div className="mb-3.5 flex justify-between">
+            <div className="flex items-center space-x-3">
+              <div className="font-urbanist text-xs font-medium text-waterloo">Admin Panel</div>
+              <CaretSmallIcon className="rotate-90 stroke-frenchgray" />
+              <div className="font-urbanist text-xs font-semibold capitalize text-onyx">
+                {currentPath}
               </div>
             </div>
             <div className="flex items-center">
-              <button className="mr-[24px]" name="Search">
-                <MagnifyingGlassIcon />
+              <button className="mr-6" name="Search">
+                <MagnifyingGlassIcon className="stroke-waterloo" />
               </button>
-              <button className="relative mr-[32px]" name="Notifications">
-                <BellIcon />
-                <div className="absolute top-[-2px] right-[-2px] h-[14px] w-[14px] rounded-full border border-solid border-wildsand bg-shark" />
+              <button className="relative mr-8" name="Notifications">
+                <BellIcon className="stroke-waterloo" />
+                <div className="absolute -top-0.5 -right-0.5 h-3.5 w-3.5 rounded-full border border-solid border-ghost-white bg-vivid-red-tangelo" />
               </button>
-              <div className="mr-[20px] flex items-center space-x-[12px]">
-                <div className="flex">
-                  <Image src={DummyAvatar} alt="Dummy" height={32} width={32} />
+              <Image src={DummyAvatar} alt="Dummy" height="32rem" width="32rem" />
+              <div className="ml-3 mr-5 flex h-9 flex-col">
+                <div className="font-urbanist text-sm font-medium text-onyx">
+                  {session?.user.firstName} {session?.user.lastName}
                 </div>
-                <div className="flex h-[36px] flex-col">
-                  <div className="font-inter text-[14px] font-medium text-shark">
-                    {session?.user.firstName} {session?.user.lastName}
-                  </div>
-                  <div className="font-inter text-[12px] font-normal text-stormgray">
-                    Broncos Leagues Club
-                  </div>
+                <div className="font-urbanist text-xs font-medium text-metallic-silver">
+                  Broncos Leagues Club
                 </div>
               </div>
               <button onClick={() => signOut()}>
-                <CaretDownIcon className="stroke-black" />
+                <CaretIcon className="rotate-180 stroke-waterloo" />
               </button>
             </div>
           </div>
-          <div className="mb-[16px] font-inter text-[24px] font-semibold capitalize text-shark">
-            {pathname.split('/').pop()?.replace('-', ' ')}
+          <div className="mb-5 font-urbanist text-xxl font-semibold capitalize text-onyx">
+            {currentPath}
           </div>
-          <div className="mb-[20px] flex space-x-[20px]">
+          <div className="mb-6 flex space-x-6">
             <FancyButton
+              Icon={
+                <div className="flex min-h-11 min-w-11 items-center justify-center rounded-lg bg-honeydew">
+                  <CalendarAddIcon className="stroke-jungle-green" />
+                </div>
+              }
               title="New Event"
               subtitle="Laborerivit rem cones mil"
               onClick={toggleNewEventModal}
             />
             <FancyButton
+              Icon={
+                <div className="flex min-h-11 min-w-11 items-center justify-center rounded-lg bg-alice-blue">
+                  <ClipboardCloseIcon className="stroke-bleu-de-france" />
+                </div>
+              }
               title="New Project Brief"
               subtitle="Laborerivit rem cones mil"
               onClick={toggleNewProjectBriefModal}
             />
             <FancyButton
+              Icon={
+                <div className="flex min-h-11 min-w-11 items-center justify-center rounded-lg bg-cosmic-latte">
+                  <PresentationChartIcon className="stroke-deep-saffron" />
+                </div>
+              }
               title="Analytics"
               subtitle="Laborerivit rem cones mil"
               onClick={toggleNewClientModal}
             />
             <FancyButton
+              Icon={
+                <div className="flex min-h-11 min-w-11 items-center justify-center rounded-lg bg-linen">
+                  <LifeBuoyIcon className="fill-vivid-red-tangelo" />
+                </div>
+              }
               title="Support Request"
               subtitle="Laborerivit rem cones mil"
               onClick={toggleSupportRequestModal}
             />
           </div>
-          <hr className="mb-[20px] border-t-athensgray" />
-          <div className="flex-1">{children}</div>
+          <hr className="mb-6 border-t-bright-gray" />
+          {children}
         </div>
       </div>
     </>
   )
 }
+
+const NavigationButton = ({
+  navigation: { Icon, title, pathname, children },
+  isCurrentPath,
+}: {
+  navigation: Navigation
+  isCurrentPath: boolean
+}) => (
+  <>
+    <div className="flex">
+      {isCurrentPath && <div className="rounded-r border-r-4 border-r-jungle-green" />}
+      <div
+        className={`flex w-full items-center justify-between py-3.5 pr-6 ${
+          isCurrentPath ? 'bg-ghost-white' : ''
+        }`}
+      >
+        {children ? (
+          <button className={`flex items-center ${isCurrentPath ? 'ml-5' : 'ml-6'}`}>
+            {Icon && (
+              <Icon className={isCurrentPath ? 'stroke-jungle-green' : 'stroke-lavender-gray'} />
+            )}
+            <div
+              className={`ml-3 font-urbanist text-sm ${
+                isCurrentPath ? 'font-semibold text-jungle-green' : 'font-medium text-rhythm'
+              }`}
+            >
+              {title}
+            </div>
+          </button>
+        ) : (
+          <Link href={pathname || '#'} passHref>
+            <div
+              className={`flex w-fit cursor-pointer items-center space-x-3 ${
+                isCurrentPath ? 'ml-5' : 'ml-6'
+              }`}
+            >
+              {Icon && (
+                <Icon className={isCurrentPath ? 'stroke-jungle-green' : 'stroke-lavender-gray'} />
+              )}
+              <div
+                className={`font-urbanist text-sm font-semibold ${
+                  isCurrentPath ? 'font-semibold text-jungle-green' : 'font-medium text-rhythm'
+                }`}
+              >
+                {title}
+              </div>
+            </div>
+          </Link>
+        )}
+        {children && (
+          <CaretIcon
+            className={isCurrentPath ? 'stroke-jungle-green' : 'rotate-180 stroke-lavender-gray'}
+          />
+        )}
+      </div>
+    </div>
+    {children?.map((navigationChild, i) => (
+      <ChildNavigationButton key={i} navigation={navigationChild} isCurrentPath={isCurrentPath} />
+    ))}
+  </>
+)
+
+const ChildNavigationButton = ({
+  navigation: { title, pathname },
+  isCurrentPath,
+}: {
+  navigation: Navigation
+  isCurrentPath: boolean
+}) => (
+  <div className="ml-15.5 py-2">
+    <Link href={pathname || '#'} passHref>
+      <div className="flex w-fit cursor-pointer items-center space-x-3">
+        <div
+          className={`inline-block h-1.5 w-1.5 rounded-full ${
+            isCurrentPath ? 'bg-jungle-green' : 'bg-lavender-gray'
+          }`}
+        />
+        <div
+          className={`font-urbanist text-sm ${
+            isCurrentPath ? 'font-medium text-onyx' : 'font-normal text-waterloo'
+          }`}
+        >
+          {title}
+        </div>
+      </div>
+    </Link>
+  </div>
+)
 
 export default AdminLayout

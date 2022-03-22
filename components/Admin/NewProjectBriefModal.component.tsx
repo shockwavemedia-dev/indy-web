@@ -32,8 +32,8 @@ const NewProjectBriefModal = ({
           <Formik initialValues={formInitialValues} onSubmit={() => {}}>
             {({ isSubmitting, setFieldValue }) => (
               <Form>
-                <div className="flex w-[560px] flex-col">
-                  <div className="mb-[24px] flex space-x-[12px]">
+                <div className="flex w-140 flex-col">
+                  <div className="mb-6 flex space-x-3">
                     <TextInput
                       label="Service"
                       Icon={LightbulbIcon}
@@ -49,7 +49,7 @@ const NewProjectBriefModal = ({
                       disableAutoComplete
                     />
                   </div>
-                  <div className="mb-[24px]">
+                  <div className="mb-6">
                     <TextInput
                       label="Brief Name"
                       Icon={PencilIcon}
@@ -58,7 +58,7 @@ const NewProjectBriefModal = ({
                       disableAutoComplete
                     />
                   </div>
-                  <div className="mb-[24px]">
+                  <div className="mb-6">
                     <TextAreaInput
                       label="Content"
                       Icon={PencilIcon}
@@ -66,10 +66,10 @@ const NewProjectBriefModal = ({
                       name="content"
                     />
                   </div>
-                  <div className="mb-[32px]">
+                  <div className="mb-8">
                     <FileInput label="Upload Assets" name="assets" setFieldValue={setFieldValue} />
                   </div>
-                  <div className="flex space-x-[12px]">
+                  <div className="flex space-x-3">
                     <Button ariaLabel="Cancel" isLight onClick={onClose}>
                       Cancel
                     </Button>

@@ -1,18 +1,25 @@
+import { ReactNode } from 'react'
+
 const CountCard = ({
+  Icon,
   value,
   description,
   className,
 }: {
+  Icon: ReactNode
   value: number
   description: string
   className?: string
 }) => (
   <div
-    className={`flex flex-col items-center justify-center rounded-[4px] border border-solid border-athensgray bg-white px-[10px] ${className}`}
+    className={`flex items-center justify-center space-x-3 rounded-xl bg-white pr-3 pl-3.5 shadow ${className}`}
   >
-    <div className="font-inter text-[20px] font-semibold text-shark">{value}</div>
-    <div className="text-center font-inter text-[14px] font-normal text-stormgray">
-      {description}
+    {Icon}
+    <div>
+      <div className="font-urbanist text-sm font-semibold text-onyx">{value}</div>
+      <div className="font-urbanist text-[11px] font-medium text-metallic-silver">
+        {description}
+      </div>
     </div>
   </div>
 )

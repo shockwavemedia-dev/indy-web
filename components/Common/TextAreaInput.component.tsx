@@ -9,19 +9,19 @@ const TextAreaInput = ({
 }: {
   name: string
   label: string
-  Icon: ComponentType
+  Icon: ComponentType<{ className: string }>
   placeholder: string
 }) => (
   <div className="flex w-full flex-col">
-    <label className="mb-[8px] font-inter text-[12px] font-normal text-mineshaft" htmlFor={name}>
+    <label className="mb-2 font-inter text-xs font-normal text-mineshaft" htmlFor={name}>
       {label}
     </label>
-    <div className="flex h-[140px] items-start overflow-hidden rounded-[4px] border border-solid border-ebonyclay border-opacity-10">
-      <label htmlFor={name} className="h-full pt-[14px] pl-[10px] pr-[8px]">
-        <Icon />
+    <div className="flex h-35 items-start overflow-hidden rounded border border-solid border-ebonyclay border-opacity-10">
+      <label htmlFor={name} className="h-full pt-3.5 pl-2.5 pr-2">
+        <Icon className="stroke-black" />
       </label>
       <Field
-        className="h-full w-full resize-none border-none py-[14px] pr-[10px] font-inter text-[14px] font-normal placeholder-stormgray outline-none"
+        className="h-full w-full resize-none border-none py-3.5 pr-2.5 font-inter text-sm font-normal placeholder-stormgray outline-none"
         component="textarea"
         name={name}
         id={name}

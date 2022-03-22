@@ -15,11 +15,11 @@ const Modal = ({
       onClick={onClose}
       className="fixed top-0 left-0 z-10 h-full w-full cursor-default bg-tuna bg-opacity-30"
     />
-    <div className="max-h-full overflow-y-auto modal-dialog modal-dialog-scrollable fixed top-[50%] left-[50%] z-20 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center rounded-[4px] bg-white p-[40px]">
-      <button className="absolute top-[24px] right-[24px]" onClick={onClose}>
-        <CrossMarkIcon />
+    <div className="max-h-full overflow-y-auto modal-dialog modal-dialog-scrollable fixed top-1/2 left-1/2 z-20 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center rounded bg-white p-10">
+      <button className="absolute top-6 right-6" onClick={onClose}>
+        <CrossMarkIcon className="stroke-black" />
       </button>
-      <div className="mb-[18px] font-inter text-[20px] font-semibold text-tuna">{title}</div>
+      <div className="mb-4.5 font-inter text-xl font-semibold text-tuna">{title}</div>
       {children}
     </div>
   </>

@@ -23,17 +23,17 @@ const CreateNewPassword: NextPageWithLayout = () => {
     passwordConfirm: '',
   }
 
-  const handleValidate = ({ password }: { password: string }) => computePasswordStrength(password)
+  const validateForm = ({ password }: { password: string }) => computePasswordStrength(password)
 
   return (
     <>
       <Head>
         <title>Daily Press - Create New Password</title>
       </Head>
-      <Formik initialValues={formInitialValues} onSubmit={() => {}} validate={handleValidate}>
+      <Formik initialValues={formInitialValues} onSubmit={() => {}} validate={validateForm}>
         {({ isSubmitting }) => (
           <Form className="flex w-full flex-col items-center">
-            <div className="mb-[8px] w-full">
+            <div className="mb-2 w-full">
               <TextInput
                 type="password"
                 name="password"
@@ -43,17 +43,17 @@ const CreateNewPassword: NextPageWithLayout = () => {
                 disableAutoComplete
               />
             </div>
-            <div className="mr-auto mb-[8px]">
+            <div className="mr-auto mb-2">
               <PasswordStrengthMeter strength={passwordStrength} />
             </div>
-            <div className="mb-[18px] w-full">
-              <div className="word font-inter text-[10px] font-normal text-nevada">
+            <div className="mb-4.5 w-full">
+              <div className="word font-inter text-xxs font-normal text-nevada">
                 Should be at least 8 symbols and contain one small and one big character,
                 <br />
                 special character and number
               </div>
             </div>
-            <div className="mb-[32px] w-full">
+            <div className="mb-8 w-full">
               <TextInput
                 type="password"
                 name="passwordConfirm"
@@ -63,9 +63,9 @@ const CreateNewPassword: NextPageWithLayout = () => {
                 disableAutoComplete
               />
             </div>
-            <div className="mb-[20px] flex w-[312px]">
+            <div className="mb-5 flex w-78">
               <Button type="submit" ariaLabel="Save New Password" disabled={isSubmitting}>
-                <FloppyDiskIcon />
+                <FloppyDiskIcon className="stroke-white" />
                 <span>Save New Password</span>
               </Button>
             </div>
@@ -78,7 +78,7 @@ const CreateNewPassword: NextPageWithLayout = () => {
 }
 
 CreateNewPassword.getLayout = (page: ReactElement) => (
-  <AuthLayout title="Password reset" subtitle="Setup your new password" className="w-[570px]">
+  <AuthLayout title="Password reset" subtitle="Setup your new password" className="w-142.5">
     {page}
   </AuthLayout>
 )

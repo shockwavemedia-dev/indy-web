@@ -8,7 +8,7 @@ import PasswordStrengthMeter from '../../components/Auth/PasswordStrengthMeter.c
 import Button from '../../components/Common/Button.component'
 import Checkbox from '../../components/Common/Checkbox.component'
 import BriefcaseIcon from '../../components/Common/Icons/Briefcase.icon'
-import CaretRightIcon from '../../components/Common/Icons/CaretRight.icon'
+import CaretIcon from '../../components/Common/Icons/Caret.icon'
 import EmailIcon from '../../components/Common/Icons/Email.icon'
 import LockIcon from '../../components/Common/Icons/Lock.icon'
 import UserIcon from '../../components/Common/Icons/User.icon'
@@ -36,7 +36,7 @@ const SignUp: NextPageWithLayout = () => {
     rememberMe: false,
   }
 
-  const handleFormSubmit = async (
+  const submitForm = async (
     signUpFormValues: SignUpForm,
     { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
   ) => {
@@ -88,21 +88,17 @@ const SignUp: NextPageWithLayout = () => {
     setSubmitting(false)
   }
 
-  const handleValidate = ({ password }: { password: string }) => computePasswordStrength(password)
+  const validateForm = ({ password }: { password: string }) => computePasswordStrength(password)
 
   return (
     <>
       <Head>
         <title>Daily Press - Sign Up</title>
       </Head>
-      <Formik
-        initialValues={formInitialValues}
-        onSubmit={handleFormSubmit}
-        validate={handleValidate}
-      >
+      <Formik initialValues={formInitialValues} onSubmit={submitForm} validate={validateForm}>
         {({ isSubmitting }) => (
           <Form className="flex w-full flex-col items-center">
-            <div className="mb-[18px] flex w-full space-x-[12px]">
+            <div className="mb-4.5 flex w-full space-x-3">
               <TextInput
                 type="text"
                 name="fullName"
@@ -119,7 +115,7 @@ const SignUp: NextPageWithLayout = () => {
                 placeholder="Enter Company Name"
               />
             </div>
-            <div className="mb-[18px] w-full">
+            <div className="mb-4.5 w-full">
               <TextInput
                 type="email"
                 name="email"
@@ -128,7 +124,7 @@ const SignUp: NextPageWithLayout = () => {
                 placeholder="Enter Email"
               />
             </div>
-            <div className="mb-[8px] flex w-full space-x-[12px]">
+            <div className="mb-2 flex w-full space-x-3">
               <TextInput
                 type="password"
                 name="password"
@@ -146,11 +142,11 @@ const SignUp: NextPageWithLayout = () => {
                 disableAutoComplete
               />
             </div>
-            <div className="mr-auto mb-[8px] w-[50%]">
+            <div className="mr-auto mb-2 w-1/2">
               <PasswordStrengthMeter strength={passwordStrength} />
             </div>
-            <div className="mr-auto mb-[24px]">
-              <div className="word font-inter text-[10px] font-normal text-nevada">
+            <div className="mr-auto mb-6">
+              <div className="word font-inter text-xxs font-normal text-nevada">
                 Should be at least 8 symbols and contain
                 <br />
                 one small and one big character, special
@@ -158,17 +154,17 @@ const SignUp: NextPageWithLayout = () => {
                 character and number
               </div>
             </div>
-            <div className="mr-auto mb-[32px]">
+            <div className="mr-auto mb-8">
               <Checkbox name="rememberMe" label="Remember me" />
             </div>
-            <div className="mb-[24px] flex w-[312px]">
+            <div className="mb-6 flex w-78">
               <Button type="submit" ariaLabel="Sign Up" disabled={isSubmitting}>
                 <span>Sign Up</span>
-                <CaretRightIcon className="stroke-white" />
+                <CaretIcon className="rotate-90 stroke-white" />
               </Button>
             </div>
-            <div className="flex items-center space-x-[6px]">
-              <div className="font-inter text-[14px] font-normal text-emperor">
+            <div className="flex items-center space-x-1.5">
+              <div className="font-inter text-sm font-normal text-emperor">
                 Already have an account?
               </div>
               <Link href="/auth/login">Login</Link>
@@ -184,7 +180,7 @@ SignUp.getLayout = (page: ReactElement) => (
   <AuthLayout
     title="Welcome to Daily Press"
     subtitle="Please sign up and start the adventure"
-    className="w-[652px]"
+    className="w-163"
   >
     {page}
   </AuthLayout>
