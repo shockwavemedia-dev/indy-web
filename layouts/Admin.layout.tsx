@@ -12,8 +12,7 @@ import BellIcon from '../components/Common/Icons/Bell.icon'
 import BriefcaseIcon from '../components/Common/Icons/Briefcase.icon'
 import CalendarIcon from '../components/Common/Icons/Calendar.icon'
 import CaretIcon from '../components/Common/Icons/Caret.icon'
-import CaretDownIcon from '../components/Common/Icons/CaretDown.icon'
-import CaretRightSmallIcon from '../components/Common/Icons/CaretRightSmall.icon'
+import CaretSmallIcon from '../components/Common/Icons/CaretSmall.icon'
 import ChartIcon from '../components/Common/Icons/Chart.icon'
 import ClipboardIcon from '../components/Common/Icons/Clipboard.icon'
 import EmailIcon from '../components/Common/Icons/Email.icon'
@@ -121,6 +120,8 @@ const AdminLayout = ({ children }: { children: ReactNode }) => {
   const [isNewProjectBriefModalVisible, setNewProjectBriefModalVisible] = useState(false)
   const [isSupportRequestModalVisible, setSupportRequestModalVisible] = useState(false)
 
+  const currentPath = pathname.split('/').pop()?.replace('-', ' ')
+
   const toggleNewEventModal = () => setNewEventModalVisible(!isNewEventModalVisible)
 
   const toggleNewProjectBriefModal = () =>
@@ -167,45 +168,41 @@ const AdminLayout = ({ children }: { children: ReactNode }) => {
             />
           ))}
         </div>
-        <div className="flex flex-1 flex-col bg-wildsand p-6">
-          <div className="mb-3.5 flex items-center justify-between">
+        <div className="flex flex-1 flex-col bg-ghost-white p-6">
+          <div className="mb-3.5 flex justify-between">
             <div className="flex items-center space-x-3">
-              <div className="font-inter text-xs font-medium text-manatee">Admin Panel</div>
-              <CaretRightSmallIcon className="stroke-frenchgray" />
-              <div className="font-inter text-xs font-semibold capitalize text-shark">
-                {pathname.split('/').pop()?.replace('-', ' ')}
+              <div className="font-urbanist text-xs font-medium text-waterloo">Admin Panel</div>
+              <CaretSmallIcon className="rotate-90 stroke-frenchgray" />
+              <div className="font-urbanist text-xs font-semibold capitalize text-onyx">
+                {currentPath}
               </div>
             </div>
             <div className="flex items-center">
-              <button className="mr-5" name="Search">
-                <MagnifyingGlassIcon />
+              <button className="mr-6" name="Search">
+                <MagnifyingGlassIcon className="stroke-waterloo" />
               </button>
               <button className="relative mr-8" name="Notifications">
-                <BellIcon />
-                <div className="absolute -top-0.5 -right-0.5 h-3.5 w-3.5 rounded-full border border-solid border-wildsand bg-shark" />
+                <BellIcon className="stroke-waterloo" />
+                <div className="absolute -top-0.5 -right-0.5 h-3.5 w-3.5 rounded-full border border-solid border-ghost-white bg-vivid-red-tangelo" />
               </button>
-              <div className="mr-5 flex items-center space-x-3">
-                <div className="flex">
-                  <Image src={DummyAvatar} alt="Dummy" height={32} width={32} />
+              <Image src={DummyAvatar} alt="Dummy" height="32rem" width="32rem" />
+              <div className="ml-3 mr-5 flex h-9 flex-col">
+                <div className="font-urbanist text-sm font-medium text-onyx">
+                  {session?.user.firstName} {session?.user.lastName}
                 </div>
-                <div className="flex h-9 flex-col">
-                  <div className="font-inter text-sm font-medium text-shark">
-                    {session?.user.firstName} {session?.user.lastName}
-                  </div>
-                  <div className="font-inter text-xs font-normal text-stormgray">
-                    Broncos Leagues Club
-                  </div>
+                <div className="font-urbanist text-xs font-medium text-metallic-silver">
+                  Broncos Leagues Club
                 </div>
               </div>
               <button onClick={() => signOut()}>
-                <CaretDownIcon className="stroke-black" />
+                <CaretIcon className="rotate-180 stroke-waterloo" />
               </button>
             </div>
           </div>
-          <div className="mb-4 font-inter text-2xl font-semibold capitalize text-shark">
-            {pathname.split('/').pop()?.replace('-', ' ')}
+          <div className="mb-6 font-urbanist text-xxl font-semibold capitalize text-onyx">
+            {currentPath}
           </div>
-          <div className="mb-5 flex space-x-5">
+          <div className="mb-6 flex space-x-6">
             <FancyButton
               title="New Event"
               subtitle="Laborerivit rem cones mil"
@@ -227,7 +224,7 @@ const AdminLayout = ({ children }: { children: ReactNode }) => {
               onClick={toggleSupportRequestModal}
             />
           </div>
-          <hr className="mb-5 border-t-athensgray" />
+          <hr className="mb-6 border-t-bright-gray" />
           {children}
         </div>
       </div>

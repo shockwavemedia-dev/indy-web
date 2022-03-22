@@ -32,6 +32,7 @@ module.exports = {
       },
       fontSize: {
         xxs: ['.625rem', '.75rem'],
+        xxl: ['1.375rem', '1.875rem'],
         '2.5xl': ['1.75rem', '2.125rem'],
       },
       width: {
@@ -114,6 +115,7 @@ module.exports = {
       'jungle-green': '#2BB67D',
       'lavender-gray': '#C5C5CC',
       'deep-saffron': '#F3A02E',
+      'vivid-red-tangelo': '#D25C2A',
     },
   },
   plugins: [require('@tailwindcss/line-clamp')],
