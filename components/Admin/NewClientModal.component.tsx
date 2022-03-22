@@ -8,6 +8,7 @@ import FileInput from '../Common/FileInput.component'
 import CalendarIcon from '../Common/Icons/Calendar.icon'
 import PencilIcon from '../Common/Icons/Pencil.icon'
 import TextInput from '../Common/TextInput.component'
+import TextAreaInput from '../Common/TextAreaInput.component'
 import Modal from './Modal.component'
 
 const NewClientModal = ({
@@ -63,14 +64,23 @@ const NewClientModal = ({
                     />
                   </div>
                   <div className="mb-[24px]">
+                    <TextInput
+                        label="Client Code"
+                        Icon={PencilIcon}
+                        placeholder="Enter Client Code"
+                        name="name"
+                        disableAutoComplete
+                    />
+                  </div>
+                  <div className="mb-[24px]">
                     <FileInput
-                        label="logo"
+                        label="Logo"
                         name="logo"
                         setFieldValue={setFieldValue}
                     />
                   </div>
                   <div className="mb-[24px]">
-                    <TextInput
+                    <TextAreaInput
                       label="Address"
                       Icon={PencilIcon}
                       placeholder="Enter Address"
