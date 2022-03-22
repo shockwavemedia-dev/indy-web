@@ -160,7 +160,7 @@ const SignUp: NextPageWithLayout = () => {
             <div className="mb-6 flex w-78">
               <Button type="submit" ariaLabel="Sign Up" disabled={isSubmitting}>
                 <span>Sign Up</span>
-                <CaretIcon className="stroke-white" />
+                <CaretIcon className="rotate-90 stroke-white" />
               </Button>
             </div>
             <div className="flex items-center space-x-1.5">

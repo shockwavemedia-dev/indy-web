@@ -15,7 +15,7 @@ const Checkbox = ({ name, label }: { name: string; label: string }) => {
           isChecked && 'bg-mineshaft'
         }`}
       >
-        {isChecked && <CheckIcon />}
+        {isChecked && <CheckIcon className="stroke-white" />}
       </div>
       <span>{label}</span>
     </label>

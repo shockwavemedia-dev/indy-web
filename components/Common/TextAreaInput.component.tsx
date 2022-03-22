@@ -9,7 +9,7 @@ const TextAreaInput = ({
 }: {
   name: string
   label: string
-  Icon: ComponentType
+  Icon: ComponentType<{ className: string }>
   placeholder: string
 }) => (
   <div className="flex w-full flex-col">
@@ -18,7 +18,7 @@ const TextAreaInput = ({
     </label>
     <div className="flex h-35 items-start overflow-hidden rounded border border-solid border-ebonyclay border-opacity-10">
       <label htmlFor={name} className="h-full pt-3.5 pl-2.5 pr-2">
-        <Icon />
+        <Icon className="stroke-black" />
       </label>
       <Field
         className="h-full w-full resize-none border-none py-3.5 pr-2.5 font-inter text-sm font-normal placeholder-stormgray outline-none"

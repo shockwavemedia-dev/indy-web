@@ -17,7 +17,7 @@ const Modal = ({
     />
     <div className="fixed top-1/2 left-1/2 z-20 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center rounded bg-white p-10">
       <button className="absolute top-6 right-6" onClick={onClose}>
-        <CrossMarkIcon />
+        <CrossMarkIcon className="stroke-black" />
       </button>
       <div className="mb-4.5 font-inter text-xl font-semibold text-tuna">{title}</div>
       {children}

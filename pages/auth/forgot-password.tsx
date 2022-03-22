@@ -35,7 +35,7 @@ const ForgotPassword: NextPageWithLayout = () => {
             <div className="mb-5 flex w-78">
               <Button type="submit" ariaLabel="Restore Password" disabled={isSubmitting}>
                 <span>Restore Password</span>
-                <CaretIcon className="stroke-white" />
+                <CaretIcon className="rotate-90 stroke-white" />
               </Button>
             </div>
             <Link href="/auth/login">Cancel</Link>

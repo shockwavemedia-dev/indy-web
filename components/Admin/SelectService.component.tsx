@@ -42,7 +42,7 @@ const SelectService = ({
           type="button"
         >
           <div className="mr-auto flex items-center space-x-2">
-            <LightbulbIcon />
+            <LightbulbIcon className="stroke-black" />
             <div className="mr-auto font-inter text-sm font-normal text-stormgray">
               {isLoading ? 'Loading Services...' : 'Select Services'}
             </div>
@@ -110,7 +110,7 @@ const ServiceRow = ({
             isServiceSelected ? 'bg-mineshaft' : 'bg-white'
           }`}
         >
-          {isServiceSelected && <CheckIcon />}
+          {isServiceSelected && <CheckIcon className="stroke-white" />}
         </div>
       </button>
       {isServiceSelected &&
@@ -157,7 +157,7 @@ const Extra = ({ extra, selectExtra }: { extra: string; selectExtra: () => void 
           isExtraSelected ? 'bg-mineshaft' : 'bg-white'
         }`}
       >
-        {isExtraSelected && <CheckIcon />}
+        {isExtraSelected && <CheckIcon className="stroke-white" />}
       </div>
     </button>
   )

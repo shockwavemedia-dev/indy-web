@@ -75,12 +75,12 @@ const Login: NextPageWithLayout = () => {
             <div className="mb-6 flex w-78">
               <Button type="submit" ariaLabel="Login" disabled={isSubmitting}>
                 <span>Login</span>
-                <CaretIcon className="stroke-white" />
+                <CaretIcon className="rotate-90 stroke-white" />
               </Button>
             </div>
             <div className="flex items-center space-x-1.5">
               <div className="font-inter text-sm font-normal text-emperor">
-                {"Don't have an account?"}
+                Don&apos;t have an account?
               </div>
               <Link href="/auth/sign-up">Sign Up</Link>
             </div>
