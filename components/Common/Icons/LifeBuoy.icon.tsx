@@ -1,4 +1,4 @@
-const LifeBuoyIcon = ({ className }: { className?: string }) => (
+const LifeBuoyIcon = ({ className }: { className: string }) => (
   <svg
     className={className}
     width="20"

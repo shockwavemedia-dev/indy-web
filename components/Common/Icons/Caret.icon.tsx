@@ -1,4 +1,4 @@
-const CaretIcon = ({ className }: { className?: string }) => (
+const CaretIcon = ({ className }: { className: string }) => (
   <svg
     className={className}
     width="16"

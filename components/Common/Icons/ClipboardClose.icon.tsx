@@ -1,4 +1,4 @@
-const ClipboardCloseIcon = ({ className }: { className?: string }) => (
+const ClipboardCloseIcon = ({ className }: { className: string }) => (
   <svg
     className={className}
     width="20"

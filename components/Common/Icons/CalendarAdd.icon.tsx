@@ -1,4 +1,4 @@
-const CalendarAddIcon = ({ className }: { className?: string }) => (
+const CalendarAddIcon = ({ className }: { className: string }) => (
   <svg
     className={className}
     width="20"
