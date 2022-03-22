@@ -74,6 +74,7 @@ module.exports = {
       },
     },
     boxShadow: {
+      DEFAULT: '0px 4px 10px #2a2a3408',
       'react-select': '0 0 0 1px #0000001a, 0 4px 11px #0000001a',
     },
     fontFamily: {
@@ -108,6 +109,8 @@ module.exports = {
       white: '#FFFFFF',
       rhythm: '#8D8D7C',
       waterloo: '#7C7C8D',
+      honeydew: '#E9FAF3',
+      linen: '#FFF0E9',
       'bright-gray': '#E8E8EF',
       'metallic-silver': '#ABABB9',
       'cosmic-latte': '#FFF6EA',
@@ -116,6 +119,8 @@ module.exports = {
       'lavender-gray': '#C5C5CC',
       'deep-saffron': '#F3A02E',
       'vivid-red-tangelo': '#D25C2A',
+      'bleu-de-france': '#2F96EB',
+      'alice-blue': '#E9F5FF',
     },
   },
   plugins: [require('@tailwindcss/line-clamp')],

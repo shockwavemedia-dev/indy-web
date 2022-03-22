@@ -11,13 +11,16 @@ import SupportRequestModal from '../components/Admin/SupportRequestModal.compone
 import BellIcon from '../components/Common/Icons/Bell.icon'
 import BriefcaseIcon from '../components/Common/Icons/Briefcase.icon'
 import CalendarIcon from '../components/Common/Icons/Calendar.icon'
+import CalendarAddIcon from '../components/Common/Icons/CalendarAdd.icon'
 import CaretIcon from '../components/Common/Icons/Caret.icon'
 import CaretSmallIcon from '../components/Common/Icons/CaretSmall.icon'
 import ChartIcon from '../components/Common/Icons/Chart.icon'
 import ClipboardIcon from '../components/Common/Icons/Clipboard.icon'
+import ClipboardCloseIcon from '../components/Common/Icons/ClipboardClose.icon'
 import EmailIcon from '../components/Common/Icons/Email.icon'
 import EyeOpenIcon from '../components/Common/Icons/EyeOpen.icon'
 import FolderIcon from '../components/Common/Icons/Folder.icon'
+import LifeBuoyIcon from '../components/Common/Icons/LifeBuoy.icon'
 import MagnifyingGlassIcon from '../components/Common/Icons/MagnifyingGlass.icon'
 import MonitorIcon from '../components/Common/Icons/Monitor.icon'
 import NotepadIcon from '../components/Common/Icons/Notepad.icon'
@@ -199,26 +202,46 @@ const AdminLayout = ({ children }: { children: ReactNode }) => {
               </button>
             </div>
           </div>
-          <div className="mb-6 font-urbanist text-xxl font-semibold capitalize text-onyx">
+          <div className="mb-5 font-urbanist text-xxl font-semibold capitalize text-onyx">
             {currentPath}
           </div>
           <div className="mb-6 flex space-x-6">
             <FancyButton
+              Icon={
+                <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-honeydew">
+                  <CalendarAddIcon className="stroke-jungle-green" />
+                </div>
+              }
               title="New Event"
               subtitle="Laborerivit rem cones mil"
               onClick={toggleNewEventModal}
             />
             <FancyButton
+              Icon={
+                <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-alice-blue">
+                  <ClipboardCloseIcon className="stroke-bleu-de-france" />
+                </div>
+              }
               title="New Project Brief"
               subtitle="Laborerivit rem cones mil"
               onClick={toggleNewProjectBriefModal}
             />
             <FancyButton
+              Icon={
+                <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-cosmic-latte">
+                  <PresentationChartIcon className="stroke-deep-saffron" />
+                </div>
+              }
               title="Analytics"
               subtitle="Laborerivit rem cones mil"
               onClick={() => {}}
             />
             <FancyButton
+              Icon={
+                <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-linen">
+                  <LifeBuoyIcon className="fill-vivid-red-tangelo" />
+                </div>
+              }
               title="Support Request"
               subtitle="Laborerivit rem cones mil"
               onClick={toggleSupportRequestModal}
