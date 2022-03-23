@@ -7,4 +7,5 @@ export interface NewClientForm {
   timezone: string
   overview: string
   clientSince: string
+  rating: string
 }

@@ -23,17 +23,18 @@ const NewClientModal = ({
   const formInitialValues: NewClientForm = {
     name: '',
     clientCode: '',
-    logo: '',
+    logo: 'testlogo.png',
     address: '',
     phone: '',
     timezone: '',
     overview: '',
-    clientSince: ''
+    clientSince: '',
+    rating: ''
   }
 
-  const handleSubmit = async (
-    values: NewClientForm,
-    { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
+  const submitForm = async (
+      values: NewClientForm,
+      { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
   ) => {
     setSubmitting(true)
 
@@ -50,7 +51,7 @@ const NewClientModal = ({
     <>
       {isVisible && (
         <Modal title="New Client" onClose={onClose}>
-          <Formik initialValues={formInitialValues} onSubmit={handleSubmit}>
+          <Formik initialValues={formInitialValues} onSubmit={submitForm}>
             {({ isSubmitting, setFieldValue }) => (
               <Form>
                 <div className="flex w-[560px] flex-col">
@@ -68,7 +69,7 @@ const NewClientModal = ({
                         label="Client Code"
                         Icon={PencilIcon}
                         placeholder="Enter Client Code"
-                        name="name"
+                        name="clientCode"
                         disableAutoComplete
                     />
                   </div>
@@ -77,6 +78,14 @@ const NewClientModal = ({
                         label="Logo"
                         name="logo"
                         setFieldValue={setFieldValue}
+                    />
+                  </div>
+                  <div className="mb-[24px]">
+                    <TextAreaInput
+                        label="Overview"
+                        Icon={PencilIcon}
+                        placeholder="Enter Overview"
+                        name="overview"
                     />
                   </div>
                   <div className="mb-[24px]">
@@ -111,6 +120,15 @@ const NewClientModal = ({
                         Icon={CalendarIcon}
                         placeholder="Enter Client Since"
                         name="clientSince"
+                        disableAutoComplete
+                    />
+                  </div>
+                  <div className="mb-[24px] flex space-x-[12px]">
+                    <TextInput
+                        label="Rating"
+                        Icon={PencilIcon}
+                        placeholder="Enter Rating"
+                        name="rating"
                         disableAutoComplete
                     />
                   </div>
