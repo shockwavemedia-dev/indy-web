@@ -12,7 +12,7 @@ axios.defaults.baseURL = API_BASE_URL
 
 axios.interceptors.request.use(
   (config) => {
-    if (config.data) {
+    if (config.data && config.data.constructor.name !== 'FormData') {
       config.data = snakecaseKeys(config.data, { deep: true })
     }
 

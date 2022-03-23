@@ -4,17 +4,19 @@ const FileInput = ({
   label,
   name,
   setFieldValue,
+  multiple = false,
 }: {
   label: string
   name: string
   setFieldValue: (field: string, value: any, shouldValidate?: boolean) => void
+  multiple?: boolean
 }) => {
-  const dropFiles = (files: Array<File>) => setFieldValue(name, files)
+  const dropFiles = (files: Array<File>) => setFieldValue(name, multiple ? files : files.pop())
 
   return (
     <div className="flex w-full flex-col">
       <label className="mb-2 font-inter text-xs font-normal text-mineshaft">{label}</label>
-      <Dropzone onDrop={dropFiles} noClick noKeyboard>
+      <Dropzone onDrop={dropFiles} noClick noKeyboard multiple={multiple}>
         {({ getRootProps, getInputProps, open, isDragActive }) => (
           <div
             {...getRootProps()}
@@ -35,7 +37,7 @@ const FileInput = ({
                 </button>
               </div>
               <div className="text-center font-inter text-xs font-normal text-frenchgray">
-                File Supported: MP3, MP4, AVI, MOV, FLV. <br />
+                Files Supported: MP3, MP4, AVI, MOV, FLV. <br />
                 Maximum size: 250 MB
               </div>
             </div>

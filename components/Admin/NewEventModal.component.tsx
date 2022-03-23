@@ -3,6 +3,7 @@ import { Form, Formik } from 'formik'
 import { useSession } from 'next-auth/react'
 import { MouseEventHandler } from 'react'
 import { NewEventForm } from '../../interfaces/NewEventForm.interface'
+import { objectWithFileToFormData } from '../../utils/form-helpers'
 import Button from '../Common/Button.component'
 import FileInput from '../Common/FileInput.component'
 import CalendarIcon from '../Common/Icons/Calendar.icon'
@@ -28,7 +29,7 @@ const NewEventModal = ({
     services: [],
     duedate: '',
     description: '',
-    attachment: [],
+    attachment: null,
   }
 
   const submitForm = async (
@@ -37,7 +38,7 @@ const NewEventModal = ({
   ) => {
     setSubmitting(true)
 
-    await axios.post('/v1/tickets/event', values, {
+    await axios.post('/v1/tickets/event', objectWithFileToFormData(values), {
       headers: {
         Authorization: `Bearer ${session?.accessToken}`,
       },

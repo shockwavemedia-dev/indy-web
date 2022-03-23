@@ -5,5 +5,5 @@ export interface NewEventForm {
   services: Array<{ serviceId: number; extras: Array<string> }>
   duedate: string
   description: string
-  attachment: Array<File>
+  attachment: File | null
 }
