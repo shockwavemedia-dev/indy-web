@@ -9,12 +9,11 @@ import Link from '../../components/Common/Link.component'
 import TextInput from '../../components/Common/TextInput.component'
 import { CreateNewPasswordForm } from '../../interfaces/CreateNewPasswordForm.interface'
 import AuthLayout from '../../layouts/Auth.layout'
-import useStore from '../../store/store'
+import { usePasswordStrengthStore } from '../../stores/PasswordStrengthStore'
 import { NextPageWithLayout } from '../../types/NextPageWithLayout.type'
 
 const CreateNewPassword: NextPageWithLayout = () => {
-  const passwordStrength = useStore(({ passwordStrength }) => passwordStrength)
-  const computePasswordStrength = useStore(({ computePasswordStrength }) => computePasswordStrength)
+  const { passwordStrength, computePasswordStrength } = usePasswordStrengthStore()
 
   useEffect(() => computePasswordStrength(''), [])
 
