@@ -65,7 +65,7 @@ const NewEventModal = ({
                     />
                   </div>
                   <div className="mb-6 flex space-x-3">
-                    <SelectService selectedServices={services} setFieldValue={setFieldValue} />
+                    <SelectService setFieldValue={setFieldValue} />
                     <TextInput
                       label="Due Date"
                       Icon={CalendarIcon}

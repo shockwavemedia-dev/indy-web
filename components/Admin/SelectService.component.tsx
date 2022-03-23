@@ -8,14 +8,12 @@ import CheckIcon from '../Common/Icons/Check.icon'
 import LightbulbIcon from '../Common/Icons/Lightbulb.icon'
 
 const SelectService = ({
-  selectedServices,
   setFieldValue,
 }: {
-  selectedServices: Array<{ serviceId: number; extras: Array<string> }>
   setFieldValue: (field: string, value: any, shouldValidate?: boolean) => void
 }) => {
-  const [isServicesVisible, setServicesVisible] = useState(false)
   const { data: session } = useSession()
+
   const { data: services, isLoading } = useQuery('services', async () => {
     const { data } = await axios.get<Array<Service>>(
       `/v1/clients/${session?.user.userType.clientId}/services`,
@@ -29,7 +27,56 @@ const SelectService = ({
     return data
   })
 
+  const [isServicesVisible, setServicesVisible] = useState(false)
+
+  const [selectedServices, setSelectedServices] = useState<{
+    [serviceId: number]: Array<string>
+  }>({})
+
+  const setSelectedServiceInForm = (selectedServices: { [serviceId: number]: Array<string> }) =>
+    setFieldValue(
+      'services',
+      Object.keys(selectedServices).map((serviceId) => ({
+        serviceId: Number(serviceId),
+        extras: selectedServices[Number(serviceId)] || [],
+      }))
+    )
+
   const toggleServices = () => setServicesVisible(!isServicesVisible)
+
+  const toggleService = (serviceId: number) => {
+    let servicesToAssign = {}
+
+    if (selectedServices[serviceId]) {
+      const { [serviceId]: _, ...filteredServices } = selectedServices
+      servicesToAssign = filteredServices
+    } else {
+      servicesToAssign = { ...selectedServices, [serviceId]: [] }
+    }
+
+    setSelectedServices(servicesToAssign)
+    setSelectedServiceInForm(servicesToAssign)
+  }
+
+  const toggleExtra = (serviceId: number, extra: string) => {
+    let servicesToAssign = {}
+    const selectedServiceExtras = selectedServices[serviceId]
+
+    if (selectedServices[serviceId].includes(extra)) {
+      servicesToAssign = {
+        ...selectedServices,
+        [serviceId]: selectedServiceExtras.filter((e) => e !== extra),
+      }
+    } else {
+      servicesToAssign = {
+        ...selectedServices,
+        [serviceId]: [...selectedServiceExtras, extra],
+      }
+    }
+
+    setSelectedServices(servicesToAssign)
+    setSelectedServiceInForm(servicesToAssign)
+  }
 
   return (
     <div className="flex w-full flex-col">
@@ -59,7 +106,8 @@ const SelectService = ({
               <ServiceRow
                 service={service}
                 selectedServices={selectedServices}
-                setFieldValue={setFieldValue}
+                toggleService={toggleService}
+                toggleExtra={toggleExtra}
                 key={i}
               />
             ))}
@@ -73,28 +121,19 @@ const SelectService = ({
 const ServiceRow = ({
   service,
   selectedServices,
-  setFieldValue,
+  toggleService,
+  toggleExtra,
 }: {
   service: Service
-  selectedServices: Array<{ serviceId: number; extras: Array<string> }>
-  setFieldValue: (field: string, value: any, shouldValidate?: boolean) => void
-}) => {
-  const [isServiceSelected, setServiceSelected] = useState(false)
-
-  const toggleService = () => {
-    setServiceSelected(!isServiceSelected)
-
-    if (!isServiceSelected) {
-      selectedServices.unshift({
-        serviceId: service.serviceId,
-        extras: [],
-      })
-    } else {
-      selectedServices = selectedServices.filter(({ serviceId }) => serviceId !== service.serviceId)
-    }
-
-    setFieldValue('services', selectedServices)
+  selectedServices: {
+    [serviceId: number]: Array<string>
   }
+  toggleService: (serviceId: number) => void
+  toggleExtra: (serviceId: number, extra: string) => void
+}) => {
+  const isServiceSelected = selectedServices[service.serviceId]
+
+  const fireToggleService = () => toggleService(service.serviceId)
 
   return (
     <>
@@ -102,7 +141,7 @@ const ServiceRow = ({
         className="flex h-8.5 w-full cursor-default items-center justify-between py-2 px-3 hover:bg-pattensblue"
         type="button"
         name={service.serviceId.toString()}
-        onClick={toggleService}
+        onClick={fireToggleService}
       >
         <div>{service.serviceId}</div>
         <div
@@ -115,41 +154,37 @@ const ServiceRow = ({
       </button>
       {isServiceSelected &&
         service.extras?.map((extra, i) => {
-          const handleSelectExtra = () => {
-            const extras = selectedServices.find(
-              ({ serviceId }) => serviceId === service.serviceId
-            )!.extras
-            const extraExists = extras.includes(extra)
+          const selectExtra = () => toggleExtra(service.serviceId, extra)
 
-            if (extraExists) {
-              selectedServices.find(({ serviceId }) => serviceId === service.serviceId)!.extras =
-                extras.filter((e) => e !== extra)
-            } else {
-              selectedServices
-                .find(({ serviceId }) => serviceId === service.serviceId)!
-                .extras.unshift(extra)
-            }
-          }
-
-          return <Extra extra={extra} selectExtra={handleSelectExtra} key={i} />
+          return (
+            <Extra
+              extra={extra}
+              selectedExtras={selectedServices[service.serviceId]}
+              selectExtra={selectExtra}
+              key={i}
+            />
+          )
         })}
     </>
   )
 }
 
-const Extra = ({ extra, selectExtra }: { extra: string; selectExtra: () => void }) => {
-  const [isExtraSelected, setExtraSelected] = useState(false)
-
-  const toggleExtra = () => {
-    setExtraSelected(!isExtraSelected)
-    selectExtra()
-  }
+const Extra = ({
+  extra,
+  selectedExtras,
+  selectExtra,
+}: {
+  extra: string
+  selectedExtras: Array<string>
+  selectExtra: () => void
+}) => {
+  const isExtraSelected = selectedExtras.includes(extra)
 
   return (
     <button
       className="flex h-8.5 w-full cursor-default items-center justify-between py-2 pl-9 pr-3 hover:bg-pattensblue"
       type="button"
-      onClick={toggleExtra}
+      onClick={selectExtra}
     >
       <div>{extra}</div>
       <div
