@@ -8,6 +8,7 @@ import JobsStatusCountCard from '../components/Admin/JobStatsCard.component'
 import NewEventModal from '../components/Admin/NewEventModal.component'
 import NewProjectBriefModal from '../components/Admin/NewProjectBriefModal.component'
 import SupportRequestModal from '../components/Admin/SupportRequestModal.component'
+import NewClientModal from '../components/Admin/NewClientModal.component'
 import BellIcon from '../components/Common/Icons/Bell.icon'
 import BriefcaseIcon from '../components/Common/Icons/Briefcase.icon'
 import CalendarIcon from '../components/Common/Icons/Calendar.icon'
@@ -110,7 +111,7 @@ const navigations: Array<Navigation> = [
   },
 ]
 
-const AdminLayout = ({ children }: { children: ReactNode }) => {
+const ClientLayout = ({ children }: { children: ReactNode }) => {
   const { replace, pathname } = useRouter()
   const { status, data: session } = useSession({
     required: true,
@@ -119,20 +120,12 @@ const AdminLayout = ({ children }: { children: ReactNode }) => {
     },
   })
 
-  const [isNewEventModalVisible, setNewEventModalVisible] = useState(false)
-  const [isNewProjectBriefModalVisible, setNewProjectBriefModalVisible] = useState(false)
-  const [isSupportRequestModalVisible, setSupportRequestModalVisible] = useState(false)
+  const [isNewClientModalVisible, setNewClientModalVisible] = useState(false)
 
   const currentPath = pathname.split('/').pop()?.replace('-', ' ')
 
-  const toggleNewEventModal = () => setNewEventModalVisible(!isNewEventModalVisible)
 
-  const toggleNewProjectBriefModal = () =>
-    setNewProjectBriefModalVisible(!isNewProjectBriefModalVisible)
-
-  const toggleSupportRequestModal = () =>
-    setSupportRequestModalVisible(!isSupportRequestModalVisible)
-
+  const toggleNewClientModal = () => setNewClientModalVisible(!isNewClientModalVisible)
 
   if (status === 'loading') {
     return null
@@ -140,15 +133,7 @@ const AdminLayout = ({ children }: { children: ReactNode }) => {
 
   return (
     <>
-      <NewEventModal isVisible={isNewEventModalVisible} onClose={toggleNewEventModal} />
-      <NewProjectBriefModal
-        isVisible={isNewProjectBriefModalVisible}
-        onClose={toggleNewProjectBriefModal}
-      />
-      <SupportRequestModal
-        isVisible={isSupportRequestModalVisible}
-        onClose={toggleSupportRequestModal}
-      />
+      <NewClientModal isVisible={isNewClientModalVisible} onClose={toggleNewClientModal} />
       <div className="flex min-h-screen">
         <div className="flex min-w-75 flex-col bg-white pt-6">
           <div className="mb-5 pl-6">
@@ -206,46 +191,16 @@ const AdminLayout = ({ children }: { children: ReactNode }) => {
           <div className="mb-5 font-urbanist text-xxl font-semibold capitalize text-onyx">
             {currentPath}
           </div>
-          <div className="mb-6 flex space-x-6">
+          <div className="mb-6  space-x-6">
             <FancyButton
               Icon={
                 <div className="flex min-h-11 min-w-11 items-center justify-center rounded-lg bg-honeydew">
-                  <CalendarAddIcon className="stroke-jungle-green" />
+                  <BriefcaseIcon className="stroke-jungle-green" />
                 </div>
               }
-              title="New Event"
+              title="New Client"
               subtitle="Laborerivit rem cones mil"
-              onClick={toggleNewEventModal}
-            />
-            <FancyButton
-              Icon={
-                <div className="flex min-h-11 min-w-11 items-center justify-center rounded-lg bg-alice-blue">
-                  <ClipboardCloseIcon className="stroke-bleu-de-france" />
-                </div>
-              }
-              title="New Project Brief"
-              subtitle="Laborerivit rem cones mil"
-              onClick={toggleNewProjectBriefModal}
-            />
-            <FancyButton
-              Icon={
-                <div className="flex min-h-11 min-w-11 items-center justify-center rounded-lg bg-cosmic-latte">
-                  <PresentationChartIcon className="stroke-deep-saffron" />
-                </div>
-              }
-              title="Analytics"
-              subtitle="Laborerivit rem cones mil"
-              onClick={() => {}}
-            />
-            <FancyButton
-              Icon={
-                <div className="flex min-h-11 min-w-11 items-center justify-center rounded-lg bg-linen">
-                  <LifeBuoyIcon className="fill-vivid-red-tangelo" />
-                </div>
-              }
-              title="Support Request"
-              subtitle="Laborerivit rem cones mil"
-              onClick={toggleSupportRequestModal}
+              onClick={toggleNewClientModal}
             />
           </div>
           <hr className="mb-6 border-t-bright-gray" />
@@ -344,4 +299,4 @@ const ChildNavigationButton = ({
   </div>
 )
 
-export default AdminLayout
+export default ClientLayout
