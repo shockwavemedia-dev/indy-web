@@ -32,9 +32,9 @@ const AuthLayout = ({
   }
 
   return (
-    <div className="flex min-h-screen flex-col bg-shark">
+    <div className="flex min-h-screen flex-col items-center justify-center bg-ghost-white bg-auth bg-center bg-no-repeat">
       <div
-        className={`m-auto flex flex-col items-center rounded bg-white px-22 py-15 ${className}`}
+        className={`flex flex-col items-center rounded-xl bg-white px-22 py-15 shadow ${className}`}
       >
         <div className="mb-4">
           <Image
@@ -45,8 +45,8 @@ const AuthLayout = ({
             width="65rem"
           />
         </div>
-        <div className="select-none font-inter text-2.5xl font-semibold">{title}</div>
-        <div className="mb-6 text-center font-inter text-base font-normal text-nevada">
+        <div className="mb-2 font-urbanist text-2.5xl font-semibold text-onyx">{title}</div>
+        <div className="mb-5 text-center font-urbanist text-base font-medium text-metallic-silver">
           {subtitle}
         </div>
         {children}

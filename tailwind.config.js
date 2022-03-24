@@ -88,6 +88,9 @@ module.exports = {
         1.5: '.375rem',
       },
     },
+    backgroundImage: {
+      auth: "url('/images/auth-bg.png')",
+    },
     boxShadow: {
       DEFAULT: '0px 4px 10px #2a2a3408',
       'react-select': '0 0 0 1px #0000001a, 0 4px 11px #0000001a',
