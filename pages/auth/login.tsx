@@ -6,8 +6,8 @@ import { ReactElement } from 'react'
 import Button from '../../components/Common/Button.component'
 import Checkbox from '../../components/Common/Checkbox.component'
 import CaretIcon from '../../components/Common/Icons/Caret.icon'
-import EmailIcon from '../../components/Common/Icons/Email.icon'
 import LockIcon from '../../components/Common/Icons/Lock.icon'
+import UserIcon from '../../components/Common/Icons/User.icon'
 import Link from '../../components/Common/Link.component'
 import TextInput from '../../components/Common/TextInput.component'
 import { SignInForm } from '../../interfaces/SignInForm.interface'
@@ -18,7 +18,7 @@ const Login: NextPageWithLayout = () => {
   const { replace } = useRouter()
 
   const formInitialValues: SignInForm = {
-    email: '',
+    username: '',
     password: '',
     rememberMe: false,
   }
@@ -30,7 +30,7 @@ const Login: NextPageWithLayout = () => {
     setSubmitting(true)
 
     const res = await signIn<'credentials'>('credentials', {
-      email: signInFormValues.email,
+      username: signInFormValues.username,
       password: signInFormValues.password,
       redirect: false,
     })
@@ -52,7 +52,7 @@ const Login: NextPageWithLayout = () => {
           <Form className="flex w-103 flex-col items-center">
             <TextInput
               name="username"
-              Icon={EmailIcon}
+              Icon={UserIcon}
               placeholder="Enter username"
               className="mb-5"
               disableAutoComplete
@@ -73,7 +73,12 @@ const Login: NextPageWithLayout = () => {
                 Forgot Password?
               </Link>
             </div>
-            <Button type="submit" ariaLabel="Login" disabled={isSubmitting} className="mb-5 w-75">
+            <Button
+              type="submit"
+              ariaLabel="Login"
+              disabled={isSubmitting}
+              className="max-w-75 mb-5"
+            >
               <div>Log In</div>
               <CaretIcon className="rotate-90 stroke-white" />
             </Button>

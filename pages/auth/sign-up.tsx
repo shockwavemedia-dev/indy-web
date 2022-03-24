@@ -142,7 +142,12 @@ const SignUp: NextPageWithLayout = () => {
               and one big character, special character and number
             </div>
             <Checkbox name="rememberMe" label="Remember me" className="mr-auto mb-8" />
-            <Button type="submit" ariaLabel="Sign Up" disabled={isSubmitting} className="mb-5 w-75">
+            <Button
+              type="submit"
+              ariaLabel="Sign Up"
+              disabled={isSubmitting}
+              className="mb-5 max-w-75"
+            >
               <div>Sign Up</div>
               <CaretIcon className="rotate-90 stroke-white" />
             </Button>

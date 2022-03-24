@@ -34,7 +34,7 @@ const ForgotPassword: NextPageWithLayout = () => {
               type="submit"
               ariaLabel="Restore Password"
               disabled={isSubmitting}
-              className="mb-5 w-75"
+              className="mb-5 max-w-75"
             >
               <div>Restore Password</div>
               <CaretIcon className="rotate-90 stroke-white" />

@@ -89,7 +89,9 @@ module.exports = {
       maxHeight: {
         75: '18.75rem',
       },
-      maxWidth: {},
+      maxWidth: {
+        75: '18.75rem',
+      },
       spacing: {
         1.5: '.375rem',
       },

@@ -1,5 +1,5 @@
 export interface SignInForm {
-  email: string
+  username: string
   password: string
   rememberMe: boolean
 }

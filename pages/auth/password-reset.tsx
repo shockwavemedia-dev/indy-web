@@ -58,7 +58,7 @@ const CreateNewPassword: NextPageWithLayout = () => {
               type="submit"
               ariaLabel="Save New Password"
               disabled={isSubmitting}
-              className="mb-5 w-75"
+              className="mb-5 max-w-75"
             >
               <FloppyDiskIcon className="stroke-white" />
               <div>Save New Password</div>

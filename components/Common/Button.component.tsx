@@ -21,7 +21,7 @@ const Button = ({
     type={type}
     aria-label={ariaLabel}
     disabled={disabled}
-    className={`flex min-h-12.5 w-full items-center justify-center space-x-2 rounded-xl bg-jungle-green font-urbanist text-base font-semibold text-white ${className}`}
+    className={`flex min-h-12.5 w-full flex-1 items-center justify-center space-x-2 rounded-xl bg-jungle-green font-urbanist text-base font-semibold text-white ${className}`}
     onClick={onClick}
   >
     {children}
