@@ -23,7 +23,7 @@ const TextInput = ({
 
   return (
     <div className={`relative flex w-full items-center ${className}`}>
-      <label className="absolute ml-6" htmlFor={name}>
+      <label className="absolute ml-6 cursor-text" htmlFor={name}>
         <Icon className="stroke-lavender-gray" />
       </label>
       <Field
