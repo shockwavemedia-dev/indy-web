@@ -10,7 +10,6 @@ import TextInput from '../../components/Common/TextInput.component'
 import { ForgotPasswordForm } from '../../interfaces/ForgotPasswordForm.interface'
 import AuthLayout from '../../layouts/Auth.layout'
 import { NextPageWithLayout } from '../../types/NextPageWithLayout.type'
-import { objectWithFileToFormData } from '../../utils/form-helpers'
 
 const ForgotPassword: NextPageWithLayout = () => {
   const formInitialValues: ForgotPasswordForm = {
@@ -23,7 +22,7 @@ const ForgotPassword: NextPageWithLayout = () => {
   ) => {
     setSubmitting(true)
 
-    await axios.post('/forgot-password', objectWithFileToFormData(values))
+    await axios.post('/forgot-password', values)
 
     setSubmitting(false)
   }
