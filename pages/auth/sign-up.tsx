@@ -102,21 +102,21 @@ const SignUp: NextPageWithLayout = () => {
                 type="text"
                 name="fullName"
                 Icon={UserIcon}
-                placeholder="Enter Full Name"
+                placeholder="Enter full name"
               />
               <ErrorMessage name="fullName" />
               <TextInput
                 type="text"
                 name="companyName"
                 Icon={BriefcaseIcon}
-                placeholder="Enter Company Name"
+                placeholder="Enter company name"
               />
             </div>
             <TextInput
               type="email"
               name="email"
               Icon={EmailIcon}
-              placeholder="Enter Email"
+              placeholder="Enter email"
               className="mb-5"
             />
             <div className="mb-3 flex w-full space-x-5">
@@ -124,14 +124,14 @@ const SignUp: NextPageWithLayout = () => {
                 type="password"
                 name="password"
                 Icon={LockIcon}
-                placeholder="Enter Password"
+                placeholder="Enter password"
                 disableAutoComplete
               />
               <TextInput
                 type="password"
                 name="passwordConfirmation"
                 Icon={LockIcon}
-                placeholder="Confirm Password"
+                placeholder="Confirm password"
                 disableAutoComplete
               />
             </div>

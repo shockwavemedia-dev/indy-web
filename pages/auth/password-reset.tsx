@@ -36,7 +36,7 @@ const CreateNewPassword: NextPageWithLayout = () => {
               type="password"
               name="password"
               Icon={LockIcon}
-              placeholder="Enter Password"
+              placeholder="Enter new password"
               disableAutoComplete
               className="mb-3"
             />
@@ -50,7 +50,7 @@ const CreateNewPassword: NextPageWithLayout = () => {
               type="password"
               name="passwordConfirm"
               Icon={LockIcon}
-              placeholder="Enter Password"
+              placeholder="Confirm new password"
               disableAutoComplete
               className="mb-8"
             />

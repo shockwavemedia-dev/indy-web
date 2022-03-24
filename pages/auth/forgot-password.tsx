@@ -27,7 +27,7 @@ const ForgotPassword: NextPageWithLayout = () => {
               type="email"
               name="email"
               Icon={EmailIcon}
-              placeholder="Enter Email"
+              placeholder="Enter email"
               className="mb-8"
             />
             <Button

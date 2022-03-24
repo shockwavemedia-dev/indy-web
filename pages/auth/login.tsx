@@ -61,7 +61,7 @@ const Login: NextPageWithLayout = () => {
               type="password"
               name="password"
               Icon={LockIcon}
-              placeholder="Enter Password"
+              placeholder="Enter password"
               className="mb-3"
             />
             <div className="mb-8 flex w-full justify-between">
