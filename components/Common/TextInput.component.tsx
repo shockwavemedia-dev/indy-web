@@ -23,11 +23,9 @@ const TextInput = ({
 
   return (
     <div className={`relative flex w-full items-center ${className}`}>
-      <label className="absolute ml-6 cursor-text" htmlFor={name}>
-        <Icon className="stroke-lavender-gray" />
-      </label>
+      <Icon className="absolute ml-6 stroke-lavender-gray" />
       <Field
-        className="min-h-12.5 w-full rounded-xl px-13 font-urbanist text-sm font-medium text-onyx placeholder-metallic-silver ring-1 ring-bright-gray ring-offset-0 selection:bg-jungle-green selection:text-white focus:ring-2 focus:ring-jungle-green focus:ring-opacity-40"
+        className="z-10 min-h-12.5 w-full rounded-xl bg-transparent px-13 font-urbanist text-sm font-medium text-onyx placeholder-metallic-silver ring-1 ring-bright-gray selection:bg-jungle-green selection:text-white focus:ring-2 focus:ring-jungle-green focus:ring-opacity-40"
         type={isShowPassword ? 'text' : type}
         name={name}
         id={name}
