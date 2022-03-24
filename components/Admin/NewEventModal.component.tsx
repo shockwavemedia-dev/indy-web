@@ -56,7 +56,7 @@ const NewEventModal = ({
               <Form className="flex w-140 flex-col">
                 <TextInput
                   Icon={PencilIcon}
-                  placeholder="Enter Subject"
+                  placeholder="Enter subject"
                   name="subject"
                   disableAutoComplete
                   className="mb-5"
@@ -65,14 +65,14 @@ const NewEventModal = ({
                   <SelectService setFieldValue={setFieldValue} />
                   <TextInput
                     Icon={CalendarIcon}
-                    placeholder="Enter Due Date"
+                    placeholder="Enter due date"
                     name="duedate"
                     disableAutoComplete
                   />
                 </div>
                 <TextAreaInput
                   Icon={PencilIcon}
-                  placeholder="Enter Description"
+                  placeholder="Enter description"
                   name="description"
                   className="mb-5"
                 />
