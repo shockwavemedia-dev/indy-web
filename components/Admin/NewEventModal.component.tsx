@@ -7,7 +7,7 @@ import { objectWithFileToFormData } from '../../utils/form-helpers'
 import Button from '../Common/Button.component'
 import FileInput from '../Common/FileInput.component'
 import CalendarIcon from '../Common/Icons/Calendar.icon'
-import PencilIcon from '../Common/Icons/Pencil.icon'
+import EditIcon from '../Common/Icons/Edit.icon'
 import TextAreaInput from '../Common/TextAreaInput.component'
 import TextInput from '../Common/TextInput.component'
 import Modal from './Modal.component'
@@ -55,7 +55,7 @@ const NewEventModal = ({
             {({ isSubmitting, setFieldValue, values: { services } }) => (
               <Form className="flex w-140 flex-col">
                 <TextInput
-                  Icon={PencilIcon}
+                  Icon={EditIcon}
                   placeholder="Enter subject"
                   name="subject"
                   disableAutoComplete
@@ -71,7 +71,7 @@ const NewEventModal = ({
                   />
                 </div>
                 <TextAreaInput
-                  Icon={PencilIcon}
+                  Icon={EditIcon}
                   placeholder="Enter description"
                   name="description"
                   className="mb-5"
