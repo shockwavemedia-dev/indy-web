@@ -105,7 +105,6 @@ const Select = ({
         components={{ DropdownIndicator, ValueContainer }}
         inputId={name}
         isDisabled={disabled}
-        menuIsOpen={true}
       />
     </div>
   )
