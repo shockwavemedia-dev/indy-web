@@ -57,7 +57,6 @@ const NewEventModal = ({
                 <div className="flex w-140 flex-col">
                   <div className="mb-6">
                     <TextInput
-                      label="Subject"
                       Icon={PencilIcon}
                       placeholder="Enter Subject"
                       name="subject"
@@ -67,7 +66,6 @@ const NewEventModal = ({
                   <div className="mb-6 flex space-x-3">
                     <SelectService setFieldValue={setFieldValue} />
                     <TextInput
-                      label="Due Date"
                       Icon={CalendarIcon}
                       placeholder="Enter Due Date"
                       name="duedate"
