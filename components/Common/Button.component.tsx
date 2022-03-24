@@ -5,7 +5,7 @@ const Button = ({
   ariaLabel,
   disabled = false,
   children,
-  isLight = false,
+  light = false,
   onClick,
   className,
 }: {
@@ -13,7 +13,7 @@ const Button = ({
   ariaLabel: string
   disabled?: boolean
   children: ReactNode
-  isLight?: boolean
+  light?: boolean
   onClick?: MouseEventHandler<HTMLButtonElement>
   className?: string
 }) => (
@@ -21,7 +21,11 @@ const Button = ({
     type={type}
     aria-label={ariaLabel}
     disabled={disabled}
-    className={`flex min-h-12.5 w-full flex-1 items-center justify-center space-x-2 rounded-xl bg-jungle-green font-urbanist text-base font-semibold text-white ${className}`}
+    className={`flex min-h-12.5 w-full flex-1 items-center justify-center space-x-2 rounded-xl font-urbanist text-base font-semibold  ${className} ${
+      light
+        ? 'border-1.5 border-solid border-bright-gray bg-white text-onyx'
+        : 'bg-jungle-green text-white'
+    }`}
     onClick={onClick}
   >
     {children}

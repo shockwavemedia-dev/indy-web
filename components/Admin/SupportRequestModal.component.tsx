@@ -46,7 +46,7 @@ const SupportRequestModal = ({
                     />
                   </div>
                   <div className="flex space-x-3">
-                    <Button ariaLabel="Cancel" isLight onClick={onClose}>
+                    <Button ariaLabel="Cancel" light onClick={onClose}>
                       Cancel
                     </Button>
                     <Button ariaLabel="Submit" type="submit" disabled={isSubmitting}>

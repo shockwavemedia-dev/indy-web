@@ -8,14 +8,14 @@ const nextAuth = NextAuth({
     CredentialsProvider({
       id: 'credentials',
       credentials: {
-        username: { type: 'text' },
+        email: { type: 'email' },
         password: { type: 'password' },
       },
       authorize: async (credentials) => {
         const {
           data: { accessToken, user, expiresIn },
         } = await axios.post<Authentication>('/authenticate', {
-          username: credentials?.username,
+          email: credentials?.email,
           password: credentials?.password,
         })
 

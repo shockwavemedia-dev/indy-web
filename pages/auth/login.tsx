@@ -18,7 +18,7 @@ const Login: NextPageWithLayout = () => {
   const { replace } = useRouter()
 
   const formInitialValues: SignInForm = {
-    username: '',
+    email: '',
     password: '',
     rememberMe: false,
   }
@@ -30,7 +30,7 @@ const Login: NextPageWithLayout = () => {
     setSubmitting(true)
 
     const res = await signIn<'credentials'>('credentials', {
-      username: signInFormValues.username,
+      email: signInFormValues.email,
       password: signInFormValues.password,
       redirect: false,
     })
@@ -51,7 +51,8 @@ const Login: NextPageWithLayout = () => {
         {({ isSubmitting }) => (
           <Form className="flex w-103 flex-col items-center">
             <TextInput
-              name="username"
+              type="email"
+              name="email"
               Icon={UserIcon}
               placeholder="Enter username"
               className="mb-5"
@@ -77,7 +78,7 @@ const Login: NextPageWithLayout = () => {
               type="submit"
               ariaLabel="Login"
               disabled={isSubmitting}
-              className="max-w-75 mb-5"
+              className="mb-5 max-w-75"
             >
               <div>Log In</div>
               <CaretIcon className="rotate-90 stroke-white" />
