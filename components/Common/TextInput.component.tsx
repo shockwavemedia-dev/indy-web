@@ -27,7 +27,7 @@ const TextInput = ({
         <Icon className="stroke-lavender-gray" />
       </label>
       <Field
-        className="min-h-12.5 w-full rounded-xl px-13 font-urbanist text-sm font-medium text-onyx placeholder-metallic-silver ring-1 ring-bright-gray ring-offset-0 focus:ring-2 focus:ring-jungle-green focus:ring-opacity-40"
+        className="min-h-12.5 w-full rounded-xl px-13 font-urbanist text-sm font-medium text-onyx placeholder-metallic-silver ring-1 ring-bright-gray ring-offset-0 selection:bg-jungle-green selection:text-white focus:ring-2 focus:ring-jungle-green focus:ring-opacity-40"
         type={isShowPassword ? 'text' : type}
         name={name}
         id={name}
