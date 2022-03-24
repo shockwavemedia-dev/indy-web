@@ -1,4 +1,10 @@
-const PasswordStrengthMeter = ({ strength }: { strength: number }) => {
+const PasswordStrengthMeter = ({
+  strength,
+  className,
+}: {
+  strength: number
+  className?: string
+}) => {
   const getStrengthText = () => {
     if (strength < 2) {
       return 'Very Weak'
@@ -14,7 +20,7 @@ const PasswordStrengthMeter = ({ strength }: { strength: number }) => {
   }
 
   return (
-    <div className="flex items-center space-x-3">
+    <div className={`flex items-center space-x-3 ${className}`}>
       <div className="flex space-x-2">
         {[...Array(5)].map((_, i) => {
           let color = 'bg-gallery'
@@ -29,10 +35,10 @@ const PasswordStrengthMeter = ({ strength }: { strength: number }) => {
             }
           }
 
-          return <div key={i} className={`h-1.5 w-6 rounded-3xl ${color}`} />
+          return <div key={i} className={`h-1.5 w-8 rounded-3xl ${color}`} />
         })}
       </div>
-      <div className="font-inter text-xxs font-normal text-nevada">{getStrengthText()}</div>
+      <div className="font-urbanist text-xxs font-medium text-waterloo">{getStrengthText()}</div>
     </div>
   )
 }

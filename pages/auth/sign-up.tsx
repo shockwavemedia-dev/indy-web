@@ -96,13 +96,12 @@ const SignUp: NextPageWithLayout = () => {
       </Head>
       <Formik initialValues={formInitialValues} onSubmit={submitForm} validate={validateForm}>
         {({ isSubmitting }) => (
-          <Form className="flex w-full flex-col items-center">
-            <div className="mb-4.5 flex w-full space-x-3">
+          <Form className="flex w-130 flex-col items-center">
+            <div className="mb-5 flex w-full space-x-5">
               <TextInput
                 type="text"
                 name="fullName"
                 Icon={UserIcon}
-                label="Full Name"
                 placeholder="Enter Full Name"
               />
               <ErrorMessage name="fullName" />
@@ -110,25 +109,21 @@ const SignUp: NextPageWithLayout = () => {
                 type="text"
                 name="companyName"
                 Icon={BriefcaseIcon}
-                label="Company Name"
                 placeholder="Enter Company Name"
               />
             </div>
-            <div className="mb-4.5 w-full">
-              <TextInput
-                type="email"
-                name="email"
-                Icon={EmailIcon}
-                label="Email"
-                placeholder="Enter Email"
-              />
-            </div>
-            <div className="mb-2 flex w-full space-x-3">
+            <TextInput
+              type="email"
+              name="email"
+              Icon={EmailIcon}
+              placeholder="Enter Email"
+              className="mb-5"
+            />
+            <div className="mb-3 flex w-full space-x-5">
               <TextInput
                 type="password"
                 name="password"
                 Icon={LockIcon}
-                label="Password"
                 placeholder="Enter Password"
                 disableAutoComplete
               />
@@ -136,36 +131,23 @@ const SignUp: NextPageWithLayout = () => {
                 type="password"
                 name="passwordConfirmation"
                 Icon={LockIcon}
-                label="Password"
-                placeholder="Enter Password"
+                placeholder="Confirm Password"
                 disableAutoComplete
               />
             </div>
-            <div className="mr-auto mb-2 w-1/2">
-              <PasswordStrengthMeter strength={passwordStrength} />
+            <PasswordStrengthMeter strength={passwordStrength} className="mr-auto mb-2" />
+            <div className="mr-auto mb-3 font-urbanist text-xxs font-medium text-metallic-silver">
+              Should be at least 8 symbols and contain one small
+              <br />
+              and one big character, special character and number
             </div>
-            <div className="mr-auto mb-6">
-              <div className="word font-inter text-xxs font-normal text-nevada">
-                Should be at least 8 symbols and contain
-                <br />
-                one small and one big character, special
-                <br />
-                character and number
-              </div>
-            </div>
-            <div className="mr-auto mb-8">
-              <Checkbox name="rememberMe" label="Remember me" />
-            </div>
-            <div className="mb-6 flex w-78">
-              <Button type="submit" ariaLabel="Sign Up" disabled={isSubmitting}>
-                <span>Sign Up</span>
-                <CaretIcon className="rotate-90 stroke-white" />
-              </Button>
-            </div>
-            <div className="flex items-center space-x-1.5">
-              <div className="font-inter text-sm font-normal text-emperor">
-                Already have an account?
-              </div>
+            <Checkbox name="rememberMe" label="Remember me" className="mr-auto mb-8" />
+            <Button type="submit" ariaLabel="Sign Up" disabled={isSubmitting} className="mb-5 w-75">
+              <span>Sign Up</span>
+              <CaretIcon className="rotate-90 stroke-white" />
+            </Button>
+            <div className="flex font-urbanist text-sm font-medium text-metallic-silver">
+              Already have an account?&nbsp;
               <Link href="/auth/login">Login</Link>
             </div>
           </Form>
@@ -176,11 +158,7 @@ const SignUp: NextPageWithLayout = () => {
 }
 
 SignUp.getLayout = (page: ReactElement) => (
-  <AuthLayout
-    title="Welcome to Daily Press"
-    subtitle="Please sign up and start the adventure"
-    className="w-163"
-  >
+  <AuthLayout title="Welcome to Daily Press" subtitle="Please sign up and start the adventure">
     {page}
   </AuthLayout>
 )
