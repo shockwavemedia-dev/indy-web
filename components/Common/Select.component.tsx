@@ -8,7 +8,7 @@ import ReactSelect, {
   ValueContainerProps,
 } from 'react-select'
 import { Option } from '../../interfaces/Option.interface'
-import CaretDownIcon from './Icons/CaretDown.icon'
+import CaretIcon from './Icons/Caret.icon'
 
 const Select = ({
   label,
@@ -80,7 +80,7 @@ const Select = ({
 
   const DropdownIndicator = (props: DropdownIndicatorProps<Option, false>) => (
     <Components.DropdownIndicator {...props}>
-      <CaretDownIcon className={`stroke-black ${props.selectProps.menuIsOpen && 'rotate-180'}`} />
+      <CaretIcon className={`stroke-black ${props.selectProps.menuIsOpen && 'rotate-180'}`} />
     </Components.DropdownIndicator>
   )
 
