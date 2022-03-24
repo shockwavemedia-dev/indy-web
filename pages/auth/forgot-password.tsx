@@ -22,22 +22,23 @@ const ForgotPassword: NextPageWithLayout = () => {
       </Head>
       <Formik initialValues={formInitialValues} onSubmit={() => {}}>
         {({ isSubmitting }) => (
-          <Form className="flex w-full flex-col items-center">
-            <div className="mb-8 w-full">
-              <TextInput
-                type="email"
-                name="email"
-                Icon={EmailIcon}
-                label="Email"
-                placeholder="Enter Email"
-              />
-            </div>
-            <div className="mb-5 flex w-78">
-              <Button type="submit" ariaLabel="Restore Password" disabled={isSubmitting}>
-                <span>Restore Password</span>
-                <CaretIcon className="rotate-90 stroke-white" />
-              </Button>
-            </div>
+          <Form className="flex w-103 flex-col items-center">
+            <TextInput
+              type="email"
+              name="email"
+              Icon={EmailIcon}
+              placeholder="Enter Email"
+              className="mb-8"
+            />
+            <Button
+              type="submit"
+              ariaLabel="Restore Password"
+              disabled={isSubmitting}
+              className="mb-5 w-75"
+            >
+              <span>Restore Password</span>
+              <CaretIcon className="rotate-90 stroke-white" />
+            </Button>
             <Link href="/auth/login">Cancel</Link>
           </Form>
         )}
@@ -56,7 +57,6 @@ ForgotPassword.getLayout = (page: ReactElement) => (
         one-time link to reset password
       </>
     }
-    className="w-142.5"
   >
     {page}
   </AuthLayout>
