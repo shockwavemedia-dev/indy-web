@@ -12,11 +12,8 @@ body {
   box-sizing: border-box;
 }
 
-input,
-button,
 input:focus-visible,
 button:focus-visible {
-  border: none;
   outline: none;
 }
 

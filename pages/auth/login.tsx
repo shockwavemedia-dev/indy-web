@@ -50,38 +50,30 @@ const Login: NextPageWithLayout = () => {
       <Formik initialValues={formInitialValues} onSubmit={submitForm}>
         {({ isSubmitting }) => (
           <Form className="flex w-full flex-col items-center">
-            <div className="mb-4.5 flex w-full">
-              <TextInput
-                type="email"
-                name="email"
-                Icon={EmailIcon}
-                label="Email"
-                placeholder="Enter Email"
-              />
-            </div>
-            <div className="mb-8 flex w-full">
-              <TextInput
-                type="password"
-                name="password"
-                Icon={LockIcon}
-                label="Password"
-                placeholder="Enter Password"
-              />
-            </div>
+            <TextInput
+              name="username"
+              Icon={EmailIcon}
+              placeholder="Enter username"
+              className="mb-6"
+              disableAutoComplete
+            />
+            <TextInput
+              type="password"
+              name="password"
+              Icon={LockIcon}
+              placeholder="Enter Password"
+              className="mb-3"
+            />
             <div className="mb-8 flex w-full justify-between">
               <Checkbox name="rememberMe" label="Remember me" />
               <Link href="/auth/forgot-password">Forgot Password?</Link>
             </div>
-            <div className="mb-6 flex w-78">
-              <Button type="submit" ariaLabel="Login" disabled={isSubmitting}>
-                <span>Login</span>
-                <CaretIcon className="rotate-90 stroke-white" />
-              </Button>
-            </div>
-            <div className="flex items-center space-x-1.5">
-              <div className="font-inter text-sm font-normal text-emperor">
-                Don&apos;t have an account?
-              </div>
+            <Button type="submit" ariaLabel="Login" disabled={isSubmitting} className="mb-5 w-75">
+              <div>Log In</div>
+              <CaretIcon className="rotate-90 stroke-white" />
+            </Button>
+            <div className="flex items-center font-urbanist text-sm font-medium text-metallic-silver">
+              Don&apos;t have an account?&nbsp;
               <Link href="/auth/sign-up">Sign Up</Link>
             </div>
           </Form>
