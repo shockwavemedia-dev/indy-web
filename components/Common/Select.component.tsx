@@ -16,7 +16,7 @@ const Select = ({
   Icon,
   placeholder,
   options,
-  isDisabled = false,
+  disabled = false,
   setFieldValue,
 }: {
   label: string
@@ -24,7 +24,7 @@ const Select = ({
   Icon: ComponentType
   placeholder: string
   options: Options<Option>
-  isDisabled: boolean
+  disabled?: boolean
   setFieldValue: (field: string, value: any, shouldValidate?: boolean) => void
 }) => {
   const [selectedOption, setSelectedOption] = useState<Option | null>(null)
