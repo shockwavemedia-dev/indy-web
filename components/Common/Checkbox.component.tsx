@@ -8,16 +8,16 @@ const Checkbox = ({ name, label }: { name: string; label: string }) => {
   const toggleCheckbox = () => setChecked(!isChecked)
 
   return (
-    <label htmlFor={name} className="flex items-center space-x-3 font-inter text-sm font-normal">
+    <label htmlFor={name} className="flex cursor-pointer items-center space-x-3">
       <Field type="checkbox" name={name} id={name} hidden onClick={toggleCheckbox} />
       <div
-        className={`flex min-h-4 min-w-4 items-center justify-center rounded border border-solid border-mineshaft ${
-          isChecked && 'bg-mineshaft'
+        className={`flex min-h-4 min-w-4 items-center justify-center rounded border border-solid border-bright-gray ${
+          isChecked && 'border-0 bg-jungle-green'
         }`}
       >
         {isChecked && <CheckIcon className="stroke-white" />}
       </div>
-      <span>{label}</span>
+      <div className="font-urbanist text-sm font-medium text-onyx">{label}</div>
     </label>
   )
 }
