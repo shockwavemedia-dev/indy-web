@@ -53,47 +53,37 @@ const NewEventModal = ({
         <Modal title="New Event" onClose={onClose}>
           <Formik initialValues={formInitialValues} onSubmit={submitForm}>
             {({ isSubmitting, setFieldValue, values: { services } }) => (
-              <Form>
-                <div className="flex w-140 flex-col">
-                  <div className="mb-6">
-                    <TextInput
-                      Icon={PencilIcon}
-                      placeholder="Enter Subject"
-                      name="subject"
-                      disableAutoComplete
-                    />
-                  </div>
-                  <div className="mb-6 flex space-x-3">
-                    <SelectService setFieldValue={setFieldValue} />
-                    <TextInput
-                      Icon={CalendarIcon}
-                      placeholder="Enter Due Date"
-                      name="duedate"
-                      disableAutoComplete
-                    />
-                  </div>
-                  <div className="mb-6">
-                    <TextAreaInput
-                      Icon={PencilIcon}
-                      placeholder="Enter Description"
-                      name="description"
-                    />
-                  </div>
-                  <div className="mb-8">
-                    <FileInput
-                      label="Upload Attachments"
-                      name="attachment"
-                      setFieldValue={setFieldValue}
-                    />
-                  </div>
-                  <div className="flex space-x-3">
-                    <Button ariaLabel="Cancel" light onClick={onClose}>
-                      Cancel
-                    </Button>
-                    <Button ariaLabel="Submit" type="submit" disabled={isSubmitting}>
-                      Submit
-                    </Button>
-                  </div>
+              <Form className="flex w-140 flex-col">
+                <TextInput
+                  Icon={PencilIcon}
+                  placeholder="Enter Subject"
+                  name="subject"
+                  disableAutoComplete
+                  className="mb-5"
+                />
+                <div className="mb-5 flex space-x-5">
+                  <SelectService setFieldValue={setFieldValue} />
+                  <TextInput
+                    Icon={CalendarIcon}
+                    placeholder="Enter Due Date"
+                    name="duedate"
+                    disableAutoComplete
+                  />
+                </div>
+                <TextAreaInput
+                  Icon={PencilIcon}
+                  placeholder="Enter Description"
+                  name="description"
+                  className="mb-5"
+                />
+                <FileInput name="attachment" setFieldValue={setFieldValue} className="mb-8" />
+                <div className="flex space-x-3">
+                  <Button ariaLabel="Cancel" light onClick={onClose}>
+                    Cancel
+                  </Button>
+                  <Button ariaLabel="Submit" type="submit" disabled={isSubmitting}>
+                    Submit
+                  </Button>
                 </div>
               </Form>
             )}

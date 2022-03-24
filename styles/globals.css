@@ -13,7 +13,8 @@ body {
 }
 
 input:focus-visible,
-button:focus-visible {
+button:focus-visible,
+textarea:focus-visible {
   outline: none;
 }
 

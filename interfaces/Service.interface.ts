@@ -1,6 +1,7 @@
 export interface Service {
   id: number
   serviceId: number
+  serviceName: string
   marketingQuota: number
   extraQuota: number
   totalUsed: number
