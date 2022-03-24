@@ -23,7 +23,7 @@ const Select = ({
   name: string
   Icon: ComponentType
   placeholder: string
-  options: Options<Option> | undefined
+  options: Options<Option>
   isDisabled: boolean
   setFieldValue: (field: string, value: any, shouldValidate?: boolean) => void
 }) => {
