@@ -3,9 +3,9 @@ import { useSession } from 'next-auth/react'
 import { useState } from 'react'
 import { useQuery } from 'react-query'
 import { Service } from '../../interfaces/Service.interface'
-import CaretDownIcon from '../Common/Icons/CaretDown.icon'
+import CaretIcon from '../Common/Icons/Caret.icon'
 import CheckIcon from '../Common/Icons/Check.icon'
-import LightbulbIcon from '../Common/Icons/Lightbulb.icon'
+import ClipboardIcon from '../Common/Icons/Clipboard.icon'
 
 const SelectService = ({
   setFieldValue,
@@ -79,39 +79,36 @@ const SelectService = ({
   }
 
   return (
-    <div className="flex w-full flex-col">
-      <label className="mb-2 font-inter text-xs font-normal text-mineshaft">Services</label>
-      <div className="relative flex w-full flex-col">
-        <button
-          className="flex h-11.5 cursor-default items-center overflow-hidden rounded border border-solid border-ebonyclay border-opacity-10 px-2.5 focus-visible:border focus-visible:border-solid focus-visible:border-ebonyclay focus-visible:border-opacity-10"
-          name="Services"
-          onClick={toggleServices}
-          type="button"
-        >
-          <div className="mr-auto flex items-center space-x-2">
-            <LightbulbIcon className="stroke-black" />
-            <div className="mr-auto font-inter text-sm font-normal text-stormgray">
-              {isLoading ? 'Loading Services...' : 'Select Services'}
-            </div>
-          </div>
-          <CaretDownIcon className="stroke-black" />
-        </button>
-        <div
-          className={`absolute top-full z-10 mt-2 flex w-full flex-col overflow-hidden rounded bg-white shadow-react-select ${
-            !isServicesVisible && 'invisible'
-          }`}
-        >
-          <div className="max-h-75 overflow-y-auto py-1">
-            {services?.map((service, i) => (
-              <ServiceRow
-                service={service}
-                selectedServices={selectedServices}
-                toggleService={toggleService}
-                toggleExtra={toggleExtra}
-                key={i}
-              />
-            ))}
-          </div>
+    <div className="relative flex w-full flex-col">
+      <button
+        className="flex min-h-12.5 cursor-default items-center rounded-xl ring-1 ring-bright-gray focus:ring-2 focus:ring-jungle-green focus:ring-opacity-40"
+        name="Services"
+        onClick={toggleServices}
+        type="button"
+      >
+        <ClipboardIcon className="absolute ml-6 stroke-lavender-gray" />
+        <div className="mr-auto pl-13 font-urbanist text-sm font-medium text-metallic-silver">
+          {isLoading ? 'Loading Services...' : 'Select Services'}
+        </div>
+        <CaretIcon
+          className={`mr-6 stroke-waterloo ${isServicesVisible ? 'rotate-0' : 'rotate-180'}`}
+        />
+      </button>
+      <div
+        className={`absolute top-full z-20 mt-2 flex w-full flex-col overflow-hidden rounded bg-white shadow-react-select ${
+          !isServicesVisible && 'invisible'
+        }`}
+      >
+        <div className="max-h-75 overflow-y-auto py-1">
+          {services?.map((service, i) => (
+            <ServiceRow
+              service={service}
+              selectedServices={selectedServices}
+              toggleService={toggleService}
+              toggleExtra={toggleExtra}
+              key={i}
+            />
+          ))}
         </div>
       </div>
     </div>
@@ -140,10 +137,10 @@ const ServiceRow = ({
       <button
         className="flex h-8.5 w-full cursor-default items-center justify-between py-2 px-3 hover:bg-pattensblue"
         type="button"
-        name={service.serviceId.toString()}
+        name={service.serviceName}
         onClick={fireToggleService}
       >
-        <div>{service.serviceId}</div>
+        <div>{service.serviceName}</div>
         <div
           className={`flex min-h-4 min-w-4 items-center justify-center rounded border border-solid border-mineshaft ${
             isServiceSelected ? 'bg-mineshaft' : 'bg-white'
