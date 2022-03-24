@@ -57,7 +57,6 @@ const NewClientModal = ({
                 <div className="flex w-[560px] flex-col">
                   <div className="mb-[24px]">
                     <TextInput
-                      label="Company Name"
                       Icon={PencilIcon}
                       placeholder="Enter Company Name"
                       name="name"
@@ -66,7 +65,6 @@ const NewClientModal = ({
                   </div>
                   <div className="mb-[24px]">
                     <TextInput
-                      label="Client Code"
                       Icon={PencilIcon}
                       placeholder="Enter Client Code"
                       name="clientCode"
@@ -77,24 +75,13 @@ const NewClientModal = ({
                     <FileInput label="Logo" name="logo" setFieldValue={setFieldValue} />
                   </div>
                   <div className="mb-[24px]">
-                    <TextAreaInput
-                      label="Overview"
-                      Icon={PencilIcon}
-                      placeholder="Enter Overview"
-                      name="overview"
-                    />
+                    <TextAreaInput Icon={PencilIcon} placeholder="Enter Overview" name="overview" />
                   </div>
                   <div className="mb-[24px]">
-                    <TextAreaInput
-                      label="Address"
-                      Icon={PencilIcon}
-                      placeholder="Enter Address"
-                      name="address"
-                    />
+                    <TextAreaInput Icon={PencilIcon} placeholder="Enter Address" name="address" />
                   </div>
                   <div className="mb-[24px]">
                     <TextInput
-                      label="Phone"
                       Icon={PencilIcon}
                       placeholder="Enter Phone"
                       name="phone"
@@ -103,7 +90,6 @@ const NewClientModal = ({
                   </div>
                   <div className="mb-[24px]">
                     <TextInput
-                      label="Timezone"
                       Icon={PencilIcon}
                       placeholder="Enter Timezone"
                       name="timezone"
@@ -112,7 +98,6 @@ const NewClientModal = ({
                   </div>
                   <div className="mb-[24px] flex space-x-[12px]">
                     <TextInput
-                      label="Client Since"
                       Icon={CalendarIcon}
                       placeholder="Enter Client Since"
                       name="clientSince"
@@ -121,7 +106,6 @@ const NewClientModal = ({
                   </div>
                   <div className="mb-[24px] flex space-x-[12px]">
                     <TextInput
-                      label="Rating"
                       Icon={PencilIcon}
                       placeholder="Enter Rating"
                       name="rating"
