@@ -31,44 +31,41 @@ const CreateNewPassword: NextPageWithLayout = () => {
       </Head>
       <Formik initialValues={formInitialValues} onSubmit={() => {}} validate={validateForm}>
         {({ isSubmitting }) => (
-          <Form className="flex w-full flex-col items-center">
-            <div className="mb-2 w-full">
-              <TextInput
-                type="password"
-                name="password"
-                Icon={LockIcon}
-                label="Password"
-                placeholder="Enter Password"
-                disableAutoComplete
-              />
+          <Form className="flex w-103 flex-col items-center">
+            <TextInput
+              type="password"
+              name="password"
+              Icon={LockIcon}
+              placeholder="Enter Password"
+              disableAutoComplete
+              className="mb-3"
+            />
+            <PasswordStrengthMeter strength={passwordStrength} className="mr-auto mb-2" />
+            <div className="mr-auto mb-5 font-urbanist text-xxs font-medium text-metallic-silver">
+              Should be at least 8 symbols and contain one small and one big character, special
+              <br />
+              character and number
             </div>
-            <div className="mr-auto mb-2">
-              <PasswordStrengthMeter strength={passwordStrength} />
-            </div>
-            <div className="mb-4.5 w-full">
-              <div className="word font-inter text-xxs font-normal text-nevada">
-                Should be at least 8 symbols and contain one small and one big character,
-                <br />
-                special character and number
-              </div>
-            </div>
-            <div className="mb-8 w-full">
-              <TextInput
-                type="password"
-                name="passwordConfirm"
-                Icon={LockIcon}
-                label="Confirm Password"
-                placeholder="Enter Password"
-                disableAutoComplete
-              />
-            </div>
-            <div className="mb-5 flex w-78">
-              <Button type="submit" ariaLabel="Save New Password" disabled={isSubmitting}>
-                <FloppyDiskIcon className="stroke-white" />
-                <span>Save New Password</span>
-              </Button>
-            </div>
-            <Link href="/auth/login">Cancel</Link>
+            <TextInput
+              type="password"
+              name="passwordConfirm"
+              Icon={LockIcon}
+              placeholder="Enter Password"
+              disableAutoComplete
+              className="mb-8"
+            />
+            <Button
+              type="submit"
+              ariaLabel="Save New Password"
+              disabled={isSubmitting}
+              className="mb-5 w-75"
+            >
+              <FloppyDiskIcon className="stroke-white" />
+              <div>Save New Password</div>
+            </Button>
+            <Link href="/auth/login" className="text-sm font-medium text-metallic-silver">
+              Cancel
+            </Link>
           </Form>
         )}
       </Formik>
@@ -77,7 +74,7 @@ const CreateNewPassword: NextPageWithLayout = () => {
 }
 
 CreateNewPassword.getLayout = (page: ReactElement) => (
-  <AuthLayout title="Password reset" subtitle="Setup your new password" className="w-142.5">
+  <AuthLayout title="Create new password" subtitle="Setup your new password">
     {page}
   </AuthLayout>
 )

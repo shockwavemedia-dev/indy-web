@@ -36,10 +36,12 @@ const ForgotPassword: NextPageWithLayout = () => {
               disabled={isSubmitting}
               className="mb-5 w-75"
             >
-              <span>Restore Password</span>
+              <div>Restore Password</div>
               <CaretIcon className="rotate-90 stroke-white" />
             </Button>
-            <Link href="/auth/login">Cancel</Link>
+            <Link href="/auth/login" className="text-sm font-medium text-metallic-silver">
+              Cancel
+            </Link>
           </Form>
         )}
       </Formik>

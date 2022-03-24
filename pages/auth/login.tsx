@@ -54,7 +54,7 @@ const Login: NextPageWithLayout = () => {
               name="username"
               Icon={EmailIcon}
               placeholder="Enter username"
-              className="mb-6"
+              className="mb-5"
               disableAutoComplete
             />
             <TextInput
@@ -66,7 +66,12 @@ const Login: NextPageWithLayout = () => {
             />
             <div className="mb-8 flex w-full justify-between">
               <Checkbox name="rememberMe" label="Remember me" />
-              <Link href="/auth/forgot-password">Forgot Password?</Link>
+              <Link
+                href="/auth/forgot-password"
+                className="text-sm font-semibold text-jungle-green"
+              >
+                Forgot Password?
+              </Link>
             </div>
             <Button type="submit" ariaLabel="Login" disabled={isSubmitting} className="mb-5 w-75">
               <div>Log In</div>
@@ -74,7 +79,9 @@ const Login: NextPageWithLayout = () => {
             </Button>
             <div className="flex font-urbanist text-sm font-medium text-metallic-silver">
               Don&apos;t have an account?&nbsp;
-              <Link href="/auth/sign-up">Sign Up</Link>
+              <Link href="/auth/sign-up" className="text-sm font-semibold text-jungle-green">
+                Sign Up
+              </Link>
             </div>
           </Form>
         )}
