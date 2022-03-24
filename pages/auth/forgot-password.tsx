@@ -1,3 +1,4 @@
+import axios from 'axios'
 import { Form, Formik } from 'formik'
 import Head from 'next/head'
 import { ReactElement } from 'react'
@@ -15,12 +16,23 @@ const ForgotPassword: NextPageWithLayout = () => {
     email: '',
   }
 
+  const submitForm = async (
+    values: ForgotPasswordForm,
+    { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
+  ) => {
+    setSubmitting(true)
+
+    await axios.post('/forgot-password', values)
+
+    setSubmitting(false)
+  }
+
   return (
     <>
       <Head>
         <title>Daily Press - Forgot Password</title>
       </Head>
-      <Formik initialValues={formInitialValues} onSubmit={() => {}}>
+      <Formik initialValues={formInitialValues} onSubmit={submitForm}>
         {({ isSubmitting }) => (
           <Form className="flex w-103 flex-col items-center">
             <TextInput
