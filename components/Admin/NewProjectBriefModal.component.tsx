@@ -35,14 +35,12 @@ const NewProjectBriefModal = ({
                 <div className="flex w-140 flex-col">
                   <div className="mb-6 flex space-x-3">
                     <TextInput
-                      label="Service"
                       Icon={LightbulbIcon}
                       placeholder="Select Service"
                       name="service"
                       disableAutoComplete
                     />
                     <TextInput
-                      label="Date"
                       Icon={CalendarIcon}
                       placeholder="Enter Date"
                       name="date"
@@ -51,7 +49,6 @@ const NewProjectBriefModal = ({
                   </div>
                   <div className="mb-6">
                     <TextInput
-                      label="Brief Name"
                       Icon={PencilIcon}
                       placeholder="Enter Brief Name"
                       name="briefName"
@@ -59,12 +56,7 @@ const NewProjectBriefModal = ({
                     />
                   </div>
                   <div className="mb-6">
-                    <TextAreaInput
-                      label="Content"
-                      Icon={PencilIcon}
-                      placeholder="Enter Content"
-                      name="content"
-                    />
+                    <TextAreaInput Icon={PencilIcon} placeholder="Enter Content" name="content" />
                   </div>
                   <div className="mb-8">
                     <FileInput label="Upload Assets" name="assets" setFieldValue={setFieldValue} />

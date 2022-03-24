@@ -30,7 +30,6 @@ const SupportRequestModal = ({
                 <div className="flex w-140 flex-col">
                   <div className="mb-6">
                     <TextInput
-                      label="Department"
                       Icon={LightbulbIcon}
                       placeholder="Select Department"
                       name="department"
@@ -38,12 +37,7 @@ const SupportRequestModal = ({
                     />
                   </div>
                   <div className="mb-6">
-                    <TextAreaInput
-                      label="Message"
-                      Icon={PencilIcon}
-                      placeholder="Enter Message"
-                      name="message"
-                    />
+                    <TextAreaInput Icon={PencilIcon} placeholder="Enter Message" name="message" />
                   </div>
                   <div className="flex space-x-3">
                     <Button ariaLabel="Cancel" light onClick={onClose}>
