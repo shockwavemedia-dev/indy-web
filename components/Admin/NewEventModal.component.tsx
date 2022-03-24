@@ -74,7 +74,6 @@ const NewEventModal = ({
                   </div>
                   <div className="mb-6">
                     <TextAreaInput
-                      label="Description"
                       Icon={PencilIcon}
                       placeholder="Enter Description"
                       name="description"
