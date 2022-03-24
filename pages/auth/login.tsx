@@ -49,7 +49,7 @@ const Login: NextPageWithLayout = () => {
       </Head>
       <Formik initialValues={formInitialValues} onSubmit={submitForm}>
         {({ isSubmitting }) => (
-          <Form className="flex w-full flex-col items-center">
+          <Form className="flex w-103 flex-col items-center">
             <TextInput
               name="username"
               Icon={EmailIcon}
@@ -87,7 +87,6 @@ Login.getLayout = (page: ReactElement) => (
   <AuthLayout
     title="Welcome to Daily Press"
     subtitle="Please log in to your account and start the adventure"
-    className="w-147"
     needsAuth
   >
     {page}

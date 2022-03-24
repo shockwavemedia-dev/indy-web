@@ -8,13 +8,11 @@ const AuthLayout = ({
   title,
   subtitle,
   children,
-  className,
   needsAuth = false,
 }: {
   title: string
   subtitle: ReactElement | string
   children: ReactElement
-  className: string
   needsAuth?: boolean
 }) => {
   const { replace } = useRouter()
@@ -33,9 +31,7 @@ const AuthLayout = ({
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-ghost-white bg-auth bg-center bg-no-repeat">
-      <div
-        className={`flex flex-col items-center rounded-xl bg-white px-22 py-15 shadow ${className}`}
-      >
+      <div className="flex flex-col items-center rounded-xl bg-white px-22 py-15 shadow">
         <div className="mb-4">
           <Image
             draggable={false}
