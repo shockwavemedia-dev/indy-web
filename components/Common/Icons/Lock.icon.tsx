@@ -1,21 +1,41 @@
 const LockIcon = ({ className }: { className: string }) => (
-  <svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg
+    className={className}
+    width="18"
+    height="19"
+    viewBox="0 0 18 19"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
     <path
-      className={className}
-      d="M14.625 6.28638H3.375C3.06434 6.28638 2.8125 6.53822 2.8125 6.84888V14.7239C2.8125 15.0345 3.06434 15.2864 3.375 15.2864H14.625C14.9357 15.2864 15.1875 15.0345 15.1875 14.7239V6.84888C15.1875 6.53822 14.9357 6.28638 14.625 6.28638Z"
+      d="M4.5 8V6.5C4.5 4.0175 5.25 2 9 2C12.75 2 13.5 4.0175 13.5 6.5V8"
+      strokeWidth="1.5"
       strokeLinecap="round"
       strokeLinejoin="round"
     />
     <path
-      className={className}
-      d="M6.46875 6.28638V3.75513C6.46875 3.0838 6.73543 2.43996 7.21014 1.96526C7.68484 1.49056 8.32867 1.22388 9 1.22388C9.67133 1.22388 10.3152 1.49056 10.7899 1.96526C11.2646 2.43996 11.5312 3.0838 11.5312 3.75513V6.28638"
+      d="M12.75 17H5.25C2.25 17 1.5 16.25 1.5 13.25V11.75C1.5 8.75 2.25 8 5.25 8H12.75C15.75 8 16.5 8.75 16.5 11.75V13.25C16.5 16.25 15.75 17 12.75 17Z"
+      strokeWidth="1.5"
       strokeLinecap="round"
       strokeLinejoin="round"
     />
     <path
-      className={className}
-      d="M9 11.6301C9.46599 11.6301 9.84375 11.2524 9.84375 10.7864C9.84375 10.3204 9.46599 9.94263 9 9.94263C8.53401 9.94263 8.15625 10.3204 8.15625 10.7864C8.15625 11.2524 8.53401 11.6301 9 11.6301Z"
-      fill="#1F1F1F"
+      d="M11.9973 12.5H12.0041"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M8.99661 12.5H9.00335"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M5.99588 12.5H6.00262"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     />
   </svg>
 )
