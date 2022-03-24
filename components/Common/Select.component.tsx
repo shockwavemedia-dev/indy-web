@@ -21,7 +21,7 @@ const Select = ({
 }: {
   label: string
   name: string
-  Icon: ComponentType
+  Icon: ComponentType<{ className: string }>
   placeholder: string
   options: Options<Option>
   disabled?: boolean
@@ -86,7 +86,7 @@ const Select = ({
 
   const ValueContainer = ({ children, ...props }: ValueContainerProps<Option, false>) => (
     <Components.ValueContainer {...props}>
-      <Icon />
+      <Icon className="stroke-black" />
       <div className="grid items-center">{children}</div>
     </Components.ValueContainer>
   )
@@ -104,7 +104,7 @@ const Select = ({
         options={options}
         components={{ DropdownIndicator, ValueContainer }}
         inputId={name}
-        isDisabled={isDisabled}
+        isDisabled={disabled}
         menuIsOpen={true}
       />
     </div>
