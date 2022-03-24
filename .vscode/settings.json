@@ -4,5 +4,6 @@
   "javascript.updateImportsOnFileMove.enabled": "always",
   "typescript.updateImportsOnFileMove.enabled": "always",
   "files.eol": "\n",
-  "editor.codeActionsOnSave": ["source.addMissingImports", "source.organizeImports"]
+  "editor.codeActionsOnSave": ["source.addMissingImports", "source.organizeImports"],
+  "typescript.tsserver.experimental.enableProjectDiagnostics": true
 }
