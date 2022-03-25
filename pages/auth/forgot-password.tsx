@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { Form, Formik } from 'formik'
 import Head from 'next/head'
+import { useRouter } from 'next/router'
 import { ReactElement } from 'react'
 import Button from '../../components/Common/Button.component'
 import CaretIcon from '../../components/Common/Icons/Caret.icon'
@@ -12,6 +13,8 @@ import AuthLayout from '../../layouts/Auth.layout'
 import { NextPageWithLayout } from '../../types/NextPageWithLayout.type'
 
 const ForgotPassword: NextPageWithLayout = () => {
+  const { replace } = useRouter()
+
   const formInitialValues: ForgotPasswordForm = {
     email: '',
   }
@@ -22,7 +25,14 @@ const ForgotPassword: NextPageWithLayout = () => {
   ) => {
     setSubmitting(true)
 
-    await axios.post('/forgot-password', values)
+    await axios
+      .post('/forgot-password', values)
+      .then((res) => {
+        if (res.status === 200) {
+          replace('/auth/login')
+        }
+      })
+      .catch((err) => {}) //@TODO handle error response
 
     setSubmitting(false)
   }

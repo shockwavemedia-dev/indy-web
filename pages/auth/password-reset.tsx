@@ -1,5 +1,7 @@
+import axios from 'axios'
 import { Form, Formik } from 'formik'
 import Head from 'next/head'
+import { useRouter } from 'next/router'
 import { ReactElement, useEffect } from 'react'
 import PasswordStrengthMeter from '../../components/Auth/PasswordStrengthMeter.component'
 import Button from '../../components/Common/Button.component'
@@ -17,19 +19,46 @@ const CreateNewPassword: NextPageWithLayout = () => {
 
   useEffect(() => computePasswordStrength(''), [])
 
+  const { query, replace } = useRouter()
+
   const formInitialValues: CreateNewPasswordForm = {
     password: '',
-    passwordConfirm: '',
+    passwordConfirmation: '',
   }
 
   const validateForm = ({ password }: { password: string }) => computePasswordStrength(password)
+
+  const submitForm = async (
+    values: CreateNewPasswordForm,
+    { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
+  ) => {
+    setSubmitting(true)
+
+    if (!query.token || !query.email) {
+      replace('/auth/login')
+    }
+
+    values.token = query.token?.toString()
+    values.email = query.email?.toString()
+
+    await axios
+      .put('/reset-password', values)
+      .then((res) => {
+        if (res.status === 200) {
+          replace('/auth/login')
+        }
+      })
+      .catch((err) => {}) //@TODO handle error response
+
+    setSubmitting(false)
+  }
 
   return (
     <>
       <Head>
         <title>Daily Press - Create New Password</title>
       </Head>
-      <Formik initialValues={formInitialValues} onSubmit={() => {}} validate={validateForm}>
+      <Formik initialValues={formInitialValues} onSubmit={submitForm} validate={validateForm}>
         {({ isSubmitting }) => (
           <Form className="flex w-103 flex-col items-center">
             <TextInput
@@ -48,7 +77,7 @@ const CreateNewPassword: NextPageWithLayout = () => {
             </div>
             <TextInput
               type="password"
-              name="passwordConfirm"
+              name="passwordConfirmation"
               Icon={LockIcon}
               placeholder="Confirm new password"
               disableAutoComplete
