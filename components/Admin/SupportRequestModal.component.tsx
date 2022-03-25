@@ -2,7 +2,7 @@ import { Form, Formik } from 'formik'
 import { MouseEventHandler } from 'react'
 import { SupportRequestForm } from '../../interfaces/SupportRequestForm.interface'
 import Button from '../Common/Button.component'
-import LightbulbIcon from '../Common/Icons/Lightbulb.icon'
+import EditIcon from '../Common/Icons/Edit.icon'
 import PencilIcon from '../Common/Icons/Pencil.icon'
 import TextAreaInput from '../Common/TextAreaInput.component'
 import TextInput from '../Common/TextInput.component'
@@ -30,7 +30,7 @@ const SupportRequestModal = ({
                 <div className="flex w-140 flex-col">
                   <div className="mb-6">
                     <TextInput
-                      Icon={LightbulbIcon}
+                      Icon={EditIcon}
                       placeholder="Select Department"
                       name="department"
                       disableAutoComplete
