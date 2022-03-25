@@ -41,14 +41,11 @@ const CreateNewPassword: NextPageWithLayout = () => {
     values.token = query.token?.toString()
     values.email = query.email?.toString()
 
-    await axios
-      .put('/reset-password', values)
-      .then((res) => {
-        if (res.status === 200) {
-          replace('/auth/login')
-        }
-      })
-      .catch((err) => {}) //@TODO handle error response
+    const response = await axios.put('/reset-password', values)
+
+    if (response.status === 200) {
+      replace('/auth/login')
+    }
 
     setSubmitting(false)
   }
