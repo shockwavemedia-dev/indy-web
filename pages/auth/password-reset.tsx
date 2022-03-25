@@ -16,10 +16,9 @@ import { NextPageWithLayout } from '../../types/NextPageWithLayout.type'
 
 const CreateNewPassword: NextPageWithLayout = () => {
   const { passwordStrength, computePasswordStrength } = usePasswordStrengthStore()
+  const { query, replace } = useRouter()
 
   useEffect(() => computePasswordStrength(''), [])
-
-  const { query, replace } = useRouter()
 
   const formInitialValues: CreateNewPasswordForm = {
     password: '',
