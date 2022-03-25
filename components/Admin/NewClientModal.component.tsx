@@ -72,7 +72,11 @@ const NewClientModal = ({
                     />
                   </div>
                   <div className="mb-[24px]">
-                    <FileInput label="Logo" name="logo" setFieldValue={setFieldValue} />
+                    <FileInput
+                      label="palagyan ng label hehe"
+                      name="logo"
+                      setFieldValue={setFieldValue}
+                    />
                   </div>
                   <div className="mb-[24px]">
                     <TextAreaInput Icon={PencilIcon} placeholder="Enter Overview" name="overview" />

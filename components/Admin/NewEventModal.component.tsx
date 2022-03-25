@@ -76,8 +76,13 @@ const NewEventModal = ({
                   name="description"
                   className="mb-5"
                 />
-                <FileInput name="attachment" setFieldValue={setFieldValue} className="mb-8" />
-                <div className="flex space-x-3">
+                <FileInput
+                  label="Upload Assets"
+                  name="attachment"
+                  setFieldValue={setFieldValue}
+                  className="mb-8"
+                />
+                <div className="flex space-x-5">
                   <Button ariaLabel="Cancel" light onClick={onClose}>
                     Cancel
                   </Button>

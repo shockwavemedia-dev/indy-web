@@ -1,5 +1,5 @@
 export interface NewProjectBriefForm {
-  service: string
+  services: Array<{ serviceId: number; extras: Array<string> }>
   date: string
   briefName: string
   content: string
