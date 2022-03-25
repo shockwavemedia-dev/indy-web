@@ -1,6 +1,5 @@
 import axios from 'axios'
 import { ErrorMessage, Form, Formik } from 'formik'
-import { signIn } from 'next-auth/react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { ReactElement, useEffect } from 'react'
@@ -14,7 +13,6 @@ import LockIcon from '../../components/Common/Icons/Lock.icon'
 import UserIcon from '../../components/Common/Icons/User.icon'
 import Link from '../../components/Common/Link.component'
 import TextInput from '../../components/Common/TextInput.component'
-import { Authentication } from '../../interfaces/Authentication.interface'
 import { SignUpForm } from '../../interfaces/SignUpForm.interface'
 import AuthLayout from '../../layouts/Auth.layout'
 import { usePasswordStrengthStore } from '../../stores/PasswordStrengthStore'
@@ -40,48 +38,11 @@ const SignUp: NextPageWithLayout = () => {
     { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
   ) => {
     setSubmitting(true)
-    // Temp Start
-    // Just here to make sign up work because it needs access token
-    const {
-      data: { accessToken },
-    } = await axios.post<Authentication>('/authenticate', {
-      email: 'superadmin@dailypress.com',
-      password: 'letmein',
-    })
-    // Temp End
 
-    const { data } = await axios.post(
-      '/v1/users/client',
-      {
-        email: signUpFormValues.email,
-        password: signUpFormValues.password,
-        birthDate: '1993/02/02',
-        passwordConfirmation: signUpFormValues.passwordConfirmation,
-        contactNumber: '0906 345 6123',
-        firstName: 'Jake',
-        lastName: 'Havakian',
-        middleName: 'Something',
-        gender: 'Male',
-        role: 'marketing',
-        clientId: 6,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      }
-    )
+    const res = await axios.post('/signup/client-lead', signUpFormValues)
 
-    if (data) {
-      const res = await signIn<'credentials'>('credentials', {
-        email: signUpFormValues.email,
-        password: signUpFormValues.password,
-        redirect: false,
-      })
-
-      if (!res?.error && res?.status === 200 && res.ok) {
-        replace('/dashboard')
-      }
+    if (res.status === 200) {
+      replace('/auth/login')
     }
 
     setSubmitting(false)
