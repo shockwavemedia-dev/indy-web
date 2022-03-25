@@ -1,4 +1,6 @@
 export interface CreateNewPasswordForm {
   password: string
-  passwordConfirm: string
+  passwordConfirmation: string
+  token?: string
+  email?: string
 }
