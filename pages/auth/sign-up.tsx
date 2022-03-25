@@ -39,13 +39,7 @@ const SignUp: NextPageWithLayout = () => {
   ) => {
     setSubmitting(true)
 
-    const res = await axios.post('/signup/client-lead', {
-      email: signUpFormValues.email,
-      password: signUpFormValues.password,
-      passwordConfirmation: signUpFormValues.passwordConfirmation,
-      companyName: signUpFormValues.companyName,
-      fullName: signUpFormValues.fullName,
-    })
+    const res = await axios.post('/signup/client-lead', signUpFormValues)
 
     if (res.status === 200) {
       replace('/auth/login')
