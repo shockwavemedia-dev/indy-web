@@ -4,11 +4,11 @@ import { NewProjectBriefForm } from '../../interfaces/NewProjectBriefForm.interf
 import Button from '../Common/Button.component'
 import FileInput from '../Common/FileInput.component'
 import CalendarIcon from '../Common/Icons/Calendar.icon'
-import LightbulbIcon from '../Common/Icons/Lightbulb.icon'
-import PencilIcon from '../Common/Icons/Pencil.icon'
+import EditIcon from '../Common/Icons/Edit.icon'
 import TextAreaInput from '../Common/TextAreaInput.component'
 import TextInput from '../Common/TextInput.component'
 import Modal from './Modal.component'
+import SelectService from './SelectService.component'
 
 const NewProjectBriefModal = ({
   isVisible,
@@ -18,7 +18,7 @@ const NewProjectBriefModal = ({
   onClose: MouseEventHandler<HTMLButtonElement>
 }) => {
   const formInitialValues: NewProjectBriefForm = {
-    service: '',
+    services: [],
     date: '',
     briefName: '',
     content: '',
@@ -31,44 +31,42 @@ const NewProjectBriefModal = ({
         <Modal title="New Project Brief" onClose={onClose}>
           <Formik initialValues={formInitialValues} onSubmit={() => {}}>
             {({ isSubmitting, setFieldValue }) => (
-              <Form>
-                <div className="flex w-140 flex-col">
-                  <div className="mb-6 flex space-x-3">
-                    <TextInput
-                      Icon={LightbulbIcon}
-                      placeholder="Select Service"
-                      name="service"
-                      disableAutoComplete
-                    />
-                    <TextInput
-                      Icon={CalendarIcon}
-                      placeholder="Enter Date"
-                      name="date"
-                      disableAutoComplete
-                    />
-                  </div>
-                  <div className="mb-6">
-                    <TextInput
-                      Icon={PencilIcon}
-                      placeholder="Enter Brief Name"
-                      name="briefName"
-                      disableAutoComplete
-                    />
-                  </div>
-                  <div className="mb-6">
-                    <TextAreaInput Icon={PencilIcon} placeholder="Enter Content" name="content" />
-                  </div>
-                  <div className="mb-8">
-                    <FileInput label="Upload Assets" name="assets" setFieldValue={setFieldValue} />
-                  </div>
-                  <div className="flex space-x-3">
-                    <Button ariaLabel="Cancel" light onClick={onClose}>
-                      Cancel
-                    </Button>
-                    <Button ariaLabel="Submit" type="submit" disabled={isSubmitting}>
-                      Submit
-                    </Button>
-                  </div>
+              <Form className="flex w-140 flex-col">
+                <div className="mb-5 flex space-x-5">
+                  <SelectService setFieldValue={setFieldValue} />
+                  <TextInput
+                    Icon={CalendarIcon}
+                    placeholder="Enter date"
+                    name="date"
+                    disableAutoComplete
+                  />
+                </div>
+                <TextInput
+                  Icon={EditIcon}
+                  placeholder="Enter brief name"
+                  name="briefName"
+                  disableAutoComplete
+                  className="mb-5"
+                />
+                <TextAreaInput
+                  Icon={EditIcon}
+                  placeholder="Enter content"
+                  name="content"
+                  className="mb-5"
+                />
+                <FileInput
+                  label="Upload Assets"
+                  name="assets"
+                  setFieldValue={setFieldValue}
+                  className="mb-8"
+                />
+                <div className="flex space-x-5">
+                  <Button ariaLabel="Cancel" light onClick={onClose}>
+                    Cancel
+                  </Button>
+                  <Button ariaLabel="Submit" type="submit" disabled={isSubmitting}>
+                    Submit
+                  </Button>
                 </div>
               </Form>
             )}

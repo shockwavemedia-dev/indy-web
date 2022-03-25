@@ -88,7 +88,7 @@ const SelectService = ({
       >
         <ClipboardIcon className="absolute ml-6 stroke-lavender-gray" />
         <div className="mr-auto pl-13 font-urbanist text-sm font-medium text-metallic-silver">
-          {isLoading ? 'Loading Services...' : 'Select Services'}
+          {isLoading ? 'Loading Services...' : 'Select services'}
         </div>
         <CaretIcon
           className={`mr-6 stroke-waterloo ${isServicesVisible ? 'rotate-0' : 'rotate-180'}`}
