@@ -5,23 +5,17 @@ import { useRouter } from 'next/router'
 import { ReactNode, useState } from 'react'
 import FancyButton from '../components/Admin/FancyButton.component'
 import JobsStatusCountCard from '../components/Admin/JobStatsCard.component'
-import NewEventModal from '../components/Admin/NewEventModal.component'
-import NewProjectBriefModal from '../components/Admin/NewProjectBriefModal.component'
-import SupportRequestModal from '../components/Admin/SupportRequestModal.component'
 import NewClientModal from '../components/Admin/NewClientModal.component'
 import BellIcon from '../components/Common/Icons/Bell.icon'
 import BriefcaseIcon from '../components/Common/Icons/Briefcase.icon'
 import CalendarIcon from '../components/Common/Icons/Calendar.icon'
-import CalendarAddIcon from '../components/Common/Icons/CalendarAdd.icon'
 import CaretIcon from '../components/Common/Icons/Caret.icon'
 import CaretSmallIcon from '../components/Common/Icons/CaretSmall.icon'
 import ChartIcon from '../components/Common/Icons/Chart.icon'
 import ClipboardIcon from '../components/Common/Icons/Clipboard.icon'
-import ClipboardCloseIcon from '../components/Common/Icons/ClipboardClose.icon'
 import EmailIcon from '../components/Common/Icons/Email.icon'
 import EyeOpenIcon from '../components/Common/Icons/EyeOpen.icon'
 import FolderIcon from '../components/Common/Icons/Folder.icon'
-import LifeBuoyIcon from '../components/Common/Icons/LifeBuoy.icon'
 import MagnifyingGlassIcon from '../components/Common/Icons/MagnifyingGlass.icon'
 import MonitorIcon from '../components/Common/Icons/Monitor.icon'
 import NotepadIcon from '../components/Common/Icons/Notepad.icon'
@@ -123,7 +117,6 @@ const ClientLayout = ({ children }: { children: ReactNode }) => {
   const [isNewClientModalVisible, setNewClientModalVisible] = useState(false)
 
   const currentPath = pathname.split('/').pop()?.replace('-', ' ')
-
 
   const toggleNewClientModal = () => setNewClientModalVisible(!isNewClientModalVisible)
 

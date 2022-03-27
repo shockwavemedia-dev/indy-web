@@ -12,7 +12,7 @@ const FancyButton = ({
   onClick: MouseEventHandler<HTMLButtonElement>
 }) => (
   <button
-    className="shadow flex flex-1 items-center space-x-4 rounded-xl bg-white px-6 py-4"
+    className="flex flex-1 items-center space-x-4 rounded-xl bg-white px-6 py-4 shadow"
     onClick={onClick}
   >
     {Icon}

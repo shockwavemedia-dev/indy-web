@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import { ReactElement } from 'react'
+import ClientLayout from '../../layouts/Client.layout'
 import { NextPageWithLayout } from '../../types/NextPageWithLayout.type'
-import ClientLayout from "../../layouts/Client.layout";
 
 const Client: NextPageWithLayout = () => (
   <>

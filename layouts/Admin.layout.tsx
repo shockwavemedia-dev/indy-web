@@ -133,7 +133,6 @@ const AdminLayout = ({ children }: { children: ReactNode }) => {
   const toggleSupportRequestModal = () =>
     setSupportRequestModalVisible(!isSupportRequestModalVisible)
 
-
   if (status === 'loading') {
     return null
   }

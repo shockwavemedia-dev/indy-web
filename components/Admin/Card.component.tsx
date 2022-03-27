@@ -9,7 +9,7 @@ const Card = ({
   children: ReactNode
   className?: string
 }) => (
-  <div className={`shadow flex flex-col rounded-xl bg-white p-6 ${className}`}>
+  <div className={`flex flex-col rounded-xl bg-white p-6 shadow ${className}`}>
     <div className="font-urbanist text-base font-semibold text-onyx">{title}</div>
     {children}
   </div>
