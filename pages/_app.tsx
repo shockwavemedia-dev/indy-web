@@ -4,7 +4,7 @@ import { SessionProvider } from 'next-auth/react'
 import React from 'react'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import snakecaseKeys from 'snakecase-keys'
-import { API_BASE_URL } from '../constants/http'
+import { API_BASE_URL } from '../constants/Http'
 import '../styles/globals.css'
 import { AppPropsWithLayout } from '../types/AppPropsWithLayout.type'
 
