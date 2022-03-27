@@ -10,105 +10,18 @@ import NewProjectBriefModal from '../components/Admin/NewProjectBriefModal.compo
 import SupportRequestModal from '../components/Admin/SupportRequestModal.component'
 import BellIcon from '../components/Common/Icons/Bell.icon'
 import BriefcaseIcon from '../components/Common/Icons/Briefcase.icon'
-import CalendarIcon from '../components/Common/Icons/Calendar.icon'
 import CalendarAddIcon from '../components/Common/Icons/CalendarAdd.icon'
 import CaretIcon from '../components/Common/Icons/Caret.icon'
 import CaretSmallIcon from '../components/Common/Icons/CaretSmall.icon'
-import ChartIcon from '../components/Common/Icons/Chart.icon'
-import ClipboardIcon from '../components/Common/Icons/Clipboard.icon'
 import ClipboardCloseIcon from '../components/Common/Icons/ClipboardClose.icon'
-import EmailIcon from '../components/Common/Icons/Email.icon'
 import EyeOpenIcon from '../components/Common/Icons/EyeOpen.icon'
-import FolderIcon from '../components/Common/Icons/Folder.icon'
 import LifeBuoyIcon from '../components/Common/Icons/LifeBuoy.icon'
 import MagnifyingGlassIcon from '../components/Common/Icons/MagnifyingGlass.icon'
-import MonitorIcon from '../components/Common/Icons/Monitor.icon'
-import NotepadIcon from '../components/Common/Icons/Notepad.icon'
 import PresentationChartIcon from '../components/Common/Icons/PresentationChart.icon'
+import { navigations } from '../constants/AdminNavigations'
 import { Navigation } from '../interfaces/Navigation.interface'
 import DailyPressLogo from '../public/images/daily-press-logo.png'
 import DummyAvatar from '../public/images/dummy-avatar.png'
-
-const navigations: Array<Navigation> = [
-  {
-    Icon: ChartIcon,
-    title: 'Dashboard',
-    pathname: '/dashboard',
-  },
-  {
-    Icon: NotepadIcon,
-    title: 'Event Manager',
-  },
-  {
-    Icon: MonitorIcon,
-    title: 'Screen Manager',
-  },
-  {
-    Icon: EmailIcon,
-    title: 'SMS Marketing',
-  },
-  {
-    Icon: CalendarIcon,
-    title: 'Marketing Planning',
-    pathname: '/marketing-planning',
-  },
-  {
-    Icon: FolderIcon,
-    title: 'My Files',
-  },
-  {
-    Icon: ClipboardIcon,
-    title: 'Service Request',
-    children: [
-      {
-        title: 'Graphic Design',
-      },
-      {
-        title: 'Website',
-      },
-      {
-        title: 'EDM',
-      },
-      {
-        title: 'Social Media',
-      },
-      {
-        title: 'Data Analytics',
-      },
-      {
-        title: 'Animations',
-      },
-      {
-        title: 'Photography',
-      },
-      {
-        title: 'Videography',
-      },
-      {
-        title: 'Print',
-      },
-    ],
-  },
-  {
-    Icon: PresentationChartIcon,
-    title: 'Analytics',
-    pathname: '/analytics',
-    children: [
-      {
-        title: 'App',
-      },
-      {
-        title: 'Website',
-      },
-      {
-        title: 'ClevaQ',
-      },
-      {
-        title: 'Social Media Ads',
-      },
-    ],
-  },
-]
 
 const AdminLayout = ({ children }: { children: ReactNode }) => {
   const { replace, pathname } = useRouter()
