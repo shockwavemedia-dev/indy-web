@@ -1,5 +1,5 @@
 import { Field } from 'formik'
-import { ComponentType } from 'react'
+import { Icon } from '../../types/Icon.type'
 
 const TextAreaInput = ({
   name,
@@ -8,7 +8,7 @@ const TextAreaInput = ({
   className,
 }: {
   name: string
-  Icon: ComponentType<{ className: string }>
+  Icon: Icon
   placeholder: string
   className?: string
 }) => (

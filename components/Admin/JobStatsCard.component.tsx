@@ -1,11 +1,11 @@
-import { ComponentType } from 'react'
+import { Icon } from '../../types/Icon.type'
 
 const JobsStatusCountCard = ({
   Icon,
   value,
   description,
 }: {
-  Icon: ComponentType<{ className: string }>
+  Icon: Icon
   value: number
   description: string
 }) => (

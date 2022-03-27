@@ -1,5 +1,6 @@
 import { Field } from 'formik'
-import { ComponentType, useState } from 'react'
+import { useState } from 'react'
+import { Icon } from '../../types/Icon.type'
 import EyeOpenIcon from './Icons/EyeOpen.icon'
 
 const TextInput = ({
@@ -12,7 +13,7 @@ const TextInput = ({
 }: {
   type?: 'text' | 'email' | 'password'
   name: string
-  Icon: ComponentType<{ className: string }>
+  Icon: Icon
   placeholder: string
   disableAutoComplete?: boolean
   className?: string

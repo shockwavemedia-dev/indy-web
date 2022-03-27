@@ -1,7 +1,7 @@
-import { ComponentType } from 'react'
+import { Icon } from '../types/Icon.type'
 
 export interface Navigation {
-  Icon?: ComponentType<{ className: string }>
+  Icon?: Icon
   title: string
   pathname?: string
   children?: Array<Navigation>
