@@ -35,10 +35,10 @@ const Login: NextPageWithLayout = () => {
       redirect: false,
     })
 
-    setSubmitting(false)
-
-    if (!res?.error && res?.status === 200 && res.ok) {
+    if (res?.status === 200) {
       replace('/dashboard')
+    } else {
+      setSubmitting(false)
     }
   }
 
