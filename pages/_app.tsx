@@ -4,9 +4,9 @@ import { SessionProvider } from 'next-auth/react'
 import React from 'react'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import snakecaseKeys from 'snakecase-keys'
+import { API_BASE_URL } from '../constants/http'
 import '../styles/globals.css'
 import { AppPropsWithLayout } from '../types/AppPropsWithLayout.type'
-import { API_BASE_URL } from '../utils/constants'
 
 axios.defaults.baseURL = API_BASE_URL
 
