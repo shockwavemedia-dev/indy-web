@@ -14,7 +14,7 @@ import CaretIcon from './Icons/Caret.icon'
 const DropdownIndicator = (props: DropdownIndicatorProps<Option, false>) => (
   <Components.DropdownIndicator {...props}>
     <CaretIcon
-      className={`stroke-waterloo  ${props.selectProps.menuIsOpen ? 'rotate-0' : 'rotate-180'}`}
+      className={`stroke-waterloo ${props.selectProps.menuIsOpen ? 'rotate-0' : 'rotate-180'}`}
     />
   </Components.DropdownIndicator>
 )
