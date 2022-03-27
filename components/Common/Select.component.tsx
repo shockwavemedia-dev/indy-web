@@ -1,31 +1,104 @@
-import { ComponentType, useState } from 'react'
+import { useState } from 'react'
 import ReactSelect, {
   components as Components,
+  ControlProps,
   DropdownIndicatorProps,
   Options,
   SingleValue,
   StylesConfig,
-  ValueContainerProps,
 } from 'react-select'
 import { Option } from '../../interfaces/Option.interface'
+import { Icon } from '../../types/Icon.type'
 import CaretIcon from './Icons/Caret.icon'
 
+const DropdownIndicator = (props: DropdownIndicatorProps<Option, false>) => (
+  <Components.DropdownIndicator {...props}>
+    <CaretIcon
+      className={`stroke-waterloo  ${props.selectProps.menuIsOpen ? 'rotate-0' : 'rotate-180'}`}
+    />
+  </Components.DropdownIndicator>
+)
+
+const Control = ({ children, ...props }: ControlProps<Option, false>) => (
+  <Components.Control {...props}>
+    <props.selectProps.Icon className="mr-2.5 stroke-lavender-gray" />
+    {children}
+  </Components.Control>
+)
+
+const styles: StylesConfig<Option, false> = {
+  indicatorSeparator: () => ({
+    display: 'none',
+  }),
+  placeholder: (base) => ({
+    ...base,
+    font: '500 0.875rem Urbanist',
+    color: '#ABABB9',
+    margin: 0,
+  }),
+  control: (base, { isFocused }) => ({
+    ...base,
+    minHeight: '3.125rem',
+    boxShadow: isFocused ? '0 0 0 2px #AAE2CB' : '0 0 0 1px #E8E8EF',
+    border: 'none',
+    borderRadius: '.75rem',
+    padding: '0 1.5rem 0',
+  }),
+  container: (base) => ({
+    ...base,
+    borderRadius: '0.75rem',
+  }),
+  input: (base) => ({
+    ...base,
+    color: '#32343D',
+    font: '500 0.875rem Urbanist',
+    margin: 0,
+    padding: 0,
+  }),
+  singleValue: (base) => ({
+    ...base,
+    color: '#32343D',
+    font: '500 0.875rem Urbanist',
+  }),
+  option: (base) => ({
+    ...base,
+    color: '#32343D',
+    font: '500 0.875rem Urbanist',
+  }),
+  menu: (base) => ({
+    ...base,
+    zIndex: 20,
+  }),
+  noOptionsMessage: (base) => ({
+    ...base,
+    font: '500 0.875rem Urbanist',
+  }),
+  dropdownIndicator: () => ({
+    width: 'fit-content',
+    marginLeft: '.625rem',
+  }),
+  valueContainer: (base) => ({
+    ...base,
+    padding: 0,
+  }),
+}
+
 const Select = ({
-  label,
   name,
   Icon,
   placeholder,
   options,
   disabled = false,
   setFieldValue,
+  className,
 }: {
-  label: string
   name: string
-  Icon: ComponentType<{ className: string }>
+  Icon: Icon
   placeholder: string
   options: Options<Option>
   disabled?: boolean
   setFieldValue: (field: string, value: any, shouldValidate?: boolean) => void
+  className?: string
 }) => {
   const [selectedOption, setSelectedOption] = useState<Option | null>(null)
 
@@ -34,79 +107,19 @@ const Select = ({
     setFieldValue(name, option?.value)
   }
 
-  const style: StylesConfig<Option, false> = {
-    indicatorSeparator: () => ({
-      display: 'none',
-    }),
-    placeholder: (base) => ({
-      ...base,
-      font: '400 14px Inter',
-      color: '#717583',
-      margin: '0 0 0 8px',
-    }),
-    control: (base) => ({
-      ...base,
-      height: '100%',
-      boxShadow: 'none',
-      border: 'none',
-    }),
-    container: (base) => ({
-      ...base,
-      height: '100%',
-      border: '1px solid #1D212B1A',
-      borderRadius: '4px',
-    }),
-    valueContainer: (base) => ({
-      ...base,
-      display: 'flex',
-    }),
-    input: (base) => ({
-      ...base,
-      margin: '0 0 0 8px',
-      font: '400 14px Inter',
-    }),
-    singleValue: (base) => ({
-      ...base,
-      margin: '0 0 0 8px',
-      color: '#000000',
-      font: '400 14px Inter',
-    }),
-    option: (base) => ({
-      ...base,
-      color: '#000000',
-      font: '400 14px Inter',
-    }),
-  }
-
-  const DropdownIndicator = (props: DropdownIndicatorProps<Option, false>) => (
-    <Components.DropdownIndicator {...props}>
-      <CaretIcon className={`stroke-black ${props.selectProps.menuIsOpen && 'rotate-180'}`} />
-    </Components.DropdownIndicator>
-  )
-
-  const ValueContainer = ({ children, ...props }: ValueContainerProps<Option, false>) => (
-    <Components.ValueContainer {...props}>
-      <Icon className="stroke-black" />
-      <div className="grid items-center">{children}</div>
-    </Components.ValueContainer>
-  )
-
   return (
-    <div className="flex w-full flex-col">
-      <label className="mb-2 font-inter text-xs font-normal text-mineshaft" htmlFor={name}>
-        {label}
-      </label>
-      <ReactSelect
-        styles={style}
-        placeholder={placeholder}
-        value={selectedOption}
-        onChange={handleChange}
-        options={options}
-        components={{ DropdownIndicator, ValueContainer }}
-        inputId={name}
-        isDisabled={disabled}
-      />
-    </div>
+    <ReactSelect
+      styles={styles}
+      placeholder={placeholder}
+      value={selectedOption}
+      onChange={handleChange}
+      options={options}
+      components={{ DropdownIndicator, Control }}
+      inputId={name}
+      isDisabled={disabled}
+      className={`selection:bg-jungle-green selection:text-white ${className}`}
+      Icon={Icon}
+    />
   )
 }
 
