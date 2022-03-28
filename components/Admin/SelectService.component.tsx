@@ -16,7 +16,7 @@ const SelectService = ({
 
   const { data: services, isLoading } = useQuery('services', async () => {
     const { data } = await axios.get<Array<Service>>(
-      `/v1/clients/${session?.user.userType.clientId}/services`,
+      `/clients/${session?.user.userType.clientId}/services`,
       {
         headers: {
           Authorization: `Bearer ${session?.accessToken}`,
