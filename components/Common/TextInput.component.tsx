@@ -36,7 +36,7 @@ const TextInput = ({
       />
       {type === 'password' && (
         <button
-          className="absolute right-0 mr-6"
+          className="absolute right-0 z-20 mr-6"
           aria-label="Show Password"
           onClick={toggleShowPassword}
           tabIndex={-1}
