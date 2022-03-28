@@ -38,7 +38,7 @@ const NewEventModal = ({
   ) => {
     setSubmitting(true)
 
-    await axios.post('/tickets/event', objectWithFileToFormData(values), {
+    await axios.post('/v1/tickets/event', objectWithFileToFormData(values), {
       headers: {
         Authorization: `Bearer ${session?.accessToken}`,
       },

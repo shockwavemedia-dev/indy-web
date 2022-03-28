@@ -32,10 +32,9 @@ const Login: NextPageWithLayout = () => {
     const res = await signIn<'credentials'>('credentials', {
       email: signInFormValues.email,
       password: signInFormValues.password,
-      redirect: false,
     })
 
-    if (res?.status === 200) {
+    if (!res?.error && res?.ok) {
       replace('/dashboard')
     } else {
       setSubmitting(false)

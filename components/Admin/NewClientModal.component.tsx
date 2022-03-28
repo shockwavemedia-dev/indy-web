@@ -38,7 +38,7 @@ const NewClientModal = ({
   ) => {
     setSubmitting(true)
 
-    await axios.post('/clients', values, {
+    await axios.post('/v1/clients', values, {
       headers: {
         Authorization: `Bearer ${session?.accessToken}`,
       },
