@@ -1,4 +1,9 @@
 export interface SupportRequestForm {
-  department: string
-  message: string
+  subject: string
+  description: string
+  type: string
+  requestedBy: number
+  clientId: number
+  departmentId: number
+  duedate: string
 }
