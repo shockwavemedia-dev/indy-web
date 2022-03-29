@@ -10,7 +10,6 @@ import BellIcon from '../components/Common/Icons/Bell.icon'
 import BriefcaseIcon from '../components/Common/Icons/Briefcase.icon'
 import CalendarIcon from '../components/Common/Icons/Calendar.icon'
 import CaretIcon from '../components/Common/Icons/Caret.icon'
-import CaretSmallIcon from '../components/Common/Icons/CaretSmall.icon'
 import ChartIcon from '../components/Common/Icons/Chart.icon'
 import ClipboardIcon from '../components/Common/Icons/Clipboard.icon'
 import EmailIcon from '../components/Common/Icons/Email.icon'
@@ -154,7 +153,7 @@ const ClientLayout = ({ children }: { children: ReactNode }) => {
           <div className="mb-3.5 flex justify-between">
             <div className="flex items-center space-x-3">
               <div className="font-urbanist text-xs font-medium text-waterloo">Admin Panel</div>
-              <CaretSmallIcon className="rotate-90 stroke-frenchgray" />
+              <CaretIcon className="rotate-90 stroke-frenchgray" small />
               <div className="font-urbanist text-xs font-semibold capitalize text-onyx">
                 {currentPath}
               </div>

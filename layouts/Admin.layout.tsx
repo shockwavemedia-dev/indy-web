@@ -12,7 +12,6 @@ import BellIcon from '../components/Common/Icons/Bell.icon'
 import BriefcaseIcon from '../components/Common/Icons/Briefcase.icon'
 import CalendarAddIcon from '../components/Common/Icons/CalendarAdd.icon'
 import CaretIcon from '../components/Common/Icons/Caret.icon'
-import CaretSmallIcon from '../components/Common/Icons/CaretSmall.icon'
 import ClipboardCloseIcon from '../components/Common/Icons/ClipboardClose.icon'
 import EyeOpenIcon from '../components/Common/Icons/EyeOpen.icon'
 import LifeBuoyIcon from '../components/Common/Icons/LifeBuoy.icon'
@@ -88,7 +87,7 @@ const AdminLayout = ({ children }: { children: ReactNode }) => {
           <div className="mb-3.5 flex justify-between">
             <div className="flex items-center space-x-3">
               <div className="font-urbanist text-xs font-medium text-waterloo">Admin Panel</div>
-              <CaretSmallIcon className="rotate-90 stroke-frenchgray" />
+              <CaretIcon className="rotate-90 stroke-frenchgray" small />
               <div className="font-urbanist text-xs font-semibold capitalize text-onyx">
                 {currentPath}
               </div>
