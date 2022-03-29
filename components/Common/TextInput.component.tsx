@@ -24,9 +24,9 @@ const TextInput = ({
 
   return (
     <div className={`relative flex w-full items-center ${className}`}>
-      <Icon className="absolute ml-6 stroke-lavender-gray" />
+      <Icon className="pointer-events-none absolute ml-6 stroke-lavender-gray" />
       <Field
-        className="z-10 min-h-12.5 w-full rounded-xl bg-transparent px-13 font-urbanist text-sm font-medium text-onyx placeholder-metallic-silver ring-1 ring-bright-gray selection:bg-jungle-green selection:text-white focus:ring-2 focus:ring-jungle-green focus:ring-opacity-40"
+        className=" min-h-12.5 w-full rounded-xl bg-transparent px-13 font-urbanist text-sm font-medium text-onyx placeholder-metallic-silver ring-1 ring-bright-gray selection:bg-jungle-green selection:text-white focus:ring-2 focus:ring-jungle-green focus:ring-opacity-40"
         type={isShowPassword ? 'text' : type}
         name={name}
         id={name}
@@ -36,7 +36,7 @@ const TextInput = ({
       />
       {type === 'password' && (
         <button
-          className="absolute right-0 z-20 mr-6"
+          className="absolute right-0 mr-6"
           aria-label="Show Password"
           onClick={toggleShowPassword}
           tabIndex={-1}
