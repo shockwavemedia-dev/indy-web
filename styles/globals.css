@@ -33,4 +33,5 @@ input:-webkit-autofill:focus {
 
 ::-webkit-scrollbar-thumb {
   background: #2bb67d;
+  border-radius: 5px;
 }
