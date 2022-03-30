@@ -1,5 +1,4 @@
-export const TicketTypeOptions = 
-[
+export const TicketTypeOptions = [
   { label: 'Email', value: 'email' },
   { label: 'Event', value: 'event' },
   { label: 'Graphic', value: 'graphic' },
