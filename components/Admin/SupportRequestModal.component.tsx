@@ -4,6 +4,7 @@ import { useSession } from 'next-auth/react'
 import { MouseEventHandler } from 'react'
 import { useQuery } from 'react-query'
 import { TicketTypeOptions } from "../../constants/TicketTypeOptions"
+import { Department } from '../../interfaces/Department.interface'
 import { SupportRequestForm } from '../../interfaces/SupportRequestForm.interface'
 import Button from '../Common/Button.component'
 import CalendarIcon from '../Common/Icons/Calendar.icon'
@@ -38,7 +39,7 @@ const SupportRequestModal = ({
   const typeOptions = TicketTypeOptions
 
   const { data: departments } = useQuery('departments', async () => {
-    const { data } = await axios.get(
+    const { data } = await axios.get<Array<Department>>(
         `/v1/departments`,
         {
           headers: {
@@ -100,7 +101,7 @@ const SupportRequestModal = ({
                   name="department"
                   Icon={ClipboardIcon}
                   placeholder="Select department"
-                  options={departmentOptions}
+                  options={departmentOptions || []}
                   setFieldValue={setFieldValue}
                   className="mb-5"
                 />
