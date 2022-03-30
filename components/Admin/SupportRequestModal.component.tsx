@@ -5,6 +5,7 @@ import { MouseEventHandler } from 'react'
 import { useQuery } from 'react-query'
 import { TicketTypeOptions } from '../../constants/TicketTypeOptions'
 import { Department } from '../../interfaces/Department.interface'
+import { Page } from '../../interfaces/Page.interface'
 import { SupportRequestForm } from '../../interfaces/SupportRequestForm.interface'
 import Button from '../Common/Button.component'
 import CalendarIcon from '../Common/Icons/Calendar.icon'
@@ -38,17 +39,24 @@ const SupportRequestModal = ({
   const typeOptions = TicketTypeOptions
 
   const { data: departments } = useQuery('departments', async () => {
-    const { data } = await axios.get<Array<Department>>(`/v1/departments`, {
+    const {
+      data: { data },
+    } = await axios.get<{
+      data: Array<Department>
+      page: Page
+    }>('/v1/departments', {
       headers: {
         Authorization: `Bearer ${session?.accessToken}`,
       },
     })
+
     return data
   })
 
-  const departmentOptions = departments?.map((department) => {
-    return { value: department.id, label: department.name }
-  })
+  const departmentOptions = departments?.map((department) => ({
+    value: department.id,
+    label: department.name,
+  }))
 
   const submitForm = async (
     values: SupportRequestForm,
@@ -76,7 +84,7 @@ const SupportRequestModal = ({
                   Icon={EditIcon}
                   placeholder="Enter Subject"
                   name="subject"
-                  className="mb-8"
+                  className="mb-5"
                 />
                 <Select
                   name="type"
