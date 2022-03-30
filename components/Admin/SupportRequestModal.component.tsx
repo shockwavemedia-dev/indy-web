@@ -2,6 +2,8 @@ import axios from 'axios'
 import { Form, Formik } from 'formik'
 import { useSession } from 'next-auth/react'
 import { MouseEventHandler } from 'react'
+import { useQuery } from 'react-query'
+import { TicketTypeOptions } from "../../constants/TicketTypeOptions"
 import { SupportRequestForm } from '../../interfaces/SupportRequestForm.interface'
 import Button from '../Common/Button.component'
 import CalendarIcon from '../Common/Icons/Calendar.icon'
@@ -12,6 +14,7 @@ import Select from '../Common/Select.component'
 import TextAreaInput from '../Common/TextAreaInput.component'
 import TextInput from '../Common/TextInput.component'
 import Modal from './Modal.component'
+
 
 const SupportRequestModal = ({
   isVisible,
@@ -31,6 +34,24 @@ const SupportRequestModal = ({
     departmentId: 1,
     duedate: ''
   }
+
+  const typeOptions = TicketTypeOptions
+
+  const { data: departments } = useQuery('departments', async () => {
+    const { data } = await axios.get(
+        `/v1/departments`,
+        {
+          headers: {
+            Authorization: `Bearer ${session?.accessToken}`,
+          },
+        }
+    )
+    return data
+   })
+
+  const departmentOptions = departments?.map((department) => {
+  return { value: department.id, label: department.name };
+  });
 
   const submitForm = async (
     values: SupportRequestForm,
@@ -64,7 +85,7 @@ const SupportRequestModal = ({
                  name="type"
                  Icon={LightbulbIcon}
                  placeholder="Select Type"
-                 options={[]}
+                 options={typeOptions}
                  setFieldValue={setFieldValue}
                  className="mb-5"
                   />
@@ -79,7 +100,7 @@ const SupportRequestModal = ({
                   name="department"
                   Icon={ClipboardIcon}
                   placeholder="Select department"
-                  options={[]}
+                  options={departmentOptions}
                   setFieldValue={setFieldValue}
                   className="mb-5"
                 />
