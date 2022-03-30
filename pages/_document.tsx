@@ -10,7 +10,7 @@ const Document = () => (
         rel="stylesheet"
       />
       <link
-        href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700&display=swap"
         rel="stylesheet"
       />
       <link rel="icon" href="/favicon.ico" />
