@@ -25,10 +25,6 @@ axios.interceptors.response.use(
   (response) => {
     if (response.data) {
       response.data = camelcaseKeys(response.data, { deep: true })
-
-      if (response.data.data) {
-        response.data = response.data.data
-      }
     }
 
     return response
