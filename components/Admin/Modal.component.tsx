@@ -1,4 +1,4 @@
-import { MouseEventHandler, ReactNode } from 'react'
+import { ReactNode } from 'react'
 import CrossMarkIcon from '../Common/Icons/CrossMark.icon'
 
 const Modal = ({
@@ -8,7 +8,7 @@ const Modal = ({
 }: {
   title: string
   children: ReactNode
-  onClose: MouseEventHandler<HTMLButtonElement>
+  onClose: () => void
 }) => (
   <>
     <button

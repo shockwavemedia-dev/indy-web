@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { Form, Formik } from 'formik'
 import { useSession } from 'next-auth/react'
-import { MouseEventHandler } from 'react'
+import { useQueryClient } from 'react-query'
 import { NewEventForm } from '../../interfaces/NewEventForm.interface'
 import { objectWithFileToFormData } from '../../utils/FormHelpers'
 import Button from '../Common/Button.component'
@@ -13,14 +13,9 @@ import TextInput from '../Common/TextInput.component'
 import Modal from './Modal.component'
 import SelectService from './SelectService.component'
 
-const NewEventModal = ({
-  isVisible,
-  onClose,
-}: {
-  isVisible: boolean
-  onClose: MouseEventHandler<HTMLButtonElement>
-}) => {
+const NewEventModal = ({ isVisible, onClose }: { isVisible: boolean; onClose: () => void }) => {
   const { data: session } = useSession()
+  const queryClient = useQueryClient()
 
   const formInitialValues: NewEventForm = {
     requestedBy: session!.user.id,
@@ -38,11 +33,16 @@ const NewEventModal = ({
   ) => {
     setSubmitting(true)
 
-    await axios.post('/v1/tickets/event', objectWithFileToFormData(values), {
+    const { status } = await axios.post('/v1/tickets/event', objectWithFileToFormData(values), {
       headers: {
         Authorization: `Bearer ${session?.accessToken}`,
       },
     })
+
+    if (status === 200) {
+      queryClient.invalidateQueries('tickets')
+      onClose()
+    }
 
     setSubmitting(false)
   }
@@ -62,7 +62,9 @@ const NewEventModal = ({
                   className="mb-5"
                 />
                 <div className="mb-5 flex space-x-5">
-                  <SelectService setFieldValue={setFieldValue} />
+                  {session?.user.userType.type === 'admin_users' && (
+                    <SelectService setFieldValue={setFieldValue} />
+                  )}
                   <TextInput
                     Icon={CalendarIcon}
                     placeholder="Enter due date"

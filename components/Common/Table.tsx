@@ -10,13 +10,13 @@ import GearIcon from './Icons/Gear.icon'
 import SortIcon from './Icons/Sort.icon'
 
 const Table = <T extends {}>({
-  ticketType,
+  tableKey,
   withFilterAndSettings = false,
   startingPageSize = 10,
   dataEndpoint,
   columns,
 }: {
-  ticketType: string
+  tableKey: string
   withFilterAndSettings?: boolean
   startingPageSize?: number
   dataEndpoint: string
@@ -44,7 +44,7 @@ const Table = <T extends {}>({
     isSuccess,
     isFetching,
   } = useQuery(
-    ['tickets', queryPageIndex, queryPageSize],
+    [tableKey, queryPageIndex, queryPageSize],
     () => getData(queryPageIndex, queryPageSize),
     { keepPreviousData: true, staleTime: 5000 }
   )
@@ -167,7 +167,7 @@ const Table = <T extends {}>({
           {pageIndex + 1 === pagination?.page.lastPage
             ? pagination.page.total
             : (pageIndex + 1) * pageSize}
-          &nbsp;of {pagination?.page.total || '?'} {ticketType}
+          &nbsp;of {pagination?.page.total || '?'} {tableKey}
         </div>
         <button
           onClick={previousPage}

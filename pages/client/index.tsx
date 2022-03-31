@@ -37,7 +37,7 @@ const Client: NextPageWithLayout = () => {
             dataEndpoint="/v1/clients"
             columns={ClientTableColumns}
             startingPageSize={20}
-            ticketType="clients"
+            tableKey="clients"
           />
         </Card>
       </div>

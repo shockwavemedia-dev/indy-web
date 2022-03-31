@@ -2,7 +2,6 @@ import axios from 'axios'
 import { Form, Formik } from 'formik'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
-import { MouseEventHandler } from 'react'
 import { NewAnimationCategoryForm } from '../../interfaces/NewAnimationCategoryForm.interface'
 import Button from '../Common/Button.component'
 import PencilIcon from '../Common/Icons/Pencil.icon'
@@ -14,7 +13,7 @@ const NewAnimationCategoryModal = ({
   onClose,
 }: {
   isVisible: boolean
-  onClose: MouseEventHandler<HTMLButtonElement>
+  onClose: () => void
 }) => {
   const { data: session } = useSession()
   const { replace } = useRouter()

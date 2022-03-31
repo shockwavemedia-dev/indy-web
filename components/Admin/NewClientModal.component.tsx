@@ -1,24 +1,19 @@
 import axios from 'axios'
 import { Form, Formik } from 'formik'
 import { useSession } from 'next-auth/react'
-import { MouseEventHandler } from 'react'
+import { useQueryClient } from 'react-query'
 import { NewClientForm } from '../../interfaces/NewClientForm.interface'
 import Button from '../Common/Button.component'
 import FileInput from '../Common/FileInput.component'
 import CalendarIcon from '../Common/Icons/Calendar.icon'
-import PencilIcon from '../Common/Icons/Pencil.icon'
+import EditIcon from '../Common/Icons/Edit.icon'
 import TextAreaInput from '../Common/TextAreaInput.component'
 import TextInput from '../Common/TextInput.component'
 import Modal from './Modal.component'
 
-const NewClientModal = ({
-  isVisible,
-  onClose,
-}: {
-  isVisible: boolean
-  onClose: MouseEventHandler<HTMLButtonElement>
-}) => {
+const NewClientModal = ({ isVisible, onClose }: { isVisible: boolean; onClose: () => void }) => {
   const { data: session } = useSession()
+  const queryClient = useQueryClient()
 
   const formInitialValues: NewClientForm = {
     name: '',
@@ -38,11 +33,16 @@ const NewClientModal = ({
   ) => {
     setSubmitting(true)
 
-    await axios.post('/v1/clients', values, {
+    const { status } = await axios.post('/v1/clients', values, {
       headers: {
         Authorization: `Bearer ${session?.accessToken}`,
       },
     })
+
+    if (status === 200) {
+      queryClient.invalidateQueries('clients')
+      onClose()
+    }
 
     setSubmitting(false)
   }
@@ -54,53 +54,54 @@ const NewClientModal = ({
           <Formik initialValues={formInitialValues} onSubmit={submitForm}>
             {({ isSubmitting, setFieldValue }) => (
               <Form>
-                <div className="flex w-[560px] flex-col">
-                  <div className="mb-[24px]">
+                <div className="flex w-140 flex-col">
+                  <div className="mb-5 flex space-x-5">
                     <TextInput
-                      Icon={PencilIcon}
+                      Icon={EditIcon}
                       placeholder="Enter Company Name"
                       name="name"
                       disableAutoComplete
                     />
-                  </div>
-                  <div className="mb-[24px]">
                     <TextInput
-                      Icon={PencilIcon}
+                      Icon={EditIcon}
                       placeholder="Enter Client Code"
                       name="clientCode"
                       disableAutoComplete
                     />
                   </div>
-                  <div className="mb-[24px]">
-                    <FileInput
-                      label="palagyan ng label hehe"
-                      name="logo"
-                      setFieldValue={setFieldValue}
-                    />
-                  </div>
-                  <div className="mb-[24px]">
-                    <TextAreaInput Icon={PencilIcon} placeholder="Enter Overview" name="overview" />
-                  </div>
-                  <div className="mb-[24px]">
-                    <TextAreaInput Icon={PencilIcon} placeholder="Enter Address" name="address" />
-                  </div>
-                  <div className="mb-[24px]">
+                  <FileInput
+                    label="Upload assets"
+                    name="logo"
+                    setFieldValue={setFieldValue}
+                    className="mb-5"
+                  />
+                  <TextAreaInput
+                    Icon={EditIcon}
+                    placeholder="Enter Overview"
+                    name="overview"
+                    className="mb-5"
+                  />
+                  <div className="mb-5 flex space-x-5">
                     <TextInput
-                      Icon={PencilIcon}
+                      Icon={EditIcon}
+                      placeholder="Enter Address"
+                      name="address"
+                      disableAutoComplete
+                    />
+                    <TextInput
+                      Icon={EditIcon}
                       placeholder="Enter Phone"
                       name="phone"
                       disableAutoComplete
                     />
                   </div>
-                  <div className="mb-[24px]">
+                  <div className="mb-5 flex space-x-5">
                     <TextInput
-                      Icon={PencilIcon}
+                      Icon={EditIcon}
                       placeholder="Enter Timezone"
                       name="timezone"
                       disableAutoComplete
                     />
-                  </div>
-                  <div className="mb-[24px] flex space-x-[12px]">
                     <TextInput
                       Icon={CalendarIcon}
                       placeholder="Enter Client Since"
@@ -108,15 +109,14 @@ const NewClientModal = ({
                       disableAutoComplete
                     />
                   </div>
-                  <div className="mb-[24px] flex space-x-[12px]">
-                    <TextInput
-                      Icon={PencilIcon}
-                      placeholder="Enter Rating"
-                      name="rating"
-                      disableAutoComplete
-                    />
-                  </div>
-                  <div className="flex space-x-[12px]">
+                  <TextInput
+                    Icon={EditIcon}
+                    placeholder="Enter Rating"
+                    name="rating"
+                    disableAutoComplete
+                    className="mb-8"
+                  />
+                  <div className="flex space-x-5">
                     <Button ariaLabel="Cancel" light onClick={onClose}>
                       Cancel
                     </Button>

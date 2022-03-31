@@ -17,7 +17,7 @@ import EyeOpenIcon from '../components/Common/Icons/EyeOpen.icon'
 import LifeBuoyIcon from '../components/Common/Icons/LifeBuoy.icon'
 import MagnifyingGlassIcon from '../components/Common/Icons/MagnifyingGlass.icon'
 import PresentationChartIcon from '../components/Common/Icons/PresentationChart.icon'
-import { navigations } from '../constants/AdminNavigations'
+import { navigations } from '../constants/Navigations'
 import { Navigation } from '../interfaces/Navigation.interface'
 import DailyPressLogo from '../public/images/daily-press-logo.png'
 import DummyAvatar from '../public/images/dummy-avatar.png'
@@ -75,13 +75,17 @@ const AdminLayout = ({ children }: { children: ReactNode }) => {
             <JobsStatusCountCard Icon={BriefcaseIcon} value={12} description="Pending Jobs" />
             <JobsStatusCountCard Icon={EyeOpenIcon} value={4} description="Jobs To Review" />
           </div>
-          {navigations.map((navigation, i) => (
-            <NavigationButton
-              key={i}
-              navigation={navigation}
-              isCurrentPath={navigation.pathname === pathname}
-            />
-          ))}
+          {navigations
+            .filter(({ forAdmin }) =>
+              forAdmin ? session.user.userType.type === 'admin_users' : true
+            )
+            .map((navigation, i) => (
+              <NavigationButton
+                key={i}
+                navigation={navigation}
+                isCurrentPath={navigation.pathname === pathname}
+              />
+            ))}
         </div>
         <div className="flex flex-1 flex-col bg-ghost-white p-6">
           <div className="mb-3.5 flex justify-between">
@@ -206,7 +210,7 @@ const NavigationButton = ({
                 <Icon className={isCurrentPath ? 'stroke-jungle-green' : 'stroke-lavender-gray'} />
               )}
               <div
-                className={`font-urbanist text-sm font-semibold ${
+                className={`font-urbanist text-sm ${
                   isCurrentPath ? 'font-semibold text-jungle-green' : 'font-medium text-rhythm'
                 }`}
               >

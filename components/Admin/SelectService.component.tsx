@@ -2,6 +2,7 @@ import axios from 'axios'
 import { useSession } from 'next-auth/react'
 import { useState } from 'react'
 import { useQuery } from 'react-query'
+import { Page } from '../../interfaces/Page.interface'
 import { Service } from '../../interfaces/Service.interface'
 import CaretIcon from '../Common/Icons/Caret.icon'
 import CheckIcon from '../Common/Icons/Check.icon'
@@ -15,14 +16,16 @@ const SelectService = ({
   const { data: session } = useSession()
 
   const { data: services, isLoading } = useQuery('services', async () => {
-    const { data } = await axios.get<Array<Service>>(
-      `/v1/clients/${session?.user.userType.clientId}/services`,
-      {
-        headers: {
-          Authorization: `Bearer ${session?.accessToken}`,
-        },
-      }
-    )
+    const {
+      data: { data },
+    } = await axios.get<{
+      data: Array<Service>
+      page: Page
+    }>(`/v1/clients/${session?.user.userType.clientId}/services`, {
+      headers: {
+        Authorization: `Bearer ${session?.accessToken}`,
+      },
+    })
 
     return data
   })

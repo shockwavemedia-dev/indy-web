@@ -22,7 +22,7 @@ const Dashboard: NextPageWithLayout = () => {
             dataEndpoint="/v1/tickets"
             columns={TicketTableColumns}
             withFilterAndSettings
-            ticketType="tickets"
+            tableKey="tickets"
           />
         </Card>
         <div className="col-span-1 row-span-4 flex flex-col space-y-3">
