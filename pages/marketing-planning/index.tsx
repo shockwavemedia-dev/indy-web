@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import { ReactElement } from 'react'
-import AdminLayout from '../../layouts/App.layout'
+import AppLayout from '../../layouts/App.layout'
 import { NextPageWithLayout } from '../../types/NextPageWithLayout.type'
 
 const Dashboard: NextPageWithLayout = () => (
@@ -11,6 +11,6 @@ const Dashboard: NextPageWithLayout = () => (
   </>
 )
 
-Dashboard.getLayout = (page: ReactElement) => <AdminLayout>{page}</AdminLayout>
+Dashboard.getLayout = (page: ReactElement) => <AppLayout>{page}</AppLayout>
 
 export default Dashboard

@@ -19,7 +19,7 @@ export const navigations: Array<Navigation> = [
     Icon: UserIcon,
     title: 'Client',
     pathname: '/client',
-    forAdmin: true, // add logical filter
+    forAdmin: true,
   },
   {
     Icon: NotepadIcon,

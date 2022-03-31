@@ -22,7 +22,7 @@ import { Navigation } from '../interfaces/Navigation.interface'
 import DailyPressLogo from '../public/images/daily-press-logo.png'
 import DummyAvatar from '../public/images/dummy-avatar.png'
 
-const AdminLayout = ({ children }: { children: ReactNode }) => {
+const AppLayout = ({ children }: { children: ReactNode }) => {
   const { replace, pathname } = useRouter()
   const { status, data: session } = useSession({
     required: true,
@@ -259,4 +259,4 @@ const ChildNavigationButton = ({
   </div>
 )
 
-export default AdminLayout
+export default AppLayout

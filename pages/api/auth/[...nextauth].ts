@@ -13,7 +13,7 @@ const nextAuth = NextAuth({
       },
       authorize: async (credentials) => {
         const {
-          data: { accessToken, user, expiresIn },
+          data: { accessToken, user },
         } = await axios.post<Authentication>('/authenticate', {
           email: credentials?.email,
           password: credentials?.password,
@@ -23,7 +23,6 @@ const nextAuth = NextAuth({
           return {
             user: user,
             accessToken: accessToken,
-            accessTokenTtl: expiresIn,
           }
         }
 
@@ -35,7 +34,6 @@ const nextAuth = NextAuth({
     jwt: async ({ token, user }) => {
       if (user) {
         token.accessToken = user.accessToken
-        token.accessTokenTtl = user.accessTokenTtl
         token.user = user.user
       }
 
@@ -47,9 +45,6 @@ const nextAuth = NextAuth({
 
       return session
     },
-  },
-  session: {
-    maxAge: 3600,
   },
 })
 
