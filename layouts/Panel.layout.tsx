@@ -22,7 +22,13 @@ import { Navigation } from '../interfaces/Navigation.interface'
 import DailyPressLogo from '../public/images/daily-press-logo.png'
 import DummyAvatar from '../public/images/dummy-avatar.png'
 
-const PanelLayout = ({ children }: { children: ReactNode }) => {
+const PanelLayout = ({
+  children,
+  forAdmin = false,
+}: {
+  children: ReactNode
+  forAdmin?: boolean
+}) => {
   const { replace, pathname } = useRouter()
   const { status, data: session } = useSession({
     required: true,
@@ -44,6 +50,11 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
     setSupportRequestModalVisible(!isSupportRequestModalVisible)
 
   if (status === 'loading') {
+    return null
+  }
+
+  if (forAdmin && !session.isAdmin) {
+    replace('/dashboard')
     return null
   }
 
