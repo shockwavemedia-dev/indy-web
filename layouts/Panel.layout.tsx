@@ -74,7 +74,7 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
             <JobsStatusCountCard Icon={EyeOpenIcon} value={4} description="Jobs To Review" />
           </div>
           {navigations
-            .filter(({ forAdmin }) => (forAdmin ? session.isAdmin : true))
+            .filter(({ forAdmin }) => (forAdmin ? session?.isAdmin : true))
             .map((navigation, i) => (
               <NavigationButton
                 key={i}
@@ -87,7 +87,7 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
           <div className="mb-3.5 flex justify-between">
             <div className="flex items-center space-x-3">
               <div className="font-urbanist text-xs font-medium text-waterloo">
-                {session.isAdmin ? 'Admin' : 'Client'} Panel
+                {session?.isAdmin ? 'Admin' : 'Client'} Panel
               </div>
               <CaretIcon className="rotate-90 stroke-frenchgray" small />
               <div className="font-urbanist text-xs font-semibold capitalize text-onyx">
