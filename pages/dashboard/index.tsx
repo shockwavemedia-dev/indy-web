@@ -18,7 +18,12 @@ const Dashboard: NextPageWithLayout = () => {
       </Head>
       <div className="mx-auto grid h-262.5 w-270 grid-cols-3 grid-rows-23 gap-6">
         <Card title="Project Status Table" className="col-span-2 row-span-14">
-          <Table dataEndpoint="/v1/tickets" columns={TicketTableColumns} />
+          <Table
+            dataEndpoint="/v1/tickets"
+            columns={TicketTableColumns}
+            withFilterAndSettings
+            ticketType="tickets"
+          />
         </Card>
         <div className="col-span-1 row-span-4 flex flex-col space-y-3">
           <div className="flex flex-1 space-x-3">

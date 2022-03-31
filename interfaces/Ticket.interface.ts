@@ -9,5 +9,4 @@ export interface Ticket {
   status: 'closed' | 'new' | 'pending' | 'on_hold' | 'open' | 'resolved' | 'deleted'
   createdAt: Date
   attachment: string
-  alerts: 'overdue'
 }

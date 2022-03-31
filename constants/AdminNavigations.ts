@@ -6,6 +6,7 @@ import FolderIcon from '../components/Common/Icons/Folder.icon'
 import MonitorIcon from '../components/Common/Icons/Monitor.icon'
 import NotepadIcon from '../components/Common/Icons/Notepad.icon'
 import PresentationChartIcon from '../components/Common/Icons/PresentationChart.icon'
+import UserIcon from '../components/Common/Icons/User.icon'
 import { Navigation } from '../interfaces/Navigation.interface'
 
 export const navigations: Array<Navigation> = [
@@ -13,6 +14,11 @@ export const navigations: Array<Navigation> = [
     Icon: ChartIcon,
     title: 'Dashboard',
     pathname: '/dashboard',
+  },
+  {
+    Icon: UserIcon,
+    title: 'Client',
+    pathname: '/client',
   },
   {
     Icon: NotepadIcon,

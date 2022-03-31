@@ -7,6 +7,7 @@ import snakecaseKeys from 'snakecase-keys'
 import { API_BASE_URL } from '../constants/Http'
 import '../styles/globals.css'
 import { AppPropsWithLayout } from '../types/AppPropsWithLayout.type'
+import { parseDates } from '../utils/DateHelpers'
 
 axios.defaults.baseURL = API_BASE_URL
 
@@ -25,6 +26,7 @@ axios.interceptors.response.use(
   (response) => {
     if (response.data) {
       response.data = camelcaseKeys(response.data, { deep: true })
+      parseDates(response.data)
     }
 
     return response

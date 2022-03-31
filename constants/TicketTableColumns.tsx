@@ -29,16 +29,11 @@ export const TicketTableColumns: Array<Column<Ticket>> = [
   {
     Header: 'Due Date',
     accessor: 'duedate',
+    sortType: 'datetime',
     Cell: ({ value }) => (
       <div className="font-urbanist text-sm font-medium text-onyx">
-        {/* to do pass value only */}
-        {format(new Date(value), "yy MMM''dd")}
+        {format(value, "yy MMM''dd")}
       </div>
     ),
-  },
-  {
-    Header: 'Alerts',
-    accessor: 'alerts',
-    disableSortBy: true,
   },
 ]

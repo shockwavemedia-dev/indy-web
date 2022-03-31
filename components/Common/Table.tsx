@@ -4,26 +4,31 @@ import { useEffect, useMemo, useState } from 'react'
 import { useQuery } from 'react-query'
 import { Column, usePagination, useSortBy, useTable } from 'react-table'
 import { Page } from '../../interfaces/Page.interface'
-import { Ticket } from '../../interfaces/Ticket.interface'
 import CalendarIcon from './Icons/Calendar.icon'
 import CaretIcon from './Icons/Caret.icon'
 import GearIcon from './Icons/Gear.icon'
 import SortIcon from './Icons/Sort.icon'
 
-const Table = ({
+const Table = <T extends {}>({
+  ticketType,
+  withFilterAndSettings = false,
+  startingPageSize = 10,
   dataEndpoint,
   columns,
 }: {
+  ticketType: string
+  withFilterAndSettings?: boolean
+  startingPageSize?: number
   dataEndpoint: string
-  columns: Array<Column<Ticket>>
+  columns: Array<Column<T>>
 }) => {
   const { data: session } = useSession()
   const [queryPageIndex, setQueryPageIndex] = useState(0)
-  const [queryPageSize, setQueryPageSize] = useState(10)
+  const [queryPageSize, setQueryPageSize] = useState(startingPageSize)
 
   const getData = async (pageIndex: number, pageSize: number) => {
     const { data } = await axios.get<{
-      data: Array<Ticket>
+      data: Array<T>
       page: Page
     }>(`${dataEndpoint}?page_number=${pageIndex + 1}&size=${pageSize}`, {
       headers: {
@@ -60,7 +65,7 @@ const Table = ({
     previousPage,
     setPageSize,
     state: { pageIndex, pageSize },
-  } = useTable<Ticket>(
+  } = useTable<T>(
     {
       columns: memoizedColumns,
       data: isSuccess && pagination ? pagination.data : [],
@@ -78,7 +83,11 @@ const Table = ({
 
   return (
     <>
-      <div className="ml-auto mb-5 flex items-center space-x-2.5">
+      <div
+        className={`ml-auto mb-5 flex items-center space-x-2.5 ${
+          withFilterAndSettings ? 'visible' : 'invisible'
+        }`}
+      >
         <CalendarIcon className="stroke-metallic-silver" />
         <div className="font-urbanist text-sm font-medium text-onyx">Last week</div>
         <CaretIcon className="rotate-180 stroke-waterloo" small />
@@ -153,12 +162,12 @@ const Table = ({
         </table>
       </div>
       <div className="relative flex min-h-5 items-center justify-center">
-        <div className="absolute left-0 font-urbanist text-sm font-medium text-metallic-silver">
+        <div className="absolute left-0 font-urbanist text-sm font-medium lowercase text-metallic-silver">
           {pageIndex * pageSize + 1}-
           {pageIndex + 1 === pagination?.page.lastPage
             ? pagination.page.total
             : (pageIndex + 1) * pageSize}
-          &nbsp;of {pagination?.page.total || '?'} tickets
+          &nbsp;of {pagination?.page.total || '?'} {ticketType}
         </div>
         <button
           onClick={previousPage}

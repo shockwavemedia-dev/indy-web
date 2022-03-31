@@ -5,14 +5,16 @@ const FancyButton = ({
   title,
   subtitle,
   onClick,
+  className,
 }: {
   Icon: ReactNode
   title: string
   subtitle: string
   onClick: MouseEventHandler<HTMLButtonElement>
+  className?: string
 }) => (
   <button
-    className="flex flex-1 items-center space-x-4 rounded-xl bg-white px-6 py-4 shadow"
+    className={`flex flex-1 items-center space-x-4 rounded-xl bg-white px-6 py-4 shadow ${className}`}
     onClick={onClick}
   >
     {Icon}
