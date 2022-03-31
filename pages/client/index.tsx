@@ -6,7 +6,7 @@ import NewClientModal from '../../components/Admin/NewClientModal.component'
 import UserIcon from '../../components/Common/Icons/User.icon'
 import Table from '../../components/Common/Table'
 import { ClientTableColumns } from '../../constants/ClientTableColumns'
-import AdminLayout from '../../layouts/Admin.layout'
+import AdminLayout from '../../layouts/App.layout'
 import { NextPageWithLayout } from '../../types/NextPageWithLayout.type'
 
 const Client: NextPageWithLayout = () => {

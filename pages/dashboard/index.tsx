@@ -7,7 +7,7 @@ import MenuBoardIcon from '../../components/Common/Icons/MenuBoard.icon'
 import VideoIcon from '../../components/Common/Icons/Video.icon'
 import Table from '../../components/Common/Table'
 import { TicketTableColumns } from '../../constants/TicketTableColumns'
-import AdminLayout from '../../layouts/Admin.layout'
+import AdminLayout from '../../layouts/App.layout'
 import { NextPageWithLayout } from '../../types/NextPageWithLayout.type'
 
 const Dashboard: NextPageWithLayout = () => {

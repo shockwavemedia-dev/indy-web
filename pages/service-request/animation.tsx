@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import { ReactElement } from 'react'
-import AdminLayout from '../../layouts/Admin.layout'
+import AdminLayout from '../../layouts/App.layout'
 import { NextPageWithLayout } from '../../types/NextPageWithLayout.type'
 
 const Animation: NextPageWithLayout = () => (
