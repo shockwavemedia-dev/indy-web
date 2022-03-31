@@ -40,7 +40,7 @@ const App = ({ Component, pageProps }: AppPropsWithLayout) => {
   const getLayout = Component.getLayout ?? ((page) => page)
 
   return (
-    <SessionProvider session={pageProps.session}>
+    <SessionProvider session={pageProps.session} refetchInterval={3600}>
       <QueryClientProvider client={queryClient}>
         {getLayout(<Component {...pageProps} />)}
       </QueryClientProvider>
