@@ -3,6 +3,7 @@ import { Form, Formik } from 'formik'
 import { useSession } from 'next-auth/react'
 import { useQueryClient } from 'react-query'
 import { NewClientForm } from '../../interfaces/NewClientForm.interface'
+import { objectWithFileToFormData } from '../../utils/FormHelpers'
 import Button from '../Common/Button.component'
 import FileInput from '../Common/FileInput.component'
 import CalendarIcon from '../Common/Icons/Calendar.icon'
@@ -33,7 +34,7 @@ const NewClientModal = ({ isVisible, onClose }: { isVisible: boolean; onClose: (
   ) => {
     setSubmitting(true)
 
-    const { status } = await axios.post('/v1/clients', values, {
+    const { status } = await axios.post('/v1/clients', objectWithFileToFormData(values), {
       headers: {
         Authorization: `Bearer ${session?.accessToken}`,
       },
