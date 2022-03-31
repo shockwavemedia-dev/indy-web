@@ -3,108 +3,26 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { ReactNode, useState } from 'react'
-import FancyButton from '../components/Admin/FancyButton.component'
-import JobsStatusCountCard from '../components/Admin/JobStatsCard.component'
-import NewClientModal from '../components/Admin/NewClientModal.component'
 import BellIcon from '../components/Common/Icons/Bell.icon'
 import BriefcaseIcon from '../components/Common/Icons/Briefcase.icon'
-import CalendarIcon from '../components/Common/Icons/Calendar.icon'
+import CalendarAddIcon from '../components/Common/Icons/CalendarAdd.icon'
 import CaretIcon from '../components/Common/Icons/Caret.icon'
-import ChartIcon from '../components/Common/Icons/Chart.icon'
-import ClipboardIcon from '../components/Common/Icons/Clipboard.icon'
-import EmailIcon from '../components/Common/Icons/Email.icon'
+import ClipboardCloseIcon from '../components/Common/Icons/ClipboardClose.icon'
 import EyeOpenIcon from '../components/Common/Icons/EyeOpen.icon'
-import FolderIcon from '../components/Common/Icons/Folder.icon'
+import LifeBuoyIcon from '../components/Common/Icons/LifeBuoy.icon'
 import MagnifyingGlassIcon from '../components/Common/Icons/MagnifyingGlass.icon'
-import MonitorIcon from '../components/Common/Icons/Monitor.icon'
-import NotepadIcon from '../components/Common/Icons/Notepad.icon'
 import PresentationChartIcon from '../components/Common/Icons/PresentationChart.icon'
+import FancyButton from '../components/Panel/FancyButton.component'
+import JobsStatusCountCard from '../components/Panel/JobStatsCard.component'
+import NewEventModal from '../components/Panel/NewEventModal.component'
+import NewProjectBriefModal from '../components/Panel/NewProjectBriefModal.component'
+import SupportRequestModal from '../components/Panel/SupportRequestModal.component'
+import { navigations } from '../constants/Navigations'
 import { Navigation } from '../interfaces/Navigation.interface'
 import DailyPressLogo from '../public/images/daily-press-logo.png'
 import DummyAvatar from '../public/images/dummy-avatar.png'
 
-const navigations: Array<Navigation> = [
-  {
-    Icon: ChartIcon,
-    title: 'Dashboard',
-    pathname: '/dashboard',
-  },
-  {
-    Icon: NotepadIcon,
-    title: 'Event Manager',
-  },
-  {
-    Icon: MonitorIcon,
-    title: 'Screen Manager',
-  },
-  {
-    Icon: EmailIcon,
-    title: 'SMS Marketing',
-  },
-  {
-    Icon: CalendarIcon,
-    title: 'Marketing Planning',
-    pathname: '/marketing-planning',
-  },
-  {
-    Icon: FolderIcon,
-    title: 'My Files',
-  },
-  {
-    Icon: ClipboardIcon,
-    title: 'Service Request',
-    children: [
-      {
-        title: 'Graphic Design',
-      },
-      {
-        title: 'Website',
-      },
-      {
-        title: 'EDM',
-      },
-      {
-        title: 'Social Media',
-      },
-      {
-        title: 'Data Analytics',
-      },
-      {
-        title: 'Animations',
-      },
-      {
-        title: 'Photography',
-      },
-      {
-        title: 'Videography',
-      },
-      {
-        title: 'Print',
-      },
-    ],
-  },
-  {
-    Icon: PresentationChartIcon,
-    title: 'Analytics',
-    pathname: '/analytics',
-    children: [
-      {
-        title: 'App',
-      },
-      {
-        title: 'Website',
-      },
-      {
-        title: 'ClevaQ',
-      },
-      {
-        title: 'Social Media Ads',
-      },
-    ],
-  },
-]
-
-const ClientLayout = ({ children }: { children: ReactNode }) => {
+const PanelLayout = ({ children }: { children: ReactNode }) => {
   const { replace, pathname } = useRouter()
   const { status, data: session } = useSession({
     required: true,
@@ -113,11 +31,17 @@ const ClientLayout = ({ children }: { children: ReactNode }) => {
     },
   })
 
-  const [isNewClientModalVisible, setNewClientModalVisible] = useState(false)
+  const [isNewEventModalVisible, setNewEventModalVisible] = useState(false)
+  const [isNewProjectBriefModalVisible, setNewProjectBriefModalVisible] = useState(false)
+  const [isSupportRequestModalVisible, setSupportRequestModalVisible] = useState(false)
 
   const currentPath = pathname.split('/').pop()?.replace('-', ' ')
 
-  const toggleNewClientModal = () => setNewClientModalVisible(!isNewClientModalVisible)
+  const toggleNewEventModal = () => setNewEventModalVisible(!isNewEventModalVisible)
+  const toggleNewProjectBriefModal = () =>
+    setNewProjectBriefModalVisible(!isNewProjectBriefModalVisible)
+  const toggleSupportRequestModal = () =>
+    setSupportRequestModalVisible(!isSupportRequestModalVisible)
 
   if (status === 'loading') {
     return null
@@ -125,7 +49,15 @@ const ClientLayout = ({ children }: { children: ReactNode }) => {
 
   return (
     <>
-      <NewClientModal isVisible={isNewClientModalVisible} onClose={toggleNewClientModal} />
+      <NewEventModal isVisible={isNewEventModalVisible} onClose={toggleNewEventModal} />
+      <NewProjectBriefModal
+        isVisible={isNewProjectBriefModalVisible}
+        onClose={toggleNewProjectBriefModal}
+      />
+      <SupportRequestModal
+        isVisible={isSupportRequestModalVisible}
+        onClose={toggleSupportRequestModal}
+      />
       <div className="flex min-h-screen">
         <div className="flex min-w-75 flex-col bg-white pt-6">
           <div className="mb-5 pl-6">
@@ -141,18 +73,22 @@ const ClientLayout = ({ children }: { children: ReactNode }) => {
             <JobsStatusCountCard Icon={BriefcaseIcon} value={12} description="Pending Jobs" />
             <JobsStatusCountCard Icon={EyeOpenIcon} value={4} description="Jobs To Review" />
           </div>
-          {navigations.map((navigation, i) => (
-            <NavigationButton
-              key={i}
-              navigation={navigation}
-              isCurrentPath={navigation.pathname === pathname}
-            />
-          ))}
+          {navigations
+            .filter(({ forAdmin }) => (forAdmin ? session.isAdmin : true))
+            .map((navigation, i) => (
+              <NavigationButton
+                key={i}
+                navigation={navigation}
+                isCurrentPath={navigation.pathname === pathname}
+              />
+            ))}
         </div>
         <div className="flex flex-1 flex-col bg-ghost-white p-6">
           <div className="mb-3.5 flex justify-between">
             <div className="flex items-center space-x-3">
-              <div className="font-urbanist text-xs font-medium text-waterloo">Admin Panel</div>
+              <div className="font-urbanist text-xs font-medium text-waterloo">
+                {session.isAdmin ? 'Admin' : 'Client'} Panel
+              </div>
               <CaretIcon className="rotate-90 stroke-frenchgray" small />
               <div className="font-urbanist text-xs font-semibold capitalize text-onyx">
                 {currentPath}
@@ -183,16 +119,46 @@ const ClientLayout = ({ children }: { children: ReactNode }) => {
           <div className="mb-5 font-urbanist text-xxl font-semibold capitalize text-onyx">
             {currentPath}
           </div>
-          <div className="mb-6  space-x-6">
+          <div className="mb-6 flex space-x-6">
             <FancyButton
               Icon={
                 <div className="flex min-h-11 min-w-11 items-center justify-center rounded-lg bg-honeydew">
-                  <BriefcaseIcon className="stroke-jungle-green" />
+                  <CalendarAddIcon className="stroke-jungle-green" />
                 </div>
               }
-              title="New Client"
+              title="New Event"
               subtitle="Laborerivit rem cones mil"
-              onClick={toggleNewClientModal}
+              onClick={toggleNewEventModal}
+            />
+            <FancyButton
+              Icon={
+                <div className="flex min-h-11 min-w-11 items-center justify-center rounded-lg bg-alice-blue">
+                  <ClipboardCloseIcon className="stroke-bleu-de-france" />
+                </div>
+              }
+              title="New Project Brief"
+              subtitle="Laborerivit rem cones mil"
+              onClick={toggleNewProjectBriefModal}
+            />
+            <FancyButton
+              Icon={
+                <div className="flex min-h-11 min-w-11 items-center justify-center rounded-lg bg-cosmic-latte">
+                  <PresentationChartIcon className="stroke-deep-saffron" />
+                </div>
+              }
+              title="Analytics"
+              subtitle="Laborerivit rem cones mil"
+              onClick={() => {}}
+            />
+            <FancyButton
+              Icon={
+                <div className="flex min-h-11 min-w-11 items-center justify-center rounded-lg bg-linen">
+                  <LifeBuoyIcon className="fill-vivid-red-tangelo" />
+                </div>
+              }
+              title="Support Request"
+              subtitle="Laborerivit rem cones mil"
+              onClick={toggleSupportRequestModal}
             />
           </div>
           <hr className="mb-6 border-t-bright-gray" />
@@ -242,7 +208,7 @@ const NavigationButton = ({
                 <Icon className={isCurrentPath ? 'stroke-jungle-green' : 'stroke-lavender-gray'} />
               )}
               <div
-                className={`font-urbanist text-sm font-semibold ${
+                className={`font-urbanist text-sm ${
                   isCurrentPath ? 'font-semibold text-jungle-green' : 'font-medium text-rhythm'
                 }`}
               >
@@ -291,4 +257,4 @@ const ChildNavigationButton = ({
   </div>
 )
 
-export default ClientLayout
+export default PanelLayout

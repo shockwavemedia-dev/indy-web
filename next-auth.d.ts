@@ -6,13 +6,18 @@ import { User as CustomUser } from './interfaces/User.interface'
 declare module 'next-auth' {
   interface Session {
     accessToken: string
+    accessTokenTtl: number
     user: CustomUser
+    isAdmin: boolean
+    isClient: boolean
   }
 
   interface User {
     accessToken: string
     accessTokenTtl: number
     user: CustomUser
+    isAdmin: boolean
+    isClient: boolean
   }
 }
 
@@ -21,5 +26,7 @@ declare module 'next-auth/jwt' {
     accessToken: string
     accessTokenTtl: number
     user: CustomUser
+    isAdmin: boolean
+    isClient: boolean
   }
 }

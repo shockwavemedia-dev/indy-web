@@ -1,7 +1,6 @@
 import axios from 'axios'
 import { Form, Formik } from 'formik'
 import { useSession } from 'next-auth/react'
-import { MouseEventHandler } from 'react'
 import { useQuery } from 'react-query'
 import { TicketTypeOptions } from '../../constants/TicketTypeOptions'
 import { Department } from '../../interfaces/Department.interface'
@@ -22,7 +21,7 @@ const SupportRequestModal = ({
   onClose,
 }: {
   isVisible: boolean
-  onClose: MouseEventHandler<HTMLButtonElement>
+  onClose: () => void
 }) => {
   const { data: session } = useSession()
 

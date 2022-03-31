@@ -3,6 +3,7 @@ module.exports = {
     './pages/**/*.{js,ts,jsx,tsx}',
     './components/**/*.{js,ts,jsx,tsx}',
     './layouts/**/*.{js,ts,jsx,tsx}',
+    './constants/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
     extend: {
@@ -10,6 +11,8 @@ module.exports = {
         1.5: '1.5px',
       },
       gridTemplateRows: {
+        10: 'repeat(10, minmax(0, 1fr))',
+        12: 'repeat(12, minmax(0, 1fr))',
         13: 'repeat(13, minmax(0, 1fr))',
         14: 'repeat(14, minmax(0, 1fr))',
         18: 'repeat(18, minmax(0, 1fr))',
@@ -83,6 +86,7 @@ module.exports = {
       },
       minHeight: {
         4: '1rem',
+        5: '1.25rem',
         9.5: '2.375rem',
         10: '2.5rem',
         11: '2.75rem',

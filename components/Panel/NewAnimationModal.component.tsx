@@ -1,7 +1,6 @@
 import axios from 'axios'
 import { Form, Formik } from 'formik'
 import { useSession } from 'next-auth/react'
-import { MouseEventHandler } from 'react'
 import { useQuery } from 'react-query'
 import { CategoryAnimation } from '../../interfaces/CategoryAnimation.interface'
 import { NewAnimationForm } from '../../interfaces/NewAnimationForm.interface'
@@ -14,13 +13,7 @@ import Select from '../Common/Select.component'
 import TextInput from '../Common/TextInput.component'
 import Modal from './Modal.component'
 
-const NewAnimationModal = ({
-  isVisible,
-  onClose,
-}: {
-  isVisible: boolean
-  onClose: MouseEventHandler<HTMLButtonElement>
-}) => {
+const NewAnimationModal = ({ isVisible, onClose }: { isVisible: boolean; onClose: () => void }) => {
   const { data: session } = useSession()
 
   const formInitialValues: NewAnimationForm = {
