@@ -22,7 +22,7 @@ import { Navigation } from '../interfaces/Navigation.interface'
 import DailyPressLogo from '../public/images/daily-press-logo.png'
 import DummyAvatar from '../public/images/dummy-avatar.png'
 
-const AppLayout = ({ children }: { children: ReactNode }) => {
+const PanelLayout = ({ children }: { children: ReactNode }) => {
   const { replace, pathname } = useRouter()
   const { status, data: session } = useSession({
     required: true,
@@ -38,10 +38,8 @@ const AppLayout = ({ children }: { children: ReactNode }) => {
   const currentPath = pathname.split('/').pop()?.replace('-', ' ')
 
   const toggleNewEventModal = () => setNewEventModalVisible(!isNewEventModalVisible)
-
   const toggleNewProjectBriefModal = () =>
     setNewProjectBriefModalVisible(!isNewProjectBriefModalVisible)
-
   const toggleSupportRequestModal = () =>
     setSupportRequestModalVisible(!isSupportRequestModalVisible)
 
@@ -76,9 +74,7 @@ const AppLayout = ({ children }: { children: ReactNode }) => {
             <JobsStatusCountCard Icon={EyeOpenIcon} value={4} description="Jobs To Review" />
           </div>
           {navigations
-            .filter(({ forAdmin }) =>
-              forAdmin ? session.user.userType.type === 'admin_users' : true
-            )
+            .filter(({ forAdmin }) => (forAdmin ? session.isAdmin : true))
             .map((navigation, i) => (
               <NavigationButton
                 key={i}
@@ -90,7 +86,9 @@ const AppLayout = ({ children }: { children: ReactNode }) => {
         <div className="flex flex-1 flex-col bg-ghost-white p-6">
           <div className="mb-3.5 flex justify-between">
             <div className="flex items-center space-x-3">
-              <div className="font-urbanist text-xs font-medium text-waterloo">Admin Panel</div>
+              <div className="font-urbanist text-xs font-medium text-waterloo">
+                {session.isAdmin ? 'Admin' : 'Client'} Panel
+              </div>
               <CaretIcon className="rotate-90 stroke-frenchgray" small />
               <div className="font-urbanist text-xs font-semibold capitalize text-onyx">
                 {currentPath}
@@ -259,4 +257,4 @@ const ChildNavigationButton = ({
   </div>
 )
 
-export default AppLayout
+export default PanelLayout

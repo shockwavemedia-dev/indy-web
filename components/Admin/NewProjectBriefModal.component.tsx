@@ -35,9 +35,7 @@ const NewProjectBriefModal = ({
             {({ isSubmitting, setFieldValue }) => (
               <Form className="flex w-140 flex-col">
                 <div className="mb-5 flex space-x-5">
-                  {session?.user.userType.type === 'admin_users' && (
-                    <SelectService setFieldValue={setFieldValue} />
-                  )}
+                  {session?.isAdmin && <SelectService setFieldValue={setFieldValue} />}
                   <TextInput
                     Icon={CalendarIcon}
                     placeholder="Enter date"

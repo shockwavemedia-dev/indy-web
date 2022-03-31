@@ -23,6 +23,8 @@ const nextAuth = NextAuth({
           return {
             user: user,
             accessToken: accessToken,
+            isAdmin: user.userType.type === 'admin_users',
+            isClient: user.userType.type === 'client_users',
           }
         }
 
@@ -35,6 +37,8 @@ const nextAuth = NextAuth({
       if (user) {
         token.accessToken = user.accessToken
         token.user = user.user
+        token.isAdmin = user.isAdmin
+        token.isClient = user.isClient
       }
 
       return token
@@ -42,6 +46,8 @@ const nextAuth = NextAuth({
     session: async ({ session, token }) => {
       session.accessToken = token.accessToken
       session.user = token.user
+      session.isAdmin = token.isAdmin
+      session.isClient = token.isClient
 
       return session
     },
