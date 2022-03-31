@@ -21,7 +21,7 @@ const NewDepartmentModal = ({
   const formInitialValues: NewDepartmentForm = {
     name: '',
     description: '',
-    min_delivery_days: '',
+    minDeliveryDays: '',
   }
 
   const submitForm = async (
@@ -71,7 +71,7 @@ const NewDepartmentModal = ({
                     <TextInput
                       Icon={PencilIcon}
                       placeholder="Minimum Delivery Days"
-                      name="min_delivery_days"
+                      name="minDeliveryDays"
                       disableAutoComplete
                     />
                   </div>
