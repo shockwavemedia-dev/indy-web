@@ -3,6 +3,7 @@ module.exports = {
     './pages/**/*.{js,ts,jsx,tsx}',
     './components/**/*.{js,ts,jsx,tsx}',
     './layouts/**/*.{js,ts,jsx,tsx}',
+    './constants/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
     extend: {
@@ -83,6 +84,7 @@ module.exports = {
       },
       minHeight: {
         4: '1rem',
+        5: '1.25rem',
         9.5: '2.375rem',
         10: '2.5rem',
         11: '2.75rem',
