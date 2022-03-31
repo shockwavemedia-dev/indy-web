@@ -2,7 +2,6 @@ import axios from 'axios'
 import { Form, Formik } from 'formik'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
-import { MouseEventHandler } from 'react'
 import { NewDepartmentForm } from '../../interfaces/NewDepartmentForm.interface'
 import Button from '../Common/Button.component'
 import PencilIcon from '../Common/Icons/Pencil.icon'
@@ -14,15 +13,15 @@ const NewDepartmentModal = ({
   onClose,
 }: {
   isVisible: boolean
-  onClose: MouseEventHandler<HTMLButtonElement>
+  onClose: () => void
 }) => {
   const { data: session } = useSession()
   const { replace } = useRouter()
 
   const formInitialValues: NewDepartmentForm = {
     name: '',
-    min_delivery_days: '',
     description: '',
+    min_delivery_days: '',
   }
 
   const submitForm = async (
