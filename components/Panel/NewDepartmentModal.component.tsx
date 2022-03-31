@@ -37,7 +37,6 @@ const NewDepartmentModal = ({
     })
 
     if (response.status === 200) {
-      replace('/dashboard')
     } else {
       setSubmitting(false)
     }
