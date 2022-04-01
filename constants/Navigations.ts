@@ -78,7 +78,6 @@ export const navigations: Array<Navigation> = [
   {
     Icon: PresentationChartIcon,
     title: 'Analytics',
-    pathname: '/analytics',
     children: [
       {
         title: 'App',
