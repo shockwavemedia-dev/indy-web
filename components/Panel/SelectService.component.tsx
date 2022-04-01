@@ -138,7 +138,7 @@ const ServiceRow = ({
   return (
     <>
       <button
-        className="flex h-8.5 w-full cursor-default items-center justify-between py-2 px-3 hover:bg-pattensblue"
+        className="flex h-8.5 w-full cursor-default items-center justify-between py-2 px-3 font-urbanist text-sm font-medium text-onyx hover:bg-pattensblue"
         type="button"
         name={service.serviceName}
         onClick={fireToggleService}
@@ -182,7 +182,7 @@ const Extra = ({
 
   return (
     <button
-      className="flex h-8.5 w-full cursor-default items-center justify-between py-2 pl-9 pr-3 hover:bg-pattensblue"
+      className="flex h-8.5 w-full cursor-default items-center justify-between py-2 pl-9 pr-3 font-urbanist text-sm font-medium text-onyx hover:bg-pattensblue"
       type="button"
       onClick={selectExtra}
     >
