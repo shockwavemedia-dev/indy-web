@@ -1,7 +1,6 @@
 import axios from 'axios'
 import { Form, Formik } from 'formik'
 import { useSession } from 'next-auth/react'
-import { useRouter } from 'next/router'
 import { NewDepartmentForm } from '../../interfaces/NewDepartmentForm.interface'
 import Button from '../Common/Button.component'
 import PencilIcon from '../Common/Icons/Pencil.icon'
@@ -16,7 +15,6 @@ const NewDepartmentModal = ({
   onClose: () => void
 }) => {
   const { data: session } = useSession()
-  const { replace } = useRouter()
 
   const formInitialValues: NewDepartmentForm = {
     name: '',
@@ -30,13 +28,13 @@ const NewDepartmentModal = ({
   ) => {
     setSubmitting(true)
 
-    const response = await axios.post('/v1/departments', values, {
+    const { status } = await axios.post('/v1/departments', values, {
       headers: {
         Authorization: `Bearer ${session?.accessToken}`,
       },
     })
 
-    if (response.status === 200) {
+    if (status === 200) {
     } else {
       setSubmitting(false)
     }
@@ -47,41 +45,33 @@ const NewDepartmentModal = ({
       {isVisible && (
         <Modal title="New Department" onClose={onClose}>
           <Formik initialValues={formInitialValues} onSubmit={submitForm}>
-            {({ isSubmitting, setFieldValue }) => (
-              <Form>
-                <div className="flex w-[560px] flex-col">
-                  <div className="mb-[24px]">
-                    <TextInput
-                      Icon={PencilIcon}
-                      placeholder="Department Name"
-                      name="name"
-                      disableAutoComplete
-                    />
-                  </div>
-                  <div className="mb-[24px]">
-                    <TextInput
-                      Icon={PencilIcon}
-                      placeholder="Description"
-                      name="description"
-                      disableAutoComplete
-                    />
-                  </div>
-                  <div className="mb-[24px]">
-                    <TextInput
-                      Icon={PencilIcon}
-                      placeholder="Minimum Delivery Days"
-                      name="minDeliveryDays"
-                      disableAutoComplete
-                    />
-                  </div>
-                  <div className="flex space-x-[12px]">
-                    <Button ariaLabel="Cancel" light onClick={onClose}>
-                      Cancel
-                    </Button>
-                    <Button ariaLabel="Submit" type="submit" disabled={isSubmitting}>
-                      Submit
-                    </Button>
-                  </div>
+            {({ isSubmitting }) => (
+              <Form className="flex w-[560px] flex-col">
+                <TextInput
+                  Icon={PencilIcon}
+                  placeholder="Department Name"
+                  name="name"
+                  disableAutoComplete
+                />
+                <TextInput
+                  Icon={PencilIcon}
+                  placeholder="Description"
+                  name="description"
+                  disableAutoComplete
+                />
+                <TextInput
+                  Icon={PencilIcon}
+                  placeholder="Minimum Delivery Days"
+                  name="minDeliveryDays"
+                  disableAutoComplete
+                />
+                <div className="flex space-x-5">
+                  <Button ariaLabel="Cancel" light onClick={onClose}>
+                    Cancel
+                  </Button>
+                  <Button ariaLabel="Submit" type="submit" disabled={isSubmitting}>
+                    Submit
+                  </Button>
                 </div>
               </Form>
             )}

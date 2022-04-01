@@ -39,13 +39,13 @@ const SignUp: NextPageWithLayout = () => {
   ) => {
     setSubmitting(true)
 
-    const res = await axios.post('/signup/client-lead', signUpFormValues)
+    const { status } = await axios.post('/signup/client-lead', signUpFormValues)
 
-    if (res.status === 200) {
+    if (status === 200) {
       replace('/auth/login')
+    } else {
+      setSubmitting(false)
     }
-
-    setSubmitting(false)
   }
 
   const validateForm = ({ password }: { password: string }) => computePasswordStrength(password)
@@ -113,7 +113,7 @@ const SignUp: NextPageWithLayout = () => {
               <CaretIcon className="rotate-90 stroke-white" />
             </Button>
             <div className="flex font-urbanist text-sm font-medium text-metallic-silver">
-              Already have an account?&nbsp;
+              Already have an account?{' '}
               <Link href="/auth/login" className="text-sm font-semibold text-jungle-green">
                 Login
               </Link>

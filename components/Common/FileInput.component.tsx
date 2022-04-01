@@ -28,7 +28,7 @@ const FileInput = ({
           >
             <div className="cursor absolute flex flex-col items-center">
               <div className="mb-1.5 font-urbanist text-sm font-medium text-onyx">
-                Drag &amp; drop you assets, or&nbsp;
+                Drag {'&'} drop you assets, or{' '}
                 <button
                   className="font-semibold text-jungle-green underline underline-offset-1"
                   name="Browse Assets"

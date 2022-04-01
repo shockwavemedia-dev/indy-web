@@ -84,7 +84,7 @@ const Login: NextPageWithLayout = () => {
               <CaretIcon className="rotate-90 stroke-white" />
             </Button>
             <div className="flex font-urbanist text-sm font-medium text-metallic-silver">
-              Don&apos;t have an account?&nbsp;
+              Don{"'"}t have an account?{' '}
               <Link href="/auth/sign-up" className="text-sm font-semibold text-jungle-green">
                 Sign Up
               </Link>

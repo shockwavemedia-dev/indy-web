@@ -25,13 +25,13 @@ const ForgotPassword: NextPageWithLayout = () => {
   ) => {
     setSubmitting(true)
 
-    const response = await axios.post('/forgot-password', values)
+    const { status } = await axios.post('/forgot-password', values)
 
-    if (response.status === 200) {
+    if (status === 200) {
       replace('/auth/login')
+    } else {
+      setSubmitting(false)
     }
-
-    setSubmitting(false)
   }
 
   return (

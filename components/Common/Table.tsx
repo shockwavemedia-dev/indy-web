@@ -166,8 +166,8 @@ const Table = <T extends {}>({
           {pageIndex * pageSize + 1}-
           {pageIndex + 1 === pagination?.page.lastPage
             ? pagination.page.total
-            : (pageIndex + 1) * pageSize}
-          &nbsp;of {pagination?.page.total || '?'} {tableKey}
+            : (pageIndex + 1) * pageSize}{' '}
+          of {pagination?.page.total || '?'} {tableKey}
         </div>
         <button
           onClick={previousPage}

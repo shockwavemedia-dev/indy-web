@@ -17,9 +17,7 @@ const CountCard = ({
     {Icon}
     <div>
       <div className="font-urbanist text-sm font-semibold text-onyx">{value}</div>
-      <div className="font-urbanist text-[11px] font-medium text-metallic-silver">
-        {description}
-      </div>
+      <div className="font-urbanist text-xxs font-medium text-metallic-silver">{description}</div>
     </div>
   </div>
 )

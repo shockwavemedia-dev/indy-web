@@ -52,7 +52,7 @@ const NewEventModal = ({ isVisible, onClose }: { isVisible: boolean; onClose: ()
       {isVisible && (
         <Modal title="New Event" onClose={onClose}>
           <Formik initialValues={formInitialValues} onSubmit={submitForm}>
-            {({ isSubmitting, setFieldValue, values: { services } }) => (
+            {({ isSubmitting, setFieldValue }) => (
               <Form className="flex w-140 flex-col">
                 <TextInput
                   Icon={EditIcon}

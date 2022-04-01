@@ -64,49 +64,40 @@ const NewAnimationModal = ({ isVisible, onClose }: { isVisible: boolean; onClose
         <Modal title="New Animation" onClose={onClose}>
           <Formik initialValues={formInitialValues} onSubmit={submitForm}>
             {({ isSubmitting, setFieldValue }) => (
-              <Form>
-                <div className="flex w-[560px] flex-col">
-                  <div className="mb-[24px]">
-                    <TextInput
-                      Icon={PencilIcon}
-                      placeholder="Animation Title"
-                      name="title"
-                      disableAutoComplete
-                    />
-                  </div>
-
-                  <Select
-                    name="libraryCategoryId"
-                    Icon={PencilIcon}
-                    placeholder="Select Category Animation"
-                    options={categoryOptions || []}
-                    setFieldValue={setFieldValue}
-                    className="mb-5"
-                  />
-                  <div className="mb-[24px]">
-                    <TextInput
-                      Icon={PencilIcon}
-                      placeholder="Description"
-                      name="description"
-                      disableAutoComplete
-                    />
-                  </div>
-                  <div className="mb-[24px]">
-                    <FileInput
-                      label="Animation File"
-                      name="file"
-                      setFieldValue={setFieldValue}
-                      className="mb-8"
-                    />
-                  </div>
-                  <div className="flex space-x-[12px]">
-                    <Button ariaLabel="Cancel" light onClick={onClose}>
-                      Cancel
-                    </Button>
-                    <Button ariaLabel="Submit" type="submit" disabled={isSubmitting}>
-                      Submit
-                    </Button>
-                  </div>
+              <Form className="flex w-[560px] flex-col">
+                <TextInput
+                  Icon={PencilIcon}
+                  placeholder="Animation Title"
+                  name="title"
+                  disableAutoComplete
+                />
+                <Select
+                  name="libraryCategoryId"
+                  Icon={PencilIcon}
+                  placeholder="Select Category Animation"
+                  options={categoryOptions || []}
+                  setFieldValue={setFieldValue}
+                  className="mb-5"
+                />
+                <TextInput
+                  Icon={PencilIcon}
+                  placeholder="Description"
+                  name="description"
+                  disableAutoComplete
+                />
+                <FileInput
+                  label="Animation File"
+                  name="file"
+                  setFieldValue={setFieldValue}
+                  className="mb-8"
+                />
+                <div className="flex space-x-5">
+                  <Button ariaLabel="Cancel" light onClick={onClose}>
+                    Cancel
+                  </Button>
+                  <Button ariaLabel="Submit" type="submit" disabled={isSubmitting}>
+                    Submit
+                  </Button>
                 </div>
               </Form>
             )}

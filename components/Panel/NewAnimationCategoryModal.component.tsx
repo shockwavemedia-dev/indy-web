@@ -1,7 +1,6 @@
 import axios from 'axios'
 import { Form, Formik } from 'formik'
 import { useSession } from 'next-auth/react'
-import { useRouter } from 'next/router'
 import { NewAnimationCategoryForm } from '../../interfaces/NewAnimationCategoryForm.interface'
 import Button from '../Common/Button.component'
 import PencilIcon from '../Common/Icons/Pencil.icon'
@@ -16,7 +15,6 @@ const NewAnimationCategoryModal = ({
   onClose: () => void
 }) => {
   const { data: session } = useSession()
-  const { replace } = useRouter()
 
   const formInitialValues: NewAnimationCategoryForm = {
     name: '',
@@ -28,14 +26,13 @@ const NewAnimationCategoryModal = ({
   ) => {
     setSubmitting(true)
 
-    const response = await axios.post('/v1/library-categories', values, {
+    const { status } = await axios.post('/v1/library-categories', values, {
       headers: {
         Authorization: `Bearer ${session?.accessToken}`,
       },
     })
 
-    if (response.status === 200) {
-      replace('/service-request/category-animation')
+    if (status === 200) {
     } else {
       setSubmitting(false)
     }
@@ -46,25 +43,21 @@ const NewAnimationCategoryModal = ({
       {isVisible && (
         <Modal title="New Category Animation" onClose={onClose}>
           <Formik initialValues={formInitialValues} onSubmit={submitForm}>
-            {({ isSubmitting, setFieldValue }) => (
-              <Form>
-                <div className="flex w-[560px] flex-col">
-                  <div className="mb-[24px]">
-                    <TextInput
-                      Icon={PencilIcon}
-                      placeholder="Category Animation  Name"
-                      name="name"
-                      disableAutoComplete
-                    />
-                  </div>
-                  <div className="flex space-x-[12px]">
-                    <Button ariaLabel="Cancel" light onClick={onClose}>
-                      Cancel
-                    </Button>
-                    <Button ariaLabel="Submit" type="submit" disabled={isSubmitting}>
-                      Submit
-                    </Button>
-                  </div>
+            {({ isSubmitting }) => (
+              <Form className="flex w-[560px] flex-col">
+                <TextInput
+                  Icon={PencilIcon}
+                  placeholder="Category Animation  Name"
+                  name="name"
+                  disableAutoComplete
+                />
+                <div className="flex space-x-5">
+                  <Button ariaLabel="Cancel" light onClick={onClose}>
+                    Cancel
+                  </Button>
+                  <Button ariaLabel="Submit" type="submit" disabled={isSubmitting}>
+                    Submit
+                  </Button>
                 </div>
               </Form>
             )}
