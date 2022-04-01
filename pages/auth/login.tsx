@@ -11,21 +11,20 @@ import LockIcon from '../../components/Common/Icons/Lock.icon'
 import UserIcon from '../../components/Common/Icons/User.icon'
 import Link from '../../components/Common/Link.component'
 import TextInput from '../../components/Common/TextInput.component'
-import { SignInForm } from '../../interfaces/SignInForm.interface'
 import AuthLayout from '../../layouts/Auth.layout'
+import { LoginSchema, LoginSchemaInterface } from '../../schemas/LoginSchema'
 import { NextPageWithLayout } from '../../types/NextPageWithLayout.type'
 
 const Login: NextPageWithLayout = () => {
   const { replace } = useRouter()
 
-  const formInitialValues: SignInForm = {
+  const formInitialValues: LoginSchemaInterface = {
     email: '',
     password: '',
-    rememberMe: false,
   }
 
   const submitForm = async (
-    signInFormValues: SignInForm,
+    signInFormValues: LoginSchemaInterface,
     { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
   ) => {
     start()
@@ -52,14 +51,20 @@ const Login: NextPageWithLayout = () => {
       <Head>
         <title>Daily Press - Login</title>
       </Head>
-      <Formik initialValues={formInitialValues} onSubmit={submitForm}>
-        {({ isSubmitting }) => (
+      <Formik
+        validationSchema={LoginSchema}
+        initialValues={formInitialValues}
+        onSubmit={submitForm}
+      >
+        {({ errors, touched, isSubmitting }) => (
           <Form className="flex w-103 flex-col items-center">
             <TextInput
               type="email"
               name="email"
               Icon={UserIcon}
               placeholder="Enter username"
+              errorMessage={errors.email}
+              touched={touched.email}
               className="mb-5"
               disableAutoComplete
             />
@@ -68,6 +73,8 @@ const Login: NextPageWithLayout = () => {
               name="password"
               Icon={LockIcon}
               placeholder="Enter password"
+              errorMessage={errors.password}
+              touched={touched.password}
               className="mb-3"
             />
             <div className="mb-8 flex w-full justify-between">
