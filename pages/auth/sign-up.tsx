@@ -2,8 +2,10 @@ import axios from 'axios'
 import { ErrorMessage, Form, Formik } from 'formik'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import { ReactElement, useEffect } from 'react'
-import PasswordStrengthMeter from '../../components/Auth/PasswordStrengthMeter.component'
+import { ReactElement, useState } from 'react'
+import PasswordStrengthMeter, {
+  computePasswordStrength,
+} from '../../components/Auth/PasswordStrengthMeter.component'
 import Button from '../../components/Common/Button.component'
 import Checkbox from '../../components/Common/Checkbox.component'
 import BriefcaseIcon from '../../components/Common/Icons/Briefcase.icon'
@@ -15,14 +17,14 @@ import Link from '../../components/Common/Link.component'
 import TextInput from '../../components/Common/TextInput.component'
 import { SignUpForm } from '../../interfaces/SignUpForm.interface'
 import AuthLayout from '../../layouts/Auth.layout'
-import { usePasswordStrengthStore } from '../../stores/PasswordStrengthStore'
 import { NextPageWithLayout } from '../../types/NextPageWithLayout.type'
 
 const SignUp: NextPageWithLayout = () => {
   const { replace } = useRouter()
-  const { passwordStrength, computePasswordStrength } = usePasswordStrengthStore()
+  const [passwordStrength, setPasswordStrength] = useState(0)
 
-  useEffect(() => computePasswordStrength(''), [])
+  const updatePasswordStrength = (password: string) =>
+    setPasswordStrength(computePasswordStrength(password))
 
   const formInitialValues: SignUpForm = {
     fullName: '',
@@ -48,7 +50,7 @@ const SignUp: NextPageWithLayout = () => {
     }
   }
 
-  const validateForm = ({ password }: { password: string }) => computePasswordStrength(password)
+  const validateForm = ({ password }: { password: string }) => updatePasswordStrength(password)
 
   return (
     <>

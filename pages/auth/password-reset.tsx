@@ -2,8 +2,10 @@ import axios from 'axios'
 import { Form, Formik } from 'formik'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import { ReactElement, useEffect } from 'react'
-import PasswordStrengthMeter from '../../components/Auth/PasswordStrengthMeter.component'
+import { ReactElement, useState } from 'react'
+import PasswordStrengthMeter, {
+  computePasswordStrength,
+} from '../../components/Auth/PasswordStrengthMeter.component'
 import Button from '../../components/Common/Button.component'
 import FloppyDiskIcon from '../../components/Common/Icons/FloppyDisk.icon'
 import LockIcon from '../../components/Common/Icons/Lock.icon'
@@ -11,21 +13,21 @@ import Link from '../../components/Common/Link.component'
 import TextInput from '../../components/Common/TextInput.component'
 import { CreateNewPasswordForm } from '../../interfaces/CreateNewPasswordForm.interface'
 import AuthLayout from '../../layouts/Auth.layout'
-import { usePasswordStrengthStore } from '../../stores/PasswordStrengthStore'
 import { NextPageWithLayout } from '../../types/NextPageWithLayout.type'
 
 const CreateNewPassword: NextPageWithLayout = () => {
-  const { passwordStrength, computePasswordStrength } = usePasswordStrengthStore()
   const { query, replace } = useRouter()
+  const [passwordStrength, setPasswordStrength] = useState(0)
 
-  useEffect(() => computePasswordStrength(''), [])
+  const updatePasswordStrength = (password: string) =>
+    setPasswordStrength(computePasswordStrength(password))
 
   const formInitialValues: CreateNewPasswordForm = {
     password: '',
     passwordConfirmation: '',
   }
 
-  const validateForm = ({ password }: { password: string }) => computePasswordStrength(password)
+  const validateForm = ({ password }: { password: string }) => updatePasswordStrength(password)
 
   const submitForm = async (
     values: CreateNewPasswordForm,
