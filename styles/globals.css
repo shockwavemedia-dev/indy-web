@@ -35,3 +35,19 @@ input:-webkit-autofill:focus {
   background: #2bb67d;
   border-radius: 5px;
 }
+
+#nprogress .bar {
+  background-color: #2bb67d;
+  height: 4px;
+}
+
+#nprogress .bar {
+  box-shadow: 0 0 10px #2bb67d, 0 0 5px #2bb67d;
+}
+
+#nprogress .spinner-icon {
+  width: 20px;
+  height: 20px;
+  border-top-color: #2bb67d;
+  border-left-color: #2bb67d;
+}

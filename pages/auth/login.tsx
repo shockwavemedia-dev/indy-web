@@ -2,6 +2,7 @@ import { Form, Formik } from 'formik'
 import { signIn } from 'next-auth/react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
+import { done, start } from 'nprogress'
 import { ReactElement } from 'react'
 import Button from '../../components/Common/Button.component'
 import Checkbox from '../../components/Common/Checkbox.component'
@@ -27,6 +28,8 @@ const Login: NextPageWithLayout = () => {
     signInFormValues: SignInForm,
     { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
   ) => {
+    start()
+
     setSubmitting(true)
 
     const res = await signIn<'credentials'>('credentials', {
@@ -40,6 +43,8 @@ const Login: NextPageWithLayout = () => {
     } else {
       setSubmitting(false)
     }
+
+    done()
   }
 
   return (
