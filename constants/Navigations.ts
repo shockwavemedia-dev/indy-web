@@ -36,7 +36,6 @@ export const navigations: Array<Navigation> = [
   {
     Icon: CalendarIcon,
     title: 'Marketing Planning',
-    pathname: '/marketing-planning',
   },
   {
     Icon: FolderIcon,
