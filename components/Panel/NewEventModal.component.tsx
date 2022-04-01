@@ -62,7 +62,7 @@ const NewEventModal = ({ isVisible, onClose }: { isVisible: boolean; onClose: ()
                   className="mb-5"
                 />
                 <div className="mb-5 flex space-x-5">
-                  {session?.isAdmin && <SelectService setFieldValue={setFieldValue} />}
+                  <SelectService setFieldValue={setFieldValue} />
                   <TextInput
                     Icon={CalendarIcon}
                     placeholder="Enter due date"

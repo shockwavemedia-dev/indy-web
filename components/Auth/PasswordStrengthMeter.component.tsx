@@ -23,15 +23,15 @@ const PasswordStrengthMeter = ({
     <div className={`flex items-center space-x-3 ${className}`}>
       <div className="flex space-x-2">
         {[...Array(5)].map((_, i) => {
-          let color = 'bg-gallery'
+          let color = 'bg-bright-gray'
 
           if (i < strength) {
             if (strength < 3) {
-              color = 'bg-red'
+              color = 'bg-vivid-red-tangelo'
             } else if (strength < 4) {
-              color = 'bg-schoolbusyellow'
+              color = 'bg-deep-saffron'
             } else {
-              color = 'bg-lapalma'
+              color = 'bg-jungle-green'
             }
           }
 

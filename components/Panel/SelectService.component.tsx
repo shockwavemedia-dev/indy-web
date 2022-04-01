@@ -145,8 +145,8 @@ const ServiceRow = ({
       >
         <div>{service.serviceName}</div>
         <div
-          className={`flex min-h-4 min-w-4 items-center justify-center rounded border border-solid border-mineshaft ${
-            isServiceSelected ? 'bg-mineshaft' : 'bg-white'
+          className={`flex min-h-4 min-w-4 items-center justify-center rounded border border-solid border-bright-gray ${
+            isServiceSelected ? 'border-none bg-jungle-green' : 'bg-white'
           }`}
         >
           {isServiceSelected && <CheckIcon className="stroke-white" />}
@@ -188,8 +188,8 @@ const Extra = ({
     >
       <div>{extra}</div>
       <div
-        className={`flex min-h-4 min-w-4 items-center justify-center rounded border border-solid border-mineshaft ${
-          isExtraSelected ? 'bg-mineshaft' : 'bg-white'
+        className={`flex min-h-4 min-w-4 items-center justify-center rounded border border-solid border-bright-gray ${
+          isExtraSelected ? 'border-none bg-jungle-green' : 'bg-white'
         }`}
       >
         {isExtraSelected && <CheckIcon className="stroke-white" />}

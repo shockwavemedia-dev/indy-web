@@ -100,7 +100,7 @@ const PanelLayout = ({
               <div className="font-urbanist text-xs font-medium text-waterloo">
                 {session.isAdmin ? 'Admin' : 'Client'} Panel
               </div>
-              <CaretIcon className="rotate-90 stroke-frenchgray" small />
+              <CaretIcon className="rotate-90 stroke-lavender-gray" small />
               <div className="font-urbanist text-xs font-semibold capitalize text-onyx">
                 {currentPath}
               </div>

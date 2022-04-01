@@ -1,5 +1,4 @@
 import { Form, Formik } from 'formik'
-import { useSession } from 'next-auth/react'
 import { NewProjectBriefForm } from '../../interfaces/NewProjectBriefForm.interface'
 import Button from '../Common/Button.component'
 import FileInput from '../Common/FileInput.component'
@@ -17,8 +16,6 @@ const NewProjectBriefModal = ({
   isVisible: boolean
   onClose: () => void
 }) => {
-  const { data: session } = useSession()
-
   const formInitialValues: NewProjectBriefForm = {
     services: [],
     date: '',
@@ -35,7 +32,7 @@ const NewProjectBriefModal = ({
             {({ isSubmitting, setFieldValue }) => (
               <Form className="flex w-140 flex-col">
                 <div className="mb-5 flex space-x-5">
-                  {session?.isAdmin && <SelectService setFieldValue={setFieldValue} />}
+                  <SelectService setFieldValue={setFieldValue} />
                   <TextInput
                     Icon={CalendarIcon}
                     placeholder="Enter date"
