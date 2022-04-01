@@ -1,13 +1,13 @@
 import Head from 'next/head'
 import { ReactElement, useState } from 'react'
-import UserIcon from '../../components/Common/Icons/User.icon'
-import Table from '../../components/Common/Table'
-import Card from '../../components/Panel/Card.component'
-import FancyButton from '../../components/Panel/FancyButton.component'
-import NewClientModal from '../../components/Panel/NewClientModal.component'
-import { ClientTableColumns } from '../../constants/ClientTableColumns'
-import PanelLayout from '../../layouts/Panel.layout'
-import { NextPageWithLayout } from '../../types/NextPageWithLayout.type'
+import UserIcon from '../components/Common/Icons/User.icon'
+import Table from '../components/Common/Table'
+import Card from '../components/Panel/Card.component'
+import FancyButton from '../components/Panel/FancyButton.component'
+import NewClientModal from '../components/Panel/NewClientModal.component'
+import { ClientTableColumns } from '../constants/ClientTableColumns'
+import PanelLayout from '../layouts/Panel.layout'
+import { NextPageWithLayout } from '../types/NextPageWithLayout.type'
 
 const Client: NextPageWithLayout = () => {
   const [isNewClientModalVisible, setNewClientModalVisible] = useState(false)
