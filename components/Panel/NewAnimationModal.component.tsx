@@ -64,12 +64,13 @@ const NewAnimationModal = ({ isVisible, onClose }: { isVisible: boolean; onClose
         <Modal title="New Animation" onClose={onClose}>
           <Formik initialValues={formInitialValues} onSubmit={submitForm}>
             {({ isSubmitting, setFieldValue }) => (
-              <Form className="flex w-[560px] flex-col">
+              <Form className="flex w-140 flex-col">
                 <TextInput
                   Icon={PencilIcon}
                   placeholder="Animation Title"
                   name="title"
                   disableAutoComplete
+                  className="mb-5"
                 />
                 <Select
                   name="libraryCategoryId"
@@ -84,6 +85,7 @@ const NewAnimationModal = ({ isVisible, onClose }: { isVisible: boolean; onClose
                   placeholder="Description"
                   name="description"
                   disableAutoComplete
+                  className="mb-5"
                 />
                 <FileInput
                   label="Animation File"
