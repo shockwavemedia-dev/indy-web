@@ -114,7 +114,7 @@ const SignUp: NextPageWithLayout = () => {
               <div>Sign Up</div>
               <CaretIcon className="rotate-90 stroke-white" />
             </Button>
-            <div className="flex font-urbanist text-sm font-medium text-metallic-silver">
+            <div className="font-urbanist text-sm font-medium text-metallic-silver">
               Already have an account?{' '}
               <Link href="/auth/login" className="text-sm font-semibold text-jungle-green">
                 Login

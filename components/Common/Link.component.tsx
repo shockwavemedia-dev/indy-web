@@ -11,9 +11,11 @@ const Link = ({
   className: string
 }) => (
   <NextLink href={href} passHref>
-    <div className={`cursor-pointer font-urbanist underline-offset-1 hover:underline ${className}`}>
+    <span
+      className={`cursor-pointer font-urbanist underline-offset-1 hover:underline ${className}`}
+    >
       {children}
-    </div>
+    </span>
   </NextLink>
 )
 
