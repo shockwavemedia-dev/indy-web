@@ -1,4 +1,4 @@
-const PasswordStrengthMeter = ({
+export const PasswordStrengthMeter = ({
   strength,
   className,
 }: {
@@ -68,5 +68,3 @@ export const computePasswordStrength = (password: string) => {
 
   return computedPasswordStrength
 }
-
-export default PasswordStrengthMeter

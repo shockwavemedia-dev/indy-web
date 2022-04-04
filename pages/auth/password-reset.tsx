@@ -3,8 +3,9 @@ import { Form, Formik } from 'formik'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { ReactElement, useState } from 'react'
-import PasswordStrengthMeter, {
+import {
   computePasswordStrength,
+  PasswordStrengthMeter,
 } from '../../components/Auth/PasswordStrengthMeter.component'
 import Button from '../../components/Common/Button.component'
 import FloppyDiskIcon from '../../components/Common/Icons/FloppyDisk.icon'
