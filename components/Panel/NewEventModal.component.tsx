@@ -3,6 +3,7 @@ import { Form, Formik } from 'formik'
 import { useSession } from 'next-auth/react'
 import { useQueryClient } from 'react-query'
 import { NewEventForm } from '../../interfaces/NewEventForm.interface'
+import { NewEventFormSchema } from '../../schemas/NewEventFormSchema'
 import { objectWithFileToFormData } from '../../utils/FormHelpers'
 import Button from '../Common/Button.component'
 import FileInput from '../Common/FileInput.component'
@@ -51,7 +52,11 @@ const NewEventModal = ({ isVisible, onClose }: { isVisible: boolean; onClose: ()
     <>
       {isVisible && (
         <Modal title="New Event" onClose={onClose}>
-          <Formik initialValues={formInitialValues} onSubmit={submitForm}>
+          <Formik
+            validationSchema={NewEventFormSchema}
+            initialValues={formInitialValues}
+            onSubmit={submitForm}
+          >
             {({ isSubmitting, setFieldValue }) => (
               <Form className="flex w-140 flex-col">
                 <TextInput

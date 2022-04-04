@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { ErrorMessage, Form, Formik } from 'formik'
+import { Form, Formik } from 'formik'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { ReactElement, useState } from 'react'
@@ -17,6 +17,7 @@ import Link from '../../components/Common/Link.component'
 import TextInput from '../../components/Common/TextInput.component'
 import { SignUpForm } from '../../interfaces/SignUpForm.interface'
 import AuthLayout from '../../layouts/Auth.layout'
+import { SignUpFormSchema } from '../../schemas/SignUpFormSchema'
 import { NextPageWithLayout } from '../../types/NextPageWithLayout.type'
 
 const SignUp: NextPageWithLayout = () => {
@@ -32,7 +33,6 @@ const SignUp: NextPageWithLayout = () => {
     email: '',
     password: '',
     passwordConfirmation: '',
-    rememberMe: false,
   }
 
   const submitForm = async (
@@ -57,8 +57,13 @@ const SignUp: NextPageWithLayout = () => {
       <Head>
         <title>Daily Press - Sign Up</title>
       </Head>
-      <Formik initialValues={formInitialValues} onSubmit={submitForm} validate={validateForm}>
-        {({ isSubmitting }) => (
+      <Formik
+        validationSchema={SignUpFormSchema}
+        initialValues={formInitialValues}
+        onSubmit={submitForm}
+        validate={validateForm}
+      >
+        {({ errors, touched, isSubmitting }) => (
           <Form className="flex w-130 flex-col items-center">
             <div className="mb-5 flex w-full space-x-5">
               <TextInput
@@ -66,13 +71,18 @@ const SignUp: NextPageWithLayout = () => {
                 name="fullName"
                 Icon={UserIcon}
                 placeholder="Enter full name"
+                errorMessage={errors.fullName}
+                touched={touched.fullName}
+                disableAutoComplete
               />
-              <ErrorMessage name="fullName" />
               <TextInput
                 type="text"
                 name="companyName"
                 Icon={BriefcaseIcon}
                 placeholder="Enter company name"
+                errorMessage={errors.companyName}
+                touched={touched.companyName}
+                disableAutoComplete
               />
             </div>
             <TextInput
@@ -80,7 +90,10 @@ const SignUp: NextPageWithLayout = () => {
               name="email"
               Icon={EmailIcon}
               placeholder="Enter email"
+              errorMessage={errors.email}
+              touched={touched.email}
               className="mb-5"
+              disableAutoComplete
             />
             <div className="mb-3 flex w-full space-x-5">
               <TextInput
@@ -88,6 +101,8 @@ const SignUp: NextPageWithLayout = () => {
                 name="password"
                 Icon={LockIcon}
                 placeholder="Enter password"
+                errorMessage={errors.password}
+                touched={touched.password}
                 disableAutoComplete
               />
               <TextInput
@@ -95,6 +110,8 @@ const SignUp: NextPageWithLayout = () => {
                 name="passwordConfirmation"
                 Icon={LockIcon}
                 placeholder="Confirm password"
+                errorMessage={errors.passwordConfirmation}
+                touched={touched.passwordConfirmation}
                 disableAutoComplete
               />
             </div>

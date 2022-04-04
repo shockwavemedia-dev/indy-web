@@ -5,6 +5,7 @@ import { useQuery } from 'react-query'
 import { CategoryAnimation } from '../../interfaces/CategoryAnimation.interface'
 import { NewAnimationForm } from '../../interfaces/NewAnimationForm.interface'
 import { Page } from '../../interfaces/Page.interface'
+import { NewAnimationFormSchema } from '../../schemas/NewAnimationFormSchema'
 import { objectWithFileToFormData } from '../../utils/FormHelpers'
 import Button from '../Common/Button.component'
 import FileInput from '../Common/FileInput.component'
@@ -19,7 +20,7 @@ const NewAnimationModal = ({ isVisible, onClose }: { isVisible: boolean; onClose
   const formInitialValues: NewAnimationForm = {
     title: '',
     description: '',
-    library_category_id: 1,
+    library_category_id: -1,
     file: null,
   }
 
@@ -49,11 +50,15 @@ const NewAnimationModal = ({ isVisible, onClose }: { isVisible: boolean; onClose
   ) => {
     setSubmitting(true)
 
-    await axios.post('/v1/libraries', objectWithFileToFormData(values), {
+    const { status } = await axios.post('/v1/libraries', objectWithFileToFormData(values), {
       headers: {
         Authorization: `Bearer ${session?.accessToken}`,
       },
     })
+
+    if (status === 200) {
+      onClose()
+    }
 
     setSubmitting(false)
   }
@@ -62,7 +67,11 @@ const NewAnimationModal = ({ isVisible, onClose }: { isVisible: boolean; onClose
     <>
       {isVisible && (
         <Modal title="New Animation" onClose={onClose}>
-          <Formik initialValues={formInitialValues} onSubmit={submitForm}>
+          <Formik
+            validationSchema={NewAnimationFormSchema}
+            initialValues={formInitialValues}
+            onSubmit={submitForm}
+          >
             {({ isSubmitting, setFieldValue }) => (
               <Form className="flex w-140 flex-col">
                 <TextInput

@@ -11,36 +11,31 @@ import FloppyDiskIcon from '../../components/Common/Icons/FloppyDisk.icon'
 import LockIcon from '../../components/Common/Icons/Lock.icon'
 import Link from '../../components/Common/Link.component'
 import TextInput from '../../components/Common/TextInput.component'
-import { CreateNewPasswordForm } from '../../interfaces/CreateNewPasswordForm.interface'
+import { PasswordResetForm } from '../../interfaces/PasswordResetForm.interface'
 import AuthLayout from '../../layouts/Auth.layout'
 import { NextPageWithLayout } from '../../types/NextPageWithLayout.type'
 
-const CreateNewPassword: NextPageWithLayout = () => {
+const PasswordReset: NextPageWithLayout = () => {
   const { query, replace } = useRouter()
   const [passwordStrength, setPasswordStrength] = useState(0)
 
   const updatePasswordStrength = (password: string) =>
     setPasswordStrength(computePasswordStrength(password))
 
-  const formInitialValues: CreateNewPasswordForm = {
+  const formInitialValues: PasswordResetForm = {
     password: '',
     passwordConfirmation: '',
+    token: query.token?.toString(),
+    email: query.email?.toString(),
   }
 
   const validateForm = ({ password }: { password: string }) => updatePasswordStrength(password)
 
   const submitForm = async (
-    values: CreateNewPasswordForm,
+    values: PasswordResetForm,
     { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
   ) => {
     setSubmitting(true)
-
-    if (!query.token || !query.email) {
-      replace('/auth/login')
-    }
-
-    values.token = query.token?.toString()
-    values.email = query.email?.toString()
 
     const { status } = await axios.put('/reset-password', values)
 
@@ -100,10 +95,15 @@ const CreateNewPassword: NextPageWithLayout = () => {
   )
 }
 
-CreateNewPassword.getLayout = (page: ReactElement) => (
-  <AuthLayout title="Create new password" subtitle="Setup your new password">
+PasswordReset.getLayout = (page: ReactElement) => (
+  <AuthLayout
+    title="Create new password"
+    subtitle="Setup your new password"
+    needsAuth
+    pageName="PasswordReset"
+  >
     {page}
   </AuthLayout>
 )
 
-export default CreateNewPassword
+export default PasswordReset

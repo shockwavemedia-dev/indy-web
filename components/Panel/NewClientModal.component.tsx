@@ -3,6 +3,7 @@ import { Form, Formik } from 'formik'
 import { useSession } from 'next-auth/react'
 import { useQueryClient } from 'react-query'
 import { NewClientForm } from '../../interfaces/NewClientForm.interface'
+import { NewClientFormSchema } from '../../schemas/NewClientFormSchema'
 import { objectWithFileToFormData } from '../../utils/FormHelpers'
 import Button from '../Common/Button.component'
 import FileInput from '../Common/FileInput.component'
@@ -25,7 +26,7 @@ const NewClientModal = ({ isVisible, onClose }: { isVisible: boolean; onClose: (
     timezone: '',
     overview: '',
     clientSince: '',
-    rating: '',
+    rating: -1,
   }
 
   const submitForm = async (
@@ -43,16 +44,20 @@ const NewClientModal = ({ isVisible, onClose }: { isVisible: boolean; onClose: (
     if (status === 200) {
       queryClient.invalidateQueries('clients')
       onClose()
+    } else {
+      setSubmitting(false)
     }
-
-    setSubmitting(false)
   }
 
   return (
     <>
       {isVisible && (
         <Modal title="New Client" onClose={onClose}>
-          <Formik initialValues={formInitialValues} onSubmit={submitForm}>
+          <Formik
+            validationSchema={NewClientFormSchema}
+            initialValues={formInitialValues}
+            onSubmit={submitForm}
+          >
             {({ isSubmitting, setFieldValue }) => (
               <Form>
                 <div className="flex w-140 flex-col">

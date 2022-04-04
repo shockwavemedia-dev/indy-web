@@ -3,5 +3,5 @@ export interface NewProjectBriefForm {
   date: string
   briefName: string
   content: string
-  assets: undefined
+  assets: File | null
 }

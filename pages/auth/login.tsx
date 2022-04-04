@@ -11,20 +11,21 @@ import LockIcon from '../../components/Common/Icons/Lock.icon'
 import UserIcon from '../../components/Common/Icons/User.icon'
 import Link from '../../components/Common/Link.component'
 import TextInput from '../../components/Common/TextInput.component'
+import { LoginForm } from '../../interfaces/LoginForm.interface'
 import AuthLayout from '../../layouts/Auth.layout'
-import { LoginSchema, LoginSchemaInterface } from '../../schemas/LoginSchema'
+import { LoginFormSchema } from '../../schemas/LoginFormSchema'
 import { NextPageWithLayout } from '../../types/NextPageWithLayout.type'
 
 const Login: NextPageWithLayout = () => {
   const { replace } = useRouter()
 
-  const formInitialValues: LoginSchemaInterface = {
+  const formInitialValues: LoginForm = {
     email: '',
     password: '',
   }
 
   const submitForm = async (
-    signInFormValues: LoginSchemaInterface,
+    signInFormValues: LoginForm,
     { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
   ) => {
     start()
@@ -52,7 +53,7 @@ const Login: NextPageWithLayout = () => {
         <title>Daily Press - Login</title>
       </Head>
       <Formik
-        validationSchema={LoginSchema}
+        validationSchema={LoginFormSchema}
         initialValues={formInitialValues}
         onSubmit={submitForm}
       >
@@ -113,6 +114,7 @@ Login.getLayout = (page: ReactElement) => (
     title="Welcome to Daily Press"
     subtitle="Please log in to your account and start the adventure"
     needsAuth
+    pageName="Login"
   >
     {page}
   </AuthLayout>

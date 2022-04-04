@@ -1,11 +1,12 @@
 import axios from 'axios'
 import { Form, Formik } from 'formik'
 import { useSession } from 'next-auth/react'
-import { useQuery } from 'react-query'
+import { useQuery, useQueryClient } from 'react-query'
 import { TicketTypeOptions } from '../../constants/TicketTypeOptions'
 import { Department } from '../../interfaces/Department.interface'
 import { Page } from '../../interfaces/Page.interface'
 import { SupportRequestForm } from '../../interfaces/SupportRequestForm.interface'
+import { SupportRequestFormSchema } from '../../schemas/SupportRequestFormSchema'
 import Button from '../Common/Button.component'
 import CalendarIcon from '../Common/Icons/Calendar.icon'
 import ClipboardIcon from '../Common/Icons/Clipboard.icon'
@@ -24,6 +25,7 @@ const SupportRequestModal = ({
   onClose: () => void
 }) => {
   const { data: session } = useSession()
+  const queryClient = useQueryClient()
 
   const formInitialValues: SupportRequestForm = {
     subject: '',
@@ -63,11 +65,16 @@ const SupportRequestModal = ({
   ) => {
     setSubmitting(true)
 
-    await axios.post('/v1/tickets', values, {
+    const { status } = await axios.post('/v1/tickets', values, {
       headers: {
         Authorization: `Bearer ${session?.accessToken}`,
       },
     })
+
+    if (status === 200) {
+      queryClient.invalidateQueries('tickets')
+      onClose()
+    }
 
     setSubmitting(false)
   }
@@ -76,7 +83,11 @@ const SupportRequestModal = ({
     <>
       {isVisible && (
         <Modal title="Support Request" onClose={onClose}>
-          <Formik initialValues={formInitialValues} onSubmit={submitForm}>
+          <Formik
+            validationSchema={SupportRequestFormSchema}
+            initialValues={formInitialValues}
+            onSubmit={submitForm}
+          >
             {({ isSubmitting, setFieldValue }) => (
               <Form className="flex w-140 flex-col">
                 <TextInput

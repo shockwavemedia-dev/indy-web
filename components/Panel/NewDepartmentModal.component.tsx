@@ -1,7 +1,9 @@
 import axios from 'axios'
 import { Form, Formik } from 'formik'
 import { useSession } from 'next-auth/react'
+import { useQueryClient } from 'react-query'
 import { NewDepartmentForm } from '../../interfaces/NewDepartmentForm.interface'
+import { NewDepartmentFormSchema } from '../../schemas/NewDepartmentFormSchema'
 import Button from '../Common/Button.component'
 import PencilIcon from '../Common/Icons/Pencil.icon'
 import TextInput from '../Common/TextInput.component'
@@ -15,11 +17,12 @@ const NewDepartmentModal = ({
   onClose: () => void
 }) => {
   const { data: session } = useSession()
+  const queryClient = useQueryClient()
 
   const formInitialValues: NewDepartmentForm = {
     name: '',
     description: '',
-    minDeliveryDays: '',
+    minDeliveryDays: -1,
   }
 
   const submitForm = async (
@@ -35,16 +38,22 @@ const NewDepartmentModal = ({
     })
 
     if (status === 200) {
-    } else {
-      setSubmitting(false)
+      queryClient.invalidateQueries('departments')
+      onClose()
     }
+
+    setSubmitting(false)
   }
 
   return (
     <>
       {isVisible && (
         <Modal title="New Department" onClose={onClose}>
-          <Formik initialValues={formInitialValues} onSubmit={submitForm}>
+          <Formik
+            validationSchema={NewDepartmentFormSchema}
+            initialValues={formInitialValues}
+            onSubmit={submitForm}
+          >
             {({ isSubmitting }) => (
               <Form className="flex w-140 flex-col">
                 <TextInput

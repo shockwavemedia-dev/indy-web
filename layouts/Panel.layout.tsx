@@ -53,7 +53,7 @@ const PanelLayout = ({
     return null
   }
 
-  if (forAdmin && !session.isAdmin) {
+  if (forAdmin && !session?.isAdmin) {
     replace('/dashboard')
     return null
   }
@@ -85,7 +85,7 @@ const PanelLayout = ({
             <JobsStatusCountCard Icon={EyeOpenIcon} value={4} description="Jobs To Review" />
           </div>
           {navigations
-            .filter(({ forAdmin }) => (forAdmin ? session.isAdmin : true))
+            .filter(({ forAdmin }) => (forAdmin ? session?.isAdmin : true))
             .map((navigation, i) => (
               <NavigationButton
                 key={i}
@@ -98,7 +98,7 @@ const PanelLayout = ({
           <div className="mb-3.5 flex justify-between">
             <div className="flex items-center space-x-3">
               <div className="font-urbanist text-xs font-medium text-waterloo">
-                {session.isAdmin ? 'Admin' : 'Client'} Panel
+                {session?.isAdmin ? 'Admin' : 'Client'} Panel
               </div>
               <CaretIcon className="rotate-90 stroke-lavender-gray" small />
               <div className="font-urbanist text-xs font-semibold capitalize text-onyx">

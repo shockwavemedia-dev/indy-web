@@ -9,13 +9,15 @@ const AuthLayout = ({
   subtitle,
   children,
   needsAuth = false,
+  pageName,
 }: {
   title: string
   subtitle: ReactElement | string
   children: ReactElement
   needsAuth?: boolean
+  pageName?: string
 }) => {
-  const { replace } = useRouter()
+  const { query, replace } = useRouter()
   const { status } = useSession()
 
   if (needsAuth) {
@@ -23,8 +25,13 @@ const AuthLayout = ({
       return null
     }
 
-    if (status === 'authenticated') {
+    if (pageName === 'Login' && status === 'authenticated') {
       replace('/dashboard')
+      return null
+    }
+
+    if (pageName === 'PasswordReset' && (!query.token || !query.email)) {
+      replace('/auth/login')
       return null
     }
   }

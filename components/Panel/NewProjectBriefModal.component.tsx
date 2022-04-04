@@ -1,5 +1,6 @@
 import { Form, Formik } from 'formik'
 import { NewProjectBriefForm } from '../../interfaces/NewProjectBriefForm.interface'
+import { NewProjectBriefFormSchema } from '../../schemas/NewProjectBriefFormSchema'
 import Button from '../Common/Button.component'
 import FileInput from '../Common/FileInput.component'
 import CalendarIcon from '../Common/Icons/Calendar.icon'
@@ -21,14 +22,18 @@ const NewProjectBriefModal = ({
     date: '',
     briefName: '',
     content: '',
-    assets: undefined,
+    assets: null,
   }
 
   return (
     <>
       {isVisible && (
         <Modal title="New Project Brief" onClose={onClose}>
-          <Formik initialValues={formInitialValues} onSubmit={() => {}}>
+          <Formik
+            validationSchema={NewProjectBriefFormSchema}
+            initialValues={formInitialValues}
+            onSubmit={() => {}}
+          >
             {({ isSubmitting, setFieldValue }) => (
               <Form className="flex w-140 flex-col">
                 <div className="mb-5 flex space-x-5">

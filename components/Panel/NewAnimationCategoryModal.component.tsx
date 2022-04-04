@@ -2,6 +2,7 @@ import axios from 'axios'
 import { Form, Formik } from 'formik'
 import { useSession } from 'next-auth/react'
 import { NewAnimationCategoryForm } from '../../interfaces/NewAnimationCategoryForm.interface'
+import { NewAnimationCategoryFormSchema } from '../../schemas/NewAnimationCategoryFormSchema'
 import Button from '../Common/Button.component'
 import PencilIcon from '../Common/Icons/Pencil.icon'
 import TextInput from '../Common/TextInput.component'
@@ -33,16 +34,21 @@ const NewAnimationCategoryModal = ({
     })
 
     if (status === 200) {
-    } else {
-      setSubmitting(false)
+      onClose()
     }
+
+    setSubmitting(false)
   }
 
   return (
     <>
       {isVisible && (
         <Modal title="New Category Animation" onClose={onClose}>
-          <Formik initialValues={formInitialValues} onSubmit={submitForm}>
+          <Formik
+            validationSchema={NewAnimationCategoryFormSchema}
+            initialValues={formInitialValues}
+            onSubmit={submitForm}
+          >
             {({ isSubmitting }) => (
               <Form className="flex w-140 flex-col">
                 <TextInput

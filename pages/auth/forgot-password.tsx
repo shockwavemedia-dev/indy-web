@@ -10,6 +10,7 @@ import Link from '../../components/Common/Link.component'
 import TextInput from '../../components/Common/TextInput.component'
 import { ForgotPasswordForm } from '../../interfaces/ForgotPasswordForm.interface'
 import AuthLayout from '../../layouts/Auth.layout'
+import { ForgotPasswordFormSchema } from '../../schemas/ForgotPasswordFormSchema'
 import { NextPageWithLayout } from '../../types/NextPageWithLayout.type'
 
 const ForgotPassword: NextPageWithLayout = () => {
@@ -39,15 +40,22 @@ const ForgotPassword: NextPageWithLayout = () => {
       <Head>
         <title>Daily Press - Forgot Password</title>
       </Head>
-      <Formik initialValues={formInitialValues} onSubmit={submitForm}>
-        {({ isSubmitting }) => (
+      <Formik
+        validationSchema={ForgotPasswordFormSchema}
+        initialValues={formInitialValues}
+        onSubmit={submitForm}
+      >
+        {({ errors, touched, isSubmitting }) => (
           <Form className="flex w-103 flex-col items-center">
             <TextInput
               type="email"
               name="email"
               Icon={EmailIcon}
               placeholder="Enter email"
+              errorMessage={errors.email}
+              touched={touched.email}
               className="mb-8"
+              disableAutoComplete
             />
             <Button
               type="submit"
