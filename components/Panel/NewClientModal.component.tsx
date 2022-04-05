@@ -58,7 +58,7 @@ const NewClientModal = ({ isVisible, onClose }: { isVisible: boolean; onClose: (
             initialValues={formInitialValues}
             onSubmit={submitForm}
           >
-            {({ isSubmitting, setFieldValue }) => (
+            {({ errors, touched, isSubmitting, setFieldValue }) => (
               <Form>
                 <div className="flex w-140 flex-col">
                   <div className="mb-5 flex space-x-5">
@@ -67,12 +67,16 @@ const NewClientModal = ({ isVisible, onClose }: { isVisible: boolean; onClose: (
                       placeholder="Enter Company Name"
                       name="name"
                       disableAutoComplete
+                      errorMessage={errors.name}
+                      touched={touched.name}
                     />
                     <TextInput
                       Icon={EditIcon}
                       placeholder="Enter Client Code"
                       name="clientCode"
                       disableAutoComplete
+                      errorMessage={errors.clientCode}
+                      touched={touched.clientCode}
                     />
                   </div>
                   <FileInput
@@ -86,6 +90,8 @@ const NewClientModal = ({ isVisible, onClose }: { isVisible: boolean; onClose: (
                     placeholder="Enter Overview"
                     name="overview"
                     className="mb-5"
+                    errorMessage={errors.overview}
+                    touched={touched.overview}
                   />
                   <div className="mb-5 flex space-x-5">
                     <TextInput
@@ -93,12 +99,16 @@ const NewClientModal = ({ isVisible, onClose }: { isVisible: boolean; onClose: (
                       placeholder="Enter Address"
                       name="address"
                       disableAutoComplete
+                      errorMessage={errors.address}
+                      touched={touched.address}
                     />
                     <TextInput
                       Icon={EditIcon}
                       placeholder="Enter Phone"
                       name="phone"
                       disableAutoComplete
+                      errorMessage={errors.phone}
+                      touched={touched.phone}
                     />
                   </div>
                   <div className="mb-5 flex space-x-5">
@@ -107,12 +117,16 @@ const NewClientModal = ({ isVisible, onClose }: { isVisible: boolean; onClose: (
                       placeholder="Enter Timezone"
                       name="timezone"
                       disableAutoComplete
+                      errorMessage={errors.timezone}
+                      touched={touched.timezone}
                     />
                     <TextInput
                       Icon={CalendarIcon}
                       placeholder="Enter Client Since"
                       name="clientSince"
                       disableAutoComplete
+                      errorMessage={errors.clientSince}
+                      touched={touched.clientSince}
                     />
                   </div>
                   <TextInput
@@ -121,6 +135,8 @@ const NewClientModal = ({ isVisible, onClose }: { isVisible: boolean; onClose: (
                     name="rating"
                     disableAutoComplete
                     className="mb-8"
+                    errorMessage={errors.rating}
+                    touched={touched.rating}
                   />
                   <div className="flex space-x-5">
                     <Button ariaLabel="Cancel" light onClick={onClose}>

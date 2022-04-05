@@ -51,7 +51,11 @@ const TextInput = ({
           </button>
         )}
       </div>
-      {touched && errorMessage}
+      {touched && errorMessage && (
+        <div className="font-small text-rose-900 mb-3 mt-0 w-full whitespace-pre-line font-urbanist text-xs capitalize  text-fire-brick">
+          {touched && errorMessage}
+        </div>
+      )}
     </>
   )
 }

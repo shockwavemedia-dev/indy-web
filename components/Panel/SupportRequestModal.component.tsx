@@ -88,13 +88,15 @@ const SupportRequestModal = ({
             initialValues={formInitialValues}
             onSubmit={submitForm}
           >
-            {({ isSubmitting, setFieldValue }) => (
+            {({ errors, touched, isSubmitting, setFieldValue }) => (
               <Form className="flex w-140 flex-col">
                 <TextInput
                   Icon={EditIcon}
                   placeholder="Enter Subject"
                   name="subject"
                   className="mb-5"
+                  errorMessage={errors.subject}
+                  touched={touched.subject}
                 />
                 <Select
                   name="type"
@@ -103,6 +105,8 @@ const SupportRequestModal = ({
                   options={typeOptions}
                   setFieldValue={setFieldValue}
                   className="mb-5"
+                  errorMessage={errors.type}
+                  touched={touched.type}
                 />
                 <TextInput
                   Icon={CalendarIcon}
@@ -110,20 +114,26 @@ const SupportRequestModal = ({
                   name="duedate"
                   disableAutoComplete
                   className="mb-5"
+                  errorMessage={errors.duedate}
+                  touched={touched.duedate}
                 />
                 <Select
-                  name="department"
+                  name="departmentId"
                   Icon={ClipboardIcon}
                   placeholder="Select department"
                   options={departmentOptions || []}
                   setFieldValue={setFieldValue}
                   className="mb-5"
+                  errorMessage={errors.departmentId}
+                  touched={touched.departmentId}
                 />
                 <TextAreaInput
                   Icon={EditIcon}
                   placeholder="Enter Description"
                   name="description"
                   className="mb-8"
+                  errorMessage={errors.description}
+                  touched={touched.description}
                 />
                 <div className="flex space-x-5">
                   <Button ariaLabel="Cancel" light onClick={onClose}>

@@ -49,7 +49,7 @@ const NewAnimationCategoryModal = ({
             initialValues={formInitialValues}
             onSubmit={submitForm}
           >
-            {({ isSubmitting }) => (
+            {({ errors, touched, isSubmitting }) => (
               <Form className="flex w-140 flex-col">
                 <TextInput
                   Icon={PencilIcon}
@@ -57,6 +57,8 @@ const NewAnimationCategoryModal = ({
                   name="name"
                   disableAutoComplete
                   className="mb-8"
+                  errorMessage={errors.name}
+                  touched={touched.name}
                 />
                 <div className="flex space-x-5">
                   <Button ariaLabel="Cancel" light onClick={onClose}>

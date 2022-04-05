@@ -54,7 +54,7 @@ const NewDepartmentModal = ({
             initialValues={formInitialValues}
             onSubmit={submitForm}
           >
-            {({ isSubmitting }) => (
+            {({ errors, touched, isSubmitting }) => (
               <Form className="flex w-140 flex-col">
                 <TextInput
                   Icon={PencilIcon}
@@ -62,6 +62,8 @@ const NewDepartmentModal = ({
                   name="name"
                   disableAutoComplete
                   className="mb-5"
+                  errorMessage={errors.name}
+                  touched={touched.name}
                 />
                 <TextInput
                   Icon={PencilIcon}
@@ -69,6 +71,8 @@ const NewDepartmentModal = ({
                   name="description"
                   disableAutoComplete
                   className="mb-5"
+                  errorMessage={errors.description}
+                  touched={touched.description}
                 />
                 <TextInput
                   Icon={PencilIcon}
@@ -76,6 +80,8 @@ const NewDepartmentModal = ({
                   name="minDeliveryDays"
                   disableAutoComplete
                   className="mb-8"
+                  errorMessage={errors.minDeliveryDays}
+                  touched={touched.minDeliveryDays}
                 />
                 <div className="flex space-x-5">
                   <Button ariaLabel="Cancel" light onClick={onClose}>
