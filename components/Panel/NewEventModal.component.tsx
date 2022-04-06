@@ -57,7 +57,7 @@ const NewEventModal = ({ isVisible, onClose }: { isVisible: boolean; onClose: ()
             initialValues={formInitialValues}
             onSubmit={submitForm}
           >
-            {({ isSubmitting, setFieldValue }) => (
+            {({ errors, touched, isSubmitting, setFieldValue }) => (
               <Form className="flex w-140 flex-col">
                 <TextInput
                   Icon={EditIcon}
@@ -65,6 +65,8 @@ const NewEventModal = ({ isVisible, onClose }: { isVisible: boolean; onClose: ()
                   name="subject"
                   disableAutoComplete
                   className="mb-5"
+                  errorMessage={errors.subject}
+                  touched={touched.subject}
                 />
                 <div className="mb-5 flex space-x-5">
                   <SelectService setFieldValue={setFieldValue} />
@@ -73,6 +75,8 @@ const NewEventModal = ({ isVisible, onClose }: { isVisible: boolean; onClose: ()
                     placeholder="Enter due date"
                     name="duedate"
                     disableAutoComplete
+                    errorMessage={errors.duedate}
+                    touched={touched.duedate}
                   />
                 </div>
                 <TextAreaInput
@@ -80,6 +84,8 @@ const NewEventModal = ({ isVisible, onClose }: { isVisible: boolean; onClose: ()
                   placeholder="Enter description"
                   name="description"
                   className="mb-5"
+                  errorMessage={errors.description}
+                  touched={touched.description}
                 />
                 <FileInput
                   label="Upload Assets"

@@ -72,7 +72,7 @@ const NewAnimationModal = ({ isVisible, onClose }: { isVisible: boolean; onClose
             initialValues={formInitialValues}
             onSubmit={submitForm}
           >
-            {({ isSubmitting, setFieldValue }) => (
+            {({ errors, touched, isSubmitting, setFieldValue }) => (
               <Form className="flex w-140 flex-col">
                 <TextInput
                   Icon={PencilIcon}
@@ -80,6 +80,8 @@ const NewAnimationModal = ({ isVisible, onClose }: { isVisible: boolean; onClose
                   name="title"
                   disableAutoComplete
                   className="mb-5"
+                  errorMessage={errors.title}
+                  touched={touched.title}
                 />
                 <Select
                   name="libraryCategoryId"
@@ -95,6 +97,8 @@ const NewAnimationModal = ({ isVisible, onClose }: { isVisible: boolean; onClose
                   name="description"
                   disableAutoComplete
                   className="mb-5"
+                  errorMessage={errors.description}
+                  touched={touched.description}
                 />
                 <FileInput
                   label="Animation File"

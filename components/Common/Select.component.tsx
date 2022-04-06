@@ -91,6 +91,8 @@ const Select = ({
   disabled = false,
   setFieldValue,
   className,
+  errorMessage,
+  touched,
 }: {
   name: string
   Icon: Icon
@@ -99,6 +101,8 @@ const Select = ({
   disabled?: boolean
   setFieldValue: (field: string, value: any, shouldValidate?: boolean) => void
   className?: string
+  errorMessage?: string
+  touched?: boolean
 }) => {
   const [selectedOption, setSelectedOption] = useState<Option | null>(null)
 
@@ -108,18 +112,25 @@ const Select = ({
   }
 
   return (
-    <ReactSelect
-      styles={styles}
-      placeholder={placeholder}
-      value={selectedOption}
-      onChange={handleChange}
-      options={options}
-      components={{ DropdownIndicator, Control }}
-      inputId={name}
-      isDisabled={disabled}
-      className={`selection:bg-jungle-green selection:text-white ${className}`}
-      Icon={Icon}
-    />
+    <>
+      <ReactSelect
+        styles={styles}
+        placeholder={placeholder}
+        value={selectedOption}
+        onChange={handleChange}
+        options={options}
+        components={{ DropdownIndicator, Control }}
+        inputId={name}
+        isDisabled={disabled}
+        className={`selection:bg-jungle-green selection:text-white ${className}`}
+        Icon={Icon}
+      />
+      {touched && errorMessage && (
+        <div className="font-small text-rose-900 mb-3 mt-0 w-full whitespace-pre-line font-urbanist text-xs capitalize  text-fire-brick">
+          {touched && errorMessage}
+        </div>
+      )}
+    </>
   )
 }
 
