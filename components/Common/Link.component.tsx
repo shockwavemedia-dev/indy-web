@@ -4,18 +4,16 @@ import { ReactNode } from 'react'
 const Link = ({
   href,
   children,
-  className,
+  className = '',
 }: {
   href: string
   children: ReactNode
-  className: string
+  className?: string
 }) => (
-  <NextLink href={href} passHref>
-    <span
-      className={`cursor-pointer font-urbanist underline-offset-1 hover:underline ${className}`}
-    >
+  <NextLink href={href}>
+    <a className={`cursor-pointer font-urbanist underline-offset-1 hover:underline ${className}`}>
       {children}
-    </span>
+    </a>
   </NextLink>
 )
 
