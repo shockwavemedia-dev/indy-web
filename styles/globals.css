@@ -32,7 +32,7 @@ input:-webkit-autofill:focus {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #2bb67d;
+  background-color: #2bb67d;
   border-radius: 5px;
 }
 
@@ -50,4 +50,56 @@ input:-webkit-autofill:focus {
   height: 20px;
   border-top-color: #2bb67d;
   border-left-color: #2bb67d;
+}
+.MuiPaper-root {
+  transition: none !important;
+}
+
+.MuiCalendarPicker-root > div:first-child > div:first-child {
+  font-family: Urbanist;
+  color: #32343d;
+}
+
+.MuiCalendarPicker-root > div:first-child > div:last-child {
+  transition: none !important;
+}
+
+.PrivatePickersYear-yearButton {
+  font-family: Urbanist;
+  color: #32343d;
+}
+
+.MuiPickersDay-root {
+  font-family: Urbanist;
+  font-weight: 600;
+  color: #32343d;
+}
+
+.MuiTypography-caption {
+  font-family: Urbanist;
+  color: #32343d;
+}
+
+.MuiIconButton-root {
+  color: #2bb67d;
+}
+
+.MuiIconButton-root:hover {
+  background-color: #e9faf3;
+}
+
+.MuiPickersDay-root:hover {
+  background-color: #e9faf3;
+}
+
+.PrivatePickersYear-yearButton:hover {
+  background-color: #e9faf3;
+}
+
+.MuiPickersDay-today {
+  border-color: #2bb67d !important;
+}
+
+.Mui-selected {
+  background-color: #2bb67d !important;
 }

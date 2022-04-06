@@ -6,8 +6,8 @@ import { NewEventForm } from '../../interfaces/NewEventForm.interface'
 import { NewEventFormSchema } from '../../schemas/NewEventFormSchema'
 import { objectWithFileToFormData } from '../../utils/FormHelpers'
 import Button from '../Common/Button.component'
+import DateInput from '../Common/DateInput.component'
 import FileInput from '../Common/FileInput.component'
-import CalendarIcon from '../Common/Icons/Calendar.icon'
 import EditIcon from '../Common/Icons/Edit.icon'
 import TextAreaInput from '../Common/TextAreaInput.component'
 import TextInput from '../Common/TextInput.component'
@@ -70,13 +70,10 @@ const NewEventModal = ({ isVisible, onClose }: { isVisible: boolean; onClose: ()
                 />
                 <div className="mb-5 flex space-x-5">
                   <SelectService setFieldValue={setFieldValue} />
-                  <TextInput
-                    Icon={CalendarIcon}
-                    placeholder="Enter due date"
+                  <DateInput
                     name="duedate"
-                    disableAutoComplete
-                    errorMessage={errors.duedate}
-                    touched={touched.duedate}
+                    placeholder="Enter due date"
+                    setFieldValue={setFieldValue}
                   />
                 </div>
                 <TextAreaInput
