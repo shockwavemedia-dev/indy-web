@@ -1,21 +1,75 @@
 import Head from 'next/head'
-import { ReactElement } from 'react'
-import GalleryIcon from '../components/Common/Icons/Gallery.icon'
-import MenuBoardIcon from '../components/Common/Icons/MenuBoard.icon'
-import VideoIcon from '../components/Common/Icons/Video.icon'
-import Table from '../components/Common/Table'
-import Card from '../components/Panel/Card.component'
-import CountCard from '../components/Panel/CountCard.component'
-import { TicketTableColumns } from '../constants/TicketTableColumns'
+import { ReactElement, useState } from 'react'
+import CalendarAddIcon from '../components/Common/Icons/CalendarAdd.icon'
+import ClipboardCloseIcon from '../components/Common/Icons/ClipboardClose.icon'
+import LifeBuoyIcon from '../components/Common/Icons/LifeBuoy.icon'
+import PresentationChartIcon from '../components/Common/Icons/PresentationChart.icon'
+import FancyButton from '../components/Panel/FancyButton.component'
+import NewEventModal from '../components/Panel/NewEventModal.component'
+import NewProjectBriefModal from '../components/Panel/NewProjectBriefModal.component'
+import SupportRequestModal from '../components/Panel/SupportRequestModal.component'
 import PanelLayout from '../layouts/Panel.layout'
 import { NextPageWithLayout } from '../types/NextPageWithLayout.type'
 
 const Dashboard: NextPageWithLayout = () => {
+  const [isNewEventModalVisible, setNewEventModalVisible] = useState(false)
+  const [isNewProjectBriefModalVisible, setNewProjectBriefModalVisible] = useState(false)
+  const [isSupportRequestModalVisible, setSupportRequestModalVisible] = useState(false)
+
+  const toggleNewEventModal = () => setNewEventModalVisible(!isNewEventModalVisible)
+  const toggleNewProjectBriefModal = () =>
+    setNewProjectBriefModalVisible(!isNewProjectBriefModalVisible)
+  const toggleSupportRequestModal = () =>
+    setSupportRequestModalVisible(!isSupportRequestModalVisible)
+
   return (
     <>
       <Head>
         <title>Daily Press - Dashboard</title>
       </Head>
+      <div className="mb-6 flex space-x-6">
+        <FancyButton
+          Icon={
+            <div className="flex min-h-11 min-w-11 items-center justify-center rounded-lg bg-honeydew">
+              <CalendarAddIcon className="stroke-jungle-green" />
+            </div>
+          }
+          title="New Event"
+          subtitle="Laborerivit rem cones mil"
+          onClick={toggleNewEventModal}
+        />
+        <FancyButton
+          Icon={
+            <div className="flex min-h-11 min-w-11 items-center justify-center rounded-lg bg-alice-blue">
+              <ClipboardCloseIcon className="stroke-bleu-de-france" />
+            </div>
+          }
+          title="New Project Brief"
+          subtitle="Laborerivit rem cones mil"
+          onClick={toggleNewProjectBriefModal}
+        />
+        <FancyButton
+          Icon={
+            <div className="flex min-h-11 min-w-11 items-center justify-center rounded-lg bg-cosmic-latte">
+              <PresentationChartIcon className="stroke-deep-saffron" />
+            </div>
+          }
+          title="Analytics"
+          subtitle="Laborerivit rem cones mil"
+          onClick={() => {}}
+        />
+        <FancyButton
+          Icon={
+            <div className="flex min-h-11 min-w-11 items-center justify-center rounded-lg bg-linen">
+              <LifeBuoyIcon className="fill-vivid-red-tangelo" />
+            </div>
+          }
+          title="Support Request"
+          subtitle="Laborerivit rem cones mil"
+          onClick={toggleSupportRequestModal}
+        />
+      </div>
+      {/* <hr className="mb-6 border-t-bright-gray" />
       <div className="mx-auto grid h-262.5 w-270 grid-cols-3 grid-rows-23 gap-6">
         <Card title="Project Status Table" className="col-span-2 row-span-14">
           <Table
@@ -78,11 +132,20 @@ const Dashboard: NextPageWithLayout = () => {
         <Card title="Requests" className="col-span-1 row-span-9">
           <div></div>
         </Card>
-      </div>
+      </div> */}
+      <NewEventModal isVisible={isNewEventModalVisible} onClose={toggleNewEventModal} />
+      <NewProjectBriefModal
+        isVisible={isNewProjectBriefModalVisible}
+        onClose={toggleNewProjectBriefModal}
+      />
+      <SupportRequestModal
+        isVisible={isSupportRequestModalVisible}
+        onClose={toggleSupportRequestModal}
+      />
     </>
   )
 }
 
-Dashboard.getLayout = (page: ReactElement) => <PanelLayout>{page}</PanelLayout>
+Dashboard.getLayout = (page: ReactElement) => <PanelLayout header="Dashboard">{page}</PanelLayout>
 
 export default Dashboard
