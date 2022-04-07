@@ -30,7 +30,6 @@ export const navigations: Array<Navigation> = [
     Icon: VideoIcon,
     title: 'Animation',
     pathname: '/animation',
-    forAdmin: true,
   },
   {
     Icon: NotepadIcon,
