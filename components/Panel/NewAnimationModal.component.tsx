@@ -30,7 +30,7 @@ const NewAnimationModal = ({ isVisible, onClose }: { isVisible: boolean; onClose
     } = await axios.get<{
       data: Array<CategoryAnimation>
       page: Page
-    }>('/v1/library-categories', {
+    }>('/v1/library-categories?size=100', {
       headers: {
         Authorization: `Bearer ${session?.accessToken}`,
       },

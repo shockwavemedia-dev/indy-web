@@ -7,6 +7,7 @@ import MonitorIcon from '../components/Common/Icons/Monitor.icon'
 import NotepadIcon from '../components/Common/Icons/Notepad.icon'
 import PresentationChartIcon from '../components/Common/Icons/PresentationChart.icon'
 import UserIcon from '../components/Common/Icons/User.icon'
+import VideoIcon from '../components/Common/Icons/Video.icon'
 import { Navigation } from '../interfaces/Navigation.interface'
 
 export const navigations: Array<Navigation> = [
@@ -19,6 +20,12 @@ export const navigations: Array<Navigation> = [
     Icon: UserIcon,
     title: 'Client',
     pathname: '/client',
+    forAdmin: true,
+  },
+  {
+    Icon: VideoIcon,
+    title: 'Animation',
+    pathname: '/animation',
     forAdmin: true,
   },
   {

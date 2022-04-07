@@ -17,7 +17,6 @@ import JobsStatusCountCard from '../components/Panel/JobStatsCard.component'
 import NewEventModal from '../components/Panel/NewEventModal.component'
 import NewProjectBriefModal from '../components/Panel/NewProjectBriefModal.component'
 import SupportRequestModal from '../components/Panel/SupportRequestModal.component'
-import TicketAssigneeModal from '../components/Panel/TicketAssigneeModal.component'
 import { navigations } from '../constants/Navigations'
 import { Navigation } from '../interfaces/Navigation.interface'
 import DailyPressLogo from '../public/images/daily-press-logo.png'
@@ -70,7 +69,6 @@ const PanelLayout = ({
         isVisible={isSupportRequestModalVisible}
         onClose={toggleSupportRequestModal}
       />
-      <TicketAssigneeModal isVisible onClose={() => {}} />
       <div className="flex min-h-screen">
         <div className="flex min-w-75 flex-col bg-white pt-6">
           <div className="mb-5 pl-6">
