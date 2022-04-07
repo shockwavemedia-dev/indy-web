@@ -20,9 +20,16 @@ const TicketAssigneeModal = ({
 }) => {
   const { data: session } = useSession()
 
+  const ticketId = 1
+
   const formInitialValues: TicketAssigneeForm = {
     departmentId: -1,
     adminUserId: -1,
+    departmentName: '',
+    role: 'staff',
+    fullName: '',
+    ticketAssigneeId: -1,
+    status: '',
   }
 
   const { data: departments } = useQuery('departmentsWithUsers', async () => {
@@ -50,7 +57,7 @@ const TicketAssigneeModal = ({
     setSubmitting(true)
 
     const { status } = await axios.post(
-      `/v1/tickets/${values.departmentId}/assign`,
+      `/v1/tickets/${ticketId}/assign`,
       { adminUserId: values.adminUserId },
       {
         headers: {
@@ -87,7 +94,7 @@ const TicketAssigneeModal = ({
                   className="mb-5"
                 />
                 <Select
-                  name="adminUsers"
+                  name="adminUserId"
                   Icon={UserIcon}
                   placeholder="Select Employee"
                   options={
