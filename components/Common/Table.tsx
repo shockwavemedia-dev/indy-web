@@ -84,7 +84,7 @@ const Table = <T extends {}>({
   return (
     <>
       <div
-        className={`ml-auto mb-5 flex items-center space-x-2.5 ${
+        className={`absolute right-6 top-6 flex items-center space-x-2.5 ${
           withFilterAndSettings ? 'visible' : 'invisible'
         }`}
       >

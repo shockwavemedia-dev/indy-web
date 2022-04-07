@@ -17,10 +17,14 @@ export const navigations: Array<Navigation> = [
     pathname: '/dashboard',
   },
   {
+    Icon: NotepadIcon,
+    title: 'Tickets',
+    pathname: '/ticket',
+  },
+  {
     Icon: UserIcon,
-    title: 'Client',
+    title: 'Clients',
     pathname: '/client',
-    forAdmin: true,
   },
   {
     Icon: VideoIcon,
