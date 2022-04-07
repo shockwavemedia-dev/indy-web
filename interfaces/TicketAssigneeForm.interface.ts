@@ -1,4 +1,4 @@
 export interface TicketAssigneeForm {
-  department: number
-  admin_users: Array<TicketAssigneeForm>
+  departmentId: number
+  adminUserId: number
 }

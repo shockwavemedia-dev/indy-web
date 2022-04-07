@@ -1,4 +1,4 @@
-import { User } from './User.interface'
+import { AuthenticationUser } from './AuthenticationUser.interface'
 
 export interface Authentication {
   status: number
@@ -7,5 +7,5 @@ export interface Authentication {
   accessToken: string
   tokenType: string
   expiresIn: number
-  user: User
+  user: AuthenticationUser
 }
