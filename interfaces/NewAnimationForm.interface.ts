@@ -1,6 +1,6 @@
 export interface NewAnimationForm {
   title: string
   description?: string
-  library_category_id: number
+  libraryCategoryId: number
   file: File | null
 }

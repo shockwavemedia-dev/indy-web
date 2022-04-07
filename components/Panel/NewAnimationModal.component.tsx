@@ -20,7 +20,7 @@ const NewAnimationModal = ({ isVisible, onClose }: { isVisible: boolean; onClose
   const formInitialValues: NewAnimationForm = {
     title: '',
     description: '',
-    library_category_id: -1,
+    libraryCategoryId: -1,
     file: null,
   }
 
