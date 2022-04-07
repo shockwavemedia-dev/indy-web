@@ -4,6 +4,6 @@ import { NewAnimationForm } from '../interfaces/NewAnimationForm.interface'
 export const NewAnimationFormSchema: SchemaOf<NewAnimationForm> = object().shape({
   title: string().required(),
   description: string().optional(),
-  library_category_id: number().required(),
+  libraryCategoryId: number().required(),
   file: mixed().required(),
 })
