@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { Form, Formik } from 'formik'
 import { useSession } from 'next-auth/react'
-import { useQuery } from 'react-query'
+import { useQuery, useQueryClient } from 'react-query'
 import { Department } from '../../interfaces/Department.interface'
 import { Page } from '../../interfaces/Page.interface'
 import { TicketAssigneeForm } from '../../interfaces/TicketAssigneeForm.interface'
@@ -14,13 +14,14 @@ import Modal from './Modal.component'
 const TicketAssigneeModal = ({
   isVisible,
   onClose,
+  ticketId,
 }: {
   isVisible: boolean
   onClose: () => void
+  ticketId?: number | string | Array<string>
 }) => {
   const { data: session } = useSession()
-
-  const ticketId = 1
+  const queryClient = useQueryClient()
 
   const formInitialValues: TicketAssigneeForm = {
     departmentId: -1,
@@ -67,6 +68,7 @@ const TicketAssigneeModal = ({
     )
 
     if (status === 200) {
+      queryClient.invalidateQueries('assignees')
       onClose()
     }
 

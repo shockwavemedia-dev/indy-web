@@ -2,7 +2,7 @@ import axios from 'axios'
 import { useSession } from 'next-auth/react'
 import { useQueryClient } from 'react-query'
 import { Column } from 'react-table'
-import EyeOpenIcon from '../components/Common/Icons/EyeOpen.icon'
+import TrashIcon from '../components/Common/Icons/Trash.icon'
 import { TicketAssigneeForm } from '../interfaces/TicketAssigneeForm.interface'
 
 export const TicketAssigneeTableColumns: Array<Column<TicketAssigneeForm>> = [
@@ -54,16 +54,14 @@ export const TicketAssigneeTableColumns: Array<Column<TicketAssigneeForm>> = [
         })
 
         if (status === 200) {
-          queryClient.invalidateQueries('tickets')
+          queryClient.invalidateQueries('assignees')
         }
       }
 
       return (
-        <div className="flex space-x-2">
-          <button onClick={deleteTicketAssignee}>
-            <EyeOpenIcon className="stroke-waterloo" />
-          </button>
-        </div>
+        <button onClick={deleteTicketAssignee}>
+          <TrashIcon className="stroke-waterloo" />
+        </button>
       )
     },
   },

@@ -84,31 +84,44 @@ const styles: StylesConfig<Option, false> = {
 }
 
 const Select = ({
-  name,
+  name = '',
   Icon,
-  placeholder,
+  placeholder = '',
   options,
   disabled = false,
   setFieldValue,
   className,
   errorMessage,
   touched,
+  functional = false,
+  onChange,
+  defaultValue,
 }: {
-  name: string
+  name?: string
   Icon: Icon
-  placeholder: string
+  placeholder?: string
   options: Options<Option>
   disabled?: boolean
-  setFieldValue: (field: string, value: any, shouldValidate?: boolean) => void
+  setFieldValue?: (field: string, value: any, shouldValidate?: boolean) => void
   className?: string
   errorMessage?: string
   touched?: boolean
+  functional?: boolean
+  onChange?: (option: SingleValue<Option>) => void
+  defaultValue?: Option
 }) => {
-  const [selectedOption, setSelectedOption] = useState<Option | null>(null)
+  const [selectedOption, setSelectedOption] = useState<Option | undefined | null>(defaultValue)
 
-  const handleChange = (option: SingleValue<Option>) => {
+  const selectOption = (option: SingleValue<Option>) => {
     setSelectedOption(option)
-    setFieldValue(name, option?.value)
+
+    if (setFieldValue) {
+      setFieldValue(name, option?.value)
+    }
+
+    if (onChange) {
+      onChange(option)
+    }
   }
 
   return (
@@ -117,7 +130,7 @@ const Select = ({
         styles={styles}
         placeholder={placeholder}
         value={selectedOption}
-        onChange={handleChange}
+        onChange={selectOption}
         options={options}
         components={{ DropdownIndicator, Control }}
         inputId={name}
@@ -125,7 +138,7 @@ const Select = ({
         className={`selection:bg-jungle-green selection:text-white ${className}`}
         Icon={Icon}
       />
-      {touched && errorMessage && (
+      {!functional && touched && errorMessage && (
         <div className="font-small text-rose-900 mb-3 mt-0 w-full whitespace-pre-line font-urbanist text-xs capitalize  text-fire-brick">
           {touched && errorMessage}
         </div>
