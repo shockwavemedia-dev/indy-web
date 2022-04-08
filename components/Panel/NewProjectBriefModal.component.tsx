@@ -2,8 +2,8 @@ import { Form, Formik } from 'formik'
 import { NewProjectBriefForm } from '../../interfaces/NewProjectBriefForm.interface'
 import { NewProjectBriefFormSchema } from '../../schemas/NewProjectBriefFormSchema'
 import Button from '../Common/Button.component'
+import DateInput from '../Common/DateInput.component'
 import FileInput from '../Common/FileInput.component'
-import CalendarIcon from '../Common/Icons/Calendar.icon'
 import EditIcon from '../Common/Icons/Edit.icon'
 import TextAreaInput from '../Common/TextAreaInput.component'
 import TextInput from '../Common/TextInput.component'
@@ -38,11 +38,11 @@ const NewProjectBriefModal = ({
               <Form className="flex w-140 flex-col">
                 <div className="mb-5 flex space-x-5">
                   <SelectService setFieldValue={setFieldValue} />
-                  <TextInput
-                    Icon={CalendarIcon}
-                    placeholder="Enter date"
+                  <DateInput
                     name="date"
-                    disableAutoComplete
+                    placeholder="Enter date"
+                    setFieldValue={setFieldValue}
+                    className="mb-5"
                   />
                 </div>
                 <TextInput

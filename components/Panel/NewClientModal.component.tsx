@@ -6,8 +6,8 @@ import { NewClientForm } from '../../interfaces/NewClientForm.interface'
 import { NewClientFormSchema } from '../../schemas/NewClientFormSchema'
 import { objectWithFileToFormData } from '../../utils/FormHelpers'
 import Button from '../Common/Button.component'
+import DateInput from '../Common/DateInput.component'
 import FileInput from '../Common/FileInput.component'
-import CalendarIcon from '../Common/Icons/Calendar.icon'
 import EditIcon from '../Common/Icons/Edit.icon'
 import TextAreaInput from '../Common/TextAreaInput.component'
 import TextInput from '../Common/TextInput.component'
@@ -120,13 +120,11 @@ const NewClientModal = ({ isVisible, onClose }: { isVisible: boolean; onClose: (
                       errorMessage={errors.timezone}
                       touched={touched.timezone}
                     />
-                    <TextInput
-                      Icon={CalendarIcon}
-                      placeholder="Enter Client Since"
+                    <DateInput
                       name="clientSince"
-                      disableAutoComplete
-                      errorMessage={errors.clientSince}
-                      touched={touched.clientSince}
+                      placeholder="Enter Client Since"
+                      setFieldValue={setFieldValue}
+                      className="mb-5"
                     />
                   </div>
                   <TextInput
