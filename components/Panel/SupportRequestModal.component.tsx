@@ -8,7 +8,7 @@ import { Page } from '../../interfaces/Page.interface'
 import { SupportRequestForm } from '../../interfaces/SupportRequestForm.interface'
 import { SupportRequestFormSchema } from '../../schemas/SupportRequestFormSchema'
 import Button from '../Common/Button.component'
-import CalendarIcon from '../Common/Icons/Calendar.icon'
+import DateInput from '../Common/DateInput.component'
 import ClipboardIcon from '../Common/Icons/Clipboard.icon'
 import EditIcon from '../Common/Icons/Edit.icon'
 import LightbulbIcon from '../Common/Icons/Lightbulb.icon'
@@ -108,14 +108,11 @@ const SupportRequestModal = ({
                   errorMessage={errors.type}
                   touched={touched.type}
                 />
-                <TextInput
-                  Icon={CalendarIcon}
-                  placeholder="Enter due date"
+                <DateInput
                   name="duedate"
-                  disableAutoComplete
+                  placeholder="Enter due date"
+                  setFieldValue={setFieldValue}
                   className="mb-5"
-                  errorMessage={errors.duedate}
-                  touched={touched.duedate}
                 />
                 <Select
                   name="departmentId"
