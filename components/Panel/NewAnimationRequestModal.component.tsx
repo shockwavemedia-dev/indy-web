@@ -13,6 +13,7 @@ import Select from '../Common/Select.component'
 import TextInput from '../Common/TextInput.component'
 import Video from '../Common/Video.component'
 import Modal from './Modal.component'
+
 const NewAnimationRequestModal = ({
   isVisible,
   onClose,
@@ -54,7 +55,7 @@ const NewAnimationRequestModal = ({
     setSubmitting(true)
 
     const { status } = await axios.post(
-      '/v1/libraries/' + values.libraryId + '/ticket',
+      `/v1/libraries/${values.libraryId}/ticket`,
       objectWithFileToFormData(values),
       {
         headers: {
