@@ -5,7 +5,7 @@ import ClipboardCloseIcon from '../components/Common/Icons/ClipboardClose.icon'
 import LifeBuoyIcon from '../components/Common/Icons/LifeBuoy.icon'
 import PresentationChartIcon from '../components/Common/Icons/PresentationChart.icon'
 import FancyButton from '../components/Panel/FancyButton.component'
-import NewAnimationRequestModal from '../components/Panel/NewAnimationRequestModal.component'
+import NewEventModal from '../components/Panel/NewEventModal.component'
 import NewProjectBriefModal from '../components/Panel/NewProjectBriefModal.component'
 import SupportRequestModal from '../components/Panel/SupportRequestModal.component'
 import PanelLayout from '../layouts/Panel.layout'
@@ -133,7 +133,7 @@ const Dashboard: NextPageWithLayout = () => {
           <div></div>
         </Card>
       </div> */}
-      <NewAnimationRequestModal isVisible={isNewEventModalVisible} onClose={toggleNewEventModal} />
+      <NewEventModal isVisible={isNewEventModalVisible} onClose={toggleNewEventModal} />
       <NewProjectBriefModal
         isVisible={isNewProjectBriefModalVisible}
         onClose={toggleNewProjectBriefModal}
