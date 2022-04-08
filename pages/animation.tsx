@@ -30,7 +30,7 @@ const Animation: NextPageWithLayout = () => {
       <Head>
         <title>Daily Press - Client</title>
       </Head>
-      <div className="mb-6 flex space-x-6">
+      <div className="mb-8 flex space-x-10">
         <FancyButton
           Icon={
             <div className="flex min-h-11 min-w-11 items-center justify-center rounded-lg bg-honeydew">
@@ -59,7 +59,8 @@ const Animation: NextPageWithLayout = () => {
           dataEndpoint="/v1/libraries"
           columns={AnimationTableColumns}
           startingPageSize={20}
-          tableKey="libraries"
+          tableQueryKey="libraries"
+          ofString="Animations"
         />
       </Card>
     </>
