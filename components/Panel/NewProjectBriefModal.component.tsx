@@ -38,12 +38,7 @@ const NewProjectBriefModal = ({
               <Form className="flex w-140 flex-col">
                 <div className="mb-5 flex space-x-5">
                   <SelectService setFieldValue={setFieldValue} />
-                  <DateInput
-                    name="date"
-                    placeholder="Enter date"
-                    setFieldValue={setFieldValue}
-                    className="mb-5"
-                  />
+                  <DateInput name="date" placeholder="Enter date" setFieldValue={setFieldValue} />
                 </div>
                 <TextInput
                   Icon={EditIcon}
