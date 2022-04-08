@@ -57,15 +57,13 @@ const Login: NextPageWithLayout = () => {
         initialValues={formInitialValues}
         onSubmit={submitForm}
       >
-        {({ errors, touched, isSubmitting }) => (
+        {({ isSubmitting }) => (
           <Form className="flex w-103 flex-col items-center">
             <TextInput
               type="email"
               name="email"
               Icon={UserIcon}
               placeholder="Enter username"
-              errorMessage={errors.email}
-              touched={touched.email}
               className="mb-5"
               disableAutoComplete
             />
@@ -74,8 +72,6 @@ const Login: NextPageWithLayout = () => {
               name="password"
               Icon={LockIcon}
               placeholder="Enter password"
-              errorMessage={errors.password}
-              touched={touched.password}
               className="mb-3"
             />
             <div className="mb-8 flex w-full justify-between">

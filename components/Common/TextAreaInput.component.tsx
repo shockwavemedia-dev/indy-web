@@ -6,8 +6,6 @@ const TextAreaInput = ({
   Icon,
   placeholder,
   className,
-  errorMessage,
-  touched,
 }: {
   name: string
   Icon: Icon
@@ -16,24 +14,15 @@ const TextAreaInput = ({
   errorMessage?: string
   touched?: boolean
 }) => (
-  <div className={`block ${className}`}>
+  <div className={`flex ${className}`}>
     <Icon className="pointer-events-none absolute ml-6 mt-4 stroke-lavender-gray" />
     <Field
-      className={
-        touched && errorMessage
-          ? 'no-sc min-h-35 w-full resize-none overflow-hidden rounded-xl bg-transparent py-4 px-13 font-urbanist text-sm font-medium text-onyx placeholder-metallic-silver ring-1 ring-fire-brick selection:bg-jungle-green selection:text-white focus:ring-2 focus:ring-jungle-green focus:ring-opacity-40'
-          : 'no-sc min-h-35 w-full resize-none overflow-hidden rounded-xl bg-transparent py-4 px-13 font-urbanist text-sm font-medium text-onyx placeholder-metallic-silver ring-1 ring-bright-gray selection:bg-jungle-green selection:text-white focus:ring-2 focus:ring-jungle-green focus:ring-opacity-40'
-      }
+      className="min-h-35 w-full resize-none overflow-hidden rounded-xl bg-transparent py-4 px-13 font-urbanist text-sm font-medium text-onyx placeholder-metallic-silver ring-1 ring-bright-gray selection:bg-jungle-green selection:text-white focus:ring-2 focus:ring-jungle-green focus:ring-opacity-40"
       component="textarea"
       name={name}
       spellCheck={false}
       placeholder={placeholder}
     />
-    {touched && errorMessage && (
-      <div className="text-rose-900 mb-3 mt-0 w-full whitespace-pre-line font-urbanist text-xxs font-semibold capitalize  text-fire-brick">
-        {touched && errorMessage}
-      </div>
-    )}
   </div>
 )
 

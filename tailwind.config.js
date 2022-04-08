@@ -135,7 +135,7 @@ module.exports = {
       'bleu-de-france': '#2F96EB',
       'alice-blue': '#E9F5FF',
       'purple-x11': '#A232E7',
-      'fire-brick': '#B22222',
+      'tart-orange': '#FF4842',
     },
   },
   plugins: [require('@tailwindcss/line-clamp')],

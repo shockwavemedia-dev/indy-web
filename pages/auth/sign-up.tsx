@@ -72,8 +72,6 @@ const SignUp: NextPageWithLayout = () => {
                 name="fullName"
                 Icon={UserIcon}
                 placeholder="Enter full name"
-                errorMessage={errors.fullName}
-                touched={touched.fullName}
                 disableAutoComplete
               />
               <TextInput
@@ -81,8 +79,6 @@ const SignUp: NextPageWithLayout = () => {
                 name="companyName"
                 Icon={BriefcaseIcon}
                 placeholder="Enter company name"
-                errorMessage={errors.companyName}
-                touched={touched.companyName}
                 disableAutoComplete
               />
             </div>
@@ -91,8 +87,6 @@ const SignUp: NextPageWithLayout = () => {
               name="email"
               Icon={EmailIcon}
               placeholder="Enter email"
-              errorMessage={errors.email}
-              touched={touched.email}
               className="mb-5"
               disableAutoComplete
             />
@@ -102,8 +96,6 @@ const SignUp: NextPageWithLayout = () => {
                 name="password"
                 Icon={LockIcon}
                 placeholder="Enter password"
-                errorMessage={errors.password}
-                touched={touched.password}
                 disableAutoComplete
               />
               <TextInput
@@ -111,8 +103,6 @@ const SignUp: NextPageWithLayout = () => {
                 name="passwordConfirmation"
                 Icon={LockIcon}
                 placeholder="Confirm password"
-                errorMessage={errors.passwordConfirmation}
-                touched={touched.passwordConfirmation}
                 disableAutoComplete
               />
             </div>
