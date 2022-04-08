@@ -6,7 +6,6 @@ import { Animation } from '../../interfaces/Animation.interface'
 import { NewAnimationRequestForm } from '../../interfaces/NewAnimationRequestForm.interface'
 import { Page } from '../../interfaces/Page.interface'
 import { NewAnimationRequestFormSchema } from '../../schemas/NewAnimationRequestFormSchema'
-import { objectWithFileToFormData } from '../../utils/FormHelpers'
 import Button from '../Common/Button.component'
 import PencilIcon from '../Common/Icons/Pencil.icon'
 import Select from '../Common/Select.component'
@@ -54,15 +53,11 @@ const NewAnimationRequestModal = ({
   ) => {
     setSubmitting(true)
 
-    const { status } = await axios.post(
-      `/v1/libraries/${values.libraryId}/ticket`,
-      objectWithFileToFormData(values),
-      {
-        headers: {
-          Authorization: `Bearer ${session?.accessToken}`,
-        },
-      }
-    )
+    const { status } = await axios.post(`/v1/libraries/${values.libraryId}/ticket`, values, {
+      headers: {
+        Authorization: `Bearer ${session?.accessToken}`,
+      },
+    })
 
     if (status === 200) {
       onClose()
