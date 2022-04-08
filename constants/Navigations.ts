@@ -7,6 +7,7 @@ import MonitorIcon from '../components/Common/Icons/Monitor.icon'
 import NotepadIcon from '../components/Common/Icons/Notepad.icon'
 import PresentationChartIcon from '../components/Common/Icons/PresentationChart.icon'
 import UserIcon from '../components/Common/Icons/User.icon'
+import VideoIcon from '../components/Common/Icons/Video.icon'
 import { Navigation } from '../interfaces/Navigation.interface'
 
 export const navigations: Array<Navigation> = [
@@ -24,6 +25,11 @@ export const navigations: Array<Navigation> = [
     Icon: UserIcon,
     title: 'Clients',
     pathname: '/client',
+  },
+  {
+    Icon: VideoIcon,
+    title: 'Animations',
+    pathname: '/animation',
   },
   {
     Icon: NotepadIcon,
@@ -66,6 +72,7 @@ export const navigations: Array<Navigation> = [
       },
       {
         title: 'Animations',
+        pathname: '/service-request/animation',
       },
       {
         title: 'Photography',
