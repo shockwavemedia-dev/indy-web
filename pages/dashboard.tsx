@@ -4,10 +4,13 @@ import CalendarAddIcon from '../components/Common/Icons/CalendarAdd.icon'
 import ClipboardCloseIcon from '../components/Common/Icons/ClipboardClose.icon'
 import LifeBuoyIcon from '../components/Common/Icons/LifeBuoy.icon'
 import PresentationChartIcon from '../components/Common/Icons/PresentationChart.icon'
+import Table from '../components/Common/Table'
+import Card from '../components/Panel/Card.component'
 import FancyButton from '../components/Panel/FancyButton.component'
 import NewEventModal from '../components/Panel/NewEventModal.component'
 import NewProjectBriefModal from '../components/Panel/NewProjectBriefModal.component'
 import SupportRequestModal from '../components/Panel/SupportRequestModal.component'
+import { TicketTableColumns } from '../constants/TicketTableColumns'
 import PanelLayout from '../layouts/Panel.layout'
 import { NextPageWithLayout } from '../types/NextPageWithLayout.type'
 
@@ -69,9 +72,19 @@ const Dashboard: NextPageWithLayout = () => {
           onClick={toggleSupportRequestModal}
         />
       </div>
-      {/* <hr className="mb-6 border-t-bright-gray" />
-      <div className="mx-auto grid h-262.5 w-270 grid-cols-3 grid-rows-23 gap-6">
-        <Card title="Project Status Table" className="col-span-2 row-span-14">
+      <hr className="mb-6 border-t-bright-gray" />
+      <div className="mx-auto grid h-262.5 w-270 grid-cols-1 grid-rows-5 gap-6">
+        <Card title="All Tickets" className="row-span-3">
+          <Table
+            columns={TicketTableColumns}
+            dataEndpoint="/v1/tickets"
+            tableQueryKey="tickets"
+            withFilterAndSettings
+            ofString="Tickets"
+          />
+        </Card>
+      </div>
+      {/* <Card title="Project Status Table" className="col-span-2 row-span-14">
           <Table
             dataEndpoint="/v1/tickets"
             columns={TicketTableColumns}
@@ -122,8 +135,8 @@ const Dashboard: NextPageWithLayout = () => {
               className="w-36"
             />
           </div>
-        </div>
-        <Card title="Notifications" className="col-span-1 row-span-10">
+        </div> */}
+      {/* <Card title="Notifications" className="col-span-1 row-span-10">
           <div></div>
         </Card>
         <Card title="Number of Projects" className="col-span-2 row-span-9">
@@ -131,8 +144,7 @@ const Dashboard: NextPageWithLayout = () => {
         </Card>
         <Card title="Requests" className="col-span-1 row-span-9">
           <div></div>
-        </Card>
-      </div> */}
+        </Card> */}
       <NewEventModal isVisible={isNewEventModalVisible} onClose={toggleNewEventModal} />
       <NewProjectBriefModal
         isVisible={isNewProjectBriefModalVisible}

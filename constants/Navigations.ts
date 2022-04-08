@@ -15,11 +15,11 @@ export const navigations: Array<Navigation> = [
     title: 'Dashboard',
     pathname: '/dashboard',
   },
-  {
-    Icon: NotepadIcon,
-    title: 'Tickets',
-    pathname: '/ticket',
-  },
+  // {
+  //   Icon: NotepadIcon,
+  //   title: 'Tickets',
+  //   pathname: '/ticket',
+  // },
   {
     Icon: UserIcon,
     title: 'Clients',
