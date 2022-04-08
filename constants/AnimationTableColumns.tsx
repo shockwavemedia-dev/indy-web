@@ -1,11 +1,10 @@
+import axios from 'axios'
+import { useSession } from 'next-auth/react'
+import { useQueryClient } from 'react-query'
 import { Column } from 'react-table'
+import TrashIcon from '../components/Common/Icons/Trash.icon'
 import { Animation } from '../interfaces/Animation.interface'
 export const AnimationTableColumns: Array<Column<Animation>> = [
-  {
-    Header: 'ID',
-    accessor: 'id',
-    Cell: ({ value }) => <div className="font-urbanist text-sm font-medium text-onyx">{value}</div>,
-  },
   {
     Header: 'Title',
     accessor: 'title',
@@ -26,5 +25,34 @@ export const AnimationTableColumns: Array<Column<Animation>> = [
     Cell: ({ value }) => (
       <div className="font-urbanist text-sm font-semibold text-onyx">{value}</div>
     ),
+  },
+  {
+    Header: 'Actions',
+    accessor: 'id',
+    disableSortBy: true,
+    Cell: ({ value }) => {
+      const { data: session } = useSession()
+      const queryClient = useQueryClient()
+
+      const deleteTicketAssignee = async () => {
+        const { status } = await axios.delete(`/v1/libraries/${value}`, {
+          headers: {
+            Authorization: `Bearer ${session?.accessToken}`,
+          },
+        })
+
+        if (status === 200) {
+          queryClient.invalidateQueries('libraries')
+        }
+      }
+
+      return (
+        <div className="flex space-x-2">
+          <button onClick={deleteTicketAssignee}>
+            <TrashIcon className="stroke-waterloo" />
+          </button>
+        </div>
+      )
+    },
   },
 ]
