@@ -6,9 +6,11 @@ const DateInput = ({
   name,
   placeholder,
   setFieldValue,
+  className,
 }: {
   name: string
   placeholder: string
+  className?: string
   setFieldValue: (field: string, value: any, shouldValidate?: boolean) => void
 }) => {
   const [selectedDate, setSelectedDate] = useState(new Date())
@@ -49,7 +51,7 @@ const DateInput = ({
         },
       }}
       renderInput={({ inputRef, inputProps }) => (
-        <div className="relative flex w-full items-center">
+        <div className={`relative flex w-full items-center ${className}`}>
           <CalendarIcon className="pointer-events-none absolute ml-6 stroke-lavender-gray" />
           <input
             ref={inputRef}
