@@ -72,6 +72,7 @@ export const navigations: Array<Navigation> = [
       },
       {
         title: 'Animations',
+        pathname: '/service-request/animation',
       },
       {
         title: 'Photography',
