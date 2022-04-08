@@ -34,7 +34,7 @@ export const AnimationTableColumns: Array<Column<Animation>> = [
       const { data: session } = useSession()
       const queryClient = useQueryClient()
 
-      const deleteTicketAssignee = async () => {
+      const deleteAnimation = async () => {
         const { status } = await axios.delete(`/v1/libraries/${value}`, {
           headers: {
             Authorization: `Bearer ${session?.accessToken}`,
@@ -47,11 +47,9 @@ export const AnimationTableColumns: Array<Column<Animation>> = [
       }
 
       return (
-        <div className="flex space-x-2">
-          <button onClick={deleteTicketAssignee}>
-            <TrashIcon className="stroke-waterloo" />
-          </button>
-        </div>
+        <button onClick={deleteAnimation}>
+          <TrashIcon className="stroke-waterloo" />
+        </button>
       )
     },
   },

@@ -12,21 +12,16 @@ import PanelLayout from '../layouts/Panel.layout'
 import { NextPageWithLayout } from '../types/NextPageWithLayout.type'
 
 const Animation: NextPageWithLayout = () => {
-  const [isNewAnimationCategoryModalVisible, setAnimationCategoryModalVisible] = useState(false)
-  const [isNewAnimationModalVisible, setAnimationModalVisible] = useState(false)
+  const [isNewAnimationCategoryModalVisible, setNewAnimationCategoryModalVisible] = useState(false)
+  const [isNewAnimationModalVisible, setNewAnimationModalVisible] = useState(false)
 
   const toggleNewAnimationCategoryModal = () =>
-    setAnimationCategoryModalVisible(!isNewAnimationCategoryModalVisible)
+    setNewAnimationCategoryModalVisible(!isNewAnimationCategoryModalVisible)
 
-  const toggleNewAnimationModal = () => setAnimationModalVisible(!isNewAnimationModalVisible)
+  const toggleNewAnimationModal = () => setNewAnimationModalVisible(!isNewAnimationModalVisible)
 
   return (
     <>
-      <NewAnimationCategoryModal
-        isVisible={isNewAnimationCategoryModalVisible}
-        onClose={toggleNewAnimationCategoryModal}
-      />
-      <NewAnimationModal isVisible={isNewAnimationModalVisible} onClose={toggleNewAnimationModal} />
       <Head>
         <title>Daily Press - Client</title>
       </Head>
@@ -63,6 +58,11 @@ const Animation: NextPageWithLayout = () => {
           ofString="Animations"
         />
       </Card>
+      <NewAnimationCategoryModal
+        isVisible={isNewAnimationCategoryModalVisible}
+        onClose={toggleNewAnimationCategoryModal}
+      />
+      <NewAnimationModal isVisible={isNewAnimationModalVisible} onClose={toggleNewAnimationModal} />
     </>
   )
 }

@@ -10,17 +10,13 @@ import PanelLayout from '../../layouts/Panel.layout'
 import { NextPageWithLayout } from '../../types/NextPageWithLayout.type'
 
 const Animation: NextPageWithLayout = () => {
-  const [isNewAnimationRequestModalVisible, setAnimationRequestModalVisible] = useState(false)
+  const [isNewAnimationRequestModalVisible, setNewAnimationRequestModalVisible] = useState(false)
 
   const toggleNewAnimationRequestModal = () =>
-    setAnimationRequestModalVisible(!isNewAnimationRequestModalVisible)
+    setNewAnimationRequestModalVisible(!isNewAnimationRequestModalVisible)
 
   return (
     <>
-      <NewAnimationRequestModal
-        isVisible={isNewAnimationRequestModalVisible}
-        onClose={toggleNewAnimationRequestModal}
-      />
       <Head>
         <title>Daily Press - Client</title>
       </Head>
@@ -46,6 +42,10 @@ const Animation: NextPageWithLayout = () => {
           />
         </Card>
       </div>
+      <NewAnimationRequestModal
+        isVisible={isNewAnimationRequestModalVisible}
+        onClose={toggleNewAnimationRequestModal}
+      />
     </>
   )
 }
