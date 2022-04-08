@@ -26,25 +26,20 @@ const Ticket: NextPageWithLayout = () => {
     query: { id },
   } = useRouter()
 
-  const {
-    data: ticket,
-    isLoading: ticketLoading,
-    isFetching: ticketFetching,
-  } = useQuery(['ticket', { ticketId: id }], async () => {
-    const { data } = await axios.get<Ticket>(`/v1/tickets/${id}`, {
-      headers: {
-        Authorization: `Bearer ${session?.accessToken}`,
-      },
-    })
+  const { data: ticket, isLoading: ticketLoading } = useQuery(
+    ['ticket', { ticketId: id }],
+    async () => {
+      const { data } = await axios.get<Ticket>(`/v1/tickets/${id}`, {
+        headers: {
+          Authorization: `Bearer ${session?.accessToken}`,
+        },
+      })
 
-    return data
-  })
+      return data
+    }
+  )
 
-  const {
-    data: client,
-    isLoading: clientLoading,
-    isFetching: clientFetching,
-  } = useQuery(
+  const { data: client, isLoading: clientLoading } = useQuery(
     ['client', ticket?.clientId],
     async () => {
       const { data } = await axios.get<Client>(`/v1/clients/${ticket?.clientId}`, {
