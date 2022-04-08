@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import { ReactElement, useState } from 'react'
 import UserIcon from '../components/Common/Icons/User.icon'
+import VideoIcon from '../components/Common/Icons/Video.icon'
 import Table from '../components/Common/Table'
 import Card from '../components/Panel/Card.component'
 import FancyButton from '../components/Panel/FancyButton.component'
@@ -29,7 +30,7 @@ const Animation: NextPageWithLayout = () => {
       <Head>
         <title>Daily Press - Client</title>
       </Head>
-      <div className="mx-auto grid h-262.5 w-270 grid-rows-10 gap-2">
+      <div className="mb-6 flex space-x-6">
         <FancyButton
           Icon={
             <div className="flex min-h-11 min-w-11 items-center justify-center rounded-lg bg-honeydew">
@@ -44,7 +45,7 @@ const Animation: NextPageWithLayout = () => {
         <FancyButton
           Icon={
             <div className="flex min-h-11 min-w-11 items-center justify-center rounded-lg bg-honeydew">
-              <UserIcon className="stroke-jungle-green" />
+              <VideoIcon className="stroke-jungle-green" />
             </div>
           }
           title="Create Animation"
@@ -52,19 +53,19 @@ const Animation: NextPageWithLayout = () => {
           onClick={toggleNewAnimationModal}
           className="row-span-1 w-fit"
         />
-        <Card title="Animations" className="row-span-11">
-          <Table
-            dataEndpoint="/v1/libraries"
-            columns={AnimationTableColumns}
-            startingPageSize={20}
-            tableKey="libraries"
-          />
-        </Card>
       </div>
+      <Card title="Animations" className="row-span-11">
+        <Table
+          dataEndpoint="/v1/libraries"
+          columns={AnimationTableColumns}
+          startingPageSize={20}
+          tableKey="libraries"
+        />
+      </Card>
     </>
   )
 }
 
-Animation.getLayout = (page: ReactElement) => <PanelLayout header="Dashboard">{page}</PanelLayout>
+Animation.getLayout = (page: ReactElement) => <PanelLayout header="Animations">{page}</PanelLayout>
 
 export default Animation

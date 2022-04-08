@@ -83,7 +83,7 @@ const NewAnimationRequestModal = ({
               <Form className="flex w-140 flex-col">
                 <TextInput
                   Icon={PencilIcon}
-                  placeholder="Description Request"
+                  placeholder="Enter the promotion details you would like to appear on your video."
                   name="description"
                   disableAutoComplete
                   className="mb-5"

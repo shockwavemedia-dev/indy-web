@@ -28,7 +28,7 @@ export const navigations: Array<Navigation> = [
   },
   {
     Icon: VideoIcon,
-    title: 'Animation',
+    title: 'Animations',
     pathname: '/animation',
   },
   {
