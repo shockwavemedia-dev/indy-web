@@ -1,4 +1,4 @@
-import { signOut, useSession } from 'next-auth/react'
+import { signOut as nextAuthSignOut, useSession } from 'next-auth/react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
@@ -15,17 +15,19 @@ import DailyPressLogo from '../public/images/daily-press-logo.png'
 import DummyAvatar from '../public/images/dummy-avatar.png'
 
 const PanelLayout = ({ header, children }: { header: string; children: ReactNode }) => {
-  const { replace, asPath } = useRouter()
   const { status, data: session } = useSession({
     required: true,
     onUnauthenticated() {
       replace('/auth/login')
     },
   })
+  const { replace, asPath } = useRouter()
 
   if (status === 'loading') {
     return null
   }
+
+  const signOut = () => nextAuthSignOut()
 
   return (
     <div className="flex min-h-screen">
@@ -71,7 +73,7 @@ const PanelLayout = ({ header, children }: { header: string; children: ReactNode
                 Broncos Club
               </div>
             </div>
-            <button onClick={() => signOut()}>
+            <button onClick={signOut}>
               <CaretIcon className="rotate-180 stroke-waterloo" />
             </button>
           </div>
