@@ -31,13 +31,7 @@ const PanelLayout = ({ header, children }: { header: string; children: ReactNode
     <div className="flex min-h-screen">
       <div className="flex min-w-75 flex-col bg-white pt-6">
         <div className="mb-5 pl-6">
-          <Image
-            draggable={false}
-            src={DailyPressLogo}
-            alt="Daily Press"
-            height="50rem"
-            width="50rem"
-          />
+          <Image draggable={false} src={DailyPressLogo} alt="Daily Press" height={50} width={50} />
         </div>
         <div className="mb-5 flex space-x-3 px-6">
           <JobsStatusCountCard Icon={BriefcaseIcon} value={12} description="Pending Jobs" />
@@ -68,7 +62,7 @@ const PanelLayout = ({ header, children }: { header: string; children: ReactNode
               <BellIcon className="stroke-waterloo" />
               <div className="absolute -top-0.5 -right-0.5 h-3.5 w-3.5 rounded-full border border-solid border-ghost-white bg-vivid-red-tangelo" />
             </button>
-            <Image src={DummyAvatar} alt="Dummy" height="32rem" width="32rem" />
+            <Image src={DummyAvatar} alt="Dummy" height={32} width={32} className="rounded-full" />
             <div className="ml-3 mr-5 flex h-9 flex-col">
               <div className="font-urbanist text-sm font-medium text-onyx">
                 {session?.user.firstName} {session?.user.lastName}
