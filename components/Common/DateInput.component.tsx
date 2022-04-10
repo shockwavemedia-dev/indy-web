@@ -13,7 +13,7 @@ const DateInput = ({
   className?: string
   setFieldValue: (field: string, value: any, shouldValidate?: boolean) => void
 }) => {
-  const [selectedDate, setSelectedDate] = useState(new Date())
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null)
   const [isPickerVisible, setPickerVisible] = useState(false)
 
   const showPicker = () => setPickerVisible(true)
