@@ -74,7 +74,7 @@ const PanelLayout = ({ header, children }: { header: string; children: ReactNode
                 {session?.user.firstName} {session?.user.lastName}
               </div>
               <div className="font-urbanist text-xs font-medium text-metallic-silver">
-                Broncos Leagues Club
+                Broncos Club
               </div>
             </div>
             <button onClick={() => signOut()}>
