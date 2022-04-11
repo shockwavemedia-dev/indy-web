@@ -1,7 +1,7 @@
 import { DesktopDatePicker } from '@mui/lab'
 import { useEffect, useState } from 'react'
 import FormErrorMessage from './FormErrorMessage.component'
-import CalendarIcon from './Icons/Calendar.icon'
+import CalendarIcon from './icons/CalendarIcon'
 
 const DateInput = ({
   name,

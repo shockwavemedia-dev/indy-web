@@ -9,7 +9,7 @@ import ReactSelect, {
 } from 'react-select'
 import { Icon } from '../../types/Icon.type'
 import { Option } from '../../types/Option.type'
-import CaretIcon from './Icons/Caret.icon'
+import CaretIcon from './icons/CaretIcon'
 
 const DropdownIndicator = (props: DropdownIndicatorProps<Option, false>) => (
   <Components.DropdownIndicator {...props}>

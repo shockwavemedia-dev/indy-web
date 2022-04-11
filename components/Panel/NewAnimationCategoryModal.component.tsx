@@ -4,7 +4,7 @@ import { useSession } from 'next-auth/react'
 import { NewAnimationCategoryFormSchema } from '../../schemas/NewAnimationCategoryFormSchema'
 import { NewAnimationCategoryForm } from '../../types/forms/NewAnimationCategoryForm.type'
 import Button from '../common/Button.component'
-import PencilIcon from '../common/Icons/Pencil.icon'
+import PencilIcon from '../common/icons/PencilIcon'
 import TextInput from '../common/TextInput.component'
 import Modal from './Modal.component'
 

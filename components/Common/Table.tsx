@@ -4,10 +4,10 @@ import { ReactNode, useEffect, useMemo, useState } from 'react'
 import { useQuery } from 'react-query'
 import { Column, usePagination, useSortBy, useTable } from 'react-table'
 import { Page } from '../../types/Page.type'
-import CalendarIcon from './Icons/Calendar.icon'
-import CaretIcon from './Icons/Caret.icon'
-import GearIcon from './Icons/Gear.icon'
-import SortIcon from './Icons/Sort.icon'
+import CalendarIcon from './icons/CalendarIcon'
+import CaretIcon from './icons/CaretIcon'
+import GearIcon from './icons/GearIcon'
+import SortIcon from './icons/SortIcon'
 
 const Table = <T extends {}>({
   tableQueryKey,

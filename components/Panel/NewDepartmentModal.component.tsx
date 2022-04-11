@@ -5,7 +5,7 @@ import { useQueryClient } from 'react-query'
 import { NewDepartmentFormSchema } from '../../schemas/NewDepartmentFormSchema'
 import { NewDepartmentForm } from '../../types/forms/NewDepartmentForm.type'
 import Button from '../common/Button.component'
-import PencilIcon from '../common/Icons/Pencil.icon'
+import PencilIcon from '../common/icons/PencilIcon'
 import TextInput from '../common/TextInput.component'
 import Modal from './Modal.component'
 

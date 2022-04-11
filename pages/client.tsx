@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import { ReactElement, useState } from 'react'
-import UserIcon from '../components/common/Icons/User.icon'
+import UserIcon from '../components/common/icons/UserIcon'
 import Table from '../components/common/Table'
 import Card from '../components/panel/Card.component'
 import FancyButton from '../components/panel/FancyButton.component'

@@ -2,7 +2,7 @@ import axios from 'axios'
 import { useSession } from 'next-auth/react'
 import { useQueryClient } from 'react-query'
 import { Column } from 'react-table'
-import TrashIcon from '../../components/common/Icons/Trash.icon'
+import TrashIcon from '../../components/common/icons/TrashIcon'
 import { TicketAssigneeForm } from '../../types/forms/TicketAssigneeForm.type'
 
 export const TicketAssigneeTableColumns: Array<Column<TicketAssigneeForm>> = [

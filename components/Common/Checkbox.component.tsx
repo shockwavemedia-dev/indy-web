@@ -1,6 +1,6 @@
 import { Field } from 'formik'
 import { useState } from 'react'
-import CheckIcon from './Icons/Check.icon'
+import CheckIcon from './icons/CheckIcon'
 
 const Checkbox = ({
   name,
