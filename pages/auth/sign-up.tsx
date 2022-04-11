@@ -3,10 +3,6 @@ import { Form, Formik } from 'formik'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { ReactElement, useState } from 'react'
-import {
-  computePasswordStrength,
-  PasswordStrengthMeter,
-} from '../../components/Auth/PasswordStrengthMeter.component'
 import Button from '../../components/Common/Button.component'
 import Checkbox from '../../components/Common/Checkbox.component'
 import BriefcaseIcon from '../../components/Common/Icons/Briefcase.icon'
@@ -15,6 +11,10 @@ import EmailIcon from '../../components/Common/Icons/Email.icon'
 import LockIcon from '../../components/Common/Icons/Lock.icon'
 import UserIcon from '../../components/Common/Icons/User.icon'
 import Link from '../../components/Common/Link.component'
+import {
+  computePasswordStrength,
+  PasswordStrengthMeter,
+} from '../../components/Common/PasswordStrengthMeter.component'
 import TextInput from '../../components/Common/TextInput.component'
 import AuthLayout from '../../layouts/Auth.layout'
 import { SignUpFormSchema } from '../../schemas/SignUpFormSchema'
