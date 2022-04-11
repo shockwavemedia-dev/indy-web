@@ -1,4 +1,5 @@
 import Dropzone from 'react-dropzone'
+import FormErrorMessage from './FormErrorMessage.component'
 
 const FileInput = ({
   label,
@@ -18,13 +19,13 @@ const FileInput = ({
   return (
     <Dropzone onDrop={dropFiles} noClick noKeyboard multiple={multiple}>
       {({ getRootProps, getInputProps, open, isDragActive }) => (
-        <>
+        <div className={className}>
           <div className="mb-2 font-urbanist text-base font-medium text-onyx">{label}</div>
           <div
             {...getRootProps()}
             className={`flex min-h-35 cursor-auto items-center justify-center overflow-hidden rounded-xl border border-dashed border-lavender-gray ${
               isDragActive ? 'bg-honeydew' : 'bg-ghost-white'
-            } ${className}`}
+            }`}
           >
             <div className="cursor absolute flex flex-col items-center">
               <div className="mb-1.5 font-urbanist text-sm font-medium text-onyx">
@@ -45,7 +46,8 @@ const FileInput = ({
             </div>
             <input {...getInputProps()} />
           </div>
-        </>
+          <FormErrorMessage name={name} />
+        </div>
       )}
     </Dropzone>
   )
