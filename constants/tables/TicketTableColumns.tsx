@@ -3,9 +3,9 @@ import { format } from 'date-fns'
 import { useSession } from 'next-auth/react'
 import { useQueryClient } from 'react-query'
 import { Column } from 'react-table'
-import EyeOpenIcon from '../../components/Common/Icons/EyeOpen.icon'
-import TrashIcon from '../../components/Common/Icons/Trash.icon'
-import Link from '../../components/Common/Link.component'
+import EyeOpenIcon from '../../components/common/Icons/EyeOpen.icon'
+import TrashIcon from '../../components/common/Icons/Trash.icon'
+import Link from '../../components/common/Link.component'
 import { Ticket } from '../../types/Ticket.type'
 
 export const TicketTableColumns: Array<Column<Ticket>> = [

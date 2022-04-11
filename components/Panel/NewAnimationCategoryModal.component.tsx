@@ -3,9 +3,9 @@ import { Form, Formik } from 'formik'
 import { useSession } from 'next-auth/react'
 import { NewAnimationCategoryFormSchema } from '../../schemas/NewAnimationCategoryFormSchema'
 import { NewAnimationCategoryForm } from '../../types/forms/NewAnimationCategoryForm.type'
-import Button from '../Common/Button.component'
-import PencilIcon from '../Common/Icons/Pencil.icon'
-import TextInput from '../Common/TextInput.component'
+import Button from '../common/Button.component'
+import PencilIcon from '../common/Icons/Pencil.icon'
+import TextInput from '../common/TextInput.component'
 import Modal from './Modal.component'
 
 const NewAnimationCategoryModal = ({

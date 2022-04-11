@@ -4,10 +4,10 @@ import { useState } from 'react'
 import { useQuery } from 'react-query'
 import { Page } from '../../types/Page.type'
 import { Service } from '../../types/Service.type'
-import FormErrorMessage from '../Common/FormErrorMessage.component'
-import CaretIcon from '../Common/Icons/Caret.icon'
-import CheckIcon from '../Common/Icons/Check.icon'
-import ClipboardIcon from '../Common/Icons/Clipboard.icon'
+import FormErrorMessage from '../common/FormErrorMessage.component'
+import CaretIcon from '../common/Icons/Caret.icon'
+import CheckIcon from '../common/Icons/Check.icon'
+import ClipboardIcon from '../common/Icons/Clipboard.icon'
 
 const SelectService = ({
   name,
