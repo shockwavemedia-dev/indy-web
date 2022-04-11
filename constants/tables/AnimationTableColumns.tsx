@@ -2,8 +2,8 @@ import axios from 'axios'
 import { useSession } from 'next-auth/react'
 import { useQueryClient } from 'react-query'
 import { Column } from 'react-table'
-import TrashIcon from '../components/Common/Icons/Trash.icon'
-import { Animation } from '../types/Animation.type'
+import TrashIcon from '../../components/Common/Icons/Trash.icon'
+import { Animation } from '../../types/Animation.type'
 export const AnimationTableColumns: Array<Column<Animation>> = [
   {
     Header: 'Title',

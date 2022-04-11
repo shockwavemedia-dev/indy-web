@@ -5,7 +5,7 @@ import Table from '../components/Common/Table'
 import Card from '../components/Panel/Card.component'
 import FancyButton from '../components/Panel/FancyButton.component'
 import NewClientModal from '../components/Panel/NewClientModal.component'
-import { ClientTableColumns } from '../constants/ClientTableColumns'
+import { ClientTableColumns } from '../constants/tables/ClientTableColumns'
 import PanelLayout from '../layouts/Panel.layout'
 import { NextPageWithLayout } from '../types/pages/NextPageWithLayout.type'
 

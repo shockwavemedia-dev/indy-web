@@ -5,7 +5,7 @@ import Table from '../../components/Common/Table'
 import Card from '../../components/Panel/Card.component'
 import FancyButton from '../../components/Panel/FancyButton.component'
 import NewAnimationRequestModal from '../../components/Panel/NewAnimationRequestModal.component'
-import { AnimationTableColumns } from '../../constants/AnimationTableColumns'
+import { AnimationTableColumns } from '../../constants/tables/AnimationTableColumns'
 import PanelLayout from '../../layouts/Panel.layout'
 import { NextPageWithLayout } from '../../types/pages/NextPageWithLayout.type'
 

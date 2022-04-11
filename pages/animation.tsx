@@ -7,7 +7,7 @@ import Card from '../components/Panel/Card.component'
 import FancyButton from '../components/Panel/FancyButton.component'
 import NewAnimationCategoryModal from '../components/Panel/NewAnimationCategoryModal.component'
 import NewAnimationModal from '../components/Panel/NewAnimationModal.component'
-import { AnimationTableColumns } from '../constants/AnimationTableColumns'
+import { AnimationTableColumns } from '../constants/tables/AnimationTableColumns'
 import PanelLayout from '../layouts/Panel.layout'
 import { NextPageWithLayout } from '../types/pages/NextPageWithLayout.type'
 

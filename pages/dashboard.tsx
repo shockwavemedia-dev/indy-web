@@ -10,7 +10,7 @@ import FancyButton from '../components/Panel/FancyButton.component'
 import NewEventModal from '../components/Panel/NewEventModal.component'
 import NewProjectBriefModal from '../components/Panel/NewProjectBriefModal.component'
 import SupportRequestModal from '../components/Panel/SupportRequestModal.component'
-import { TicketTableColumns } from '../constants/TicketTableColumns'
+import { TicketTableColumns } from '../constants/tables/TicketTableColumns'
 import PanelLayout from '../layouts/Panel.layout'
 import { NextPageWithLayout } from '../types/pages/NextPageWithLayout.type'
 

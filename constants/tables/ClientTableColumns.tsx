@@ -1,6 +1,6 @@
 import { format } from 'date-fns'
 import { Column } from 'react-table'
-import { Client } from '../types/Client.type'
+import { Client } from '../../types/Client.type'
 
 export const ClientTableColumns: Array<Column<Client>> = [
   {
