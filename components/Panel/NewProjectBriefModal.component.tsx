@@ -19,7 +19,7 @@ const NewProjectBriefModal = ({
 }) => {
   const formInitialValues: NewProjectBriefForm = {
     services: [],
-    date: '',
+    date: null,
     briefName: '',
     content: '',
     assets: null,

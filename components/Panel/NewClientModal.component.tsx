@@ -25,7 +25,7 @@ const NewClientModal = ({ isVisible, onClose }: { isVisible: boolean; onClose: (
     phone: '',
     timezone: '',
     overview: '',
-    clientSince: '',
+    clientSince: null,
     rating: -1,
   }
 

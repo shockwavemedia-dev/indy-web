@@ -3,7 +3,7 @@ export interface NewEventForm {
   clientId: number
   subject: string
   services: Array<{ serviceId: number; extras: Array<string> }>
-  duedate: string
+  duedate: Date | null
   description: string
   attachment: File | null
 }

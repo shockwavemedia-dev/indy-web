@@ -23,7 +23,7 @@ const NewEventModal = ({ isVisible, onClose }: { isVisible: boolean; onClose: ()
     clientId: session!.user.userType.clientId,
     subject: '',
     services: [],
-    duedate: '',
+    duedate: null,
     description: '',
     attachment: null,
   }

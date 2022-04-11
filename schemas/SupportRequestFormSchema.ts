@@ -1,4 +1,4 @@
-import { number, object, SchemaOf, string } from 'yup'
+import { date, number, object, SchemaOf, string } from 'yup'
 import { SupportRequestForm } from '../interfaces/SupportRequestForm.interface'
 
 export const SupportRequestFormSchema: SchemaOf<SupportRequestForm> = object().shape({
@@ -8,5 +8,5 @@ export const SupportRequestFormSchema: SchemaOf<SupportRequestForm> = object().s
   requestedBy: number().required(),
   clientId: number().required(),
   departmentId: number().required(),
-  duedate: string().required(),
+  duedate: date().required().nullable(),
 })

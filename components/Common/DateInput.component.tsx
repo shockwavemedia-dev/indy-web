@@ -1,5 +1,6 @@
 import { DesktopDatePicker } from '@mui/lab'
 import { useEffect, useState } from 'react'
+import FormErrorMessage from './FormErrorMessage.component'
 import CalendarIcon from './Icons/Calendar.icon'
 
 const DateInput = ({
@@ -51,22 +52,25 @@ const DateInput = ({
         },
       }}
       renderInput={({ inputRef, inputProps }) => (
-        <div className={`relative flex w-full items-center ${className}`}>
-          <CalendarIcon className="pointer-events-none absolute ml-6 stroke-lavender-gray" />
-          <input
-            ref={inputRef}
-            {...inputProps}
-            className={`min-h-12.5 w-full rounded-xl bg-transparent px-13 font-urbanist text-sm font-medium text-onyx placeholder-metallic-silver selection:bg-jungle-green selection:text-white focus:ring-2 focus:ring-jungle-green focus:ring-opacity-40 ${
-              isPickerVisible
-                ? 'ring-2 ring-jungle-green ring-opacity-40'
-                : 'ring-1 ring-bright-gray'
-            }`}
-            name={name}
-            spellCheck={false}
-            placeholder={placeholder}
-            readOnly
-            onClick={showPicker}
-          />
+        <div className={`w-full ${className}`}>
+          <div className="relative flex items-center">
+            <CalendarIcon className="pointer-events-none absolute ml-6 stroke-lavender-gray" />
+            <input
+              ref={inputRef}
+              {...inputProps}
+              className={`min-h-12.5 w-full rounded-xl bg-transparent px-13 font-urbanist text-sm font-medium text-onyx placeholder-metallic-silver selection:bg-jungle-green selection:text-white focus:ring-2 focus:ring-jungle-green focus:ring-opacity-40 ${
+                isPickerVisible
+                  ? 'ring-2 ring-jungle-green ring-opacity-40'
+                  : 'ring-1 ring-bright-gray'
+              }`}
+              name={name}
+              spellCheck={false}
+              placeholder={placeholder}
+              readOnly
+              onClick={showPicker}
+            />
+          </div>
+          <FormErrorMessage name={name} />
         </div>
       )}
     />

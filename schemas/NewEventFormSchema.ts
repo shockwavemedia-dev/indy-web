@@ -1,4 +1,4 @@
-import { array, mixed, number, object, SchemaOf, string } from 'yup'
+import { array, date, mixed, number, object, SchemaOf, string } from 'yup'
 import { NewEventForm } from '../interfaces/NewEventForm.interface'
 
 export const NewEventFormSchema: SchemaOf<NewEventForm> = object().shape({
@@ -16,7 +16,7 @@ export const NewEventFormSchema: SchemaOf<NewEventForm> = object().shape({
     )
     .required()
     .min(1),
-  duedate: string().required(),
+  duedate: date().required().nullable(),
   description: string().required(),
   attachment: mixed().required(),
 })

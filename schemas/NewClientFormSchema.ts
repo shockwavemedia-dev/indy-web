@@ -1,4 +1,4 @@
-import { number, object, SchemaOf, string } from 'yup'
+import { date, number, object, SchemaOf, string } from 'yup'
 import { NewClientForm } from '../interfaces/NewClientForm.interface'
 
 export const NewClientFormSchema: SchemaOf<NewClientForm> = object().shape({
@@ -9,6 +9,6 @@ export const NewClientFormSchema: SchemaOf<NewClientForm> = object().shape({
   phone: string().required(),
   timezone: string().required(),
   overview: string().required(),
-  clientSince: string().required(),
+  clientSince: date().required().nullable(),
   rating: number().required(),
 })

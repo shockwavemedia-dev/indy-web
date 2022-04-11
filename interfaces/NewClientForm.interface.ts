@@ -6,6 +6,6 @@ export interface NewClientForm {
   phone: string
   timezone: string
   overview: string
-  clientSince: string
+  clientSince: Date | null
   rating: number
 }

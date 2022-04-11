@@ -5,5 +5,5 @@ export interface SupportRequestForm {
   requestedBy: number
   clientId: number
   departmentId: number
-  duedate: string
+  duedate: Date | null
 }

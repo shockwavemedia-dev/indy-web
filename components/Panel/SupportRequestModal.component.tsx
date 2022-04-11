@@ -34,7 +34,7 @@ const SupportRequestModal = ({
     requestedBy: session?.user.id || -1,
     clientId: session?.user.userType.clientId || -1,
     departmentId: -1,
-    duedate: '',
+    duedate: null,
   }
 
   const typeOptions = TicketTypeOptions

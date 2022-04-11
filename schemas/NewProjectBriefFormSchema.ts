@@ -1,4 +1,4 @@
-import { array, mixed, number, object, SchemaOf, string } from 'yup'
+import { array, date, mixed, number, object, SchemaOf, string } from 'yup'
 import { NewProjectBriefForm } from '../interfaces/NewProjectBriefForm.interface'
 
 export const NewProjectBriefFormSchema: SchemaOf<NewProjectBriefForm> = object().shape({
@@ -13,7 +13,7 @@ export const NewProjectBriefFormSchema: SchemaOf<NewProjectBriefForm> = object()
     )
     .required()
     .min(1),
-  date: string().required(),
+  date: date().required().nullable(),
   briefName: string().required(),
   content: string().required(),
   assets: mixed().required(),
