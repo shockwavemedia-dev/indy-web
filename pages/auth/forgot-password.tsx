@@ -10,8 +10,8 @@ import Link from '../../components/Common/Link.component'
 import TextInput from '../../components/Common/TextInput.component'
 import AuthLayout from '../../layouts/Auth.layout'
 import { ForgotPasswordFormSchema } from '../../schemas/ForgotPasswordFormSchema'
-import { ForgotPasswordForm } from '../../types/ForgotPasswordForm.type'
-import { NextPageWithLayout } from '../../types/NextPageWithLayout.type'
+import { ForgotPasswordForm } from '../../types/forms/ForgotPasswordForm.type'
+import { NextPageWithLayout } from '../../types/pages/NextPageWithLayout.type'
 
 const ForgotPassword: NextPageWithLayout = () => {
   const { replace } = useRouter()

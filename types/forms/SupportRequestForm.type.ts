@@ -1,4 +1,4 @@
-export interface SupportRequestForm {
+export type SupportRequestForm = {
   subject: string
   description: string
   type: string

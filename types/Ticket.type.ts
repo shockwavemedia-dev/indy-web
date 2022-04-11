@@ -1,6 +1,6 @@
 import { Service } from './Service.type'
 
-export interface Ticket {
+export type Ticket = {
   id: number
   ticketCode: string
   clientId?: number

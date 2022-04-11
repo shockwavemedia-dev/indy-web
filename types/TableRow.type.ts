@@ -1,3 +1,1 @@
-export interface TableRow {
-  [key: string]: any
-}
+export type TableRow = { [key: string]: any }

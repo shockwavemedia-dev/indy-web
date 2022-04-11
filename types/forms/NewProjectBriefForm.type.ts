@@ -1,4 +1,4 @@
-export interface NewProjectBriefForm {
+export type NewProjectBriefForm = {
   services: Array<{ serviceId: number; extras: Array<string> }>
   date: Date | null
   briefName: string

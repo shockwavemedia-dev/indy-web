@@ -1,4 +1,4 @@
-export interface Service {
+export type Service = {
   id: number
   serviceId: number
   serviceName: string

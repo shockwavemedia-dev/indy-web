@@ -1,4 +1,4 @@
-export interface TicketAssigneeForm {
+export type TicketAssigneeForm = {
   departmentId: number
   departmentName: string
   adminUserId: number

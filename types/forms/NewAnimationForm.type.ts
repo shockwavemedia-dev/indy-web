@@ -1,4 +1,4 @@
-export interface NewAnimationForm {
+export type NewAnimationForm = {
   title: string
   description?: string
   libraryCategoryId: number

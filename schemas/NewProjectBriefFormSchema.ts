@@ -1,5 +1,5 @@
 import { array, date, mixed, number, object, SchemaOf, string } from 'yup'
-import { NewProjectBriefForm } from '../types/NewProjectBriefForm.type'
+import { NewProjectBriefForm } from '../types/forms/NewProjectBriefForm.type'
 
 export const NewProjectBriefFormSchema: SchemaOf<NewProjectBriefForm> = object().shape({
   services: array()

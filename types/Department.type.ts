@@ -1,6 +1,6 @@
 import { User } from './User.type'
 
-export interface Department {
+export type Department = {
   id: number
   name: string
   description: string

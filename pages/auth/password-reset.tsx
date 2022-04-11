@@ -13,8 +13,8 @@ import LockIcon from '../../components/Common/Icons/Lock.icon'
 import Link from '../../components/Common/Link.component'
 import TextInput from '../../components/Common/TextInput.component'
 import AuthLayout from '../../layouts/Auth.layout'
-import { NextPageWithLayout } from '../../types/NextPageWithLayout.type'
-import { PasswordResetForm } from '../../types/PasswordResetForm.type'
+import { PasswordResetForm } from '../../types/forms/PasswordResetForm.type'
+import { NextPageWithLayout } from '../../types/pages/NextPageWithLayout.type'
 
 const PasswordReset: NextPageWithLayout = () => {
   const { query, replace } = useRouter()

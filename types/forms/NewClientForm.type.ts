@@ -1,4 +1,4 @@
-export interface NewClientForm {
+export type NewClientForm = {
   name: string
   clientCode: string
   logo: string

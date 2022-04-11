@@ -1,4 +1,4 @@
-export interface Animation {
+export type Animation = {
   id: number
   title: string
   description?: string

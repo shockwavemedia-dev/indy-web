@@ -1,4 +1,4 @@
-export interface AuthenticationUser {
+export type AuthenticationUser = {
   id: number
   email: string
   status: 'active' | 'deleted' | 'inactive' | 'not_verified' | 'revoked'

@@ -1,6 +1,6 @@
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
-import { NextPageWithLayout } from '../types/NextPageWithLayout.type'
+import { NextPageWithLayout } from '../types/pages/NextPageWithLayout.type'
 
 const Home: NextPageWithLayout = () => {
   const { replace } = useRouter()

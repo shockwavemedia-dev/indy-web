@@ -1,4 +1,4 @@
-export interface CategoryAnimation {
+export type CategoryAnimation = {
   id: number
   name: string
 }

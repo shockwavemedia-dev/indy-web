@@ -1,4 +1,4 @@
-export interface PasswordResetForm {
+export type PasswordResetForm = {
   password: string
   passwordConfirmation: string
   token?: string

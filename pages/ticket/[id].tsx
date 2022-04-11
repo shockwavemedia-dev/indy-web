@@ -15,8 +15,8 @@ import { TicketAssigneeTableColumns } from '../../constants/TicketAssigneeTableC
 import { TicketStatusOptions } from '../../constants/TicketStatusOptions'
 import PanelLayout from '../../layouts/Panel.layout'
 import { Client } from '../../types/Client.type'
-import { NextPageWithLayout } from '../../types/NextPageWithLayout.type'
 import { Option } from '../../types/Option.type'
+import { NextPageWithLayout } from '../../types/pages/NextPageWithLayout.type'
 import { Ticket } from '../../types/Ticket.type'
 
 const Ticket: NextPageWithLayout = () => {

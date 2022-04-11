@@ -1,7 +1,7 @@
 import 'next-auth'
 import 'next-auth/jwt'
 import 'next-auth/user'
-import { AuthenticationUser } from './types/AuthenticationUser.type'
+import { AuthenticationUser } from './types/auth/AuthenticationUser.type'
 
 declare module 'next-auth' {
   interface Session {

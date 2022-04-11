@@ -9,7 +9,7 @@ import NewAnimationCategoryModal from '../components/Panel/NewAnimationCategoryM
 import NewAnimationModal from '../components/Panel/NewAnimationModal.component'
 import { AnimationTableColumns } from '../constants/AnimationTableColumns'
 import PanelLayout from '../layouts/Panel.layout'
-import { NextPageWithLayout } from '../types/NextPageWithLayout.type'
+import { NextPageWithLayout } from '../types/pages/NextPageWithLayout.type'
 
 const Animation: NextPageWithLayout = () => {
   const [isNewAnimationCategoryModalVisible, setNewAnimationCategoryModalVisible] = useState(false)

@@ -1,4 +1,4 @@
-export interface Page {
+export type Page = {
   from: number
   to: number
   currentPage: number

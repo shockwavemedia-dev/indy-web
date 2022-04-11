@@ -10,7 +10,7 @@ import { QueryClient, QueryClientProvider } from 'react-query'
 import snakecaseKeys from 'snakecase-keys'
 import { API_BASE_URL } from '../constants/Http'
 import '../styles/globals.css'
-import { AppPropsWithLayout } from '../types/AppPropsWithLayout.type'
+import { AppPropsWithLayout } from '../types/pages/AppPropsWithLayout.type'
 import { parseDates } from '../utils/DateHelpers'
 
 const isClientSide = typeof window !== 'undefined'

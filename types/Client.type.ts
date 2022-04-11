@@ -1,4 +1,4 @@
-export interface Client {
+export type Client = {
   id: number
   name: string
   clientCode: string

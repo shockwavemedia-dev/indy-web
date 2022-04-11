@@ -1,4 +1,4 @@
-export interface NewAnimationRequestForm {
+export type NewAnimationRequestForm = {
   libraryId: number
   description?: string
 }

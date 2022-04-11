@@ -18,8 +18,8 @@ import Link from '../../components/Common/Link.component'
 import TextInput from '../../components/Common/TextInput.component'
 import AuthLayout from '../../layouts/Auth.layout'
 import { SignUpFormSchema } from '../../schemas/SignUpFormSchema'
-import { NextPageWithLayout } from '../../types/NextPageWithLayout.type'
-import { SignUpForm } from '../../types/SignUpForm.type'
+import { SignUpForm } from '../../types/forms/SignUpForm.type'
+import { NextPageWithLayout } from '../../types/pages/NextPageWithLayout.type'
 
 const SignUp: NextPageWithLayout = () => {
   const { replace } = useRouter()

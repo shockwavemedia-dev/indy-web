@@ -7,7 +7,7 @@ import FancyButton from '../components/Panel/FancyButton.component'
 import NewClientModal from '../components/Panel/NewClientModal.component'
 import { ClientTableColumns } from '../constants/ClientTableColumns'
 import PanelLayout from '../layouts/Panel.layout'
-import { NextPageWithLayout } from '../types/NextPageWithLayout.type'
+import { NextPageWithLayout } from '../types/pages/NextPageWithLayout.type'
 
 const Client: NextPageWithLayout = () => {
   const [isNewClientModalVisible, setNewClientModalVisible] = useState(false)

@@ -1,6 +1,6 @@
 import { Form, Formik } from 'formik'
 import { NewProjectBriefFormSchema } from '../../schemas/NewProjectBriefFormSchema'
-import { NewProjectBriefForm } from '../../types/NewProjectBriefForm.type'
+import { NewProjectBriefForm } from '../../types/forms/NewProjectBriefForm.type'
 import Button from '../Common/Button.component'
 import DateInput from '../Common/DateInput.component'
 import FileInput from '../Common/FileInput.component'

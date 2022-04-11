@@ -1,4 +1,4 @@
-export interface NewEventForm {
+export type NewEventForm = {
   requestedBy: number
   clientId: number
   subject: string

@@ -1,6 +1,6 @@
 import { Icon } from '../types/Icon.type'
 
-export interface Navigation {
+export type Navigation = {
   Icon?: Icon
   title: string
   pathname?: string

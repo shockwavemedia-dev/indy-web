@@ -1,6 +1,6 @@
 import { AuthenticationUser } from './AuthenticationUser.type'
 
-export interface Authentication {
+export type Authentication = {
   status: number
   title: string
   message: string

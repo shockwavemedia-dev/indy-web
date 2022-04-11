@@ -12,7 +12,7 @@ import NewProjectBriefModal from '../components/Panel/NewProjectBriefModal.compo
 import SupportRequestModal from '../components/Panel/SupportRequestModal.component'
 import { TicketTableColumns } from '../constants/TicketTableColumns'
 import PanelLayout from '../layouts/Panel.layout'
-import { NextPageWithLayout } from '../types/NextPageWithLayout.type'
+import { NextPageWithLayout } from '../types/pages/NextPageWithLayout.type'
 
 const Dashboard: NextPageWithLayout = () => {
   const [isNewEventModalVisible, setNewEventModalVisible] = useState(false)
