@@ -84,20 +84,16 @@ input:-webkit-autofill:focus {
   color: #2bb67d;
 }
 
-.MuiIconButton-root:hover {
-  background-color: #e9faf3;
-}
-
-.MuiPickersDay-root:hover {
-  background-color: #e9faf3;
-}
-
+.MuiButtonBase-root:hover,
 .PrivatePickersYear-yearButton:hover {
-  background-color: #e9faf3;
+  background-color: #e9faf3 !important;
+  transition: none !important;
+  -webkit-transition: none !important;
 }
 
 .MuiPickersDay-today {
   border-color: #2bb67d !important;
+  background-color: transparent !important;
 }
 
 .Mui-selected {

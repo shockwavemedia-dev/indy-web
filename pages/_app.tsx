@@ -1,6 +1,5 @@
 import AdapterDateFns from '@mui/lab/AdapterDateFns'
 import LocalizationProvider from '@mui/lab/LocalizationProvider'
-import { StyledEngineProvider } from '@mui/material'
 import axios from 'axios'
 import camelcaseKeys from 'camelcase-keys'
 import { SessionProvider } from 'next-auth/react'
@@ -70,9 +69,7 @@ const App = ({ Component, pageProps }: AppPropsWithLayout) => {
     <SessionProvider session={pageProps.session} refetchInterval={3600}>
       <QueryClientProvider client={queryClient}>
         <LocalizationProvider dateAdapter={AdapterDateFns}>
-          <StyledEngineProvider injectFirst>
-            {getLayout(<Component {...pageProps} />)}
-          </StyledEngineProvider>
+          {getLayout(<Component {...pageProps} />)}
         </LocalizationProvider>
       </QueryClientProvider>
     </SessionProvider>
