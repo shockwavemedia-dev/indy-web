@@ -1,5 +1,5 @@
 import { number, object, SchemaOf, string } from 'yup'
-import { NewDepartmentForm } from '../interfaces/NewDepartmentForm.interface'
+import { NewDepartmentForm } from '../types/NewDepartmentForm.type'
 
 export const NewDepartmentFormSchema: SchemaOf<NewDepartmentForm> = object().shape({
   name: string().required(),

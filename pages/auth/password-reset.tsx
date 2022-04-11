@@ -12,9 +12,9 @@ import FloppyDiskIcon from '../../components/Common/Icons/FloppyDisk.icon'
 import LockIcon from '../../components/Common/Icons/Lock.icon'
 import Link from '../../components/Common/Link.component'
 import TextInput from '../../components/Common/TextInput.component'
-import { PasswordResetForm } from '../../interfaces/PasswordResetForm.interface'
 import AuthLayout from '../../layouts/Auth.layout'
 import { NextPageWithLayout } from '../../types/NextPageWithLayout.type'
+import { PasswordResetForm } from '../../types/PasswordResetForm.type'
 
 const PasswordReset: NextPageWithLayout = () => {
   const { query, replace } = useRouter()

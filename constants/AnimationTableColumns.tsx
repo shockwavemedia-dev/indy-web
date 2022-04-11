@@ -3,7 +3,7 @@ import { useSession } from 'next-auth/react'
 import { useQueryClient } from 'react-query'
 import { Column } from 'react-table'
 import TrashIcon from '../components/Common/Icons/Trash.icon'
-import { Animation } from '../interfaces/Animation.interface'
+import { Animation } from '../types/Animation.type'
 export const AnimationTableColumns: Array<Column<Animation>> = [
   {
     Header: 'Title',

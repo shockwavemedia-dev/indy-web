@@ -1,4 +1,4 @@
-import { Service } from './Service.interface'
+import { Service } from './Service.type'
 
 export interface Ticket {
   id: number

@@ -13,11 +13,11 @@ import Card from '../../components/Panel/Card.component'
 import TicketAssigneeModal from '../../components/Panel/TicketAssigneeModal.component'
 import { TicketAssigneeTableColumns } from '../../constants/TicketAssigneeTableColumns'
 import { TicketStatusOptions } from '../../constants/TicketStatusOptions'
-import { Client } from '../../interfaces/Client.interface'
-import { Option } from '../../interfaces/Option.interface'
-import { Ticket } from '../../interfaces/Ticket.interface'
 import PanelLayout from '../../layouts/Panel.layout'
+import { Client } from '../../types/Client.type'
 import { NextPageWithLayout } from '../../types/NextPageWithLayout.type'
+import { Option } from '../../types/Option.type'
+import { Ticket } from '../../types/Ticket.type'
 
 const Ticket: NextPageWithLayout = () => {
   const { data: session } = useSession()

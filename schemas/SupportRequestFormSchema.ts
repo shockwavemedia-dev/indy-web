@@ -1,5 +1,5 @@
 import { date, number, object, SchemaOf, string } from 'yup'
-import { SupportRequestForm } from '../interfaces/SupportRequestForm.interface'
+import { SupportRequestForm } from '../types/SupportRequestForm.type'
 
 export const SupportRequestFormSchema: SchemaOf<SupportRequestForm> = object().shape({
   subject: string().required(),

@@ -3,7 +3,7 @@ import { useSession } from 'next-auth/react'
 import { useQueryClient } from 'react-query'
 import { Column } from 'react-table'
 import TrashIcon from '../components/Common/Icons/Trash.icon'
-import { TicketAssigneeForm } from '../interfaces/TicketAssigneeForm.interface'
+import { TicketAssigneeForm } from '../types/TicketAssigneeForm.type'
 
 export const TicketAssigneeTableColumns: Array<Column<TicketAssigneeForm>> = [
   {

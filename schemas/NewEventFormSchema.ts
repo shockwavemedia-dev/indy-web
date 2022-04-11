@@ -1,5 +1,5 @@
 import { array, date, mixed, number, object, SchemaOf, string } from 'yup'
-import { NewEventForm } from '../interfaces/NewEventForm.interface'
+import { NewEventForm } from '../types/NewEventForm.type'
 
 export const NewEventFormSchema: SchemaOf<NewEventForm> = object().shape({
   requestedBy: number().required(),

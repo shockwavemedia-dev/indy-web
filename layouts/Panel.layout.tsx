@@ -10,9 +10,9 @@ import EyeOpenIcon from '../components/Common/Icons/EyeOpen.icon'
 import MagnifyingGlassIcon from '../components/Common/Icons/MagnifyingGlass.icon'
 import JobsStatusCountCard from '../components/Panel/JobStatsCard.component'
 import { navigations } from '../constants/Navigations'
-import { Navigation } from '../interfaces/Navigation.interface'
 import DailyPressLogo from '../public/images/daily-press-logo.png'
 import DummyAvatar from '../public/images/dummy-avatar.png'
+import { Navigation } from '../types/Navigation.type'
 
 const PanelLayout = ({ header, children }: { header: string; children: ReactNode }) => {
   const { status, data: session } = useSession({

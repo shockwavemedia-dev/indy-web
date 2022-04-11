@@ -1,5 +1,5 @@
 import { mixed, number, object, SchemaOf, string } from 'yup'
-import { NewAnimationForm } from '../interfaces/NewAnimationForm.interface'
+import { NewAnimationForm } from '../types/NewAnimationForm.type'
 
 export const NewAnimationFormSchema: SchemaOf<NewAnimationForm> = object().shape({
   title: string().required(),

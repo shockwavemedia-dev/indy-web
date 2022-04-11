@@ -6,7 +6,7 @@ import { Column } from 'react-table'
 import EyeOpenIcon from '../components/Common/Icons/EyeOpen.icon'
 import TrashIcon from '../components/Common/Icons/Trash.icon'
 import Link from '../components/Common/Link.component'
-import { Ticket } from '../interfaces/Ticket.interface'
+import { Ticket } from '../types/Ticket.type'
 
 export const TicketTableColumns: Array<Column<Ticket>> = [
   {

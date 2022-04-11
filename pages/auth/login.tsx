@@ -11,9 +11,9 @@ import LockIcon from '../../components/Common/Icons/Lock.icon'
 import UserIcon from '../../components/Common/Icons/User.icon'
 import Link from '../../components/Common/Link.component'
 import TextInput from '../../components/Common/TextInput.component'
-import { LoginForm } from '../../interfaces/LoginForm.interface'
 import AuthLayout from '../../layouts/Auth.layout'
 import { LoginFormSchema } from '../../schemas/LoginFormSchema'
+import { LoginForm } from '../../types/LoginForm.type'
 import { NextPageWithLayout } from '../../types/NextPageWithLayout.type'
 
 const Login: NextPageWithLayout = () => {

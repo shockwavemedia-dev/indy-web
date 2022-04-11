@@ -1,4 +1,4 @@
-import { User } from './User.interface'
+import { User } from './User.type'
 
 export interface Department {
   id: number

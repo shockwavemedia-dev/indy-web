@@ -7,8 +7,8 @@ import ReactSelect, {
   SingleValue,
   StylesConfig,
 } from 'react-select'
-import { Option } from '../../interfaces/Option.interface'
 import { Icon } from '../../types/Icon.type'
+import { Option } from '../../types/Option.type'
 import CaretIcon from './Icons/Caret.icon'
 
 const DropdownIndicator = (props: DropdownIndicatorProps<Option, false>) => (

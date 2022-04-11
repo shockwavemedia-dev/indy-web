@@ -1,5 +1,5 @@
 import { object, SchemaOf, string } from 'yup'
-import { SignUpForm } from '../interfaces/SignUpForm.interface'
+import { SignUpForm } from '../types/SignUpForm.type'
 
 export const SignUpFormSchema: SchemaOf<SignUpForm> = object().shape({
   fullName: string().required(),

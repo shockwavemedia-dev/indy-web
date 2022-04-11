@@ -1,5 +1,5 @@
 import { object, SchemaOf, string } from 'yup'
-import { PasswordResetForm } from '../interfaces/PasswordResetForm.interface'
+import { PasswordResetForm } from '../types/PasswordResetForm.type'
 
 export const PasswordResetFormSchema: SchemaOf<PasswordResetForm> = object().shape({
   password: string().required(),

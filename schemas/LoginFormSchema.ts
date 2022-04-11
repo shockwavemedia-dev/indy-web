@@ -1,5 +1,5 @@
 import { object, SchemaOf, string } from 'yup'
-import { LoginForm } from '../interfaces/LoginForm.interface'
+import { LoginForm } from '../types/LoginForm.type'
 
 export const LoginFormSchema: SchemaOf<LoginForm> = object().shape({
   email: string().email().required(),

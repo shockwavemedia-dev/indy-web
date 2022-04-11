@@ -1,4 +1,4 @@
-import { AuthenticationUser } from './AuthenticationUser.interface'
+import { AuthenticationUser } from './AuthenticationUser.type'
 
 export interface Authentication {
   status: number

@@ -8,7 +8,7 @@ import NotepadIcon from '../components/Common/Icons/Notepad.icon'
 import PresentationChartIcon from '../components/Common/Icons/PresentationChart.icon'
 import UserIcon from '../components/Common/Icons/User.icon'
 import VideoIcon from '../components/Common/Icons/Video.icon'
-import { Navigation } from '../interfaces/Navigation.interface'
+import { Navigation } from '../types/Navigation.type'
 
 export const navigations: Array<Navigation> = [
   {

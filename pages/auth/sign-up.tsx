@@ -16,10 +16,10 @@ import LockIcon from '../../components/Common/Icons/Lock.icon'
 import UserIcon from '../../components/Common/Icons/User.icon'
 import Link from '../../components/Common/Link.component'
 import TextInput from '../../components/Common/TextInput.component'
-import { SignUpForm } from '../../interfaces/SignUpForm.interface'
 import AuthLayout from '../../layouts/Auth.layout'
 import { SignUpFormSchema } from '../../schemas/SignUpFormSchema'
 import { NextPageWithLayout } from '../../types/NextPageWithLayout.type'
+import { SignUpForm } from '../../types/SignUpForm.type'
 
 const SignUp: NextPageWithLayout = () => {
   const { replace } = useRouter()

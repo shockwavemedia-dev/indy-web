@@ -8,9 +8,9 @@ import CaretIcon from '../../components/Common/Icons/Caret.icon'
 import EmailIcon from '../../components/Common/Icons/Email.icon'
 import Link from '../../components/Common/Link.component'
 import TextInput from '../../components/Common/TextInput.component'
-import { ForgotPasswordForm } from '../../interfaces/ForgotPasswordForm.interface'
 import AuthLayout from '../../layouts/Auth.layout'
 import { ForgotPasswordFormSchema } from '../../schemas/ForgotPasswordFormSchema'
+import { ForgotPasswordForm } from '../../types/ForgotPasswordForm.type'
 import { NextPageWithLayout } from '../../types/NextPageWithLayout.type'
 
 const ForgotPassword: NextPageWithLayout = () => {
