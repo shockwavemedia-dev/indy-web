@@ -9,7 +9,7 @@ export const NewClientUserFormSchema: SchemaOf<NewClientUserForm> = object().sha
   contactNumber: string().required(),
   firstName: string().required(),
   lastName: string().required(),
-  middleName: string().nullable(),
+  middleName: string().optional(),
   gender: string().required(),
   role: string().required(),
   birthDate: string().required(),

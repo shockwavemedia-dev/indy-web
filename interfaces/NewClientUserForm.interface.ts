@@ -6,7 +6,7 @@ export interface NewClientUserForm {
   contactNumber: string
   firstName: string
   lastName: string
-  middleName: string
+  middleName?: string
   gender: string
   role: string
   clientId: number

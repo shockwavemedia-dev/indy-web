@@ -6,7 +6,7 @@ export interface NewAdminUserForm {
   contactNumber: string
   firstName: string
   lastName: string
-  middleName: string | null
+  middleName?: string
   gender: string
   role: string
 }
