@@ -15,9 +15,9 @@ const AccountVerified: NextPageWithLayout = () => {
   } = useRouter()
 
   useEffect(() => {
-    if (isReady === true) {
+    if (isReady) {
       ;(async () => {
-        await axios.get(`/v1/verify-email`, {
+        await axios.get('/v1/verify-email', {
           params: {
             email,
             token,
