@@ -1,5 +1,5 @@
 import Dropzone from 'react-dropzone'
-import FormErrorMessage from './FormErrorMessage.component'
+import FormErrorMessage from './FormErrorMessage'
 
 const FileInput = ({
   label,

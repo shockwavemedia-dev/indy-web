@@ -1,16 +1,16 @@
 import { Form, Formik } from 'formik'
 import { signIn } from 'next-auth/react'
 import Head from 'next/head'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { done, start } from 'nprogress'
 import { ReactElement } from 'react'
-import Button from '../../components/common/Button.component'
-import Checkbox from '../../components/common/Checkbox.component'
+import Button from '../../components/common/Button'
+import Checkbox from '../../components/common/Checkbox'
 import CaretIcon from '../../components/common/icons/CaretIcon'
 import LockIcon from '../../components/common/icons/LockIcon'
 import UserIcon from '../../components/common/icons/UserIcon'
-import Link from '../../components/common/Link.component'
-import TextInput from '../../components/common/TextInput.component'
+import TextInput from '../../components/common/TextInput'
 import AuthLayout from '../../layouts/Auth.layout'
 import { LoginFormSchema } from '../../schemas/LoginFormSchema'
 import { LoginForm } from '../../types/forms/LoginForm.type'
@@ -76,11 +76,10 @@ const Login: NextPageWithLayout = () => {
             />
             <div className="mb-8 flex w-full justify-between">
               <Checkbox name="rememberMe" label="Remember me" />
-              <Link
-                href="/auth/forgot-password"
-                className="text-sm font-semibold text-jungle-green"
-              >
-                Forgot Password?
+              <Link href="/auth/forgot-password">
+                <a className="font-urbanist text-sm font-semibold text-jungle-green underline-offset-1 hover:underline">
+                  Forgot Password?
+                </a>
               </Link>
             </div>
             <Button
@@ -94,8 +93,10 @@ const Login: NextPageWithLayout = () => {
             </Button>
             <div className="font-urbanist text-sm font-medium text-metallic-silver">
               Don{"'"}t have an account?{' '}
-              <Link href="/auth/sign-up" className="text-sm font-semibold text-jungle-green">
-                Sign Up
+              <Link href="/auth/sign-up">
+                <a className="font-urbanist text-sm font-semibold text-jungle-green underline-offset-1 hover:underline">
+                  Sign Up
+                </a>
               </Link>
             </div>
           </Form>

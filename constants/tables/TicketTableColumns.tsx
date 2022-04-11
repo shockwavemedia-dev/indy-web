@@ -1,11 +1,11 @@
 import axios from 'axios'
 import { format } from 'date-fns'
 import { useSession } from 'next-auth/react'
+import Link from 'next/link'
 import { useQueryClient } from 'react-query'
 import { Column } from 'react-table'
 import EyeOpenIcon from '../../components/common/icons/EyeOpenIcon'
 import TrashIcon from '../../components/common/icons/TrashIcon'
-import Link from '../../components/common/Link.component'
 import { Ticket } from '../../types/Ticket.type'
 
 export const TicketTableColumns: Array<Column<Ticket>> = [
@@ -68,7 +68,9 @@ export const TicketTableColumns: Array<Column<Ticket>> = [
       return (
         <div className="flex space-x-2">
           <Link href={`/ticket/${value}`}>
-            <EyeOpenIcon className="stroke-waterloo" />
+            <a>
+              <EyeOpenIcon className="stroke-waterloo" />
+            </a>
           </Link>
           <button onClick={deleteTicket}>
             <TrashIcon className="stroke-waterloo" />

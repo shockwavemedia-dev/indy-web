@@ -1,14 +1,14 @@
 import { Form, Formik } from 'formik'
 import { NewProjectBriefFormSchema } from '../../schemas/NewProjectBriefFormSchema'
 import { NewProjectBriefForm } from '../../types/forms/NewProjectBriefForm.type'
-import Button from '../common/Button.component'
-import DateInput from '../common/DateInput.component'
-import FileInput from '../common/FileInput.component'
+import Button from '../common/Button'
+import DateInput from '../common/DateInput'
+import FileInput from '../common/FileInput'
 import EditIcon from '../common/icons/EditIcon'
-import TextAreaInput from '../common/TextAreaInput.component'
-import TextInput from '../common/TextInput.component'
-import Modal from './Modal.component'
-import SelectService from './SelectService.component'
+import TextAreaInput from '../common/TextAreaInput'
+import TextInput from '../common/TextInput'
+import Modal from './Modal'
+import SelectService from './SelectService'
 
 const NewProjectBriefModal = ({
   isVisible,

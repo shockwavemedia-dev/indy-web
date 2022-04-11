@@ -1,6 +1,6 @@
 import { Field } from 'formik'
 import { Icon } from '../../types/Icon.type'
-import FormErrorMessage from './FormErrorMessage.component'
+import FormErrorMessage from './FormErrorMessage'
 
 const TextAreaInput = ({
   name,

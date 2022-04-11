@@ -7,15 +7,15 @@ import { SupportRequestFormSchema } from '../../schemas/SupportRequestFormSchema
 import { Department } from '../../types/Department.type'
 import { SupportRequestForm } from '../../types/forms/SupportRequestForm.type'
 import { Page } from '../../types/Page.type'
-import Button from '../common/Button.component'
-import DateInput from '../common/DateInput.component'
+import Button from '../common/Button'
+import DateInput from '../common/DateInput'
 import ClipboardIcon from '../common/icons/ClipboardIcon'
 import EditIcon from '../common/icons/EditIcon'
 import LightbulbIcon from '../common/icons/LightbulbIcon'
-import Select from '../common/Select.component'
-import TextAreaInput from '../common/TextAreaInput.component'
-import TextInput from '../common/TextInput.component'
-import Modal from './Modal.component'
+import Select from '../common/Select'
+import TextAreaInput from '../common/TextAreaInput'
+import TextInput from '../common/TextInput'
+import Modal from './Modal'
 
 const SupportRequestModal = ({
   isVisible,

@@ -1,7 +1,7 @@
 import { Field } from 'formik'
 import { useState } from 'react'
 import { Icon } from '../../types/Icon.type'
-import FormErrorMessage from './FormErrorMessage.component'
+import FormErrorMessage from './FormErrorMessage'
 import EyeOpenIcon from './icons/EyeOpenIcon'
 
 const TextInput = ({

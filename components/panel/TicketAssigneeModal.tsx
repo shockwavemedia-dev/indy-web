@@ -5,11 +5,11 @@ import { useQuery, useQueryClient } from 'react-query'
 import { Department } from '../../types/Department.type'
 import { TicketAssigneeForm } from '../../types/forms/TicketAssigneeForm.type'
 import { Page } from '../../types/Page.type'
-import Button from '../common/Button.component'
+import Button from '../common/Button'
 import ClipboardIcon from '../common/icons/ClipboardIcon'
 import UserIcon from '../common/icons/UserIcon'
-import Select from '../common/Select.component'
-import Modal from './Modal.component'
+import Select from '../common/Select'
+import Modal from './Modal'
 
 const TicketAssigneeModal = ({
   isVisible,

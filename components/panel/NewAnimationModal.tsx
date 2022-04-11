@@ -7,12 +7,12 @@ import { CategoryAnimation } from '../../types/CategoryAnimation.type'
 import { NewAnimationForm } from '../../types/forms/NewAnimationForm.type'
 import { Page } from '../../types/Page.type'
 import { objectWithFileToFormData } from '../../utils/FormHelpers'
-import Button from '../common/Button.component'
-import FileInput from '../common/FileInput.component'
+import Button from '../common/Button'
+import FileInput from '../common/FileInput'
 import PencilIcon from '../common/icons/PencilIcon'
-import Select from '../common/Select.component'
-import TextInput from '../common/TextInput.component'
-import Modal from './Modal.component'
+import Select from '../common/Select'
+import TextInput from '../common/TextInput'
+import Modal from './Modal'
 
 const NewAnimationModal = ({ isVisible, onClose }: { isVisible: boolean; onClose: () => void }) => {
   const { data: session } = useSession()

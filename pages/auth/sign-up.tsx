@@ -1,21 +1,21 @@
 import axios from 'axios'
 import { Form, Formik } from 'formik'
 import Head from 'next/head'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { ReactElement, useState } from 'react'
-import Button from '../../components/common/Button.component'
-import Checkbox from '../../components/common/Checkbox.component'
+import Button from '../../components/common/Button'
+import Checkbox from '../../components/common/Checkbox'
 import BriefcaseIcon from '../../components/common/icons/BriefcaseIcon'
 import CaretIcon from '../../components/common/icons/CaretIcon'
 import EmailIcon from '../../components/common/icons/EmailIcon'
 import LockIcon from '../../components/common/icons/LockIcon'
 import UserIcon from '../../components/common/icons/UserIcon'
-import Link from '../../components/common/Link.component'
 import {
   computePasswordStrength,
   PasswordStrengthMeter,
-} from '../../components/common/PasswordStrengthMeter.component'
-import TextInput from '../../components/common/TextInput.component'
+} from '../../components/common/PasswordStrengthMeter'
+import TextInput from '../../components/common/TextInput'
 import AuthLayout from '../../layouts/Auth.layout'
 import { SignUpFormSchema } from '../../schemas/SignUpFormSchema'
 import { SignUpForm } from '../../types/forms/SignUpForm.type'
@@ -124,8 +124,10 @@ const SignUp: NextPageWithLayout = () => {
             </Button>
             <div className="font-urbanist text-sm font-medium text-metallic-silver">
               Already have an account?{' '}
-              <Link href="/auth/login" className="text-sm font-semibold text-jungle-green">
-                Login
+              <Link href="/auth/login">
+                <a className="font-urbanist text-sm font-semibold text-jungle-green underline-offset-1 hover:underline">
+                  Login
+                </a>
               </Link>
             </div>
           </Form>

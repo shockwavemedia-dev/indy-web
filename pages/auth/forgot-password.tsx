@@ -1,13 +1,13 @@
 import axios from 'axios'
 import { Form, Formik } from 'formik'
 import Head from 'next/head'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { ReactElement } from 'react'
-import Button from '../../components/common/Button.component'
+import Button from '../../components/common/Button'
 import CaretIcon from '../../components/common/icons/CaretIcon'
 import EmailIcon from '../../components/common/icons/EmailIcon'
-import Link from '../../components/common/Link.component'
-import TextInput from '../../components/common/TextInput.component'
+import TextInput from '../../components/common/TextInput'
 import AuthLayout from '../../layouts/Auth.layout'
 import { ForgotPasswordFormSchema } from '../../schemas/ForgotPasswordFormSchema'
 import { ForgotPasswordForm } from '../../types/forms/ForgotPasswordForm.type'
@@ -64,8 +64,10 @@ const ForgotPassword: NextPageWithLayout = () => {
               <div>Restore Password</div>
               <CaretIcon className="rotate-90 stroke-white" />
             </Button>
-            <Link href="/auth/login" className="text-sm font-medium text-metallic-silver">
-              Cancel
+            <Link href="/auth/login">
+              <a className="font-urbanist text-sm font-medium text-metallic-silver underline-offset-1 hover:underline">
+                Cancel
+              </a>
             </Link>
           </Form>
         )}

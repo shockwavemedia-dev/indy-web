@@ -1,17 +1,17 @@
 import axios from 'axios'
 import { Form, Formik } from 'formik'
 import Head from 'next/head'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { ReactElement, useState } from 'react'
-import Button from '../../components/common/Button.component'
+import Button from '../../components/common/Button'
 import FloppyDiskIcon from '../../components/common/icons/FloppyDiskIcon'
 import LockIcon from '../../components/common/icons/LockIcon'
-import Link from '../../components/common/Link.component'
 import {
   computePasswordStrength,
   PasswordStrengthMeter,
-} from '../../components/common/PasswordStrengthMeter.component'
-import TextInput from '../../components/common/TextInput.component'
+} from '../../components/common/PasswordStrengthMeter'
+import TextInput from '../../components/common/TextInput'
 import AuthLayout from '../../layouts/Auth.layout'
 import { PasswordResetForm } from '../../types/forms/PasswordResetForm.type'
 import { NextPageWithLayout } from '../../types/pages/NextPageWithLayout.type'
@@ -86,8 +86,10 @@ const PasswordReset: NextPageWithLayout = () => {
               <FloppyDiskIcon className="stroke-white" />
               <div>Save New Password</div>
             </Button>
-            <Link href="/auth/login" className="text-sm font-medium text-metallic-silver">
-              Cancel
+            <Link href="/auth/login">
+              <a className="font-urbanist text-sm font-medium text-metallic-silver underline-offset-1 hover:underline">
+                Cancel
+              </a>
             </Link>
           </Form>
         )}
