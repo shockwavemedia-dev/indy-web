@@ -67,7 +67,7 @@ const NewEventModal = ({ isVisible, onClose }: { isVisible: boolean; onClose: ()
                   className="mb-5"
                 />
                 <div className="mb-5 flex space-x-5">
-                  <SelectService setFieldValue={setFieldValue} />
+                  <SelectService name="services" setFieldValue={setFieldValue} />
                   <DateInput
                     name="duedate"
                     placeholder="Enter due date"

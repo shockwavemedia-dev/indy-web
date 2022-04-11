@@ -9,12 +9,11 @@ export const NewEventFormSchema: SchemaOf<NewEventForm> = object().shape({
     .of(
       object()
         .shape({
-          serviceId: number().required(),
-          extras: array().of(string().required()).optional(),
+          serviceId: number(),
+          extras: array().of(string()),
         })
         .required()
     )
-    .required()
     .min(1),
   duedate: date().required().nullable(),
   description: string().required(),

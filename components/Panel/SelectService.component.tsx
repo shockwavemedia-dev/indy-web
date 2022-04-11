@@ -4,13 +4,16 @@ import { useState } from 'react'
 import { useQuery } from 'react-query'
 import { Page } from '../../interfaces/Page.interface'
 import { Service } from '../../interfaces/Service.interface'
+import FormErrorMessage from '../Common/FormErrorMessage.component'
 import CaretIcon from '../Common/Icons/Caret.icon'
 import CheckIcon from '../Common/Icons/Check.icon'
 import ClipboardIcon from '../Common/Icons/Clipboard.icon'
 
 const SelectService = ({
+  name,
   setFieldValue,
 }: {
+  name: string
   setFieldValue: (field: string, value: any, shouldValidate?: boolean) => void
 }) => {
   const { data: session } = useSession()
@@ -38,7 +41,7 @@ const SelectService = ({
 
   const setSelectedServiceInForm = (selectedServices: { [serviceId: number]: Array<string> }) =>
     setFieldValue(
-      'services',
+      name,
       Object.keys(selectedServices).map((serviceId) => ({
         serviceId: Number(serviceId),
         extras: selectedServices[Number(serviceId)] || [],
@@ -97,9 +100,10 @@ const SelectService = ({
           className={`mr-6 stroke-waterloo ${isServicesVisible ? 'rotate-0' : 'rotate-180'}`}
         />
       </button>
+      <FormErrorMessage name={name} />
       <div
         className={`absolute top-full z-20 mt-2 flex w-full flex-col overflow-hidden rounded bg-white shadow-react-select ${
-          !isServicesVisible && 'invisible'
+          !isServicesVisible ? 'invisible' : 'visible'
         }`}
       >
         <div className="max-h-75 overflow-y-auto py-1">
@@ -138,7 +142,7 @@ const ServiceRow = ({
   return (
     <>
       <button
-        className="flex h-8.5 w-full cursor-default items-center justify-between py-2 px-3 font-urbanist text-sm font-medium text-onyx hover:bg-pattensblue"
+        className="flex h-8.5 w-full cursor-default items-center justify-between py-2 px-3 font-urbanist text-sm font-medium text-onyx hover:bg-honeydew"
         type="button"
         name={service.serviceName}
         onClick={fireToggleService}
@@ -182,7 +186,7 @@ const Extra = ({
 
   return (
     <button
-      className="flex h-8.5 w-full cursor-default items-center justify-between py-2 pl-9 pr-3 font-urbanist text-sm font-medium text-onyx hover:bg-pattensblue"
+      className="flex h-8.5 w-full cursor-default items-center justify-between py-2 pl-9 pr-3 font-urbanist text-sm font-medium text-onyx hover:bg-honeydew"
       type="button"
       onClick={selectExtra}
     >
