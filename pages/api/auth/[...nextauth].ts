@@ -1,7 +1,7 @@
 import axios from 'axios'
 import NextAuth from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
-import { Authentication } from '../../../types/auth/Authentication.type'
+import { AuthenticationResponse } from '../../../types/auth/AuthenticationResponse.type'
 
 const nextAuth = NextAuth({
   providers: [
@@ -14,7 +14,7 @@ const nextAuth = NextAuth({
       authorize: async (credentials) => {
         const {
           data: { accessToken, user },
-        } = await axios.post<Authentication>('/authenticate', {
+        } = await axios.post<AuthenticationResponse>('/authenticate', {
           email: credentials?.email,
           password: credentials?.password,
         })
