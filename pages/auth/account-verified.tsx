@@ -7,8 +7,6 @@ import AuthLayout from '../../layouts/Auth.layout'
 import { NextPageWithLayout } from '../../types/NextPageWithLayout.type'
 
 const AccountVerified: NextPageWithLayout = () => {
-  const router = useRouter()
-
   const {
     query: { email, token },
     isReady,
