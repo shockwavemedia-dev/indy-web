@@ -102,8 +102,8 @@ const TicketAssigneeModal = ({
                   options={
                     departments
                       ?.find(({ id }) => id === departmentId)
-                      ?.users?.map(({ adminUserId, firstName, middleName, lastName }) => ({
-                        label: `${firstName} ${middleName} ${lastName}`,
+                      ?.users?.map(({ adminUserId, firstName, lastName }) => ({
+                        label: `${firstName} ${lastName}`,
                         value: adminUserId,
                       })) || []
                   }
