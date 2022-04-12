@@ -1,17 +1,17 @@
 import axios from 'axios'
 import { Form, Formik } from 'formik'
 import Head from 'next/head'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { ReactElement } from 'react'
-import Button from '../../components/Common/Button.component'
-import CaretIcon from '../../components/Common/Icons/Caret.icon'
-import EmailIcon from '../../components/Common/Icons/Email.icon'
-import Link from '../../components/Common/Link.component'
-import TextInput from '../../components/Common/TextInput.component'
-import { ForgotPasswordForm } from '../../interfaces/ForgotPasswordForm.interface'
+import Button from '../../components/common/Button'
+import CaretIcon from '../../components/common/icons/CaretIcon'
+import EmailIcon from '../../components/common/icons/EmailIcon'
+import TextInput from '../../components/common/TextInput'
 import AuthLayout from '../../layouts/Auth.layout'
 import { ForgotPasswordFormSchema } from '../../schemas/ForgotPasswordFormSchema'
-import { NextPageWithLayout } from '../../types/NextPageWithLayout.type'
+import { ForgotPasswordForm } from '../../types/forms/ForgotPasswordForm.type'
+import { NextPageWithLayout } from '../../types/pages/NextPageWithLayout.type'
 
 const EmailVerificationRequest: NextPageWithLayout = () => {
   const { replace } = useRouter()
@@ -64,8 +64,10 @@ const EmailVerificationRequest: NextPageWithLayout = () => {
               <div>Send Email Verification Link</div>
               <CaretIcon className="rotate-90 stroke-white" />
             </Button>
-            <Link href="/auth/login" className="text-sm font-medium text-metallic-silver">
-              Cancel
+            <Link href="/auth/login">
+              <a className="font-urbanist text-sm font-medium text-metallic-silver underline-offset-1 hover:underline">
+                Cancel
+              </a>
             </Link>
           </Form>
         )}

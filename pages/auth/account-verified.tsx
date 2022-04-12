@@ -1,10 +1,10 @@
 import axios from 'axios'
 import Head from 'next/head'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { ReactElement, useEffect } from 'react'
-import Link from '../../components/Common/Link.component'
 import AuthLayout from '../../layouts/Auth.layout'
-import { NextPageWithLayout } from '../../types/NextPageWithLayout.type'
+import { NextPageWithLayout } from '../../types/pages/NextPageWithLayout.type'
 
 const AccountVerified: NextPageWithLayout = () => {
   const {
@@ -30,8 +30,11 @@ const AccountVerified: NextPageWithLayout = () => {
       <Head>
         <title>Daily Press - Verification</title>
       </Head>
-      <Link href="/auth/login" className="text-sm font-semibold text-jungle-green">
-        Proceed to login page.
+
+      <Link href="/auth/login">
+        <a className="font-urbanist text-sm font-semibold text-jungle-green underline-offset-1 hover:underline">
+          Proceed to login page.
+        </a>
       </Link>
     </>
   )
