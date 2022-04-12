@@ -16,8 +16,8 @@
     "incremental": true
   },
   "include": [
-    "next-env.d.ts",
     "next-auth.d.ts",
+    "next-env.d.ts",
     "react-select.d.ts",
     "react-tables.d.ts",
     "**/*.ts",
