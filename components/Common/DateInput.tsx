@@ -1,5 +1,5 @@
 import { DesktopDatePicker } from '@mui/lab'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import FormErrorMessage from './FormErrorMessage'
 import CalendarIcon from './icons/CalendarIcon'
 
@@ -20,11 +20,10 @@ const DateInput = ({
   const showPicker = () => setPickerVisible(true)
   const hidePicker = () => setPickerVisible(false)
 
-  useEffect(() => setFieldValue(name, selectedDate), [selectedDate])
-
   const setDate = (date: Date | null) => {
     if (date) {
       setSelectedDate(date)
+      setFieldValue(name, date)
     }
   }
 
@@ -37,9 +36,6 @@ const DateInput = ({
       onClose={hidePicker}
       open={isPickerVisible}
       showDaysOutsideCurrentMonth
-      PaperProps={{
-        className: 'shadow-react-select mt-2',
-      }}
       componentsProps={{
         switchViewButton: {
           disableRipple: true,

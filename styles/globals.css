@@ -51,6 +51,7 @@ input:-webkit-autofill:focus {
   border-top-color: #2bb67d;
   border-left-color: #2bb67d;
 }
+
 .MuiPaper-root {
   transition: none !important;
 }
@@ -60,35 +61,30 @@ input:-webkit-autofill:focus {
   color: #32343d;
 }
 
-.MuiCalendarPicker-root > div:first-child > div:last-child {
-  transition: none !important;
-}
-
 .PrivatePickersYear-yearButton {
-  font-family: Urbanist;
-  color: #32343d;
+  font-family: Urbanist !important;
+  color: #32343d !important;
 }
 
 .MuiPickersDay-root {
-  font-family: Urbanist;
-  font-weight: 600;
-  color: #32343d;
+  font-family: Urbanist !important;
+  font-weight: 600 !important;
+  color: #32343d !important;
+}
+
+.MuiPickersDay-dayOutsideMonth {
+  color: #ababb9 !important;
 }
 
 .MuiTypography-caption {
-  font-family: Urbanist;
-  color: #32343d;
-}
-
-.MuiIconButton-root {
-  color: #2bb67d;
+  font-family: Urbanist !important;
+  font-weight: 600 !important;
+  color: #ababb9 !important;
 }
 
 .MuiButtonBase-root:hover,
 .PrivatePickersYear-yearButton:hover {
   background-color: #e9faf3 !important;
-  transition: none !important;
-  -webkit-transition: none !important;
 }
 
 .MuiPickersDay-today {
@@ -98,4 +94,14 @@ input:-webkit-autofill:focus {
 
 .Mui-selected {
   background-color: #2bb67d !important;
+  color: #ffffff !important;
+}
+
+.Mui-selected:hover {
+  background-color: #2bb67d !important;
+}
+
+.MuiPaper-root {
+  margin-top: 0.5rem;
+  box-shadow: 0 0 0 1px #0000001a, 0 4px 11px #0000001a !important;
 }
