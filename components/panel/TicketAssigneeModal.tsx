@@ -114,7 +114,7 @@ const TicketAssigneeModal = ({
                   <Button ariaLabel="Cancel" light onClick={onClose}>
                     Cancel
                   </Button>
-                  <Button ariaLabel="Submit" type="submit" disabled={isSubmitting}>
+                  <Button ariaLabel="Submit" disabled={isSubmitting} submit>
                     Submit
                   </Button>
                 </div>

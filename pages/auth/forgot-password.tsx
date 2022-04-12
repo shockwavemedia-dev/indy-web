@@ -56,10 +56,10 @@ const ForgotPassword: NextPageWithLayout = () => {
               disableAutoComplete
             />
             <Button
-              type="submit"
               ariaLabel="Restore Password"
               disabled={isSubmitting}
               className="mb-5 max-w-75"
+              submit
             >
               <div>Restore Password</div>
               <CaretIcon className="rotate-90 stroke-white" />

@@ -82,12 +82,7 @@ const Login: NextPageWithLayout = () => {
                 </a>
               </Link>
             </div>
-            <Button
-              type="submit"
-              ariaLabel="Login"
-              disabled={isSubmitting}
-              className="mb-5 max-w-75"
-            >
+            <Button ariaLabel="Login" disabled={isSubmitting} className="mb-5 max-w-75" submit>
               <div>Log In</div>
               <CaretIcon className="rotate-90 stroke-white" />
             </Button>
