@@ -7,6 +7,6 @@ export interface NewAdminUserForm {
   firstName: string
   lastName: string
   middleName?: string
-  gender: string
-  role: string
+  gender: 'female' | 'male' | null
+  role: 'admin' | 'account_manager' | 'manager' | 'staff' | null
 }

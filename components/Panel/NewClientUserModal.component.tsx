@@ -43,8 +43,8 @@ const NewClientUserModal = ({
     firstName: '',
     lastName: '',
     middleName: '',
-    gender: '',
-    role: '',
+    gender: null,
+    role: null,
     clientId: 0,
   }
 
@@ -52,10 +52,6 @@ const NewClientUserModal = ({
 
   const updatePasswordStrength = (password: string) =>
     setPasswordStrength(computePasswordStrength(password))
-
-  const roleOptions = ClientUserRoleOptions
-
-  const genderOptions = UserGenderOptions
 
   const { data: clients } = useQuery('clients', async () => {
     const {
@@ -74,9 +70,9 @@ const NewClientUserModal = ({
 
   const clientOptions = clients
     ?.filter((client) => client.status === 'active')
-    .map((client) => ({
-      value: client.id,
-      label: client.name,
+    .map(({ id, name }) => ({
+      value: id,
+      label: name,
     }))
 
   const submitForm = async (
@@ -125,7 +121,7 @@ const NewClientUserModal = ({
                   name="role"
                   Icon={ClipboardIcon}
                   placeholder="Select Role"
-                  options={roleOptions}
+                  options={ClientUserRoleOptions}
                   setFieldValue={setFieldValue}
                   className="mb-5"
                 />
@@ -154,7 +150,7 @@ const NewClientUserModal = ({
                   name="gender"
                   Icon={UserIcon}
                   placeholder="Select Gender"
-                  options={genderOptions}
+                  options={UserGenderOptions}
                   setFieldValue={setFieldValue}
                   className="mb-5"
                 />

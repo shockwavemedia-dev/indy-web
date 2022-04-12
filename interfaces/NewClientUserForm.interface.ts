@@ -7,7 +7,7 @@ export interface NewClientUserForm {
   firstName: string
   lastName: string
   middleName?: string
-  gender: string
-  role: string
+  gender: 'female' | 'male' | null
+  role: 'group_manager' | 'marketing_manager' | 'marketing' | null
   clientId: number
 }

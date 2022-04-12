@@ -35,18 +35,14 @@ const NewAdminUserModal = ({ isVisible, onClose }: { isVisible: boolean; onClose
     firstName: '',
     lastName: '',
     middleName: '',
-    gender: '',
-    role: '',
+    gender: null,
+    role: null,
   }
 
   const [passwordStrength, setPasswordStrength] = useState(0)
 
   const updatePasswordStrength = (password: string) =>
     setPasswordStrength(computePasswordStrength(password))
-
-  const roleOptions = AdminUserRoleOptions
-
-  const genderOptions = UserGenderOptions
 
   const submitForm = async (
     values: NewAdminUserForm,
@@ -86,7 +82,7 @@ const NewAdminUserModal = ({ isVisible, onClose }: { isVisible: boolean; onClose
                   name="role"
                   Icon={ClipboardIcon}
                   placeholder="Select Role"
-                  options={roleOptions}
+                  options={AdminUserRoleOptions}
                   setFieldValue={setFieldValue}
                   className="mb-5"
                 />
@@ -115,7 +111,7 @@ const NewAdminUserModal = ({ isVisible, onClose }: { isVisible: boolean; onClose
                   name="gender"
                   Icon={UserIcon}
                   placeholder="Select Gender"
-                  options={genderOptions}
+                  options={UserGenderOptions}
                   setFieldValue={setFieldValue}
                   className="mb-5"
                 />
