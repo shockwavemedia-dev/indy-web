@@ -75,6 +75,7 @@ module.exports = {
       },
       inset: {
         0.5: '.125rem',
+        0.752: '0.188rem',
       },
       minWidth: {
         4: '1rem',
