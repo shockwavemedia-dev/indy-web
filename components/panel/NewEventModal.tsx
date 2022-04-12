@@ -60,10 +60,10 @@ const NewEventModal = ({ isVisible, onClose }: { isVisible: boolean; onClose: ()
             {({ isSubmitting, setFieldValue }) => (
               <Form className="flex w-140 flex-col">
                 <TextInput
+                  type="text"
                   Icon={EditIcon}
                   placeholder="Enter subject"
                   name="subject"
-                  disableAutoComplete
                   className="mb-5"
                 />
                 <div className="mb-5 flex space-x-5">

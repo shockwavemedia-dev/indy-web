@@ -53,7 +53,6 @@ const ForgotPassword: NextPageWithLayout = () => {
               Icon={EmailIcon}
               placeholder="Enter email"
               className="mb-8"
-              disableAutoComplete
             />
             <Button
               ariaLabel="Restore Password"

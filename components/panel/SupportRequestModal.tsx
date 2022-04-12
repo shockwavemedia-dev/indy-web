@@ -91,6 +91,7 @@ const SupportRequestModal = ({
             {({ isSubmitting, setFieldValue }) => (
               <Form className="flex w-140 flex-col">
                 <TextInput
+                  type="text"
                   Icon={EditIcon}
                   placeholder="Enter Subject"
                   name="subject"

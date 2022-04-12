@@ -52,10 +52,10 @@ const NewAnimationCategoryModal = ({
             {({ isSubmitting }) => (
               <Form className="flex w-140 flex-col">
                 <TextInput
+                  type="text"
                   Icon={PencilIcon}
                   placeholder="Category Animation  Name"
                   name="name"
-                  disableAutoComplete
                   className="mb-8"
                 />
                 <div className="flex space-x-5">

@@ -63,16 +63,16 @@ const NewClientModal = ({ isVisible, onClose }: { isVisible: boolean; onClose: (
                 <div className="flex w-140 flex-col">
                   <div className="mb-5 flex space-x-5">
                     <TextInput
+                      type="text"
                       Icon={EditIcon}
                       placeholder="Enter Company Name"
                       name="name"
-                      disableAutoComplete
                     />
                     <TextInput
+                      type="text"
                       Icon={EditIcon}
                       placeholder="Enter Client Code"
                       name="clientCode"
-                      disableAutoComplete
                     />
                   </div>
                   <FileInput
@@ -89,24 +89,19 @@ const NewClientModal = ({ isVisible, onClose }: { isVisible: boolean; onClose: (
                   />
                   <div className="mb-5 flex space-x-5">
                     <TextInput
+                      type="text"
                       Icon={EditIcon}
                       placeholder="Enter Address"
                       name="address"
-                      disableAutoComplete
                     />
-                    <TextInput
-                      Icon={EditIcon}
-                      placeholder="Enter Phone"
-                      name="phone"
-                      disableAutoComplete
-                    />
+                    <TextInput type="text" Icon={EditIcon} placeholder="Enter Phone" name="phone" />
                   </div>
                   <div className="mb-5 flex space-x-5">
                     <TextInput
+                      type="text"
                       Icon={EditIcon}
                       placeholder="Enter Timezone"
                       name="timezone"
-                      disableAutoComplete
                     />
                     <DateInput
                       name="clientSince"
@@ -116,10 +111,10 @@ const NewClientModal = ({ isVisible, onClose }: { isVisible: boolean; onClose: (
                     />
                   </div>
                   <TextInput
+                    type="text"
                     Icon={EditIcon}
                     placeholder="Enter Rating"
                     name="rating"
-                    disableAutoComplete
                     className="mb-8"
                   />
                   <div className="flex space-x-5">

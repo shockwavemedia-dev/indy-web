@@ -10,6 +10,7 @@ import Checkbox from '../../components/common/Checkbox'
 import CaretIcon from '../../components/common/icons/CaretIcon'
 import LockIcon from '../../components/common/icons/LockIcon'
 import UserIcon from '../../components/common/icons/UserIcon'
+import PasswordInput from '../../components/common/PasswordInput'
 import TextInput from '../../components/common/TextInput'
 import AuthLayout from '../../layouts/Auth.layout'
 import { LoginFormSchema } from '../../schemas/LoginFormSchema'
@@ -65,10 +66,8 @@ const Login: NextPageWithLayout = () => {
               Icon={UserIcon}
               placeholder="Enter username"
               className="mb-5"
-              disableAutoComplete
             />
-            <TextInput
-              type="password"
+            <PasswordInput
               name="password"
               Icon={LockIcon}
               placeholder="Enter password"

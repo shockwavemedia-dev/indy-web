@@ -41,10 +41,10 @@ const NewProjectBriefModal = ({
                   <DateInput name="date" placeholder="Enter date" setFieldValue={setFieldValue} />
                 </div>
                 <TextInput
+                  type="text"
                   Icon={EditIcon}
                   placeholder="Enter brief name"
                   name="briefName"
-                  disableAutoComplete
                   className="mb-5"
                 />
                 <TextAreaInput

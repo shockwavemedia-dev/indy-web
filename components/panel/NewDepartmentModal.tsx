@@ -57,24 +57,24 @@ const NewDepartmentModal = ({
             {({ isSubmitting }) => (
               <Form className="flex w-140 flex-col">
                 <TextInput
+                  type="text"
                   Icon={PencilIcon}
                   placeholder="Department Name"
                   name="name"
-                  disableAutoComplete
                   className="mb-5"
                 />
                 <TextInput
+                  type="text"
                   Icon={PencilIcon}
                   placeholder="Description"
                   name="description"
-                  disableAutoComplete
                   className="mb-5"
                 />
                 <TextInput
+                  type="text"
                   Icon={PencilIcon}
                   placeholder="Minimum Delivery Days"
                   name="minDeliveryDays"
-                  disableAutoComplete
                   className="mb-8"
                 />
                 <div className="flex space-x-5">

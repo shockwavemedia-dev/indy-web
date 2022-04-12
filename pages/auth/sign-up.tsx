@@ -11,6 +11,7 @@ import CaretIcon from '../../components/common/icons/CaretIcon'
 import EmailIcon from '../../components/common/icons/EmailIcon'
 import LockIcon from '../../components/common/icons/LockIcon'
 import UserIcon from '../../components/common/icons/UserIcon'
+import PasswordInput from '../../components/common/PasswordInput'
 import {
   computePasswordStrength,
   PasswordStrengthMeter,
@@ -72,14 +73,12 @@ const SignUp: NextPageWithLayout = () => {
                 name="fullName"
                 Icon={UserIcon}
                 placeholder="Enter full name"
-                disableAutoComplete
               />
               <TextInput
                 type="text"
                 name="companyName"
                 Icon={BriefcaseIcon}
                 placeholder="Enter company name"
-                disableAutoComplete
               />
             </div>
             <TextInput
@@ -88,22 +87,13 @@ const SignUp: NextPageWithLayout = () => {
               Icon={EmailIcon}
               placeholder="Enter email"
               className="mb-5"
-              disableAutoComplete
             />
             <div className="mb-3 flex w-full space-x-5">
-              <TextInput
-                type="password"
-                name="password"
-                Icon={LockIcon}
-                placeholder="Enter password"
-                disableAutoComplete
-              />
-              <TextInput
-                type="password"
+              <PasswordInput name="password" Icon={LockIcon} placeholder="Enter password" />
+              <PasswordInput
                 name="passwordConfirmation"
                 Icon={LockIcon}
                 placeholder="Confirm password"
-                disableAutoComplete
               />
             </div>
             <PasswordStrengthMeter strength={passwordStrength} className="mr-auto mb-2" />

@@ -53,7 +53,6 @@ const EmailVerificationRequest: NextPageWithLayout = () => {
               Icon={EmailIcon}
               placeholder="Enter email"
               className="mb-8"
-              disableAutoComplete
             />
             <Button ariaLabel="Send Link" disabled={isSubmitting} className="mb-5 max-w-75" submit>
               <div>Send Email Verification Link</div>

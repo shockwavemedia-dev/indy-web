@@ -7,11 +7,11 @@ import { ReactElement, useState } from 'react'
 import Button from '../../components/common/Button'
 import FloppyDiskIcon from '../../components/common/icons/FloppyDiskIcon'
 import LockIcon from '../../components/common/icons/LockIcon'
+import PasswordInput from '../../components/common/PasswordInput'
 import {
   computePasswordStrength,
   PasswordStrengthMeter,
 } from '../../components/common/PasswordStrengthMeter'
-import TextInput from '../../components/common/TextInput'
 import AuthLayout from '../../layouts/Auth.layout'
 import { PasswordResetForm } from '../../types/forms/PasswordResetForm.type'
 import { NextPageWithLayout } from '../../types/pages/NextPageWithLayout.type'
@@ -55,12 +55,10 @@ const PasswordReset: NextPageWithLayout = () => {
       <Formik initialValues={formInitialValues} onSubmit={submitForm} validate={validateForm}>
         {({ isSubmitting }) => (
           <Form className="flex w-103 flex-col items-center">
-            <TextInput
-              type="password"
+            <PasswordInput
               name="password"
               Icon={LockIcon}
               placeholder="Enter new password"
-              disableAutoComplete
               className="mb-3"
             />
             <PasswordStrengthMeter strength={passwordStrength} className="mr-auto mb-2" />
@@ -69,12 +67,10 @@ const PasswordReset: NextPageWithLayout = () => {
               <br />
               character and number
             </div>
-            <TextInput
-              type="password"
+            <PasswordInput
               name="passwordConfirmation"
               Icon={LockIcon}
               placeholder="Confirm new password"
-              disableAutoComplete
               className="mb-8"
             />
             <Button

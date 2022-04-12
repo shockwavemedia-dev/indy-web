@@ -75,10 +75,10 @@ const NewAnimationModal = ({ isVisible, onClose }: { isVisible: boolean; onClose
             {({ isSubmitting, setFieldValue }) => (
               <Form className="flex w-140 flex-col">
                 <TextInput
+                  type="text"
                   Icon={PencilIcon}
                   placeholder="Animation Title"
                   name="title"
-                  disableAutoComplete
                   className="mb-5"
                 />
                 <Select
@@ -90,10 +90,10 @@ const NewAnimationModal = ({ isVisible, onClose }: { isVisible: boolean; onClose
                   className="mb-5"
                 />
                 <TextInput
+                  type="text"
                   Icon={PencilIcon}
                   placeholder="Description"
                   name="description"
-                  disableAutoComplete
                   className="mb-5"
                 />
                 <FileInput
