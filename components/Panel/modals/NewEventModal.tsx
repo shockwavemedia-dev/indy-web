@@ -64,7 +64,6 @@ const NewEventModal = ({ isVisible, onClose }: { isVisible: boolean; onClose: ()
                 placeholder="Enter subject"
                 name="subject"
                 className="mb-5"
-                readOnly
               />
               <div className="mb-5 flex space-x-5">
                 <SelectService name="services" />
