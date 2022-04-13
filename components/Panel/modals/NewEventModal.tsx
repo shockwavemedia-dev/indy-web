@@ -77,10 +77,10 @@ const NewEventModal = ({ isVisible, onClose }: { isVisible: boolean; onClose: ()
               />
               <FileInput label="Upload Assets" name="attachment" className="mb-8" />
               <div className="flex space-x-5">
-                <Button ariaLabel="Cancel" light onClick={onClose}>
+                <Button ariaLabel="Cancel" onClick={onClose} type="button" light>
                   Cancel
                 </Button>
-                <Button ariaLabel="Submit" disabled={false} submit>
+                <Button ariaLabel="Submit" disabled={false} type="submit">
                   Submit
                 </Button>
               </div>

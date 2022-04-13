@@ -142,10 +142,10 @@ const NewAdminUserModal = ({ isVisible, onClose }: { isVisible: boolean; onClose
                   and one big character, special character and number
                 </div>
                 <div className="flex space-x-5">
-                  <Button ariaLabel="Cancel" light onClick={onClose}>
+                  <Button ariaLabel="Cancel" onClick={onClose} type="button" light>
                     Cancel
                   </Button>
-                  <Button ariaLabel="Submit" disabled={isSubmitting} submit>
+                  <Button ariaLabel="Submit" disabled={isSubmitting} type="submit">
                     Submit
                   </Button>
                 </div>

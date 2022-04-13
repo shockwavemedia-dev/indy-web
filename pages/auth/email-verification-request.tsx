@@ -54,7 +54,12 @@ const EmailVerificationRequest: NextPageWithLayout = () => {
               placeholder="Enter email"
               className="mb-8"
             />
-            <Button ariaLabel="Send Link" disabled={isSubmitting} className="mb-5 max-w-75" submit>
+            <Button
+              ariaLabel="Send Link"
+              disabled={isSubmitting}
+              className="mb-5 max-w-75"
+              type="submit"
+            >
               <div>Send Email Verification Link</div>
               <CaretIcon className="rotate-90 stroke-white" />
             </Button>

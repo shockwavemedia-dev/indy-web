@@ -2,23 +2,23 @@ import { MouseEventHandler, ReactNode } from 'react'
 
 const Button = ({
   onClick,
+  type,
   ariaLabel,
   children,
   disabled = false,
   light = false,
-  submit = false,
   className,
 }: {
+  type: 'button' | 'submit'
   onClick?: MouseEventHandler<HTMLButtonElement>
   ariaLabel: string
   children: ReactNode
   disabled?: boolean
   light?: boolean
-  submit?: boolean
   className?: string
 }) => (
   <button
-    type={submit ? 'submit' : 'button'}
+    type={type}
     aria-label={ariaLabel}
     disabled={disabled}
     className={`flex min-h-12.5 w-full flex-1 items-center justify-center space-x-2 rounded-xl font-urbanist text-base font-semibold ${
