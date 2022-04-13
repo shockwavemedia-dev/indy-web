@@ -58,7 +58,7 @@ const NewClientModal = ({ isVisible, onClose }: { isVisible: boolean; onClose: (
             initialValues={formInitialValues}
             onSubmit={submitForm}
           >
-            {({ isSubmitting, setFieldValue }) => (
+            {({ isSubmitting }) => (
               <Form>
                 <div className="flex w-140 flex-col">
                   <div className="mb-5 flex space-x-5">
@@ -98,12 +98,7 @@ const NewClientModal = ({ isVisible, onClose }: { isVisible: boolean; onClose: (
                       placeholder="Enter Timezone"
                       name="timezone"
                     />
-                    <DateInput
-                      name="clientSince"
-                      placeholder="Enter Client Since"
-                      setFieldValue={setFieldValue}
-                      className="mb-5"
-                    />
+                    <DateInput name="clientSince" placeholder="Enter Client Since" />
                   </div>
                   <TextInput
                     type="text"

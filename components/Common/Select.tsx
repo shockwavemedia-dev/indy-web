@@ -1,3 +1,4 @@
+import { useFormikContext } from 'formik'
 import { useState } from 'react'
 import ReactSelect, {
   components as Components,
@@ -84,44 +85,28 @@ const styles: StylesConfig<Option, false> = {
 }
 
 const Select = ({
-  name = '',
+  name,
   Icon,
-  placeholder = '',
+  placeholder,
   options,
-  disabled = false,
-  setFieldValue,
   className,
-  errorMessage,
-  touched,
-  functional = false,
-  onChange,
-  defaultValue,
+  disabled = false,
+  defaultValue = null,
 }: {
-  name?: string
+  name: string
   Icon: Icon
-  placeholder?: string
+  placeholder: string
   options: Options<Option>
   disabled?: boolean
-  setFieldValue?: (field: string, value: any, shouldValidate?: boolean) => void
   className?: string
-  errorMessage?: string
-  touched?: boolean
-  functional?: boolean
-  onChange?: (option: SingleValue<Option>) => void
-  defaultValue?: Option
+  defaultValue?: Option | null
 }) => {
-  const [selectedOption, setSelectedOption] = useState<Option | undefined | null>(defaultValue)
+  const { setFieldValue } = useFormikContext()
+  const [selectedOption, setSelectedOption] = useState<Option | null>(defaultValue)
 
   const selectOption = (option: SingleValue<Option>) => {
     setSelectedOption(option)
-
-    if (setFieldValue) {
-      setFieldValue(name, option?.value)
-    }
-
-    if (onChange) {
-      onChange(option)
-    }
+    setFieldValue(name, option?.value)
   }
 
   return (

@@ -72,7 +72,7 @@ const NewAnimationModal = ({ isVisible, onClose }: { isVisible: boolean; onClose
             initialValues={formInitialValues}
             onSubmit={submitForm}
           >
-            {({ isSubmitting, setFieldValue }) => (
+            {({ isSubmitting }) => (
               <Form className="flex w-140 flex-col">
                 <TextInput
                   type="text"
@@ -86,7 +86,6 @@ const NewAnimationModal = ({ isVisible, onClose }: { isVisible: boolean; onClose
                   Icon={PencilIcon}
                   placeholder="Select Category Animation"
                   options={categoryOptions || []}
-                  setFieldValue={setFieldValue}
                   className="mb-5"
                 />
                 <TextInput

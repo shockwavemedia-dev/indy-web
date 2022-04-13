@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { useFormikContext } from 'formik'
 import { useSession } from 'next-auth/react'
 import { useState } from 'react'
 import { useQuery } from 'react-query'
@@ -9,13 +10,8 @@ import CaretIcon from '../common/icons/CaretIcon'
 import CheckIcon from '../common/icons/CheckIcon'
 import ClipboardIcon from '../common/icons/ClipboardIcon'
 
-const SelectService = ({
-  name,
-  setFieldValue,
-}: {
-  name: string
-  setFieldValue: (field: string, value: any, shouldValidate?: boolean) => void
-}) => {
+const SelectService = ({ name }: { name: string }) => {
+  const { setFieldValue } = useFormikContext()
   const { data: session } = useSession()
 
   const { data: services, isLoading } = useQuery('services', async () => {

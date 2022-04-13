@@ -34,11 +34,11 @@ const NewProjectBriefModal = ({
             initialValues={formInitialValues}
             onSubmit={() => {}}
           >
-            {({ isSubmitting, setFieldValue }) => (
+            {({ isSubmitting }) => (
               <Form className="flex w-140 flex-col">
                 <div className="mb-5 flex space-x-5">
-                  <SelectService name="services" setFieldValue={setFieldValue} />
-                  <DateInput name="date" placeholder="Enter date" setFieldValue={setFieldValue} />
+                  <SelectService name="services" />
+                  <DateInput name="date" placeholder="Enter date" />
                 </div>
                 <TextInput
                   type="text"

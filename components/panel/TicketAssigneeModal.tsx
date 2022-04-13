@@ -80,7 +80,7 @@ const TicketAssigneeModal = ({
       {isVisible && (
         <Modal title="Ticket Assignee" onClose={onClose}>
           <Formik initialValues={formInitialValues} onSubmit={submitForm}>
-            {({ values: { departmentId }, isSubmitting, setFieldValue }) => (
+            {({ values: { departmentId }, isSubmitting }) => (
               <Form className="flex w-140 flex-col">
                 <Select
                   name="departmentId"
@@ -92,7 +92,6 @@ const TicketAssigneeModal = ({
                       value: id,
                     })) || []
                   }
-                  setFieldValue={setFieldValue}
                   className="mb-5"
                 />
                 <Select
@@ -107,7 +106,6 @@ const TicketAssigneeModal = ({
                         value: adminUserId,
                       })) || []
                   }
-                  setFieldValue={setFieldValue}
                   className="mb-8"
                 />
                 <div className="flex space-x-5">

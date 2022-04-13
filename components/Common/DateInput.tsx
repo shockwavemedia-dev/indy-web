@@ -1,4 +1,5 @@
 import { DesktopDatePicker } from '@mui/lab'
+import { useFormikContext } from 'formik'
 import { useState } from 'react'
 import FormErrorMessage from './FormErrorMessage'
 import CalendarIcon from './icons/CalendarIcon'
@@ -6,14 +7,14 @@ import CalendarIcon from './icons/CalendarIcon'
 const DateInput = ({
   name,
   placeholder,
-  setFieldValue,
   className,
 }: {
   name: string
   placeholder: string
   className?: string
-  setFieldValue: (field: string, value: any, shouldValidate?: boolean) => void
 }) => {
+  const { setFieldValue } = useFormikContext()
+
   const [selectedDate, setSelectedDate] = useState<Date | null>(null)
   const [isPickerVisible, setPickerVisible] = useState(false)
 

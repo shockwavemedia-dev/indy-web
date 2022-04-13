@@ -88,7 +88,7 @@ const SupportRequestModal = ({
             initialValues={formInitialValues}
             onSubmit={submitForm}
           >
-            {({ isSubmitting, setFieldValue }) => (
+            {({ isSubmitting }) => (
               <Form className="flex w-140 flex-col">
                 <TextInput
                   type="text"
@@ -102,21 +102,14 @@ const SupportRequestModal = ({
                   Icon={LightbulbIcon}
                   placeholder="Select Type"
                   options={typeOptions}
-                  setFieldValue={setFieldValue}
                   className="mb-5"
                 />
-                <DateInput
-                  name="duedate"
-                  placeholder="Enter due date"
-                  setFieldValue={setFieldValue}
-                  className="mb-5"
-                />
+                <DateInput name="duedate" placeholder="Enter due date" className="mb-5" />
                 <Select
                   name="departmentId"
                   Icon={ClipboardIcon}
                   placeholder="Select department"
                   options={departmentOptions || []}
-                  setFieldValue={setFieldValue}
                   className="mb-5"
                 />
                 <TextAreaInput

@@ -6,11 +6,13 @@ import { NewEventFormSchema } from '../../schemas/NewEventFormSchema'
 import { NewEventForm } from '../../types/forms/NewEventForm.type'
 import { objectWithFileToFormData } from '../../utils/FormHelpers'
 import Button from '../common/Button'
+import DateInput from '../common/DateInput'
 import FileInput from '../common/FileInput'
 import EditIcon from '../common/icons/EditIcon'
 import TextAreaInput from '../common/TextAreaInput'
 import TextInput from '../common/TextInput'
 import Modal from './Modal'
+import SelectService from './SelectService'
 
 const NewEventModal = ({ isVisible, onClose }: { isVisible: boolean; onClose: () => void }) => {
   const { data: session } = useSession()
@@ -65,12 +67,8 @@ const NewEventModal = ({ isVisible, onClose }: { isVisible: boolean; onClose: ()
                   className="mb-5"
                 />
                 <div className="mb-5 flex space-x-5">
-                  {/* <SelectService name="services" setFieldValue={setFieldValue} />
-                  <DateInput
-                    name="duedate"
-                    placeholder="Enter due date"
-                    setFieldValue={setFieldValue}
-                  /> */}
+                  <SelectService name="services" />
+                  <DateInput name="duedate" placeholder="Enter due date" />
                 </div>
                 <TextAreaInput
                   Icon={EditIcon}

@@ -74,14 +74,13 @@ const NewAdminUserModal = ({ isVisible, onClose }: { isVisible: boolean; onClose
             onSubmit={submitForm}
             validate={validateForm}
           >
-            {({ isSubmitting, setFieldValue }) => (
+            {({ isSubmitting }) => (
               <Form className="flex w-140 flex-col">
                 <Select
                   name="role"
                   Icon={ClipboardIcon}
                   placeholder="Select Role"
                   options={AdminUserRoleOptions}
-                  setFieldValue={setFieldValue}
                   className="mb-5"
                 />
                 <TextInput
@@ -110,15 +109,10 @@ const NewAdminUserModal = ({ isVisible, onClose }: { isVisible: boolean; onClose
                   Icon={UserIcon}
                   placeholder="Select Gender"
                   options={UserGenderOptions}
-                  setFieldValue={setFieldValue}
                   className="mb-5"
                 />
                 <div className="mb-5 flex space-x-5">
-                  <DateInput
-                    name="birthDate"
-                    placeholder="Enter Birth Date"
-                    setFieldValue={setFieldValue}
-                  />
+                  <DateInput name="birthDate" placeholder="Enter Birth Date" />
                   <TextInput
                     type="text"
                     Icon={PencilIcon}

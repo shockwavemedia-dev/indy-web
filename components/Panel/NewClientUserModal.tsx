@@ -106,14 +106,13 @@ const NewClientUserModal = ({
             onSubmit={submitForm}
             validate={validateForm}
           >
-            {({ isSubmitting, setFieldValue }) => (
+            {({ isSubmitting }) => (
               <Form className="flex w-140 flex-col">
                 <Select
                   name="clientId"
                   Icon={BriefcaseIcon}
                   placeholder="Select Client"
                   options={clientOptions || []}
-                  setFieldValue={setFieldValue}
                   className="mb-5"
                 />
                 <Select
@@ -121,7 +120,6 @@ const NewClientUserModal = ({
                   Icon={ClipboardIcon}
                   placeholder="Select Role"
                   options={ClientUserRoleOptions}
-                  setFieldValue={setFieldValue}
                   className="mb-5"
                 />
                 <TextInput
@@ -150,16 +148,10 @@ const NewClientUserModal = ({
                   Icon={UserIcon}
                   placeholder="Select Gender"
                   options={UserGenderOptions}
-                  setFieldValue={setFieldValue}
                   className="mb-5"
                 />
                 <div className="mb-5 flex space-x-5">
-                  <DateInput
-                    name="birthDate"
-                    placeholder="Enter Birth Date"
-                    setFieldValue={setFieldValue}
-                    className="mb-5"
-                  />
+                  <DateInput name="birthDate" placeholder="Enter Birth Date" />
                   <TextInput
                     type="text"
                     Icon={PencilIcon}

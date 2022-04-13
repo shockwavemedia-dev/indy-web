@@ -75,7 +75,7 @@ const NewAnimationRequestModal = ({
             initialValues={formInitialValues}
             onSubmit={submitForm}
           >
-            {({ isSubmitting, setFieldValue }) => (
+            {({ isSubmitting }) => (
               <Form className="flex w-140 flex-col">
                 <TextInput
                   type="text"
@@ -89,7 +89,6 @@ const NewAnimationRequestModal = ({
                   Icon={PencilIcon}
                   placeholder="Select Animation"
                   options={libraryOptions || []}
-                  setFieldValue={setFieldValue}
                   className="mb-5"
                 />
                 <Video src="https://storage.googleapis.com/crm-admin-client/libraries/6a15061d042b93281b53f5fc67e989d7a786bad5-file_example_MP4_480_1_5MG.mp4?GoogleAccessId=test2-707%40loyal-burner-340623.iam.gserviceaccount.com&Expires=1680857928&Signature=XcY6M7gm1G%2B4GgH%2FADKALhuogSH%2B8uEYCqeweTDCpuRra3JY7mmNU323Tx0TNyXLiksYNDisgu8rIvz%2FgQNqLO9sCAKA8Km6aYku8hHVlNbtHcyJljhtsFzG9k30n0aZ5mUH70e7s9el01S7kxDeh9w8yDts8GuaECq5WQWLQRb8RXp37Q2rPTVtoqD1pIflu0XJeHHbXtWYIJAfGa5zZYuayJoFaZOjvtA4h7uN535aIYuSY1MtfXjkoDqM02Lbr82gj3TPb7qG8X5WtTxhYfvax6mO%2BeV5uN2TFPopX%2F0QX2KcCQjd1twUTiEyIr1qXFYhvy2KTsSFfGMp%2FxfF0g%3D%3D&generation=1649300328436473"></Video>
