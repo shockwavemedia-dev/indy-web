@@ -27,7 +27,7 @@ export const PasswordStrengthMeter = ({
 
           if (i < strength) {
             if (strength < 3) {
-              color = 'bg-vivid-red-tangelo'
+              color = 'bg-tart-orange'
             } else if (strength < 4) {
               color = 'bg-deep-saffron'
             } else {
