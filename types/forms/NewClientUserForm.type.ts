@@ -1,7 +1,7 @@
-export interface NewClientUserForm {
+export type NewClientUserForm = {
   email: string
   password: string
-  birthDate: string
+  birthDate: Date | null
   passwordConfirmation: string
   contactNumber: string
   firstName: string

@@ -5,9 +5,9 @@ import { useState } from 'react'
 import { useQuery, useQueryClient } from 'react-query'
 import { ClientUserRoleOptions } from '../../../constants/ClientUserRoleOptions'
 import { UserGenderOptions } from '../../../constants/UserGenderOptions'
-import { NewClientUserForm } from '../../../interfaces/NewClientUserForm.interface'
 import { NewClientUserFormSchema } from '../../../schemas/NewClientUserFormSchema'
 import { Client } from '../../../types/Client.type'
+import { NewClientUserForm } from '../../../types/forms/NewClientUserForm.type'
 import { Page } from '../../../types/Page.type'
 import Button from '../../common/Button'
 import DateInput from '../../common/DateInput'
@@ -36,7 +36,7 @@ const NewClientUserModal = ({
   const formInitialValues: NewClientUserForm = {
     email: '',
     password: '',
-    birthDate: '',
+    birthDate: null,
     passwordConfirmation: '',
     contactNumber: '',
     firstName: '',

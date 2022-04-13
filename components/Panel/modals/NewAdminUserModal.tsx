@@ -5,8 +5,8 @@ import { useState } from 'react'
 import { useQueryClient } from 'react-query'
 import { AdminUserRoleOptions } from '../../../constants/AdminUserRoleOptions'
 import { UserGenderOptions } from '../../../constants/UserGenderOptions'
-import { NewAdminUserForm } from '../../../interfaces/NewAdminUserForm.interface'
 import { NewAdminUserFormSchema } from '../../../schemas/NewAdminUserFormSchema'
+import { NewAdminUserForm } from '../../../types/forms/NewAdminUserForm.type'
 import Button from '../../common/Button'
 import DateInput from '../../common/DateInput'
 import ClipboardIcon from '../../common/icons/ClipboardIcon'
@@ -27,7 +27,7 @@ const NewAdminUserModal = ({ isVisible, onClose }: { isVisible: boolean; onClose
   const formInitialValues: NewAdminUserForm = {
     email: '',
     password: '',
-    birthDate: '',
+    birthDate: null,
     passwordConfirmation: '',
     contactNumber: '',
     firstName: '',

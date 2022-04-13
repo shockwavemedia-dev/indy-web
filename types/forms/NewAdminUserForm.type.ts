@@ -1,7 +1,7 @@
-export interface NewAdminUserForm {
+export type NewAdminUserForm = {
   email: string
   password: string
-  birthDate: string
+  birthDate: Date | null
   passwordConfirmation: string
   contactNumber: string
   firstName: string

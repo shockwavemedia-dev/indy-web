@@ -1,5 +1,5 @@
-import { mixed, object, SchemaOf, string } from 'yup'
-import { NewAdminUserForm } from '../interfaces/NewAdminUserForm.interface'
+import { date, mixed, object, SchemaOf, string } from 'yup'
+import { NewAdminUserForm } from '../types/forms/NewAdminUserForm.type'
 
 export const NewAdminUserFormSchema: SchemaOf<NewAdminUserForm> = object().shape({
   email: string().email().required(),
@@ -11,5 +11,5 @@ export const NewAdminUserFormSchema: SchemaOf<NewAdminUserForm> = object().shape
   middleName: string().optional(),
   gender: mixed().required().oneOf(['female', 'male']),
   role: mixed().required().oneOf(['admin', 'account_manager', 'manager', 'staff']),
-  birthDate: string().required(),
+  birthDate: date().required(),
 })
