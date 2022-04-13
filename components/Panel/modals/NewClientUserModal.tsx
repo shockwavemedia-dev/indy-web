@@ -127,21 +127,21 @@ const NewClientUserModal = ({
                   Icon={UserIcon}
                   placeholder="Enter First Name"
                   name="firstName"
-                  className="mb-8"
+                  className="mb-5"
                 />
                 <TextInput
                   type="text"
                   Icon={UserIcon}
                   placeholder="Enter Middle Name"
                   name="middleName"
-                  className="mb-8"
+                  className="mb-5"
                 />
                 <TextInput
                   type="text"
                   Icon={UserIcon}
                   placeholder="Enter Last Name"
                   name="lastName"
-                  className="mb-8"
+                  className="mb-5"
                 />
                 <Select
                   name="gender"
@@ -175,7 +175,7 @@ const NewClientUserModal = ({
                   />
                 </div>
                 <PasswordStrengthMeter strength={passwordStrength} className="mr-auto mb-2" />
-                <div className="mr-auto mb-3 font-urbanist text-xxs font-medium text-metallic-silver">
+                <div className="mr-auto mb-8 font-urbanist text-xxs font-medium text-metallic-silver">
                   Should be at least 8 symbols and contain one small
                   <br />
                   and one big character, special character and number

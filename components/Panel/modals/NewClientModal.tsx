@@ -20,7 +20,7 @@ const NewClientModal = ({ isVisible, onClose }: { isVisible: boolean; onClose: (
   const formInitialValues: NewClientForm = {
     name: '',
     clientCode: '',
-    logo: 'testlogo.png',
+    logo: null,
     address: '',
     phone: '',
     timezone: '',
@@ -84,19 +84,19 @@ const NewClientModal = ({ isVisible, onClose }: { isVisible: boolean; onClose: (
                   />
                   <div className="mb-5 flex space-x-5">
                     <TextInput
+                      name="address"
                       type="text"
                       Icon={EditIcon}
                       placeholder="Enter Address"
-                      name="address"
                     />
                     <TextInput type="text" Icon={EditIcon} placeholder="Enter Phone" name="phone" />
                   </div>
                   <div className="mb-5 flex space-x-5">
                     <TextInput
+                      name="timezone"
                       type="text"
                       Icon={EditIcon}
                       placeholder="Enter Timezone"
-                      name="timezone"
                     />
                     <DateInput name="clientSince" placeholder="Enter Client Since" />
                   </div>
