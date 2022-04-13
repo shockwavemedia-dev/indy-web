@@ -8,10 +8,14 @@ const DateInput = ({
   name,
   placeholder,
   className,
+  label,
+  readOnly = false,
 }: {
   name: string
   placeholder: string
   className?: string
+  label?: string
+  readOnly?: boolean
 }) => {
   const { setFieldValue } = useFormikContext()
 
@@ -33,6 +37,7 @@ const DateInput = ({
       inputFormat="P"
       disableOpenPicker
       onChange={setDate}
+      disabled={readOnly}
       value={selectedDate}
       onClose={hidePicker}
       open={isPickerVisible}
@@ -50,12 +55,19 @@ const DateInput = ({
       }}
       renderInput={({ inputRef, inputProps }) => (
         <div className={`w-full ${className}`}>
+          <label
+            htmlFor={name}
+            className="mb-2 font-urbanist text-xs font-medium text-metallic-silver"
+          >
+            {label}
+          </label>
           <div className="relative flex items-center">
             <CalendarIcon className="pointer-events-none absolute ml-6 stroke-lavender-gray" />
             <input
               ref={inputRef}
               {...inputProps}
-              className={`min-h-12.5 w-full rounded-xl bg-transparent px-13 font-urbanist text-sm font-medium text-onyx placeholder-metallic-silver selection:bg-jungle-green selection:text-white focus:ring-2 focus:ring-jungle-green focus:ring-opacity-40 ${
+              className={`min-h-12.5 w-full rounded-xl
+              bg-transparent px-13 font-urbanist text-sm font-medium text-onyx placeholder-metallic-silver selection:bg-jungle-green selection:text-white read-only:cursor-auto focus:ring-2 focus:ring-jungle-green focus:ring-opacity-40 read-only:focus:ring-1 read-only:focus:ring-bright-gray ${
                 isPickerVisible
                   ? 'ring-2 ring-jungle-green ring-opacity-40'
                   : 'ring-1 ring-bright-gray'
@@ -63,8 +75,8 @@ const DateInput = ({
               name={name}
               spellCheck={false}
               placeholder={placeholder}
-              readOnly
               onClick={showPicker}
+              readOnly
             />
           </div>
           <FormErrorMessage name={name} />
