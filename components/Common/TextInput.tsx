@@ -8,24 +8,32 @@ const TextInput = ({
   Icon,
   placeholder,
   className,
+  readOnly = false,
+  label,
 }: {
   type: 'text' | 'email'
   name: string
   Icon: Icon
   placeholder: string
   className?: string
+  readOnly?: boolean
+  label?: string
 }) => (
   <div className={`w-full ${className}`}>
+    <label htmlFor={name} className="mb-2 font-urbanist text-xs font-medium text-metallic-silver">
+      {label}
+    </label>
     <div className="relative flex items-center">
       <Icon className="pointer-events-none absolute left-6 stroke-lavender-gray" />
       <Field
-        className="min-h-12.5 w-full rounded-xl px-13 font-urbanist text-sm font-medium text-onyx placeholder-metallic-silver ring-1 ring-bright-gray selection:bg-jungle-green selection:text-white focus:ring-2 focus:ring-jungle-green focus:ring-opacity-40"
+        className="min-h-12.5 w-full rounded-xl px-13 font-urbanist text-sm font-medium text-onyx placeholder-metallic-silver ring-1 ring-bright-gray selection:bg-jungle-green selection:text-white read-only:cursor-auto focus:ring-2 focus:ring-jungle-green focus:ring-opacity-40 read-only:focus:ring-1 read-only:focus:ring-bright-gray"
         type={type}
         name={name}
         id={name}
         spellCheck={false}
         placeholder={placeholder}
         autoComplete="off"
+        readOnly={readOnly}
       />
     </div>
     <FormErrorMessage name={name} />
