@@ -250,7 +250,7 @@ const Table = <T extends {}>({
         </>
       ) : (
         !isLoading && (
-          <div className="text-center font-urbanist text-base text-metallic-silver">
+          <div className="my-auto text-center font-urbanist text-base text-metallic-silver">
             No entries found in {ofString} table
           </div>
         )
