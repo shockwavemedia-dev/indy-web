@@ -96,12 +96,7 @@ const NewAnimationModal = ({ isVisible, onClose }: { isVisible: boolean; onClose
                   name="description"
                   className="mb-5"
                 />
-                <FileInput
-                  label="Animation File"
-                  name="file"
-                  setFieldValue={setFieldValue}
-                  className="mb-8"
-                />
+                <FileInput label="Animation File" name="file" className="mb-8" />
                 <div className="flex space-x-5">
                   <Button ariaLabel="Cancel" light onClick={onClose}>
                     Cancel

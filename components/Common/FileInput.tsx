@@ -1,23 +1,24 @@
+import { useFormikContext } from 'formik'
 import Dropzone from 'react-dropzone'
 import FormErrorMessage from './FormErrorMessage'
 
 const FileInput = ({
   label,
   name,
-  setFieldValue,
   multiple = false,
   className,
 }: {
   label: string
   name: string
-  setFieldValue: (field: string, value: any, shouldValidate?: boolean) => void
   multiple?: boolean
   className?: string
 }) => {
+  const { setFieldValue } = useFormikContext()
+
   const dropFiles = (files: Array<File>) => setFieldValue(name, multiple ? files : files.pop())
 
   return (
-    <Dropzone onDrop={dropFiles} noClick noKeyboard multiple={multiple}>
+    <Dropzone onDrop={dropFiles} multiple={multiple} accept="video/*" noClick noKeyboard>
       {({ getRootProps, getInputProps, open, isDragActive }) => (
         <div className={className}>
           <div className="mb-2 font-urbanist text-base font-medium text-onyx">{label}</div>
@@ -32,7 +33,6 @@ const FileInput = ({
                 Drag {'&'} drop you assets, or{' '}
                 <button
                   className="font-semibold text-jungle-green underline underline-offset-1"
-                  name="Browse Assets"
                   onClick={open}
                   type="button"
                 >
@@ -40,7 +40,8 @@ const FileInput = ({
                 </button>
               </div>
               <div className="text-center font-urbanist text-xs font-medium text-metallic-silver">
-                Files Supported: MP3, MP4, AVI, MOV, FLV. <br />
+                Files Supported: MP3, MP4, AVI, MOV, FLV
+                <br />
                 Maximum size: 250 MB
               </div>
             </div>

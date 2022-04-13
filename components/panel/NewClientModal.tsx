@@ -75,12 +75,7 @@ const NewClientModal = ({ isVisible, onClose }: { isVisible: boolean; onClose: (
                       name="clientCode"
                     />
                   </div>
-                  <FileInput
-                    label="Upload assets"
-                    name="logo"
-                    setFieldValue={setFieldValue}
-                    className="mb-5"
-                  />
+                  <FileInput label="Upload assets" name="logo" className="mb-5" />
                   <TextAreaInput
                     Icon={EditIcon}
                     placeholder="Enter Overview"

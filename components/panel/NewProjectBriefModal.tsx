@@ -53,12 +53,7 @@ const NewProjectBriefModal = ({
                   name="content"
                   className="mb-5"
                 />
-                <FileInput
-                  label="Upload Assets"
-                  name="assets"
-                  setFieldValue={setFieldValue}
-                  className="mb-8"
-                />
+                <FileInput label="Upload Assets" name="assets" className="mb-8" />
                 <div className="flex space-x-5">
                   <Button ariaLabel="Cancel" light onClick={onClose}>
                     Cancel
