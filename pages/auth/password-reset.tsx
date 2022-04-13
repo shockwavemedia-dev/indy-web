@@ -12,7 +12,7 @@ import {
   computePasswordStrength,
   PasswordStrengthMeter,
 } from '../../components/common/PasswordStrengthMeter'
-import AuthLayout from '../../layouts/Auth.layout'
+import AuthLayout from '../../layouts/AuthLayout'
 import { PasswordResetForm } from '../../types/forms/PasswordResetForm.type'
 import { NextPageWithLayout } from '../../types/pages/NextPageWithLayout.type'
 

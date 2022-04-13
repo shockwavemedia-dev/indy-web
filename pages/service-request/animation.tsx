@@ -6,7 +6,7 @@ import Card from '../../components/panel/Card'
 import FancyButton from '../../components/panel/FancyButton'
 import NewAnimationRequestModal from '../../components/panel/modals/NewAnimationRequestModal'
 import { AnimationTableColumns } from '../../constants/tables/AnimationTableColumns'
-import PanelLayout from '../../layouts/Panel.layout'
+import PanelLayout from '../../layouts/PanelLayout'
 import { NextPageWithLayout } from '../../types/pages/NextPageWithLayout.type'
 
 const Animation: NextPageWithLayout = () => {

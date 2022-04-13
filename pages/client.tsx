@@ -6,7 +6,7 @@ import Card from '../components/panel/Card'
 import FancyButton from '../components/panel/FancyButton'
 import NewClientModal from '../components/panel/modals/NewClientModal'
 import { ClientTableColumns } from '../constants/tables/ClientTableColumns'
-import PanelLayout from '../layouts/Panel.layout'
+import PanelLayout from '../layouts/PanelLayout'
 import { NextPageWithLayout } from '../types/pages/NextPageWithLayout.type'
 
 const Client: NextPageWithLayout = () => {

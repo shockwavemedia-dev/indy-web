@@ -3,7 +3,7 @@ import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { ReactElement, useEffect } from 'react'
-import AuthLayout from '../../layouts/Auth.layout'
+import AuthLayout from '../../layouts/AuthLayout'
 import { NextPageWithLayout } from '../../types/pages/NextPageWithLayout.type'
 
 const AccountVerified: NextPageWithLayout = () => {

@@ -11,7 +11,7 @@ import NewEventModal from '../components/panel/modals/NewEventModal'
 import NewProjectBriefModal from '../components/panel/modals/NewProjectBriefModal'
 import SupportRequestModal from '../components/panel/modals/SupportRequestModal'
 import { TicketTableColumns } from '../constants/tables/TicketTableColumns'
-import PanelLayout from '../layouts/Panel.layout'
+import PanelLayout from '../layouts/PanelLayout'
 import { NextPageWithLayout } from '../types/pages/NextPageWithLayout.type'
 
 const Dashboard: NextPageWithLayout = () => {

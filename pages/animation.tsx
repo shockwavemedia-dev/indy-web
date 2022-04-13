@@ -8,7 +8,7 @@ import FancyButton from '../components/panel/FancyButton'
 import NewAnimationCategoryModal from '../components/panel/modals/NewAnimationCategoryModal'
 import NewAnimationModal from '../components/panel/modals/NewAnimationModal'
 import { AnimationTableColumns } from '../constants/tables/AnimationTableColumns'
-import PanelLayout from '../layouts/Panel.layout'
+import PanelLayout from '../layouts/PanelLayout'
 import { NextPageWithLayout } from '../types/pages/NextPageWithLayout.type'
 
 const Animation: NextPageWithLayout = () => {

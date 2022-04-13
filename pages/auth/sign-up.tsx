@@ -17,7 +17,7 @@ import {
   PasswordStrengthMeter,
 } from '../../components/common/PasswordStrengthMeter'
 import TextInput from '../../components/common/TextInput'
-import AuthLayout from '../../layouts/Auth.layout'
+import AuthLayout from '../../layouts/AuthLayout'
 import { SignUpFormSchema } from '../../schemas/SignUpFormSchema'
 import { SignUpForm } from '../../types/forms/SignUpForm.type'
 import { NextPageWithLayout } from '../../types/pages/NextPageWithLayout.type'
