@@ -116,7 +116,9 @@ const Select = ({
 
   return (
     <div>
-      <label className="mb-2 font-urbanist text-xs font-medium text-metallic-silver">{label}</label>
+      <label className="mb-2 inline-block font-urbanist text-xs font-medium text-metallic-silver empty:hidden">
+        {label}
+      </label>
       <ReactSelect
         styles={styles}
         placeholder={placeholder}

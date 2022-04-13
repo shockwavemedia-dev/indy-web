@@ -18,7 +18,10 @@ const TextAreaInput = ({
   label?: string
 }) => (
   <div className={className}>
-    <label htmlFor={name} className="mb-2 font-urbanist text-xs font-medium text-metallic-silver">
+    <label
+      htmlFor={name}
+      className="mb-2 inline-block font-urbanist text-xs font-medium text-metallic-silver empty:hidden"
+    >
       {label}
     </label>
     <div>

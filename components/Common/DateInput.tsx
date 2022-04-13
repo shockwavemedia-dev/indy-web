@@ -57,7 +57,7 @@ const DateInput = ({
         <div className={`w-full ${className}`}>
           <label
             htmlFor={name}
-            className="mb-2 font-urbanist text-xs font-medium text-metallic-silver"
+            className="mb-2 inline-block font-urbanist text-xs font-medium text-metallic-silver empty:hidden"
           >
             {label}
           </label>
