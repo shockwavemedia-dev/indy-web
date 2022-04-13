@@ -15,13 +15,6 @@
     "jsx": "preserve",
     "incremental": true
   },
-  "include": [
-    "next-auth.d.ts",
-    "next-env.d.ts",
-    "react-select.d.ts",
-    "react-tables.d.ts",
-    "**/*.ts",
-    "**/*.tsx"
-  ],
+  "include": ["**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"]
 }

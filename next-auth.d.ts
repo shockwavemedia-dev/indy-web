@@ -1,13 +1,13 @@
 import 'next-auth'
 import 'next-auth/jwt'
 import 'next-auth/user'
-import { AuthenticationUser } from './types/auth/AuthenticationResponseUser.type'
+import { AuthenticationResponseUser } from './types/auth/AuthenticationResponseUser.type'
 
 declare module 'next-auth' {
   interface Session {
     accessToken: string
     accessTokenTtl: number
-    user: AuthenticationUser
+    user: AuthenticationResponseUser
     isAdmin: boolean
     isClient: boolean
   }

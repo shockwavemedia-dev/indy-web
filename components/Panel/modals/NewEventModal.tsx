@@ -19,8 +19,8 @@ const NewEventModal = ({ isVisible, onClose }: { isVisible: boolean; onClose: ()
   const queryClient = useQueryClient()
 
   const formInitialValues: NewEventForm = {
-    requestedBy: session!.user.id,
-    clientId: session!.user.userType.clientId,
+    requestedBy: session?.user.id || -1,
+    clientId: session?.user.userType.clientId || -1,
     subject: '',
     services: [],
     duedate: null,
