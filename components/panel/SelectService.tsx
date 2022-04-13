@@ -5,10 +5,10 @@ import { useState } from 'react'
 import { useQuery } from 'react-query'
 import { Page } from '../../types/Page.type'
 import { Service } from '../../types/Service.type'
-import FormErrorMessage from '../Common/FormErrorMessage'
-import CaretIcon from '../Common/icons/CaretIcon'
-import CheckIcon from '../Common/icons/CheckIcon'
-import ClipboardIcon from '../Common/icons/ClipboardIcon'
+import FormErrorMessage from '../common/FormErrorMessage'
+import CaretIcon from '../common/icons/CaretIcon'
+import CheckIcon from '../common/icons/CheckIcon'
+import ClipboardIcon from '../common/icons/ClipboardIcon'
 
 const SelectService = ({ name }: { name: string }) => {
   const { setFieldValue } = useFormikContext()

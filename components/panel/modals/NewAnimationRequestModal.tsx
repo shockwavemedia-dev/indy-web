@@ -6,11 +6,11 @@ import { NewAnimationRequestFormSchema } from '../../../schemas/NewAnimationRequ
 import { Animation } from '../../../types/Animation.type'
 import { NewAnimationRequestForm } from '../../../types/forms/NewAnimationRequestForm.type'
 import { Page } from '../../../types/Page.type'
-import Button from '../../Common/Button'
-import PencilIcon from '../../Common/icons/PencilIcon'
-import Select from '../../Common/Select'
-import TextInput from '../../Common/TextInput'
-import Video from '../../Common/Video'
+import Button from '../../common/Button'
+import PencilIcon from '../../common/icons/PencilIcon'
+import Select from '../../common/Select'
+import TextInput from '../../common/TextInput'
+import Video from '../../common/Video'
 import Modal from '../Modal'
 
 const NewAnimationRequestModal = ({

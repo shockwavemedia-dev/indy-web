@@ -1,14 +1,15 @@
 import axios from 'axios'
 import { Form, Formik } from 'formik'
 import { useSession } from 'next-auth/react'
-import { NewAnimationCategoryFormSchema } from '../../../schemas/NewAnimationCategoryFormSchema'
-import { NewAnimationCategoryForm } from '../../../types/forms/NewAnimationCategoryForm.type'
-import Button from '../../Common/Button'
-import PencilIcon from '../../Common/icons/PencilIcon'
-import TextInput from '../../Common/TextInput'
+import { useQueryClient } from 'react-query'
+import { NewDepartmentFormSchema } from '../../../schemas/NewDepartmentFormSchema'
+import { NewDepartmentForm } from '../../../types/forms/NewDepartmentForm.type'
+import Button from '../../common/Button'
+import PencilIcon from '../../common/icons/PencilIcon'
+import TextInput from '../../common/TextInput'
 import Modal from '../Modal'
 
-const NewAnimationCategoryModal = ({
+const NewDepartmentModal = ({
   isVisible,
   onClose,
 }: {
@@ -16,24 +17,28 @@ const NewAnimationCategoryModal = ({
   onClose: () => void
 }) => {
   const { data: session } = useSession()
+  const queryClient = useQueryClient()
 
-  const formInitialValues: NewAnimationCategoryForm = {
+  const formInitialValues: NewDepartmentForm = {
     name: '',
+    description: '',
+    minDeliveryDays: -1,
   }
 
   const submitForm = async (
-    values: NewAnimationCategoryForm,
+    values: NewDepartmentForm,
     { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
   ) => {
     setSubmitting(true)
 
-    const { status } = await axios.post('/v1/library-categories', values, {
+    const { status } = await axios.post('/v1/departments', values, {
       headers: {
         Authorization: `Bearer ${session?.accessToken}`,
       },
     })
 
     if (status === 200) {
+      queryClient.invalidateQueries('departments')
       onClose()
     }
 
@@ -43,9 +48,9 @@ const NewAnimationCategoryModal = ({
   return (
     <>
       {isVisible && (
-        <Modal title="New Category Animation" onClose={onClose}>
+        <Modal title="New Department" onClose={onClose}>
           <Formik
-            validationSchema={NewAnimationCategoryFormSchema}
+            validationSchema={NewDepartmentFormSchema}
             initialValues={formInitialValues}
             onSubmit={submitForm}
           >
@@ -54,8 +59,22 @@ const NewAnimationCategoryModal = ({
                 <TextInput
                   type="text"
                   Icon={PencilIcon}
-                  placeholder="Category Animation  Name"
+                  placeholder="Department Name"
                   name="name"
+                  className="mb-5"
+                />
+                <TextInput
+                  type="text"
+                  Icon={PencilIcon}
+                  placeholder="Description"
+                  name="description"
+                  className="mb-5"
+                />
+                <TextInput
+                  type="text"
+                  Icon={PencilIcon}
+                  placeholder="Minimum Delivery Days"
+                  name="minDeliveryDays"
                   className="mb-8"
                 />
                 <div className="flex space-x-5">
@@ -75,4 +94,4 @@ const NewAnimationCategoryModal = ({
   )
 }
 
-export default NewAnimationCategoryModal
+export default NewDepartmentModal
