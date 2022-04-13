@@ -57,36 +57,34 @@ const NewEventModal = ({ isVisible, onClose }: { isVisible: boolean; onClose: ()
             initialValues={formInitialValues}
             onSubmit={submitForm}
           >
-            {() => (
-              <Form className="flex w-140 flex-col">
-                <TextInput
-                  type="text"
-                  Icon={EditIcon}
-                  placeholder="Enter subject"
-                  name="subject"
-                  className="mb-5"
-                />
-                <div className="mb-5 flex space-x-5">
-                  <SelectService name="services" />
-                  <DateInput name="duedate" placeholder="Enter due date" />
-                </div>
-                <TextAreaInput
-                  Icon={EditIcon}
-                  placeholder="Enter description"
-                  name="description"
-                  className="mb-5"
-                />
-                <FileInput label="Upload Assets" name="attachment" className="mb-8" />
-                <div className="flex space-x-5">
-                  <Button ariaLabel="Cancel" light onClick={onClose}>
-                    Cancel
-                  </Button>
-                  <Button ariaLabel="Submit" disabled={false} submit>
-                    Submit
-                  </Button>
-                </div>
-              </Form>
-            )}
+            <Form className="flex w-140 flex-col">
+              <TextInput
+                type="text"
+                Icon={EditIcon}
+                placeholder="Enter subject"
+                name="subject"
+                className="mb-5"
+              />
+              <div className="mb-5 flex space-x-5">
+                <SelectService name="services" />
+                <DateInput name="duedate" placeholder="Enter due date" />
+              </div>
+              <TextAreaInput
+                Icon={EditIcon}
+                placeholder="Enter description"
+                name="description"
+                className="mb-5"
+              />
+              <FileInput label="Upload Assets" name="attachment" className="mb-8" />
+              <div className="flex space-x-5">
+                <Button ariaLabel="Cancel" light onClick={onClose}>
+                  Cancel
+                </Button>
+                <Button ariaLabel="Submit" disabled={false} submit>
+                  Submit
+                </Button>
+              </div>
+            </Form>
           </Formik>
         </Modal>
       )}

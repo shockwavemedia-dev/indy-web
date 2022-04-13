@@ -65,7 +65,7 @@ const SignUp: NextPageWithLayout = () => {
         onSubmit={submitForm}
         validate={validateForm}
       >
-        {({ errors, touched, isSubmitting }) => (
+        {({ isSubmitting }) => (
           <Form className="flex w-130 flex-col items-center">
             <div className="mb-5 flex w-full space-x-5">
               <TextInput
