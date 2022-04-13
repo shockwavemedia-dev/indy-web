@@ -37,7 +37,7 @@ const styles: StylesConfig<Option, false> = {
     color: '#ABABB9',
     margin: 0,
   }),
-  control: (base, { isFocused }) => ({
+  control: (base, { isFocused, isDisabled }) => ({
     ...base,
     minHeight: '3.125rem',
     boxShadow: isFocused ? '0 0 0 2px #AAE2CB' : '0 0 0 1px #E8E8EF',
@@ -45,6 +45,7 @@ const styles: StylesConfig<Option, false> = {
     borderRadius: '.75rem',
     padding: '0 1.5rem 0',
     backgroundColor: '#ffffff',
+    cursor: isDisabled ? 'auto' : 'pointer',
   }),
   container: (base) => ({
     ...base,
@@ -62,10 +63,14 @@ const styles: StylesConfig<Option, false> = {
     color: '#32343D',
     font: '500 0.875rem Urbanist',
   }),
-  option: (base) => ({
+  option: (base, { isSelected }) => ({
     ...base,
-    color: '#32343D',
+    color: isSelected ? '#FFFFFF' : '#32343D',
     font: '500 0.875rem Urbanist',
+    backgroundColor: isSelected ? '#2BB67D !important' : '#FFFFFF',
+    ':hover': {
+      backgroundColor: '#E9FAF3',
+    },
   }),
   menu: (base) => ({
     ...base,
