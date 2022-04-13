@@ -4,8 +4,8 @@ import { useSession } from 'next-auth/react'
 import Link from 'next/link'
 import { useQueryClient } from 'react-query'
 import { Column } from 'react-table'
-import EyeOpenIcon from '../../components/common/icons/EyeOpenIcon'
-import TrashIcon from '../../components/common/icons/TrashIcon'
+import EyeOpenIcon from '../../components/Common/icons/EyeOpenIcon'
+import TrashIcon from '../../components/Common/icons/TrashIcon'
 import { Ticket } from '../../types/Ticket.type'
 
 export const TicketTableColumns: Array<Column<Ticket>> = [

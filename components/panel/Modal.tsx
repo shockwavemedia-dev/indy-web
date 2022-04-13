@@ -1,5 +1,5 @@
 import { ReactNode } from 'react'
-import CrossMarkIcon from '../common/icons/CrossMarkIcon'
+import CrossMarkIcon from '../Common/icons/CrossMarkIcon'
 
 const Modal = ({
   title,

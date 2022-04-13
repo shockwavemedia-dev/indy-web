@@ -4,9 +4,9 @@ import { useSession } from 'next-auth/react'
 import { useQueryClient } from 'react-query'
 import { NewDepartmentFormSchema } from '../../../schemas/NewDepartmentFormSchema'
 import { NewDepartmentForm } from '../../../types/forms/NewDepartmentForm.type'
-import Button from '../../common/Button'
-import PencilIcon from '../../common/icons/PencilIcon'
-import TextInput from '../../common/TextInput'
+import Button from '../../Common/Button'
+import PencilIcon from '../../Common/icons/PencilIcon'
+import TextInput from '../../Common/TextInput'
 import Modal from '../Modal'
 
 const NewDepartmentModal = ({
