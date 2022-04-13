@@ -1,12 +1,12 @@
 import axios from 'axios'
 import { Form, Formik } from 'formik'
 import { useSession } from 'next-auth/react'
-import { NewAnimationCategoryFormSchema } from '../../schemas/NewAnimationCategoryFormSchema'
-import { NewAnimationCategoryForm } from '../../types/forms/NewAnimationCategoryForm.type'
-import Button from '../common/Button'
-import PencilIcon from '../common/icons/PencilIcon'
-import TextInput from '../common/TextInput'
-import Modal from './Modal'
+import { NewAnimationCategoryFormSchema } from '../../../schemas/NewAnimationCategoryFormSchema'
+import { NewAnimationCategoryForm } from '../../../types/forms/NewAnimationCategoryForm.type'
+import Button from '../../common/Button'
+import PencilIcon from '../../common/icons/PencilIcon'
+import TextInput from '../../common/TextInput'
+import Modal from '../Modal'
 
 const NewAnimationCategoryModal = ({
   isVisible,
