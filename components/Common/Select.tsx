@@ -44,6 +44,7 @@ const styles: StylesConfig<Option, false> = {
     border: 'none',
     borderRadius: '.75rem',
     padding: '0 1.5rem 0',
+    backgroundColor: '#ffffff',
   }),
   container: (base) => ({
     ...base,
@@ -92,6 +93,8 @@ const Select = ({
   className,
   disabled = false,
   defaultValue = null,
+  readOnly = false,
+  label,
 }: {
   name: string
   Icon: Icon
@@ -100,6 +103,8 @@ const Select = ({
   disabled?: boolean
   className?: string
   defaultValue?: Option | null
+  readOnly?: boolean
+  label?: string
 }) => {
   const { setFieldValue } = useFormikContext()
   const [selectedOption, setSelectedOption] = useState<Option | null>(defaultValue)
@@ -110,18 +115,21 @@ const Select = ({
   }
 
   return (
-    <ReactSelect
-      styles={styles}
-      placeholder={placeholder}
-      value={selectedOption}
-      onChange={selectOption}
-      options={options}
-      components={{ DropdownIndicator, Control }}
-      inputId={name}
-      isDisabled={disabled}
-      className={`selection:bg-jungle-green selection:text-white ${className}`}
-      Icon={Icon}
-    />
+    <div>
+      <label className="mb-2 font-urbanist text-xs font-medium text-metallic-silver">{label}</label>
+      <ReactSelect
+        styles={styles}
+        placeholder={placeholder}
+        value={selectedOption}
+        onChange={selectOption}
+        options={options}
+        components={{ DropdownIndicator, Control }}
+        inputId={name}
+        isDisabled={disabled || readOnly}
+        className={`selection:bg-jungle-green selection:text-white ${className}`}
+        Icon={Icon}
+      />
+    </div>
   )
 }
 
