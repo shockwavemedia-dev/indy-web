@@ -1,5 +1,5 @@
 import { Options } from 'react-select'
-import { Option } from '../types/Option.type'
+import { Option } from '../../types/Option.type'
 
 export const TicketTypeOptions: Options<Option> = [
   { label: 'Email', value: 'email' },
