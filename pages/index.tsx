@@ -12,6 +12,7 @@ const Home: NextPageWithLayout = () => {
 
   if (status === 'authenticated') {
     if (session.isAdmin) {
+      replace('/admin-panel/clients')
     } else if (session.isClient) {
       replace('/client-panel/dashboard')
     }
