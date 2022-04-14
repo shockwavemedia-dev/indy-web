@@ -12,11 +12,9 @@ import { API_BASE_URL } from '../constants/Http'
 import '../styles/globals.css'
 import { AppPropsWithLayout } from '../types/pages/AppPropsWithLayout.type'
 import { parseDates } from '../utils/DateHelpers'
-
-const isClientSide = typeof window !== 'undefined'
+import { isClientSide } from '../utils/EnvironmentHelpers'
 
 axios.defaults.baseURL = API_BASE_URL
-
 axios.interceptors.request.use(
   (config) => {
     if (isClientSide) {
@@ -37,7 +35,6 @@ axios.interceptors.request.use(
     }
   }
 )
-
 axios.interceptors.response.use(
   (response) => {
     if (isClientSide) {
@@ -66,7 +63,7 @@ const App = ({ Component, pageProps }: AppPropsWithLayout) => {
   const getLayout = Component.getLayout ?? ((page) => page)
 
   return (
-    <SessionProvider session={pageProps.session} refetchInterval={3600}>
+    <SessionProvider session={pageProps.session}>
       <QueryClientProvider client={queryClient}>
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           {getLayout(<Component {...pageProps} />)}

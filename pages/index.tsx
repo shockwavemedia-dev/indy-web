@@ -4,14 +4,17 @@ import { NextPageWithLayout } from '../types/pages/NextPageWithLayout.type'
 
 const Home: NextPageWithLayout = () => {
   const { replace } = useRouter()
-  const { status } = useSession()
+  const { status, data: session } = useSession()
 
   if (status === 'unauthenticated') {
     replace('/auth/login')
   }
 
   if (status === 'authenticated') {
-    replace('/dashboard')
+    if (session.isAdmin) {
+    } else if (session.isClient) {
+      replace('/client-panel/dashboard')
+    }
   }
 
   return null

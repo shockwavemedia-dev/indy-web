@@ -1,18 +1,19 @@
 import Head from 'next/head'
 import { ReactElement, useState } from 'react'
-import CalendarAddIcon from '../components/common/icons/CalendarAddIcon'
-import ClipboardCloseIcon from '../components/common/icons/ClipboardCloseIcon'
-import LifeBuoyIcon from '../components/common/icons/LifeBuoyIcon'
-import PresentationChartIcon from '../components/common/icons/PresentationChartIcon'
-import Table from '../components/common/Table'
-import Card from '../components/panel/Card'
-import FancyButton from '../components/panel/FancyButton'
-import NewEventModal from '../components/panel/modals/NewEventModal'
-import NewProjectBriefModal from '../components/panel/modals/NewProjectBriefModal'
-import SupportRequestModal from '../components/panel/modals/SupportRequestModal'
-import { TicketTableColumns } from '../constants/tables/TicketTableColumns'
-import PanelLayout from '../layouts/PanelLayout'
-import { NextPageWithLayout } from '../types/pages/NextPageWithLayout.type'
+import CalendarAddIcon from '../../components/common/icons/CalendarAddIcon'
+import ClipboardCloseIcon from '../../components/common/icons/ClipboardCloseIcon'
+import LifeBuoyIcon from '../../components/common/icons/LifeBuoyIcon'
+import PresentationChartIcon from '../../components/common/icons/PresentationChartIcon'
+import Table from '../../components/common/Table'
+import Card from '../../components/panel/Card'
+import FancyButton from '../../components/panel/FancyButton'
+import NewEventModal from '../../components/panel/modals/NewEventModal'
+import NewProjectBriefModal from '../../components/panel/modals/NewProjectBriefModal'
+import SupportRequestModal from '../../components/panel/modals/SupportRequestModal'
+import { ClientRoutes } from '../../constants/routes/ClientRoutes'
+import { TicketTableColumns } from '../../constants/tables/TicketTableColumns'
+import PanelLayout from '../../layouts/PanelLayout'
+import { NextPageWithLayout } from '../../types/pages/NextPageWithLayout.type'
 
 const Dashboard: NextPageWithLayout = () => {
   const [isNewEventModalVisible, setNewEventModalVisible] = useState(false)
@@ -158,6 +159,10 @@ const Dashboard: NextPageWithLayout = () => {
   )
 }
 
-Dashboard.getLayout = (page: ReactElement) => <PanelLayout header="Dashboard">{page}</PanelLayout>
+Dashboard.getLayout = (page: ReactElement) => (
+  <PanelLayout header="Dashboard" routes={ClientRoutes}>
+    {page}
+  </PanelLayout>
+)
 
 export default Dashboard

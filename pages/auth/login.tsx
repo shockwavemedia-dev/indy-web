@@ -40,7 +40,7 @@ const Login: NextPageWithLayout = () => {
     })
 
     if (!res?.error && res?.ok) {
-      replace('/dashboard')
+      replace('/')
     } else {
       setSubmitting(false)
     }
@@ -109,8 +109,6 @@ Login.getLayout = (page: ReactElement) => (
   <AuthLayout
     title="Welcome to Daily Press"
     subtitle="Please log in to your account and start the adventure"
-    needsAuth
-    pageName="Login"
   >
     {page}
   </AuthLayout>

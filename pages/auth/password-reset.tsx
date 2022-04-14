@@ -95,12 +95,7 @@ const PasswordReset: NextPageWithLayout = () => {
 }
 
 PasswordReset.getLayout = (page: ReactElement) => (
-  <AuthLayout
-    title="Create new password"
-    subtitle="Setup your new password"
-    needsAuth
-    pageName="PasswordReset"
-  >
+  <AuthLayout title="Create new password" subtitle="Setup your new password">
     {page}
   </AuthLayout>
 )

@@ -1,13 +1,14 @@
 import Head from 'next/head'
 import { ReactElement, useState } from 'react'
-import UserIcon from '../../components/common/icons/UserIcon'
-import Table from '../../components/common/Table'
-import Card from '../../components/panel/Card'
-import FancyButton from '../../components/panel/FancyButton'
-import NewAnimationRequestModal from '../../components/panel/modals/NewAnimationRequestModal'
-import { AnimationTableColumns } from '../../constants/tables/AnimationTableColumns'
-import PanelLayout from '../../layouts/PanelLayout'
-import { NextPageWithLayout } from '../../types/pages/NextPageWithLayout.type'
+import UserIcon from '../../../components/common/icons/UserIcon'
+import Table from '../../../components/common/Table'
+import Card from '../../../components/panel/Card'
+import FancyButton from '../../../components/panel/FancyButton'
+import NewAnimationRequestModal from '../../../components/panel/modals/NewAnimationRequestModal'
+import { ClientRoutes } from '../../../constants/routes/ClientRoutes'
+import { AnimationTableColumns } from '../../../constants/tables/AnimationTableColumns'
+import PanelLayout from '../../../layouts/PanelLayout'
+import { NextPageWithLayout } from '../../../types/pages/NextPageWithLayout.type'
 
 const Animation: NextPageWithLayout = () => {
   const [isNewAnimationRequestModalVisible, setNewAnimationRequestModalVisible] = useState(false)
@@ -50,6 +51,10 @@ const Animation: NextPageWithLayout = () => {
   )
 }
 
-Animation.getLayout = (page: ReactElement) => <PanelLayout header="Animations">{page}</PanelLayout>
+Animation.getLayout = (page: ReactElement) => (
+  <PanelLayout header="Animations" routes={ClientRoutes}>
+    {page}
+  </PanelLayout>
+)
 
 export default Animation
