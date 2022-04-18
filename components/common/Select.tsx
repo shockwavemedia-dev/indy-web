@@ -96,27 +96,36 @@ const Select = ({
   placeholder,
   options,
   className,
+  label,
+  onChange,
   disabled = false,
   defaultValue = null,
   readOnly = false,
-  label,
 }: {
-  name: string
+  name?: string
   Icon: Icon
-  placeholder: string
+  placeholder?: string
   options: Options<Option>
-  disabled?: boolean
   className?: string
+  label?: string
+  onChange?: (option: SingleValue<Option>) => void
+  disabled?: boolean
   defaultValue?: Option | null
   readOnly?: boolean
-  label?: string
 }) => {
   const { setFieldValue } = useFormikContext()
   const [selectedOption, setSelectedOption] = useState<Option | null>(defaultValue)
 
   const selectOption = (option: SingleValue<Option>) => {
     setSelectedOption(option)
-    setFieldValue(name, option?.value)
+
+    if (name) {
+      setFieldValue(name, option?.value)
+    }
+
+    if (onChange) {
+      onChange(option)
+    }
   }
 
   return (

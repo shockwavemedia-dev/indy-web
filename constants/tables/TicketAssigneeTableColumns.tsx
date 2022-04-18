@@ -1,8 +1,11 @@
 import axios from 'axios'
 import { useSession } from 'next-auth/react'
+import { useState } from 'react'
 import { useQueryClient } from 'react-query'
 import { Column } from 'react-table'
+import EyeIcon from '../../components/common/icons/EyeIcon'
 import TrashIcon from '../../components/common/icons/TrashIcon'
+import TicketAssigneeEditModal from '../../components/panel/modals/TicketAssigneeEditModal'
 import { TicketAssigneeForm } from '../../types/forms/TicketAssigneeForm.type'
 
 export const TicketAssigneeTableColumns: Array<Column<TicketAssigneeForm>> = [
@@ -46,6 +49,11 @@ export const TicketAssigneeTableColumns: Array<Column<TicketAssigneeForm>> = [
       const { data: session } = useSession()
       const queryClient = useQueryClient()
 
+      const [isTicketAssigneeEditModalVisible, setTicketAssigneeEditModalVisible] = useState(false)
+
+      const toggleTicketAssigneeEditModal = () =>
+        setTicketAssigneeEditModalVisible(!isTicketAssigneeEditModalVisible)
+
       const deleteTicketAssignee = async () => {
         const { status } = await axios.delete(`/v1/ticket-assignees/${value}`, {
           headers: {
@@ -59,9 +67,19 @@ export const TicketAssigneeTableColumns: Array<Column<TicketAssigneeForm>> = [
       }
 
       return (
-        <button onClick={deleteTicketAssignee}>
-          <TrashIcon className="stroke-waterloo" />
-        </button>
+        <div className="flex space-x-2">
+          <button onClick={toggleTicketAssigneeEditModal}>
+            <EyeIcon className="stroke-waterloo" />
+          </button>
+          <button onClick={deleteTicketAssignee}>
+            <TrashIcon className="stroke-waterloo" />
+          </button>
+          <TicketAssigneeEditModal
+            isVisible={isTicketAssigneeEditModalVisible}
+            onClose={toggleTicketAssigneeEditModal}
+            ticketAssigneeId={value}
+          />
+        </div>
       )
     },
   },
