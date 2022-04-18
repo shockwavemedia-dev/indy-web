@@ -5,7 +5,7 @@ import { ReactNode } from 'react'
 import BellIcon from '../components/common/icons/BellIcon'
 import BriefcaseIcon from '../components/common/icons/BriefcaseIcon'
 import CaretIcon from '../components/common/icons/CaretIcon'
-import EyeOpenIcon from '../components/common/icons/EyeOpenIcon'
+import EyeIcon from '../components/common/icons/EyeIcon'
 import MagnifyingGlassIcon from '../components/common/icons/MagnifyingGlassIcon'
 import JobsStatusCountCard from '../components/panel/JobStatsCard'
 import RouteButton from '../components/panel/RouteButton'
@@ -44,7 +44,7 @@ const PanelLayout = ({
         </div>
         <div className="mb-5 flex space-x-3 px-6">
           <JobsStatusCountCard Icon={BriefcaseIcon} value={12} description="Pending Jobs" />
-          <JobsStatusCountCard Icon={EyeOpenIcon} value={4} description="Jobs To Review" />
+          <JobsStatusCountCard Icon={EyeIcon} value={4} description="Jobs To Review" />
         </div>
         {routes.map(({ title, Icon, pathname, subRoutes = [] }) => (
           <>

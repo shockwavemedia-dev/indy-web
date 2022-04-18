@@ -2,7 +2,8 @@ import { Field } from 'formik'
 import { useState } from 'react'
 import { Icon } from '../../types/Icon.type'
 import FormErrorMessage from './FormErrorMessage'
-import EyeOpenIcon from './icons/EyeOpenIcon'
+import EyeIcon from './icons/EyeIcon'
+import EyeSlashIcon from './icons/EyeSlashIcon'
 
 const PasswordInput = ({
   name,
@@ -39,7 +40,11 @@ const PasswordInput = ({
           tabIndex={-1}
           type="button"
         >
-          <EyeOpenIcon className="stroke-lavender-gray group-hover:stroke-jungle-green" />
+          {isShowPassword ? (
+            <EyeSlashIcon className="stroke-lavender-gray group-hover:stroke-jungle-green" />
+          ) : (
+            <EyeIcon className="stroke-lavender-gray group-hover:stroke-jungle-green" />
+          )}
         </button>
       </div>
       <FormErrorMessage name={name} />

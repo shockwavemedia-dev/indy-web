@@ -1,4 +1,4 @@
-const EyeOpenIcon = ({ className }: { className: string }) => (
+const EyeIcon = ({ className }: { className: string }) => (
   <svg
     className={className}
     width="18"
@@ -22,4 +22,4 @@ const EyeOpenIcon = ({ className }: { className: string }) => (
   </svg>
 )
 
-export default EyeOpenIcon
+export default EyeIcon
