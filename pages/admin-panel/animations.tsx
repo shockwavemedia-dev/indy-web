@@ -1,4 +1,4 @@
-import Head from 'next/Head'
+import Head from 'next/head'
 import { ReactElement, useState } from 'react'
 import UserIcon from '../../components/common/icons/UserIcon'
 import VideoIcon from '../../components/common/icons/VideoIcon'
