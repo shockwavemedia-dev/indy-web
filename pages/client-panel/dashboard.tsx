@@ -8,7 +8,6 @@ import Table from '../../components/common/Table'
 import Card from '../../components/panel/Card'
 import FancyButton from '../../components/panel/FancyButton'
 import NewEventModal from '../../components/panel/modals/NewEventModal'
-import NewProjectBriefModal from '../../components/panel/modals/NewProjectBriefModal'
 import SupportRequestModal from '../../components/panel/modals/SupportRequestModal'
 import { ClientRoutes } from '../../constants/routes/ClientRoutes'
 import { TicketsTableColumns } from '../../constants/tables/TicketsTableColumns'
@@ -17,12 +16,9 @@ import { NextPageWithLayout } from '../../types/pages/NextPageWithLayout.type'
 
 const Dashboard: NextPageWithLayout = () => {
   const [isNewEventModalVisible, setNewEventModalVisible] = useState(false)
-  const [isNewProjectBriefModalVisible, setNewProjectBriefModalVisible] = useState(false)
   const [isSupportRequestModalVisible, setSupportRequestModalVisible] = useState(false)
 
   const toggleNewEventModal = () => setNewEventModalVisible(!isNewEventModalVisible)
-  const toggleNewProjectBriefModal = () =>
-    setNewProjectBriefModalVisible(!isNewProjectBriefModalVisible)
   const toggleSupportRequestModal = () =>
     setSupportRequestModalVisible(!isSupportRequestModalVisible)
 
@@ -50,7 +46,7 @@ const Dashboard: NextPageWithLayout = () => {
           }
           title="New Project Brief"
           subtitle="Laborerivit rem cones mil"
-          onClick={toggleNewProjectBriefModal}
+          onClick={() => {}}
         />
         <FancyButton
           Icon={
@@ -146,10 +142,6 @@ const Dashboard: NextPageWithLayout = () => {
           <div></div>
         </Card> */}
       <NewEventModal isVisible={isNewEventModalVisible} onClose={toggleNewEventModal} />
-      <NewProjectBriefModal
-        isVisible={isNewProjectBriefModalVisible}
-        onClose={toggleNewProjectBriefModal}
-      />
       <SupportRequestModal
         isVisible={isSupportRequestModalVisible}
         onClose={toggleSupportRequestModal}
