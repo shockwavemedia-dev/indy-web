@@ -1,4 +1,5 @@
 import { Service } from './Service.type'
+import { TicketStatus } from './TicketStatus.type'
 import { TicketType } from './TicketType.type'
 
 export type Ticket = {
@@ -10,7 +11,7 @@ export type Ticket = {
   departmentName: string
   duedate: Date
   type: TicketType
-  status: 'closed' | 'new' | 'pending' | 'on_hold' | 'open' | 'resolved' | 'deleted'
+  status: TicketStatus
   createdAt: Date
   attachment: string
   services?: Array<Service>
