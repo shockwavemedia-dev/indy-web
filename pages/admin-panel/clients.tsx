@@ -37,7 +37,7 @@ const Client: NextPageWithLayout = () => {
           <Table
             dataEndpoint="/v1/clients"
             columns={ClientTableColumns}
-            startingPageSize={20}
+            initialPageSize={20}
             tableQueryKey="clients"
             ofString="Clients"
           />

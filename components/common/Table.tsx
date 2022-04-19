@@ -11,24 +11,26 @@ import SortIcon from './icons/SortIcon'
 
 const Table = <T extends {}>({
   tableQueryKey,
-  withFilterAndSettings = false,
-  startingPageSize = 10,
   dataEndpoint,
   columns,
   ofString,
-  tableAction,
+  tableActions,
+  initialPageSize = 10,
+  periodicFilter = false,
+  settings = false,
 }: {
   tableQueryKey: string | Array<string | number>
-  withFilterAndSettings?: boolean
-  startingPageSize?: number
   dataEndpoint: string
   columns: Array<Column<T>>
   ofString: string
-  tableAction?: ReactNode
+  tableActions?: ReactNode
+  initialPageSize?: number
+  periodicFilter?: boolean
+  settings?: boolean
 }) => {
   const { data: session } = useSession()
   const [queryPageIndex, setQueryPageIndex] = useState(0)
-  const [queryPageSize, setQueryPageSize] = useState(startingPageSize)
+  const [queryPageSize, setQueryPageSize] = useState(initialPageSize)
 
   const {
     data: pagination,
@@ -85,16 +87,16 @@ const Table = <T extends {}>({
 
   return (
     <>
-      <div className="absolute right-6 top-6 flex items-center space-x-2.5">
-        {tableAction}
-        {withFilterAndSettings && (
+      <div className="absolute right-6 top-6 flex items-center">
+        {tableActions}
+        {periodicFilter && (
           <>
-            <CalendarIcon className="stroke-metallic-silver" />
-            <div className="font-urbanist text-sm font-medium text-onyx">Last week</div>
-            <CaretIcon className="rotate-180 stroke-waterloo" small />
-            <GearIcon className="!ml-5 stroke-waterloo" />
+            <CalendarIcon className="mr-2 stroke-metallic-silver" />
+            <div className="mr-2 font-urbanist text-sm font-medium text-onyx">Last Week</div>
+            <CaretIcon className="mr-5 rotate-180 stroke-waterloo" small />
           </>
         )}
+        {settings && <GearIcon className="stroke-waterloo" />}
       </div>
       {rows.length > 0 ? (
         <>
@@ -125,7 +127,7 @@ const Table = <T extends {}>({
                               {render('Header')}
                             </div>
                             {canSort && (
-                              <div className="flex flex-col space-y-1">
+                              <div className="space-y-1">
                                 <SortIcon
                                   className={
                                     isSorted && !isSortedDesc

@@ -54,7 +54,7 @@ const Animations: NextPageWithLayout = () => {
         <Table
           dataEndpoint="/v1/libraries"
           columns={AnimationTableColumns}
-          startingPageSize={20}
+          initialPageSize={20}
           tableQueryKey="libraries"
           ofString="Animations"
         />
