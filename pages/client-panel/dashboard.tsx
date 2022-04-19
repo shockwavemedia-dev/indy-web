@@ -11,7 +11,7 @@ import NewEventModal from '../../components/panel/modals/NewEventModal'
 import NewProjectBriefModal from '../../components/panel/modals/NewProjectBriefModal'
 import SupportRequestModal from '../../components/panel/modals/SupportRequestModal'
 import { ClientRoutes } from '../../constants/routes/ClientRoutes'
-import { TicketTableColumns } from '../../constants/tables/TicketTableColumns'
+import { TicketsTableColumns } from '../../constants/tables/TicketsTableColumns'
 import PanelLayout from '../../layouts/PanelLayout'
 import { NextPageWithLayout } from '../../types/pages/NextPageWithLayout.type'
 
@@ -77,10 +77,9 @@ const Dashboard: NextPageWithLayout = () => {
       <div className="mx-auto grid h-262.5 w-270 grid-cols-1 grid-rows-5 gap-6">
         <Card title="All Tickets" className="row-span-3">
           <Table
-            columns={TicketTableColumns}
+            columns={TicketsTableColumns}
             dataEndpoint="/v1/tickets"
             tableQueryKey="tickets"
-            withFilterAndSettings
             ofString="Tickets"
           />
         </Card>

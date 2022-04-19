@@ -4,19 +4,15 @@ import { useSession } from 'next-auth/react'
 import Link from 'next/link'
 import { useQueryClient } from 'react-query'
 import { Column } from 'react-table'
+import EditIcon from '../../components/common/icons/EditIcon'
 import EyeIcon from '../../components/common/icons/EyeIcon'
 import TrashIcon from '../../components/common/icons/TrashIcon'
 import { Ticket } from '../../types/Ticket.type'
 
-export const TicketTableColumns: Array<Column<Ticket>> = [
+export const TicketsTableColumns: Array<Column<Ticket>> = [
   {
     Header: 'Ticket Code',
     accessor: 'ticketCode',
-    Cell: ({ value }) => <div className="font-urbanist text-sm font-medium text-onyx">{value}</div>,
-  },
-  {
-    Header: 'Type',
-    accessor: 'type',
     Cell: ({ value }) => <div className="font-urbanist text-sm font-medium text-onyx">{value}</div>,
   },
   {
@@ -25,19 +21,18 @@ export const TicketTableColumns: Array<Column<Ticket>> = [
     Cell: ({ value }) => <div className="font-urbanist text-sm font-medium text-onyx">{value}</div>,
   },
   {
-    Header: 'Status',
-    accessor: 'status',
-    Cell: ({ value }) => (
-      <div
-        className={`w-fit rounded-lg bg-honeydew py-1 px-2 font-urbanist text-sm font-medium text-jungle-green`}
-      >
-        {value}
-      </div>
-    ),
+    Header: 'Type',
+    accessor: 'type',
+    Cell: ({ value }) => <div className="font-urbanist text-sm font-medium text-onyx">{value}</div>,
   },
   {
-    Header: 'Due Date',
-    accessor: 'duedate',
+    Header: 'Status',
+    accessor: 'status',
+    Cell: ({ value }) => <div className="font-urbanist text-sm font-medium text-onyx">{value}</div>,
+  },
+  {
+    Header: 'Create Date',
+    accessor: 'createdAt',
     sortType: 'datetime',
     Cell: ({ value }) => (
       <div className="font-urbanist text-sm font-medium text-onyx">
@@ -68,12 +63,15 @@ export const TicketTableColumns: Array<Column<Ticket>> = [
       return (
         <div className="flex space-x-2">
           <Link href={`/ticket/${value}`}>
-            <a>
-              <EyeIcon className="stroke-waterloo" />
+            <a className="group">
+              <EyeIcon className="stroke-waterloo group-hover:stroke-jungle-green" />
             </a>
           </Link>
-          <button onClick={deleteTicket}>
-            <TrashIcon className="stroke-waterloo" />
+          <button onClick={deleteTicket} className="group">
+            <EditIcon className="stroke-waterloo group-hover:stroke-jungle-green" />
+          </button>
+          <button onClick={deleteTicket} className="group">
+            <TrashIcon className="stroke-waterloo group-hover:stroke-jungle-green" />
           </button>
         </div>
       )
