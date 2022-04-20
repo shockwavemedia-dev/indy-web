@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import { ReactElement, useState } from 'react'
+import DataTable from '../../../components/common/DataTable'
 import PlusIcon from '../../../components/common/icons/PlusIcon'
-import Table from '../../../components/common/Table'
 import Card from '../../../components/panel/Card'
 import CreateEventModal from '../../../components/panel/modals/CreateEventModal'
 import CreateSupportRequestModal from '../../../components/panel/modals/CreateSupportRequestModal'
@@ -24,7 +24,7 @@ const Ticket: NextPageWithLayout = () => {
         <title>Daily Press - Tickets</title>
       </Head>
       <Card title="All Tickets" className="mx-auto h-full w-full max-w-7xl">
-        <Table
+        <DataTable
           columns={TicketsTableColumns}
           dataEndpoint="/v1/tickets"
           tableQueryKey="tickets"

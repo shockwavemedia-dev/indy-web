@@ -9,7 +9,7 @@ import CaretIcon from './icons/CaretIcon'
 import GearIcon from './icons/GearIcon'
 import SortIcon from './icons/SortIcon'
 
-const Table = <T extends {}>({
+const DataTable = <T extends {}>({
   tableQueryKey,
   dataEndpoint,
   columns,
@@ -261,4 +261,4 @@ const Table = <T extends {}>({
   )
 }
 
-export default Table
+export default DataTable

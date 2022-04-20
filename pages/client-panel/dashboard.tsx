@@ -1,10 +1,10 @@
 import Head from 'next/head'
 import { ReactElement, useState } from 'react'
+import DataTable from '../../components/common/DataTable'
 import CalendarAddIcon from '../../components/common/icons/CalendarAddIcon'
 import ClipboardCloseIcon from '../../components/common/icons/ClipboardCloseIcon'
 import LifeBuoyIcon from '../../components/common/icons/LifeBuoyIcon'
 import PresentationChartIcon from '../../components/common/icons/PresentationChartIcon'
-import Table from '../../components/common/Table'
 import Card from '../../components/panel/Card'
 import FancyButton from '../../components/panel/FancyButton'
 import CreateEventModal from '../../components/panel/modals/CreateEventModal'
@@ -72,7 +72,7 @@ const Dashboard: NextPageWithLayout = () => {
       <hr className="mb-6 border-t-bright-gray" />
       <div className="mx-auto grid h-262.5 w-270 grid-cols-1 grid-rows-5 gap-6">
         <Card title="All Tickets" className="row-span-3">
-          <Table
+          <DataTable
             columns={TicketsTableColumns}
             dataEndpoint="/v1/tickets"
             tableQueryKey="tickets"
