@@ -12,6 +12,7 @@ import SortIcon from './icons/SortIcon'
 const DataTable = <T extends {}>({
   tableQueryKey,
   dataEndpoint,
+  dataParams,
   columns,
   ofString,
   tableActions,
@@ -21,6 +22,7 @@ const DataTable = <T extends {}>({
 }: {
   tableQueryKey: string | Array<string | number>
   dataEndpoint: string
+  dataParams?: { [key: string]: string | number }
   columns: Array<Column<T>>
   ofString: string
   tableActions?: ReactNode
@@ -43,7 +45,12 @@ const DataTable = <T extends {}>({
       const { data } = await axios.get<{
         data: Array<T>
         page: Page
-      }>(`${dataEndpoint}?page_number=${queryPageIndex + 1}&size=${queryPageSize}`, {
+      }>(dataEndpoint, {
+        params: {
+          page_number: queryPageIndex + 1,
+          size: queryPageSize,
+          ...dataParams,
+        },
         headers: {
           Authorization: `Bearer ${session?.accessToken}`,
         },
