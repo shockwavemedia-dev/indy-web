@@ -1,5 +1,4 @@
 import axios from 'axios'
-import { useSession } from 'next-auth/react'
 import { useQueryClient } from 'react-query'
 import { Column } from 'react-table'
 import TrashIcon from '../../components/common/icons/TrashIcon'
@@ -31,15 +30,10 @@ export const AnimationTableColumns: Array<Column<Animation>> = [
     accessor: 'id',
     disableSortBy: true,
     Cell: ({ value }) => {
-      const { data: session } = useSession()
       const queryClient = useQueryClient()
 
       const deleteAnimation = async () => {
-        const { status } = await axios.delete(`/v1/libraries/${value}`, {
-          headers: {
-            Authorization: `Bearer ${session?.accessToken}`,
-          },
-        })
+        const { status } = await axios.delete(`/v1/libraries/${value}`)
 
         if (status === 200) {
           queryClient.invalidateQueries('libraries')

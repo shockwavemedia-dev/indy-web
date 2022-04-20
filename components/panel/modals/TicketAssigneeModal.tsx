@@ -1,6 +1,5 @@
 import axios from 'axios'
 import { Form, Formik } from 'formik'
-import { useSession } from 'next-auth/react'
 import { useQuery, useQueryClient } from 'react-query'
 import { Department } from '../../../types/Department.type'
 import { TicketAssigneeForm } from '../../../types/forms/TicketAssigneeForm.type'
@@ -20,7 +19,6 @@ const TicketAssigneeModal = ({
   onClose: () => void
   ticketId?: number | string | Array<string>
 }) => {
-  const { data: session } = useSession()
   const queryClient = useQueryClient()
 
   const formInitialValues: TicketAssigneeForm = {
@@ -43,9 +41,6 @@ const TicketAssigneeModal = ({
       params: {
         with_users: true,
       },
-      headers: {
-        Authorization: `Bearer ${session?.accessToken}`,
-      },
     })
 
     return data
@@ -57,15 +52,9 @@ const TicketAssigneeModal = ({
   ) => {
     setSubmitting(true)
 
-    const { status } = await axios.post(
-      `/v1/tickets/${ticketId}/assign`,
-      { adminUserId: values.adminUserId },
-      {
-        headers: {
-          Authorization: `Bearer ${session?.accessToken}`,
-        },
-      }
-    )
+    const { status } = await axios.post(`/v1/tickets/${ticketId}/assign`, {
+      adminUserId: values.adminUserId,
+    })
 
     if (status === 200) {
       queryClient.invalidateQueries('assignees')

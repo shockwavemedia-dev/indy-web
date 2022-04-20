@@ -1,6 +1,5 @@
 import axios from 'axios'
 import { format } from 'date-fns'
-import { useSession } from 'next-auth/react'
 import Head from 'next/head'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
@@ -25,16 +24,11 @@ import { Ticket } from '../../../types/Ticket.type'
 import { TicketPageTabs } from '../../../types/TicketPageTabs.type'
 
 const Ticket: NextPageWithLayout = () => {
-  const { data: session } = useSession()
   const {
     query: { id },
   } = useRouter()
   const { data: ticket, isSuccess } = useQuery(['ticket', Number(id)], async () => {
-    const { data } = await axios.get<Ticket>(`/v1/tickets/${id}`, {
-      headers: {
-        Authorization: `Bearer ${session?.accessToken}`,
-      },
-    })
+    const { data } = await axios.get<Ticket>(`/v1/tickets/${id}`)
 
     return data
   })

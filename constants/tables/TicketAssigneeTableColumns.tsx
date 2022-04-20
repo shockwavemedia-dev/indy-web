@@ -1,5 +1,4 @@
 import axios from 'axios'
-import { useSession } from 'next-auth/react'
 import { useState } from 'react'
 import { useQueryClient } from 'react-query'
 import { Column } from 'react-table'
@@ -46,7 +45,6 @@ export const TicketAssigneeTableColumns: Array<Column<TicketAssigneeForm>> = [
     accessor: 'ticketAssigneeId',
     disableSortBy: true,
     Cell: ({ value }) => {
-      const { data: session } = useSession()
       const queryClient = useQueryClient()
 
       const [isTicketAssigneeEditModalVisible, setTicketAssigneeEditModalVisible] = useState(false)
@@ -55,11 +53,7 @@ export const TicketAssigneeTableColumns: Array<Column<TicketAssigneeForm>> = [
         setTicketAssigneeEditModalVisible(!isTicketAssigneeEditModalVisible)
 
       const deleteTicketAssignee = async () => {
-        const { status } = await axios.delete(`/v1/ticket-assignees/${value}`, {
-          headers: {
-            Authorization: `Bearer ${session?.accessToken}`,
-          },
-        })
+        const { status } = await axios.delete(`/v1/ticket-assignees/${value}`)
 
         if (status === 200) {
           queryClient.invalidateQueries('assignees')

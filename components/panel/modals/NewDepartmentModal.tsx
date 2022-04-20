@@ -1,6 +1,5 @@
 import axios from 'axios'
 import { Form, Formik } from 'formik'
-import { useSession } from 'next-auth/react'
 import { useQueryClient } from 'react-query'
 import { NewDepartmentFormSchema } from '../../../schemas/NewDepartmentFormSchema'
 import { NewDepartmentForm } from '../../../types/forms/NewDepartmentForm.type'
@@ -16,7 +15,6 @@ const NewDepartmentModal = ({
   isVisible: boolean
   onClose: () => void
 }) => {
-  const { data: session } = useSession()
   const queryClient = useQueryClient()
 
   const formInitialValues: NewDepartmentForm = {
@@ -31,11 +29,7 @@ const NewDepartmentModal = ({
   ) => {
     setSubmitting(true)
 
-    const { status } = await axios.post('/v1/departments', values, {
-      headers: {
-        Authorization: `Bearer ${session?.accessToken}`,
-      },
-    })
+    const { status } = await axios.post('/v1/departments', values)
 
     if (status === 200) {
       queryClient.invalidateQueries('departments')

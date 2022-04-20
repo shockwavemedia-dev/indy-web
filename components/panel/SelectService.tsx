@@ -20,11 +20,7 @@ const SelectService = ({ name }: { name: string }) => {
     } = await axios.get<{
       data: Array<Service>
       page: Page
-    }>(`/v1/clients/${session?.user.userType.clientId}/services`, {
-      headers: {
-        Authorization: `Bearer ${session?.accessToken}`,
-      },
-    })
+    }>(`/v1/clients/${session?.user.userType.clientId}/services`)
 
     return data
   })

@@ -33,11 +33,7 @@ const CreateEventModal = ({ isVisible, onClose }: { isVisible: boolean; onClose:
   ) => {
     setSubmitting(true)
 
-    const { status } = await axios.post('/v1/tickets/event', objectWithFileToFormData(values), {
-      headers: {
-        Authorization: `Bearer ${session?.accessToken}`,
-      },
-    })
+    const { status } = await axios.post('/v1/tickets/event', objectWithFileToFormData(values))
 
     if (status === 200) {
       queryClient.invalidateQueries('tickets')

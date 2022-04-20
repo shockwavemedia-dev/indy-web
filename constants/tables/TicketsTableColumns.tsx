@@ -1,6 +1,5 @@
 import axios from 'axios'
 import { format } from 'date-fns'
-import { useSession } from 'next-auth/react'
 import Link from 'next/link'
 import { useQueryClient } from 'react-query'
 import { Column } from 'react-table'
@@ -49,15 +48,10 @@ export const TicketsTableColumns: Array<Column<Ticket>> = [
     accessor: 'id',
     disableSortBy: true,
     Cell: ({ value }) => {
-      const { data: session } = useSession()
       const queryClient = useQueryClient()
 
       const deleteTicket = async () => {
-        const { status } = await axios.delete(`/v1/tickets/${value}`, {
-          headers: {
-            Authorization: `Bearer ${session?.accessToken}`,
-          },
-        })
+        const { status } = await axios.delete(`/v1/tickets/${value}`)
 
         if (status === 200) {
           queryClient.invalidateQueries('tickets')

@@ -1,6 +1,5 @@
 import axios from 'axios'
 import { id } from 'date-fns/locale'
-import { useSession } from 'next-auth/react'
 import { useQuery, useQueryClient } from 'react-query'
 import { SingleValue } from 'react-select'
 import { TicketAssigneeStatusOptions } from '../../../constants/options/TicketAssigneeStatusOptions'
@@ -19,18 +18,10 @@ const TicketAssigneeEditModal = ({
   onClose: () => void
   ticketAssigneeId: number
 }) => {
-  const { data: session } = useSession()
   const queryClient = useQueryClient()
 
   const { data: ticketAssignee, isLoading } = useQuery('ticketAssigneeShow', async () => {
-    const { data } = await axios.get<TicketAssigneeForm>(
-      `/v1/ticket-assignees/${ticketAssigneeId}`,
-      {
-        headers: {
-          Authorization: `Bearer ${session?.accessToken}`,
-        },
-      }
-    )
+    const { data } = await axios.get<TicketAssigneeForm>(`/v1/ticket-assignees/${ticketAssigneeId}`)
 
     return data
   })
@@ -38,14 +29,7 @@ const TicketAssigneeEditModal = ({
   const updateStatus = async (status: SingleValue<Option>) => {
     const { status: responseStatus } = await axios.put<TicketAssigneeForm>(
       `/v1/ticket-assignees/${ticketAssigneeId}`,
-      {
-        status: status?.value,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${session?.accessToken}`,
-        },
-      }
+      { status: status?.value }
     )
 
     if (responseStatus === 200) {

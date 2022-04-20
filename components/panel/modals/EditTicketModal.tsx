@@ -1,7 +1,6 @@
 import axios from 'axios'
 import { id } from 'date-fns/locale'
 import { Form, Formik } from 'formik'
-import { useSession } from 'next-auth/react'
 import { useQueryClient } from 'react-query'
 import { TicketStatusOptions } from '../../../constants/options/TicketStatusOptions'
 import { TicketTypeOptions } from '../../../constants/options/TicketTypeOptions'
@@ -27,7 +26,6 @@ const EditTicketModal = ({
   onClose: () => void
   ticket: Ticket
 }) => {
-  const { data: session } = useSession()
   const queryClient = useQueryClient()
 
   const submitForm = async (
@@ -36,11 +34,7 @@ const EditTicketModal = ({
   ) => {
     setSubmitting(true)
 
-    const { status } = await axios.put(`/v1/tickets/${ticket.id}`, values, {
-      headers: {
-        Authorization: `Bearer ${session?.accessToken}`,
-      },
-    })
+    const { status } = await axios.put(`/v1/tickets/${ticket.id}`, values)
 
     if (status === 200) {
       queryClient.invalidateQueries('tickets')

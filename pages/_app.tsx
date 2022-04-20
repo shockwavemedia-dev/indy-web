@@ -2,7 +2,7 @@ import AdapterDateFns from '@mui/lab/AdapterDateFns'
 import LocalizationProvider from '@mui/lab/LocalizationProvider'
 import axios from 'axios'
 import camelcaseKeys from 'camelcase-keys'
-import { SessionProvider } from 'next-auth/react'
+import { getSession, SessionProvider } from 'next-auth/react'
 import { done, start } from 'nprogress'
 import 'nprogress/nprogress.css'
 import React from 'react'
@@ -16,7 +16,9 @@ import { isClientSide } from '../utils/EnvironmentHelpers'
 
 axios.defaults.baseURL = API_BASE_URL
 axios.interceptors.request.use(
-  (config) => {
+  async (config) => {
+    const session = await getSession()
+
     if (isClientSide) {
       start()
     }
@@ -25,7 +27,13 @@ axios.interceptors.request.use(
       config.data = snakecaseKeys(config.data, { deep: true })
     }
 
-    return config
+    return {
+      ...config,
+      headers: {
+        ...config.headers,
+        Authorization: `Bearer ${session?.accessToken}`,
+      },
+    }
   },
   (error) => {
     Promise.reject(error)

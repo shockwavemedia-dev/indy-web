@@ -1,5 +1,4 @@
 import axios from 'axios'
-import { useSession } from 'next-auth/react'
 import { ReactNode, useEffect, useMemo, useState } from 'react'
 import { useQuery } from 'react-query'
 import { Column, usePagination, useSortBy, useTable } from 'react-table'
@@ -30,7 +29,6 @@ const DataTable = <T extends {}>({
   periodicFilter?: boolean
   settings?: boolean
 }) => {
-  const { data: session } = useSession()
   const [queryPageIndex, setQueryPageIndex] = useState(0)
   const [queryPageSize, setQueryPageSize] = useState(initialPageSize)
 
@@ -50,9 +48,6 @@ const DataTable = <T extends {}>({
           page_number: queryPageIndex + 1,
           size: queryPageSize,
           ...dataParams,
-        },
-        headers: {
-          Authorization: `Bearer ${session?.accessToken}`,
         },
       })
 

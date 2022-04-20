@@ -1,6 +1,5 @@
 import axios from 'axios'
 import { Form, Formik } from 'formik'
-import { useSession } from 'next-auth/react'
 import { NewAnimationCategoryFormSchema } from '../../../schemas/NewAnimationCategoryFormSchema'
 import { NewAnimationCategoryForm } from '../../../types/forms/NewAnimationCategoryForm.type'
 import Button from '../../common/Button'
@@ -15,8 +14,6 @@ const NewAnimationCategoryModal = ({
   isVisible: boolean
   onClose: () => void
 }) => {
-  const { data: session } = useSession()
-
   const formInitialValues: NewAnimationCategoryForm = {
     name: '',
   }
@@ -27,11 +24,7 @@ const NewAnimationCategoryModal = ({
   ) => {
     setSubmitting(true)
 
-    const { status } = await axios.post('/v1/library-categories', values, {
-      headers: {
-        Authorization: `Bearer ${session?.accessToken}`,
-      },
-    })
+    const { status } = await axios.post('/v1/library-categories', values)
 
     if (status === 200) {
       onClose()

@@ -1,6 +1,5 @@
 import axios from 'axios'
 import { format } from 'date-fns'
-import { useSession } from 'next-auth/react'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { useQueryClient } from 'react-query'
@@ -22,16 +21,11 @@ const DeleteTicketModal = ({
   ticket: Ticket
   minimal?: boolean
 }) => {
-  const { data: session } = useSession()
   const { replace } = useRouter()
   const queryClient = useQueryClient()
 
   const deleteTicket = async () => {
-    const { status } = await axios.delete(`/v1/tickets/${ticket.id}`, {
-      headers: {
-        Authorization: `Bearer ${session?.accessToken}`,
-      },
-    })
+    const { status } = await axios.delete(`/v1/tickets/${ticket.id}`)
 
     if (status === 200) {
       queryClient.invalidateQueries('tickets')

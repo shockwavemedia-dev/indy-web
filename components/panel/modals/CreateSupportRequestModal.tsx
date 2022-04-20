@@ -43,11 +43,7 @@ const CreateSupportRequestModal = ({
     } = await axios.get<{
       data: Array<Department>
       page: Page
-    }>('/v1/departments', {
-      headers: {
-        Authorization: `Bearer ${session?.accessToken}`,
-      },
-    })
+    }>('/v1/departments')
 
     return data
   })
@@ -58,11 +54,7 @@ const CreateSupportRequestModal = ({
   ) => {
     setSubmitting(true)
 
-    const { status } = await axios.post('/v1/tickets', values, {
-      headers: {
-        Authorization: `Bearer ${session?.accessToken}`,
-      },
-    })
+    const { status } = await axios.post('/v1/tickets', values)
 
     if (status === 200) {
       queryClient.invalidateQueries('tickets')
