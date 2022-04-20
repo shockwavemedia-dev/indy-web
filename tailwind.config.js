@@ -9,6 +9,7 @@ module.exports = {
     extend: {
       borderWidth: {
         1.5: '1.5px',
+        3: '3px',
       },
       gridTemplateRows: {
         10: 'repeat(10, minmax(0, 1fr))',
@@ -65,6 +66,8 @@ module.exports = {
         270: '67.5rem',
       },
       height: {
+        0.25: '0.0625rem',
+        0.75: '0.1875rem',
         1.5: '.375rem',
         8.5: '2.125rem',
         9.5: '2.375rem',
@@ -85,7 +88,9 @@ module.exports = {
         10: '2.5rem',
         11: '2.75rem',
         11.5: '2.875rem',
+        25: '6.25rem',
         75: '18.75rem',
+        86: '21.5rem',
       },
       minHeight: {
         4: '1rem',
@@ -104,7 +109,11 @@ module.exports = {
         75: '18.75rem',
       },
       spacing: {
+        0.5: '0.125rem',
         1.5: '.375rem',
+        '1/4': '25%',
+        '1/2': '50%',
+        '3/4': '75%',
       },
     },
     backgroundImage: {

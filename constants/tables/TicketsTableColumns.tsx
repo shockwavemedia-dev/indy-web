@@ -23,12 +23,16 @@ export const TicketsTableColumns: Array<Column<Ticket>> = [
   {
     Header: 'Type',
     accessor: 'type',
-    Cell: ({ value }) => <div className="font-urbanist text-sm font-medium text-onyx">{value}</div>,
+    Cell: ({ value }) => (
+      <div className="font-urbanist text-sm font-medium capitalize text-onyx">{value}</div>
+    ),
   },
   {
     Header: 'Status',
     accessor: 'status',
-    Cell: ({ value }) => <div className="font-urbanist text-sm font-medium text-onyx">{value}</div>,
+    Cell: ({ value }) => (
+      <div className="font-urbanist text-sm font-medium capitalize text-onyx">{value}</div>
+    ),
   },
   {
     Header: 'Create Date',
@@ -62,7 +66,7 @@ export const TicketsTableColumns: Array<Column<Ticket>> = [
 
       return (
         <div className="flex space-x-2">
-          <Link href={`/ticket/${value}`}>
+          <Link href={`/client-panel/ticket/${value}`}>
             <a className="group">
               <EyeIcon className="stroke-waterloo group-hover:stroke-jungle-green" />
             </a>

@@ -5,7 +5,8 @@ import { TicketType } from './TicketType.type'
 export type Ticket = {
   id: number
   ticketCode: string
-  clientId?: number
+  clientId: number
+  clientName: string
   subject: string
   description: string
   departmentName: string
@@ -13,6 +14,6 @@ export type Ticket = {
   type: TicketType
   status: TicketStatus
   createdAt: Date
-  attachment: string
+  attachment?: string
   services?: Array<Service>
 }
