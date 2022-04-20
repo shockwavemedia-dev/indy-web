@@ -60,7 +60,7 @@ export const ClientRoutes: Array<Route> = [
       },
       {
         title: 'Animations',
-        pathname: '/service-request/animations',
+        pathname: '/client-panel/service-request/animations',
       },
       {
         title: 'Photography',

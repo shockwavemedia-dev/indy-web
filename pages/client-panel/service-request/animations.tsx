@@ -36,6 +36,9 @@ const Animation: NextPageWithLayout = () => {
         <Card title="Animations" className="row-span-11">
           <DataTable
             dataEndpoint="/v1/libraries"
+            dataParams={{
+              types: 'library',
+            }}
             columns={AnimationTableColumns}
             initialPageSize={20}
             tableQueryKey="libraries"
