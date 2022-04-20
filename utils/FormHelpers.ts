@@ -22,7 +22,7 @@ export const objectWithFileToFormData = (object: Object) => {
 
           return true
         })
-        .reduce<{ [key: string]: any }>((newObject, [key, value]) => {
+        .reduce<Record<string, unknown>>((newObject, [key, value]) => {
           newObject[key] = value
 
           return newObject

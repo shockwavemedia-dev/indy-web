@@ -21,7 +21,7 @@ const DataTable = <T extends {}>({
 }: {
   tableQueryKey: string | Array<string | number>
   dataEndpoint: string
-  dataParams?: { [key: string]: string | number }
+  dataParams?: Record<string, string | number>
   columns: Array<Column<T>>
   ofString: string
   tableActions?: ReactNode
