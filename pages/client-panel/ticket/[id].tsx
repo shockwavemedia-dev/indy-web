@@ -98,7 +98,7 @@ const Ticket: NextPageWithLayout = () => {
   return (
     <>
       <Head>
-        <title>Daily Press - Ticket {ticket.ticketCode}</title>
+        <title>Daily Press - Ticket {ticket!.ticketCode}</title>
       </Head>
       <div className="mx-auto flex h-full w-full max-w-7xl space-x-6">
         <Card title="Ticket Details" className="h-fit min-w-86">
@@ -112,37 +112,37 @@ const Ticket: NextPageWithLayout = () => {
           </div>
           <div className="mb-6 flex space-x-5">
             <div className="min-w-25">
-              <Image src={DummyCompany} height={100} width={100} alt={ticket.clientName} />
+              <Image src={DummyCompany} height={100} width={100} alt={ticket!.clientName} />
             </div>
             <div>
               <TitleValue title="Company" className="mb-3">
-                {ticket.clientName}
+                {ticket!.clientName}
               </TitleValue>
-              <TitleValue title="Subject">{ticket.subject}</TitleValue>
+              <TitleValue title="Subject">{ticket!.subject}</TitleValue>
             </div>
           </div>
           <hr className="mb-6 border-t-bright-gray" />
           <div className="space-y-2">
             <TitleValue title="ID" className="flex items-center justify-between">
-              {ticket.id}
+              {ticket!.id}
             </TitleValue>
             <TitleValue title="Code" className="flex items-center justify-between">
-              {ticket.ticketCode}
+              {ticket!.ticketCode}
             </TitleValue>
             <TitleValue title="Type" className="flex items-center justify-between capitalize">
-              {ticket.type}
+              {ticket!.type}
             </TitleValue>
             <TitleValue title="Status" className="flex items-center justify-between capitalize">
-              {ticket.status}
+              {ticket!.status}
             </TitleValue>
             <TitleValue title="Department" className="flex items-center justify-between">
-              {ticket.departmentName}
+              {ticket!.departmentName}
             </TitleValue>
             <TitleValue title="Due Created" className="flex items-center justify-between">
-              {format(ticket.duedate, "yy MMM''dd")}
+              {format(ticket!.duedate, "yy MMM''dd")}
             </TitleValue>
             <TitleValue title="Date Created" className="flex items-center justify-between">
-              {format(ticket.createdAt, "yy MMM''dd")}
+              {format(ticket!.createdAt, "yy MMM''dd")}
             </TitleValue>
           </div>
         </Card>
@@ -170,12 +170,12 @@ const Ticket: NextPageWithLayout = () => {
       <EditTicketModal
         isVisible={isEditTicketModalVisible}
         onClose={toggleEditTicketModal}
-        ticket={ticket}
+        ticket={ticket!}
       />
       <DeleteTicketModal
         isVisible={isDeleteTicketModalVisible}
         onClose={toggleDeleteTicketModal}
-        ticket={ticket}
+        ticket={ticket!}
         minimal
       />
     </>

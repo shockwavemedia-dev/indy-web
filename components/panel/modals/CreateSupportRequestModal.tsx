@@ -105,7 +105,7 @@ const CreateSupportRequestModal = ({
                   placeholder="Select department"
                   options={
                     isSuccess
-                      ? departments.map((department) => ({
+                      ? departments!.map((department) => ({
                           value: department.id,
                           label: department.name,
                         }))
