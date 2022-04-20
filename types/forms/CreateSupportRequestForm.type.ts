@@ -1,4 +1,4 @@
-export type SupportRequestForm = {
+export type CreateSupportRequestForm = {
   subject: string
   description: string
   type: string

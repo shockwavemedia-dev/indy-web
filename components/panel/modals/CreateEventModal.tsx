@@ -2,8 +2,8 @@ import axios from 'axios'
 import { Form, Formik } from 'formik'
 import { useSession } from 'next-auth/react'
 import { useQueryClient } from 'react-query'
-import { NewEventFormSchema } from '../../../schemas/NewEventFormSchema'
-import { NewEventForm } from '../../../types/forms/NewEventForm.type'
+import { CreateEventFormSchema } from '../../../schemas/NewEventFormSchema'
+import { CreateEventForm } from '../../../types/forms/CreateEventFormSchema.type'
 import { objectWithFileToFormData } from '../../../utils/FormHelpers'
 import Button from '../../common/Button'
 import DateInput from '../../common/DateInput'
@@ -14,22 +14,21 @@ import TextInput from '../../common/TextInput'
 import Modal from '../Modal'
 import SelectService from '../SelectService'
 
-const NewEventModal = ({ isVisible, onClose }: { isVisible: boolean; onClose: () => void }) => {
+const CreateEventModal = ({ isVisible, onClose }: { isVisible: boolean; onClose: () => void }) => {
   const { data: session } = useSession()
   const queryClient = useQueryClient()
 
-  const formInitialValues: NewEventForm = {
+  const formInitialValues: CreateEventForm = {
     requestedBy: session?.user.id || -1,
     clientId: session?.user.userType.clientId || -1,
     subject: '',
     services: [],
     duedate: null,
     description: '',
-    attachment: null,
   }
 
   const submitForm = async (
-    values: NewEventForm,
+    values: CreateEventForm,
     { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
   ) => {
     setSubmitting(true)
@@ -51,9 +50,9 @@ const NewEventModal = ({ isVisible, onClose }: { isVisible: boolean; onClose: ()
   return (
     <>
       {isVisible && (
-        <Modal title="New Event" onClose={onClose}>
+        <Modal title="Create Event" onClose={onClose}>
           <Formik
-            validationSchema={NewEventFormSchema}
+            validationSchema={CreateEventFormSchema}
             initialValues={formInitialValues}
             onSubmit={submitForm}
           >
@@ -92,4 +91,4 @@ const NewEventModal = ({ isVisible, onClose }: { isVisible: boolean; onClose: ()
   )
 }
 
-export default NewEventModal
+export default CreateEventModal

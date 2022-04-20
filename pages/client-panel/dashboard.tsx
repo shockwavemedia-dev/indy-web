@@ -7,20 +7,20 @@ import PresentationChartIcon from '../../components/common/icons/PresentationCha
 import Table from '../../components/common/Table'
 import Card from '../../components/panel/Card'
 import FancyButton from '../../components/panel/FancyButton'
-import NewEventModal from '../../components/panel/modals/NewEventModal'
-import SupportRequestModal from '../../components/panel/modals/SupportRequestModal'
+import CreateEventModal from '../../components/panel/modals/CreateEventModal'
+import CreateSupportRequestModal from '../../components/panel/modals/CreateSupportRequestModal'
 import { ClientRoutes } from '../../constants/routes/ClientRoutes'
 import { TicketsTableColumns } from '../../constants/tables/TicketsTableColumns'
 import PanelLayout from '../../layouts/PanelLayout'
 import { NextPageWithLayout } from '../../types/pages/NextPageWithLayout.type'
 
 const Dashboard: NextPageWithLayout = () => {
-  const [isNewEventModalVisible, setNewEventModalVisible] = useState(false)
-  const [isSupportRequestModalVisible, setSupportRequestModalVisible] = useState(false)
+  const [isCreateEventModalVisible, setCreateEventModalVisible] = useState(false)
+  const [isCreateSupportRequestModalVisible, setCreateSupportRequestModalVisible] = useState(false)
 
-  const toggleNewEventModal = () => setNewEventModalVisible(!isNewEventModalVisible)
-  const toggleSupportRequestModal = () =>
-    setSupportRequestModalVisible(!isSupportRequestModalVisible)
+  const toggleCreateEventModal = () => setCreateEventModalVisible(!isCreateEventModalVisible)
+  const toggleCreateSupportRequestModal = () =>
+    setCreateSupportRequestModalVisible(!isCreateSupportRequestModalVisible)
 
   return (
     <>
@@ -34,9 +34,9 @@ const Dashboard: NextPageWithLayout = () => {
               <CalendarAddIcon className="stroke-jungle-green" />
             </div>
           }
-          title="New Event"
+          title="Create Event"
           subtitle="Laborerivit rem cones mil"
-          onClick={toggleNewEventModal}
+          onClick={toggleCreateEventModal}
         />
         <FancyButton
           Icon={
@@ -64,9 +64,9 @@ const Dashboard: NextPageWithLayout = () => {
               <LifeBuoyIcon className="fill-vivid-red-tangelo" />
             </div>
           }
-          title="Support Request"
+          title="Create Support Request"
           subtitle="Laborerivit rem cones mil"
-          onClick={toggleSupportRequestModal}
+          onClick={toggleCreateSupportRequestModal}
         />
       </div>
       <hr className="mb-6 border-t-bright-gray" />
@@ -141,10 +141,10 @@ const Dashboard: NextPageWithLayout = () => {
         <Card title="Requests" className="col-span-1 row-span-9">
           <div></div>
         </Card> */}
-      <NewEventModal isVisible={isNewEventModalVisible} onClose={toggleNewEventModal} />
-      <SupportRequestModal
-        isVisible={isSupportRequestModalVisible}
-        onClose={toggleSupportRequestModal}
+      <CreateEventModal isVisible={isCreateEventModalVisible} onClose={toggleCreateEventModal} />
+      <CreateSupportRequestModal
+        isVisible={isCreateSupportRequestModalVisible}
+        onClose={toggleCreateSupportRequestModal}
       />
     </>
   )

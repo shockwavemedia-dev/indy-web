@@ -10,8 +10,11 @@ import CalendarIcon from '../../../components/common/icons/CalendarIcon'
 import ColorsIcon from '../../../components/common/icons/ColorsIcon'
 import EditIcon from '../../../components/common/icons/EditIcon'
 import EmailIcon from '../../../components/common/icons/EmailIcon'
+import NoteIcon from '../../../components/common/icons/NoteIcon'
 import TrashIcon from '../../../components/common/icons/TrashIcon'
 import Card from '../../../components/panel/Card'
+import DeleteTicketModal from '../../../components/panel/modals/DeleteTicketModal'
+import EditTicketModal from '../../../components/panel/modals/EditTicketModal'
 import TitleValue from '../../../components/panel/TitleValue'
 import { ClientRoutes } from '../../../constants/routes/ClientRoutes'
 import PanelLayout from '../../../layouts/PanelLayout'
@@ -26,10 +29,7 @@ const Ticket: NextPageWithLayout = () => {
   const {
     query: { id },
   } = useRouter()
-
-  const [activeTab, setActiveTab] = useState<TicketPageTabs>('notes')
-
-  const { data: ticket, isSuccess } = useQuery(['ticket', id], async () => {
+  const { data: ticket, isSuccess } = useQuery(['ticket', Number(id)], async () => {
     const { data } = await axios.get<Ticket>(`/v1/tickets/${id}`, {
       headers: {
         Authorization: `Bearer ${session?.accessToken}`,
@@ -38,6 +38,13 @@ const Ticket: NextPageWithLayout = () => {
 
     return data
   })
+
+  const [activeTab, setActiveTab] = useState<TicketPageTabs>('notes')
+  const [isEditTicketModalVisible, setEditTicketModalVisible] = useState(false)
+  const [isDeleteTicketModalVisible, setDeleteTicketModalVisible] = useState(false)
+
+  const toggleEditTicketModal = () => setEditTicketModalVisible(!isEditTicketModalVisible)
+  const toggleDeleteTicketModal = () => setDeleteTicketModalVisible(!isDeleteTicketModalVisible)
 
   const Tab = ({
     title,
@@ -84,21 +91,22 @@ const Ticket: NextPageWithLayout = () => {
   }
 
   if (!isSuccess) {
-    return <h1>I forgor 💀</h1>
+    // todo create loading skeleton
+    return null
   }
 
   return (
     <>
       <Head>
-        <title>Daily Press - Ticket {id}</title>
+        <title>Daily Press - Ticket {ticket.ticketCode}</title>
       </Head>
       <div className="mx-auto flex h-full w-full max-w-7xl space-x-6">
         <Card title="Ticket Details" className="h-fit min-w-86">
           <div className="absolute top-6 right-6 space-x-4">
-            <button className="group">
+            <button className="group" onClick={toggleEditTicketModal}>
               <EditIcon className="stroke-waterloo group-hover:stroke-jungle-green" />
             </button>
-            <button className="group">
+            <button className="group" onClick={toggleDeleteTicketModal}>
               <TrashIcon className="stroke-waterloo group-hover:stroke-jungle-green" />
             </button>
           </div>
@@ -118,20 +126,29 @@ const Ticket: NextPageWithLayout = () => {
             <TitleValue title="ID" className="flex items-center justify-between">
               {ticket.id}
             </TitleValue>
+            <TitleValue title="Code" className="flex items-center justify-between">
+              {ticket.ticketCode}
+            </TitleValue>
             <TitleValue title="Type" className="flex items-center justify-between capitalize">
               {ticket.type}
             </TitleValue>
-            <TitleValue title="Date Created" className="flex items-center justify-between">
-              {format(ticket.createdAt, "yy MMM''dd")}
+            <TitleValue title="Status" className="flex items-center justify-between capitalize">
+              {ticket.status}
             </TitleValue>
             <TitleValue title="Department" className="flex items-center justify-between">
               {ticket.departmentName}
+            </TitleValue>
+            <TitleValue title="Due Created" className="flex items-center justify-between">
+              {format(ticket.duedate, "yy MMM''dd")}
+            </TitleValue>
+            <TitleValue title="Date Created" className="flex items-center justify-between">
+              {format(ticket.createdAt, "yy MMM''dd")}
             </TitleValue>
           </div>
         </Card>
         <div className="h-fit w-full">
           <div className="flex justify-between">
-            <Tab title="Notes" Icon={EmailIcon} tabName="notes" />
+            <Tab title="Notes" Icon={NoteIcon} tabName="notes" />
             <Tab title="Email" Icon={EmailIcon} tabName="email" />
             <Tab title="Activities" Icon={CalendarIcon} tabName="activities" />
             <Tab title="Style Guide" Icon={ColorsIcon} tabName="style_guide" disabled />
@@ -150,6 +167,17 @@ const Ticket: NextPageWithLayout = () => {
           />
         </div>
       </div>
+      <EditTicketModal
+        isVisible={isEditTicketModalVisible}
+        onClose={toggleEditTicketModal}
+        ticket={ticket}
+      />
+      <DeleteTicketModal
+        isVisible={isDeleteTicketModalVisible}
+        onClose={toggleDeleteTicketModal}
+        ticket={ticket}
+        minimal
+      />
     </>
   )
 }

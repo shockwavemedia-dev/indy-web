@@ -129,7 +129,7 @@ const Select = ({
   }
 
   return (
-    <div>
+    <div className={`w-full ${className}`}>
       <label className="mb-2 inline-block font-urbanist text-xs font-medium text-metallic-silver empty:hidden">
         {label}
       </label>
@@ -142,7 +142,7 @@ const Select = ({
         components={{ DropdownIndicator, Control }}
         inputId={name}
         isDisabled={disabled || readOnly}
-        className={`selection:bg-jungle-green selection:text-white ${className}`}
+        className="selection:bg-jungle-green selection:text-white"
         Icon={Icon}
       />
     </div>
