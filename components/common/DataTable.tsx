@@ -8,7 +8,7 @@ import CaretIcon from './icons/CaretIcon'
 import GearIcon from './icons/GearIcon'
 import SortIcon from './icons/SortIcon'
 
-const DataTable = <T extends {}>({
+const DataTable = <T extends Record<string, unknown>>({
   tableQueryKey,
   dataEndpoint,
   dataParams,
