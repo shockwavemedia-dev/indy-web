@@ -4,7 +4,6 @@ import { useQueryClient } from 'react-query'
 import { Column } from 'react-table'
 import EyeIcon from '../../components/common/icons/EyeIcon'
 import TrashIcon from '../../components/common/icons/TrashIcon'
-import TicketAssigneeEditModal from '../../components/panel/modals/TicketAssigneeEditModal'
 import { TicketAssignee } from '../../types/TicketAssignee.type'
 
 export const TicketAssigneeTableColumns: Array<Column<TicketAssignee>> = [
@@ -40,7 +39,7 @@ export const TicketAssigneeTableColumns: Array<Column<TicketAssignee>> = [
     Header: 'Actions',
     accessor: 'ticketAssigneeId',
     disableSortBy: true,
-    Cell: ({ value }) => {
+    Cell: ({ row: { original: ticketAssignee } }) => {
       const queryClient = useQueryClient()
 
       const [isTicketAssigneeEditModalVisible, setTicketAssigneeEditModalVisible] = useState(false)
@@ -49,7 +48,7 @@ export const TicketAssigneeTableColumns: Array<Column<TicketAssignee>> = [
         setTicketAssigneeEditModalVisible(!isTicketAssigneeEditModalVisible)
 
       const deleteTicketAssignee = async () => {
-        const { status } = await axios.delete(`/v1/ticket-assignees/${value}`)
+        const { status } = await axios.delete(`/v1/ticket-assignees/${ticketAssignee.adminUserId}`)
 
         if (status === 200) {
           queryClient.invalidateQueries('assignees')
@@ -64,11 +63,6 @@ export const TicketAssigneeTableColumns: Array<Column<TicketAssignee>> = [
           <button onClick={deleteTicketAssignee} className="group">
             <TrashIcon className="stroke-waterloo group-hover:stroke-jungle-green" />
           </button>
-          <TicketAssigneeEditModal
-            isVisible={isTicketAssigneeEditModalVisible}
-            onClose={toggleTicketAssigneeEditModal}
-            ticketAssigneeId={value}
-          />
         </div>
       )
     },
