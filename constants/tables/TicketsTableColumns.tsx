@@ -1,6 +1,5 @@
 import { format } from 'date-fns'
 import Link from 'next/link'
-import { useQueryClient } from 'react-query'
 import { Column } from 'react-table'
 import EditIcon from '../../components/common/icons/EditIcon'
 import EyeIcon from '../../components/common/icons/EyeIcon'
@@ -48,7 +47,6 @@ export const TicketsTableColumns: Array<Column<Ticket>> = [
     accessor: 'id',
     disableSortBy: true,
     Cell: ({ row: { original: ticket } }) => {
-      const queryClient = useQueryClient()
       const { setActiveTicket, toggleEditTicketModal, toggleDeleteTicketModal } = useTicketStore()
 
       const editTicket = () => {
