@@ -3,8 +3,8 @@ import { id } from 'date-fns/locale'
 import { useQuery, useQueryClient } from 'react-query'
 import { SingleValue } from 'react-select'
 import { TicketAssigneeStatusOptions } from '../../../constants/options/TicketAssigneeStatusOptions'
-import { TicketAssigneeForm } from '../../../types/forms/TicketAssigneeForm.type'
 import { Option } from '../../../types/Option.type'
+import { TicketAssignee } from '../../../types/TicketAssignee.type'
 import ClipboardIcon from '../../common/icons/ClipboardIcon'
 import Select from '../../common/Select'
 import Modal from '../Modal'
@@ -23,9 +23,7 @@ const TicketAssigneeEditModal = ({
   const { data: ticketAssignee, isLoading } = useQuery(
     'ticketAssigneeShow',
     async () => {
-      const { data } = await axios.get<TicketAssigneeForm>(
-        `/v1/ticket-assignees/${ticketAssigneeId}`
-      )
+      const { data } = await axios.get<TicketAssignee>(`/v1/ticket-assignees/${ticketAssigneeId}`)
 
       return data
     },
@@ -35,7 +33,7 @@ const TicketAssigneeEditModal = ({
   )
 
   const updateStatus = async (status: SingleValue<Option>) => {
-    const { status: responseStatus } = await axios.put<TicketAssigneeForm>(
+    const { status: responseStatus } = await axios.put<TicketAssignee>(
       `/v1/ticket-assignees/${ticketAssigneeId}`,
       { status: status?.value }
     )

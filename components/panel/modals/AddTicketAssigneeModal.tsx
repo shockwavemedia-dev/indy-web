@@ -1,8 +1,11 @@
 import axios from 'axios'
 import { Form, Formik } from 'formik'
+import { useState } from 'react'
 import { useQuery, useQueryClient } from 'react-query'
+import { SingleValue } from 'react-select'
 import { Department } from '../../../types/Department.type'
-import { TicketAssigneeForm } from '../../../types/forms/TicketAssigneeForm.type'
+import { AddTicketAssigneeForm } from '../../../types/forms/AddTicketAssigneeForm.type'
+import { Option } from '../../../types/Option.type'
 import { Page } from '../../../types/Page.type'
 import Button from '../../common/Button'
 import ClipboardIcon from '../../common/icons/ClipboardIcon'
@@ -10,27 +13,16 @@ import UserIcon from '../../common/icons/UserIcon'
 import Select from '../../common/Select'
 import Modal from '../Modal'
 
-const TicketAssigneeModal = ({
+const AddTicketAssigneeModal = ({
   isVisible,
   onClose,
   ticketId,
 }: {
   isVisible: boolean
   onClose: () => void
-  ticketId?: number | string | Array<string>
+  ticketId: number
 }) => {
   const queryClient = useQueryClient()
-
-  const formInitialValues: TicketAssigneeForm = {
-    departmentId: -1,
-    adminUserId: -1,
-    departmentName: '',
-    role: 'staff',
-    fullName: '',
-    ticketAssigneeId: -1,
-    status: '',
-  }
-
   const { data: departments } = useQuery(
     'departmentsWithUsers',
     async () => {
@@ -42,6 +34,7 @@ const TicketAssigneeModal = ({
       }>('/v1/departments', {
         params: {
           with_users: true,
+          size: 100,
         },
       })
 
@@ -51,16 +44,17 @@ const TicketAssigneeModal = ({
       enabled: isVisible,
     }
   )
+  const [department, setDepartment] = useState<SingleValue<Option> | null>(null)
+
+  const selectDepartment = (option: SingleValue<Option>) => setDepartment(option)
 
   const submitForm = async (
-    values: TicketAssigneeForm,
+    values: AddTicketAssigneeForm,
     { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
   ) => {
     setSubmitting(true)
 
-    const { status } = await axios.post(`/v1/tickets/${ticketId}/assign`, {
-      adminUserId: values.adminUserId,
-    })
+    const { status } = await axios.post(`/v1/tickets/${ticketId}/assign`, values)
 
     if (status === 200) {
       queryClient.invalidateQueries('assignees')
@@ -74,9 +68,14 @@ const TicketAssigneeModal = ({
     <>
       {isVisible && (
         <Modal title="Ticket Assignee" onClose={onClose}>
-          <Formik initialValues={formInitialValues} onSubmit={submitForm}>
-            {({ values: { departmentId }, isSubmitting }) => (
-              <Form className="flex w-140 flex-col">
+          <Formik
+            initialValues={{
+              adminUserId: -1,
+            }}
+            onSubmit={submitForm}
+          >
+            {({ isSubmitting }) => (
+              <Form className="flex w-96 flex-col">
                 <Select
                   name="departmentId"
                   Icon={ClipboardIcon}
@@ -88,14 +87,14 @@ const TicketAssigneeModal = ({
                     })) || []
                   }
                   className="mb-5"
+                  onChange={selectDepartment}
                 />
                 <Select
-                  name="adminUserId"
                   Icon={UserIcon}
                   placeholder="Select Employee"
                   options={
                     departments
-                      ?.find(({ id }) => id === departmentId)
+                      ?.find(({ id }) => id === department?.value)
                       ?.users?.map(({ adminUserId, firstName, lastName }) => ({
                         label: `${firstName} ${lastName}`,
                         value: adminUserId,
@@ -120,4 +119,4 @@ const TicketAssigneeModal = ({
   )
 }
 
-export default TicketAssigneeModal
+export default AddTicketAssigneeModal
