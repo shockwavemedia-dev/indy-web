@@ -37,16 +37,22 @@ const CreateSupportRequestModal = ({
     duedate: null,
   }
 
-  const { data: departments, isSuccess } = useQuery('departments', async () => {
-    const {
-      data: { data },
-    } = await axios.get<{
-      data: Array<Department>
-      page: Page
-    }>('/v1/departments')
+  const { data: departments } = useQuery(
+    'departments',
+    async () => {
+      const {
+        data: { data },
+      } = await axios.get<{
+        data: Array<Department>
+        page: Page
+      }>('/v1/departments')
 
-    return data
-  })
+      return data
+    },
+    {
+      enabled: isVisible,
+    }
+  )
 
   const submitForm = async (
     values: CreateSupportRequestForm,
@@ -96,12 +102,10 @@ const CreateSupportRequestModal = ({
                   Icon={ClipboardIcon}
                   placeholder="Select department"
                   options={
-                    isSuccess
-                      ? departments!.map((department) => ({
-                          value: department.id,
-                          label: department.name,
-                        }))
-                      : []
+                    departments?.map((department) => ({
+                      value: department.id,
+                      label: department.name,
+                    })) ?? []
                   }
                   className="mb-5"
                 />

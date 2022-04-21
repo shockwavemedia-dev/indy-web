@@ -50,16 +50,26 @@ const NewClientUserModal = ({
   const updatePasswordStrength = (password: string) =>
     setPasswordStrength(computePasswordStrength(password))
 
-  const { data: clients } = useQuery('clients', async () => {
-    const {
-      data: { data },
-    } = await axios.get<{
-      data: Array<Client>
-      page: Page
-    }>('/v1/clients')
+  const { data: clients } = useQuery(
+    'clients',
+    async () => {
+      const {
+        data: { data },
+      } = await axios.get<{
+        data: Array<Client>
+        page: Page
+      }>('/v1/clients', {
+        params: {
+          size: 100,
+        },
+      })
 
-    return data
-  })
+      return data
+    },
+    {
+      enabled: isVisible,
+    }
+  )
 
   const clientOptions = clients
     ?.filter((client) => client.status === 'active')

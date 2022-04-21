@@ -5,12 +5,23 @@ import PlusIcon from '../../../components/common/icons/PlusIcon'
 import Card from '../../../components/panel/Card'
 import CreateEventModal from '../../../components/panel/modals/CreateEventModal'
 import CreateSupportRequestModal from '../../../components/panel/modals/CreateSupportRequestModal'
+import DeleteTicketModal from '../../../components/panel/modals/DeleteTicketModal'
+import EditTicketModal from '../../../components/panel/modals/EditTicketModal'
 import { ClientRoutes } from '../../../constants/routes/ClientRoutes'
 import { TicketsTableColumns } from '../../../constants/tables/TicketsTableColumns'
 import PanelLayout from '../../../layouts/PanelLayout'
+import { useTicketStore } from '../../../store/TicketStore'
 import { NextPageWithLayout } from '../../../types/pages/NextPageWithLayout.type'
 
 const Ticket: NextPageWithLayout = () => {
+  const {
+    activeTicket,
+    isEditTicketModalVisible,
+    isDeleteTicketModalVisible,
+    toggleEditTicketModal,
+    toggleDeleteTicketModal,
+  } = useTicketStore()
+
   const [isCreateEventModalVisible, setCreateEventModalVisible] = useState(false)
   const [isCreateSupportRequestModalVisible, setCreateSupportRequestModalVisible] = useState(false)
 
@@ -54,6 +65,16 @@ const Ticket: NextPageWithLayout = () => {
       <CreateSupportRequestModal
         isVisible={isCreateSupportRequestModalVisible}
         onClose={toggleCreateSupportRequestModal}
+      />
+      <EditTicketModal
+        isVisible={isEditTicketModalVisible}
+        onClose={toggleEditTicketModal}
+        ticket={activeTicket}
+      />
+      <DeleteTicketModal
+        isVisible={isDeleteTicketModalVisible}
+        onClose={toggleDeleteTicketModal}
+        ticket={activeTicket}
       />
     </>
   )

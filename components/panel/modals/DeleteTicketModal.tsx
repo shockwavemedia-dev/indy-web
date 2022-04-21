@@ -29,6 +29,7 @@ const DeleteTicketModal = ({
 
     if (status === 200) {
       queryClient.invalidateQueries('tickets')
+      queryClient.removeQueries(['ticket', ticket.id])
       onClose()
       replace('/client-panel/ticket')
     }

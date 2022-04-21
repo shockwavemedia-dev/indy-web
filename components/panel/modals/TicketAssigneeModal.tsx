@@ -31,20 +31,26 @@ const TicketAssigneeModal = ({
     status: '',
   }
 
-  const { data: departments } = useQuery('departmentsWithUsers', async () => {
-    const {
-      data: { data },
-    } = await axios.get<{
-      data: Array<Department>
-      page: Page
-    }>('/v1/departments', {
-      params: {
-        with_users: true,
-      },
-    })
+  const { data: departments } = useQuery(
+    'departmentsWithUsers',
+    async () => {
+      const {
+        data: { data },
+      } = await axios.get<{
+        data: Array<Department>
+        page: Page
+      }>('/v1/departments', {
+        params: {
+          with_users: true,
+        },
+      })
 
-    return data
-  })
+      return data
+    },
+    {
+      enabled: isVisible,
+    }
+  )
 
   const submitForm = async (
     values: TicketAssigneeForm,

@@ -20,11 +20,19 @@ const TicketAssigneeEditModal = ({
 }) => {
   const queryClient = useQueryClient()
 
-  const { data: ticketAssignee, isLoading } = useQuery('ticketAssigneeShow', async () => {
-    const { data } = await axios.get<TicketAssigneeForm>(`/v1/ticket-assignees/${ticketAssigneeId}`)
+  const { data: ticketAssignee, isLoading } = useQuery(
+    'ticketAssigneeShow',
+    async () => {
+      const { data } = await axios.get<TicketAssigneeForm>(
+        `/v1/ticket-assignees/${ticketAssigneeId}`
+      )
 
-    return data
-  })
+      return data
+    },
+    {
+      enabled: isVisible,
+    }
+  )
 
   const updateStatus = async (status: SingleValue<Option>) => {
     const { status: responseStatus } = await axios.put<TicketAssigneeForm>(

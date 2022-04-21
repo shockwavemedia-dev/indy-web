@@ -1,4 +1,3 @@
-import axios from 'axios'
 import { format } from 'date-fns'
 import Link from 'next/link'
 import { useQueryClient } from 'react-query'
@@ -6,6 +5,7 @@ import { Column } from 'react-table'
 import EditIcon from '../../components/common/icons/EditIcon'
 import EyeIcon from '../../components/common/icons/EyeIcon'
 import TrashIcon from '../../components/common/icons/TrashIcon'
+import { useTicketStore } from '../../store/TicketStore'
 import { Ticket } from '../../types/Ticket.type'
 
 export const TicketsTableColumns: Array<Column<Ticket>> = [
@@ -47,25 +47,28 @@ export const TicketsTableColumns: Array<Column<Ticket>> = [
     Header: 'Actions',
     accessor: 'id',
     disableSortBy: true,
-    Cell: ({ value }) => {
+    Cell: ({ row: { original: ticket } }) => {
       const queryClient = useQueryClient()
+      const { setActiveTicket, toggleEditTicketModal, toggleDeleteTicketModal } = useTicketStore()
 
-      const deleteTicket = async () => {
-        const { status } = await axios.delete(`/v1/tickets/${value}`)
+      const editTicket = () => {
+        setActiveTicket(ticket)
+        toggleEditTicketModal()
+      }
 
-        if (status === 200) {
-          queryClient.invalidateQueries('tickets')
-        }
+      const deleteTicket = () => {
+        setActiveTicket(ticket)
+        toggleDeleteTicketModal()
       }
 
       return (
         <div className="flex space-x-2">
-          <Link href={`/client-panel/ticket/${value}`}>
+          <Link href={`/client-panel/ticket/${ticket.id}`}>
             <a className="group">
               <EyeIcon className="stroke-waterloo group-hover:stroke-jungle-green" />
             </a>
           </Link>
-          <button onClick={deleteTicket} className="group">
+          <button onClick={editTicket} className="group">
             <EditIcon className="stroke-waterloo group-hover:stroke-jungle-green" />
           </button>
           <button onClick={deleteTicket} className="group">

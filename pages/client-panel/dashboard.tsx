@@ -1,16 +1,13 @@
 import Head from 'next/head'
 import { ReactElement, useState } from 'react'
-import DataTable from '../../components/common/DataTable'
 import CalendarAddIcon from '../../components/common/icons/CalendarAddIcon'
 import ClipboardCloseIcon from '../../components/common/icons/ClipboardCloseIcon'
 import LifeBuoyIcon from '../../components/common/icons/LifeBuoyIcon'
 import PresentationChartIcon from '../../components/common/icons/PresentationChartIcon'
-import Card from '../../components/panel/Card'
 import FancyButton from '../../components/panel/FancyButton'
 import CreateEventModal from '../../components/panel/modals/CreateEventModal'
 import CreateSupportRequestModal from '../../components/panel/modals/CreateSupportRequestModal'
 import { ClientRoutes } from '../../constants/routes/ClientRoutes'
-import { TicketsTableColumns } from '../../constants/tables/TicketsTableColumns'
 import PanelLayout from '../../layouts/PanelLayout'
 import { NextPageWithLayout } from '../../types/pages/NextPageWithLayout.type'
 
@@ -69,7 +66,7 @@ const Dashboard: NextPageWithLayout = () => {
           onClick={toggleCreateSupportRequestModal}
         />
       </div>
-      <hr className="mb-6 border-t-bright-gray" />
+      {/* <hr className="mb-6 border-t-bright-gray" />
       <div className="mx-auto grid h-262.5 w-270 grid-cols-1 grid-rows-5 gap-6">
         <Card title="All Tickets" className="row-span-3">
           <DataTable
@@ -79,7 +76,7 @@ const Dashboard: NextPageWithLayout = () => {
             ofString="Tickets"
           />
         </Card>
-      </div>
+      </div> */}
       {/* <Card title="Project Status Table" className="col-span-2 row-span-14">
           <Table
             dataEndpoint="/v1/tickets"

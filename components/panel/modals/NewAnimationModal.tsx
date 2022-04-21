@@ -21,16 +21,26 @@ const NewAnimationModal = ({ isVisible, onClose }: { isVisible: boolean; onClose
     file: null,
   }
 
-  const { data: categories } = useQuery('categories', async () => {
-    const {
-      data: { data },
-    } = await axios.get<{
-      data: Array<CategoryAnimation>
-      page: Page
-    }>('/v1/library-categories?size=100')
+  const { data: categories } = useQuery(
+    'categories',
+    async () => {
+      const {
+        data: { data },
+      } = await axios.get<{
+        data: Array<CategoryAnimation>
+        page: Page
+      }>('/v1/library-categories', {
+        params: {
+          size: 100,
+        },
+      })
 
-    return data
-  })
+      return data
+    },
+    {
+      enabled: isVisible,
+    }
+  )
 
   const categoryOptions = categories?.map((category) => ({
     value: category.id,

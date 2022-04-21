@@ -24,16 +24,26 @@ const NewAnimationRequestModal = ({
     description: '',
   }
 
-  const { data: libraries } = useQuery('libraries', async () => {
-    const {
-      data: { data },
-    } = await axios.get<{
-      data: Array<Animation>
-      page: Page
-    }>('/v1/libraries?size=100')
+  const { data: libraries } = useQuery(
+    'libraries',
+    async () => {
+      const {
+        data: { data },
+      } = await axios.get<{
+        data: Array<Animation>
+        page: Page
+      }>('/v1/libraries', {
+        params: {
+          size: 100,
+        },
+      })
 
-    return data
-  })
+      return data
+    },
+    {
+      enabled: isVisible,
+    }
+  )
 
   const libraryOptions = libraries?.map((library) => ({
     value: library.id,
