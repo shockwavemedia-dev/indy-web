@@ -94,7 +94,10 @@ const Ticket: NextPageWithLayout = () => {
       <Head>
         <title>Daily Press - Ticket {ticket!.ticketCode}</title>
       </Head>
-      <div className="mx-auto flex h-full w-full max-w-7xl space-x-6">
+      <div className="mb-5 font-urbanist text-xxl font-semibold text-onyx">
+        Ticket {ticket.ticketCode}
+      </div>
+      <div className="mx-auto flex w-full max-w-7xl space-x-6">
         <Card title="Ticket Details" className="h-fit min-w-86">
           <div className="absolute top-6 right-6 space-x-4">
             <button className="group" onClick={toggleEditTicketModal}>

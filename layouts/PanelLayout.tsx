@@ -75,7 +75,9 @@ const PanelLayout = ({ routes, children }: { routes: Array<Route>; children: Rea
                   >
                     {s.replace('-', ' ')}
                   </div>
-                  <CaretIcon className="mr-3 rotate-90 stroke-lavender-gray" small />
+                  {i + 1 !== paths.length && (
+                    <CaretIcon className="mr-3 rotate-90 stroke-lavender-gray" small />
+                  )}
                 </>
               )
             })}

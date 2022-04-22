@@ -42,8 +42,8 @@ const Dashboard: NextPageWithLayout = () => {
       <Head>
         <title>Daily Press - Dashboard</title>
       </Head>
+      <div className="mb-5 font-urbanist text-xxl font-semibold text-onyx">Dashboard</div>
       <div className="mx-auto flex h-full w-full max-w-7xl flex-col">
-        <div className="mb-5 font-urbanist text-xxl font-semibold text-onyx">Dashboard</div>
         <div className="mb-6 flex space-x-6">
           <FancyButton
             Icon={
@@ -88,12 +88,12 @@ const Dashboard: NextPageWithLayout = () => {
         </div>
         <hr className="mb-6 border-t-bright-gray" />
         <div className="mb-6 flex min-h-155 space-x-6">
-          <Card title="All Tickets" className="w-full max-w-228">
+          <Card title="Project Status Table" className="w-full max-w-228">
             <DataTable
               columns={TicketsTableColumns}
               dataEndpoint="/v1/tickets"
               tableQueryKey="tickets"
-              ofString="Tickets"
+              ofString="Projects"
               settings
               periodicFilter
             />
