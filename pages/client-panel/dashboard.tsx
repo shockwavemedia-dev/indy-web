@@ -64,6 +64,7 @@ const Dashboard: NextPageWithLayout = () => {
             title="New Project Brief"
             subtitle="Laborerivit rem cones mil"
             onClick={() => {}}
+            className="pointer-events-none cursor-default opacity-50"
           />
           <FancyButton
             Icon={
@@ -74,6 +75,7 @@ const Dashboard: NextPageWithLayout = () => {
             title="Analytics"
             subtitle="Laborerivit rem cones mil"
             onClick={() => {}}
+            className="pointer-events-none cursor-default opacity-50"
           />
           <FancyButton
             Icon={
@@ -141,16 +143,16 @@ const Dashboard: NextPageWithLayout = () => {
                 className="w-36"
               />
             </div>
-            <Card title="Notifications" className="h-full min-w-86">
+            <Card title="Notifications" className="h-full min-w-86 opacity-50">
               <div></div>
             </Card>
           </div>
         </div>
         <div className="flex min-h-102 space-x-6">
-          <Card title="Number of Projects" className="w-full max-w-228">
+          <Card title="Number of Projects" className="w-full max-w-228 opacity-50">
             <></>
           </Card>
-          <Card title="Requests" className="min-w-86">
+          <Card title="Requests" className="min-w-86 opacity-50">
             <></>
           </Card>
         </div>
