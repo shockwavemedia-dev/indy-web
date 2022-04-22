@@ -176,10 +176,6 @@ const Ticket: NextPageWithLayout = () => {
   )
 }
 
-Ticket.getLayout = (page: ReactElement) => (
-  <PanelLayout header="Tickets" routes={ClientRoutes}>
-    {page}
-  </PanelLayout>
-)
+Ticket.getLayout = (page: ReactElement) => <PanelLayout routes={ClientRoutes}>{page}</PanelLayout>
 
 export default Ticket

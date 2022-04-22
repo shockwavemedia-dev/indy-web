@@ -47,10 +47,6 @@ const Client: NextPageWithLayout = () => {
   )
 }
 
-Client.getLayout = (page: ReactElement) => (
-  <PanelLayout header="Clients" routes={AdminRoutes}>
-    {page}
-  </PanelLayout>
-)
+Client.getLayout = (page: ReactElement) => <PanelLayout routes={AdminRoutes}>{page}</PanelLayout>
 
 export default Client

@@ -13,15 +13,7 @@ import DailyPressLogo from '../public/images/daily-press-logo.png'
 import DummyAvatar from '../public/images/dummy-avatar.png'
 import { Route } from '../types/Route.type'
 
-const PanelLayout = ({
-  routes,
-  header,
-  children,
-}: {
-  routes: Array<Route>
-  header: string
-  children: ReactNode
-}) => {
+const PanelLayout = ({ routes, children }: { routes: Array<Route>; children: ReactNode }) => {
   const { status, data: session } = useSession({
     required: true,
     onUnauthenticated() {
@@ -37,7 +29,7 @@ const PanelLayout = ({
   const signOut = () => nextAuthSignOut()
 
   return (
-    <div className="flex min-h-screen">
+    <div className="flex min-h-screen overflow-x-clip bg-ghost-white">
       <div className="flex min-w-75 flex-col bg-white pt-6">
         <div className="mb-5 pl-6">
           <Image draggable={false} src={DailyPressLogo} alt="Daily Press" height={50} width={50} />
@@ -65,13 +57,28 @@ const PanelLayout = ({
           </>
         ))}
       </div>
-      <div className="flex flex-1 flex-col bg-ghost-white p-6">
+      <div className="flex w-full flex-col overflow-y-scroll p-6">
         <div className="mb-3.5 flex items-center">
-          <div className="mr-3 font-urbanist text-xs font-medium text-waterloo">
-            {session?.isAdmin ? 'Admin' : 'Client'} Panel
-          </div>
-          <CaretIcon className="mr-3 rotate-90 stroke-lavender-gray" small />
-          <div className="mr-auto font-urbanist text-xs font-semibold text-onyx">{header}</div>
+          {asPath
+            .split('/')
+            .filter((s) => s !== '')
+            .map((s, i, paths) => {
+              return (
+                <>
+                  <div
+                    key={s}
+                    className={`font-urbanist text-xs capitalize ${
+                      i + 1 === paths.length
+                        ? 'mr-auto font-semibold text-onyx'
+                        : 'mr-3 font-medium text-waterloo'
+                    } `}
+                  >
+                    {s.replace('-', ' ')}
+                  </div>
+                  <CaretIcon className="mr-3 rotate-90 stroke-lavender-gray" small />
+                </>
+              )
+            })}
           <MagnifyingGlassIcon className="mr-6 stroke-waterloo" />
           <button className="relative mr-8">
             <BellIcon className="stroke-waterloo" />
@@ -90,7 +97,6 @@ const PanelLayout = ({
             <CaretIcon className="rotate-180 stroke-waterloo" />
           </button>
         </div>
-        <div className="mb-5 font-urbanist text-xxl font-semibold text-onyx">{header}</div>
         {children}
       </div>
     </div>

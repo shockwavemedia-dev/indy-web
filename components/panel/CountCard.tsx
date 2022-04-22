@@ -11,13 +11,13 @@ const CountCard = ({
   description: string
   className?: string
 }) => (
-  <div
-    className={`flex items-center justify-center space-x-3 rounded-xl bg-white pr-3 pl-3.5 shadow ${className}`}
-  >
+  <div className={`flex w-full items-center space-x-3 rounded-xl bg-white p-4 shadow ${className}`}>
     {Icon}
     <div>
       <div className="font-urbanist text-sm font-semibold text-onyx">{value}</div>
-      <div className="font-urbanist text-xxs font-medium text-metallic-silver">{description}</div>
+      <div className="font-urbanist text-xxs font-medium text-metallic-silver line-clamp-2">
+        {description}
+      </div>
     </div>
   </div>
 )

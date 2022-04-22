@@ -69,9 +69,7 @@ const Animations: NextPageWithLayout = () => {
 }
 
 Animations.getLayout = (page: ReactElement) => (
-  <PanelLayout header="Animations" routes={AdminRoutes}>
-    {page}
-  </PanelLayout>
+  <PanelLayout routes={AdminRoutes}>{page}</PanelLayout>
 )
 
 export default Animations
