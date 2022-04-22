@@ -48,7 +48,7 @@ const EditTicketModal = ({
   return (
     <>
       {isVisible && (
-        <Modal title="Edit Ticket" onClose={onClose}>
+        <Modal title={`Edit Ticket ${ticket.ticketCode}`} onClose={onClose}>
           <Formik
             initialValues={{
               subject: ticket.subject,
