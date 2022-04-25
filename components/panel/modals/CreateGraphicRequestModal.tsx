@@ -37,9 +37,7 @@ const CreateGraphicRequestModal = ({
     { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
   ) => {
     setSubmitting(true)
-    console.log(values.attachments)
     values.extras = ['DL', 'A4']
-    values.attachments = [values.attachments]
     const { status } = await axios.post('/v1/graphics', values)
 
     if (status === 200) {
@@ -77,7 +75,7 @@ const CreateGraphicRequestModal = ({
                 name="description"
                 className="mb-5"
               />
-              <FileInput label="Upload Assets" name="attachments" className="mb-8" />
+              <FileInput label="Upload Assets" name="attachments" className="mb-8" multiple />
               <div className="flex space-x-5">
                 <Button ariaLabel="Cancel" onClick={onClose} type="button" light>
                   Cancel
