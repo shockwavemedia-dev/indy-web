@@ -1,11 +1,8 @@
-import { useState } from 'react'
 import { Column } from 'react-table'
 import EyeIcon from '../../components/common/icons/EyeIcon'
 import TrashIcon from '../../components/common/icons/TrashIcon'
-import DeleteTicketAssigneeModal from '../../components/panel/modals/DeleteTicketAssigneeModal'
-import EditTicketAssigneeModal from '../../components/panel/modals/EditTicketAssigneeModal'
+import { useTicketAssigneeStore } from '../../store/TicketAssigneeStore'
 import { TicketAssignee } from '../../types/TicketAssignee.type'
-
 export const TicketAssigneeTableColumns: Array<Column<TicketAssignee>> = [
   {
     Header: 'Name',
@@ -26,34 +23,30 @@ export const TicketAssigneeTableColumns: Array<Column<TicketAssignee>> = [
     accessor: 'ticketAssigneeId',
     disableSortBy: true,
     Cell: ({ row: { original: ticketAssignee } }) => {
-      const [isTicketAssigneeEditModalVisible, setTicketAssigneeEditModalVisible] = useState(false)
-      const [isTicketAssigneeDeleteModalVisible, setTicketAssigneeDeleteModalVisible] =
-        useState(false)
+      const {
+        setActiveTicketAssignee,
+        toggleEditTicketAssigneeModal,
+        toggleDeleteTicketAssigneeModal,
+      } = useTicketAssigneeStore()
 
-      const toggleTicketAssigneeEditModal = () =>
-        setTicketAssigneeEditModalVisible(!isTicketAssigneeEditModalVisible)
+      const editTicketAssignee = () => {
+        setActiveTicketAssignee(ticketAssignee)
+        toggleEditTicketAssigneeModal()
+      }
 
-      const toggleTicketAssigneeDeleteModal = () =>
-        setTicketAssigneeDeleteModalVisible(!isTicketAssigneeDeleteModalVisible)
+      const deleteTicketAssignee = () => {
+        setActiveTicketAssignee(ticketAssignee)
+        toggleDeleteTicketAssigneeModal()
+      }
 
       return (
         <div className="flex space-x-2">
-          <button onClick={toggleTicketAssigneeEditModal} className="group">
+          <button onClick={editTicketAssignee} className="group">
             <EyeIcon className="stroke-waterloo group-hover:stroke-jungle-green" />
           </button>
-          <button onClick={toggleTicketAssigneeDeleteModal} className="group">
+          <button onClick={deleteTicketAssignee} className="group">
             <TrashIcon className="stroke-waterloo group-hover:stroke-jungle-green" />
           </button>
-          <EditTicketAssigneeModal
-            isVisible={isTicketAssigneeEditModalVisible}
-            onClose={toggleTicketAssigneeEditModal}
-            ticketAssignee={ticketAssignee}
-          />
-          <DeleteTicketAssigneeModal
-            isVisible={isTicketAssigneeDeleteModalVisible}
-            onClose={toggleTicketAssigneeDeleteModal}
-            ticketAssignee={ticketAssignee}
-          />
         </div>
       )
     },

@@ -15,17 +15,21 @@ import PlusIcon from '../../../components/common/icons/PlusIcon'
 import TrashIcon from '../../../components/common/icons/TrashIcon'
 import Card from '../../../components/panel/Card'
 import AddTicketAssigneeModal from '../../../components/panel/modals/AddTicketAssigneeModal'
+import DeleteTicketAssigneeModal from '../../../components/panel/modals/DeleteTicketAssigneeModal'
 import DeleteTicketModal from '../../../components/panel/modals/DeleteTicketModal'
+import EditTicketAssigneeModal from '../../../components/panel/modals/EditTicketAssigneeModal'
 import EditTicketModal from '../../../components/panel/modals/EditTicketModal'
 import TitleValue from '../../../components/panel/TitleValue'
 import { ClientRoutes } from '../../../constants/routes/ClientRoutes'
 import { TicketAssigneeTableColumns } from '../../../constants/tables/TicketAssigneeTableColumns'
 import PanelLayout from '../../../layouts/PanelLayout'
 import DummyCompany from '../../../public/images/dummy-company.png'
+import { useTicketAssigneeStore } from '../../../store/TicketAssigneeStore'
 import { Icon } from '../../../types/Icon.type'
 import { NextPageWithLayout } from '../../../types/pages/NextPageWithLayout.type'
 import { Ticket } from '../../../types/Ticket.type'
 import { TicketPageTabs } from '../../../types/TicketPageTabs.type'
+
 const Ticket: NextPageWithLayout = () => {
   const {
     query: { id },
@@ -35,6 +39,14 @@ const Ticket: NextPageWithLayout = () => {
 
     return data
   })
+
+  const {
+    activeTicketAssignee,
+    isEditTicketAssigneeModalVisible,
+    isDeleteTicketAssigneeModalVisible,
+    toggleEditTicketAssigneeModal,
+    toggleDeleteTicketAssigneeModal,
+  } = useTicketAssigneeStore()
 
   const [activeTab, setActiveTab] = useState<TicketPageTabs>('notes')
   const [isEditTicketModalVisible, setEditTicketModalVisible] = useState(false)
@@ -207,6 +219,16 @@ const Ticket: NextPageWithLayout = () => {
         isVisible={isAddTicketAssigneeModalVisible}
         onClose={toggleAddTicketAssigneeModal}
         ticketId={ticket.id}
+      />
+      <EditTicketAssigneeModal
+        isVisible={isEditTicketAssigneeModalVisible}
+        onClose={toggleEditTicketAssigneeModal}
+        ticketAssignee={activeTicketAssignee}
+      />
+      <DeleteTicketAssigneeModal
+        isVisible={isDeleteTicketAssigneeModalVisible}
+        onClose={toggleDeleteTicketAssigneeModal}
+        ticketAssignee={activeTicketAssignee}
       />
     </>
   )
