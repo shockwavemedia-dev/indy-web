@@ -9,6 +9,7 @@ module.exports = {
     extend: {
       borderWidth: {
         1.5: '1.5px',
+        3: '3px',
       },
       gridTemplateRows: {
         10: 'repeat(10, minmax(0, 1fr))',
@@ -62,9 +63,13 @@ module.exports = {
         142.5: '35.625rem',
         147: '36.75rem',
         163: '40.75rem',
+        175: '43.75rem',
+        212.5: '53.125rem',
         270: '67.5rem',
       },
       height: {
+        0.25: '0.0625rem',
+        0.75: '0.1875rem',
         1.5: '.375rem',
         8.5: '2.125rem',
         9.5: '2.375rem',
@@ -73,6 +78,8 @@ module.exports = {
         18.5: '4.625rem',
         30: '7.5rem',
         35: '8.75rem',
+        108.5: '27.125rem',
+        155: '38.75rem',
         262.5: '65.625rem',
       },
       inset: {
@@ -85,7 +92,9 @@ module.exports = {
         10: '2.5rem',
         11: '2.75rem',
         11.5: '2.875rem',
+        25: '6.25rem',
         75: '18.75rem',
+        86: '21.5rem',
       },
       minHeight: {
         4: '1rem',
@@ -96,15 +105,23 @@ module.exports = {
         11.5: '2.875rem',
         12.5: '3.125rem',
         35: '8.75rem',
+        102: '25.5rem',
+        155: '38.75rem',
       },
       maxHeight: {
         75: '18.75rem',
       },
       maxWidth: {
         75: '18.75rem',
+        86: '21.5rem',
+        228: '57rem',
       },
       spacing: {
+        0.5: '0.125rem',
         1.5: '.375rem',
+        '1/4': '25%',
+        '1/2': '50%',
+        '3/4': '75%',
       },
     },
     backgroundImage: {

@@ -1,5 +1,4 @@
 import axios from 'axios'
-import { useSession } from 'next-auth/react'
 import { ReactNode, useEffect, useMemo, useState } from 'react'
 import { useQuery } from 'react-query'
 import { Column, usePagination, useSortBy, useTable } from 'react-table'
@@ -9,9 +8,10 @@ import CaretIcon from './icons/CaretIcon'
 import GearIcon from './icons/GearIcon'
 import SortIcon from './icons/SortIcon'
 
-const Table = <T extends {}>({
+const DataTable = <T extends Record<string, unknown>>({
   tableQueryKey,
   dataEndpoint,
+  dataParams,
   columns,
   ofString,
   tableActions,
@@ -21,6 +21,7 @@ const Table = <T extends {}>({
 }: {
   tableQueryKey: string | Array<string | number>
   dataEndpoint: string
+  dataParams?: Record<string, string | number>
   columns: Array<Column<T>>
   ofString: string
   tableActions?: ReactNode
@@ -28,7 +29,6 @@ const Table = <T extends {}>({
   periodicFilter?: boolean
   settings?: boolean
 }) => {
-  const { data: session } = useSession()
   const [queryPageIndex, setQueryPageIndex] = useState(0)
   const [queryPageSize, setQueryPageSize] = useState(initialPageSize)
 
@@ -43,9 +43,11 @@ const Table = <T extends {}>({
       const { data } = await axios.get<{
         data: Array<T>
         page: Page
-      }>(`${dataEndpoint}?page_number=${queryPageIndex + 1}&size=${queryPageSize}`, {
-        headers: {
-          Authorization: `Bearer ${session?.accessToken}`,
+      }>(dataEndpoint, {
+        params: {
+          page_number: queryPageIndex + 1,
+          size: queryPageSize,
+          ...dataParams,
         },
       })
 
@@ -261,4 +263,4 @@ const Table = <T extends {}>({
   )
 }
 
-export default Table
+export default DataTable

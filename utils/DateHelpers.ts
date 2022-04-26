@@ -1,4 +1,4 @@
-export function parseDates(data: any) {
+export function parseDates(data: Record<string, unknown>) {
   if (data === null || data === undefined || typeof data !== 'object') {
     return data
   }
@@ -9,7 +9,7 @@ export function parseDates(data: any) {
     if (value && typeof value === 'string' && /\d{4}-\d{2}-\d{2}/.test(value)) {
       data[key] = new Date(value)
     } else if (typeof value === 'object') {
-      parseDates(value)
+      parseDates(value as Record<string, unknown>)
     }
   }
 }

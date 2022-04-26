@@ -1,6 +1,8 @@
+import { UserRole } from './UserRole.type'
+
 export type User = {
   adminUserId: number
-  role: 'account_manager' | 'admin' | 'manager' | 'staff'
+  role: UserRole
   firstName: string
   middleName: string
   lastName: string

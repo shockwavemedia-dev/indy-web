@@ -1,14 +1,12 @@
 import axios from 'axios'
-import { useSession } from 'next-auth/react'
 import { useState } from 'react'
 import { useQueryClient } from 'react-query'
 import { Column } from 'react-table'
 import EyeIcon from '../../components/common/icons/EyeIcon'
 import TrashIcon from '../../components/common/icons/TrashIcon'
-import TicketAssigneeEditModal from '../../components/panel/modals/TicketAssigneeEditModal'
-import { TicketAssigneeForm } from '../../types/forms/TicketAssigneeForm.type'
+import { TicketAssignee } from '../../types/TicketAssignee.type'
 
-export const TicketAssigneeTableColumns: Array<Column<TicketAssigneeForm>> = [
+export const TicketAssigneeTableColumns: Array<Column<TicketAssignee>> = [
   {
     Header: 'Department',
     accessor: 'departmentName',
@@ -34,19 +32,14 @@ export const TicketAssigneeTableColumns: Array<Column<TicketAssigneeForm>> = [
     Header: 'Status',
     accessor: 'status',
     Cell: ({ value }) => (
-      <div
-        className={`w-fit rounded-lg bg-honeydew py-1 px-2 font-urbanist text-sm font-medium text-jungle-green`}
-      >
-        {value}
-      </div>
+      <div className="font-urbanist text-sm font-medium capitalize text-onyx">{value}</div>
     ),
   },
   {
     Header: 'Actions',
     accessor: 'ticketAssigneeId',
     disableSortBy: true,
-    Cell: ({ value }) => {
-      const { data: session } = useSession()
+    Cell: ({ row: { original: ticketAssignee } }) => {
       const queryClient = useQueryClient()
 
       const [isTicketAssigneeEditModalVisible, setTicketAssigneeEditModalVisible] = useState(false)
@@ -55,11 +48,7 @@ export const TicketAssigneeTableColumns: Array<Column<TicketAssigneeForm>> = [
         setTicketAssigneeEditModalVisible(!isTicketAssigneeEditModalVisible)
 
       const deleteTicketAssignee = async () => {
-        const { status } = await axios.delete(`/v1/ticket-assignees/${value}`, {
-          headers: {
-            Authorization: `Bearer ${session?.accessToken}`,
-          },
-        })
+        const { status } = await axios.delete(`/v1/ticket-assignees/${ticketAssignee.adminUserId}`)
 
         if (status === 200) {
           queryClient.invalidateQueries('assignees')
@@ -68,17 +57,12 @@ export const TicketAssigneeTableColumns: Array<Column<TicketAssigneeForm>> = [
 
       return (
         <div className="flex space-x-2">
-          <button onClick={toggleTicketAssigneeEditModal}>
-            <EyeIcon className="stroke-waterloo" />
+          <button onClick={toggleTicketAssigneeEditModal} className="group">
+            <EyeIcon className="stroke-waterloo group-hover:stroke-jungle-green" />
           </button>
-          <button onClick={deleteTicketAssignee}>
-            <TrashIcon className="stroke-waterloo" />
+          <button onClick={deleteTicketAssignee} className="group">
+            <TrashIcon className="stroke-waterloo group-hover:stroke-jungle-green" />
           </button>
-          <TicketAssigneeEditModal
-            isVisible={isTicketAssigneeEditModalVisible}
-            onClose={toggleTicketAssigneeEditModal}
-            ticketAssigneeId={value}
-          />
         </div>
       )
     },

@@ -1,6 +1,5 @@
 import axios from 'axios'
 import { Form, Formik } from 'formik'
-import { useSession } from 'next-auth/react'
 import { useQuery } from 'react-query'
 import { NewAnimationRequestFormSchema } from '../../../schemas/NewAnimationRequestFormSchema'
 import { Animation } from '../../../types/Animation.type'
@@ -20,27 +19,31 @@ const NewAnimationRequestModal = ({
   isVisible: boolean
   onClose: () => void
 }) => {
-  const { data: session } = useSession()
-
   const formInitialValues: NewAnimationRequestForm = {
     libraryId: -1,
     description: '',
   }
 
-  const { data: libraries } = useQuery('libraries', async () => {
-    const {
-      data: { data },
-    } = await axios.get<{
-      data: Array<Animation>
-      page: Page
-    }>('/v1/libraries?size=100', {
-      headers: {
-        Authorization: `Bearer ${session?.accessToken}`,
-      },
-    })
+  const { data: libraries } = useQuery(
+    'libraries',
+    async () => {
+      const {
+        data: { data },
+      } = await axios.get<{
+        data: Array<Animation>
+        page: Page
+      }>('/v1/libraries', {
+        params: {
+          size: 100,
+        },
+      })
 
-    return data
-  })
+      return data
+    },
+    {
+      enabled: isVisible,
+    }
+  )
 
   const libraryOptions = libraries?.map((library) => ({
     value: library.id,
@@ -53,11 +56,7 @@ const NewAnimationRequestModal = ({
   ) => {
     setSubmitting(true)
 
-    const { status } = await axios.post(`/v1/libraries/${values.libraryId}/ticket`, values, {
-      headers: {
-        Authorization: `Bearer ${session?.accessToken}`,
-      },
-    })
+    const { status } = await axios.post(`/v1/libraries/${values.libraryId}/ticket`, values)
 
     if (status === 200) {
       onClose()

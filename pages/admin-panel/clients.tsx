@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import { ReactElement, useState } from 'react'
+import DataTable from '../../components/common/DataTable'
 import UserIcon from '../../components/common/icons/UserIcon'
-import Table from '../../components/common/Table'
 import Card from '../../components/panel/Card'
 import FancyButton from '../../components/panel/FancyButton'
 import NewClientModal from '../../components/panel/modals/NewClientModal'
@@ -34,7 +34,7 @@ const Client: NextPageWithLayout = () => {
           className="row-span-1 w-fit"
         />
         <Card title="Clients" className="row-span-11">
-          <Table
+          <DataTable
             dataEndpoint="/v1/clients"
             columns={ClientTableColumns}
             initialPageSize={20}
@@ -47,10 +47,6 @@ const Client: NextPageWithLayout = () => {
   )
 }
 
-Client.getLayout = (page: ReactElement) => (
-  <PanelLayout header="Clients" routes={AdminRoutes}>
-    {page}
-  </PanelLayout>
-)
+Client.getLayout = (page: ReactElement) => <PanelLayout routes={AdminRoutes}>{page}</PanelLayout>
 
 export default Client

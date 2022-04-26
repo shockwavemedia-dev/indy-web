@@ -15,11 +15,6 @@ export const ClientRoutes: Array<Route> = [
     Icon: ChartIcon,
   },
   {
-    title: 'Tickets',
-    pathname: '/client-panel/ticket',
-    Icon: NotepadIcon,
-  },
-  {
     title: 'Event Manager',
     Icon: NotepadIcon,
   },
@@ -60,7 +55,7 @@ export const ClientRoutes: Array<Route> = [
       },
       {
         title: 'Animations',
-        pathname: '/service-request/animations',
+        pathname: '/client-panel/service-request/animations',
       },
       {
         title: 'Photography',

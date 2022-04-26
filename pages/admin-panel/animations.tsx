@@ -1,8 +1,8 @@
 import Head from 'next/head'
 import { ReactElement, useState } from 'react'
+import DataTable from '../../components/common/DataTable'
 import UserIcon from '../../components/common/icons/UserIcon'
 import VideoIcon from '../../components/common/icons/VideoIcon'
-import Table from '../../components/common/Table'
 import Card from '../../components/panel/Card'
 import FancyButton from '../../components/panel/FancyButton'
 import NewAnimationCategoryModal from '../../components/panel/modals/NewAnimationCategoryModal'
@@ -51,7 +51,7 @@ const Animations: NextPageWithLayout = () => {
         />
       </div>
       <Card title="Animations" className="row-span-11">
-        <Table
+        <DataTable
           dataEndpoint="/v1/libraries"
           columns={AnimationTableColumns}
           initialPageSize={20}
@@ -69,9 +69,7 @@ const Animations: NextPageWithLayout = () => {
 }
 
 Animations.getLayout = (page: ReactElement) => (
-  <PanelLayout header="Animations" routes={AdminRoutes}>
-    {page}
-  </PanelLayout>
+  <PanelLayout routes={AdminRoutes}>{page}</PanelLayout>
 )
 
 export default Animations

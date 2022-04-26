@@ -1,6 +1,5 @@
 import axios from 'axios'
 import { Form, Formik } from 'formik'
-import { useSession } from 'next-auth/react'
 import { useQueryClient } from 'react-query'
 import { NewClientFormSchema } from '../../../schemas/NewClientFormSchema'
 import { NewClientForm } from '../../../types/forms/NewClientForm.type'
@@ -14,7 +13,6 @@ import TextInput from '../../common/TextInput'
 import Modal from '../Modal'
 
 const NewClientModal = ({ isVisible, onClose }: { isVisible: boolean; onClose: () => void }) => {
-  const { data: session } = useSession()
   const queryClient = useQueryClient()
 
   const formInitialValues: NewClientForm = {
@@ -35,11 +33,7 @@ const NewClientModal = ({ isVisible, onClose }: { isVisible: boolean; onClose: (
   ) => {
     setSubmitting(true)
 
-    const { status } = await axios.post('/v1/clients', objectWithFileToFormData(values), {
-      headers: {
-        Authorization: `Bearer ${session?.accessToken}`,
-      },
-    })
+    const { status } = await axios.post('/v1/clients', objectWithFileToFormData(values))
 
     if (status === 200) {
       queryClient.invalidateQueries('clients')

@@ -3,9 +3,9 @@ import { Form, Formik } from 'formik'
 import { useSession } from 'next-auth/react'
 import { useQuery, useQueryClient } from 'react-query'
 import { TicketTypeOptions } from '../../../constants/options/TicketTypeOptions'
-import { SupportRequestFormSchema } from '../../../schemas/SupportRequestFormSchema'
+import { CreateSupportRequestFormSchema } from '../../../schemas/CreateSupportRequestFormSchema.type'
 import { Department } from '../../../types/Department.type'
-import { SupportRequestForm } from '../../../types/forms/SupportRequestForm.type'
+import { CreateSupportRequestForm } from '../../../types/forms/CreateSupportRequestForm.type'
 import { Page } from '../../../types/Page.type'
 import Button from '../../common/Button'
 import DateInput from '../../common/DateInput'
@@ -17,7 +17,7 @@ import TextAreaInput from '../../common/TextAreaInput'
 import TextInput from '../../common/TextInput'
 import Modal from '../Modal'
 
-const SupportRequestModal = ({
+const CreateSupportRequestModal = ({
   isVisible,
   onClose,
 }: {
@@ -27,7 +27,7 @@ const SupportRequestModal = ({
   const { data: session } = useSession()
   const queryClient = useQueryClient()
 
-  const formInitialValues: SupportRequestForm = {
+  const formInitialValues: CreateSupportRequestForm = {
     subject: '',
     description: '',
     type: '',
@@ -37,39 +37,30 @@ const SupportRequestModal = ({
     duedate: null,
   }
 
-  const typeOptions = TicketTypeOptions
+  const { data: departments } = useQuery(
+    'departments',
+    async () => {
+      const {
+        data: { data },
+      } = await axios.get<{
+        data: Array<Department>
+        page: Page
+      }>('/v1/departments')
 
-  const { data: departments } = useQuery('departments', async () => {
-    const {
-      data: { data },
-    } = await axios.get<{
-      data: Array<Department>
-      page: Page
-    }>('/v1/departments', {
-      headers: {
-        Authorization: `Bearer ${session?.accessToken}`,
-      },
-    })
-
-    return data
-  })
-
-  const departmentOptions = departments?.map((department) => ({
-    value: department.id,
-    label: department.name,
-  }))
+      return data
+    },
+    {
+      enabled: isVisible,
+    }
+  )
 
   const submitForm = async (
-    values: SupportRequestForm,
+    values: CreateSupportRequestForm,
     { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
   ) => {
     setSubmitting(true)
 
-    const { status } = await axios.post('/v1/tickets', values, {
-      headers: {
-        Authorization: `Bearer ${session?.accessToken}`,
-      },
-    })
+    const { status } = await axios.post('/v1/tickets', values)
 
     if (status === 200) {
       queryClient.invalidateQueries('tickets')
@@ -82,9 +73,9 @@ const SupportRequestModal = ({
   return (
     <>
       {isVisible && (
-        <Modal title="Support Request" onClose={onClose}>
+        <Modal title="Create Support Request" onClose={onClose}>
           <Formik
-            validationSchema={SupportRequestFormSchema}
+            validationSchema={CreateSupportRequestFormSchema}
             initialValues={formInitialValues}
             onSubmit={submitForm}
           >
@@ -97,19 +88,25 @@ const SupportRequestModal = ({
                   name="subject"
                   className="mb-5"
                 />
-                <Select
-                  name="type"
-                  Icon={LightbulbIcon}
-                  placeholder="Select Type"
-                  options={typeOptions}
-                  className="mb-5"
-                />
-                <DateInput name="duedate" placeholder="Enter due date" className="mb-5" />
+                <div className="mb-5 flex space-x-5">
+                  <Select
+                    name="type"
+                    Icon={LightbulbIcon}
+                    placeholder="Select Type"
+                    options={TicketTypeOptions}
+                  />
+                  <DateInput name="duedate" placeholder="Enter due date" />
+                </div>
                 <Select
                   name="departmentId"
                   Icon={ClipboardIcon}
                   placeholder="Select department"
-                  options={departmentOptions || []}
+                  options={
+                    departments?.map((department) => ({
+                      value: department.id,
+                      label: department.name,
+                    })) ?? []
+                  }
                   className="mb-5"
                 />
                 <TextAreaInput
@@ -135,4 +132,4 @@ const SupportRequestModal = ({
   )
 }
 
-export default SupportRequestModal
+export default CreateSupportRequestModal

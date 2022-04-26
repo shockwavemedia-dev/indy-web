@@ -1,6 +1,5 @@
 import axios from 'axios'
 import { Form, Formik } from 'formik'
-import { useSession } from 'next-auth/react'
 import { useQuery } from 'react-query'
 import { NewAnimationFormSchema } from '../../../schemas/NewAnimationFormSchema'
 import { CategoryAnimation } from '../../../types/CategoryAnimation.type'
@@ -15,8 +14,6 @@ import TextInput from '../../common/TextInput'
 import Modal from '../Modal'
 
 const NewAnimationModal = ({ isVisible, onClose }: { isVisible: boolean; onClose: () => void }) => {
-  const { data: session } = useSession()
-
   const formInitialValues: NewAnimationForm = {
     title: '',
     description: '',
@@ -24,20 +21,26 @@ const NewAnimationModal = ({ isVisible, onClose }: { isVisible: boolean; onClose
     file: null,
   }
 
-  const { data: categories } = useQuery('categories', async () => {
-    const {
-      data: { data },
-    } = await axios.get<{
-      data: Array<CategoryAnimation>
-      page: Page
-    }>('/v1/library-categories?size=100', {
-      headers: {
-        Authorization: `Bearer ${session?.accessToken}`,
-      },
-    })
+  const { data: categories } = useQuery(
+    'categories',
+    async () => {
+      const {
+        data: { data },
+      } = await axios.get<{
+        data: Array<CategoryAnimation>
+        page: Page
+      }>('/v1/library-categories', {
+        params: {
+          size: 100,
+        },
+      })
 
-    return data
-  })
+      return data
+    },
+    {
+      enabled: isVisible,
+    }
+  )
 
   const categoryOptions = categories?.map((category) => ({
     value: category.id,
@@ -50,11 +53,7 @@ const NewAnimationModal = ({ isVisible, onClose }: { isVisible: boolean; onClose
   ) => {
     setSubmitting(true)
 
-    const { status } = await axios.post('/v1/libraries', objectWithFileToFormData(values), {
-      headers: {
-        Authorization: `Bearer ${session?.accessToken}`,
-      },
-    })
+    const { status } = await axios.post('/v1/libraries', objectWithFileToFormData(values))
 
     if (status === 200) {
       onClose()

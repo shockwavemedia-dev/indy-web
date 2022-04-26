@@ -1,6 +1,5 @@
 import axios from 'axios'
 import { Form, Formik } from 'formik'
-import { useSession } from 'next-auth/react'
 import { useState } from 'react'
 import { useQuery, useQueryClient } from 'react-query'
 import { ClientUserRoleOptions } from '../../../constants/options/ClientUserRoleOptions'
@@ -30,7 +29,6 @@ const NewClientUserModal = ({
   isVisible: boolean
   onClose: () => void
 }) => {
-  const { data: session } = useSession()
   const queryClient = useQueryClient()
 
   const formInitialValues: NewClientUserForm = {
@@ -52,20 +50,26 @@ const NewClientUserModal = ({
   const updatePasswordStrength = (password: string) =>
     setPasswordStrength(computePasswordStrength(password))
 
-  const { data: clients } = useQuery('clients', async () => {
-    const {
-      data: { data },
-    } = await axios.get<{
-      data: Array<Client>
-      page: Page
-    }>('/v1/clients', {
-      headers: {
-        Authorization: `Bearer ${session?.accessToken}`,
-      },
-    })
+  const { data: clients } = useQuery(
+    'clients',
+    async () => {
+      const {
+        data: { data },
+      } = await axios.get<{
+        data: Array<Client>
+        page: Page
+      }>('/v1/clients', {
+        params: {
+          size: 100,
+        },
+      })
 
-    return data
-  })
+      return data
+    },
+    {
+      enabled: isVisible,
+    }
+  )
 
   const clientOptions = clients
     ?.filter((client) => client.status === 'active')
@@ -80,11 +84,7 @@ const NewClientUserModal = ({
   ) => {
     setSubmitting(true)
 
-    const { status } = await axios.post('/v1/users/client', values, {
-      headers: {
-        Authorization: `Bearer ${session?.accessToken}`,
-      },
-    })
+    const { status } = await axios.post('/v1/users/client', values)
 
     if (status === 200) {
       queryClient.invalidateQueries('clients')
