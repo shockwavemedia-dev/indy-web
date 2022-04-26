@@ -12,6 +12,7 @@ import TextAreaInput from '../../common/TextAreaInput'
 import TextInput from '../../common/TextInput'
 import Modal from '../Modal'
 import SelectService from '../SelectService'
+
 const CreateGraphicRequestModal = ({
   isVisible,
   onClose,
