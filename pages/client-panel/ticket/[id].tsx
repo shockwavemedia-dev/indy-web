@@ -176,7 +176,7 @@ const Ticket: NextPageWithLayout = () => {
             <button className="flex space-x-2" onClick={toggleAddTicketAssigneeModal}>
               <PlusIcon className="stroke-jungle-green" />
               <div className="font-urbanist text-sm font-semibold text-jungle-green">
-                Add assignee
+                Add Assignee
               </div>
             </button>
           </div>
