@@ -1,26 +1,12 @@
-import axios from 'axios'
 import { useState } from 'react'
-import { useQueryClient } from 'react-query'
 import { Column } from 'react-table'
 import EyeIcon from '../../components/common/icons/EyeIcon'
 import TrashIcon from '../../components/common/icons/TrashIcon'
+import DeleteTicketAssigneeModal from '../../components/panel/modals/DeleteTicketAssigneeModal'
+import EditTicketAssigneeModal from '../../components/panel/modals/EditTicketAssigneeModal'
 import { TicketAssignee } from '../../types/TicketAssignee.type'
 
 export const TicketAssigneeTableColumns: Array<Column<TicketAssignee>> = [
-  {
-    Header: 'Department',
-    accessor: 'departmentName',
-    Cell: ({ value }) => (
-      <div className="font-urbanist text-sm font-medium capitalize text-onyx">{value}</div>
-    ),
-  },
-  {
-    Header: 'Role',
-    accessor: 'role',
-    Cell: ({ value }) => (
-      <div className="font-urbanist text-sm font-medium capitalize text-onyx">{value}</div>
-    ),
-  },
   {
     Header: 'Name',
     accessor: 'fullName',
@@ -40,29 +26,34 @@ export const TicketAssigneeTableColumns: Array<Column<TicketAssignee>> = [
     accessor: 'ticketAssigneeId',
     disableSortBy: true,
     Cell: ({ row: { original: ticketAssignee } }) => {
-      const queryClient = useQueryClient()
-
       const [isTicketAssigneeEditModalVisible, setTicketAssigneeEditModalVisible] = useState(false)
+      const [isTicketAssigneeDeleteModalVisible, setTicketAssigneeDeleteModalVisible] =
+        useState(false)
 
       const toggleTicketAssigneeEditModal = () =>
         setTicketAssigneeEditModalVisible(!isTicketAssigneeEditModalVisible)
 
-      const deleteTicketAssignee = async () => {
-        const { status } = await axios.delete(`/v1/ticket-assignees/${ticketAssignee.adminUserId}`)
-
-        if (status === 200) {
-          queryClient.invalidateQueries('assignees')
-        }
-      }
+      const toggleTicketAssigneeDeleteModal = () =>
+        setTicketAssigneeDeleteModalVisible(!isTicketAssigneeDeleteModalVisible)
 
       return (
         <div className="flex space-x-2">
           <button onClick={toggleTicketAssigneeEditModal} className="group">
             <EyeIcon className="stroke-waterloo group-hover:stroke-jungle-green" />
           </button>
-          <button onClick={deleteTicketAssignee} className="group">
+          <button onClick={toggleTicketAssigneeDeleteModal} className="group">
             <TrashIcon className="stroke-waterloo group-hover:stroke-jungle-green" />
           </button>
+          <EditTicketAssigneeModal
+            isVisible={isTicketAssigneeEditModalVisible}
+            onClose={toggleTicketAssigneeEditModal}
+            ticketAssignee={ticketAssignee}
+          />
+          <DeleteTicketAssigneeModal
+            isVisible={isTicketAssigneeDeleteModalVisible}
+            onClose={toggleTicketAssigneeDeleteModal}
+            ticketAssignee={ticketAssignee}
+          />
         </div>
       )
     },
