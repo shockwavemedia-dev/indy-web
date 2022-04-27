@@ -113,7 +113,7 @@ const Ticket: NextPageWithLayout = () => {
         <title>Daily Press - Ticket {ticket!.ticketCode}</title>
       </Head>
       <div className="mb-5 font-urbanist text-xxl font-semibold text-onyx">
-        Ticket {ticket.ticketCode}
+        Ticket {ticket!.ticketCode}
       </div>
       <div className="mx-auto flex w-full max-w-7xl space-x-6">
         <Card title="Ticket Details" className="h-fit min-w-86">
@@ -218,7 +218,7 @@ const Ticket: NextPageWithLayout = () => {
       <AddTicketAssigneeModal
         isVisible={isAddTicketAssigneeModalVisible}
         onClose={toggleAddTicketAssigneeModal}
-        ticketId={ticket.id}
+        ticketId={ticket!.id}
       />
       <EditTicketAssigneeModal
         isVisible={isEditTicketAssigneeModalVisible}
