@@ -8,6 +8,7 @@ import Button from '../../common/Button'
 import DateInput from '../../common/DateInput'
 import FileInput from '../../common/FileInput'
 import EditIcon from '../../common/icons/EditIcon'
+import RichTextInput from '../../common/RichTextInput'
 import TextInput from '../../common/TextInput'
 import Modal from '../Modal'
 
