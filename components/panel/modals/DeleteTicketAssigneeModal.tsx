@@ -2,7 +2,9 @@ import axios from 'axios'
 import { useQueryClient } from 'react-query'
 import { TicketAssignee } from '../../../types/TicketAssignee.type'
 import Button from '../../common/Button'
+import TrashIcon from '../../common/icons/TrashIcon'
 import Modal from '../Modal'
+import TitleValue from '../TitleValue'
 
 const DeleteTicketAssigneeModal = ({
   isVisible,
@@ -29,46 +31,25 @@ const DeleteTicketAssigneeModal = ({
       {isVisible && (
         <Modal title="Are you sure you want to delete Ticket Assignee?" onClose={onClose}>
           <div className="mb-8 flex w-140 flex-col">
-            <div className="grid grid-cols-2 grid-rows-3 gap-6">
-              <div className="space-y-1">
-                <div className={`font-urbanist text-sm font-bold text-onyx`}>Name</div>
-                <div
-                  className={`font-urbanist text-sm font-medium text-waterloo ${'inline-block h-5 w-60 animate-pulse rounded bg-metallic-silver text-transparent'}`}
-                >
-                  {ticketAssignee?.fullName}
-                </div>
-              </div>
-              <div className="space-y-1">
-                <div className={`font-urbanist text-sm font-bold text-onyx`}>Department</div>
-                <div
-                  className={`font-urbanist text-sm font-medium text-waterloo ${'inline-block h-5 w-60 animate-pulse rounded bg-metallic-silver text-transparent'}`}
-                >
-                  {ticketAssignee?.departmentName}
-                </div>
-              </div>
-              <div className="space-y-1">
-                <div className={`font-urbanist text-sm font-bold text-onyx`}>Role</div>
-                <div
-                  className={`font-urbanist text-sm font-medium capitalize  text-waterloo ${'inline-block h-5 w-60 animate-pulse rounded bg-metallic-silver text-transparent'}`}
-                >
-                  {ticketAssignee?.role}
-                </div>
-              </div>
-              <div className="space-y-1">
-                <div className={`font-urbanist text-sm font-bold text-onyx`}>Status</div>
-                <div
-                  className={`font-urbanist text-sm font-medium capitalize  text-waterloo ${'inline-block h-5 w-60 animate-pulse rounded bg-metallic-silver text-transparent'}`}
-                >
-                  {ticketAssignee?.status}
-                </div>
-              </div>
+            <div className="mb-8 flex space-x-20">
+              <TitleValue title="Department">{ticketAssignee?.departmentName}</TitleValue>
+              <TitleValue title="Name" className="capitalize">
+                {ticketAssignee?.fullName}
+              </TitleValue>
+              <TitleValue title="Role" className="capitalize">
+                {ticketAssignee?.role}
+              </TitleValue>
+              <TitleValue title="Status" className="capitalize">
+                {ticketAssignee?.status}
+              </TitleValue>
             </div>
             <div className="flex space-x-5">
               <Button ariaLabel="Cancel" onClick={onClose} type="button" light>
                 Cancel
               </Button>
               <Button ariaLabel="Submit" onClick={deleteTicketAssignee} type="submit">
-                Delete
+                <TrashIcon className="stroke-white" />
+                <div>Delete</div>
               </Button>
             </div>
           </div>
