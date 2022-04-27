@@ -142,7 +142,6 @@ const Select = ({
         components={{ DropdownIndicator, Control }}
         inputId={name}
         isDisabled={disabled || readOnly}
-        className="selection:bg-jungle-green selection:text-white"
         Icon={Icon}
       />
     </div>

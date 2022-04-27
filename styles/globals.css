@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+::selection {
+  color: #ffffff;
+  background: #2bb67d;
+}
+
 input:focus-visible,
 button:focus-visible,
 textarea:focus-visible {
@@ -95,4 +100,33 @@ input:-webkit-autofill:focus {
 .MuiPaper-root {
   margin-top: 0.5rem;
   box-shadow: 0 0 0 1px #0000001a, 0 4px 11px #0000001a !important;
+}
+
+.DraftEditor-root {
+  height: 150px !important;
+  overflow-y: auto;
+}
+
+.DraftEditor-editorContainer {
+  border: none !important;
+}
+
+.public-DraftEditor-content,
+.public-DraftEditorPlaceholder-root {
+  padding-left: 3.25rem;
+  padding-right: 3.25rem;
+  padding-top: 1rem;
+  font: normal normal 500 0.875rem/1.25rem Urbanist;
+}
+
+.public-DraftEditor-content {
+  color: #32343d !important;
+}
+
+.public-DraftEditorPlaceholder-root {
+  color: #ababb9 !important;
+}
+
+.public-DraftStyleDefault-ul {
+  margin: 0 !important;
 }

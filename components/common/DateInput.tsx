@@ -69,7 +69,7 @@ const DateInput = ({
             <input
               ref={inputRef}
               {...inputProps}
-              className={`min-h-12.5 w-full rounded-xl bg-transparent px-13 font-urbanist text-sm font-medium text-onyx placeholder-metallic-silver selection:bg-jungle-green selection:text-white focus:ring-2 focus:ring-jungle-green focus:ring-opacity-40 read-only:focus:ring-1 read-only:focus:ring-bright-gray ${
+              className={`min-h-12.5 w-full rounded-xl bg-transparent px-13 font-urbanist text-sm font-medium text-onyx placeholder-metallic-silver focus:ring-2 focus:ring-jungle-green focus:ring-opacity-40 read-only:focus:ring-1 read-only:focus:ring-bright-gray ${
                 isPickerVisible
                   ? 'ring-2 ring-jungle-green ring-opacity-40'
                   : 'ring-1 ring-bright-gray'

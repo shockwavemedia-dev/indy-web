@@ -29,7 +29,7 @@ const TextInput = ({
     <div className="relative flex items-center">
       <Icon className="pointer-events-none absolute left-6 stroke-lavender-gray" />
       <Field
-        className="min-h-12.5 w-full rounded-xl px-13 font-urbanist text-sm font-medium text-onyx placeholder-metallic-silver ring-1 ring-bright-gray selection:bg-jungle-green selection:text-white read-only:cursor-auto focus:ring-2 focus:ring-jungle-green focus:ring-opacity-40 read-only:focus:ring-1 read-only:focus:ring-bright-gray"
+        className="min-h-12.5 w-full rounded-xl px-13 font-urbanist text-sm font-medium text-onyx placeholder-metallic-silver ring-1 ring-bright-gray read-only:cursor-auto focus:ring-2 focus:ring-jungle-green focus:ring-opacity-40 read-only:focus:ring-1 read-only:focus:ring-bright-gray"
         type={type}
         name={name}
         id={name}
