@@ -23,9 +23,7 @@ export const DepartmentTableColumns: Array<Column<Department>> = [
     Header: 'Status',
     accessor: 'status',
     Cell: ({ value }) => (
-      <div className="font-urbanist text-sm font-medium text-onyx">
-        {value.charAt(0).toUpperCase() + value.slice(1)}
-      </div>
+      <div className="font-urbanist text-sm font-medium capitalize text-onyx">{value}</div>
     ),
   },
   {
