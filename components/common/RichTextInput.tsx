@@ -1,4 +1,12 @@
-import { Editor, EditorCommand, EditorState, RichUtils } from 'draft-js'
+import {
+  convertFromRaw,
+  convertToRaw,
+  Editor,
+  EditorCommand,
+  EditorState,
+  getDefaultKeyBinding,
+  RichUtils,
+} from 'draft-js'
 import 'draft-js/dist/Draft.css'
 import { useFormikContext } from 'formik'
 import { KeyboardEvent, SyntheticEvent, useEffect, useState } from 'react'
@@ -28,26 +36,40 @@ const RichTextInput = ({
   readOnly?: boolean
   label?: string
 }) => {
-  const { handleBlur } = useFormikContext()
-  const [editorState, setEditorState] = useState(EditorState.createEmpty())
+  const { handleBlur, setFieldValue, getFieldProps } = useFormikContext()
+
+  const initialValue = getFieldProps<string>(name).value
+
+  const [editorState, setEditorState] = useState(
+    initialValue
+      ? EditorState.createWithContent(convertFromRaw(JSON.parse(initialValue)))
+      : EditorState.createEmpty()
+  )
   const [isEditorFocused, setEditorFocused] = useState(false)
   const [textAlignment, setTextAlignment] = useState<'left' | 'center' | 'right'>('left')
   const [isPlaceholderVisible, setPlaceHolderVisible] = useState(true)
 
   const onChange = (editorState: EditorState) => {
     setEditorState(editorState)
+    setFieldValue(name, JSON.stringify(convertToRaw(editorState.getCurrentContent())))
   }
   const handleKeyCommand = (command: EditorCommand, editorState: EditorState) => {
     const newEditorState = RichUtils.handleKeyCommand(editorState, command)
 
     if (newEditorState) {
-      onChange(newEditorState)
+      setEditorState(newEditorState)
       return 'handled'
     }
 
     return 'not-handled'
   }
-  const onTab = (e: KeyboardEvent) => onChange(RichUtils.onTab(e, editorState, 4))
+  const keyBindingFn = (e: KeyboardEvent) => {
+    if (e.code === 'Tab') {
+      setEditorState(RichUtils.onTab(e, editorState, 4))
+    }
+
+    return getDefaultKeyBinding(e)
+  }
   const onFocus = () => setEditorFocused(true)
   const onBlur = (e: SyntheticEvent) => {
     setEditorFocused(false)
@@ -148,7 +170,7 @@ const RichTextInput = ({
           readOnly={readOnly}
           spellCheck={false}
           textAlignment={textAlignment}
-          onTab={onTab}
+          keyBindingFn={keyBindingFn}
         />
       </div>
       <FormErrorMessage name={name} />

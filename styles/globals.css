@@ -113,9 +113,7 @@ input:-webkit-autofill:focus {
 
 .public-DraftEditor-content,
 .public-DraftEditorPlaceholder-root {
-  padding-left: 3.25rem;
-  padding-right: 3.25rem;
-  padding-top: 1rem;
+  padding: 1rem 3.25rem;
   font: normal normal 500 0.875rem/1.25rem Urbanist;
 }
 
