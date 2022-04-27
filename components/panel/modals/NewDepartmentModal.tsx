@@ -20,7 +20,7 @@ const NewDepartmentModal = ({
   const formInitialValues: NewDepartmentForm = {
     name: '',
     description: '',
-    minDeliveryDays: -1,
+    minDeliveryDays: 0,
   }
 
   const submitForm = async (
