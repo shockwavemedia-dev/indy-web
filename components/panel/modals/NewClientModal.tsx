@@ -8,7 +8,6 @@ import Button from '../../common/Button'
 import DateInput from '../../common/DateInput'
 import FileInput from '../../common/FileInput'
 import EditIcon from '../../common/icons/EditIcon'
-import TextAreaInput from '../../common/RichTextInput'
 import TextInput from '../../common/TextInput'
 import Modal from '../Modal'
 
@@ -70,7 +69,7 @@ const NewClientModal = ({ isVisible, onClose }: { isVisible: boolean; onClose: (
                     />
                   </div>
                   <FileInput label="Upload assets" name="logo" className="mb-5" />
-                  <TextAreaInput
+                  <RichTextInput
                     Icon={EditIcon}
                     placeholder="Enter Overview"
                     name="overview"

@@ -13,7 +13,7 @@ import TextRightAlignmentIcon from './icons/TextRightAlignmentIcon'
 import UnderlineIcon from './icons/UnderlineIcon'
 import UnorderedListIcon from './icons/UnorderedListIcon'
 
-const TextAreaInput = ({
+const RichTextInput = ({
   name,
   Icon,
   placeholder,
@@ -191,4 +191,4 @@ const StyleButton = ({
   </button>
 )
 
-export default TextAreaInput
+export default RichTextInput

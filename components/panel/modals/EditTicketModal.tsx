@@ -12,7 +12,7 @@ import DateInput from '../../common/DateInput'
 import ClipboardIcon from '../../common/icons/ClipboardIcon'
 import EditIcon from '../../common/icons/EditIcon'
 import FloppyDiskIcon from '../../common/icons/FloppyDiskIcon'
-import TextAreaInput from '../../common/RichTextInput'
+import RichTextInput from '../../common/RichTextInput'
 import Select from '../../common/Select'
 import TextInput from '../../common/TextInput'
 import Modal from '../Modal'
@@ -89,7 +89,7 @@ const EditTicketModal = ({
                   defaultValue={TicketStatusOptions.find(({ value }) => value === ticket.status)}
                   className="mb-5"
                 />
-                <TextAreaInput
+                <RichTextInput
                   label="Description"
                   Icon={EditIcon}
                   placeholder="Enter Description"

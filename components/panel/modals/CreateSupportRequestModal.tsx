@@ -12,7 +12,7 @@ import DateInput from '../../common/DateInput'
 import ClipboardIcon from '../../common/icons/ClipboardIcon'
 import EditIcon from '../../common/icons/EditIcon'
 import LightbulbIcon from '../../common/icons/LightbulbIcon'
-import TextAreaInput from '../../common/RichTextInput'
+import RichTextInput from '../../common/RichTextInput'
 import Select from '../../common/Select'
 import TextInput from '../../common/TextInput'
 import Modal from '../Modal'
@@ -109,7 +109,7 @@ const CreateSupportRequestModal = ({
                   }
                   className="mb-5"
                 />
-                <TextAreaInput
+                <RichTextInput
                   Icon={EditIcon}
                   placeholder="Enter Description"
                   name="description"

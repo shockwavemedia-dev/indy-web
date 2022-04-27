@@ -8,7 +8,6 @@ import Button from '../../common/Button'
 import DateInput from '../../common/DateInput'
 import FileInput from '../../common/FileInput'
 import EditIcon from '../../common/icons/EditIcon'
-import TextAreaInput from '../../common/RichTextInput'
 import TextInput from '../../common/TextInput'
 import Modal from '../Modal'
 import SelectService from '../SelectService'
@@ -70,7 +69,7 @@ const CreateGraphicRequestModal = ({
                 <SelectService name="service" />
                 <DateInput name="duedate" placeholder="Enter due date" />
               </div>
-              <TextAreaInput
+              <RichTextInput
                 Icon={EditIcon}
                 placeholder="Enter description"
                 name="description"
