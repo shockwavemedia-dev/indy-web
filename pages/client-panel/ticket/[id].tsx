@@ -116,51 +116,69 @@ const Ticket: NextPageWithLayout = () => {
         Ticket {ticket!.ticketCode}
       </div>
       <div className="mx-auto flex w-full max-w-7xl space-x-6">
-        <Card title="Ticket Details" className="h-fit min-w-86">
-          <div className="absolute top-6 right-6 space-x-4">
-            <button className="group" onClick={toggleEditTicketModal}>
-              <EditIcon className="stroke-waterloo group-hover:stroke-jungle-green" />
-            </button>
-            <button className="group" onClick={toggleDeleteTicketModal}>
-              <TrashIcon className="stroke-waterloo group-hover:stroke-jungle-green" />
-            </button>
-          </div>
-          <div className="mb-6 flex space-x-5">
-            <div className="min-w-25">
-              <Image src={DummyCompany} height={100} width={100} alt={ticket!.clientName} />
+        <div className="flex min-w-86 flex-col space-y-6">
+          <Card title="Ticket Details">
+            <div className="absolute top-6 right-6 space-x-4">
+              <button className="group" onClick={toggleEditTicketModal}>
+                <EditIcon className="stroke-waterloo group-hover:stroke-jungle-green" />
+              </button>
+              <button className="group" onClick={toggleDeleteTicketModal}>
+                <TrashIcon className="stroke-waterloo group-hover:stroke-jungle-green" />
+              </button>
             </div>
-            <div>
-              <TitleValue title="Company" className="mb-3">
-                {ticket!.clientName}
+            <div className="mb-6 flex space-x-5">
+              <div className="min-w-25">
+                <Image src={DummyCompany} height={100} width={100} alt={ticket!.clientName} />
+              </div>
+              <div>
+                <TitleValue title="Company" className="mb-3">
+                  {ticket!.clientName}
+                </TitleValue>
+                <TitleValue title="Subject">{ticket!.subject}</TitleValue>
+              </div>
+            </div>
+            <hr className="mb-6 border-t-bright-gray" />
+            <div className="space-y-2">
+              <TitleValue title="ID" className="flex items-center justify-between">
+                {ticket!.id}
               </TitleValue>
-              <TitleValue title="Subject">{ticket!.subject}</TitleValue>
+              <TitleValue title="Code" className="flex items-center justify-between">
+                {ticket!.ticketCode}
+              </TitleValue>
+              <TitleValue title="Type" className="flex items-center justify-between capitalize">
+                {ticket!.type}
+              </TitleValue>
+              <TitleValue title="Status" className="flex items-center justify-between capitalize">
+                {ticket!.status}
+              </TitleValue>
+              <TitleValue title="Department" className="flex items-center justify-between">
+                {ticket!.departmentName}
+              </TitleValue>
+              <TitleValue title="Due Created" className="flex items-center justify-between">
+                {format(ticket!.duedate, "yy MMM''dd")}
+              </TitleValue>
+              <TitleValue title="Date Created" className="flex items-center justify-between">
+                {format(ticket!.createdAt, "yy MMM''dd")}
+              </TitleValue>
             </div>
-          </div>
-          <hr className="mb-6 border-t-bright-gray" />
-          <div className="space-y-2">
-            <TitleValue title="ID" className="flex items-center justify-between">
-              {ticket!.id}
-            </TitleValue>
-            <TitleValue title="Code" className="flex items-center justify-between">
-              {ticket!.ticketCode}
-            </TitleValue>
-            <TitleValue title="Type" className="flex items-center justify-between capitalize">
-              {ticket!.type}
-            </TitleValue>
-            <TitleValue title="Status" className="flex items-center justify-between capitalize">
-              {ticket!.status}
-            </TitleValue>
-            <TitleValue title="Department" className="flex items-center justify-between">
-              {ticket!.departmentName}
-            </TitleValue>
-            <TitleValue title="Due Created" className="flex items-center justify-between">
-              {format(ticket!.duedate, "yy MMM''dd")}
-            </TitleValue>
-            <TitleValue title="Date Created" className="flex items-center justify-between">
-              {format(ticket!.createdAt, "yy MMM''dd")}
-            </TitleValue>
-          </div>
-        </Card>
+          </Card>
+          <Card title="Ticket Assignees">
+            <DataTable
+              columns={TicketAssigneeTableColumns}
+              dataEndpoint={`/v1/tickets/${id}/assignees`}
+              tableQueryKey={['assignees', Number(id)]}
+              ofString="Assignee"
+              tableActions={
+                <button className="flex space-x-2" onClick={toggleAddTicketAssigneeModal}>
+                  <PlusIcon className="stroke-jungle-green" />
+                  <div className="font-urbanist text-sm font-semibold text-jungle-green">
+                    Add Assignee
+                  </div>
+                </button>
+              }
+            />
+          </Card>
+        </div>
         <div className="h-fit w-full">
           <div className="flex justify-between">
             <Tab title="Notes" Icon={NoteIcon} tabName="notes" />
@@ -181,28 +199,6 @@ const Ticket: NextPageWithLayout = () => {
             }`}
           />
         </div>
-      </div>
-      <div className="mx-auto mt-10 flex w-full max-w-7xl space-x-6">
-        <Card title="Assignee" className="h-fit min-w-86">
-          <div className="top-6 right-6 space-x-4">
-            <button className="flex space-x-2" onClick={toggleAddTicketAssigneeModal}>
-              <PlusIcon className="stroke-jungle-green" />
-              <div className="font-urbanist text-sm font-semibold text-jungle-green">
-                Add Assignee
-              </div>
-            </button>
-          </div>
-          <div className="mt-5">
-            <DataTable
-              columns={TicketAssigneeTableColumns}
-              dataEndpoint={`/v1/tickets/${id}/assignees`}
-              tableQueryKey="assignees"
-              ofString="Assignee"
-              settings
-              periodicFilter
-            />
-          </div>
-        </Card>
       </div>
       <EditTicketModal
         isVisible={isEditTicketModalVisible}

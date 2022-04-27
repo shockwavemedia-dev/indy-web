@@ -32,15 +32,15 @@ const DeleteTicketAssigneeModal = ({
         <Modal title="Are you sure you want to delete Ticket Assignee?" onClose={onClose}>
           <div className="mb-8 flex w-140 flex-col">
             <div className="mb-8 flex space-x-20">
-              <TitleValue title="Department">{ticketAssignee?.departmentName}</TitleValue>
+              <TitleValue title="Department">{ticketAssignee.departmentName}</TitleValue>
               <TitleValue title="Name" className="capitalize">
-                {ticketAssignee?.fullName}
+                {ticketAssignee.fullName}
               </TitleValue>
               <TitleValue title="Role" className="capitalize">
-                {ticketAssignee?.role}
+                {ticketAssignee.role}
               </TitleValue>
               <TitleValue title="Status" className="capitalize">
-                {ticketAssignee?.status}
+                {ticketAssignee.status}
               </TitleValue>
             </div>
             <div className="flex space-x-5">
