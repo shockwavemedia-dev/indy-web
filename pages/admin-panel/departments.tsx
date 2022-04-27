@@ -32,7 +32,7 @@ const Departments: NextPageWithLayout = () => {
           onClick={toggleNewDepartmentModal}
           className="row-span-1 w-fit"
         />
-        <Card title="Clients" className="row-span-11">
+        <Card title="Departments" className="row-span-11">
           <DataTable
             dataEndpoint="/v1/departments"
             columns={DepartmentTableColumns}
