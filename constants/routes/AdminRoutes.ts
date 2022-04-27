@@ -6,12 +6,12 @@ import { Route } from '../../types/Route.type'
 export const AdminRoutes: Array<Route> = [
   {
     title: 'Clients',
-    pathname: 'admin-panel/clients',
+    pathname: '/admin-panel/clients',
     Icon: UserIcon,
   },
   {
     title: 'Animations',
-    pathname: 'admin-panel/animations',
+    pathname: '/admin-panel/animations',
     Icon: VideoIcon,
   },
   {
@@ -21,5 +21,6 @@ export const AdminRoutes: Array<Route> = [
   {
     title: 'Departments',
     Icon: ClipboardIcon,
+    pathname: '/admin-panel/departments',
   },
 ]
