@@ -11,7 +11,7 @@ const TextInput = ({
   readOnly = false,
   label,
 }: {
-  type: 'text' | 'email'
+  type: 'text' | 'email' | 'url'
   name: string
   Icon: Icon
   placeholder: string

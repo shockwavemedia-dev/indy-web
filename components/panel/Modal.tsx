@@ -5,12 +5,14 @@ const Modal = ({
   title,
   children,
   onClose,
+  className,
 }: {
   title: string
   children: ReactNode
   onClose: () => void
+  className?: string
 }) => (
-  <>
+  <div className={className}>
     <button
       onClick={onClose}
       className="fixed top-0 left-0 z-10 h-full w-full cursor-default bg-onyx bg-opacity-20"
@@ -22,7 +24,7 @@ const Modal = ({
       <div className="mb-6 font-urbanist text-xl font-semibold text-onyx">{title}</div>
       {children}
     </div>
-  </>
+  </div>
 )
 
 export default Modal

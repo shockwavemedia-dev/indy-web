@@ -13,6 +13,7 @@ import RichTextInput from '../../common/RichTextInput'
 import TextInput from '../../common/TextInput'
 import Modal from '../Modal'
 import SelectService from '../SelectService'
+import CreateLinkModal from './CreateLinkModal'
 
 const CreateEventModal = ({ isVisible, onClose }: { isVisible: boolean; onClose: () => void }) => {
   const { data: session } = useSession()
@@ -83,6 +84,7 @@ const CreateEventModal = ({ isVisible, onClose }: { isVisible: boolean; onClose:
           </Formik>
         </Modal>
       )}
+      <CreateLinkModal />
     </>
   )
 }
