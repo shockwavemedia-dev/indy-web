@@ -14,11 +14,13 @@ import PasswordInput from '../../components/common/PasswordInput'
 import TextInput from '../../components/common/TextInput'
 import AuthLayout from '../../layouts/AuthLayout'
 import { LoginFormSchema } from '../../schemas/LoginFormSchema'
+import { useToastStore } from '../../store/ToastStore'
 import { LoginForm } from '../../types/forms/LoginForm.type'
 import { NextPageWithLayout } from '../../types/pages/NextPageWithLayout.type'
 
 const Login: NextPageWithLayout = () => {
   const { replace } = useRouter()
+  const { showToast } = useToastStore()
 
   const formInitialValues: LoginForm = {
     email: '',
@@ -39,12 +41,17 @@ const Login: NextPageWithLayout = () => {
       redirect: false,
     })
 
+    console.log(res)
+
     if (!res?.error && res?.ok) {
       replace('/')
     } else {
+      showToast({
+        type: 'error',
+        message: 'Email or Password is incorrect!',
+      })
       setSubmitting(false)
     }
-
     done()
   }
 

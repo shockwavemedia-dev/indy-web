@@ -35,7 +35,7 @@ const Toast = ({
       ) : (
         <ToastWarningIcon />
       )}
-      <div className="ml-3 mr-5">{message}</div>
+      <div className="ml-3 mr-5 font-urbanist text-sm font-medium text-onyx">{message}</div>
       <button
         onClick={closeCurrentToast}
         className="group grid h-6 w-6 place-items-center rounded-full"
