@@ -1,5 +1,5 @@
-import AdapterDateFns from '@mui/lab/AdapterDateFns'
-import LocalizationProvider from '@mui/lab/LocalizationProvider'
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import axios from 'axios'
 import camelcaseKeys from 'camelcase-keys'
 import { getSession, SessionProvider } from 'next-auth/react'

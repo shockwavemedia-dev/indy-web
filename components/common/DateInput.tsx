@@ -1,4 +1,4 @@
-import { DesktopDatePicker } from '@mui/lab'
+import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker'
 import { FormikValues, useFormikContext } from 'formik'
 import { useState } from 'react'
 import FormErrorMessage from './FormErrorMessage'

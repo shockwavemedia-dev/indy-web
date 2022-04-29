@@ -1,7 +1,6 @@
 import { Form, Formik } from 'formik'
-import createStore from 'zustand'
-import { combine } from 'zustand/middleware'
 import { CreateLinkFormSchema } from '../../../schemas/CreateLinkFormSchema'
+import { useCreateLinkModalStore } from '../../../store/CreateLinkModalStore'
 import { CreateLinkForm } from '../../../types/forms/CreateLinkForm.type'
 import Button from '../../common/Button'
 import EditIcon from '../../common/icons/EditIcon'
@@ -60,20 +59,5 @@ const CreateLinkModal = () => {
     </>
   )
 }
-
-export const useCreateLinkModalStore = createStore(
-  combine(
-    {
-      linkText: '',
-      isModalVisible: false,
-      createLink: (_values: CreateLinkForm) => {},
-    },
-    (set, get) => ({
-      setLinkText: (linkText: string) => set(() => ({ linkText })),
-      toggleModal: () => set(() => ({ isModalVisible: !get().isModalVisible })),
-      setCreateLink: (createLink: (values: CreateLinkForm) => void) => set(() => ({ createLink })),
-    })
-  )
-)
 
 export default CreateLinkModal
