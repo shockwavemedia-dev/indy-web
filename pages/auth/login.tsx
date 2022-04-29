@@ -41,8 +41,6 @@ const Login: NextPageWithLayout = () => {
       redirect: false,
     })
 
-    console.log(res)
-
     if (!res?.error && res?.ok) {
       replace('/')
     } else {
