@@ -12,19 +12,25 @@ const nextAuth = NextAuth({
         password: { type: 'password' },
       },
       authorize: async (credentials) => {
-        const {
-          data: { accessToken, user },
-        } = await axios.post<AuthenticationResponse>('/authenticate', {
-          email: credentials?.email,
-          password: credentials?.password,
-        })
+        try {
+          const {
+            data: { accessToken, user },
+          } = await axios.post<AuthenticationResponse>('/authenticate', {
+            email: credentials?.email,
+            password: credentials?.password,
+          })
 
-        if (accessToken) {
           return {
             user: user,
             accessToken: accessToken,
             isAdmin: user.userType.type === 'admin_users',
             isClient: user.userType.type === 'client_users',
+          }
+        } catch (e) {
+          if (axios.isAxiosError(e)) {
+            return Promise.reject(
+              new Error(e.response?.data.message || 'Something went wrong during login!')
+            )
           }
         }
 

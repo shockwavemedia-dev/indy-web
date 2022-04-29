@@ -36,11 +36,11 @@ axios.interceptors.request.use(
     }
   },
   (error) => {
-    Promise.reject(error)
-
     if (isClientSide) {
       done()
     }
+
+    return Promise.reject(error)
   }
 )
 axios.interceptors.response.use(
@@ -57,11 +57,11 @@ axios.interceptors.response.use(
     return response
   },
   (error) => {
-    Promise.reject(error)
-
     if (isClientSide) {
       done()
     }
+
+    return Promise.reject(error)
   }
 )
 

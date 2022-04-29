@@ -41,15 +41,18 @@ const Login: NextPageWithLayout = () => {
       redirect: false,
     })
 
-    if (!res?.error && res?.ok) {
-      replace('/')
-    } else {
-      showToast({
-        type: 'error',
-        message: 'Email or Password is incorrect!',
-      })
-      setSubmitting(false)
+    if (res) {
+      if (!res.error) {
+        replace('/')
+      } else {
+        showToast({
+          type: 'error',
+          message: res.error,
+        })
+        setSubmitting(false)
+      }
     }
+
     done()
   }
 
