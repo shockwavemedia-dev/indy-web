@@ -212,7 +212,7 @@ const DataTable = <T extends Record<string, unknown>>({
               )}
               {pageOptions
                 .slice(pageIndex > 0 ? pageIndex - 1 : pageIndex, pageIndex + 5)
-                .map((pageNumber, i) => {
+                .map((pageNumber) => {
                   const gotoThisPage = () => {
                     gotoPage(pageNumber)
                   }
@@ -220,7 +220,7 @@ const DataTable = <T extends Record<string, unknown>>({
                   return (
                     <button
                       onClick={gotoThisPage}
-                      key={i}
+                      key={`goto-page-${pageNumber}`}
                       disabled={pageNumber === pageIndex || isFetching}
                       className={`text-metallic-silver ${
                         isFetching

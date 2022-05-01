@@ -1,5 +1,4 @@
 import axios from 'axios'
-import { id } from 'date-fns/locale'
 import { Form, Formik } from 'formik'
 import { useQueryClient } from 'react-query'
 import { TicketStatusOptions } from '../../../constants/options/TicketStatusOptions'
@@ -75,7 +74,6 @@ const EditTicketModal = ({
                   <Select
                     label="Type"
                     name="type"
-                    key={`ticketAssignee${id}${ticket.type}`}
                     Icon={ClipboardIcon}
                     options={TicketTypeOptions}
                     defaultValue={TicketTypeOptions.find(({ value }) => value === ticket.type)}

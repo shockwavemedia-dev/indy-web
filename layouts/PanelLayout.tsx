@@ -1,7 +1,7 @@
 import { signOut as nextAuthSignOut, useSession } from 'next-auth/react'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
-import { ReactNode } from 'react'
+import { Fragment, ReactNode } from 'react'
 import BellIcon from '../components/common/icons/BellIcon'
 import BriefcaseIcon from '../components/common/icons/BriefcaseIcon'
 import CaretIcon from '../components/common/icons/CaretIcon'
@@ -47,23 +47,22 @@ const PanelLayout = ({ routes, children }: { routes: Array<Route>; children: Rea
             <JobsStatusCountCard Icon={BriefcaseIcon} value={12} description="Pending Jobs" />
             <JobsStatusCountCard Icon={EyeIcon} value={4} description="Jobs To Review" />
           </div>
-          {routes.map(({ title, Icon, pathname, subRoutes = [] }) => (
-            <>
+          {routes.map(({ title, Icon, pathname, subRoutes = [] }, i) => (
+            <Fragment key={`route-group-${i}`}>
               <RouteButton
-                key={title}
                 route={{ title, Icon, pathname }}
                 hasSubRoutes={subRoutes.length > 0}
                 isCurrentPath={pathname === asPath}
               />
               {subRoutes.map(({ title, Icon, pathname }) => (
                 <RouteButton
-                  key={title}
+                  key={`sub-${title}-${pathname}`}
                   route={{ title, Icon, pathname }}
                   isCurrentPath={pathname === asPath}
                   subRoute
                 />
               ))}
-            </>
+            </Fragment>
           ))}
         </div>
         <div className="flex w-full flex-col overflow-y-scroll p-6">
@@ -71,25 +70,22 @@ const PanelLayout = ({ routes, children }: { routes: Array<Route>; children: Rea
             {asPath
               .split('/')
               .filter((s) => s !== '')
-              .map((s, i, paths) => {
-                return (
-                  <>
-                    <div
-                      key={s}
-                      className={`font-urbanist text-xs capitalize ${
-                        i + 1 === paths.length
-                          ? 'mr-auto font-semibold text-onyx'
-                          : 'mr-3 font-medium text-waterloo'
-                      } `}
-                    >
-                      {s.replace('-', ' ')}
-                    </div>
-                    {i + 1 !== paths.length && (
-                      <CaretIcon className="mr-3 rotate-90 stroke-lavender-gray" small />
-                    )}
-                  </>
-                )
-              })}
+              .map((s, i, paths) => (
+                <Fragment key={`crumbs-${i}`}>
+                  <div
+                    className={`font-urbanist text-xs capitalize ${
+                      i + 1 === paths.length
+                        ? 'mr-auto font-semibold text-onyx'
+                        : 'mr-3 font-medium text-waterloo'
+                    } `}
+                  >
+                    {s.replace('-', ' ')}
+                  </div>
+                  {i + 1 !== paths.length && (
+                    <CaretIcon className="mr-3 rotate-90 stroke-lavender-gray" small />
+                  )}
+                </Fragment>
+              ))}
             <MagnifyingGlassIcon className="mr-6 stroke-waterloo" />
             <button className="relative mr-8">
               <BellIcon className="stroke-waterloo" />

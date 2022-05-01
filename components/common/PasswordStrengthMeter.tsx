@@ -35,7 +35,7 @@ export const PasswordStrengthMeter = ({
             }
           }
 
-          return <div key={i} className={`h-1.5 w-8 rounded-3xl ${color}`} />
+          return <div key={`color-pill-${i}`} className={`h-1.5 w-8 rounded-3xl ${color}`} />
         })}
       </div>
       <div className="font-urbanist text-xxs font-medium text-waterloo">{getStrengthText()}</div>

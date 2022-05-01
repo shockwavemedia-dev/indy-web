@@ -105,7 +105,7 @@ const SelectService = ({ name }: { name: string }) => {
               selectedServices={selectedServices}
               toggleService={toggleService}
               toggleExtra={toggleExtra}
-              key={i}
+              key={`service-${service.serviceName}-${i}`}
             />
           ))}
         </div>
@@ -157,7 +157,7 @@ const ServiceRow = ({
               extra={extra}
               selectedExtras={selectedServices[service.serviceId]}
               selectExtra={selectExtra}
-              key={i}
+              key={`service-${extra}-${i}`}
             />
           )
         })}
