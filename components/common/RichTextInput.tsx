@@ -148,6 +148,7 @@ const RichTextInput = ({
               ? 'ring-2 ring-jungle-green ring-opacity-40'
               : 'ring-1 ring-bright-gray '
           }`}
+          id="rich-text-input"
         >
           <div className="flex space-x-2 bg-ghost-white px-4 py-1.5">
             <StyleButton

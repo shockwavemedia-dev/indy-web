@@ -1,9 +1,17 @@
 import axios from 'axios'
 import { format } from 'date-fns'
+import {
+  CompositeDecorator,
+  convertFromRaw,
+  DraftDecoratorComponentProps,
+  Editor,
+  EditorState,
+} from 'draft-js'
 import Head from 'next/head'
 import Image from 'next/image'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { ReactElement, useState } from 'react'
+import { Fragment, ReactElement, useState } from 'react'
 import { useQuery } from 'react-query'
 import DataTable from '../../../components/common/DataTable'
 import CalendarIcon from '../../../components/common/icons/CalendarIcon'
@@ -15,6 +23,7 @@ import PlusIcon from '../../../components/common/icons/PlusIcon'
 import TrashIcon from '../../../components/common/icons/TrashIcon'
 import Card from '../../../components/panel/Card'
 import AddTicketAssigneeModal from '../../../components/panel/modals/AddTicketAssigneeModal'
+import CreateLinkModal from '../../../components/panel/modals/CreateLinkModal'
 import DeleteTicketAssigneeModal from '../../../components/panel/modals/DeleteTicketAssigneeModal'
 import DeleteTicketModal from '../../../components/panel/modals/DeleteTicketModal'
 import EditTicketAssigneeModal from '../../../components/panel/modals/EditTicketAssigneeModal'
@@ -116,8 +125,8 @@ const Ticket: NextPageWithLayout = () => {
         Ticket {ticket!.ticketCode}
       </div>
       <div className="mx-auto flex w-full max-w-7xl space-x-6">
-        <div className="flex min-w-86 flex-col space-y-6">
-          <Card title="Ticket Details">
+        <div className="flex max-w-86 flex-col space-y-6">
+          <Card title="Details">
             <div className="absolute top-6 right-6 space-x-4">
               <button className="group" onClick={toggleEditTicketModal}>
                 <EditIcon className="stroke-waterloo group-hover:stroke-jungle-green" />
@@ -160,9 +169,61 @@ const Ticket: NextPageWithLayout = () => {
               <TitleValue title="Date Created" className="flex items-center justify-between">
                 {format(ticket!.createdAt, "yy MMM''dd")}
               </TitleValue>
+              <TitleValue title="Services">
+                <div className="flex flex-wrap gap-1">
+                  {ticket.services?.map(({ serviceName, extras }, i) => (
+                    <Fragment key={`service-${i}`}>
+                      <div className="rounded-lg border border-bright-gray px-2.5">
+                        {serviceName}
+                      </div>
+                      {extras.map((extra) => (
+                        <div
+                          key={`extra-${i}`}
+                          className="rounded-lg border border-bright-gray px-2.5"
+                        >
+                          {extra}
+                        </div>
+                      ))}
+                    </Fragment>
+                  ))}
+                </div>
+              </TitleValue>
+              <TitleValue title="Description">
+                <Editor
+                  onChange={() => {}}
+                  editorState={EditorState.createWithContent(
+                    convertFromRaw(JSON.parse(ticket.description)),
+                    new CompositeDecorator([
+                      {
+                        strategy: (contentBlock, callback, contentState) => {
+                          contentBlock.findEntityRanges((character) => {
+                            const entityKey = character.getEntity()
+                            return (
+                              entityKey !== null &&
+                              contentState.getEntity(entityKey).getType() === 'LINK'
+                            )
+                          }, callback)
+                        },
+                        component: (props: DraftDecoratorComponentProps) => (
+                          <Link href={props.contentState.getEntity(props.entityKey).getData().link}>
+                            <a
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-bleu-de-france underline"
+                            >
+                              {props.children}
+                            </a>
+                          </Link>
+                        ),
+                      },
+                    ])
+                  )}
+                  readOnly
+                />
+              </TitleValue>
             </div>
           </Card>
-          <Card title="Ticket Assignees">
+          <Card title="Assignees">
             <DataTable
               columns={TicketAssigneeTableColumns}
               dataEndpoint={`/v1/tickets/${id}/assignees`}
@@ -226,6 +287,7 @@ const Ticket: NextPageWithLayout = () => {
         onClose={toggleDeleteTicketAssigneeModal}
         ticketAssignee={activeTicketAssignee}
       />
+      <CreateLinkModal />
     </>
   )
 }

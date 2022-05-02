@@ -102,26 +102,26 @@ input:-webkit-autofill:focus {
   box-shadow: 0 0 0 1px #0000001a, 0 4px 11px #0000001a !important;
 }
 
-.DraftEditor-root {
+#rich-text-input .DraftEditor-root {
   height: 150px !important;
   overflow-y: auto;
 }
 
-.DraftEditor-editorContainer {
+#rich-text-input .DraftEditor-editorContainer {
   border: none !important;
 }
 
-.public-DraftEditor-content,
-.public-DraftEditorPlaceholder-root {
+#rich-text-input .public-DraftEditor-content,
+#rich-text-input .public-DraftEditorPlaceholder-root {
   padding: 1rem 3.25rem;
   font: normal normal 500 0.875rem/1.25rem Urbanist;
 }
 
-.public-DraftEditor-content {
+#rich-text-input .public-DraftEditor-content {
   color: #32343d !important;
 }
 
-.public-DraftEditorPlaceholder-root {
+#rich-text-input .public-DraftEditorPlaceholder-root {
   color: #ababb9 !important;
 }
 

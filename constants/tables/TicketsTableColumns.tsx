@@ -9,6 +9,12 @@ import { Ticket } from '../../types/Ticket.type'
 
 export const TicketsTableColumns: Array<Column<Ticket>> = [
   {
+    Header: 'ID',
+    accessor: 'id',
+    id: 'id',
+    Cell: ({ value }) => <div className="font-urbanist text-sm font-medium text-onyx">{value}</div>,
+  },
+  {
     Header: 'Ticket Code',
     accessor: 'ticketCode',
     Cell: ({ value }) => <div className="font-urbanist text-sm font-medium text-onyx">{value}</div>,
@@ -29,7 +35,24 @@ export const TicketsTableColumns: Array<Column<Ticket>> = [
     Header: 'Status',
     accessor: 'status',
     Cell: ({ value }) => (
-      <div className="font-urbanist text-sm font-medium capitalize text-onyx">{value}</div>
+      <div className="flex h-6 w-fit items-center space-x-1.5 rounded-lg border border-bright-gray px-2.5">
+        <div
+          className={`h-1.5 w-1.5 rounded-full ${
+            value === 'closed' || value === 'resolved'
+              ? 'bg-jungle-green'
+              : value === 'new' || value === 'open'
+              ? 'bg-bleu-de-france'
+              : value === 'pending'
+              ? 'bg-waterloo'
+              : value === 'on_hold'
+              ? 'bg-deep-saffron'
+              : 'bg-tart-orange'
+          }`}
+        />
+        <div className="font-urbanist text-sm font-medium capitalize text-onyx">
+          {value.replace(/_/g, ' ')}
+        </div>
+      </div>
     ),
   },
   {
@@ -45,6 +68,7 @@ export const TicketsTableColumns: Array<Column<Ticket>> = [
   {
     Header: 'Actions',
     accessor: 'id',
+    id: 'actions',
     disableSortBy: true,
     Cell: ({ row: { original: ticket } }) => {
       const { setActiveTicket, toggleEditTicketModal, toggleDeleteTicketModal } = useTicketStore()
