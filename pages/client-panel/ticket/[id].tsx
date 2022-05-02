@@ -171,7 +171,7 @@ const Ticket: NextPageWithLayout = () => {
               </TitleValue>
               <TitleValue title="Services">
                 <div className="flex flex-wrap gap-1">
-                  {ticket.services?.map(({ serviceName, extras }, i) => (
+                  {ticket!.services?.map(({ serviceName, extras }, i) => (
                     <Fragment key={`service-${i}`}>
                       <div className="rounded-lg border border-bright-gray px-2.5">
                         {serviceName}
@@ -192,7 +192,7 @@ const Ticket: NextPageWithLayout = () => {
                 <Editor
                   onChange={() => {}}
                   editorState={EditorState.createWithContent(
-                    convertFromRaw(JSON.parse(ticket.description)),
+                    convertFromRaw(JSON.parse(ticket!.description)),
                     new CompositeDecorator([
                       {
                         strategy: (contentBlock, callback, contentState) => {
