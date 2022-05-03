@@ -1,5 +1,5 @@
 import { ReactNode } from 'react'
-import CrossMarkIcon from '../common/icons/CrossMarkIcon'
+import CloseModalIcon from '../common/icons/CloseModalIcon'
 
 const Modal = ({
   title,
@@ -19,7 +19,7 @@ const Modal = ({
     />
     <div className="fixed top-1/2 left-1/2 z-20 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center rounded-xl bg-white p-10">
       <button className="absolute top-6 right-6" onClick={onClose}>
-        <CrossMarkIcon className="stroke-lavender-gray" />
+        <CloseModalIcon className="stroke-lavender-gray" />
       </button>
       <div className="mb-6 font-urbanist text-xl font-semibold text-onyx">{title}</div>
       {children}

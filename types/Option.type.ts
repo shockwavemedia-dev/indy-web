@@ -1,4 +1,4 @@
-export type Option = {
+export type Option<T> = {
   label: string
-  value: unknown
+  value: T
 }

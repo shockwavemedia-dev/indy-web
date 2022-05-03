@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useToastStore } from '../../store/ToastStore'
 import { Toast } from '../../types/Toast'
-import ToastCloseIcon from './icons/ToastCloseIcon'
+import CloseToastIcon from './icons/CloseToastIcon'
 import ToastErrorIcon from './icons/ToastErrorIcon'
 import ToastInfoIcon from './icons/ToastInfoIcon'
 import ToastSuccessIcon from './icons/ToastSuccessIcon'
@@ -40,7 +40,7 @@ const Toast = ({
         onClick={closeCurrentToast}
         className="group grid h-6 w-6 place-items-center rounded-full"
       >
-        <ToastCloseIcon className="stroke-lavender-gray group-hover:stroke-waterloo" />
+        <CloseToastIcon className="stroke-lavender-gray group-hover:stroke-waterloo" />
       </button>
     </div>
   )

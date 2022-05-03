@@ -2,11 +2,12 @@ import axios from 'axios'
 import { Form, Formik } from 'formik'
 import { useState } from 'react'
 import { useQuery, useQueryClient } from 'react-query'
-import { SingleValue } from 'react-select'
+import { PropsValue } from 'react-select'
 import { Department } from '../../../types/Department.type'
 import { AddTicketAssigneeForm } from '../../../types/forms/AddTicketAssigneeForm.type'
 import { Option } from '../../../types/Option.type'
 import { Page } from '../../../types/Page.type'
+import { isSingleValue } from '../../../utils/SelectHelpers'
 import Button from '../../common/Button'
 import ClipboardIcon from '../../common/icons/ClipboardIcon'
 import UserIcon from '../../common/icons/UserIcon'
@@ -44,9 +45,13 @@ const AddTicketAssigneeModal = ({
       enabled: isVisible,
     }
   )
-  const [department, setDepartment] = useState<SingleValue<Option> | null>(null)
+  const [department, setDepartment] = useState<number | null>(null)
 
-  const selectDepartment = (option: SingleValue<Option>) => setDepartment(option)
+  const selectDepartment = (option: PropsValue<Option<number>>) => {
+    if (isSingleValue(option)) {
+      setDepartment(option?.value || null)
+    }
+  }
 
   const submitForm = async (
     values: AddTicketAssigneeForm,
@@ -94,7 +99,7 @@ const AddTicketAssigneeModal = ({
                   placeholder="Select Employee"
                   options={
                     departments
-                      ?.find(({ id }) => id === department?.value)
+                      ?.find(({ id }) => id === department)
                       ?.users?.map(({ adminUserId, firstName, lastName }) => ({
                         label: `${firstName} ${lastName}`,
                         value: adminUserId,

@@ -1,4 +1,4 @@
-const ToastCloseIcon = ({ className }: { className: string }) => (
+const CloseToastIcon = ({ className }: { className: string }) => (
   <svg
     className={className}
     width="16"
@@ -12,4 +12,4 @@ const ToastCloseIcon = ({ className }: { className: string }) => (
   </svg>
 )
 
-export default ToastCloseIcon
+export default CloseToastIcon

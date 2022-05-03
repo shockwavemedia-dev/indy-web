@@ -1,7 +1,7 @@
 import { Options } from 'react-select'
 import { Option } from '../../types/Option.type'
 
-export const TicketStatusOptions: Options<Option> = [
+export const TicketStatusOptions: Options<Option<string>> = [
   { label: 'Closed', value: 'closed' },
   { label: 'New', value: 'new' },
   { label: 'Pending', value: 'pending' },

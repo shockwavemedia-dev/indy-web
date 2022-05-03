@@ -1,4 +1,4 @@
-const CrossMarkIcon = ({ className }: { className: string }) => (
+const CloseModalIcon = ({ className }: { className: string }) => (
   <svg
     className={className}
     width="20"
@@ -22,4 +22,4 @@ const CrossMarkIcon = ({ className }: { className: string }) => (
   </svg>
 )
 
-export default CrossMarkIcon
+export default CloseModalIcon

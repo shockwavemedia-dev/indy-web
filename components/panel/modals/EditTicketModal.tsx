@@ -70,7 +70,6 @@ const EditTicketModal = ({
                   className="mb-5"
                 />
                 <div className="mb-5 flex space-x-5">
-                  <DateInput label="Duedate" name="duedate" placeholder="Enter due date" />
                   <Select
                     label="Type"
                     name="type"
@@ -78,6 +77,7 @@ const EditTicketModal = ({
                     options={TicketTypeOptions}
                     defaultValue={TicketTypeOptions.find(({ value }) => value === ticket.type)}
                   />
+                  <DateInput label="Duedate" name="duedate" placeholder="Enter due date" />
                 </div>
                 <Select
                   label="Status"

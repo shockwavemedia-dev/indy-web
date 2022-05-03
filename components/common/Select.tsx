@@ -1,18 +1,24 @@
 import { useFormikContext } from 'formik'
-import { useState } from 'react'
 import ReactSelect, {
+  ClearIndicatorProps,
   components as Components,
   ControlProps,
   DropdownIndicatorProps,
+  MultiValueRemoveProps,
   Options,
-  SingleValue,
+  PropsValue,
   StylesConfig,
 } from 'react-select'
 import { Icon } from '../../types/Icon.type'
 import { Option } from '../../types/Option.type'
+import { isMultiValue, isSingleValue } from '../../utils/SelectHelpers'
 import CaretIcon from './icons/CaretIcon'
+import ClearSelectIcon from './icons/ClearSelectIcon'
+import RemoveMultiValueIcon from './icons/RemoveMultiValueIcon'
 
-const DropdownIndicator = (props: DropdownIndicatorProps<Option, false>) => (
+const DropdownIndicator = <T extends unknown>(
+  props: DropdownIndicatorProps<Option<T>, boolean>
+) => (
   <Components.DropdownIndicator {...props}>
     <CaretIcon
       className={`stroke-waterloo ${props.selectProps.menuIsOpen ? 'rotate-0' : 'rotate-180'}`}
@@ -20,24 +26,36 @@ const DropdownIndicator = (props: DropdownIndicatorProps<Option, false>) => (
   </Components.DropdownIndicator>
 )
 
-const Control = ({ children, ...props }: ControlProps<Option, false>) => (
+const Control = <T extends unknown>({ children, ...props }: ControlProps<Option<T>, boolean>) => (
   <Components.Control {...props}>
     <props.selectProps.Icon className="mr-2.5 stroke-lavender-gray" />
     {children}
   </Components.Control>
 )
 
-const styles: StylesConfig<Option, false> = {
+const ClearIndicator = <T extends unknown>(props: ClearIndicatorProps<Option<T>, boolean>) => (
+  <Components.ClearIndicator {...props} className="group">
+    <ClearSelectIcon className="stroke-waterloo group-hover:stroke-tart-orange" />
+  </Components.ClearIndicator>
+)
+
+const MultiValueRemove = <T extends unknown>(props: MultiValueRemoveProps<Option<T>, boolean>) => (
+  <Components.MultiValueRemove {...props}>
+    <RemoveMultiValueIcon className="stroke-waterloo hover:stroke-tart-orange" />
+  </Components.MultiValueRemove>
+)
+
+const styles: StylesConfig<Option<unknown>, boolean> = {
   indicatorSeparator: () => ({
     display: 'none',
   }),
   placeholder: (base) => ({
     ...base,
-    font: '500 0.875rem Urbanist',
+    font: '500 0.875rem/1.25rem Urbanist',
     color: '#ABABB9',
     margin: 0,
   }),
-  control: (base, { isFocused, isDisabled }) => ({
+  control: (base, { isFocused }) => ({
     ...base,
     minHeight: '3.125rem',
     boxShadow: isFocused ? '0 0 0 2px #AAE2CB' : '0 0 0 1px #E8E8EF',
@@ -45,7 +63,6 @@ const styles: StylesConfig<Option, false> = {
     borderRadius: '.75rem',
     padding: '0 1.5rem 0',
     backgroundColor: '#ffffff',
-    cursor: isDisabled ? 'auto' : 'pointer',
   }),
   container: (base) => ({
     ...base,
@@ -54,19 +71,19 @@ const styles: StylesConfig<Option, false> = {
   input: (base) => ({
     ...base,
     color: '#32343D',
-    font: '500 0.875rem Urbanist',
+    font: '500 0.875rem/1.25rem Urbanist',
     margin: 0,
     padding: 0,
   }),
   singleValue: (base) => ({
     ...base,
     color: '#32343D',
-    font: '500 0.875rem Urbanist',
+    font: '500 0.875rem/1.25rem Urbanist',
   }),
   option: (base, { isSelected }) => ({
     ...base,
     color: isSelected ? '#FFFFFF' : '#32343D',
-    font: '500 0.875rem Urbanist',
+    font: '500 0.875rem/1.25rem Urbanist',
     backgroundColor: isSelected ? '#2BB67D !important' : '#FFFFFF',
     ':hover': {
       backgroundColor: '#E9FAF3',
@@ -78,19 +95,39 @@ const styles: StylesConfig<Option, false> = {
   }),
   noOptionsMessage: (base) => ({
     ...base,
-    font: '500 0.875rem Urbanist',
+    font: '500 0.875rem/1.25rem Urbanist',
   }),
   dropdownIndicator: () => ({
-    width: 'fit-content',
     marginLeft: '.625rem',
   }),
   valueContainer: (base) => ({
     ...base,
+    padding: '.25rem 0',
+    gap: '.25rem',
+  }),
+  clearIndicator: (base) => ({
+    ...base,
+    cursor: 'pointer',
     padding: 0,
+  }),
+  multiValue: () => ({
+    display: 'flex',
+    border: '1px solid #E8E8EF',
+    paddingLeft: '.625rem',
+    paddingRight: '.625rem',
+    borderRadius: 8,
+  }),
+  multiValueLabel: () => ({
+    font: '500 0.875rem/1.25rem Urbanist',
+    color: '#32343D',
+  }),
+  multiValueRemove: () => ({
+    height: 'fit-content',
+    margin: 'auto 0 auto .25rem',
   }),
 }
 
-const Select = ({
+const Select = <T extends unknown>({
   name,
   Icon,
   placeholder,
@@ -99,32 +136,37 @@ const Select = ({
   label,
   onChange,
   disabled = false,
-  defaultValue = null,
+  defaultValue,
   readOnly = false,
+  multi = false,
 }: {
   name?: string
   Icon: Icon
   placeholder?: string
-  options: Options<Option>
+  options: Options<Option<T>>
   className?: string
   label?: string
-  onChange?: (option: SingleValue<Option>) => void
+  onChange?: (option: PropsValue<Option<T>>) => void
   disabled?: boolean
-  defaultValue?: Option | null
+  defaultValue?: PropsValue<Option<T>>
   readOnly?: boolean
+  multi?: boolean
 }) => {
   const { setFieldValue } = useFormikContext()
-  const [selectedOption, setSelectedOption] = useState<Option | null>(defaultValue)
 
-  const selectOption = (option: SingleValue<Option>) => {
-    setSelectedOption(option)
-
+  const selectOption = <T extends unknown>(option: PropsValue<Option<T>>) => {
     if (name) {
-      setFieldValue(name, option?.value)
+      if (isSingleValue(option)) {
+        setFieldValue(name, option?.value)
+      } else if (isMultiValue(option)) {
+        setFieldValue(
+          name,
+          option.map((value) => value)
+        )
+      }
     }
 
     if (onChange) {
-      onChange(option)
     }
   }
 
@@ -136,13 +178,15 @@ const Select = ({
       <ReactSelect
         styles={styles}
         placeholder={placeholder}
-        value={selectedOption}
         onChange={selectOption}
         options={options}
-        components={{ DropdownIndicator, Control }}
+        components={{ DropdownIndicator, Control, ClearIndicator, MultiValueRemove }}
         inputId={name}
         isDisabled={disabled || readOnly}
         Icon={Icon}
+        isMulti={multi}
+        closeMenuOnSelect={!multi}
+        defaultValue={defaultValue}
       />
     </div>
   )
