@@ -1,7 +1,7 @@
 import { Options } from 'react-select'
-import { Option } from '../../types/Option.type'
+import { SelectOption } from '../../types/SelectOption.type'
 
-export const AdminUserRoleOptions: Options<Option<string>> = [
+export const AdminUserRoleOptions: Options<SelectOption<string>> = [
   { label: 'Admin', value: 'admin' },
   { label: 'Account Manager', value: 'account_manager' },
   { label: 'Manager', value: 'manager' },

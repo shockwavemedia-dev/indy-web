@@ -5,8 +5,8 @@ import { useQuery, useQueryClient } from 'react-query'
 import { PropsValue } from 'react-select'
 import { Department } from '../../../types/Department.type'
 import { AddTicketAssigneeForm } from '../../../types/forms/AddTicketAssigneeForm.type'
-import { Option } from '../../../types/Option.type'
 import { Page } from '../../../types/Page.type'
+import { SelectOption } from '../../../types/SelectOption.type'
 import { isSingleValue } from '../../../utils/SelectHelpers'
 import Button from '../../common/Button'
 import ClipboardIcon from '../../common/icons/ClipboardIcon'
@@ -47,9 +47,9 @@ const AddTicketAssigneeModal = ({
   )
   const [department, setDepartment] = useState<number | null>(null)
 
-  const selectDepartment = (option: PropsValue<Option<number>>) => {
-    if (isSingleValue(option)) {
-      setDepartment(option?.value || null)
+  const selectDepartment = (newValue: PropsValue<SelectOption<number>>) => {
+    if (isSingleValue(newValue)) {
+      setDepartment(newValue?.value || null)
     }
   }
 

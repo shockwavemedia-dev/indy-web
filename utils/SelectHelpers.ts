@@ -1,11 +1,11 @@
-import { MultiValue, PropsValue, SingleValue } from 'react-select'
-import { Option } from '../types/Option.type'
+import { MultiValue, OnChangeValue, SingleValue } from 'react-select'
+import { SelectOption } from '../types/SelectOption.type'
 
 export const isSingleValue = <T extends unknown>(
-  x: PropsValue<Option<T>>
-): x is SingleValue<Option<T>> => !!x && 'value' in x
+  x: OnChangeValue<SelectOption<T>, boolean>
+): x is SingleValue<SelectOption<T>> => !!x && 'value' in x
 
 export const isMultiValue = <T extends unknown>(
-  x: PropsValue<Option<T>>
-): x is MultiValue<Option<T>> =>
-  !!x && Array.isArray(x) && x.some((option: Option<T>) => 'value' in option)
+  x: OnChangeValue<SelectOption<T>, boolean>
+): x is MultiValue<SelectOption<T>> =>
+  !!x && Array.isArray(x) && x.some((option: SelectOption<T>) => 'value' in option)

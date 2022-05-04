@@ -11,7 +11,6 @@ import Button from '../../common/Button'
 import DateInput from '../../common/DateInput'
 import ClipboardIcon from '../../common/icons/ClipboardIcon'
 import EditIcon from '../../common/icons/EditIcon'
-import LightbulbIcon from '../../common/icons/LightbulbIcon'
 import RichTextInput from '../../common/RichTextInput'
 import Select from '../../common/Select'
 import TextInput from '../../common/TextInput'
@@ -91,7 +90,7 @@ const CreateSupportRequestModal = ({
                 <div className="mb-5 flex space-x-5">
                   <Select
                     name="type"
-                    Icon={LightbulbIcon}
+                    Icon={ClipboardIcon}
                     placeholder="Select Type"
                     options={TicketTypeOptions}
                   />

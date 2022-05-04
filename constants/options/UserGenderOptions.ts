@@ -1,7 +1,7 @@
 import { Options } from 'react-select'
-import { Option } from '../../types/Option.type'
+import { SelectOption } from '../../types/SelectOption.type'
 
-export const UserGenderOptions: Options<Option<string>> = [
+export const UserGenderOptions: Options<SelectOption<string>> = [
   { label: 'Female', value: 'female' },
   { label: 'Male', value: 'male' },
 ]
