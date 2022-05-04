@@ -24,6 +24,7 @@ const Select = <Option, IsMulti extends boolean = false>(props: Props<Option, Is
         borderRadius: '.75rem',
         padding: '0 1.5rem 0',
         backgroundColor: '#ffffff',
+        transition: 'none',
       }),
       container: (base) => ({
         ...base,
