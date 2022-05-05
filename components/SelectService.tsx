@@ -4,12 +4,12 @@ import { useSession } from 'next-auth/react'
 import { useState } from 'react'
 import { useQuery } from 'react-query'
 import { MultiValue } from 'react-select'
-import { ExtrasOption } from '../../types/ExtrasOption.type'
-import { Page } from '../../types/Page.type'
-import { Service } from '../../types/Service.type'
-import { ServiceOption } from '../../types/ServiceOption.type'
-import ClipboardIcon from '../common/icons/ClipboardIcon'
-import Select from '../common/Select'
+import { ExtrasOption } from '../types/ExtrasOption.type'
+import { Page } from '../types/Page.type'
+import { Service } from '../types/Service.type'
+import { ServiceOption } from '../types/ServiceOption.type'
+import ClipboardIcon from './icons/ClipboardIcon'
+import Select from './Select'
 
 const SelectService = () => {
   const { data: session } = useSession()

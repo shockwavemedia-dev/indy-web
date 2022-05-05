@@ -1,16 +1,15 @@
 import axios from 'axios'
 import { Form, Formik } from 'formik'
 import { useQuery } from 'react-query'
-import { NewAnimationRequestFormSchema } from '../../../schemas/NewAnimationRequestFormSchema'
-import { Animation } from '../../../types/Animation.type'
-import { NewAnimationRequestForm } from '../../../types/forms/NewAnimationRequestForm.type'
-import { Page } from '../../../types/Page.type'
-import Button from '../../common/Button'
-import PencilIcon from '../../common/icons/PencilIcon'
-import Select from '../../common/Select'
-import TextInput from '../../common/TextInput'
-import Video from '../../common/Video'
+import { NewAnimationRequestFormSchema } from '../../schemas/NewAnimationRequestFormSchema'
+import { Animation } from '../../types/Animation.type'
+import { NewAnimationRequestForm } from '../../types/forms/NewAnimationRequestForm.type'
+import { Page } from '../../types/Page.type'
+import Button from '../Button'
+import PencilIcon from '../icons/PencilIcon'
 import Modal from '../Modal'
+import Select from '../Select'
+import TextInput from '../TextInput'
 
 const NewAnimationRequestModal = ({
   isVisible,
@@ -90,7 +89,11 @@ const NewAnimationRequestModal = ({
                   options={libraryOptions || []}
                   className="mb-5"
                 />
-                <Video src="https://storage.googleapis.com/crm-admin-client/libraries/6a15061d042b93281b53f5fc67e989d7a786bad5-file_example_MP4_480_1_5MG.mp4?GoogleAccessId=test2-707%40loyal-burner-340623.iam.gserviceaccount.com&Expires=1680857928&Signature=XcY6M7gm1G%2B4GgH%2FADKALhuogSH%2B8uEYCqeweTDCpuRra3JY7mmNU323Tx0TNyXLiksYNDisgu8rIvz%2FgQNqLO9sCAKA8Km6aYku8hHVlNbtHcyJljhtsFzG9k30n0aZ5mUH70e7s9el01S7kxDeh9w8yDts8GuaECq5WQWLQRb8RXp37Q2rPTVtoqD1pIflu0XJeHHbXtWYIJAfGa5zZYuayJoFaZOjvtA4h7uN535aIYuSY1MtfXjkoDqM02Lbr82gj3TPb7qG8X5WtTxhYfvax6mO%2BeV5uN2TFPopX%2F0QX2KcCQjd1twUTiEyIr1qXFYhvy2KTsSFfGMp%2FxfF0g%3D%3D&generation=1649300328436473"></Video>
+                <div className="md-5 block">
+                  <video muted autoPlay loop style={{ width: '500px', height: '500px' }}>
+                    <source src="https://storage.googleapis.com/crm-admin-client/libraries/6a15061d042b93281b53f5fc67e989d7a786bad5-file_example_MP4_480_1_5MG.mp4?GoogleAccessId=test2-707%40loyal-burner-340623.iam.gserviceaccount.com&Expires=1680857928&Signature=XcY6M7gm1G%2B4GgH%2FADKALhuogSH%2B8uEYCqeweTDCpuRra3JY7mmNU323Tx0TNyXLiksYNDisgu8rIvz%2FgQNqLO9sCAKA8Km6aYku8hHVlNbtHcyJljhtsFzG9k30n0aZ5mUH70e7s9el01S7kxDeh9w8yDts8GuaECq5WQWLQRb8RXp37Q2rPTVtoqD1pIflu0XJeHHbXtWYIJAfGa5zZYuayJoFaZOjvtA4h7uN535aIYuSY1MtfXjkoDqM02Lbr82gj3TPb7qG8X5WtTxhYfvax6mO%2BeV5uN2TFPopX%2F0QX2KcCQjd1twUTiEyIr1qXFYhvy2KTsSFfGMp%2FxfF0g%3D%3D&generation=1649300328436473" />
+                  </video>
+                </div>
                 <div className="flex space-x-5">
                   <Button ariaLabel="Cancel" onClick={onClose} type="button" light>
                     Cancel

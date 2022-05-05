@@ -1,37 +1,28 @@
 import axios from 'axios'
 import { Form, Formik } from 'formik'
 import { useState } from 'react'
-import { useQuery, useQueryClient } from 'react-query'
-import { ClientUserRoleOptions } from '../../../constants/options/ClientUserRoleOptions'
-import { UserGenderOptions } from '../../../constants/options/UserGenderOptions'
-import { NewClientUserFormSchema } from '../../../schemas/NewClientUserFormSchema'
-import { Client } from '../../../types/Client.type'
-import { NewClientUserForm } from '../../../types/forms/NewClientUserForm.type'
-import { Page } from '../../../types/Page.type'
-import Button from '../../common/Button'
-import DateInput from '../../common/DateInput'
-import BriefcaseIcon from '../../common/icons/BriefcaseIcon'
-import ClipboardIcon from '../../common/icons/ClipboardIcon'
-import EmailIcon from '../../common/icons/EmailIcon'
-import LockIcon from '../../common/icons/LockIcon'
-import PencilIcon from '../../common/icons/PencilIcon'
-import UserIcon from '../../common/icons/UserIcon'
-import PasswordInput from '../../common/PasswordInput'
-import { computePasswordStrength, PasswordStrengthMeter } from '../../common/PasswordStrengthMeter'
-import Select from '../../common/Select'
-import TextInput from '../../common/TextInput'
+import { useQueryClient } from 'react-query'
+import { AdminUserRoleOptions } from '../../constants/options/AdminUserRoleOptions'
+import { UserGenderOptions } from '../../constants/options/UserGenderOptions'
+import { NewAdminUserFormSchema } from '../../schemas/NewAdminUserFormSchema'
+import { NewAdminUserForm } from '../../types/forms/NewAdminUserForm.type'
+import Button from '../Button'
+import DateInput from '../DateInput'
+import ClipboardIcon from '../icons/ClipboardIcon'
+import EmailIcon from '../icons/EmailIcon'
+import LockIcon from '../icons/LockIcon'
+import PencilIcon from '../icons/PencilIcon'
+import UserIcon from '../icons/UserIcon'
 import Modal from '../Modal'
+import PasswordInput from '../PasswordInput'
+import { computePasswordStrength, PasswordStrengthMeter } from '../PasswordStrengthMeter'
+import Select from '../Select'
+import TextInput from '../TextInput'
 
-const NewClientUserModal = ({
-  isVisible,
-  onClose,
-}: {
-  isVisible: boolean
-  onClose: () => void
-}) => {
+const NewAdminUserModal = ({ isVisible, onClose }: { isVisible: boolean; onClose: () => void }) => {
   const queryClient = useQueryClient()
 
-  const formInitialValues: NewClientUserForm = {
+  const formInitialValues: NewAdminUserForm = {
     email: '',
     password: '',
     birthDate: null,
@@ -42,7 +33,6 @@ const NewClientUserModal = ({
     middleName: '',
     gender: null,
     role: null,
-    clientId: 0,
   }
 
   const [passwordStrength, setPasswordStrength] = useState(0)
@@ -50,41 +40,13 @@ const NewClientUserModal = ({
   const updatePasswordStrength = (password: string) =>
     setPasswordStrength(computePasswordStrength(password))
 
-  const { data: clients } = useQuery(
-    'clients',
-    async () => {
-      const {
-        data: { data },
-      } = await axios.get<{
-        data: Array<Client>
-        page: Page
-      }>('/v1/clients', {
-        params: {
-          size: 100,
-        },
-      })
-
-      return data
-    },
-    {
-      enabled: isVisible,
-    }
-  )
-
-  const clientOptions = clients
-    ?.filter((client) => client.status === 'active')
-    .map(({ id, name }) => ({
-      value: id,
-      label: name,
-    }))
-
   const submitForm = async (
-    values: NewClientUserForm,
+    values: NewAdminUserForm,
     { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
   ) => {
     setSubmitting(true)
 
-    const { status } = await axios.post('/v1/users/client', values)
+    const { status } = await axios.post('/v1/users/admin', values)
 
     if (status === 200) {
       queryClient.invalidateQueries('clients')
@@ -99,9 +61,9 @@ const NewClientUserModal = ({
   return (
     <>
       {isVisible && (
-        <Modal title="New Client User" onClose={onClose}>
+        <Modal title="New Admin User" onClose={onClose}>
           <Formik
-            validationSchema={NewClientUserFormSchema}
+            validationSchema={NewAdminUserFormSchema}
             initialValues={formInitialValues}
             onSubmit={submitForm}
             validate={validateForm}
@@ -109,17 +71,10 @@ const NewClientUserModal = ({
             {({ isSubmitting }) => (
               <Form className="flex w-140 flex-col">
                 <Select
-                  name="clientId"
-                  Icon={BriefcaseIcon}
-                  placeholder="Select Client"
-                  options={clientOptions || []}
-                  className="mb-5"
-                />
-                <Select
                   name="role"
                   Icon={ClipboardIcon}
                   placeholder="Select Role"
-                  options={ClientUserRoleOptions}
+                  options={AdminUserRoleOptions}
                   className="mb-5"
                 />
                 <TextInput
@@ -197,4 +152,4 @@ const NewClientUserModal = ({
   )
 }
 
-export default NewClientUserModal
+export default NewAdminUserModal

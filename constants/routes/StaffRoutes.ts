@@ -1,7 +1,7 @@
-import ChartIcon from '../../components/common/icons/ChartIcon'
-import FolderIcon from '../../components/common/icons/FolderIcon'
-import UserIcon from '../../components/common/icons/UserIcon'
-import VideoIcon from '../../components/common/icons/VideoIcon'
+import ChartIcon from '../../components/icons/ChartIcon'
+import FolderIcon from '../../components/icons/FolderIcon'
+import UserIcon from '../../components/icons/UserIcon'
+import VideoIcon from '../../components/icons/VideoIcon'
 import { Route } from '../../types/Route.type'
 
 export const StaffRoutes: Array<Route> = [

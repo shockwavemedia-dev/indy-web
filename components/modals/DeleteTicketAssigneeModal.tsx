@@ -1,8 +1,8 @@
 import axios from 'axios'
 import { useQueryClient } from 'react-query'
-import { TicketAssignee } from '../../../types/TicketAssignee.type'
-import Button from '../../common/Button'
-import TrashIcon from '../../common/icons/TrashIcon'
+import { TicketAssignee } from '../../types/TicketAssignee.type'
+import Button from '../Button'
+import TrashIcon from '../icons/TrashIcon'
 import Modal from '../Modal'
 import TitleValue from '../TitleValue'
 

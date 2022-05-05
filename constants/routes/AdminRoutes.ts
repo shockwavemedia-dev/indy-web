@@ -1,6 +1,6 @@
-import ClipboardIcon from '../../components/common/icons/ClipboardIcon'
-import UserIcon from '../../components/common/icons/UserIcon'
-import VideoIcon from '../../components/common/icons/VideoIcon'
+import ClipboardIcon from '../../components/icons/ClipboardIcon'
+import UserIcon from '../../components/icons/UserIcon'
+import VideoIcon from '../../components/icons/VideoIcon'
 import { Route } from '../../types/Route.type'
 
 export const AdminRoutes: Array<Route> = [

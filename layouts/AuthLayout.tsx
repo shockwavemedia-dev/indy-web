@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import { ReactElement } from 'react'
-import ToastContainer from '../components/common/ToastContainer'
+import ToastContainer from '../components/ToastContainer'
 import DailyPressLogo from '../public/images/daily-press-logo.png'
 
 const AuthLayout = ({

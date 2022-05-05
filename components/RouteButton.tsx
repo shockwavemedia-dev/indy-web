@@ -1,7 +1,7 @@
 import Link from 'next/link'
-import { Route } from '../../types/Route.type'
-import CaretIcon from '../common/icons/CaretIcon'
-import TinyDotIcon from '../common/icons/TinyDotIcon'
+import { Route } from '../types/Route.type'
+import CaretIcon from './icons/CaretIcon'
+import TinyDotIcon from './icons/TinyDotIcon'
 
 const RouteButton = ({
   route: { Icon = TinyDotIcon, title, pathname = '#' },

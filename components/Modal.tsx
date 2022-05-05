@@ -1,5 +1,5 @@
 import { ReactNode } from 'react'
-import CloseModalIcon from '../common/icons/CloseModalIcon'
+import CloseModalIcon from './icons/CloseModalIcon'
 
 const Modal = ({
   title,

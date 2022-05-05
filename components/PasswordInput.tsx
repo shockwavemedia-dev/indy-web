@@ -1,6 +1,6 @@
 import { Field } from 'formik'
 import { useState } from 'react'
-import { Icon } from '../../types/Icon.type'
+import { Icon } from '../types/Icon.type'
 import FormErrorMessage from './FormErrorMessage'
 import EyeIcon from './icons/EyeIcon'
 import EyeSlashIcon from './icons/EyeSlashIcon'

@@ -1,5 +1,5 @@
 import { Field } from 'formik'
-import { Icon } from '../../types/Icon.type'
+import { Icon } from '../types/Icon.type'
 import FormErrorMessage from './FormErrorMessage'
 
 const TextInput = ({

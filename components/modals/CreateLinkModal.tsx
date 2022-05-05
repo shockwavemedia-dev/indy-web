@@ -1,11 +1,11 @@
 import { Form, Formik } from 'formik'
-import { CreateLinkFormSchema } from '../../../schemas/CreateLinkFormSchema'
-import { useCreateLinkModalStore } from '../../../store/CreateLinkModalStore'
-import { CreateLinkForm } from '../../../types/forms/CreateLinkForm.type'
-import Button from '../../common/Button'
-import EditIcon from '../../common/icons/EditIcon'
-import TextInput from '../../common/TextInput'
+import { CreateLinkFormSchema } from '../../schemas/CreateLinkFormSchema'
+import { useCreateLinkModalStore } from '../../store/CreateLinkModalStore'
+import { CreateLinkForm } from '../../types/forms/CreateLinkForm.type'
+import Button from '../Button'
+import EditIcon from '../icons/EditIcon'
 import Modal from '../Modal'
+import TextInput from '../TextInput'
 
 const CreateLinkModal = () => {
   const { isModalVisible, toggleModal, createLink, linkText } = useCreateLinkModalStore()

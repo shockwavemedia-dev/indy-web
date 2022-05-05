@@ -1,11 +1,11 @@
 import axios from 'axios'
 import { Form, Formik } from 'formik'
-import { NewAnimationCategoryFormSchema } from '../../../schemas/NewAnimationCategoryFormSchema'
-import { NewAnimationCategoryForm } from '../../../types/forms/NewAnimationCategoryForm.type'
-import Button from '../../common/Button'
-import PencilIcon from '../../common/icons/PencilIcon'
-import TextInput from '../../common/TextInput'
+import { NewAnimationCategoryFormSchema } from '../../schemas/NewAnimationCategoryFormSchema'
+import { NewAnimationCategoryForm } from '../../types/forms/NewAnimationCategoryForm.type'
+import Button from '../Button'
+import PencilIcon from '../icons/PencilIcon'
 import Modal from '../Modal'
+import TextInput from '../TextInput'
 
 const NewAnimationCategoryModal = ({
   isVisible,

@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
-import { useToastStore } from '../../store/ToastStore'
-import { Toast } from '../../types/Toast'
+import { useToastStore } from '../store/ToastStore'
+import { Toast } from '../types/Toast'
 import CloseToastIcon from './icons/CloseToastIcon'
 import ToastErrorIcon from './icons/ToastErrorIcon'
 import ToastInfoIcon from './icons/ToastInfoIcon'

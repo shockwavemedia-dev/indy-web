@@ -1,4 +1,4 @@
-import { TicketAssignee } from '../../../types/TicketAssignee.type'
+import { TicketAssignee } from '../../types/TicketAssignee.type'
 import Modal from '../Modal'
 import TitleValue from '../TitleValue'
 

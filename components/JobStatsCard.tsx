@@ -1,4 +1,4 @@
-import { Icon } from '../../types/Icon.type'
+import { Icon } from '../types/Icon.type'
 
 const JobsStatusCountCard = ({
   Icon,
