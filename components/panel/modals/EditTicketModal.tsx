@@ -71,7 +71,7 @@ const EditTicketModal = ({
                 />
                 <div className="mb-5 flex space-x-5">
                   <Select
-                    // label="Type"
+                    label="Type"
                     name="type"
                     Icon={ClipboardIcon}
                     options={TicketTypeOptions}
@@ -80,7 +80,7 @@ const EditTicketModal = ({
                   <DateInput label="Duedate" name="duedate" placeholder="Enter due date" />
                 </div>
                 <Select
-                  // label="Status"
+                  label="Status"
                   name="status"
                   Icon={ClipboardIcon}
                   options={TicketStatusOptions}

@@ -1,9 +1,72 @@
-import ReactSelect, { components as Components, Props } from 'react-select'
+import ReactSelect, {
+  ClearIndicatorProps,
+  components as Components,
+  ContainerProps,
+  ControlProps,
+  DropdownIndicatorProps,
+  GroupBase,
+  MultiValueRemoveProps,
+  Props,
+} from 'react-select'
 import CaretIcon from './icons/CaretIcon'
 import ClearSelectIcon from './icons/ClearSelectIcon'
 import RemoveMultiValueIcon from './icons/RemoveMultiValueIcon'
 
-const Select = <Option, IsMulti extends boolean = false>(props: Props<Option, IsMulti>) => (
+const SelectContainer = <Option, IsMulti extends boolean>({
+  children,
+  ...props
+}: ContainerProps<Option, IsMulti>) => (
+  <Components.SelectContainer {...props}>
+    <label className="mb-2 inline-block font-urbanist text-xs font-medium text-metallic-silver empty:hidden">
+      {props.selectProps.label}
+    </label>
+    {children}
+  </Components.SelectContainer>
+)
+
+const DropdownIndicator = <Option, IsMulti extends boolean>(
+  props: DropdownIndicatorProps<Option, IsMulti>
+) => (
+  <Components.DropdownIndicator {...props}>
+    <CaretIcon
+      className={`stroke-waterloo ${props.selectProps.menuIsOpen ? 'rotate-0' : 'rotate-180'}`}
+    />
+  </Components.DropdownIndicator>
+)
+
+const Control = <Option, IsMulti extends boolean>({
+  children,
+  ...props
+}: ControlProps<Option, IsMulti>) => (
+  <Components.Control {...props}>
+    <props.selectProps.Icon className="mr-2.5 stroke-lavender-gray" />
+    {children}
+  </Components.Control>
+)
+
+const MultiValueRemove = <Option, IsMulti extends boolean>(
+  props: MultiValueRemoveProps<Option, IsMulti>
+) => (
+  <Components.MultiValueRemove {...props}>
+    <RemoveMultiValueIcon className="stroke-waterloo hover:stroke-tart-orange" />
+  </Components.MultiValueRemove>
+)
+
+const ClearIndicator = <Option, IsMulti extends boolean, Group extends GroupBase<Option>>(
+  props: ClearIndicatorProps<Option, IsMulti, Group>
+) => (
+  <Components.ClearIndicator {...props} className="group">
+    <ClearSelectIcon className="stroke-waterloo group-hover:stroke-tart-orange" />
+  </Components.ClearIndicator>
+)
+
+const Select = <
+  Option,
+  IsMulti extends boolean = false,
+  Group extends GroupBase<Option> = GroupBase<Option>
+>(
+  props: Props<Option, IsMulti, Group>
+) => (
   <ReactSelect
     {...props}
     styles={{
@@ -55,6 +118,7 @@ const Select = <Option, IsMulti extends boolean = false>(props: Props<Option, Is
       menu: (base) => ({
         ...base,
         zIndex: 20,
+        overflow: 'clip',
       }),
       noOptionsMessage: (base) => ({
         ...base,
@@ -90,39 +154,11 @@ const Select = <Option, IsMulti extends boolean = false>(props: Props<Option, Is
       }),
     }}
     components={{
-      SelectContainer: ({ children, ...props }) => (
-        <Components.SelectContainer {...props}>
-          <label className="mb-2 inline-block font-urbanist text-xs font-medium text-metallic-silver empty:hidden">
-            {props.selectProps.label}
-          </label>
-          {children}
-        </Components.SelectContainer>
-      ),
-      DropdownIndicator: (props) => (
-        <Components.DropdownIndicator {...props}>
-          <CaretIcon
-            className={`stroke-waterloo ${
-              props.selectProps.menuIsOpen ? 'rotate-0' : 'rotate-180'
-            }`}
-          />
-        </Components.DropdownIndicator>
-      ),
-      Control: ({ children, ...props }) => (
-        <Components.Control {...props}>
-          <props.selectProps.Icon className="mr-2.5 stroke-lavender-gray" />
-          {children}
-        </Components.Control>
-      ),
-      MultiValueRemove: (props) => (
-        <Components.MultiValueRemove {...props}>
-          <RemoveMultiValueIcon className="stroke-waterloo hover:stroke-tart-orange" />
-        </Components.MultiValueRemove>
-      ),
-      ClearIndicator: (props) => (
-        <Components.ClearIndicator {...props} className="group">
-          <ClearSelectIcon className="stroke-waterloo group-hover:stroke-tart-orange" />
-        </Components.ClearIndicator>
-      ),
+      SelectContainer,
+      DropdownIndicator,
+      Control,
+      MultiValueRemove,
+      ClearIndicator,
     }}
   />
 )

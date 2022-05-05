@@ -171,14 +171,15 @@ const Ticket: NextPageWithLayout = () => {
               </TitleValue>
               <TitleValue title="Services">
                 <div className="flex flex-wrap gap-1">
-                  {ticket!.services?.map(({ serviceName, extras }, i) => (
-                    <Fragment key={`service-${i}`}>
+                  {ticket!.services?.map(({ serviceName, extras, serviceId }, i) => (
+                    <Fragment key={`${serviceName}-${i}`}>
                       <div className="rounded-lg border border-bright-gray px-2.5">
+                        {serviceId}
                         {serviceName}
                       </div>
                       {extras.map((extra) => (
                         <div
-                          key={`extra-${i}`}
+                          key={`${serviceName}-${extra}`}
                           className="rounded-lg border border-bright-gray px-2.5"
                         >
                           {extra}

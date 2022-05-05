@@ -67,7 +67,7 @@ const CreateGraphicRequestModal = ({
                 className="mb-5"
               />
               <div className="mb-5 flex space-x-5">
-                <SelectService name="service" />
+                <SelectService />
                 <DateInput name="duedate" placeholder="Enter due date" />
               </div>
               <RichTextInput
