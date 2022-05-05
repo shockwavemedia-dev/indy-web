@@ -139,7 +139,6 @@ module.exports = {
       pattensblue: '#DEEBFF',
       onyx: '#32343D',
       white: '#FFFFFF',
-      rhythm: '#8D8D7C',
       waterloo: '#7C7C8D',
       honeydew: '#E9FAF3',
       linen: '#FFF0E9',
