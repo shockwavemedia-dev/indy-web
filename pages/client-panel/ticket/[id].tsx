@@ -13,6 +13,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { Fragment, ReactElement, useState } from 'react'
 import { useQuery } from 'react-query'
+import ActivityCard from '../../../components/ActivityCard'
 import Card from '../../../components/Card'
 import DataTable from '../../../components/DataTable'
 import CalendarIcon from '../../../components/icons/CalendarIcon'
@@ -35,16 +36,30 @@ import PanelLayout from '../../../layouts/PanelLayout'
 import DummyCompany from '../../../public/images/dummy-company.png'
 import { useTicketAssigneeStore } from '../../../store/TicketAssigneeStore'
 import { Icon } from '../../../types/Icon.type'
+import { Page } from '../../../types/Page.type'
 import { NextPageWithLayout } from '../../../types/pages/NextPageWithLayout.type'
 import { Ticket } from '../../../types/Ticket.type'
+import { TicketActivity } from '../../../types/TicketActivity.type'
 import { TicketPageTabs } from '../../../types/TicketPageTabs.type'
 
 const Ticket: NextPageWithLayout = () => {
   const {
     query: { id },
   } = useRouter()
+
   const { data: ticket, isSuccess } = useQuery(['ticket', Number(id)], async () => {
     const { data } = await axios.get<Ticket>(`/v1/tickets/${id}`)
+
+    return data
+  })
+
+  const { data: activities } = useQuery(['activities', Number(id)], async () => {
+    const {
+      data: { data },
+    } = await axios.get<{
+      data: Array<TicketActivity>
+      page: Page
+    }>(`/v1/tickets/${id}/activities`)
 
     return data
   })
@@ -250,7 +265,7 @@ const Ticket: NextPageWithLayout = () => {
           </div>
           <div className="h-0.25 bg-bright-gray" />
           <div
-            className={`-mt-0.5 h-0.75 w-1/4 rounded bg-jungle-green fill-jungle-green ${
+            className={`-mt-0.5 mb-4 h-0.75 w-1/4 rounded bg-jungle-green fill-jungle-green ${
               activeTab === 'email'
                 ? 'ml-1/4'
                 : activeTab === 'activities'
@@ -260,6 +275,13 @@ const Ticket: NextPageWithLayout = () => {
                 : 'ml-0'
             }`}
           />
+          {activeTab === 'activities' && (
+            <div className="space-y-5">
+              {activities?.map(({ id, activity, createdAt }) => (
+                <ActivityCard key={`activity-${id}`} activity={activity} createdAt={createdAt} />
+              ))}
+            </div>
+          )}
         </div>
       </div>
       <EditTicketModal
