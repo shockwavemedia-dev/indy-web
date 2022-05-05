@@ -50,12 +50,6 @@ const SelectService = () => {
           extras: [],
         }
       )
-    // .filter((value): value is number => typeof value === 'number')
-
-    // const extras = newValue.map(({value}) => value).filter((value): value is {
-    //   serviceId: number
-    //   name: string
-    // } => typeof value === 'object')
 
     setValue(
       newValue.filter(({ value }) => {
