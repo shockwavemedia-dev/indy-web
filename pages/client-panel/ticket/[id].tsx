@@ -46,24 +46,11 @@ const Ticket: NextPageWithLayout = () => {
   const {
     query: { id },
   } = useRouter()
-
   const { data: ticket, isSuccess } = useQuery(['ticket', Number(id)], async () => {
     const { data } = await axios.get<Ticket>(`/v1/tickets/${id}`)
 
     return data
   })
-
-  const { data: activities } = useQuery(['activities', Number(id)], async () => {
-    const {
-      data: { data },
-    } = await axios.get<{
-      data: Array<TicketActivity>
-      page: Page
-    }>(`/v1/tickets/${id}/activities`)
-
-    return data
-  })
-
   const {
     activeTicketAssignee,
     isEditTicketAssigneeModalVisible,
@@ -76,6 +63,23 @@ const Ticket: NextPageWithLayout = () => {
   const [isEditTicketModalVisible, setEditTicketModalVisible] = useState(false)
   const [isDeleteTicketModalVisible, setDeleteTicketModalVisible] = useState(false)
   const [isAddTicketAssigneeModalVisible, setAddTicketAssigneeModalVisible] = useState(false)
+
+  const { data: activities } = useQuery(
+    ['activities', Number(id)],
+    async () => {
+      const {
+        data: { data },
+      } = await axios.get<{
+        data: Array<TicketActivity>
+        page: Page
+      }>(`/v1/tickets/${id}/activities`)
+
+      return data
+    },
+    {
+      enabled: activeTab === 'activities',
+    }
+  )
 
   const toggleEditTicketModal = () => setEditTicketModalVisible(!isEditTicketModalVisible)
   const toggleDeleteTicketModal = () => setDeleteTicketModalVisible(!isDeleteTicketModalVisible)

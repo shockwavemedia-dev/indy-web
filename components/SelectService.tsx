@@ -11,18 +11,24 @@ import { ServiceOption } from '../types/ServiceOption.type'
 import ClipboardIcon from './icons/ClipboardIcon'
 import Select from './Select'
 
-const SelectService = () => {
+const SelectService = ({ enabled }: { enabled: boolean }) => {
   const { data: session } = useSession()
-  const { data: services } = useQuery('services', async () => {
-    const {
-      data: { data },
-    } = await axios.get<{
-      data: Array<Service>
-      page: Page
-    }>(`/v1/clients/${session?.user.userType.clientId}/services`)
+  const { data: services } = useQuery(
+    'services',
+    async () => {
+      const {
+        data: { data },
+      } = await axios.get<{
+        data: Array<Service>
+        page: Page
+      }>(`/v1/clients/${session?.user.userType.clientId}/services`)
 
-    return data
-  })
+      return data
+    },
+    {
+      enabled,
+    }
+  )
   const { setFieldValue } = useFormikContext()
   const [value, setValue] = useState<MultiValue<ServiceOption | ExtrasOption>>([])
 
