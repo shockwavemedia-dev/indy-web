@@ -2,12 +2,11 @@ import axios from 'axios'
 import { Form, Formik } from 'formik'
 import { useState } from 'react'
 import { useQuery, useQueryClient } from 'react-query'
-import { PropsValue } from 'react-select'
+import { SingleValue } from 'react-select'
 import { Department } from '../../types/Department.type'
 import { AddTicketAssigneeForm } from '../../types/forms/AddTicketAssigneeForm.type'
 import { Page } from '../../types/Page.type'
 import { SelectOption } from '../../types/SelectOption.type'
-import { isSingleValue } from '../../utils/SelectHelpers'
 import Button from '../Button'
 import ClipboardIcon from '../icons/ClipboardIcon'
 import UserIcon from '../icons/UserIcon'
@@ -47,10 +46,8 @@ const AddTicketAssigneeModal = ({
   )
   const [department, setDepartment] = useState<number | null>(null)
 
-  const selectDepartment = (newValue: PropsValue<SelectOption<number>>) => {
-    if (isSingleValue(newValue)) {
-      setDepartment(newValue?.value || null)
-    }
+  const selectDepartment = (newValue: SingleValue<SelectOption<number>>) => {
+    setDepartment(newValue?.value || null)
   }
 
   const submitForm = async (

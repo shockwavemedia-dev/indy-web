@@ -4,10 +4,11 @@ import { useSession } from 'next-auth/react'
 import { useState } from 'react'
 import { useQuery } from 'react-query'
 import { MultiValue } from 'react-select'
-import { ExtrasOption } from '../types/ExtrasOption.type'
 import { Page } from '../types/Page.type'
 import { Service } from '../types/Service.type'
 import { ServiceOption } from '../types/ServiceOption.type'
+import { ServiceOptionExtraValue } from '../types/ServiceOptionExtraValue.type'
+import { ServiceOptionValue } from '../types/ServiceOptionValue.type'
 import ClipboardIcon from './icons/ClipboardIcon'
 import Select from './Select'
 
@@ -30,17 +31,14 @@ const SelectService = ({ enabled }: { enabled: boolean }) => {
     }
   )
   const { setFieldValue } = useFormikContext()
-  const [value, setValue] = useState<MultiValue<ServiceOption | ExtrasOption>>([])
+  const [value, setValue] = useState<MultiValue<ServiceOption>>([])
 
-  const onChange = (newValue: MultiValue<ServiceOption | ExtrasOption>) => {
+  const onChange = (newValue: MultiValue<ServiceOption>) => {
     const { services, extras } = newValue
       .map(({ value }) => value)
       .reduce<{
-        services: Array<number>
-        extras: Array<{
-          serviceId: number
-          name: string
-        }>
+        services: Array<ServiceOptionValue>
+        extras: Array<ServiceOptionExtraValue>
       }>(
         (values, curr) => {
           if (typeof curr === 'number') {
@@ -61,19 +59,7 @@ const SelectService = ({ enabled }: { enabled: boolean }) => {
       newValue.filter(({ value }) => {
         if (typeof value === 'number') {
           return true
-        } else if (
-          ((
-            x:
-              | number
-              | {
-                  serviceId: number
-                  name: string
-                }
-          ): x is {
-            serviceId: number
-            name: string
-          } => typeof x === 'object')(value)
-        ) {
+        } else if (((x): x is ServiceOptionExtraValue => typeof x === 'object')(value)) {
           return services.includes(value.serviceId)
         }
       })
@@ -90,9 +76,9 @@ const SelectService = ({ enabled }: { enabled: boolean }) => {
 
   return (
     <Select<
-      ServiceOption | ExtrasOption,
+      ServiceOptionValue | ServiceOptionExtraValue,
       true,
-      { label: string; options: Array<ServiceOption> | Array<ExtrasOption> }
+      { label: string; options: Array<ServiceOption> }
     >
       name="services"
       placeholder="Select services"

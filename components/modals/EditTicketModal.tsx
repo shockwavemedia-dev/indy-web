@@ -38,6 +38,7 @@ const EditTicketModal = ({
     if (status === 200) {
       queryClient.invalidateQueries('tickets')
       queryClient.invalidateQueries(['ticket', ticket.id])
+      queryClient.invalidateQueries(['activities', ticket.id])
       onClose()
     }
 
