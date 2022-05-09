@@ -5,15 +5,17 @@ import {
   convertFromRaw,
   DraftDecoratorComponentProps,
   Editor,
-  EditorState
+  EditorState,
 } from 'draft-js'
+import { Form, Formik, FormikState } from 'formik'
+import { useSession } from 'next-auth/react'
 import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { Fragment, ReactElement, useState } from 'react'
-import { useQuery } from 'react-query'
-import ActivityCard from '../../../components/ActivityCard'
+import { useQuery, useQueryClient } from 'react-query'
+import Button from '../../../components/Button'
 import Card from '../../../components/Card'
 import DataTable from '../../../components/DataTable'
 import CalendarIcon from '../../../components/icons/CalendarIcon'
@@ -21,6 +23,7 @@ import ColorsIcon from '../../../components/icons/ColorsIcon'
 import EditIcon from '../../../components/icons/EditIcon'
 import EmailIcon from '../../../components/icons/EmailIcon'
 import NoteIcon from '../../../components/icons/NoteIcon'
+import PaperPlaneIcon from '../../../components/icons/PaperPlaneIcon'
 import PlusIcon from '../../../components/icons/PlusIcon'
 import TrashIcon from '../../../components/icons/TrashIcon'
 import AddTicketAssigneeModal from '../../../components/modals/AddTicketAssigneeModal'
@@ -29,22 +32,31 @@ import DeleteTicketAssigneeModal from '../../../components/modals/DeleteTicketAs
 import DeleteTicketModal from '../../../components/modals/DeleteTicketModal'
 import EditTicketAssigneeModal from '../../../components/modals/EditTicketAssigneeModal'
 import EditTicketModal from '../../../components/modals/EditTicketModal'
-import NoteCard from '../../../components/NoteCard'
+import RichTextInput from '../../../components/RichTextInput'
+import ActivityCard from '../../../components/TicketActivityCard'
+import EmailCard from '../../../components/TicketEmailCard'
+import NoteCard from '../../../components/TicketNoteCard'
 import TitleValue from '../../../components/TitleValue'
 import { ClientRoutes } from '../../../constants/routes/ClientRoutes'
 import { TicketAssigneeTableColumns } from '../../../constants/tables/TicketAssigneeTableColumns'
 import PanelLayout from '../../../layouts/PanelLayout'
 import DummyCompany from '../../../public/images/dummy-company.png'
+import { CreateEmailFormSchema } from '../../../schemas/CreateEmailFormSchema'
+import { CreateNoteFormSchema } from '../../../schemas/CreateNoteFormSchema'
 import { useTicketAssigneeStore } from '../../../store/TicketAssigneeStore'
+import { CreateEmailForm } from '../../../types/forms/CreateEmailForm.type'
+import { CreateNoteForm } from '../../../types/forms/CreateNoteForm.type'
 import { Icon } from '../../../types/Icon.type'
 import { Page } from '../../../types/Page.type'
 import { NextPageWithLayout } from '../../../types/pages/NextPageWithLayout.type'
 import { Ticket } from '../../../types/Ticket.type'
 import { TicketActivity } from '../../../types/TicketActivity.type'
+import { TicketEmail } from '../../../types/TicketEmail.type'
 import { TicketNote } from '../../../types/TicketNote.type'
 import { TicketPageTabs } from '../../../types/TicketPageTabs.type'
 
 const Ticket: NextPageWithLayout = () => {
+  const { data: session } = useSession()
   const {
     query: { id },
   } = useRouter()
@@ -53,6 +65,7 @@ const Ticket: NextPageWithLayout = () => {
 
     return data
   })
+  const queryClient = useQueryClient()
   const {
     activeTicketAssignee,
     isEditTicketAssigneeModalVisible,
@@ -65,6 +78,40 @@ const Ticket: NextPageWithLayout = () => {
   const [isEditTicketModalVisible, setEditTicketModalVisible] = useState(false)
   const [isDeleteTicketModalVisible, setDeleteTicketModalVisible] = useState(false)
   const [isAddTicketAssigneeModalVisible, setAddTicketAssigneeModalVisible] = useState(false)
+
+  const { data: notes } = useQuery(
+    ['notes', Number(id)],
+    async () => {
+      const {
+        data: { data },
+      } = await axios.get<{
+        data: Array<TicketNote>
+        page: Page
+      }>(`/v1/tickets/${id}/notes`)
+
+      return data
+    },
+    {
+      enabled: activeTab === 'notes',
+    }
+  )
+
+  const { data: emails } = useQuery(
+    ['emails', Number(id)],
+    async () => {
+      const {
+        data: { data },
+      } = await axios.get<{
+        data: Array<TicketEmail>
+        page: Page
+      }>(`/v1/tickets/${id}/emails`)
+
+      return data
+    },
+    {
+      enabled: activeTab === 'email',
+    }
+  )
 
   const { data: activities } = useQuery(
     ['activities', Number(id)],
@@ -83,27 +130,32 @@ const Ticket: NextPageWithLayout = () => {
     }
   )
 
-  const { data: notes } = useQuery(
-    ['notes', Number(id)],
-    async () => {
-      const {
-        data: { data },
-      } = await axios.get<{
-        data: Array<TicketNote>
-        page: Page
-      }>(`/v1/tickets/${id}/notes`)
-
-      return data
-    },
-    {
-      enabled: activeTab === 'notes',
-    }
-  )
-  
   const toggleEditTicketModal = () => setEditTicketModalVisible(!isEditTicketModalVisible)
   const toggleDeleteTicketModal = () => setDeleteTicketModalVisible(!isDeleteTicketModalVisible)
   const toggleAddTicketAssigneeModal = () =>
     setAddTicketAssigneeModalVisible(!isAddTicketAssigneeModalVisible)
+  const submitEmailForm = async (
+    values: CreateEmailForm,
+    { resetForm }: { resetForm: (nextState?: Partial<FormikState<CreateEmailForm>>) => void }
+  ) => {
+    const { status } = await axios.post(`/v1/tickets/${id}/emails`, values)
+
+    if (status === 200) {
+      queryClient.invalidateQueries(['emails', Number(id)])
+      resetForm()
+    }
+  }
+  const submitNoteForm = async (
+    values: CreateNoteForm,
+    { resetForm }: { resetForm: (nextState?: Partial<FormikState<CreateNoteForm>>) => void }
+  ) => {
+    const { status } = await axios.post(`/v1/tickets/${id}/notes`, values)
+
+    if (status === 200) {
+      queryClient.invalidateQueries(['notes', Number(id)])
+      resetForm()
+    }
+  }
 
   const Tab = ({
     title,
@@ -163,7 +215,7 @@ const Ticket: NextPageWithLayout = () => {
         Ticket {ticket!.ticketCode}
       </div>
       <div className="mx-auto flex w-full max-w-7xl space-x-6">
-        <div className="flex w-full max-w-86 flex-col space-y-6">
+        <div className="flex min-w-86 flex-col space-y-6">
           <Card title="Details">
             <div className="absolute top-6 right-6 space-x-4">
               <button className="group" onClick={toggleEditTicketModal}>
@@ -279,7 +331,7 @@ const Ticket: NextPageWithLayout = () => {
             />
           </Card>
         </div>
-        <div className="h-fit w-full">
+        <div className="w-full">
           <div className="flex justify-between">
             <Tab title="Notes" Icon={NoteIcon} tabName="notes" />
             <Tab title="Email" Icon={EmailIcon} tabName="email" />
@@ -298,17 +350,87 @@ const Ticket: NextPageWithLayout = () => {
                 : 'ml-0'
             }`}
           />
+          {activeTab === 'notes' && (
+            <>
+              <Formik
+                validationSchema={CreateNoteFormSchema}
+                initialValues={{ note: '' }}
+                onSubmit={submitNoteForm}
+              >
+                {({ isSubmitting }) => (
+                  <Form>
+                    <RichTextInput
+                      Icon={EditIcon}
+                      placeholder="Enter notes"
+                      name="note"
+                      className="mb-5"
+                      inputActions={
+                        <Button
+                          ariaLabel="Submit Notes"
+                          type="submit"
+                          className="absolute right-6 bottom-6 z-10 !w-fit px-10"
+                          disabled={isSubmitting}
+                        >
+                          <PaperPlaneIcon className="stroke-white" />
+                          <div>Send</div>
+                        </Button>
+                      }
+                    />
+                  </Form>
+                )}
+              </Formik>
+              <div className="space-y-5">
+                {notes?.map(({ id, note, createdBy, createdAt }) => (
+                  <NoteCard
+                    key={`note-${id}`}
+                    note={note}
+                    createdBy={createdBy}
+                    createdAt={createdAt}
+                  />
+                ))}
+              </div>
+            </>
+          )}
+          {activeTab === 'email' && (
+            <>
+              <Formik
+                validationSchema={CreateEmailFormSchema}
+                initialValues={{ cc: session?.user.email ?? '', message: '' }}
+                onSubmit={submitEmailForm}
+              >
+                {({ isSubmitting }) => (
+                  <Form>
+                    <RichTextInput
+                      Icon={EditIcon}
+                      placeholder="Enter message"
+                      name="message"
+                      className="mb-5"
+                      inputActions={
+                        <Button
+                          ariaLabel="Submit Email"
+                          type="submit"
+                          className="absolute right-6 bottom-6 z-10 !w-fit px-10"
+                          disabled={isSubmitting}
+                        >
+                          <PaperPlaneIcon className="stroke-white" />
+                          <div>Send</div>
+                        </Button>
+                      }
+                    />
+                  </Form>
+                )}
+              </Formik>
+              <div className="space-y-5">
+                {emails?.map(({ id, message, createdAt }) => (
+                  <EmailCard key={`email-${id}`} message={message} createdAt={createdAt} />
+                ))}
+              </div>
+            </>
+          )}
           {activeTab === 'activities' && (
             <div className="space-y-5">
               {activities?.map(({ id, activity, createdAt }) => (
                 <ActivityCard key={`activity-${id}`} activity={activity} createdAt={createdAt} />
-              ))}
-            </div>
-          )}
-          {activeTab === 'notes' && (
-            <div className="space-y-5">
-              {notes?.map(({ id, note, createdBy, createdAt }) => (
-                <NoteCard key={`note-${id}`} note={note} createdBy={createdBy} createdAt={createdAt} />
               ))}
             </div>
           )}

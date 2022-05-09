@@ -6,32 +6,17 @@ import {
   Editor,
   EditorState,
 } from 'draft-js'
-import Image from 'next/image'
 import Link from 'next/link'
-import DummyAvatar from '../public/images/dummy-avatar.png'
 
-const NoteCard = ({
-  note,
-  createdBy,
-  createdAt,
-}: {
-  note: string
-  createdBy: string
-  createdAt: Date
-}) => (
-  <div className="rounded-xl bg-white px-6 py-5 shadow">
-    <div className="mb-3 flex items-center">
-      <Image src={DummyAvatar} alt="Dummy" height={32} width={32} className="rounded-full" />
-      <div className="ml-3 font-urbanist text-sm font-semibold text-onyx">{createdBy}</div>
-      <div className="mx-2 h-1 w-1 rounded bg-bright-gray" />
-      <div className="font-urbanist text-xs font-medium text-lavender-gray">
-        {format(createdAt, "yy MM''dd")}
-      </div>
+const TicketEmailCard = ({ message, createdAt }: { message: string; createdAt: Date }) => (
+  <div className="space-y-3 rounded-xl bg-white px-6 py-5 shadow">
+    <div className="font-urbanist text-xs font-medium text-lavender-gray">
+      {format(createdAt, "yy MMM''dd")}
     </div>
     <Editor
       onChange={() => {}}
       editorState={EditorState.createWithContent(
-        convertFromRaw(JSON.parse(note)),
+        convertFromRaw(JSON.parse(message)),
         new CompositeDecorator([
           {
             strategy: (contentBlock, callback, contentState) => {
@@ -59,4 +44,4 @@ const NoteCard = ({
   </div>
 )
 
-export default NoteCard
+export default TicketEmailCard

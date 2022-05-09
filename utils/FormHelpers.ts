@@ -38,3 +38,6 @@ export const objectWithFileToFormData = (object: Object) => {
 
   return formData
 }
+
+export const richTextEmptyCheck = (value?: string) =>
+  !!value && !/{"blocks":\[{"key":"(.*?)","text":""/.test(value)

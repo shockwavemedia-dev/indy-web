@@ -13,7 +13,7 @@ import {
 import 'draft-js/dist/Draft.css'
 import { useFormikContext } from 'formik'
 import Link from 'next/link'
-import { KeyboardEvent, SyntheticEvent, useEffect, useState } from 'react'
+import { KeyboardEvent, ReactNode, SyntheticEvent, useEffect, useState } from 'react'
 import { useCreateLinkModalStore } from '../store/CreateLinkModalStore'
 import { CreateLinkForm } from '../types/forms/CreateLinkForm.type'
 import { Icon } from '../types/Icon.type'
@@ -35,6 +35,7 @@ const RichTextInput = ({
   className,
   readOnly = false,
   label,
+  inputActions,
 }: {
   name: string
   Icon: Icon
@@ -42,6 +43,7 @@ const RichTextInput = ({
   className?: string
   readOnly?: boolean
   label?: string
+  inputActions?: ReactNode
 }) => {
   const { handleBlur, setFieldValue, getFieldProps } = useFormikContext()
   const { toggleModal, setCreateLink, setLinkText } = useCreateLinkModalStore()
@@ -134,91 +136,88 @@ const RichTextInput = ({
   }, [editorState])
 
   return (
-    <>
-      <div className={className}>
-        <label
-          htmlFor={name}
-          className="mb-2 inline-block font-urbanist text-xs font-medium text-metallic-silver empty:hidden"
-        >
-          {label}
-        </label>
-        <div
-          className={`overflow-hidden rounded-xl ${
-            isEditorFocused
-              ? 'ring-2 ring-jungle-green ring-opacity-40'
-              : 'ring-1 ring-bright-gray '
-          }`}
-          id="rich-text-input"
-        >
-          <div className="flex space-x-2 bg-ghost-white px-4 py-1.5">
-            <StyleButton
-              Icon={ItalicIcon}
-              onClick={italicOnClick}
-              isActive={editorState.getCurrentInlineStyle().has('ITALIC')}
-            />
-            <StyleButton
-              Icon={BoldIcon}
-              onClick={boldOnClick}
-              isActive={editorState.getCurrentInlineStyle().has('BOLD')}
-            />
-            <StyleButton
-              Icon={UnderlineIcon}
-              onClick={underlineOnClick}
-              isActive={editorState.getCurrentInlineStyle().has('UNDERLINE')}
-            />
-            <StyleButton
-              Icon={StrikethroughIcon}
-              onClick={strikethroughOnClick}
-              isActive={editorState.getCurrentInlineStyle().has('STRIKETHROUGH')}
-            />
-            <StyleButton Icon={LinkIcon} onClick={toggleCreateLinkModal} />
-            <StyleButton
-              Icon={TextLeftAlignmentIcon}
-              onClick={textLeftAlignmentOnClick}
-              isActive={textAlignment === 'left'}
-              stroke
-            />
-            <StyleButton
-              Icon={TextCenterAlignmentIcon}
-              onClick={textCenterAlignmentOnClick}
-              isActive={textAlignment === 'center'}
-              stroke
-            />
-            <StyleButton
-              Icon={TextRightAlignmentIcon}
-              onClick={textRightAlignmentOnClick}
-              isActive={textAlignment === 'right'}
-              stroke
-            />
-            <StyleButton
-              Icon={UnorderedListIcon}
-              onClick={unorderedListOnClick}
-              isActive={
-                editorState
-                  .getCurrentContent()
-                  .getBlockForKey(editorState.getSelection().getStartKey())
-                  .getType() === 'unordered-list-item'
-              }
-              stroke
-            />
-          </div>
-          <Icon className="pointer-events-none absolute ml-6 mt-4 stroke-lavender-gray" />
-          <Editor
-            placeholder={isPlaceholderVisible ? placeholder : undefined}
-            editorState={editorState}
-            onChange={onChange}
-            handleKeyCommand={handleKeyCommand}
-            onFocus={onFocus}
-            onBlur={onBlur}
-            readOnly={readOnly}
-            spellCheck={false}
-            textAlignment={textAlignment}
-            keyBindingFn={keyBindingFn}
+    <div className={className}>
+      <label
+        htmlFor={name}
+        className="mb-2 inline-block font-urbanist text-xs font-medium text-metallic-silver empty:hidden"
+      >
+        {label}
+      </label>
+      <div
+        className={`relative overflow-hidden rounded-xl bg-white ${
+          isEditorFocused ? 'ring-2 ring-jungle-green ring-opacity-40' : 'ring-1 ring-bright-gray '
+        }`}
+        id="rich-text-input"
+      >
+        <div className="flex space-x-2 bg-ghost-white px-4 py-1.5">
+          <StyleButton
+            Icon={ItalicIcon}
+            onClick={italicOnClick}
+            isActive={editorState.getCurrentInlineStyle().has('ITALIC')}
+          />
+          <StyleButton
+            Icon={BoldIcon}
+            onClick={boldOnClick}
+            isActive={editorState.getCurrentInlineStyle().has('BOLD')}
+          />
+          <StyleButton
+            Icon={UnderlineIcon}
+            onClick={underlineOnClick}
+            isActive={editorState.getCurrentInlineStyle().has('UNDERLINE')}
+          />
+          <StyleButton
+            Icon={StrikethroughIcon}
+            onClick={strikethroughOnClick}
+            isActive={editorState.getCurrentInlineStyle().has('STRIKETHROUGH')}
+          />
+          <StyleButton Icon={LinkIcon} onClick={toggleCreateLinkModal} />
+          <StyleButton
+            Icon={TextLeftAlignmentIcon}
+            onClick={textLeftAlignmentOnClick}
+            isActive={textAlignment === 'left'}
+            stroke
+          />
+          <StyleButton
+            Icon={TextCenterAlignmentIcon}
+            onClick={textCenterAlignmentOnClick}
+            isActive={textAlignment === 'center'}
+            stroke
+          />
+          <StyleButton
+            Icon={TextRightAlignmentIcon}
+            onClick={textRightAlignmentOnClick}
+            isActive={textAlignment === 'right'}
+            stroke
+          />
+          <StyleButton
+            Icon={UnorderedListIcon}
+            onClick={unorderedListOnClick}
+            isActive={
+              editorState
+                .getCurrentContent()
+                .getBlockForKey(editorState.getSelection().getStartKey())
+                .getType() === 'unordered-list-item'
+            }
+            stroke
           />
         </div>
-        <FormErrorMessage name={name} />
+        <Icon className="pointer-events-none absolute ml-6 mt-4 stroke-lavender-gray" />
+        <Editor
+          placeholder={isPlaceholderVisible ? placeholder : undefined}
+          editorState={editorState}
+          onChange={onChange}
+          handleKeyCommand={handleKeyCommand}
+          onFocus={onFocus}
+          onBlur={onBlur}
+          readOnly={readOnly}
+          spellCheck={false}
+          textAlignment={textAlignment}
+          keyBindingFn={keyBindingFn}
+        />
+        {inputActions}
       </div>
-    </>
+      <FormErrorMessage name={name} />
+    </div>
   )
 }
 

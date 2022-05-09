@@ -28,20 +28,13 @@ const CreateEventModal = ({ isVisible, onClose }: { isVisible: boolean; onClose:
     description: '',
   }
 
-  const submitForm = async (
-    values: CreateEventForm,
-    { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
-  ) => {
-    setSubmitting(true)
-
+  const submitForm = async (values: CreateEventForm) => {
     const { status } = await axios.post('/v1/tickets/event', objectWithFileToFormData(values))
 
     if (status === 200) {
       queryClient.invalidateQueries('tickets')
       onClose()
     }
-
-    setSubmitting(false)
   }
 
   return (
@@ -53,34 +46,36 @@ const CreateEventModal = ({ isVisible, onClose }: { isVisible: boolean; onClose:
             initialValues={formInitialValues}
             onSubmit={submitForm}
           >
-            <Form className="flex w-140 flex-col">
-              <TextInput
-                type="text"
-                Icon={EditIcon}
-                placeholder="Enter subject"
-                name="subject"
-                className="mb-5"
-              />
-              <div className="mb-5 flex space-x-5">
-                <SelectService enabled={isVisible} />
-                <DateInput name="duedate" placeholder="Enter due date" />
-              </div>
-              <RichTextInput
-                Icon={EditIcon}
-                placeholder="Enter description"
-                name="description"
-                className="mb-5"
-              />
-              <FileInput label="Upload Assets" name="attachment" className="mb-8" />
-              <div className="flex space-x-5">
-                <Button ariaLabel="Cancel" onClick={onClose} type="button" light>
-                  Cancel
-                </Button>
-                <Button ariaLabel="Submit" disabled={false} type="submit">
-                  Submit
-                </Button>
-              </div>
-            </Form>
+            {({ isSubmitting }) => (
+              <Form className="flex w-140 flex-col">
+                <TextInput
+                  type="text"
+                  Icon={EditIcon}
+                  placeholder="Enter subject"
+                  name="subject"
+                  className="mb-5"
+                />
+                <div className="mb-5 flex space-x-5">
+                  <SelectService enabled={isVisible} />
+                  <DateInput name="duedate" placeholder="Enter due date" />
+                </div>
+                <RichTextInput
+                  Icon={EditIcon}
+                  placeholder="Enter description"
+                  name="description"
+                  className="mb-5"
+                />
+                <FileInput label="Upload Assets" name="attachment" className="mb-8" />
+                <div className="flex space-x-5">
+                  <Button ariaLabel="Cancel" onClick={onClose} type="button" light>
+                    Cancel
+                  </Button>
+                  <Button ariaLabel="Submit" disabled={isSubmitting} type="submit">
+                    Submit
+                  </Button>
+                </div>
+              </Form>
+            )}
           </Formik>
         </Modal>
       )}
