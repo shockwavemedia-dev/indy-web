@@ -331,7 +331,7 @@ const Ticket: NextPageWithLayout = () => {
             />
           </Card>
         </div>
-        <div className="w-full">
+        <div className="w-full min-w-0 flex-grow">
           <div className="flex justify-between">
             <Tab title="Notes" Icon={NoteIcon} tabName="notes" />
             <Tab title="Email" Icon={EmailIcon} tabName="email" />
