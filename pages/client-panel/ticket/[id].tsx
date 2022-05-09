@@ -5,7 +5,7 @@ import {
   convertFromRaw,
   DraftDecoratorComponentProps,
   Editor,
-  EditorState,
+  EditorState
 } from 'draft-js'
 import Head from 'next/head'
 import Image from 'next/image'
@@ -29,6 +29,7 @@ import DeleteTicketAssigneeModal from '../../../components/modals/DeleteTicketAs
 import DeleteTicketModal from '../../../components/modals/DeleteTicketModal'
 import EditTicketAssigneeModal from '../../../components/modals/EditTicketAssigneeModal'
 import EditTicketModal from '../../../components/modals/EditTicketModal'
+import NoteCard from '../../../components/NoteCard'
 import TitleValue from '../../../components/TitleValue'
 import { ClientRoutes } from '../../../constants/routes/ClientRoutes'
 import { TicketAssigneeTableColumns } from '../../../constants/tables/TicketAssigneeTableColumns'
@@ -40,6 +41,7 @@ import { Page } from '../../../types/Page.type'
 import { NextPageWithLayout } from '../../../types/pages/NextPageWithLayout.type'
 import { Ticket } from '../../../types/Ticket.type'
 import { TicketActivity } from '../../../types/TicketActivity.type'
+import { TicketNote } from '../../../types/TicketNote.type'
 import { TicketPageTabs } from '../../../types/TicketPageTabs.type'
 
 const Ticket: NextPageWithLayout = () => {
@@ -81,6 +83,23 @@ const Ticket: NextPageWithLayout = () => {
     }
   )
 
+  const { data: notes } = useQuery(
+    ['notes', Number(id)],
+    async () => {
+      const {
+        data: { data },
+      } = await axios.get<{
+        data: Array<TicketNote>
+        page: Page
+      }>(`/v1/tickets/${id}/notes`)
+
+      return data
+    },
+    {
+      enabled: activeTab === 'notes',
+    }
+  )
+  
   const toggleEditTicketModal = () => setEditTicketModalVisible(!isEditTicketModalVisible)
   const toggleDeleteTicketModal = () => setDeleteTicketModalVisible(!isDeleteTicketModalVisible)
   const toggleAddTicketAssigneeModal = () =>
@@ -283,6 +302,13 @@ const Ticket: NextPageWithLayout = () => {
             <div className="space-y-5">
               {activities?.map(({ id, activity, createdAt }) => (
                 <ActivityCard key={`activity-${id}`} activity={activity} createdAt={createdAt} />
+              ))}
+            </div>
+          )}
+          {activeTab === 'notes' && (
+            <div className="space-y-5">
+              {notes?.map(({ id, note, createdBy, createdAt }) => (
+                <NoteCard key={`note-${id}`} note={note} createdBy={createdBy} createdAt={createdAt} />
               ))}
             </div>
           )}
