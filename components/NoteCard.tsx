@@ -1,8 +1,14 @@
-import { format } from 'date-fns';
-import { CompositeDecorator, convertFromRaw, DraftDecoratorComponentProps, Editor, EditorState } from 'draft-js';
-import Image from 'next/image';
-import Link from 'next/link';
-import DummyAvatar from '../public/images/dummy-avatar.png';
+import { format } from 'date-fns'
+import {
+  CompositeDecorator,
+  convertFromRaw,
+  DraftDecoratorComponentProps,
+  Editor,
+  EditorState,
+} from 'draft-js'
+import Image from 'next/image'
+import Link from 'next/link'
+import DummyAvatar from '../public/images/dummy-avatar.png'
 
 const NoteCard = ({
   note,
@@ -14,15 +20,14 @@ const NoteCard = ({
   createdAt: Date
 }) => (
   <div className="rounded-xl bg-white px-6 py-5 shadow">
-  <div className="flex items-center mb-3">
-    <Image src={DummyAvatar} alt="Dummy" height={32} width={32} className="rounded-full" />
-    <div className="ml-3 font-urbanist text-sm font-semibold text-onyx">{createdBy}</div>
-    <div className="mx-2 h-1 w-1 rounded bg-bright-gray" />
-    <div className="font-urbanist text-xs font-medium text-lavender-gray">
-      {format(createdAt, "yy MM''dd")}
+    <div className="mb-3 flex items-center">
+      <Image src={DummyAvatar} alt="Dummy" height={32} width={32} className="rounded-full" />
+      <div className="ml-3 font-urbanist text-sm font-semibold text-onyx">{createdBy}</div>
+      <div className="mx-2 h-1 w-1 rounded bg-bright-gray" />
+      <div className="font-urbanist text-xs font-medium text-lavender-gray">
+        {format(createdAt, "yy MM''dd")}
+      </div>
     </div>
-  </div>
-  <div className="whitespace-normal">
     <Editor
       onChange={() => {}}
       editorState={EditorState.createWithContent(
@@ -32,10 +37,7 @@ const NoteCard = ({
             strategy: (contentBlock, callback, contentState) => {
               contentBlock.findEntityRanges((character) => {
                 const entityKey = character.getEntity()
-                return (
-                  entityKey !== null &&
-                  contentState.getEntity(entityKey).getType() === 'LINK'
-                )
+                return entityKey !== null && contentState.getEntity(entityKey).getType() === 'LINK'
               }, callback)
             },
             component: (props: DraftDecoratorComponentProps) => (
@@ -54,7 +56,6 @@ const NoteCard = ({
       )}
       readOnly
     />
-  </div>
   </div>
 )
 
