@@ -215,7 +215,7 @@ const Ticket: NextPageWithLayout = () => {
         Ticket {ticket!.ticketCode}
       </div>
       <div className="mx-auto flex w-full max-w-7xl space-x-6">
-        <div className="flex min-w-86 flex-col space-y-6">
+        <div className="flex w-full max-w-86 flex-col space-y-6">
           <Card title="Details">
             <div className="absolute top-6 right-6 space-x-4">
               <button className="group" onClick={toggleEditTicketModal}>
