@@ -1,3 +1,4 @@
+import { useFormikContext } from 'formik'
 import ReactSelect, {
   ClearIndicatorProps,
   components as Components,
@@ -5,9 +6,14 @@ import ReactSelect, {
   ControlProps,
   DropdownIndicatorProps,
   GroupBase,
+  MultiValue,
   MultiValueRemoveProps,
   Props,
+  PropsValue,
+  SingleValue,
 } from 'react-select'
+import { SelectOption } from '../types/SelectOption.type'
+import FormErrorMessage from './FormErrorMessage'
 import CaretIcon from './icons/CaretIcon'
 import ClearSelectIcon from './icons/ClearSelectIcon'
 import RemoveMultiValueIcon from './icons/RemoveMultiValueIcon'
@@ -21,6 +27,7 @@ const SelectContainer = <Option, IsMulti extends boolean>({
       {props.selectProps.label}
     </label>
     {children}
+    {props.selectProps.name && <FormErrorMessage name={props.selectProps.name} />}
   </Components.SelectContainer>
 )
 
@@ -61,106 +68,133 @@ const ClearIndicator = <Option, IsMulti extends boolean, Group extends GroupBase
 )
 
 const Select = <
-  Option,
+  T,
   IsMulti extends boolean = false,
-  Group extends GroupBase<Option> = GroupBase<Option>
->(
-  props: Props<Option, IsMulti, Group>
-) => (
-  <ReactSelect
-    {...props}
-    styles={{
-      indicatorSeparator: () => ({
-        display: 'none',
-      }),
-      placeholder: (base) => ({
-        ...base,
-        font: '500 0.875rem/1.25rem Urbanist',
-        color: '#ABABB9',
-        margin: 0,
-      }),
-      control: (base, { isFocused }) => ({
-        ...base,
-        minHeight: '3.125rem',
-        boxShadow: isFocused ? '0 0 0 2px #AAE2CB' : '0 0 0 1px #E8E8EF',
-        border: 'none',
-        borderRadius: '.75rem',
-        padding: '0 1.5rem 0',
-        backgroundColor: '#ffffff',
-        transition: 'none',
-      }),
-      container: (base) => ({
-        ...base,
-        borderRadius: '0.75rem',
-        width: '100%',
-      }),
-      input: (base) => ({
-        ...base,
-        color: '#32343D',
-        font: '500 0.875rem/1.25rem Urbanist',
-        margin: 0,
-        padding: 0,
-      }),
-      singleValue: (base) => ({
-        ...base,
-        color: '#32343D',
-        font: '500 0.875rem/1.25rem Urbanist',
-      }),
-      option: (base, { isSelected }) => ({
-        ...base,
-        color: isSelected ? '#FFFFFF' : '#32343D',
-        font: '500 0.875rem/1.25rem Urbanist',
-        backgroundColor: isSelected ? '#2BB67D !important' : '#FFFFFF',
-        ':hover': {
-          backgroundColor: '#E9FAF3',
-        },
-      }),
-      menu: (base) => ({
-        ...base,
-        zIndex: 20,
-        overflow: 'clip',
-      }),
-      noOptionsMessage: (base) => ({
-        ...base,
-        font: '500 0.875rem/1.25rem Urbanist',
-      }),
-      dropdownIndicator: () => ({
-        marginLeft: '.625rem',
-      }),
-      valueContainer: (base) => ({
-        ...base,
-        padding: '.25rem 0',
-        gap: '.25rem',
-      }),
-      clearIndicator: (base) => ({
-        ...base,
-        cursor: 'pointer',
-        padding: 0,
-      }),
-      multiValue: () => ({
-        display: 'flex',
-        border: '1px solid #E8E8EF',
-        paddingLeft: '.625rem',
-        paddingRight: '.625rem',
-        borderRadius: 8,
-      }),
-      multiValueLabel: () => ({
-        font: '500 0.875rem/1.25rem Urbanist',
-        color: '#32343D',
-      }),
-      multiValueRemove: () => ({
-        height: 'fit-content',
-        margin: 'auto 0 auto .25rem',
-      }),
-    }}
-    components={{
-      SelectContainer,
-      DropdownIndicator,
-      Control,
-      MultiValueRemove,
-      ClearIndicator,
-    }}
-  />
-)
+  Group extends GroupBase<SelectOption<T>> = GroupBase<SelectOption<T>>
+>({
+  onChange,
+  ...props
+}: Props<SelectOption<T>, IsMulti, Group>) => {
+  const { setFieldValue } = useFormikContext()
+
+  const setValueInForm = (newValue: PropsValue<SelectOption<T>>) => {
+    if (props.name) {
+      if (
+        ((x: PropsValue<SelectOption<T>>): x is MultiValue<SelectOption<T>> => Array.isArray(x))(
+          newValue
+        )
+      ) {
+        setFieldValue(
+          props.name,
+          newValue.map(({ value }) => value)
+        )
+      } else if (
+        ((x: PropsValue<SelectOption<T>>): x is SingleValue<SelectOption<T>> => !Array.isArray(x))(
+          newValue
+        )
+      ) {
+        setFieldValue(props.name, newValue?.value)
+      }
+    }
+  }
+
+  return (
+    <ReactSelect
+      {...props}
+      styles={{
+        indicatorSeparator: () => ({
+          display: 'none',
+        }),
+        placeholder: (base) => ({
+          ...base,
+          font: '500 0.875rem/1.25rem Urbanist',
+          color: '#ABABB9',
+          margin: 0,
+        }),
+        control: (base, { isFocused }) => ({
+          ...base,
+          minHeight: '3.125rem',
+          boxShadow: isFocused ? '0 0 0 2px #AAE2CB' : '0 0 0 1px #E8E8EF',
+          border: 'none',
+          borderRadius: '.75rem',
+          padding: '0 1.5rem 0',
+          backgroundColor: '#ffffff',
+          transition: 'none',
+        }),
+        container: (base) => ({
+          ...base,
+          borderRadius: '0.75rem',
+          width: '100%',
+        }),
+        input: (base) => ({
+          ...base,
+          color: '#32343D',
+          font: '500 0.875rem/1.25rem Urbanist',
+          margin: 0,
+          padding: 0,
+        }),
+        singleValue: (base) => ({
+          ...base,
+          color: '#32343D',
+          font: '500 0.875rem/1.25rem Urbanist',
+        }),
+        option: (base, { isSelected }) => ({
+          ...base,
+          color: isSelected ? '#FFFFFF' : '#32343D',
+          font: '500 0.875rem/1.25rem Urbanist',
+          backgroundColor: isSelected ? '#2BB67D !important' : '#FFFFFF',
+          ':hover': {
+            backgroundColor: '#E9FAF3',
+          },
+        }),
+        menu: (base) => ({
+          ...base,
+          zIndex: 20,
+          overflow: 'clip',
+        }),
+        noOptionsMessage: (base) => ({
+          ...base,
+          font: '500 0.875rem/1.25rem Urbanist',
+        }),
+        dropdownIndicator: () => ({
+          marginLeft: '.625rem',
+        }),
+        valueContainer: (base) => ({
+          ...base,
+          padding: '.25rem 0',
+          gap: '.25rem',
+        }),
+        clearIndicator: (base) => ({
+          ...base,
+          cursor: 'pointer',
+          padding: 0,
+        }),
+        multiValue: () => ({
+          display: 'flex',
+          border: '1px solid #E8E8EF',
+          paddingLeft: '.625rem',
+          paddingRight: '.625rem',
+          borderRadius: 8,
+        }),
+        multiValueLabel: () => ({
+          font: '500 0.875rem/1.25rem Urbanist',
+          color: '#32343D',
+        }),
+        multiValueRemove: () => ({
+          height: 'fit-content',
+          margin: 'auto 0 auto .25rem',
+        }),
+      }}
+      components={{
+        SelectContainer,
+        DropdownIndicator,
+        Control,
+        MultiValueRemove,
+        ClearIndicator,
+      }}
+      onChange={onChange ?? setValueInForm}
+    />
+  )
+}
 
 export default Select
