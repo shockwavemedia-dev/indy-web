@@ -25,7 +25,7 @@ const TicketNoteCard = ({
       <div className="ml-3 font-urbanist text-sm font-semibold text-onyx">{createdBy}</div>
       <div className="mx-2 h-1 w-1 rounded bg-bright-gray" />
       <div className="font-urbanist text-xs font-medium text-lavender-gray">
-        {format(createdAt, "yy MM''dd")}
+        {format(createdAt, "yy MMM''dd")}
       </div>
     </div>
     <Editor
