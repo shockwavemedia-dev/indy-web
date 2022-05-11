@@ -1,14 +1,7 @@
 import { format } from 'date-fns'
-import {
-  CompositeDecorator,
-  convertFromRaw,
-  DraftDecoratorComponentProps,
-  Editor,
-  EditorState,
-} from 'draft-js'
 import Image from 'next/image'
-import Link from 'next/link'
 import DummyAvatar from '../public/images/dummy-avatar.png'
+import RichTextDisplay from './RichTextDisplay'
 
 const TicketNoteCard = ({
   note,
@@ -25,37 +18,10 @@ const TicketNoteCard = ({
       <div className="ml-3 font-urbanist text-sm font-semibold text-onyx">{createdBy}</div>
       <div className="mx-2 h-1 w-1 rounded bg-bright-gray" />
       <div className="font-urbanist text-xs font-medium text-lavender-gray">
-        {format(createdAt, "yy MM''dd")}
+        {format(createdAt, "yy MMM''dd")}
       </div>
     </div>
-    <Editor
-      onChange={() => {}}
-      editorState={EditorState.createWithContent(
-        convertFromRaw(JSON.parse(note)),
-        new CompositeDecorator([
-          {
-            strategy: (contentBlock, callback, contentState) => {
-              contentBlock.findEntityRanges((character) => {
-                const entityKey = character.getEntity()
-                return entityKey !== null && contentState.getEntity(entityKey).getType() === 'LINK'
-              }, callback)
-            },
-            component: (props: DraftDecoratorComponentProps) => (
-              <Link href={props.contentState.getEntity(props.entityKey).getData().link}>
-                <a
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-bleu-de-france underline"
-                >
-                  {props.children}
-                </a>
-              </Link>
-            ),
-          },
-        ])
-      )}
-      readOnly
-    />
+    <RichTextDisplay value={note} className="font-urbanist text-sm font-medium text-onyx" />
   </div>
 )
 

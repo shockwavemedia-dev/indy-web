@@ -4,6 +4,7 @@ import { richTextEmptyCheck } from '../utils/FormHelpers'
 
 export const CreateEmailFormSchema: SchemaOf<CreateEmailForm> = object().shape({
   cc: string().required(),
+  title: string().required(),
   message: string()
     .required()
     .test('draft-js-empty-check', 'Message is a required field', richTextEmptyCheck),

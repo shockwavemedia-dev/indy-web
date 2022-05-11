@@ -1,47 +1,38 @@
 import { format } from 'date-fns'
-import {
-  CompositeDecorator,
-  convertFromRaw,
-  DraftDecoratorComponentProps,
-  Editor,
-  EditorState,
-} from 'draft-js'
-import Link from 'next/link'
+import { useState } from 'react'
+import RichTextDisplay from './RichTextDisplay'
 
-const TicketEmailCard = ({ message, createdAt }: { message: string; createdAt: Date }) => (
-  <div className="space-y-3 rounded-xl bg-white px-6 py-5 shadow">
-    <div className="font-urbanist text-xs font-medium text-lavender-gray">
-      {format(createdAt, "yy MMM''dd")}
-    </div>
-    <Editor
-      onChange={() => {}}
-      editorState={EditorState.createWithContent(
-        convertFromRaw(JSON.parse(message)),
-        new CompositeDecorator([
-          {
-            strategy: (contentBlock, callback, contentState) => {
-              contentBlock.findEntityRanges((character) => {
-                const entityKey = character.getEntity()
-                return entityKey !== null && contentState.getEntity(entityKey).getType() === 'LINK'
-              }, callback)
-            },
-            component: (props: DraftDecoratorComponentProps) => (
-              <Link href={props.contentState.getEntity(props.entityKey).getData().link}>
-                <a
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-bleu-de-france underline"
-                >
-                  {props.children}
-                </a>
-              </Link>
-            ),
-          },
-        ])
+const TicketEmailCard = ({
+  title,
+  message,
+  createdAt,
+}: {
+  title: string
+  message: string
+  createdAt: Date
+}) => {
+  const [isMessageVisible, setMessageVisible] = useState(false)
+
+  const toggleEmailCard = () => setMessageVisible(!isMessageVisible)
+
+  return (
+    <button
+      type="button"
+      onClick={toggleEmailCard}
+      className="w-full space-y-3 rounded-xl bg-white px-6 py-5 shadow"
+    >
+      <div className="flex items-center space-x-2">
+        <div className="font-urbanist text-sm font-semibold text-onyx">{title}</div>
+        <div className="h-1 w-1 rounded bg-bright-gray" />
+        <div className="font-urbanist text-xs font-medium text-lavender-gray">
+          {format(createdAt, "yy MMM''dd")}
+        </div>
+      </div>
+      {isMessageVisible && (
+        <RichTextDisplay value={message} className="font-urbanist text-sm font-medium text-onyx" />
       )}
-      readOnly
-    />
-  </div>
-)
+    </button>
+  )
+}
 
 export default TicketEmailCard
