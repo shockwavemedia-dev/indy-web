@@ -1,17 +1,9 @@
 import axios from 'axios'
 import { format } from 'date-fns'
-import {
-  CompositeDecorator,
-  convertFromRaw,
-  DraftDecoratorComponentProps,
-  Editor,
-  EditorState,
-} from 'draft-js'
 import { Form, Formik, FormikState } from 'formik'
 import { useSession } from 'next-auth/react'
 import Head from 'next/head'
 import Image from 'next/image'
-import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { Fragment, ReactElement, useState } from 'react'
 import { useQuery, useQueryClient } from 'react-query'
@@ -23,6 +15,7 @@ import ColorsIcon from '../../../components/icons/ColorsIcon'
 import EditIcon from '../../../components/icons/EditIcon'
 import EmailIcon from '../../../components/icons/EmailIcon'
 import NoteIcon from '../../../components/icons/NoteIcon'
+import PaperClipIcon from '../../../components/icons/PaperClipIcon'
 import PaperPlaneIcon from '../../../components/icons/PaperPlaneIcon'
 import PlusIcon from '../../../components/icons/PlusIcon'
 import TrashIcon from '../../../components/icons/TrashIcon'
@@ -32,7 +25,9 @@ import DeleteTicketAssigneeModal from '../../../components/modals/DeleteTicketAs
 import DeleteTicketModal from '../../../components/modals/DeleteTicketModal'
 import EditTicketAssigneeModal from '../../../components/modals/EditTicketAssigneeModal'
 import EditTicketModal from '../../../components/modals/EditTicketModal'
+import RichTextDisplay from '../../../components/RichTextDisplay'
 import RichTextInput from '../../../components/RichTextInput'
+import TextInput from '../../../components/TextInput'
 import ActivityCard from '../../../components/TicketActivityCard'
 import EmailCard from '../../../components/TicketEmailCard'
 import NoteCard from '../../../components/TicketNoteCard'
@@ -147,10 +142,13 @@ const Ticket: NextPageWithLayout = () => {
   }
   const submitNoteForm = async (
     values: CreateNoteForm,
-    { resetForm }: { resetForm: (nextState?: Partial<FormikState<CreateNoteForm>>) => void }
+    {
+      resetForm,
+    }: {
+      resetForm: () => void
+    }
   ) => {
     const { status } = await axios.post(`/v1/tickets/${id}/notes`, values)
-
     if (status === 200) {
       queryClient.invalidateQueries(['notes', Number(id)])
       resetForm()
@@ -253,7 +251,7 @@ const Ticket: NextPageWithLayout = () => {
               <TitleValue title="Department" className="flex items-center justify-between">
                 {ticket!.departmentName}
               </TitleValue>
-              <TitleValue title="Due Created" className="flex items-center justify-between">
+              <TitleValue title="Due Date" className="flex items-center justify-between">
                 {format(ticket!.duedate, "yy MMM''dd")}
               </TitleValue>
               <TitleValue title="Date Created" className="flex items-center justify-between">
@@ -280,37 +278,7 @@ const Ticket: NextPageWithLayout = () => {
                 </div>
               </TitleValue>
               <TitleValue title="Description">
-                <Editor
-                  onChange={() => {}}
-                  editorState={EditorState.createWithContent(
-                    convertFromRaw(JSON.parse(ticket!.description)),
-                    new CompositeDecorator([
-                      {
-                        strategy: (contentBlock, callback, contentState) => {
-                          contentBlock.findEntityRanges((character) => {
-                            const entityKey = character.getEntity()
-                            return (
-                              entityKey !== null &&
-                              contentState.getEntity(entityKey).getType() === 'LINK'
-                            )
-                          }, callback)
-                        },
-                        component: (props: DraftDecoratorComponentProps) => (
-                          <Link href={props.contentState.getEntity(props.entityKey).getData().link}>
-                            <a
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="text-bleu-de-france underline"
-                            >
-                              {props.children}
-                            </a>
-                          </Link>
-                        ),
-                      },
-                    ])
-                  )}
-                  readOnly
-                />
+                <RichTextDisplay value={ticket!.description} />
               </TitleValue>
             </div>
           </Card>
@@ -331,7 +299,7 @@ const Ticket: NextPageWithLayout = () => {
             />
           </Card>
         </div>
-        <div className="w-full min-w-0 flex-grow">
+        <div className="w-full min-w-0">
           <div className="flex justify-between">
             <Tab title="Notes" Icon={NoteIcon} tabName="notes" />
             <Tab title="Email" Icon={EmailIcon} tabName="email" />
@@ -358,22 +326,27 @@ const Ticket: NextPageWithLayout = () => {
                 onSubmit={submitNoteForm}
               >
                 {({ isSubmitting }) => (
-                  <Form>
+                  <Form className="mb-5">
                     <RichTextInput
                       Icon={EditIcon}
                       placeholder="Enter notes"
                       name="note"
-                      className="mb-5"
                       inputActions={
-                        <Button
-                          ariaLabel="Submit Notes"
-                          type="submit"
-                          className="absolute right-6 bottom-6 z-10 !w-fit px-10"
-                          disabled={isSubmitting}
-                        >
-                          <PaperPlaneIcon className="stroke-white" />
-                          <div>Send</div>
-                        </Button>
+                        <div className="absolute right-6 bottom-6 z-10 flex items-center space-x-6">
+                          <input type="file" name="attachment" id="note-attachment" hidden />
+                          <label htmlFor="note-attachment" className="cursor-pointer">
+                            <PaperClipIcon className="stroke-waterloo" />
+                          </label>
+                          <Button
+                            ariaLabel="Submit Notes"
+                            type="submit"
+                            className="!w-fit px-10"
+                            disabled={isSubmitting}
+                          >
+                            <PaperPlaneIcon className="stroke-white" />
+                            <div>Send</div>
+                          </Button>
+                        </div>
                       }
                     />
                   </Form>
@@ -395,34 +368,46 @@ const Ticket: NextPageWithLayout = () => {
             <>
               <Formik
                 validationSchema={CreateEmailFormSchema}
-                initialValues={{ cc: session?.user.email ?? '', message: '' }}
+                initialValues={{ cc: session?.user.email ?? '', title: '', message: '' }}
                 onSubmit={submitEmailForm}
               >
                 {({ isSubmitting }) => (
-                  <Form>
+                  <Form className="mb-5 space-y-5">
+                    <TextInput type="text" Icon={EditIcon} name="title" placeholder="Input title" />
                     <RichTextInput
                       Icon={EditIcon}
                       placeholder="Enter message"
                       name="message"
                       className="mb-5"
                       inputActions={
-                        <Button
-                          ariaLabel="Submit Email"
-                          type="submit"
-                          className="absolute right-6 bottom-6 z-10 !w-fit px-10"
-                          disabled={isSubmitting}
-                        >
-                          <PaperPlaneIcon className="stroke-white" />
-                          <div>Send</div>
-                        </Button>
+                        <div className="absolute right-6 bottom-6 z-10 flex items-center space-x-6">
+                          <input type="file" name="attachment" id="email-attachment" hidden />
+                          <label htmlFor="email-attachment" className="cursor-pointer">
+                            <PaperClipIcon className="stroke-waterloo" />
+                          </label>
+                          <Button
+                            ariaLabel="Submit Email"
+                            type="submit"
+                            className="!w-fit px-10"
+                            disabled={isSubmitting}
+                          >
+                            <PaperPlaneIcon className="stroke-white" />
+                            <div>Send</div>
+                          </Button>
+                        </div>
                       }
                     />
                   </Form>
                 )}
               </Formik>
               <div className="space-y-5">
-                {emails?.map(({ id, message, createdAt }) => (
-                  <EmailCard key={`email-${id}`} message={message} createdAt={createdAt} />
+                {emails?.map(({ id, title, message, createdAt }) => (
+                  <EmailCard
+                    key={`email-${id}`}
+                    title={title}
+                    message={message}
+                    createdAt={createdAt}
+                  />
                 ))}
               </div>
             </>

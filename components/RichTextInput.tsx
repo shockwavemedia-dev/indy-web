@@ -13,7 +13,7 @@ import {
 import 'draft-js/dist/Draft.css'
 import { useFormikContext } from 'formik'
 import Link from 'next/link'
-import { KeyboardEvent, ReactNode, SyntheticEvent, useEffect, useState } from 'react'
+import { KeyboardEvent, ReactNode, SyntheticEvent, useEffect, useRef, useState } from 'react'
 import { useCreateLinkModalStore } from '../store/CreateLinkModalStore'
 import { CreateLinkForm } from '../types/forms/CreateLinkForm.type'
 import { Icon } from '../types/Icon.type'
@@ -33,7 +33,6 @@ const RichTextInput = ({
   Icon,
   placeholder,
   className,
-  readOnly = false,
   label,
   inputActions,
 }: {
@@ -41,7 +40,6 @@ const RichTextInput = ({
   Icon: Icon
   placeholder: string
   className?: string
-  readOnly?: boolean
   label?: string
   inputActions?: ReactNode
 }) => {
@@ -59,10 +57,13 @@ const RichTextInput = ({
   const [textAlignment, setTextAlignment] = useState<'left' | 'center' | 'right'>('left')
   const [isPlaceholderVisible, setPlaceHolderVisible] = useState(true)
 
+  const editorRef = useRef<Editor>(null)
+
   const onChange = (editorState: EditorState) => {
     setEditorState(editorState)
     setFieldValue(name, JSON.stringify(convertToRaw(editorState.getCurrentContent())))
   }
+
   const handleKeyCommand = (command: EditorCommand, editorState: EditorState) => {
     const newEditorState = RichUtils.handleKeyCommand(editorState, command)
 
@@ -102,7 +103,7 @@ const RichTextInput = ({
     const currentContent = editorState.getCurrentContent()
 
     setCreateLink(({ text, link }: CreateLinkForm) => {
-      setEditorState(
+      onChange(
         EditorState.createWithContent(
           Modifier.replaceText(
             currentContent,
@@ -118,7 +119,9 @@ const RichTextInput = ({
           compositeDecorator
         )
       )
+      editorRef.current?.focus()
     })
+
     setLinkText(
       currentContent
         .getBlockForKey(selection.getAnchorKey())
@@ -134,6 +137,12 @@ const RichTextInput = ({
       currentContent.hasText() || currentContent.getBlockMap().first().getType() === 'unstyled'
     )
   }, [editorState])
+
+  useEffect(() => {
+    if (!initialValue) {
+      setEditorState(EditorState.createEmpty(compositeDecorator))
+    }
+  }, [initialValue])
 
   return (
     <div className={className}>
@@ -209,10 +218,10 @@ const RichTextInput = ({
           handleKeyCommand={handleKeyCommand}
           onFocus={onFocus}
           onBlur={onBlur}
-          readOnly={readOnly}
           spellCheck={false}
           textAlignment={textAlignment}
           keyBindingFn={keyBindingFn}
+          ref={editorRef}
         />
         {inputActions}
       </div>
@@ -241,6 +250,7 @@ const StyleButton = ({
     className={`group grid h-5 w-5 place-items-center rounded ${
       isActive ? 'bg-jungle-green' : 'hover:bg-jungle-green'
     }`}
+    tabIndex={-1}
   >
     <Icon
       className={

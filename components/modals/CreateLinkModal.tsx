@@ -10,7 +10,7 @@ import TextInput from '../TextInput'
 const CreateLinkModal = () => {
   const { isModalVisible, toggleModal, createLink, linkText } = useCreateLinkModalStore()
 
-  const submitForm = async (values: CreateLinkForm) => {
+  const submitForm = (values: CreateLinkForm) => {
     createLink(values)
     toggleModal()
   }

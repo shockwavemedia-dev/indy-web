@@ -40,4 +40,4 @@ export const objectWithFileToFormData = (object: Object) => {
 }
 
 export const richTextEmptyCheck = (value?: string) =>
-  !!value && !/{"blocks":\[{"key":"(.*?)","text":""/.test(value)
+  !!value && !/^{"blocks":\[{"key":"[a-z0-9]{5}","text":""/.test(value)
