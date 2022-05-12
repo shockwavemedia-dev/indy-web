@@ -6,7 +6,6 @@ import { NewClientForm } from '../../types/forms/NewClientForm.type'
 import { objectWithFileToFormData } from '../../utils/FormHelpers'
 import Button from '../Button'
 import DateInput from '../DateInput'
-import FileInput from '../FileInput'
 import EditIcon from '../icons/EditIcon'
 import Modal from '../Modal'
 import RichTextInput from '../RichTextInput'
@@ -69,7 +68,7 @@ const NewClientModal = ({ isVisible, onClose }: { isVisible: boolean; onClose: (
                       name="clientCode"
                     />
                   </div>
-                  <FileInput label="Upload assets" name="logo" className="mb-5" />
+                  {/* <FileDropZone label="Upload assets" name="logo" className="mb-5" /> */}
                   <RichTextInput
                     Icon={EditIcon}
                     placeholder="Enter Overview"
