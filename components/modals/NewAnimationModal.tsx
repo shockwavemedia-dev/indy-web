@@ -8,7 +8,6 @@ import { NewAnimationForm } from '../../types/forms/NewAnimationForm.type'
 import { Page } from '../../types/Page.type'
 import { objectWithFileToFormData } from '../../utils/FormHelpers'
 import Button from '../Button'
-import FileInput from '../FileInput'
 import PencilIcon from '../icons/PencilIcon'
 import Modal from '../Modal'
 import Select from '../Select'
@@ -105,7 +104,7 @@ const NewAnimationModal = ({ isVisible, onClose }: { isVisible: boolean; onClose
                   name="description"
                   className="mb-5"
                 />
-                <FileInput label="Animation File" name="file" className="mb-8" />
+                {/* <FileDropZone label="Animation File" name="file" className="mb-8" /> */}
                 <div className="flex space-x-5">
                   <Button ariaLabel="Cancel" onClick={onClose} type="button" light>
                     Cancel

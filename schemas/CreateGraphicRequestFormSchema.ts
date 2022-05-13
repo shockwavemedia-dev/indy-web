@@ -8,5 +8,5 @@ export const CreateGraphicRequestFormSchema: SchemaOf<CreateGraphicRequestForm> 
   extras: array().of(string().required()),
   duedate: date().required().nullable(),
   description: string().required(),
-  attachments: mixed().required(),
+  attachments: array().of(mixed().optional()).min(1),
 })

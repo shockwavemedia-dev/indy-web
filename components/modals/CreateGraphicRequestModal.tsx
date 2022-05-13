@@ -7,7 +7,6 @@ import { useToastStore } from '../../store/ToastStore'
 import { CreateGraphicRequestForm } from '../../types/forms/CreateGraphicRequestForm.type'
 import Button from '../Button'
 import DateInput from '../DateInput'
-import FileInput from '../FileInput'
 import EditIcon from '../icons/EditIcon'
 import Modal from '../Modal'
 import RichTextInput from '../RichTextInput'
@@ -87,7 +86,7 @@ const CreateGraphicRequestModal = ({
                 name="description"
                 className="mb-5"
               />
-              <FileInput label="Upload Assets" name="attachments" className="mb-8" multiple />
+              {/* <FileDropZone label="Upload Assets" name="attachments" className="mb-8" multiple /> */}
               <div className="flex space-x-5">
                 <Button ariaLabel="Cancel" onClick={onClose} type="button" light>
                   Cancel
