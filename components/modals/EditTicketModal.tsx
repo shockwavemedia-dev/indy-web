@@ -46,6 +46,11 @@ const EditTicketModal = ({
         type: 'success',
         message: 'All changes was successfully saved',
       })
+    } else {
+      showToast({
+        type: 'error',
+        message: 'Something went wrong',
+      })
     }
 
     setSubmitting(false)

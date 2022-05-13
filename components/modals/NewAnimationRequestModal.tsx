@@ -65,6 +65,11 @@ const NewAnimationRequestModal = ({
         type: 'success',
         message: 'Succesfully saved',
       })
+    } else {
+      showToast({
+        type: 'error',
+        message: 'Something went wrong',
+      })
     }
 
     setSubmitting(false)

@@ -37,6 +37,11 @@ const DeleteTicketModal = ({
         type: 'success',
         message: 'Succesfully deleted',
       })
+    } else {
+      showToast({
+        type: 'error',
+        message: 'Something went wrong',
+      })
     }
   }
 
