@@ -3,6 +3,7 @@ import { Form, Formik } from 'formik'
 import { useState } from 'react'
 import { useQuery, useQueryClient } from 'react-query'
 import { SingleValue } from 'react-select'
+import { useToastStore } from '../../store/ToastStore'
 import { Department } from '../../types/Department.type'
 import { AddTicketAssigneeForm } from '../../types/forms/AddTicketAssigneeForm.type'
 import { Page } from '../../types/Page.type'
@@ -23,6 +24,7 @@ const AddTicketAssigneeModal = ({
   ticketId: number
 }) => {
   const queryClient = useQueryClient()
+  const { showToast } = useToastStore()
   const { data: departments } = useQuery(
     'departmentsWithUsers',
     async () => {
@@ -61,6 +63,10 @@ const AddTicketAssigneeModal = ({
     if (status === 200) {
       queryClient.invalidateQueries('assignees')
       onClose()
+      showToast({
+        type: 'success',
+        message: 'Succesfully saved',
+      })
     }
 
     setSubmitting(false)

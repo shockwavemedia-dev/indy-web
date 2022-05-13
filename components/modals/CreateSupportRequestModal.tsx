@@ -4,6 +4,7 @@ import { useSession } from 'next-auth/react'
 import { useQuery, useQueryClient } from 'react-query'
 import { TicketTypeOptions } from '../../constants/options/TicketTypeOptions'
 import { CreateSupportRequestFormSchema } from '../../schemas/CreateSupportRequestFormSchema'
+import { useToastStore } from '../../store/ToastStore'
 import { Department } from '../../types/Department.type'
 import { CreateSupportRequestForm } from '../../types/forms/CreateSupportRequestForm.type'
 import { Page } from '../../types/Page.type'
@@ -25,6 +26,7 @@ const CreateSupportRequestModal = ({
 }) => {
   const { data: session } = useSession()
   const queryClient = useQueryClient()
+  const { showToast } = useToastStore()
 
   const formInitialValues: CreateSupportRequestForm = {
     subject: '',
@@ -64,6 +66,10 @@ const CreateSupportRequestModal = ({
     if (status === 200) {
       queryClient.invalidateQueries('tickets')
       onClose()
+      showToast({
+        type: 'success',
+        message: 'Succesfully saved',
+      })
     }
 
     setSubmitting(false)

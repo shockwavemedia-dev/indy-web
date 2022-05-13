@@ -2,6 +2,7 @@ import axios from 'axios'
 import { Form, Formik } from 'formik'
 import { useQueryClient } from 'react-query'
 import { NewClientFormSchema } from '../../schemas/NewClientFormSchema'
+import { useToastStore } from '../../store/ToastStore'
 import { NewClientForm } from '../../types/forms/NewClientForm.type'
 import { objectWithFileToFormData } from '../../utils/FormHelpers'
 import Button from '../Button'
@@ -14,6 +15,7 @@ import TextInput from '../TextInput'
 
 const NewClientModal = ({ isVisible, onClose }: { isVisible: boolean; onClose: () => void }) => {
   const queryClient = useQueryClient()
+  const { showToast } = useToastStore()
 
   const formInitialValues: NewClientForm = {
     name: '',
@@ -38,6 +40,10 @@ const NewClientModal = ({ isVisible, onClose }: { isVisible: boolean; onClose: (
     if (status === 200) {
       queryClient.invalidateQueries('clients')
       onClose()
+      showToast({
+        type: 'success',
+        message: 'Succesfully saved',
+      })
     } else {
       setSubmitting(false)
     }

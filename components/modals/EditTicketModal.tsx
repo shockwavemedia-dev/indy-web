@@ -4,6 +4,7 @@ import { useQueryClient } from 'react-query'
 import { TicketStatusOptions } from '../../constants/options/TicketStatusOptions'
 import { TicketTypeOptions } from '../../constants/options/TicketTypeOptions'
 import { EditTicketFormSchema } from '../../schemas/EditTicketFormSchema'
+import { useToastStore } from '../../store/ToastStore'
 import { EditTicketForm } from '../../types/forms/EditTicketForm.type'
 import { Ticket } from '../../types/Ticket.type'
 import Button from '../Button'
@@ -26,6 +27,7 @@ const EditTicketModal = ({
   ticket: Ticket
 }) => {
   const queryClient = useQueryClient()
+  const { showToast } = useToastStore()
 
   const submitForm = async (
     values: EditTicketForm,
@@ -40,6 +42,10 @@ const EditTicketModal = ({
       queryClient.invalidateQueries(['ticket', ticket.id])
       queryClient.invalidateQueries(['activities', ticket.id])
       onClose()
+      showToast({
+        type: 'success',
+        message: 'All changes was successfully saved',
+      })
     }
 
     setSubmitting(false)

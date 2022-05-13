@@ -3,6 +3,7 @@ import { Form, Formik } from 'formik'
 import { useSession } from 'next-auth/react'
 import { useQueryClient } from 'react-query'
 import { CreateGraphicRequestFormSchema } from '../../schemas/CreateGraphicRequestFormSchema'
+import { useToastStore } from '../../store/ToastStore'
 import { CreateGraphicRequestForm } from '../../types/forms/CreateGraphicRequestForm.type'
 import Button from '../Button'
 import DateInput from '../DateInput'
@@ -22,6 +23,7 @@ const CreateGraphicRequestModal = ({
 }) => {
   const { data: session } = useSession()
   const queryClient = useQueryClient()
+  const { showToast } = useToastStore()
 
   const formInitialValues: CreateGraphicRequestForm = {
     subject: '',
@@ -44,6 +46,10 @@ const CreateGraphicRequestModal = ({
     if (status === 200) {
       queryClient.invalidateQueries('tickets')
       onClose()
+      showToast({
+        type: 'success',
+        message: 'Succesfully saved',
+      })
     }
 
     setSubmitting(false)

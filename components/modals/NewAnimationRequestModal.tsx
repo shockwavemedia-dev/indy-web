@@ -2,6 +2,7 @@ import axios from 'axios'
 import { Form, Formik } from 'formik'
 import { useQuery } from 'react-query'
 import { NewAnimationRequestFormSchema } from '../../schemas/NewAnimationRequestFormSchema'
+import { useToastStore } from '../../store/ToastStore'
 import { Animation } from '../../types/Animation.type'
 import { NewAnimationRequestForm } from '../../types/forms/NewAnimationRequestForm.type'
 import { Page } from '../../types/Page.type'
@@ -22,6 +23,7 @@ const NewAnimationRequestModal = ({
     libraryId: -1,
     description: '',
   }
+  const { showToast } = useToastStore()
 
   const { data: libraries } = useQuery(
     'libraries',
@@ -59,6 +61,10 @@ const NewAnimationRequestModal = ({
 
     if (status === 200) {
       onClose()
+      showToast({
+        type: 'success',
+        message: 'Succesfully saved',
+      })
     }
 
     setSubmitting(false)

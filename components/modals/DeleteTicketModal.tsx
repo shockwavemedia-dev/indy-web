@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { useQueryClient } from 'react-query'
 import DummyCompany from '../../public/images/dummy-company.png'
+import { useToastStore } from '../../store/ToastStore'
 import { Ticket } from '../../types/Ticket.type'
 import Button from '../Button'
 import TrashIcon from '../icons/TrashIcon'
@@ -23,6 +24,7 @@ const DeleteTicketModal = ({
 }) => {
   const { replace } = useRouter()
   const queryClient = useQueryClient()
+  const { showToast } = useToastStore()
 
   const deleteTicket = async () => {
     const { status } = await axios.delete(`/v1/tickets/${ticket.id}`)
@@ -31,6 +33,10 @@ const DeleteTicketModal = ({
       queryClient.invalidateQueries('tickets')
       onClose()
       replace('/client-panel/dashboard')
+      showToast({
+        type: 'success',
+        message: 'Succesfully deleted',
+      })
     }
   }
 

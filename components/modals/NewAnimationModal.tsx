@@ -2,6 +2,7 @@ import axios from 'axios'
 import { Form, Formik } from 'formik'
 import { useQuery } from 'react-query'
 import { NewAnimationFormSchema } from '../../schemas/NewAnimationFormSchema'
+import { useToastStore } from '../../store/ToastStore'
 import { CategoryAnimation } from '../../types/CategoryAnimation.type'
 import { NewAnimationForm } from '../../types/forms/NewAnimationForm.type'
 import { Page } from '../../types/Page.type'
@@ -20,6 +21,7 @@ const NewAnimationModal = ({ isVisible, onClose }: { isVisible: boolean; onClose
     libraryCategoryId: -1,
     file: null,
   }
+  const { showToast } = useToastStore()
 
   const { data: categories } = useQuery(
     'categories',
@@ -57,6 +59,10 @@ const NewAnimationModal = ({ isVisible, onClose }: { isVisible: boolean; onClose
 
     if (status === 200) {
       onClose()
+      showToast({
+        type: 'success',
+        message: 'Succesfully saved',
+      })
     }
 
     setSubmitting(false)
