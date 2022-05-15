@@ -17,5 +17,5 @@ export const CreateEventFormSchema: SchemaOf<CreateEventForm> = object().shape({
     .min(1),
   duedate: date().required().nullable(),
   description: string().required(),
-  attachment: mixed().optional(),
+  attachments: array().of(mixed().optional()),
 })

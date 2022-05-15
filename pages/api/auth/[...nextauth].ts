@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios, { AxiosError } from 'axios'
 import NextAuth from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import { AuthenticationResponse } from '../../../types/auth/AuthenticationResponse.type'
@@ -27,10 +27,8 @@ const nextAuth = NextAuth({
             isClient: user.userType.type === 'client_users',
           }
         } catch (e) {
-          if (axios.isAxiosError(e)) {
-            return Promise.reject(
-              new Error(e.response?.data.message || 'Something went wrong during login!')
-            )
+          if (((x): x is AxiosError<{ message: string }> => axios.isAxiosError(x))(e)) {
+            return Promise.reject(new Error(e.response?.data.message))
           }
         }
 

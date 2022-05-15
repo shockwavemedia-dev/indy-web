@@ -5,5 +5,5 @@ export type CreateEventForm = {
   services: Array<{ serviceId: number; extras: Array<string> }>
   duedate: Date | null
   description: string
-  attachment?: File
+  attachments: Array<File>
 }

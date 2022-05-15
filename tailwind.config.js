@@ -49,6 +49,7 @@ module.exports = {
         15.5: '3.875rem',
       },
       fontSize: {
+        tiny: ['.375rem', '.45rem'],
         xxs: ['.625rem', '.75rem'],
         xxl: ['1.375rem', '1.875rem'],
         '2.5xl': ['1.75rem', '2.125rem'],
@@ -133,6 +134,7 @@ module.exports = {
     },
     fontFamily: {
       urbanist: ['Urbanist'],
+      'varela-round': ['Varela Round'],
     },
     colors: {
       transparent: 'transparent',
@@ -155,6 +157,7 @@ module.exports = {
       'alice-blue': '#E9F5FF',
       'purple-x11': '#A232E7',
       'tart-orange': '#FF4842',
+      'mint-cream': '#F7FCFA',
     },
   },
   plugins: [require('@tailwindcss/line-clamp')],

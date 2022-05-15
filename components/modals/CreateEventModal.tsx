@@ -7,7 +7,7 @@ import { CreateEventForm } from '../../types/forms/CreateEventForm.type'
 import { objectWithFileToFormData } from '../../utils/FormHelpers'
 import Button from '../Button'
 import DateInput from '../DateInput'
-import FileInput from '../FileInput'
+import FileDropZone from '../FileDropZone'
 import EditIcon from '../icons/EditIcon'
 import Modal from '../Modal'
 import RichTextInput from '../RichTextInput'
@@ -26,6 +26,7 @@ const CreateEventModal = ({ isVisible, onClose }: { isVisible: boolean; onClose:
     services: [],
     duedate: null,
     description: '',
+    attachments: [],
   }
 
   const submitForm = async (values: CreateEventForm) => {
@@ -65,7 +66,15 @@ const CreateEventModal = ({ isVisible, onClose }: { isVisible: boolean; onClose:
                   name="description"
                   className="mb-5"
                 />
-                <FileInput label="Upload Assets" name="attachment" className="mb-8" />
+                <FileDropZone
+                  label="Upload Assets"
+                  name="attachments"
+                  className="mb-8"
+                  maxSize={250}
+                  mimeType="image/gif"
+                  accept={['.gif']}
+                  multiple
+                />
                 <div className="flex space-x-5">
                   <Button ariaLabel="Cancel" onClick={onClose} type="button" light>
                     Cancel

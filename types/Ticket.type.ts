@@ -14,6 +14,9 @@ export type Ticket = {
   type: TicketType
   status: TicketStatus
   createdAt: Date
-  attachment?: string
+  attachments: {
+    id: string
+    url: string
+  }
   services?: Array<Service>
 }

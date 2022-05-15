@@ -9,24 +9,25 @@ export const objectWithFileToFormData = (object: Object) => {
 
   const formData = serialize(
     snakecaseKeys(
-      Object.entries(object)
-        .filter(([key, value]) => {
-          if (value instanceof File) {
+      Object.entries(object).reduce<Record<string, unknown>>((newObject, [key, value]) => {
+        if (value instanceof File) {
+          files.push({
+            key,
+            file: value,
+          })
+        } else if (Array.isArray(value) && value.every((file) => file instanceof File)) {
+          value.forEach((file) => {
             files.push({
-              key,
-              file: value,
+              key: `${key}[]`,
+              file,
             })
-
-            return false
-          }
-
-          return true
-        })
-        .reduce<Record<string, unknown>>((newObject, [key, value]) => {
+          })
+        } else {
           newObject[key] = value
+        }
 
-          return newObject
-        }, {}),
+        return newObject
+      }, {}),
       { deep: true }
     ),
     {
@@ -34,7 +35,7 @@ export const objectWithFileToFormData = (object: Object) => {
     }
   )
 
-  files.forEach(({ key, file }) => formData.set(key, file))
+  files.forEach(({ key, file }) => formData.append(key, file))
 
   return formData
 }
