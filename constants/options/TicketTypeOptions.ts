@@ -3,6 +3,7 @@ import { SelectOption } from '../../types/SelectOption.type'
 
 export const TicketTypeOptions: Options<SelectOption<string>> = [
   { label: 'Email', value: 'email' },
+  { label: 'Library', value: 'library' },
   { label: 'Event', value: 'event' },
   { label: 'Graphic', value: 'graphic' },
   { label: 'Print', value: 'print' },
