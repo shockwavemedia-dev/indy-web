@@ -21,7 +21,7 @@ const Home: NextPageWithLayout = () => {
       if (role === 'admin') {
         replace('/admin-panel/clients')
       } else if (role === 'account_manager') {
-        // put redirect here
+        replace('/manager-panel/dashboard')
       }
     } else if (type === 'client_users') {
       replace('/client-panel/dashboard')
