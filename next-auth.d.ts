@@ -8,16 +8,12 @@ declare module 'next-auth' {
     accessToken: string
     accessTokenTtl: number
     user: AuthenticationResponseUser
-    isAdmin: boolean
-    isClient: boolean
   }
 
   interface User {
     accessToken: string
     accessTokenTtl: number
     user: AuthenticationUser
-    isAdmin: boolean
-    isClient: boolean
   }
 }
 
@@ -26,7 +22,5 @@ declare module 'next-auth/jwt' {
     accessToken: string
     accessTokenTtl: number
     user: AuthenticationUser
-    isAdmin: boolean
-    isClient: boolean
   }
 }
