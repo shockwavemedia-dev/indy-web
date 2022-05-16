@@ -32,7 +32,7 @@ import ActivityCard from '../../../components/TicketActivityCard'
 import EmailCard from '../../../components/TicketEmailCard'
 import NoteCard from '../../../components/TicketNoteCard'
 import TitleValue from '../../../components/TitleValue'
-import { ClientRoutes } from '../../../constants/routes/ClientRoutes'
+import { ManagerRoutes } from '../../../constants/routes/ManagerRoutes'
 import { TicketAssigneeTableColumns } from '../../../constants/tables/TicketAssigneeTableColumns'
 import PanelLayout from '../../../layouts/PanelLayout'
 import DummyCompany from '../../../public/images/dummy-company.png'
@@ -60,7 +60,9 @@ const Ticket: NextPageWithLayout = () => {
 
     return data
   })
+
   const queryClient = useQueryClient()
+
   const {
     activeTicketAssignee,
     isEditTicketAssigneeModalVisible,
@@ -452,6 +454,6 @@ const Ticket: NextPageWithLayout = () => {
   )
 }
 
-Ticket.getLayout = (page: ReactElement) => <PanelLayout routes={ClientRoutes}>{page}</PanelLayout>
+Ticket.getLayout = (page: ReactElement) => <PanelLayout routes={ManagerRoutes}>{page}</PanelLayout>
 
 export default Ticket
