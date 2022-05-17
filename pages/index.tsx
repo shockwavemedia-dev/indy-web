@@ -11,9 +11,19 @@ const Home: NextPageWithLayout = () => {
   }
 
   if (status === 'authenticated') {
-    if (session?.isAdmin) {
-      replace('/admin-panel/clients')
-    } else if (session?.isClient) {
+    const {
+      user: {
+        userType: { type, role },
+      },
+    } = session
+
+    if (type === 'admin_users') {
+      if (role === 'admin') {
+        replace('/admin-panel/clients')
+      } else if (role === 'account_manager' || role === 'manager') {
+        replace('/manager-panel/dashboard')
+      }
+    } else if (type === 'client_users') {
       replace('/client-panel/dashboard')
     }
   }

@@ -83,7 +83,7 @@ const CreateEventModal = ({ isVisible, onClose }: { isVisible: boolean; onClose:
                   className="mb-8"
                   maxSize={250}
                   mimeType="image/gif"
-                  accept={['.gif']}
+                  accept={['.gif', '.jpeg', '.mp4', '.png']}
                   multiple
                 />
                 <div className="flex space-x-5">

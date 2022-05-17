@@ -1,3 +1,4 @@
+import { useSession } from 'next-auth/react'
 import Head from 'next/head'
 import { ReactElement, useState } from 'react'
 import Card from '../../components/Card'
@@ -15,12 +16,14 @@ import CreateEventModal from '../../components/modals/CreateEventModal'
 import CreateSupportRequestModal from '../../components/modals/CreateSupportRequestModal'
 import DeleteTicketModal from '../../components/modals/DeleteTicketModal'
 import EditTicketModal from '../../components/modals/EditTicketModal'
-import { ClientRoutes } from '../../constants/routes/ClientRoutes'
-import { ClientTicketsTableColumns } from '../../constants/tables/ClientTicketsTableColumns'
+import { ManagerRoutes } from '../../constants/routes/ManagerRoutes'
+import { ManagerTicketsTableColumns } from '../../constants/tables/ManagerTicketsTableColumns'
 import PanelLayout from '../../layouts/PanelLayout'
 import { useTicketStore } from '../../store/TicketStore'
 import { NextPageWithLayout } from '../../types/pages/NextPageWithLayout.type'
 const Dashboard: NextPageWithLayout = () => {
+  const { data: session } = useSession()
+
   const {
     activeTicket,
     isEditTicketModalVisible,
@@ -91,10 +94,10 @@ const Dashboard: NextPageWithLayout = () => {
         <div className="mb-6 flex min-h-155 space-x-6">
           <Card title="Project Status Table" className="w-full max-w-228">
             <DataTable
-              columns={ClientTicketsTableColumns}
-              dataEndpoint="/v1/tickets"
+              columns={ManagerTicketsTableColumns}
+              dataEndpoint={`/v1/departments/${session?.user.userType.departments[0].id}/tickets`}
               tableQueryKey="tickets"
-              ofString="Projects"
+              ofString="Tickets"
               settings
               periodicFilter
             />
@@ -176,7 +179,7 @@ const Dashboard: NextPageWithLayout = () => {
 }
 
 Dashboard.getLayout = (page: ReactElement) => (
-  <PanelLayout routes={ClientRoutes}>{page}</PanelLayout>
+  <PanelLayout routes={ManagerRoutes}>{page}</PanelLayout>
 )
 
 export default Dashboard
