@@ -1,3 +1,4 @@
+import { useSession } from 'next-auth/react'
 import Head from 'next/head'
 import { ReactElement, useState } from 'react'
 import Card from '../../components/Card'
@@ -21,6 +22,8 @@ import PanelLayout from '../../layouts/PanelLayout'
 import { useTicketStore } from '../../store/TicketStore'
 import { NextPageWithLayout } from '../../types/pages/NextPageWithLayout.type'
 const Dashboard: NextPageWithLayout = () => {
+  const { data: session } = useSession()
+
   const {
     activeTicket,
     isEditTicketModalVisible,
@@ -92,7 +95,7 @@ const Dashboard: NextPageWithLayout = () => {
           <Card title="Project Status Table" className="w-full max-w-228">
             <DataTable
               columns={ManagerTicketsTableColumns}
-              dataEndpoint="/v1/departments/1/tickets"
+              dataEndpoint={`/v1/departments/${session?.user.userType.departments[0].id}/tickets`}
               tableQueryKey="tickets"
               ofString="Tickets"
               settings
