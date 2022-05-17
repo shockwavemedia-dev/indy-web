@@ -2,6 +2,7 @@ import axios from 'axios'
 import { Form, Formik } from 'formik'
 import { useQueryClient } from 'react-query'
 import { NewDepartmentFormSchema } from '../../schemas/NewDepartmentFormSchema'
+import { useToastStore } from '../../store/ToastStore'
 import { NewDepartmentForm } from '../../types/forms/NewDepartmentForm.type'
 import Button from '../Button'
 import PencilIcon from '../icons/PencilIcon'
@@ -16,6 +17,7 @@ const NewDepartmentModal = ({
   onClose: () => void
 }) => {
   const queryClient = useQueryClient()
+  const { showToast } = useToastStore()
 
   const formInitialValues: NewDepartmentForm = {
     name: '',
@@ -34,6 +36,15 @@ const NewDepartmentModal = ({
     if (status === 200) {
       queryClient.invalidateQueries('departments')
       onClose()
+      showToast({
+        type: 'success',
+        message: 'New Department successfully created!',
+      })
+    } else {
+      showToast({
+        type: 'error',
+        message: 'Something went wrong',
+      })
     }
 
     setSubmitting(false)

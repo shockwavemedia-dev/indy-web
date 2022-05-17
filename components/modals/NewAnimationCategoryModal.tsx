@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { Form, Formik } from 'formik'
 import { NewAnimationCategoryFormSchema } from '../../schemas/NewAnimationCategoryFormSchema'
+import { useToastStore } from '../../store/ToastStore'
 import { NewAnimationCategoryForm } from '../../types/forms/NewAnimationCategoryForm.type'
 import Button from '../Button'
 import PencilIcon from '../icons/PencilIcon'
@@ -17,6 +18,7 @@ const NewAnimationCategoryModal = ({
   const formInitialValues: NewAnimationCategoryForm = {
     name: '',
   }
+  const { showToast } = useToastStore()
 
   const submitForm = async (
     values: NewAnimationCategoryForm,
@@ -28,6 +30,15 @@ const NewAnimationCategoryModal = ({
 
     if (status === 200) {
       onClose()
+      showToast({
+        type: 'success',
+        message: 'New Animation Category successfully created!',
+      })
+    } else {
+      showToast({
+        type: 'error',
+        message: 'Something went wrong',
+      })
     }
 
     setSubmitting(false)

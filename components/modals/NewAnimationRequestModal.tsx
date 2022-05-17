@@ -2,6 +2,7 @@ import axios from 'axios'
 import { Form, Formik } from 'formik'
 import { useQuery } from 'react-query'
 import { NewAnimationRequestFormSchema } from '../../schemas/NewAnimationRequestFormSchema'
+import { useToastStore } from '../../store/ToastStore'
 import { Animation } from '../../types/Animation.type'
 import { NewAnimationRequestForm } from '../../types/forms/NewAnimationRequestForm.type'
 import { Page } from '../../types/Page.type'
@@ -23,6 +24,7 @@ const NewAnimationRequestModal = ({
     libraryId: -1,
     description: '',
   }
+  const { showToast } = useToastStore()
 
   const { data: libraries } = useQuery(
     'libraries',
@@ -56,10 +58,19 @@ const NewAnimationRequestModal = ({
   ) => {
     setSubmitting(true)
 
-    const { status } = await axios.post(`/v1/libraries/${values.libraryId}/ticket`, values)
+    const { status, data } = await axios.post(`/v1/libraries/${values.libraryId}/ticket`, values)
 
     if (status === 200) {
       onClose()
+      showToast({
+        type: 'success',
+        message: `New Ticket ${data.ticketCode} successfully created!`,
+      })
+    } else {
+      showToast({
+        type: 'error',
+        message: 'Something went wrong',
+      })
     }
 
     setSubmitting(false)

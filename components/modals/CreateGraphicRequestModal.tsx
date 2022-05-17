@@ -3,6 +3,7 @@ import { Form, Formik } from 'formik'
 import { useSession } from 'next-auth/react'
 import { useQueryClient } from 'react-query'
 import { CreateGraphicRequestFormSchema } from '../../schemas/CreateGraphicRequestFormSchema'
+import { useToastStore } from '../../store/ToastStore'
 import { CreateGraphicRequestForm } from '../../types/forms/CreateGraphicRequestForm.type'
 import Button from '../Button'
 import DateInput from '../DateInput'
@@ -21,6 +22,7 @@ const CreateGraphicRequestModal = ({
 }) => {
   const { data: session } = useSession()
   const queryClient = useQueryClient()
+  const { showToast } = useToastStore()
 
   const formInitialValues: CreateGraphicRequestForm = {
     subject: '',
@@ -38,11 +40,20 @@ const CreateGraphicRequestModal = ({
   ) => {
     setSubmitting(true)
     values.extras = ['DL', 'A4']
-    const { status } = await axios.post('/v1/graphics', values)
+    const { status, data } = await axios.post('/v1/graphics', values)
 
     if (status === 200) {
       queryClient.invalidateQueries('tickets')
       onClose()
+      showToast({
+        type: 'success',
+        message: `New Ticket ${data.ticketCode} successfully created!`,
+      })
+    } else {
+      showToast({
+        type: 'error',
+        message: 'Something went wrong',
+      })
     }
 
     setSubmitting(false)

@@ -5,6 +5,7 @@ import { useQueryClient } from 'react-query'
 import { AdminUserRoleOptions } from '../../constants/options/AdminUserRoleOptions'
 import { UserGenderOptions } from '../../constants/options/UserGenderOptions'
 import { NewAdminUserFormSchema } from '../../schemas/NewAdminUserFormSchema'
+import { useToastStore } from '../../store/ToastStore'
 import { NewAdminUserForm } from '../../types/forms/NewAdminUserForm.type'
 import Button from '../Button'
 import DateInput from '../DateInput'
@@ -21,6 +22,7 @@ import TextInput from '../TextInput'
 
 const NewAdminUserModal = ({ isVisible, onClose }: { isVisible: boolean; onClose: () => void }) => {
   const queryClient = useQueryClient()
+  const { showToast } = useToastStore()
 
   const formInitialValues: NewAdminUserForm = {
     email: '',
@@ -51,6 +53,15 @@ const NewAdminUserModal = ({ isVisible, onClose }: { isVisible: boolean; onClose
     if (status === 200) {
       queryClient.invalidateQueries('clients')
       onClose()
+      showToast({
+        type: 'success',
+        message: 'New User successfully created!',
+      })
+    } else {
+      showToast({
+        type: 'error',
+        message: 'Something went wrong',
+      })
     }
 
     setSubmitting(false)

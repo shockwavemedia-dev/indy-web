@@ -3,6 +3,7 @@ import { Form, Formik } from 'formik'
 import { useSession } from 'next-auth/react'
 import { useQueryClient } from 'react-query'
 import { CreateEventFormSchema } from '../../schemas/CreateEventFormSchema'
+import { useToastStore } from '../../store/ToastStore'
 import { CreateEventForm } from '../../types/forms/CreateEventForm.type'
 import { objectWithFileToFormData } from '../../utils/FormHelpers'
 import Button from '../Button'
@@ -18,6 +19,7 @@ import CreateLinkModal from './CreateLinkModal'
 const CreateEventModal = ({ isVisible, onClose }: { isVisible: boolean; onClose: () => void }) => {
   const { data: session } = useSession()
   const queryClient = useQueryClient()
+  const { showToast } = useToastStore()
 
   const formInitialValues: CreateEventForm = {
     requestedBy: session?.user.id || -1,
@@ -30,11 +32,20 @@ const CreateEventModal = ({ isVisible, onClose }: { isVisible: boolean; onClose:
   }
 
   const submitForm = async (values: CreateEventForm) => {
-    const { status } = await axios.post('/v1/tickets/event', objectWithFileToFormData(values))
+    const { status, data } = await axios.post('/v1/tickets/event', objectWithFileToFormData(values))
 
     if (status === 200) {
       queryClient.invalidateQueries('tickets')
       onClose()
+      showToast({
+        type: 'success',
+        message: `New Ticket ${data.ticketCode} successfully created!`,
+      })
+    } else {
+      showToast({
+        type: 'error',
+        message: 'Something went wrong',
+      })
     }
   }
 

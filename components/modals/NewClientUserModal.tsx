@@ -5,6 +5,7 @@ import { useQuery, useQueryClient } from 'react-query'
 import { ClientUserRoleOptions } from '../../constants/options/ClientUserRoleOptions'
 import { UserGenderOptions } from '../../constants/options/UserGenderOptions'
 import { NewClientUserFormSchema } from '../../schemas/NewClientUserFormSchema'
+import { useToastStore } from '../../store/ToastStore'
 import { Client } from '../../types/Client.type'
 import { NewClientUserForm } from '../../types/forms/NewClientUserForm.type'
 import { Page } from '../../types/Page.type'
@@ -30,6 +31,7 @@ const NewClientUserModal = ({
   onClose: () => void
 }) => {
   const queryClient = useQueryClient()
+  const { showToast } = useToastStore()
 
   const formInitialValues: NewClientUserForm = {
     email: '',
@@ -89,6 +91,15 @@ const NewClientUserModal = ({
     if (status === 200) {
       queryClient.invalidateQueries('clients')
       onClose()
+      showToast({
+        type: 'success',
+        message: 'New User successfully created!',
+      })
+    } else {
+      showToast({
+        type: 'error',
+        message: 'Something went wrong',
+      })
     }
 
     setSubmitting(false)

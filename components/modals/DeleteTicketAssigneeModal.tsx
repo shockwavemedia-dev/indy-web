@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { useQueryClient } from 'react-query'
+import { useToastStore } from '../../store/ToastStore'
 import { TicketAssignee } from '../../types/TicketAssignee.type'
 import Button from '../Button'
 import TrashIcon from '../icons/TrashIcon'
@@ -16,6 +17,7 @@ const DeleteTicketAssigneeModal = ({
   ticketAssignee: TicketAssignee
 }) => {
   const queryClient = useQueryClient()
+  const { showToast } = useToastStore()
 
   const deleteTicketAssignee = async () => {
     const { status } = await axios.delete(`/v1/ticket-assignees/${ticketAssignee.adminUserId}`)
@@ -23,6 +25,15 @@ const DeleteTicketAssigneeModal = ({
     if (status === 200) {
       queryClient.invalidateQueries('assignees')
       onClose()
+      showToast({
+        type: 'success',
+        message: 'Ticket Assignee successfully deleted!',
+      })
+    } else {
+      showToast({
+        type: 'error',
+        message: 'Something went wrong',
+      })
     }
   }
 
