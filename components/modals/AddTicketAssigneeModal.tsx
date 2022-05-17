@@ -58,16 +58,18 @@ const AddTicketAssigneeModal = ({
   ) => {
     setSubmitting(true)
 
-    const { status } = await axios.post(`/v1/tickets/${ticketId}/assign`, values)
+    try {
+      const { status } = await axios.post(`/v1/tickets/${ticketId}/assign`, values)
 
-    if (status === 200) {
-      queryClient.invalidateQueries('assignees')
-      onClose()
-      showToast({
-        type: 'success',
-        message: 'New Ticket Assignee successfully created!',
-      })
-    } else {
+      if (status === 200) {
+        queryClient.invalidateQueries('assignees')
+        onClose()
+        showToast({
+          type: 'success',
+          message: 'New Ticket Assignee successfully created!',
+        })
+      }
+    } catch (e) {
       showToast({
         type: 'error',
         message: 'Something went wrong',

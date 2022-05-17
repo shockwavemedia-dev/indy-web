@@ -16,7 +16,6 @@ import Modal from '../Modal'
 import RichTextInput from '../RichTextInput'
 import Select from '../Select'
 import TextInput from '../TextInput'
-
 const EditTicketModal = ({
   isVisible,
   onClose,
@@ -35,18 +34,20 @@ const EditTicketModal = ({
   ) => {
     setSubmitting(true)
 
-    const { status } = await axios.put(`/v1/tickets/${ticket.id}`, values)
+    try {
+      const { status } = await axios.put(`/v1/tickets/${ticket.id}`, values)
 
-    if (status === 200) {
-      queryClient.invalidateQueries('tickets')
-      queryClient.invalidateQueries(['ticket', ticket.id])
-      queryClient.invalidateQueries(['activities', ticket.id])
-      onClose()
-      showToast({
-        type: 'success',
-        message: 'All changes was successfully saved',
-      })
-    } else {
+      if (status === 200) {
+        queryClient.invalidateQueries('tickets')
+        queryClient.invalidateQueries(['ticket', ticket.id])
+        queryClient.invalidateQueries(['activities', ticket.id])
+        onClose()
+        showToast({
+          type: 'success',
+          message: 'All changes was successfully saved',
+        })
+      }
+    } catch (e) {
       showToast({
         type: 'error',
         message: 'Something went wrong',

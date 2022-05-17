@@ -27,17 +27,22 @@ const DeleteTicketModal = ({
   const { showToast } = useToastStore()
 
   const deleteTicket = async () => {
-    const { status, data } = await axios.delete(`/v1/tickets/${ticket.id}`)
+    try {
+      const {
+        status,
+        data: { ticketCode },
+      } = await axios.delete(`/v1/tickets/${ticket.id}`)
 
-    if (status === 200) {
-      queryClient.invalidateQueries('tickets')
-      onClose()
-      replace('/client-panel/dashboard')
-      showToast({
-        type: 'success',
-        message: `Ticket ${data.ticketCode} successfully deleted!`,
-      })
-    } else {
+      if (status === 200) {
+        queryClient.invalidateQueries('tickets')
+        onClose()
+        replace('/client-panel/dashboard')
+        showToast({
+          type: 'success',
+          message: `Ticket ${ticketCode} successfully deleted!`,
+        })
+      }
+    } catch (e) {
       showToast({
         type: 'error',
         message: 'Something went wrong',

@@ -8,6 +8,7 @@ import { useToastStore } from '../../store/ToastStore'
 import { Department } from '../../types/Department.type'
 import { CreateSupportRequestForm } from '../../types/forms/CreateSupportRequestForm.type'
 import { Page } from '../../types/Page.type'
+import { Ticket } from '../../types/Ticket.type'
 import Button from '../Button'
 import DateInput from '../DateInput'
 import ClipboardIcon from '../icons/ClipboardIcon'
@@ -61,16 +62,21 @@ const CreateSupportRequestModal = ({
   ) => {
     setSubmitting(true)
 
-    const { status, data } = await axios.post('/v1/tickets', values)
+    try {
+      const {
+        status,
+        data: { ticketCode },
+      } = await axios.post<Ticket>('/v1/tickets', values)
 
-    if (status === 200) {
-      queryClient.invalidateQueries('tickets')
-      onClose()
-      showToast({
-        type: 'success',
-        message: `New Ticket ${data.ticketCode} successfully created!`,
-      })
-    } else {
+      if (status === 200) {
+        queryClient.invalidateQueries('tickets')
+        onClose()
+        showToast({
+          type: 'success',
+          message: `New Ticket ${ticketCode} successfully created!`,
+        })
+      }
+    } catch (e) {
       showToast({
         type: 'error',
         message: 'Something went wrong',

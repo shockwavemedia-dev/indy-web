@@ -86,16 +86,18 @@ const NewClientUserModal = ({
   ) => {
     setSubmitting(true)
 
-    const { status } = await axios.post('/v1/users/client', values)
+    try {
+      const { status } = await axios.post('/v1/users/client', values)
 
-    if (status === 200) {
-      queryClient.invalidateQueries('clients')
-      onClose()
-      showToast({
-        type: 'success',
-        message: 'New User successfully created!',
-      })
-    } else {
+      if (status === 200) {
+        queryClient.invalidateQueries('clients')
+        onClose()
+        showToast({
+          type: 'success',
+          message: 'New User successfully created!',
+        })
+      }
+    } catch (e) {
       showToast({
         type: 'error',
         message: 'Something went wrong',
