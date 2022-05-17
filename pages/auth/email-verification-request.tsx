@@ -57,7 +57,7 @@ const EmailVerificationRequest: NextPageWithLayout = () => {
             <Button
               ariaLabel="Send Link"
               disabled={isSubmitting}
-              className="mb-5 max-w-75"
+              className="mb-5 w-75"
               type="submit"
             >
               <div>Send Email Verification Link</div>

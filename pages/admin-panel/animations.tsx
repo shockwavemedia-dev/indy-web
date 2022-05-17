@@ -29,7 +29,7 @@ const Animations: NextPageWithLayout = () => {
       <div className="mb-8 flex space-x-10">
         <FancyButton
           Icon={
-            <div className="flex min-h-11 min-w-11 items-center justify-center rounded-lg bg-honeydew">
+            <div className="grid h-11 w-11 flex-none place-items-center rounded-lg bg-honeydew">
               <UserIcon className="stroke-jungle-green" />
             </div>
           }
@@ -40,7 +40,7 @@ const Animations: NextPageWithLayout = () => {
         />
         <FancyButton
           Icon={
-            <div className="flex min-h-11 min-w-11 items-center justify-center rounded-lg bg-honeydew">
+            <div className="grid h-11 w-11 flex-none place-items-center rounded-lg bg-honeydew">
               <VideoIcon className="stroke-jungle-green" />
             </div>
           }
@@ -50,7 +50,7 @@ const Animations: NextPageWithLayout = () => {
           className="row-span-1 w-fit"
         />
       </div>
-      <Card title="Animations" className="row-span-11">
+      <Card title="Animations">
         <DataTable
           dataEndpoint="/v1/libraries"
           columns={AnimationTableColumns}

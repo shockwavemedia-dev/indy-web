@@ -33,7 +33,7 @@ const PanelLayout = ({ routes, children }: { routes: Array<Route>; children: Rea
     <>
       <ToastContainer />
       <div className="flex min-h-screen overflow-x-clip bg-ghost-white">
-        <div className="flex min-w-75 flex-col bg-white pt-6">
+        <div className="w-75 flex-none bg-white pt-6">
           <div className="mb-5 pl-6">
             <Image
               draggable={false}

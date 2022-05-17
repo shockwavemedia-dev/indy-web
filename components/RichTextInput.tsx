@@ -12,7 +12,6 @@ import {
 } from 'draft-js'
 import 'draft-js/dist/Draft.css'
 import { useFormikContext } from 'formik'
-import Link from 'next/link'
 import { KeyboardEvent, ReactNode, SyntheticEvent, useEffect, useRef, useState } from 'react'
 import { useCreateLinkModalStore } from '../store/CreateLinkModalStore'
 import { CreateLinkForm } from '../types/forms/CreateLinkForm.type'
@@ -154,7 +153,7 @@ const RichTextInput = ({
       </label>
       <div
         className={`relative overflow-hidden rounded-xl bg-white ${
-          isEditorFocused ? 'ring-2 ring-jungle-green ring-opacity-40' : 'ring-1 ring-bright-gray '
+          isEditorFocused ? 'ring-2 ring-jungle-green' : 'ring-1 ring-bright-gray '
         }`}
         id="rich-text-input"
       >
@@ -275,11 +274,14 @@ const compositeDecorator = new CompositeDecorator([
       }, callback)
     },
     component: (props: DraftDecoratorComponentProps) => (
-      <Link href={props.contentState.getEntity(props.entityKey).getData().link}>
-        <a target="_blank" rel="noopener noreferrer" className="text-bleu-de-france underline">
-          {props.children}
-        </a>
-      </Link>
+      <a
+        target="_blank"
+        rel="noopener noreferrer"
+        href={props.contentState.getEntity(props.entityKey).getData().link}
+        className="text-bleu-de-france underline"
+      >
+        {props.children}
+      </a>
     ),
   },
 ])

@@ -6,7 +6,6 @@ import {
   EditorState,
 } from 'draft-js'
 import 'draft-js/dist/Draft.css'
-import Link from 'next/link'
 
 const RichTextDisplay = ({ value, className }: { value: string; className?: string }) => {
   return (
@@ -32,11 +31,14 @@ const compositeDecorator = new CompositeDecorator([
       }, callback)
     },
     component: (props: DraftDecoratorComponentProps) => (
-      <Link href={props.contentState.getEntity(props.entityKey).getData().link}>
-        <a target="_blank" rel="noopener noreferrer" className="text-bleu-de-france underline">
-          {props.children}
-        </a>
-      </Link>
+      <a
+        target="_blank"
+        rel="noopener noreferrer"
+        href={props.contentState.getEntity(props.entityKey).getData().link}
+        className="text-bleu-de-france underline"
+      >
+        {props.children}
+      </a>
     ),
   },
 ])

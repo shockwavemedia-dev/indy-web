@@ -32,6 +32,7 @@ export const ClientRoutes: Array<Route> = [
   },
   {
     title: 'My Files',
+    pathname: '/client-panel/my-files',
     Icon: FolderIcon,
   },
   {

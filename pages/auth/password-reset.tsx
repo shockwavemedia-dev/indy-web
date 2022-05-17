@@ -76,7 +76,7 @@ const PasswordReset: NextPageWithLayout = () => {
             <Button
               ariaLabel="Save New Password"
               disabled={isSubmitting}
-              className="mb-5 max-w-75"
+              className="mb-5 w-75"
               type="submit"
             >
               <FloppyDiskIcon className="stroke-white" />

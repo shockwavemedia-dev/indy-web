@@ -46,7 +46,7 @@ const FileDropZone = ({
       <div className="mb-2 font-urbanist text-base font-medium text-onyx">{label}</div>
       <div
         {...getRootProps()}
-        className={`flex min-h-35 cursor-default items-center justify-center overflow-hidden rounded-xl border border-dashed ${
+        className={`flex h-35 cursor-default items-center justify-center overflow-hidden rounded-xl border border-dashed ${
           isDragAccept ? 'border-jungle-green bg-mint-cream' : 'border-lavender-gray bg-ghost-white'
         }`}
       >

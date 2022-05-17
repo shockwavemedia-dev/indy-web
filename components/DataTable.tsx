@@ -172,7 +172,7 @@ const DataTable = <T extends Record<string, unknown>>({
               </tbody>
             </table>
           </div>
-          <div className="relative flex min-h-5 items-center justify-center">
+          <div className="relative flex items-center justify-center">
             <div className="absolute left-0 font-urbanist text-sm font-medium text-metallic-silver">
               {pageIndex * pageSize + 1}-
               {pageIndex + 1 === pagination?.page.lastPage

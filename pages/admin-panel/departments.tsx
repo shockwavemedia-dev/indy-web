@@ -23,7 +23,7 @@ const Departments: NextPageWithLayout = () => {
       <div className="mx-auto grid h-262.5 w-270 grid-rows-10 gap-6">
         <FancyButton
           Icon={
-            <div className="flex min-h-11 min-w-11 items-center justify-center rounded-lg bg-honeydew">
+            <div className="grid h-11 w-11 flex-none place-items-center rounded-lg bg-honeydew">
               <UserIcon className="stroke-jungle-green" />
             </div>
           }

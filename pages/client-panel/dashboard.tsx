@@ -46,7 +46,7 @@ const Dashboard: NextPageWithLayout = () => {
         <div className="mb-6 flex space-x-6">
           <FancyButton
             Icon={
-              <div className="flex min-h-11 min-w-11 items-center justify-center rounded-lg bg-honeydew">
+              <div className="grid h-11 w-11 flex-none place-items-center rounded-lg bg-honeydew">
                 <CalendarAddIcon className="stroke-jungle-green" />
               </div>
             }
@@ -56,7 +56,7 @@ const Dashboard: NextPageWithLayout = () => {
           />
           <FancyButton
             Icon={
-              <div className="flex min-h-11 min-w-11 items-center justify-center rounded-lg bg-alice-blue">
+              <div className="grid h-11 w-11 flex-none place-items-center rounded-lg bg-alice-blue">
                 <ClipboardCloseIcon className="stroke-bleu-de-france" />
               </div>
             }
@@ -67,7 +67,7 @@ const Dashboard: NextPageWithLayout = () => {
           />
           <FancyButton
             Icon={
-              <div className="flex min-h-11 min-w-11 items-center justify-center rounded-lg bg-cosmic-latte">
+              <div className="bas grid h-11 w-11 flex-none place-items-center rounded-lg bg-cosmic-latte">
                 <PresentationChartIcon className="stroke-deep-saffron" />
               </div>
             }
@@ -78,7 +78,7 @@ const Dashboard: NextPageWithLayout = () => {
           />
           <FancyButton
             Icon={
-              <div className="flex min-h-11 min-w-11 items-center justify-center rounded-lg bg-linen">
+              <div className="grid h-11 w-11 flex-none place-items-center rounded-lg bg-linen">
                 <LifeBuoyIcon className="fill-vivid-red-tangelo" />
               </div>
             }
@@ -88,8 +88,8 @@ const Dashboard: NextPageWithLayout = () => {
           />
         </div>
         <hr className="mb-6 border-t-bright-gray" />
-        <div className="mb-6 flex min-h-155 space-x-6">
-          <Card title="Project Status Table" className="w-full max-w-228">
+        <div className="mb-6 flex h-155 space-x-6">
+          <Card title="Project Status Table" className="flex w-228 flex-col">
             <DataTable
               columns={ClientTicketsTableColumns}
               dataEndpoint="/v1/tickets"
@@ -99,11 +99,11 @@ const Dashboard: NextPageWithLayout = () => {
               periodicFilter
             />
           </Card>
-          <div className="flex flex-col">
+          <div className="flex flex-1 flex-col">
             <div className="mb-3 flex space-x-3">
               <CountCard
                 Icon={
-                  <div className="flex min-h-11.5 min-w-11.5 items-center justify-center rounded-lg bg-cosmic-latte">
+                  <div className="grid h-11.5 w-11.5 flex-none place-items-center rounded-lg bg-cosmic-latte">
                     <VideoIcon className="stroke-deep-saffron" />
                   </div>
                 }
@@ -113,7 +113,7 @@ const Dashboard: NextPageWithLayout = () => {
               />
               <CountCard
                 Icon={
-                  <div className="flex min-h-11.5 min-w-11.5 items-center justify-center rounded-lg bg-honeydew">
+                  <div className="grid h-11.5 w-11.5 flex-none place-items-center rounded-lg bg-honeydew">
                     <GalleryIcon className="stroke-jungle-green" />
                   </div>
                 }
@@ -124,7 +124,7 @@ const Dashboard: NextPageWithLayout = () => {
             <div className="mb-6 flex space-x-3">
               <CountCard
                 Icon={
-                  <div className="flex min-h-11.5 min-w-11.5 items-center justify-center rounded-lg bg-alice-blue">
+                  <div className="grid h-11.5 w-11.5 flex-none place-items-center rounded-lg bg-alice-blue">
                     <MenuBoardIcon className="stroke-bleu-de-france" />
                   </div>
                 }
@@ -133,7 +133,7 @@ const Dashboard: NextPageWithLayout = () => {
               />
               <CountCard
                 Icon={
-                  <div className="flex min-h-11.5 min-w-11.5 items-center justify-center rounded-lg bg-magnolia">
+                  <div className="grid h-11.5 w-11.5 flex-none place-items-center rounded-lg bg-magnolia">
                     <VideoIcon className="stroke-purple-x11" />
                   </div>
                 }
@@ -142,16 +142,16 @@ const Dashboard: NextPageWithLayout = () => {
                 className="w-36"
               />
             </div>
-            <Card title="Notifications" className="h-full min-w-86 opacity-50">
+            <Card title="Notifications" className="h-full w-full opacity-50">
               <div></div>
             </Card>
           </div>
         </div>
-        <div className="flex min-h-102 space-x-6">
-          <Card title="Number of Projects" className="w-full max-w-228 opacity-50">
+        <div className="flex h-102 space-x-6">
+          <Card title="Number of Projects" className="w-228 opacity-50">
             <></>
           </Card>
-          <Card title="Requests" className="min-w-86 opacity-50">
+          <Card title="Requests" className="flex-1 opacity-50">
             <></>
           </Card>
         </div>

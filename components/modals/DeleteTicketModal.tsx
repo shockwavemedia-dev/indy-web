@@ -55,9 +55,7 @@ const DeleteTicketModal = ({
           <div className="flex w-140 flex-col">
             {!minimal && (
               <div className="mb-8 flex space-x-8">
-                <div className="min-w-25">
-                  <Image src={DummyCompany} height={100} width={100} alt={ticket.clientName} />
-                </div>
+                <Image src={DummyCompany} height={100} width={100} alt={ticket.clientName} />
                 <div className="grid w-full grid-cols-4 grid-rows-2 gap-y-5">
                   <TitleValue title="ID">{ticket.id}</TitleValue>
                   <TitleValue title="Company">{ticket.clientName}</TitleValue>
