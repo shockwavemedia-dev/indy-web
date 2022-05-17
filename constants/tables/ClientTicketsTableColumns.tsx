@@ -7,7 +7,7 @@ import TrashIcon from '../../components/icons/TrashIcon'
 import { useTicketStore } from '../../store/TicketStore'
 import { Ticket } from '../../types/Ticket.type'
 
-export const TicketsTableColumns: Array<Column<Ticket>> = [
+export const ClientTicketsTableColumns: Array<Column<Ticket>> = [
   {
     Header: 'ID',
     accessor: 'id',

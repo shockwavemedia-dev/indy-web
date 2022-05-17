@@ -16,11 +16,10 @@ import CreateSupportRequestModal from '../../components/modals/CreateSupportRequ
 import DeleteTicketModal from '../../components/modals/DeleteTicketModal'
 import EditTicketModal from '../../components/modals/EditTicketModal'
 import { ClientRoutes } from '../../constants/routes/ClientRoutes'
-import { TicketsTableColumns } from '../../constants/tables/TicketsTableColumns'
+import { ClientTicketsTableColumns } from '../../constants/tables/ClientTicketsTableColumns'
 import PanelLayout from '../../layouts/PanelLayout'
 import { useTicketStore } from '../../store/TicketStore'
 import { NextPageWithLayout } from '../../types/pages/NextPageWithLayout.type'
-
 const Dashboard: NextPageWithLayout = () => {
   const {
     activeTicket,
@@ -92,7 +91,7 @@ const Dashboard: NextPageWithLayout = () => {
         <div className="mb-6 flex min-h-155 space-x-6">
           <Card title="Project Status Table" className="w-full max-w-228">
             <DataTable
-              columns={TicketsTableColumns}
+              columns={ClientTicketsTableColumns}
               dataEndpoint="/v1/tickets"
               tableQueryKey="tickets"
               ofString="Projects"
