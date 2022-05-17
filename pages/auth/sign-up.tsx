@@ -19,12 +19,14 @@ import {
 import TextInput from '../../components/TextInput'
 import AuthLayout from '../../layouts/AuthLayout'
 import { SignUpFormSchema } from '../../schemas/SignUpFormSchema'
+import { useToastStore } from '../../store/ToastStore'
 import { SignUpForm } from '../../types/forms/SignUpForm.type'
 import { NextPageWithLayout } from '../../types/pages/NextPageWithLayout.type'
 
 const SignUp: NextPageWithLayout = () => {
   const { replace } = useRouter()
   const [passwordStrength, setPasswordStrength] = useState(0)
+  const { showToast } = useToastStore()
 
   const updatePasswordStrength = (password: string) =>
     setPasswordStrength(computePasswordStrength(password))
@@ -43,12 +45,22 @@ const SignUp: NextPageWithLayout = () => {
   ) => {
     setSubmitting(true)
 
-    const { status } = await axios.post('/signup/client-lead', signUpFormValues)
+    try {
+      const { status } = await axios.post('/signup/client-lead', signUpFormValues)
 
-    if (status === 200) {
-      replace('/auth/login')
-    } else {
+      if (status === 200) {
+        replace('/auth/login')
+        showToast({
+          type: 'success',
+          message: 'Registration completed successfully!',
+        })
+      }
+    } catch (e) {
       setSubmitting(false)
+      showToast({
+        type: 'error',
+        message: 'Something went wrong',
+      })
     }
   }
 
