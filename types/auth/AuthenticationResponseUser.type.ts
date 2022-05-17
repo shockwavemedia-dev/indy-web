@@ -1,3 +1,5 @@
+import { Department } from '../Department.type'
+
 export type AuthenticationResponseUser = {
   id: number
   email: string
@@ -20,5 +22,6 @@ export type AuthenticationResponseUser = {
       | 'marketing_manager'
       | 'group_manager'
     clientId: number
+    departments: Array<Department>
   }
 }
