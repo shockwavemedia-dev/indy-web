@@ -61,14 +61,14 @@ const CreateSupportRequestModal = ({
   ) => {
     setSubmitting(true)
 
-    const { status } = await axios.post('/v1/tickets', values)
+    const { status, data } = await axios.post('/v1/tickets', values)
 
     if (status === 200) {
       queryClient.invalidateQueries('tickets')
       onClose()
       showToast({
         type: 'success',
-        message: 'Succesfully saved',
+        message: `New Ticket ${data.ticketCode} successfully created!`,
       })
     } else {
       showToast({

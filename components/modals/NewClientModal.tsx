@@ -41,7 +41,7 @@ const NewClientModal = ({ isVisible, onClose }: { isVisible: boolean; onClose: (
       onClose()
       showToast({
         type: 'success',
-        message: 'Succesfully saved',
+        message: 'New Client successfully created!',
       })
     } else {
       showToast({

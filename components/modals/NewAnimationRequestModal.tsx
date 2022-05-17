@@ -58,13 +58,13 @@ const NewAnimationRequestModal = ({
   ) => {
     setSubmitting(true)
 
-    const { status } = await axios.post(`/v1/libraries/${values.libraryId}/ticket`, values)
+    const { status, data } = await axios.post(`/v1/libraries/${values.libraryId}/ticket`, values)
 
     if (status === 200) {
       onClose()
       showToast({
         type: 'success',
-        message: 'Succesfully saved',
+        message: `New Ticket ${data.ticketCode} successfully created!`,
       })
     } else {
       showToast({

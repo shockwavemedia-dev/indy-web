@@ -38,7 +38,7 @@ const NewDepartmentModal = ({
       onClose()
       showToast({
         type: 'success',
-        message: 'Succesfully saved',
+        message: 'New Department successfully created!',
       })
     } else {
       showToast({

@@ -32,14 +32,14 @@ const CreateEventModal = ({ isVisible, onClose }: { isVisible: boolean; onClose:
   }
 
   const submitForm = async (values: CreateEventForm) => {
-    const { status } = await axios.post('/v1/tickets/event', objectWithFileToFormData(values))
+    const { status, data } = await axios.post('/v1/tickets/event', objectWithFileToFormData(values))
 
     if (status === 200) {
       queryClient.invalidateQueries('tickets')
       onClose()
       showToast({
         type: 'success',
-        message: 'Succesfully saved',
+        message: `New Ticket ${data.ticketCode} successfully created!`,
       })
     } else {
       showToast({

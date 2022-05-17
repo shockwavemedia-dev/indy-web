@@ -32,7 +32,7 @@ const NewAnimationCategoryModal = ({
       onClose()
       showToast({
         type: 'success',
-        message: 'Succesfully saved',
+        message: 'New Animation Category successfully created!',
       })
     } else {
       showToast({

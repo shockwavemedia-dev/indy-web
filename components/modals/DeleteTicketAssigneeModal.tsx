@@ -27,7 +27,7 @@ const DeleteTicketAssigneeModal = ({
       onClose()
       showToast({
         type: 'success',
-        message: 'Succesfully deleted',
+        message: 'Ticket Assignee successfully deleted!',
       })
     } else {
       showToast({

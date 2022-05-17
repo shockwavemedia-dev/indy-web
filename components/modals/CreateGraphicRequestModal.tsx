@@ -40,14 +40,14 @@ const CreateGraphicRequestModal = ({
   ) => {
     setSubmitting(true)
     values.extras = ['DL', 'A4']
-    const { status } = await axios.post('/v1/graphics', values)
+    const { status, data } = await axios.post('/v1/graphics', values)
 
     if (status === 200) {
       queryClient.invalidateQueries('tickets')
       onClose()
       showToast({
         type: 'success',
-        message: 'Succesfully saved',
+        message: `New Ticket ${data.ticketCode} successfully created!`,
       })
     } else {
       showToast({

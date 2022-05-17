@@ -65,7 +65,7 @@ const AddTicketAssigneeModal = ({
       onClose()
       showToast({
         type: 'success',
-        message: 'Succesfully saved',
+        message: 'New Ticket Assignee successfully created!',
       })
     } else {
       showToast({

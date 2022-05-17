@@ -55,7 +55,7 @@ const NewAdminUserModal = ({ isVisible, onClose }: { isVisible: boolean; onClose
       onClose()
       showToast({
         type: 'success',
-        message: 'Succesfully saved',
+        message: 'New User successfully created!',
       })
     } else {
       showToast({

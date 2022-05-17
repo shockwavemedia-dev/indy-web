@@ -60,7 +60,7 @@ const NewAnimationModal = ({ isVisible, onClose }: { isVisible: boolean; onClose
       onClose()
       showToast({
         type: 'success',
-        message: 'Succesfully saved',
+        message: 'New Animation successfully created!',
       })
     } else {
       showToast({
