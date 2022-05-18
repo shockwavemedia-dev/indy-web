@@ -1,5 +1,5 @@
 import { Column } from 'react-table'
-import EyeIcon from '../../components/icons/EyeIcon'
+import EditIcon from '../../components/icons/EditIcon'
 import TrashIcon from '../../components/icons/TrashIcon'
 import { useTicketAssigneeStore } from '../../store/TicketAssigneeStore'
 import { TicketAssignee } from '../../types/TicketAssignee.type'
@@ -43,7 +43,7 @@ export const ManagerTicketAssigneeTableColumns: Array<Column<TicketAssignee>> = 
       return (
         <div className="flex space-x-2">
           <button onClick={editTicketAssignee} className="group">
-            <EyeIcon className="stroke-waterloo group-hover:stroke-jungle-green" />
+            <EditIcon className="stroke-waterloo group-hover:stroke-jungle-green" />
           </button>
           <button onClick={deleteTicketAssignee} className="group">
             <TrashIcon className="stroke-waterloo group-hover:stroke-jungle-green" />

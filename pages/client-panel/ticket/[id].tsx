@@ -20,8 +20,8 @@ import PaperPlaneIcon from '../../../components/icons/PaperPlaneIcon'
 import TrashIcon from '../../../components/icons/TrashIcon'
 import CreateLinkModal from '../../../components/modals/CreateLinkModal'
 import DeleteTicketModal from '../../../components/modals/DeleteTicketModal'
-import EditTicketAssigneeModal from '../../../components/modals/EditTicketAssigneeModal'
 import EditTicketModal from '../../../components/modals/EditTicketModal'
+import ViewTicketAssigneeModal from '../../../components/modals/ViewTicketAssigneeModal'
 import RichTextDisplay from '../../../components/RichTextDisplay'
 import RichTextInput from '../../../components/RichTextInput'
 import TextInput from '../../../components/TextInput'
@@ -57,13 +57,12 @@ const Ticket: NextPageWithLayout = () => {
     return data
   })
   const queryClient = useQueryClient()
-  const { activeTicketAssignee, isEditTicketAssigneeModalVisible, toggleEditTicketAssigneeModal } =
+  const { activeTicketAssignee, isViewTicketAssigneeModalVisible, toggleViewTicketAssigneeModal } =
     useTicketAssigneeStore()
 
   const [activeTab, setActiveTab] = useState<TicketPageTabs>('notes')
   const [isEditTicketModalVisible, setEditTicketModalVisible] = useState(false)
   const [isDeleteTicketModalVisible, setDeleteTicketModalVisible] = useState(false)
-  const [isAddTicketAssigneeModalVisible, setAddTicketAssigneeModalVisible] = useState(false)
 
   const { data: notes } = useQuery(
     ['notes', Number(id)],
@@ -411,9 +410,9 @@ const Ticket: NextPageWithLayout = () => {
         ticket={ticket!}
         minimal
       />
-      <EditTicketAssigneeModal
-        isVisible={isEditTicketAssigneeModalVisible}
-        onClose={toggleEditTicketAssigneeModal}
+      <ViewTicketAssigneeModal
+        isVisible={isViewTicketAssigneeModalVisible}
+        onClose={toggleViewTicketAssigneeModal}
         ticketAssignee={activeTicketAssignee}
       />
       <CreateLinkModal />

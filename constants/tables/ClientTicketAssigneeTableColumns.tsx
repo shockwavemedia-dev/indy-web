@@ -23,16 +23,16 @@ export const ClientTicketAssigneeTableColumns: Array<Column<TicketAssignee>> = [
     accessor: 'ticketAssigneeId',
     disableSortBy: true,
     Cell: ({ row: { original: ticketAssignee } }) => {
-      const { setActiveTicketAssignee, toggleEditTicketAssigneeModal } = useTicketAssigneeStore()
+      const { setActiveTicketAssignee, toggleViewTicketAssigneeModal } = useTicketAssigneeStore()
 
-      const editTicketAssignee = () => {
+      const viewTicketAssignee = () => {
         setActiveTicketAssignee(ticketAssignee)
-        toggleEditTicketAssigneeModal()
+        toggleViewTicketAssigneeModal()
       }
 
       return (
         <div className="flex space-x-2">
-          <button onClick={editTicketAssignee} className="group">
+          <button onClick={viewTicketAssignee}>
             <EyeIcon className="stroke-waterloo group-hover:stroke-jungle-green" />
           </button>
         </div>
