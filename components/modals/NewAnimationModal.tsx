@@ -14,12 +14,6 @@ import Select from '../Select'
 import TextInput from '../TextInput'
 
 const NewAnimationModal = ({ isVisible, onClose }: { isVisible: boolean; onClose: () => void }) => {
-  const formInitialValues: NewAnimationForm = {
-    title: '',
-    description: '',
-    libraryCategoryId: -1,
-    file: null,
-  }
   const { showToast } = useToastStore()
 
   const { data: categories } = useQuery(
@@ -80,7 +74,12 @@ const NewAnimationModal = ({ isVisible, onClose }: { isVisible: boolean; onClose
         <Modal title="New Animation" onClose={onClose}>
           <Formik
             validationSchema={NewAnimationFormSchema}
-            initialValues={formInitialValues}
+            initialValues={{
+              title: '',
+              description: '',
+              libraryCategoryId: -1,
+              file: null,
+            }}
             onSubmit={submitForm}
           >
             {({ isSubmitting }) => (

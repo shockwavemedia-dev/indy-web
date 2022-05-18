@@ -18,10 +18,6 @@ const ForgotPassword: NextPageWithLayout = () => {
   const { replace } = useRouter()
   const { showToast } = useToastStore()
 
-  const formInitialValues: ForgotPasswordForm = {
-    email: '',
-  }
-
   const submitForm = async (
     values: ForgotPasswordForm,
     { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
@@ -54,7 +50,9 @@ const ForgotPassword: NextPageWithLayout = () => {
       </Head>
       <Formik
         validationSchema={ForgotPasswordFormSchema}
-        initialValues={formInitialValues}
+        initialValues={{
+          email: '',
+        }}
         onSubmit={submitForm}
       >
         {({ isSubmitting }) => (

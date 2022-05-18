@@ -25,13 +25,6 @@ const PasswordReset: NextPageWithLayout = () => {
   const updatePasswordStrength = (password: string) =>
     setPasswordStrength(computePasswordStrength(password))
 
-  const formInitialValues: PasswordResetForm = {
-    password: '',
-    passwordConfirmation: '',
-    token: query.token?.toString(),
-    email: query.email?.toString(),
-  }
-
   const validateForm = ({ password }: { password: string }) => updatePasswordStrength(password)
 
   const submitForm = async (
@@ -64,7 +57,16 @@ const PasswordReset: NextPageWithLayout = () => {
       <Head>
         <title>Daily Press - Create New Password</title>
       </Head>
-      <Formik initialValues={formInitialValues} onSubmit={submitForm} validate={validateForm}>
+      <Formik
+        initialValues={{
+          password: '',
+          passwordConfirmation: '',
+          token: query.token?.toString(),
+          email: query.email?.toString(),
+        }}
+        onSubmit={submitForm}
+        validate={validateForm}
+      >
         {({ isSubmitting }) => (
           <Form className="flex w-103 flex-col items-center">
             <PasswordInput

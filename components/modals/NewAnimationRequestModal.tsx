@@ -20,10 +20,6 @@ const NewAnimationRequestModal = ({
   isVisible: boolean
   onClose: () => void
 }) => {
-  const formInitialValues: NewAnimationRequestForm = {
-    libraryId: -1,
-    description: '',
-  }
   const { showToast } = useToastStore()
 
   const { data: libraries } = useQuery(
@@ -87,7 +83,10 @@ const NewAnimationRequestModal = ({
         <Modal title="Request New Animation" onClose={onClose}>
           <Formik
             validationSchema={NewAnimationRequestFormSchema}
-            initialValues={formInitialValues}
+            initialValues={{
+              libraryId: -1,
+              description: '',
+            }}
             onSubmit={submitForm}
           >
             {({ isSubmitting }) => (

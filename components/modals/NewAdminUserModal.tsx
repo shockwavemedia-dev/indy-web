@@ -24,19 +24,6 @@ const NewAdminUserModal = ({ isVisible, onClose }: { isVisible: boolean; onClose
   const queryClient = useQueryClient()
   const { showToast } = useToastStore()
 
-  const formInitialValues: NewAdminUserForm = {
-    email: '',
-    password: '',
-    birthDate: null,
-    passwordConfirmation: '',
-    contactNumber: '',
-    firstName: '',
-    lastName: '',
-    middleName: '',
-    gender: null,
-    role: null,
-  }
-
   const [passwordStrength, setPasswordStrength] = useState(0)
 
   const updatePasswordStrength = (password: string) =>
@@ -76,7 +63,18 @@ const NewAdminUserModal = ({ isVisible, onClose }: { isVisible: boolean; onClose
         <Modal title="New Admin User" onClose={onClose}>
           <Formik
             validationSchema={NewAdminUserFormSchema}
-            initialValues={formInitialValues}
+            initialValues={{
+              email: '',
+              password: '',
+              birthDate: null,
+              passwordConfirmation: '',
+              contactNumber: '',
+              firstName: '',
+              lastName: '',
+              middleName: '',
+              gender: null,
+              role: null,
+            }}
             onSubmit={submitForm}
             validate={validateForm}
           >

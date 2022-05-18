@@ -22,11 +22,6 @@ const Login: NextPageWithLayout = () => {
   const { replace } = useRouter()
   const { showToast } = useToastStore()
 
-  const formInitialValues: LoginForm = {
-    email: '',
-    password: '',
-  }
-
   const submitForm = async (
     signInFormValues: LoginForm,
     { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
@@ -63,7 +58,10 @@ const Login: NextPageWithLayout = () => {
       </Head>
       <Formik
         validationSchema={LoginFormSchema}
-        initialValues={formInitialValues}
+        initialValues={{
+          email: '',
+          password: '',
+        }}
         onSubmit={submitForm}
       >
         {({ isSubmitting }) => (

@@ -31,14 +31,6 @@ const SignUp: NextPageWithLayout = () => {
   const updatePasswordStrength = (password: string) =>
     setPasswordStrength(computePasswordStrength(password))
 
-  const formInitialValues: SignUpForm = {
-    fullName: '',
-    companyName: '',
-    email: '',
-    password: '',
-    passwordConfirmation: '',
-  }
-
   const submitForm = async (
     signUpFormValues: SignUpForm,
     { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
@@ -73,7 +65,13 @@ const SignUp: NextPageWithLayout = () => {
       </Head>
       <Formik
         validationSchema={SignUpFormSchema}
-        initialValues={formInitialValues}
+        initialValues={{
+          fullName: '',
+          companyName: '',
+          email: '',
+          password: '',
+          passwordConfirmation: '',
+        }}
         onSubmit={submitForm}
         validate={validateForm}
       >

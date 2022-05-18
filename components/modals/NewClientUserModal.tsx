@@ -33,20 +33,6 @@ const NewClientUserModal = ({
   const queryClient = useQueryClient()
   const { showToast } = useToastStore()
 
-  const formInitialValues: NewClientUserForm = {
-    email: '',
-    password: '',
-    birthDate: null,
-    passwordConfirmation: '',
-    contactNumber: '',
-    firstName: '',
-    lastName: '',
-    middleName: '',
-    gender: null,
-    role: null,
-    clientId: 0,
-  }
-
   const [passwordStrength, setPasswordStrength] = useState(0)
 
   const updatePasswordStrength = (password: string) =>
@@ -115,7 +101,19 @@ const NewClientUserModal = ({
         <Modal title="New Client User" onClose={onClose}>
           <Formik
             validationSchema={NewClientUserFormSchema}
-            initialValues={formInitialValues}
+            initialValues={{
+              email: '',
+              password: '',
+              birthDate: null,
+              passwordConfirmation: '',
+              contactNumber: '',
+              firstName: '',
+              lastName: '',
+              middleName: '',
+              gender: null,
+              role: null,
+              clientId: -1,
+            }}
             onSubmit={submitForm}
             validate={validateForm}
           >

@@ -16,18 +16,6 @@ const NewClientModal = ({ isVisible, onClose }: { isVisible: boolean; onClose: (
   const queryClient = useQueryClient()
   const { showToast } = useToastStore()
 
-  const formInitialValues: NewClientForm = {
-    name: '',
-    clientCode: '',
-    logo: null,
-    address: '',
-    phone: '',
-    timezone: '',
-    overview: '',
-    clientSince: null,
-    rating: -1,
-  }
-
   const submitForm = async (
     values: NewClientForm,
     { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
@@ -59,7 +47,17 @@ const NewClientModal = ({ isVisible, onClose }: { isVisible: boolean; onClose: (
         <Modal title="New Client" onClose={onClose}>
           <Formik
             validationSchema={NewClientFormSchema}
-            initialValues={formInitialValues}
+            initialValues={{
+              name: '',
+              clientCode: '',
+              logo: null,
+              address: '',
+              phone: '',
+              timezone: '',
+              overview: '',
+              clientSince: null,
+              rating: -1,
+            }}
             onSubmit={submitForm}
           >
             {({ isSubmitting }) => (

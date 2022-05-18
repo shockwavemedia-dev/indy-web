@@ -25,16 +25,6 @@ const CreateGraphicRequestModal = ({
   const queryClient = useQueryClient()
   const { showToast } = useToastStore()
 
-  const formInitialValues: CreateGraphicRequestForm = {
-    subject: '',
-    description: '',
-    requestedBy: session?.user.id || -1,
-    clientId: session?.user.userType.clientId || -1,
-    duedate: null,
-    extras: [],
-    attachments: [],
-  }
-
   const submitForm = async (
     values: CreateGraphicRequestForm,
     { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
@@ -71,7 +61,15 @@ const CreateGraphicRequestModal = ({
         <Modal title="Create Graphic" onClose={onClose}>
           <Formik
             validationSchema={CreateGraphicRequestFormSchema}
-            initialValues={formInitialValues}
+            initialValues={{
+              subject: '',
+              description: '',
+              requestedBy: session?.user.id || -1,
+              clientId: session?.user.userType.clientId || -1,
+              duedate: null,
+              extras: [],
+              attachments: [],
+            }}
             onSubmit={submitForm}
           >
             <Form className="flex w-140 flex-col">

@@ -19,12 +19,6 @@ const NewDepartmentModal = ({
   const queryClient = useQueryClient()
   const { showToast } = useToastStore()
 
-  const formInitialValues: NewDepartmentForm = {
-    name: '',
-    description: '',
-    minDeliveryDays: 0,
-  }
-
   const submitForm = async (
     values: NewDepartmentForm,
     { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
@@ -58,7 +52,11 @@ const NewDepartmentModal = ({
         <Modal title="New Department" onClose={onClose}>
           <Formik
             validationSchema={NewDepartmentFormSchema}
-            initialValues={formInitialValues}
+            initialValues={{
+              name: '',
+              description: '',
+              minDeliveryDays: 0,
+            }}
             onSubmit={submitForm}
           >
             {({ isSubmitting }) => (

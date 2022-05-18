@@ -15,9 +15,6 @@ const NewAnimationCategoryModal = ({
   isVisible: boolean
   onClose: () => void
 }) => {
-  const formInitialValues: NewAnimationCategoryForm = {
-    name: '',
-  }
   const { showToast } = useToastStore()
 
   const submitForm = async (
@@ -52,7 +49,9 @@ const NewAnimationCategoryModal = ({
         <Modal title="New Category Animation" onClose={onClose}>
           <Formik
             validationSchema={NewAnimationCategoryFormSchema}
-            initialValues={formInitialValues}
+            initialValues={{
+              name: '',
+            }}
             onSubmit={submitForm}
           >
             {({ isSubmitting }) => (

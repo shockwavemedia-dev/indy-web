@@ -29,16 +29,6 @@ const CreateSupportRequestModal = ({
   const queryClient = useQueryClient()
   const { showToast } = useToastStore()
 
-  const formInitialValues: CreateSupportRequestForm = {
-    subject: '',
-    description: '',
-    type: '',
-    requestedBy: session?.user.id || -1,
-    clientId: session?.user.userType.clientId || -1,
-    departmentId: -1,
-    duedate: null,
-  }
-
   const { data: departments } = useQuery(
     'departments',
     async () => {
@@ -92,7 +82,15 @@ const CreateSupportRequestModal = ({
         <Modal title="Create Support Request" onClose={onClose}>
           <Formik
             validationSchema={CreateSupportRequestFormSchema}
-            initialValues={formInitialValues}
+            initialValues={{
+              subject: '',
+              description: '',
+              type: '',
+              requestedBy: session?.user.id || -1,
+              clientId: session?.user.userType.clientId || -1,
+              departmentId: -1,
+              duedate: null,
+            }}
             onSubmit={submitForm}
           >
             {({ isSubmitting }) => (

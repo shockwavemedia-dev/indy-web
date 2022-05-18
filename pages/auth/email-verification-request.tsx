@@ -16,10 +16,6 @@ import { NextPageWithLayout } from '../../types/pages/NextPageWithLayout.type'
 const EmailVerificationRequest: NextPageWithLayout = () => {
   const { replace } = useRouter()
 
-  const formInitialValues: ForgotPasswordForm = {
-    email: '',
-  }
-
   const submitForm = async (
     values: ForgotPasswordForm,
     { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
@@ -42,7 +38,9 @@ const EmailVerificationRequest: NextPageWithLayout = () => {
       </Head>
       <Formik
         validationSchema={ForgotPasswordFormSchema}
-        initialValues={formInitialValues}
+        initialValues={{
+          email: '',
+        }}
         onSubmit={submitForm}
       >
         {({ isSubmitting }) => (

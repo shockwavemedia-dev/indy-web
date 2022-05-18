@@ -22,16 +22,6 @@ const CreateEventModal = ({ isVisible, onClose }: { isVisible: boolean; onClose:
   const queryClient = useQueryClient()
   const { showToast } = useToastStore()
 
-  const formInitialValues: CreateEventForm = {
-    requestedBy: session?.user.id || -1,
-    clientId: session?.user.userType.clientId || -1,
-    subject: '',
-    services: [],
-    duedate: null,
-    description: '',
-    attachments: [],
-  }
-
   const submitForm = async (values: CreateEventForm) => {
     try {
       const {
@@ -61,7 +51,15 @@ const CreateEventModal = ({ isVisible, onClose }: { isVisible: boolean; onClose:
         <Modal title="Create Event" onClose={onClose}>
           <Formik
             validationSchema={CreateEventFormSchema}
-            initialValues={formInitialValues}
+            initialValues={{
+              requestedBy: session?.user.id || -1,
+              clientId: session?.user.userType.clientId || -1,
+              subject: '',
+              services: [],
+              duedate: null,
+              description: '',
+              attachments: [],
+            }}
             onSubmit={submitForm}
           >
             {({ isSubmitting }) => (
