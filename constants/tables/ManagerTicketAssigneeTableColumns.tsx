@@ -4,7 +4,7 @@ import TrashIcon from '../../components/icons/TrashIcon'
 import { useTicketAssigneeStore } from '../../store/TicketAssigneeStore'
 import { TicketAssignee } from '../../types/TicketAssignee.type'
 
-export const TicketAssigneeTableColumns: Array<Column<TicketAssignee>> = [
+export const ManagerTicketAssigneeTableColumns: Array<Column<TicketAssignee>> = [
   {
     Header: 'Name',
     accessor: 'fullName',

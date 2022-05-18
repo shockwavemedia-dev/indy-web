@@ -17,11 +17,8 @@ import EmailIcon from '../../../components/icons/EmailIcon'
 import NoteIcon from '../../../components/icons/NoteIcon'
 import PaperClipIcon from '../../../components/icons/PaperClipIcon'
 import PaperPlaneIcon from '../../../components/icons/PaperPlaneIcon'
-import PlusIcon from '../../../components/icons/PlusIcon'
 import TrashIcon from '../../../components/icons/TrashIcon'
-import AddTicketAssigneeModal from '../../../components/modals/AddTicketAssigneeModal'
 import CreateLinkModal from '../../../components/modals/CreateLinkModal'
-import DeleteTicketAssigneeModal from '../../../components/modals/DeleteTicketAssigneeModal'
 import DeleteTicketModal from '../../../components/modals/DeleteTicketModal'
 import EditTicketAssigneeModal from '../../../components/modals/EditTicketAssigneeModal'
 import EditTicketModal from '../../../components/modals/EditTicketModal'
@@ -33,7 +30,7 @@ import EmailCard from '../../../components/TicketEmailCard'
 import NoteCard from '../../../components/TicketNoteCard'
 import TitleValue from '../../../components/TitleValue'
 import { ClientRoutes } from '../../../constants/routes/ClientRoutes'
-import { TicketAssigneeTableColumns } from '../../../constants/tables/TicketAssigneeTableColumns'
+import { ClientTicketAssigneeTableColumns } from '../../../constants/tables/ClientTicketAssigneeTableColumns'
 import PanelLayout from '../../../layouts/PanelLayout'
 import DummyCompany from '../../../public/images/dummy-company.png'
 import { CreateEmailFormSchema } from '../../../schemas/CreateEmailFormSchema'
@@ -49,7 +46,6 @@ import { TicketActivity } from '../../../types/TicketActivity.type'
 import { TicketEmail } from '../../../types/TicketEmail.type'
 import { TicketNote } from '../../../types/TicketNote.type'
 import { TicketPageTabs } from '../../../types/TicketPageTabs.type'
-
 const Ticket: NextPageWithLayout = () => {
   const { data: session } = useSession()
   const {
@@ -61,13 +57,8 @@ const Ticket: NextPageWithLayout = () => {
     return data
   })
   const queryClient = useQueryClient()
-  const {
-    activeTicketAssignee,
-    isEditTicketAssigneeModalVisible,
-    isDeleteTicketAssigneeModalVisible,
-    toggleEditTicketAssigneeModal,
-    toggleDeleteTicketAssigneeModal,
-  } = useTicketAssigneeStore()
+  const { activeTicketAssignee, isEditTicketAssigneeModalVisible, toggleEditTicketAssigneeModal } =
+    useTicketAssigneeStore()
 
   const [activeTab, setActiveTab] = useState<TicketPageTabs>('notes')
   const [isEditTicketModalVisible, setEditTicketModalVisible] = useState(false)
@@ -127,8 +118,6 @@ const Ticket: NextPageWithLayout = () => {
 
   const toggleEditTicketModal = () => setEditTicketModalVisible(!isEditTicketModalVisible)
   const toggleDeleteTicketModal = () => setDeleteTicketModalVisible(!isDeleteTicketModalVisible)
-  const toggleAddTicketAssigneeModal = () =>
-    setAddTicketAssigneeModalVisible(!isAddTicketAssigneeModalVisible)
   const submitEmailForm = async (
     values: CreateEmailForm,
     { resetForm }: { resetForm: (nextState?: Partial<FormikState<CreateEmailForm>>) => void }
@@ -282,18 +271,10 @@ const Ticket: NextPageWithLayout = () => {
           </Card>
           <Card title="Assignees">
             <DataTable
-              columns={TicketAssigneeTableColumns}
+              columns={ClientTicketAssigneeTableColumns}
               dataEndpoint={`/v1/tickets/${id}/assignees`}
               tableQueryKey={['assignees', Number(id)]}
               ofString="Assignee"
-              tableActions={
-                <button className="flex space-x-2" onClick={toggleAddTicketAssigneeModal}>
-                  <PlusIcon className="stroke-jungle-green" />
-                  <div className="font-urbanist text-sm font-semibold text-jungle-green">
-                    Add Assignee
-                  </div>
-                </button>
-              }
             />
           </Card>
         </div>
@@ -430,19 +411,9 @@ const Ticket: NextPageWithLayout = () => {
         ticket={ticket!}
         minimal
       />
-      <AddTicketAssigneeModal
-        isVisible={isAddTicketAssigneeModalVisible}
-        onClose={toggleAddTicketAssigneeModal}
-        ticketId={ticket!.id}
-      />
       <EditTicketAssigneeModal
         isVisible={isEditTicketAssigneeModalVisible}
         onClose={toggleEditTicketAssigneeModal}
-        ticketAssignee={activeTicketAssignee}
-      />
-      <DeleteTicketAssigneeModal
-        isVisible={isDeleteTicketAssigneeModalVisible}
-        onClose={toggleDeleteTicketAssigneeModal}
         ticketAssignee={activeTicketAssignee}
       />
       <CreateLinkModal />

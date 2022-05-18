@@ -33,7 +33,7 @@ import EmailCard from '../../../components/TicketEmailCard'
 import NoteCard from '../../../components/TicketNoteCard'
 import TitleValue from '../../../components/TitleValue'
 import { ManagerRoutes } from '../../../constants/routes/ManagerRoutes'
-import { TicketAssigneeTableColumns } from '../../../constants/tables/TicketAssigneeTableColumns'
+import { ManagerTicketAssigneeTableColumns } from '../../../constants/tables/ManagerTicketAssigneeTableColumns'
 import PanelLayout from '../../../layouts/PanelLayout'
 import DummyCompany from '../../../public/images/dummy-company.png'
 import { CreateEmailFormSchema } from '../../../schemas/CreateEmailFormSchema'
@@ -282,7 +282,7 @@ const Ticket: NextPageWithLayout = () => {
           </Card>
           <Card title="Assignees">
             <DataTable
-              columns={TicketAssigneeTableColumns}
+              columns={ManagerTicketAssigneeTableColumns}
               dataEndpoint={`/v1/tickets/${id}/assignees`}
               tableQueryKey={['assignees', Number(id)]}
               ofString="Assignee"
