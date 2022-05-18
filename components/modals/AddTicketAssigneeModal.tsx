@@ -92,7 +92,6 @@ const AddTicketAssigneeModal = ({
             {({ isSubmitting }) => (
               <Form className="flex w-96 flex-col">
                 <Select
-                  name="departmentId"
                   Icon={ClipboardIcon}
                   placeholder="Select department"
                   options={
