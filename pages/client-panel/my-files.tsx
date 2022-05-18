@@ -16,9 +16,7 @@ const MyFiles: NextPageWithLayout = () => {
   const [month, setMonth] = useState('')
 
   const { data: files, isSuccess } = useQuery('files', async () => {
-    const {
-      data: { data },
-    } = await axios.get<{ data: Files }>(`/v1/clients/${session?.user.userType.clientId}/files`)
+    const { data } = await axios.get<Files>(`/v1/clients/${session?.user.userType.clientId}/files`)
 
     return data
   })
