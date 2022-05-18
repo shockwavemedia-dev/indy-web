@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { ReactElement } from 'react'
+import { ReactElement, ReactNode } from 'react'
 import DailyPressLogo from '../public/images/daily-press-logo.png'
 
 const AuthLayout = ({
@@ -8,7 +8,7 @@ const AuthLayout = ({
   children,
 }: {
   title: string
-  subtitle: ReactElement | string
+  subtitle: ReactNode
   children: ReactElement
 }) => (
   <>
