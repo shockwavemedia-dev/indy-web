@@ -11,20 +11,24 @@ const DeleteTicketAssigneeModal = ({
   isVisible,
   onClose,
   ticketAssignee,
+  ticketId,
 }: {
   isVisible: boolean
   onClose: () => void
   ticketAssignee: TicketAssignee
+  ticketId: number
 }) => {
   const queryClient = useQueryClient()
   const { showToast } = useToastStore()
 
   const deleteTicketAssignee = async () => {
     try {
-      const { status } = await axios.delete(`/v1/ticket-assignees/${ticketAssignee.adminUserId}`)
+      const { status } = await axios.delete(
+        `/v1/ticket-assignees/${ticketAssignee.ticketAssigneeId}`
+      )
 
       if (status === 200) {
-        queryClient.invalidateQueries('assignees')
+        queryClient.invalidateQueries(['assignees', Number(ticketId)])
         onClose()
         showToast({
           type: 'success',

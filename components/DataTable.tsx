@@ -19,7 +19,7 @@ const DataTable = <T extends Record<string, unknown>>({
   periodicFilter = false,
   settings = false,
 }: {
-  tableQueryKey: string | Array<string | number>
+  tableQueryKey: Array<string | number>
   dataEndpoint: string
   dataParams?: Record<string, string | number>
   columns: Array<Column<T>>
@@ -38,7 +38,7 @@ const DataTable = <T extends Record<string, unknown>>({
     isFetching,
     isLoading,
   } = useQuery(
-    [tableQueryKey, queryPageIndex, queryPageSize],
+    [...tableQueryKey, queryPageIndex, queryPageSize],
     async () => {
       const { data } = await axios.get<{
         data: Array<T>

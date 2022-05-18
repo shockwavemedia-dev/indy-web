@@ -55,7 +55,7 @@ const Animations: NextPageWithLayout = () => {
           dataEndpoint="/v1/libraries"
           columns={AnimationTableColumns}
           initialPageSize={20}
-          tableQueryKey="libraries"
+          tableQueryKey={['libraries']}
           ofString="Animations"
         />
       </Card>

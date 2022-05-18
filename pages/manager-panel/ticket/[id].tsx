@@ -33,7 +33,7 @@ import EmailCard from '../../../components/TicketEmailCard'
 import NoteCard from '../../../components/TicketNoteCard'
 import TitleValue from '../../../components/TitleValue'
 import { ManagerRoutes } from '../../../constants/routes/ManagerRoutes'
-import { TicketAssigneeTableColumns } from '../../../constants/tables/TicketAssigneeTableColumns'
+import { ManagerTicketAssigneeTableColumns } from '../../../constants/tables/ManagerTicketAssigneeTableColumns'
 import PanelLayout from '../../../layouts/PanelLayout'
 import DummyCompany from '../../../public/images/dummy-company.png'
 import { CreateEmailFormSchema } from '../../../schemas/CreateEmailFormSchema'
@@ -60,9 +60,7 @@ const Ticket: NextPageWithLayout = () => {
 
     return data
   })
-
   const queryClient = useQueryClient()
-
   const {
     activeTicketAssignee,
     isEditTicketAssigneeModalVisible,
@@ -215,7 +213,7 @@ const Ticket: NextPageWithLayout = () => {
         Ticket {ticket!.ticketCode}
       </div>
       <div className="mx-auto flex w-full max-w-7xl space-x-6">
-        <div className="flex w-full max-w-86 flex-col space-y-6">
+        <div className="w-86 flex-none space-y-6">
           <Card title="Details">
             <div className="absolute top-6 right-6 space-x-4">
               <button className="group" onClick={toggleEditTicketModal}>
@@ -226,9 +224,7 @@ const Ticket: NextPageWithLayout = () => {
               </button>
             </div>
             <div className="mb-6 flex space-x-5">
-              <div className="min-w-25">
-                <Image src={DummyCompany} height={100} width={100} alt={ticket!.clientName} />
-              </div>
+              <Image src={DummyCompany} height={100} width={100} alt={ticket!.clientName} />
               <div>
                 <TitleValue title="Company" className="mb-3">
                   {ticket!.clientName}
@@ -286,7 +282,7 @@ const Ticket: NextPageWithLayout = () => {
           </Card>
           <Card title="Assignees">
             <DataTable
-              columns={TicketAssigneeTableColumns}
+              columns={ManagerTicketAssigneeTableColumns}
               dataEndpoint={`/v1/tickets/${id}/assignees`}
               tableQueryKey={['assignees', Number(id)]}
               ofString="Assignee"
@@ -308,7 +304,7 @@ const Ticket: NextPageWithLayout = () => {
             <Tab title="Activities" Icon={CalendarIcon} tabName="activities" />
             <Tab title="Style Guide" Icon={ColorsIcon} tabName="style_guide" disabled />
           </div>
-          <div className="h-0.25 bg-bright-gray" />
+          <div className="h-px bg-bright-gray" />
           <div
             className={`-mt-0.5 mb-4 h-0.75 w-1/4 rounded bg-jungle-green fill-jungle-green ${
               activeTab === 'email'
@@ -443,11 +439,13 @@ const Ticket: NextPageWithLayout = () => {
         isVisible={isEditTicketAssigneeModalVisible}
         onClose={toggleEditTicketAssigneeModal}
         ticketAssignee={activeTicketAssignee}
+        ticketId={ticket!.id}
       />
       <DeleteTicketAssigneeModal
         isVisible={isDeleteTicketAssigneeModalVisible}
         onClose={toggleDeleteTicketAssigneeModal}
         ticketAssignee={activeTicketAssignee}
+        ticketId={ticket!.id}
       />
       <CreateLinkModal />
     </>

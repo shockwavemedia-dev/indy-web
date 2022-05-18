@@ -62,7 +62,7 @@ const AddTicketAssigneeModal = ({
       const { status } = await axios.post(`/v1/tickets/${ticketId}/assign`, values)
 
       if (status === 200) {
-        queryClient.invalidateQueries('assignees')
+        queryClient.invalidateQueries(['assignees', Number(ticketId)])
         onClose()
         showToast({
           type: 'success',
@@ -92,7 +92,6 @@ const AddTicketAssigneeModal = ({
             {({ isSubmitting }) => (
               <Form className="flex w-96 flex-col">
                 <Select
-                  name="departmentId"
                   Icon={ClipboardIcon}
                   placeholder="Select department"
                   options={
@@ -105,6 +104,7 @@ const AddTicketAssigneeModal = ({
                   onChange={selectDepartment}
                 />
                 <Select
+                  name="adminUserId"
                   Icon={UserIcon}
                   placeholder="Select Employee"
                   options={
