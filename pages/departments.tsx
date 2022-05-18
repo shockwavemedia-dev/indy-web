@@ -1,14 +1,13 @@
 import Head from 'next/head'
 import { ReactElement, useState } from 'react'
-import Card from '../../components/Card'
-import DataTable from '../../components/DataTable'
-import FancyButton from '../../components/FancyButton'
-import UserIcon from '../../components/icons/UserIcon'
-import NewDepartmentModal from '../../components/modals/NewDepartmentModal'
-import { AdminRoutes } from '../../constants/routes/AdminRoutes'
-import { DepartmentTableColumns } from '../../constants/tables/DepartmentTableColumns'
-import PanelLayout from '../../layouts/PanelLayout'
-import { NextPageWithLayout } from '../../types/pages/NextPageWithLayout.type'
+import Card from '../components/Card'
+import DataTable from '../components/DataTable'
+import FancyButton from '../components/FancyButton'
+import UserIcon from '../components/icons/UserIcon'
+import NewDepartmentModal from '../components/modals/NewDepartmentModal'
+import { DepartmentTableColumns } from '../constants/tables/DepartmentTableColumns'
+import PanelLayout from '../layouts/PanelLayout'
+import { NextPageWithLayout } from '../types/pages/NextPageWithLayout.type'
 
 const Departments: NextPageWithLayout = () => {
   const [isNewDepartmentModalVisible, setNewDepartmentModalVisible] = useState(false)
@@ -50,8 +49,6 @@ const Departments: NextPageWithLayout = () => {
   )
 }
 
-Departments.getLayout = (page: ReactElement) => (
-  <PanelLayout routes={AdminRoutes}>{page}</PanelLayout>
-)
+Departments.getLayout = (page: ReactElement) => <PanelLayout>{page}</PanelLayout>
 
 export default Departments

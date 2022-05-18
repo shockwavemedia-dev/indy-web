@@ -11,7 +11,7 @@ import { Route } from '../../types/Route.type'
 export const ClientRoutes: Array<Route> = [
   {
     title: 'Dashboard',
-    pathname: '/client-panel/dashboard',
+    pathname: '/dashboard',
     Icon: ChartIcon,
   },
   {
@@ -32,7 +32,7 @@ export const ClientRoutes: Array<Route> = [
   },
   {
     title: 'My Files',
-    pathname: '/client-panel/my-files',
+    pathname: '/my-files',
     Icon: FolderIcon,
   },
   {
@@ -56,7 +56,7 @@ export const ClientRoutes: Array<Route> = [
       },
       {
         title: 'Animations',
-        pathname: '/client-panel/service-request/animations',
+        pathname: '/service-request/animations',
       },
       {
         title: 'Photography',

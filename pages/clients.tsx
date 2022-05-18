@@ -1,14 +1,13 @@
 import Head from 'next/head'
 import { ReactElement, useState } from 'react'
-import Card from '../../components/Card'
-import DataTable from '../../components/DataTable'
-import FancyButton from '../../components/FancyButton'
-import UserIcon from '../../components/icons/UserIcon'
-import NewClientModal from '../../components/modals/NewClientModal'
-import { AdminRoutes } from '../../constants/routes/AdminRoutes'
-import { ClientTableColumns } from '../../constants/tables/ClientTableColumns'
-import PanelLayout from '../../layouts/PanelLayout'
-import { NextPageWithLayout } from '../../types/pages/NextPageWithLayout.type'
+import Card from '../components/Card'
+import DataTable from '../components/DataTable'
+import FancyButton from '../components/FancyButton'
+import UserIcon from '../components/icons/UserIcon'
+import NewClientModal from '../components/modals/NewClientModal'
+import { ClientTableColumns } from '../constants/tables/ClientTableColumns'
+import PanelLayout from '../layouts/PanelLayout'
+import { NextPageWithLayout } from '../types/pages/NextPageWithLayout.type'
 
 const Client: NextPageWithLayout = () => {
   const [isNewClientModalVisible, setNewClientModalVisible] = useState(false)
@@ -47,6 +46,6 @@ const Client: NextPageWithLayout = () => {
   )
 }
 
-Client.getLayout = (page: ReactElement) => <PanelLayout routes={AdminRoutes}>{page}</PanelLayout>
+Client.getLayout = (page: ReactElement) => <PanelLayout>{page}</PanelLayout>
 
 export default Client

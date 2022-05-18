@@ -4,8 +4,7 @@ import { Form, Formik, FormikState } from 'formik'
 import { useSession } from 'next-auth/react'
 import Head from 'next/head'
 import Image from 'next/image'
-import { useRouter } from 'next/router'
-import { Fragment, ReactElement, useState } from 'react'
+import { Fragment, useState } from 'react'
 import { useQuery, useQueryClient } from 'react-query'
 import Button from '../../../components/Button'
 import Card from '../../../components/Card'
@@ -17,11 +16,14 @@ import EmailIcon from '../../../components/icons/EmailIcon'
 import NoteIcon from '../../../components/icons/NoteIcon'
 import PaperClipIcon from '../../../components/icons/PaperClipIcon'
 import PaperPlaneIcon from '../../../components/icons/PaperPlaneIcon'
+import PlusIcon from '../../../components/icons/PlusIcon'
 import TrashIcon from '../../../components/icons/TrashIcon'
+import AddTicketAssigneeModal from '../../../components/modals/AddTicketAssigneeModal'
 import CreateLinkModal from '../../../components/modals/CreateLinkModal'
+import DeleteTicketAssigneeModal from '../../../components/modals/DeleteTicketAssigneeModal'
 import DeleteTicketModal from '../../../components/modals/DeleteTicketModal'
+import EditTicketAssigneeModal from '../../../components/modals/EditTicketAssigneeModal'
 import EditTicketModal from '../../../components/modals/EditTicketModal'
-import ViewTicketAssigneeModal from '../../../components/modals/ViewTicketAssigneeModal'
 import RichTextDisplay from '../../../components/RichTextDisplay'
 import RichTextInput from '../../../components/RichTextInput'
 import TextInput from '../../../components/TextInput'
@@ -29,9 +31,7 @@ import ActivityCard from '../../../components/TicketActivityCard'
 import EmailCard from '../../../components/TicketEmailCard'
 import NoteCard from '../../../components/TicketNoteCard'
 import TitleValue from '../../../components/TitleValue'
-import { ClientRoutes } from '../../../constants/routes/ClientRoutes'
-import { ClientTicketAssigneeTableColumns } from '../../../constants/tables/ClientTicketAssigneeTableColumns'
-import PanelLayout from '../../../layouts/PanelLayout'
+import { ManagerTicketAssigneeTableColumns } from '../../../constants/tables/ManagerTicketAssigneeTableColumns'
 import DummyCompany from '../../../public/images/dummy-company.png'
 import { CreateEmailFormSchema } from '../../../schemas/CreateEmailFormSchema'
 import { CreateNoteFormSchema } from '../../../schemas/CreateNoteFormSchema'
@@ -40,39 +40,42 @@ import { CreateEmailForm } from '../../../types/forms/CreateEmailForm.type'
 import { CreateNoteForm } from '../../../types/forms/CreateNoteForm.type'
 import { Icon } from '../../../types/Icon.type'
 import { Page } from '../../../types/Page.type'
-import { NextPageWithLayout } from '../../../types/pages/NextPageWithLayout.type'
 import { Ticket } from '../../../types/Ticket.type'
 import { TicketActivity } from '../../../types/TicketActivity.type'
 import { TicketEmail } from '../../../types/TicketEmail.type'
 import { TicketNote } from '../../../types/TicketNote.type'
 import { TicketPageTabs } from '../../../types/TicketPageTabs.type'
-const Ticket: NextPageWithLayout = () => {
+
+const ManagerTicket = ({ ticketId }: { ticketId: number }) => {
   const { data: session } = useSession()
-  const {
-    query: { id },
-  } = useRouter()
-  const { data: ticket, isSuccess } = useQuery(['ticket', Number(id)], async () => {
-    const { data } = await axios.get<Ticket>(`/v1/tickets/${id}`)
+  const { data: ticket, isSuccess } = useQuery(['ticket', ticketId], async () => {
+    const { data } = await axios.get<Ticket>(`/v1/tickets/${ticketId}`)
 
     return data
   })
   const queryClient = useQueryClient()
-  const { activeTicketAssignee, isViewTicketAssigneeModalVisible, toggleViewTicketAssigneeModal } =
-    useTicketAssigneeStore()
+  const {
+    activeTicketAssignee,
+    isEditTicketAssigneeModalVisible,
+    isDeleteTicketAssigneeModalVisible,
+    toggleEditTicketAssigneeModal,
+    toggleDeleteTicketAssigneeModal,
+  } = useTicketAssigneeStore()
 
   const [activeTab, setActiveTab] = useState<TicketPageTabs>('notes')
   const [isEditTicketModalVisible, setEditTicketModalVisible] = useState(false)
   const [isDeleteTicketModalVisible, setDeleteTicketModalVisible] = useState(false)
+  const [isAddTicketAssigneeModalVisible, setAddTicketAssigneeModalVisible] = useState(false)
 
   const { data: notes } = useQuery(
-    ['notes', Number(id)],
+    ['notes', ticketId],
     async () => {
       const {
         data: { data },
       } = await axios.get<{
         data: Array<TicketNote>
         page: Page
-      }>(`/v1/tickets/${id}/notes`)
+      }>(`/v1/tickets/${ticketId}/notes`)
 
       return data
     },
@@ -82,14 +85,14 @@ const Ticket: NextPageWithLayout = () => {
   )
 
   const { data: emails } = useQuery(
-    ['emails', Number(id)],
+    ['emails', ticketId],
     async () => {
       const {
         data: { data },
       } = await axios.get<{
         data: Array<TicketEmail>
         page: Page
-      }>(`/v1/tickets/${id}/emails`)
+      }>(`/v1/tickets/${ticketId}/emails`)
 
       return data
     },
@@ -99,14 +102,14 @@ const Ticket: NextPageWithLayout = () => {
   )
 
   const { data: activities } = useQuery(
-    ['activities', Number(id)],
+    ['activities', ticketId],
     async () => {
       const {
         data: { data },
       } = await axios.get<{
         data: Array<TicketActivity>
         page: Page
-      }>(`/v1/tickets/${id}/activities`)
+      }>(`/v1/tickets/${ticketId}/activities`)
 
       return data
     },
@@ -117,14 +120,16 @@ const Ticket: NextPageWithLayout = () => {
 
   const toggleEditTicketModal = () => setEditTicketModalVisible(!isEditTicketModalVisible)
   const toggleDeleteTicketModal = () => setDeleteTicketModalVisible(!isDeleteTicketModalVisible)
+  const toggleAddTicketAssigneeModal = () =>
+    setAddTicketAssigneeModalVisible(!isAddTicketAssigneeModalVisible)
   const submitEmailForm = async (
     values: CreateEmailForm,
     { resetForm }: { resetForm: (nextState?: Partial<FormikState<CreateEmailForm>>) => void }
   ) => {
-    const { status } = await axios.post(`/v1/tickets/${id}/emails`, values)
+    const { status } = await axios.post(`/v1/tickets/${ticketId}/emails`, values)
 
     if (status === 200) {
-      queryClient.invalidateQueries(['emails', Number(id)])
+      queryClient.invalidateQueries(['emails', ticketId])
       resetForm()
     }
   }
@@ -136,9 +141,9 @@ const Ticket: NextPageWithLayout = () => {
       resetForm: () => void
     }
   ) => {
-    const { status } = await axios.post(`/v1/tickets/${id}/notes`, values)
+    const { status } = await axios.post(`/v1/tickets/${ticketId}/notes`, values)
     if (status === 200) {
-      queryClient.invalidateQueries(['notes', Number(id)])
+      queryClient.invalidateQueries(['notes', ticketId])
       resetForm()
     }
   }
@@ -270,10 +275,18 @@ const Ticket: NextPageWithLayout = () => {
           </Card>
           <Card title="Assignees">
             <DataTable
-              columns={ClientTicketAssigneeTableColumns}
-              dataEndpoint={`/v1/tickets/${id}/assignees`}
-              tableQueryKey={['assignees', Number(id)]}
+              columns={ManagerTicketAssigneeTableColumns}
+              dataEndpoint={`/v1/tickets/${ticketId}/assignees`}
+              tableQueryKey={['assignees', ticketId]}
               ofString="Assignee"
+              tableActions={
+                <button className="flex space-x-2" onClick={toggleAddTicketAssigneeModal}>
+                  <PlusIcon className="stroke-jungle-green" />
+                  <div className="font-urbanist text-sm font-semibold text-jungle-green">
+                    Add Assignee
+                  </div>
+                </button>
+              }
             />
           </Card>
         </div>
@@ -410,16 +423,26 @@ const Ticket: NextPageWithLayout = () => {
         ticket={ticket!}
         minimal
       />
-      <ViewTicketAssigneeModal
-        isVisible={isViewTicketAssigneeModalVisible}
-        onClose={toggleViewTicketAssigneeModal}
+      <AddTicketAssigneeModal
+        isVisible={isAddTicketAssigneeModalVisible}
+        onClose={toggleAddTicketAssigneeModal}
+        ticketId={ticket!.id}
+      />
+      <EditTicketAssigneeModal
+        isVisible={isEditTicketAssigneeModalVisible}
+        onClose={toggleEditTicketAssigneeModal}
         ticketAssignee={activeTicketAssignee}
+        ticketId={ticket!.id}
+      />
+      <DeleteTicketAssigneeModal
+        isVisible={isDeleteTicketAssigneeModalVisible}
+        onClose={toggleDeleteTicketAssigneeModal}
+        ticketAssignee={activeTicketAssignee}
+        ticketId={ticket!.id}
       />
       <CreateLinkModal />
     </>
   )
 }
 
-Ticket.getLayout = (page: ReactElement) => <PanelLayout routes={ClientRoutes}>{page}</PanelLayout>
-
-export default Ticket
+export default ManagerTicket

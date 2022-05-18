@@ -8,6 +8,7 @@ import 'nprogress/nprogress.css'
 import React from 'react'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import snakecaseKeys from 'snakecase-keys'
+import ToastContainer from '../components/ToastContainer'
 import { API_BASE_URL } from '../constants/Http'
 import '../styles/globals.css'
 import { AppPropsWithLayout } from '../types/pages/AppPropsWithLayout.type'
@@ -74,6 +75,7 @@ const App = ({ Component, pageProps }: AppPropsWithLayout) => {
     <SessionProvider session={pageProps.session}>
       <QueryClientProvider client={queryClient}>
         <LocalizationProvider dateAdapter={AdapterDateFns}>
+          <ToastContainer />
           {getLayout(<Component {...pageProps} />)}
         </LocalizationProvider>
       </QueryClientProvider>

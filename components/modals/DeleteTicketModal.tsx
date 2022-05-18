@@ -36,7 +36,7 @@ const DeleteTicketModal = ({
       if (status === 200) {
         queryClient.invalidateQueries('tickets')
         onClose()
-        replace('/client-panel/dashboard')
+        replace('/dashboard')
         showToast({
           type: 'success',
           message: `Ticket ${ticketCode} successfully deleted!`,

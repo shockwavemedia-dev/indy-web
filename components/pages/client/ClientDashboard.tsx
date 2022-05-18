@@ -1,26 +1,24 @@
 import Head from 'next/head'
-import { ReactElement, useState } from 'react'
-import Card from '../../components/Card'
-import CountCard from '../../components/CountCard'
-import DataTable from '../../components/DataTable'
-import FancyButton from '../../components/FancyButton'
-import CalendarAddIcon from '../../components/icons/CalendarAddIcon'
-import ClipboardCloseIcon from '../../components/icons/ClipboardCloseIcon'
-import GalleryIcon from '../../components/icons/GalleryIcon'
-import LifeBuoyIcon from '../../components/icons/LifeBuoyIcon'
-import MenuBoardIcon from '../../components/icons/MenuBoardIcon'
-import PresentationChartIcon from '../../components/icons/PresentationChartIcon'
-import VideoIcon from '../../components/icons/VideoIcon'
-import CreateEventModal from '../../components/modals/CreateEventModal'
-import CreateSupportRequestModal from '../../components/modals/CreateSupportRequestModal'
-import DeleteTicketModal from '../../components/modals/DeleteTicketModal'
-import EditTicketModal from '../../components/modals/EditTicketModal'
-import { ClientRoutes } from '../../constants/routes/ClientRoutes'
-import { ClientTicketsTableColumns } from '../../constants/tables/ClientTicketsTableColumns'
-import PanelLayout from '../../layouts/PanelLayout'
-import { useTicketStore } from '../../store/TicketStore'
-import { NextPageWithLayout } from '../../types/pages/NextPageWithLayout.type'
-const Dashboard: NextPageWithLayout = () => {
+import { useState } from 'react'
+import { ClientTicketsTableColumns } from '../../../constants/tables/ClientTicketsTableColumns'
+import { useTicketStore } from '../../../store/TicketStore'
+import Card from '../../Card'
+import CountCard from '../../CountCard'
+import DataTable from '../../DataTable'
+import FancyButton from '../../FancyButton'
+import CalendarAddIcon from '../../icons/CalendarAddIcon'
+import ClipboardCloseIcon from '../../icons/ClipboardCloseIcon'
+import GalleryIcon from '../../icons/GalleryIcon'
+import LifeBuoyIcon from '../../icons/LifeBuoyIcon'
+import MenuBoardIcon from '../../icons/MenuBoardIcon'
+import PresentationChartIcon from '../../icons/PresentationChartIcon'
+import VideoIcon from '../../icons/VideoIcon'
+import CreateEventModal from '../../modals/CreateEventModal'
+import CreateSupportRequestModal from '../../modals/CreateSupportRequestModal'
+import DeleteTicketModal from '../../modals/DeleteTicketModal'
+import EditTicketModal from '../../modals/EditTicketModal'
+
+const ClientDashboard = () => {
   const {
     activeTicket,
     isEditTicketModalVisible,
@@ -175,8 +173,4 @@ const Dashboard: NextPageWithLayout = () => {
   )
 }
 
-Dashboard.getLayout = (page: ReactElement) => (
-  <PanelLayout routes={ClientRoutes}>{page}</PanelLayout>
-)
-
-export default Dashboard
+export default ClientDashboard

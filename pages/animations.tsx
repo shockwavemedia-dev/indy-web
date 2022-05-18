@@ -1,16 +1,15 @@
 import Head from 'next/head'
 import { ReactElement, useState } from 'react'
-import Card from '../../components/Card'
-import DataTable from '../../components/DataTable'
-import FancyButton from '../../components/FancyButton'
-import UserIcon from '../../components/icons/UserIcon'
-import VideoIcon from '../../components/icons/VideoIcon'
-import NewAnimationCategoryModal from '../../components/modals/NewAnimationCategoryModal'
-import NewAnimationModal from '../../components/modals/NewAnimationModal'
-import { AdminRoutes } from '../../constants/routes/AdminRoutes'
-import { AnimationTableColumns } from '../../constants/tables/AnimationTableColumns'
-import PanelLayout from '../../layouts/PanelLayout'
-import { NextPageWithLayout } from '../../types/pages/NextPageWithLayout.type'
+import Card from '../components/Card'
+import DataTable from '../components/DataTable'
+import FancyButton from '../components/FancyButton'
+import UserIcon from '../components/icons/UserIcon'
+import VideoIcon from '../components/icons/VideoIcon'
+import NewAnimationCategoryModal from '../components/modals/NewAnimationCategoryModal'
+import NewAnimationModal from '../components/modals/NewAnimationModal'
+import { AnimationTableColumns } from '../constants/tables/AnimationTableColumns'
+import PanelLayout from '../layouts/PanelLayout'
+import { NextPageWithLayout } from '../types/pages/NextPageWithLayout.type'
 
 const Animations: NextPageWithLayout = () => {
   const [isNewAnimationCategoryModalVisible, setNewAnimationCategoryModalVisible] = useState(false)
@@ -68,8 +67,6 @@ const Animations: NextPageWithLayout = () => {
   )
 }
 
-Animations.getLayout = (page: ReactElement) => (
-  <PanelLayout routes={AdminRoutes}>{page}</PanelLayout>
-)
+Animations.getLayout = (page: ReactElement) => <PanelLayout>{page}</PanelLayout>
 
 export default Animations

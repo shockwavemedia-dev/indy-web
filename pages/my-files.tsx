@@ -3,12 +3,11 @@ import { useSession } from 'next-auth/react'
 import Head from 'next/head'
 import { ReactElement, useState } from 'react'
 import { useQuery } from 'react-query'
-import Card from '../../components/Card'
-import File from '../../components/File'
-import { ClientRoutes } from '../../constants/routes/ClientRoutes'
-import PanelLayout from '../../layouts/PanelLayout'
-import { Files } from '../../types/Files.type'
-import { NextPageWithLayout } from '../../types/pages/NextPageWithLayout.type'
+import Card from '../components/Card'
+import File from '../components/File'
+import PanelLayout from '../layouts/PanelLayout'
+import { Files } from '../types/Files.type'
+import { NextPageWithLayout } from '../types/pages/NextPageWithLayout.type'
 
 const MyFiles: NextPageWithLayout = () => {
   const { data: session } = useSession()
@@ -66,6 +65,6 @@ const MyFiles: NextPageWithLayout = () => {
   )
 }
 
-MyFiles.getLayout = (page: ReactElement) => <PanelLayout routes={ClientRoutes}>{page}</PanelLayout>
+MyFiles.getLayout = (page: ReactElement) => <PanelLayout>{page}</PanelLayout>
 
 export default MyFiles

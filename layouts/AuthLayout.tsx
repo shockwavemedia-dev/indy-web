@@ -1,6 +1,5 @@
 import Image from 'next/image'
 import { ReactElement } from 'react'
-import ToastContainer from '../components/ToastContainer'
 import DailyPressLogo from '../public/images/daily-press-logo.png'
 
 const AuthLayout = ({
@@ -13,7 +12,6 @@ const AuthLayout = ({
   children: ReactElement
 }) => (
   <>
-    <ToastContainer />
     <div className="flex min-h-screen flex-col items-center justify-center bg-ghost-white bg-auth bg-center bg-no-repeat">
       <div className="flex flex-col items-center rounded-xl bg-white px-22 py-15 shadow">
         <div className="mb-4">

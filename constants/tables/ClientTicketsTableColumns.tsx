@@ -85,7 +85,7 @@ export const ClientTicketsTableColumns: Array<Column<Ticket>> = [
 
       return (
         <div className="flex space-x-2">
-          <Link href={`/client-panel/ticket/${ticket.id}`}>
+          <Link href={`/ticket/${ticket.id}`}>
             <a className="group">
               <EyeIcon className="stroke-waterloo group-hover:stroke-jungle-green" />
             </a>

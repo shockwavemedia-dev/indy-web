@@ -20,9 +20,16 @@ const nextAuth = NextAuth({
             password: credentials?.password,
           })
 
+          const {
+            userType: { role, type },
+          } = user
+
           return {
             user: user,
             accessToken: accessToken,
+            isAdmin: type === 'admin_users' && role === 'admin',
+            isClient: type === 'client_users',
+            isManager: type === 'admin_users' && (role === 'account_manager' || role === 'manager'),
           }
         } catch (e) {
           if (((x): x is AxiosError<{ message: string }> => axios.isAxiosError(x))(e)) {
@@ -39,6 +46,9 @@ const nextAuth = NextAuth({
       if (user) {
         token.accessToken = user.accessToken
         token.user = user.user
+        token.isAdmin = user.isAdmin
+        token.isClient = user.isClient
+        token.isManager = user.isManager
       }
 
       return token
@@ -46,6 +56,9 @@ const nextAuth = NextAuth({
     session: async ({ session, token }) => {
       session.accessToken = token.accessToken
       session.user = token.user
+      session.isAdmin = token.isAdmin
+      session.isClient = token.isClient
+      session.isManager = token.isManager
 
       return session
     },
