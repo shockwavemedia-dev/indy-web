@@ -13,11 +13,13 @@ import {
   PasswordStrengthMeter,
 } from '../../components/PasswordStrengthMeter'
 import AuthLayout from '../../layouts/AuthLayout'
+import { useToastStore } from '../../store/ToastStore'
 import { PasswordResetForm } from '../../types/forms/PasswordResetForm.type'
 import { NextPageWithLayout } from '../../types/pages/NextPageWithLayout.type'
 
 const PasswordReset: NextPageWithLayout = () => {
   const { query, replace } = useRouter()
+  const { showToast } = useToastStore()
   const [passwordStrength, setPasswordStrength] = useState(0)
 
   const updatePasswordStrength = (password: string) =>
@@ -38,12 +40,22 @@ const PasswordReset: NextPageWithLayout = () => {
   ) => {
     setSubmitting(true)
 
-    const { status } = await axios.put('/reset-password', values)
+    try {
+      const { status } = await axios.put('/reset-password', values)
 
-    if (status === 200) {
-      replace('/auth/login')
-    } else {
+      if (status === 200) {
+        replace('/auth/login')
+        showToast({
+          type: 'success',
+          message: 'We have e-mailed your password reset link!',
+        })
+      }
+    } catch (e) {
       setSubmitting(false)
+      showToast({
+        type: 'error',
+        message: 'Something went wrong',
+      })
     }
   }
 

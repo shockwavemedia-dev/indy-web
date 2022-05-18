@@ -5,6 +5,7 @@ import { useQueryClient } from 'react-query'
 import { CreateEventFormSchema } from '../../schemas/CreateEventFormSchema'
 import { useToastStore } from '../../store/ToastStore'
 import { CreateEventForm } from '../../types/forms/CreateEventForm.type'
+import { Ticket } from '../../types/Ticket.type'
 import { objectWithFileToFormData } from '../../utils/FormHelpers'
 import Button from '../Button'
 import DateInput from '../DateInput'
@@ -32,16 +33,21 @@ const CreateEventModal = ({ isVisible, onClose }: { isVisible: boolean; onClose:
   }
 
   const submitForm = async (values: CreateEventForm) => {
-    const { status, data } = await axios.post('/v1/tickets/event', objectWithFileToFormData(values))
+    try {
+      const {
+        status,
+        data: { ticketCode },
+      } = await axios.post<Ticket>('/v1/tickets/event', objectWithFileToFormData(values))
 
-    if (status === 200) {
-      queryClient.invalidateQueries('tickets')
-      onClose()
-      showToast({
-        type: 'success',
-        message: `New Ticket ${data.ticketCode} successfully created!`,
-      })
-    } else {
+      if (status === 200) {
+        queryClient.invalidateQueries('tickets')
+        onClose()
+        showToast({
+          type: 'success',
+          message: `New Ticket ${ticketCode} successfully created!`,
+        })
+      }
+    } catch (e) {
       showToast({
         type: 'error',
         message: 'Something went wrong',

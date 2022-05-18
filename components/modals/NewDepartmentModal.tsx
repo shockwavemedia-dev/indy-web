@@ -31,16 +31,18 @@ const NewDepartmentModal = ({
   ) => {
     setSubmitting(true)
 
-    const { status } = await axios.post('/v1/departments', values)
+    try {
+      const { status } = await axios.post('/v1/departments', values)
 
-    if (status === 200) {
-      queryClient.invalidateQueries('departments')
-      onClose()
-      showToast({
-        type: 'success',
-        message: 'New Department successfully created!',
-      })
-    } else {
+      if (status === 200) {
+        queryClient.invalidateQueries('departments')
+        onClose()
+        showToast({
+          type: 'success',
+          message: 'New Department successfully created!',
+        })
+      }
+    } catch (e) {
       showToast({
         type: 'error',
         message: 'Something went wrong',

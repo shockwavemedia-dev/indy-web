@@ -47,17 +47,18 @@ const NewAdminUserModal = ({ isVisible, onClose }: { isVisible: boolean; onClose
     { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
   ) => {
     setSubmitting(true)
+    try {
+      const { status } = await axios.post('/v1/users/admin', values)
 
-    const { status } = await axios.post('/v1/users/admin', values)
-
-    if (status === 200) {
-      queryClient.invalidateQueries('clients')
-      onClose()
-      showToast({
-        type: 'success',
-        message: 'New User successfully created!',
-      })
-    } else {
+      if (status === 200) {
+        queryClient.invalidateQueries('clients')
+        onClose()
+        showToast({
+          type: 'success',
+          message: 'New User successfully created!',
+        })
+      }
+    } catch (e) {
       showToast({
         type: 'error',
         message: 'Something went wrong',

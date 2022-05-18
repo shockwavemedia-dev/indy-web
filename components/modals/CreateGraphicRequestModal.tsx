@@ -5,6 +5,7 @@ import { useQueryClient } from 'react-query'
 import { CreateGraphicRequestFormSchema } from '../../schemas/CreateGraphicRequestFormSchema'
 import { useToastStore } from '../../store/ToastStore'
 import { CreateGraphicRequestForm } from '../../types/forms/CreateGraphicRequestForm.type'
+import { Ticket } from '../../types/Ticket.type'
 import Button from '../Button'
 import DateInput from '../DateInput'
 import EditIcon from '../icons/EditIcon'
@@ -40,16 +41,21 @@ const CreateGraphicRequestModal = ({
   ) => {
     setSubmitting(true)
     values.extras = ['DL', 'A4']
-    const { status, data } = await axios.post('/v1/graphics', values)
+    try {
+      const {
+        status,
+        data: { ticketCode },
+      } = await axios.post<Ticket>('/v1/graphics', values)
 
-    if (status === 200) {
-      queryClient.invalidateQueries('tickets')
-      onClose()
-      showToast({
-        type: 'success',
-        message: `New Ticket ${data.ticketCode} successfully created!`,
-      })
-    } else {
+      if (status === 200) {
+        queryClient.invalidateQueries('tickets')
+        onClose()
+        showToast({
+          type: 'success',
+          message: `New Ticket ${ticketCode} successfully created!`,
+        })
+      }
+    } catch (e) {
       showToast({
         type: 'error',
         message: 'Something went wrong',

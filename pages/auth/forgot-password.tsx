@@ -10,11 +10,13 @@ import EmailIcon from '../../components/icons/EmailIcon'
 import TextInput from '../../components/TextInput'
 import AuthLayout from '../../layouts/AuthLayout'
 import { ForgotPasswordFormSchema } from '../../schemas/ForgotPasswordFormSchema'
+import { useToastStore } from '../../store/ToastStore'
 import { ForgotPasswordForm } from '../../types/forms/ForgotPasswordForm.type'
 import { NextPageWithLayout } from '../../types/pages/NextPageWithLayout.type'
 
 const ForgotPassword: NextPageWithLayout = () => {
   const { replace } = useRouter()
+  const { showToast } = useToastStore()
 
   const formInitialValues: ForgotPasswordForm = {
     email: '',
@@ -26,12 +28,22 @@ const ForgotPassword: NextPageWithLayout = () => {
   ) => {
     setSubmitting(true)
 
-    const { status } = await axios.post('/forgot-password', values)
+    try {
+      const { status } = await axios.post('/forgot-password', values)
 
-    if (status === 200) {
-      replace('/auth/login')
-    } else {
+      if (status === 200) {
+        replace('/auth/login')
+        showToast({
+          type: 'success',
+          message: 'We have e-mailed your password reset link!',
+        })
+      }
+    } catch (e) {
       setSubmitting(false)
+      showToast({
+        type: 'error',
+        message: 'Something went wrong',
+      })
     }
   }
 

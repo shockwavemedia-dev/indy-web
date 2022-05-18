@@ -34,21 +34,22 @@ const NewClientModal = ({ isVisible, onClose }: { isVisible: boolean; onClose: (
   ) => {
     setSubmitting(true)
 
-    const { status } = await axios.post('/v1/clients', objectWithFileToFormData(values))
+    try {
+      const { status } = await axios.post('/v1/clients', objectWithFileToFormData(values))
 
-    if (status === 200) {
-      queryClient.invalidateQueries('clients')
-      onClose()
-      showToast({
-        type: 'success',
-        message: 'New Client successfully created!',
-      })
-    } else {
+      if (status === 200) {
+        queryClient.invalidateQueries('clients')
+        onClose()
+        showToast({
+          type: 'success',
+          message: 'New Client successfully created!',
+        })
+      }
+    } catch (e) {
       showToast({
         type: 'error',
         message: 'Something went wrong',
       })
-      setSubmitting(false)
     }
   }
 
