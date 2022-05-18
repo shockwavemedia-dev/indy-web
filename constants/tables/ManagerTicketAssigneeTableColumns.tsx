@@ -16,7 +16,9 @@ export const ManagerTicketAssigneeTableColumns: Array<Column<TicketAssignee>> = 
     Header: 'Status',
     accessor: 'status',
     Cell: ({ value }) => (
-      <div className="font-urbanist text-sm font-medium capitalize text-onyx">{value}</div>
+      <div className="font-urbanist text-sm font-medium capitalize text-onyx">
+        {value?.replace(/_/g, ' ')}
+      </div>
     ),
   },
   {

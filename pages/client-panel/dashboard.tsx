@@ -93,7 +93,7 @@ const Dashboard: NextPageWithLayout = () => {
             <DataTable
               columns={ClientTicketsTableColumns}
               dataEndpoint="/v1/tickets"
-              tableQueryKey="tickets"
+              tableQueryKey={['tickets']}
               ofString="Projects"
               settings
               periodicFilter
