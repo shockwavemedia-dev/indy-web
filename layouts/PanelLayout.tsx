@@ -37,10 +37,10 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
       }
     }
 
-    return { panelName: '', routes: [] }
-  }, [session])
+    return { panelName: null, routes: [] }
+  }, [!!session])
 
-  if (status === 'loading') {
+  if (status === 'loading' || !!!panelName) {
     return null
   }
 
