@@ -62,7 +62,7 @@ const AddTicketAssigneeModal = ({
       const { status } = await axios.post(`/v1/tickets/${ticketId}/assign`, values)
 
       if (status === 200) {
-        queryClient.invalidateQueries('assignees')
+        queryClient.invalidateQueries(['assignees', Number(ticketId)])
         onClose()
         showToast({
           type: 'success',

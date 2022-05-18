@@ -439,11 +439,13 @@ const Ticket: NextPageWithLayout = () => {
         isVisible={isEditTicketAssigneeModalVisible}
         onClose={toggleEditTicketAssigneeModal}
         ticketAssignee={activeTicketAssignee}
+        ticketId={ticket!.id}
       />
       <DeleteTicketAssigneeModal
         isVisible={isDeleteTicketAssigneeModalVisible}
         onClose={toggleDeleteTicketAssigneeModal}
         ticketAssignee={activeTicketAssignee}
+        ticketId={ticket!.id}
       />
       <CreateLinkModal />
     </>

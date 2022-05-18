@@ -11,10 +11,12 @@ const DeleteTicketAssigneeModal = ({
   isVisible,
   onClose,
   ticketAssignee,
+  ticketId,
 }: {
   isVisible: boolean
   onClose: () => void
   ticketAssignee: TicketAssignee
+  ticketId: number
 }) => {
   const queryClient = useQueryClient()
   const { showToast } = useToastStore()
@@ -26,7 +28,7 @@ const DeleteTicketAssigneeModal = ({
       )
 
       if (status === 200) {
-        queryClient.invalidateQueries('assignees')
+        queryClient.invalidateQueries(['assignees', Number(ticketId)])
         onClose()
         showToast({
           type: 'success',
