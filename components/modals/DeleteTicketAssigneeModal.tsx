@@ -21,7 +21,9 @@ const DeleteTicketAssigneeModal = ({
 
   const deleteTicketAssignee = async () => {
     try {
-      const { status } = await axios.delete(`/v1/ticket-assignees/${ticketAssignee.adminUserId}`)
+      const { status } = await axios.delete(
+        `/v1/ticket-assignees/${ticketAssignee.ticketAssigneeId}`
+      )
 
       if (status === 200) {
         queryClient.invalidateQueries('assignees')

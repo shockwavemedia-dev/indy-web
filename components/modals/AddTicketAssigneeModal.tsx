@@ -105,6 +105,7 @@ const AddTicketAssigneeModal = ({
                   onChange={selectDepartment}
                 />
                 <Select
+                  name="adminUserId"
                   Icon={UserIcon}
                   placeholder="Select Employee"
                   options={
