@@ -12,6 +12,7 @@ import RouteButton from '../components/RouteButton'
 import { AdminRoutes } from '../constants/routes/AdminRoutes'
 import { ClientRoutes } from '../constants/routes/ClientRoutes'
 import { ManagerRoutes } from '../constants/routes/ManagerRoutes'
+import { StaffRoutes } from '../constants/routes/StaffRoutes'
 import DailyPressLogo from '../public/images/daily-press-logo.png'
 import DummyAvatar from '../public/images/dummy-avatar.png'
 
@@ -26,7 +27,7 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
 
   const { panelName, routes } = useMemo(() => {
     if (!!session) {
-      const { isAdmin, isClient, isManager } = session
+      const { isAdmin, isClient, isManager, isStaff } = session
 
       if (isAdmin) {
         return { panelName: 'Admin Panel', routes: AdminRoutes }
@@ -34,6 +35,8 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
         return { panelName: 'Client Panel', routes: ClientRoutes }
       } else if (isManager) {
         return { panelName: 'Manager Panel', routes: ManagerRoutes }
+      } else if (isStaff) {
+        return { panelName: 'Staff Panel', routes: StaffRoutes }
       }
     }
 
