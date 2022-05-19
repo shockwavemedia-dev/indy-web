@@ -6,6 +6,7 @@ import DataTable from '../../DataTable'
 import GalleryIcon from '../../icons/GalleryIcon'
 import MenuBoardIcon from '../../icons/MenuBoardIcon'
 import VideoIcon from '../../icons/VideoIcon'
+
 const StaffDashboard = () => {
   return (
     <>
@@ -18,7 +19,7 @@ const StaffDashboard = () => {
           <Card title="My Tickets" className="flex w-228 flex-col">
             <DataTable
               columns={StaffTicketsTableColumns}
-              dataEndpoint={`/v1/my-tickets`}
+              dataEndpoint="/v1/my-tickets"
               tableQueryKey={['tickets']}
               ofString="Projects"
               settings
