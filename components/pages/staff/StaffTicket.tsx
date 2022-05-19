@@ -16,10 +16,7 @@ import EmailIcon from '../../../components/icons/EmailIcon'
 import NoteIcon from '../../../components/icons/NoteIcon'
 import PaperClipIcon from '../../../components/icons/PaperClipIcon'
 import PaperPlaneIcon from '../../../components/icons/PaperPlaneIcon'
-import TrashIcon from '../../../components/icons/TrashIcon'
 import CreateLinkModal from '../../../components/modals/CreateLinkModal'
-import DeleteTicketModal from '../../../components/modals/DeleteTicketModal'
-import EditTicketModal from '../../../components/modals/EditTicketModal'
 import ViewTicketAssigneeModal from '../../../components/modals/ViewTicketAssigneeModal'
 import RichTextDisplay from '../../../components/RichTextDisplay'
 import RichTextInput from '../../../components/RichTextInput'
@@ -55,8 +52,6 @@ const StaffTicket = ({ ticketId }: { ticketId: number }) => {
     useTicketAssigneeStore()
 
   const [activeTab, setActiveTab] = useState<TicketPageTabs>('notes')
-  const [isEditTicketModalVisible, setEditTicketModalVisible] = useState(false)
-  const [isDeleteTicketModalVisible, setDeleteTicketModalVisible] = useState(false)
 
   const { data: notes } = useQuery(
     ['notes', ticketId],
@@ -109,8 +104,6 @@ const StaffTicket = ({ ticketId }: { ticketId: number }) => {
     }
   )
 
-  const toggleEditTicketModal = () => setEditTicketModalVisible(!isEditTicketModalVisible)
-  const toggleDeleteTicketModal = () => setDeleteTicketModalVisible(!isDeleteTicketModalVisible)
   const submitEmailForm = async (
     values: CreateEmailForm,
     { resetForm }: { resetForm: (nextState?: Partial<FormikState<CreateEmailForm>>) => void }
@@ -197,14 +190,6 @@ const StaffTicket = ({ ticketId }: { ticketId: number }) => {
       <div className="mx-auto flex w-full max-w-7xl space-x-6">
         <div className="w-86 flex-none space-y-6">
           <Card title="Details">
-            <div className="absolute top-6 right-6 space-x-4">
-              <button className="group" onClick={toggleEditTicketModal}>
-                <EditIcon className="stroke-waterloo group-hover:stroke-jungle-green" />
-              </button>
-              <button className="group" onClick={toggleDeleteTicketModal}>
-                <TrashIcon className="stroke-waterloo group-hover:stroke-jungle-green" />
-              </button>
-            </div>
             <div className="mb-6 flex space-x-5">
               <Image src={DummyCompany} height={100} width={100} alt={ticket!.clientName} />
               <div>
@@ -393,17 +378,6 @@ const StaffTicket = ({ ticketId }: { ticketId: number }) => {
           )}
         </div>
       </div>
-      <EditTicketModal
-        isVisible={isEditTicketModalVisible}
-        onClose={toggleEditTicketModal}
-        ticket={ticket!}
-      />
-      <DeleteTicketModal
-        isVisible={isDeleteTicketModalVisible}
-        onClose={toggleDeleteTicketModal}
-        ticket={ticket!}
-        minimal
-      />
       <ViewTicketAssigneeModal
         isVisible={isViewTicketAssigneeModalVisible}
         onClose={toggleViewTicketAssigneeModal}
