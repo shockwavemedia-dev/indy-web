@@ -3,6 +3,7 @@ import { useRouter } from 'next/router'
 import { ReactElement } from 'react'
 import ClientTicket from '../../components/pages/client/ClientTicket'
 import ManagerTicket from '../../components/pages/manager/ManagerTicket'
+import StaffTicket from '../../components/pages/staff/StaffTicket'
 import PanelLayout from '../../layouts/PanelLayout'
 import { NextPageWithLayout } from '../../types/pages/NextPageWithLayout.type'
 
@@ -16,6 +17,8 @@ const Ticket: NextPageWithLayout = () => {
     return <ClientTicket ticketId={Number(id)} />
   } else if (session?.isManager) {
     return <ManagerTicket ticketId={Number(id)} />
+  } else if (session?.isStaff) {
+    return <StaffTicket ticketId={Number(id)} />
   }
 
   return null

@@ -30,6 +30,7 @@ const nextAuth = NextAuth({
             isAdmin: type === 'admin_users' && role === 'admin',
             isClient: type === 'client_users',
             isManager: type === 'admin_users' && (role === 'account_manager' || role === 'manager'),
+            isStaff: type === 'admin_users' && role === 'staff',
           }
         } catch (e) {
           if (((x): x is AxiosError<{ message: string }> => axios.isAxiosError(x))(e)) {
@@ -49,6 +50,7 @@ const nextAuth = NextAuth({
         token.isAdmin = user.isAdmin
         token.isClient = user.isClient
         token.isManager = user.isManager
+        token.isStaff = user.isStaff
       }
 
       return token
@@ -59,6 +61,7 @@ const nextAuth = NextAuth({
       session.isAdmin = token.isAdmin
       session.isClient = token.isClient
       session.isManager = token.isManager
+      session.isStaff = token.isStaff
 
       return session
     },

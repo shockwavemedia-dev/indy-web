@@ -9,11 +9,11 @@ const Home: NextPageWithLayout = () => {
   if (status === 'unauthenticated') {
     replace('/auth/login')
   } else if (status === 'authenticated') {
-    const { isAdmin, isClient, isManager } = session
+    const { isAdmin, isClient, isManager, isStaff } = session
 
     if (isAdmin) {
       replace('/clients')
-    } else if (isClient || isManager) {
+    } else if (isClient || isManager || isStaff) {
       replace('/dashboard')
     }
   }
