@@ -67,7 +67,42 @@ const ClientMyFiles = () => {
           }
         />
         <Card className="flex flex-wrap gap-4">
-          {clientId && filesSucess && !Array.isArray(files) ? (
+          {clientId !== -1 ? (
+            !Array.isArray(files) && filesSucess ? (
+              year === '' ? (
+                Object.keys(files).map((year) => {
+                  const openYearFolder = () => setYear(year)
+
+                  return <File key={year} onClick={openYearFolder} name={year} />
+                })
+              ) : month !== '' ? (
+                <>
+                  <File key={month} onClick={goUpToMonthsFolder} name="../" />
+                  {files[year][month].map(({ id, originalFilename, url }) => (
+                    <File key={id} href={url} name={originalFilename} />
+                  ))}
+                </>
+              ) : (
+                <>
+                  <File key={month} onClick={goUpToYearsFolder} name="../" />
+                  {Object.keys(files[year]).map((month) => {
+                    const openMonthFolder = () => setMonth(month)
+
+                    return <File key={month} onClick={openMonthFolder} name={month} />
+                  })}
+                </>
+              )
+            ) : (
+              <div className="grid h-20 w-full place-items-center">
+                <div className="font-urbanist text-base text-metallic-silver">No files found.</div>
+              </div>
+            )
+          ) : (
+            <div className="grid h-20 w-full place-items-center">
+              <div className="font-urbanist text-base text-metallic-silver">Select a Client.</div>
+            </div>
+          )}
+          {/* {clientId && filesSucess && !Array.isArray(files) ? (
             year === '' ? (
               Object.keys(files).map((year) => {
                 const openYearFolder = () => setYear(year)
@@ -95,7 +130,7 @@ const ClientMyFiles = () => {
             <div className="grid h-20 w-full place-items-center">
               <div className="font-urbanist text-base text-metallic-silver">No files found.</div>
             </div>
-          )}
+          )} */}
         </Card>
       </div>
     </>
