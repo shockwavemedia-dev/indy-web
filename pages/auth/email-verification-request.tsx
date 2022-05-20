@@ -13,7 +13,7 @@ import { ForgotPasswordFormSchema } from '../../schemas/ForgotPasswordFormSchema
 import { ForgotPasswordForm } from '../../types/forms/ForgotPasswordForm.type'
 import { NextPageWithLayout } from '../../types/pages/NextPageWithLayout.type'
 
-const EmailVerificationRequest: NextPageWithLayout = () => {
+const EmailVerificationRequestPage: NextPageWithLayout = () => {
   const { replace } = useRouter()
 
   const submitForm = async (
@@ -73,7 +73,7 @@ const EmailVerificationRequest: NextPageWithLayout = () => {
   )
 }
 
-EmailVerificationRequest.getLayout = (page: ReactElement) => (
+EmailVerificationRequestPage.getLayout = (page: ReactElement) => (
   <AuthLayout
     title="Send Email Verification Link"
     subtitle={
@@ -88,4 +88,4 @@ EmailVerificationRequest.getLayout = (page: ReactElement) => (
   </AuthLayout>
 )
 
-export default EmailVerificationRequest
+export default EmailVerificationRequestPage

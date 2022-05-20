@@ -23,7 +23,7 @@ import { useToastStore } from '../../store/ToastStore'
 import { SignUpForm } from '../../types/forms/SignUpForm.type'
 import { NextPageWithLayout } from '../../types/pages/NextPageWithLayout.type'
 
-const SignUp: NextPageWithLayout = () => {
+const SignUpPage: NextPageWithLayout = () => {
   const { replace } = useRouter()
   const [passwordStrength, setPasswordStrength] = useState(0)
   const { showToast } = useToastStore()
@@ -132,10 +132,10 @@ const SignUp: NextPageWithLayout = () => {
   )
 }
 
-SignUp.getLayout = (page: ReactElement) => (
+SignUpPage.getLayout = (page: ReactElement) => (
   <AuthLayout title="Welcome to Daily Press" subtitle="Please sign up and start the adventure">
     {page}
   </AuthLayout>
 )
 
-export default SignUp
+export default SignUpPage

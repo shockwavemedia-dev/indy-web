@@ -2,7 +2,7 @@ import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import { NextPageWithLayout } from '../types/pages/NextPageWithLayout.type'
 
-const Home: NextPageWithLayout = () => {
+const HomePage: NextPageWithLayout = () => {
   const { replace } = useRouter()
   const { status, data: session } = useSession()
 
@@ -21,4 +21,4 @@ const Home: NextPageWithLayout = () => {
   return null
 }
 
-export default Home
+export default HomePage

@@ -11,7 +11,7 @@ import { AnimationTableColumns } from '../constants/tables/AnimationTableColumns
 import PanelLayout from '../layouts/PanelLayout'
 import { NextPageWithLayout } from '../types/pages/NextPageWithLayout.type'
 
-const Animations: NextPageWithLayout = () => {
+const AnimationsPage: NextPageWithLayout = () => {
   const [isNewAnimationCategoryModalVisible, setNewAnimationCategoryModalVisible] = useState(false)
   const [isNewAnimationModalVisible, setNewAnimationModalVisible] = useState(false)
 
@@ -35,7 +35,7 @@ const Animations: NextPageWithLayout = () => {
           title="Create Animation Category"
           subtitle="Laborerivit rem cones mil"
           onClick={toggleNewAnimationCategoryModal}
-          className="row-span-1 w-fit"
+          className="w-fit"
         />
         <FancyButton
           Icon={
@@ -46,7 +46,7 @@ const Animations: NextPageWithLayout = () => {
           title="Create Animation"
           subtitle="Laborerivit rem cones mil"
           onClick={toggleNewAnimationModal}
-          className="row-span-1 w-fit"
+          className="w-fit"
         />
       </div>
       <Card title="Animations">
@@ -67,6 +67,6 @@ const Animations: NextPageWithLayout = () => {
   )
 }
 
-Animations.getLayout = (page: ReactElement) => <PanelLayout>{page}</PanelLayout>
+AnimationsPage.getLayout = (page: ReactElement) => <PanelLayout>{page}</PanelLayout>
 
-export default Animations
+export default AnimationsPage

@@ -6,7 +6,7 @@ import { ReactElement, useEffect } from 'react'
 import AuthLayout from '../../layouts/AuthLayout'
 import { NextPageWithLayout } from '../../types/pages/NextPageWithLayout.type'
 
-const AccountVerified: NextPageWithLayout = () => {
+const AccountVerifiedPage: NextPageWithLayout = () => {
   const {
     query: { email, token },
     isReady,
@@ -40,10 +40,10 @@ const AccountVerified: NextPageWithLayout = () => {
   )
 }
 
-AccountVerified.getLayout = (page: ReactElement) => (
+AccountVerifiedPage.getLayout = (page: ReactElement) => (
   <AuthLayout title="Verified!" subtitle="You have successfully verified your account.">
     {page}
   </AuthLayout>
 )
 
-export default AccountVerified
+export default AccountVerifiedPage

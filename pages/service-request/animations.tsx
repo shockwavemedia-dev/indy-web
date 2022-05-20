@@ -9,7 +9,7 @@ import { AnimationTableColumns } from '../../constants/tables/AnimationTableColu
 import PanelLayout from '../../layouts/PanelLayout'
 import { NextPageWithLayout } from '../../types/pages/NextPageWithLayout.type'
 
-const Animation: NextPageWithLayout = () => {
+const AnimationPage: NextPageWithLayout = () => {
   const [isNewAnimationRequestModalVisible, setNewAnimationRequestModalVisible] = useState(false)
 
   const toggleNewAnimationRequestModal = () =>
@@ -20,7 +20,7 @@ const Animation: NextPageWithLayout = () => {
       <Head>
         <title>Daily Press - Client</title>
       </Head>
-      <div className="grid-rows-10 mx-auto grid h-262.5 w-270 gap-6">
+      <div className="mx-auto flex h-full w-full max-w-7xl flex-col space-y-6">
         <FancyButton
           Icon={
             <div className="grid h-11 w-11 flex-none place-items-center rounded-lg bg-honeydew">
@@ -30,9 +30,9 @@ const Animation: NextPageWithLayout = () => {
           title="Request Animation"
           subtitle="Laborerivit rem cones mil"
           onClick={toggleNewAnimationRequestModal}
-          className="row-span-1 w-fit"
+          className="w-fit"
         />
-        <Card title="Animations" className="row-span-11">
+        <Card title="Animations" className="flex flex-col">
           <DataTable
             dataEndpoint="/v1/libraries"
             dataParams={{
@@ -53,6 +53,6 @@ const Animation: NextPageWithLayout = () => {
   )
 }
 
-Animation.getLayout = (page: ReactElement) => <PanelLayout>{page}</PanelLayout>
+AnimationPage.getLayout = (page: ReactElement) => <PanelLayout>{page}</PanelLayout>
 
-export default Animation
+export default AnimationPage

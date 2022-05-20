@@ -7,7 +7,7 @@ import StaffTicket from '../../components/pages/staff/StaffTicket'
 import PanelLayout from '../../layouts/PanelLayout'
 import { NextPageWithLayout } from '../../types/pages/NextPageWithLayout.type'
 
-const Ticket: NextPageWithLayout = () => {
+const TicketPage: NextPageWithLayout = () => {
   const { data: session } = useSession()
   const {
     query: { id },
@@ -24,6 +24,6 @@ const Ticket: NextPageWithLayout = () => {
   return null
 }
 
-Ticket.getLayout = (page: ReactElement) => <PanelLayout>{page}</PanelLayout>
+TicketPage.getLayout = (page: ReactElement) => <PanelLayout>{page}</PanelLayout>
 
-export default Ticket
+export default TicketPage

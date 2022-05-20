@@ -9,7 +9,7 @@ import { ClientTableColumns } from '../constants/tables/ClientTableColumns'
 import PanelLayout from '../layouts/PanelLayout'
 import { NextPageWithLayout } from '../types/pages/NextPageWithLayout.type'
 
-const Client: NextPageWithLayout = () => {
+const ClientPage: NextPageWithLayout = () => {
   const [isNewClientModalVisible, setNewClientModalVisible] = useState(false)
 
   const toggleNewClientModal = () => setNewClientModalVisible(!isNewClientModalVisible)
@@ -20,7 +20,7 @@ const Client: NextPageWithLayout = () => {
       <Head>
         <title>Daily Press - Client</title>
       </Head>
-      <div className="grid-rows-10 mx-auto grid h-262.5 w-270 gap-6">
+      <div className="mx-auto flex h-full w-full max-w-7xl flex-col space-y-6">
         <FancyButton
           Icon={
             <div className="grid h-11 w-11 flex-none place-items-center rounded-lg bg-honeydew">
@@ -30,9 +30,9 @@ const Client: NextPageWithLayout = () => {
           title="Create Client"
           subtitle="Laborerivit rem cones mil"
           onClick={toggleNewClientModal}
-          className="row-span-1 w-fit"
+          className="w-fit"
         />
-        <Card title="Clients" className="row-span-11">
+        <Card title="Clients" className="flex flex-col">
           <DataTable
             dataEndpoint="/v1/clients"
             columns={ClientTableColumns}
@@ -46,6 +46,6 @@ const Client: NextPageWithLayout = () => {
   )
 }
 
-Client.getLayout = (page: ReactElement) => <PanelLayout>{page}</PanelLayout>
+ClientPage.getLayout = (page: ReactElement) => <PanelLayout>{page}</PanelLayout>
 
-export default Client
+export default ClientPage

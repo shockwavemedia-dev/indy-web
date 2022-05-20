@@ -9,7 +9,7 @@ import { DepartmentTableColumns } from '../constants/tables/DepartmentTableColum
 import PanelLayout from '../layouts/PanelLayout'
 import { NextPageWithLayout } from '../types/pages/NextPageWithLayout.type'
 
-const Departments: NextPageWithLayout = () => {
+const DepartmentsPage: NextPageWithLayout = () => {
   const [isNewDepartmentModalVisible, setNewDepartmentModalVisible] = useState(false)
 
   const toggleNewDepartmentModal = () => setNewDepartmentModalVisible(!isNewDepartmentModalVisible)
@@ -19,7 +19,7 @@ const Departments: NextPageWithLayout = () => {
       <Head>
         <title>Daily Press - Client</title>
       </Head>
-      <div className="grid-rows-10 mx-auto grid h-262.5 w-270 gap-6">
+      <div className="mx-auto flex h-full w-full max-w-7xl flex-col space-y-6">
         <FancyButton
           Icon={
             <div className="grid h-11 w-11 flex-none place-items-center rounded-lg bg-honeydew">
@@ -29,9 +29,9 @@ const Departments: NextPageWithLayout = () => {
           title="Create Department"
           subtitle="Laborerivit rem cones mil"
           onClick={toggleNewDepartmentModal}
-          className="row-span-1 w-fit"
+          className="w-fit"
         />
-        <Card title="Departments" className="row-span-11">
+        <Card title="Departments" className="flex flex-col">
           <DataTable
             dataEndpoint="/v1/departments"
             columns={DepartmentTableColumns}
@@ -49,6 +49,6 @@ const Departments: NextPageWithLayout = () => {
   )
 }
 
-Departments.getLayout = (page: ReactElement) => <PanelLayout>{page}</PanelLayout>
+DepartmentsPage.getLayout = (page: ReactElement) => <PanelLayout>{page}</PanelLayout>
 
-export default Departments
+export default DepartmentsPage

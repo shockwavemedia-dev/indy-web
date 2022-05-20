@@ -17,7 +17,7 @@ import { useToastStore } from '../../store/ToastStore'
 import { PasswordResetForm } from '../../types/forms/PasswordResetForm.type'
 import { NextPageWithLayout } from '../../types/pages/NextPageWithLayout.type'
 
-const PasswordReset: NextPageWithLayout = () => {
+const PasswordResetPage: NextPageWithLayout = () => {
   const { query, replace } = useRouter()
   const { showToast } = useToastStore()
   const [passwordStrength, setPasswordStrength] = useState(0)
@@ -108,10 +108,10 @@ const PasswordReset: NextPageWithLayout = () => {
   )
 }
 
-PasswordReset.getLayout = (page: ReactElement) => (
+PasswordResetPage.getLayout = (page: ReactElement) => (
   <AuthLayout title="Create new password" subtitle="Setup your new password">
     {page}
   </AuthLayout>
 )
 
-export default PasswordReset
+export default PasswordResetPage

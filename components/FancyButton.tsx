@@ -14,7 +14,7 @@ const FancyButton = ({
   className?: string
 }) => (
   <button
-    className={`flex w-full items-center space-x-4 rounded-xl bg-white px-6 py-4 shadow ${className}`}
+    className={`flex items-center space-x-4 rounded-xl bg-white px-6 py-4 shadow ${className}`}
     onClick={onClick}
   >
     {Icon}

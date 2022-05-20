@@ -7,5 +7,5 @@ export type NewClientForm = {
   timezone: string
   overview: string
   clientSince: Date | null
-  rating: number
+  rating: number | null
 }

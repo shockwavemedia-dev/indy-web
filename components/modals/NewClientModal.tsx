@@ -56,7 +56,7 @@ const NewClientModal = ({ isVisible, onClose }: { isVisible: boolean; onClose: (
               timezone: '',
               overview: '',
               clientSince: null,
-              rating: -1,
+              rating: null,
             }}
             onSubmit={submitForm}
           >

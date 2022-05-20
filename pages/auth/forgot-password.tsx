@@ -14,7 +14,7 @@ import { useToastStore } from '../../store/ToastStore'
 import { ForgotPasswordForm } from '../../types/forms/ForgotPasswordForm.type'
 import { NextPageWithLayout } from '../../types/pages/NextPageWithLayout.type'
 
-const ForgotPassword: NextPageWithLayout = () => {
+const ForgotPasswordPage: NextPageWithLayout = () => {
   const { replace } = useRouter()
   const { showToast } = useToastStore()
 
@@ -85,7 +85,7 @@ const ForgotPassword: NextPageWithLayout = () => {
   )
 }
 
-ForgotPassword.getLayout = (page: ReactElement) => (
+ForgotPasswordPage.getLayout = (page: ReactElement) => (
   <AuthLayout
     title="Forgot password?"
     subtitle={
@@ -100,4 +100,4 @@ ForgotPassword.getLayout = (page: ReactElement) => (
   </AuthLayout>
 )
 
-export default ForgotPassword
+export default ForgotPasswordPage

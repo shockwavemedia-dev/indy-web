@@ -48,9 +48,8 @@ const AddTicketAssigneeModal = ({
   )
   const [department, setDepartment] = useState<number | null>(null)
 
-  const selectDepartment = (newValue: SingleValue<SelectOption<number>>) => {
+  const selectDepartment = (newValue: SingleValue<SelectOption<number>>) =>
     setDepartment(newValue?.value || null)
-  }
 
   const submitForm = async (
     values: AddTicketAssigneeForm,
