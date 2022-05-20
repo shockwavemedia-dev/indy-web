@@ -1,4 +1,4 @@
-const PresentationChartIcon = ({ className }: { className: string }) => (
+export const PresentationChartIcon = ({ className }: { className: string }) => (
   <svg
     className={className}
     width="18"
@@ -44,5 +44,3 @@ const PresentationChartIcon = ({ className }: { className: string }) => (
     />
   </svg>
 )
-
-export default PresentationChartIcon

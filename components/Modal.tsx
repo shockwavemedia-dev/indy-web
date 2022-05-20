@@ -1,7 +1,7 @@
 import { ReactNode } from 'react'
-import CloseModalIcon from './icons/CloseModalIcon'
+import { CloseModalIcon } from './icons/CloseModalIcon'
 
-const Modal = ({
+export const Modal = ({
   title,
   children,
   onClose,
@@ -26,5 +26,3 @@ const Modal = ({
     </div>
   </div>
 )
-
-export default Modal

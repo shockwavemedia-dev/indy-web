@@ -1,4 +1,4 @@
-const CheckIcon = ({ className }: { className: string }) => (
+export const CheckIcon = ({ className }: { className: string }) => (
   <svg
     className={className}
     width="10"
@@ -15,5 +15,3 @@ const CheckIcon = ({ className }: { className: string }) => (
     />
   </svg>
 )
-
-export default CheckIcon

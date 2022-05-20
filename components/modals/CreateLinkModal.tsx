@@ -2,12 +2,12 @@ import { Form, Formik } from 'formik'
 import { CreateLinkFormSchema } from '../../schemas/CreateLinkFormSchema'
 import { useCreateLinkModalStore } from '../../store/CreateLinkModalStore'
 import { CreateLinkForm } from '../../types/forms/CreateLinkForm.type'
-import Button from '../Button'
-import EditIcon from '../icons/EditIcon'
-import Modal from '../Modal'
-import TextInput from '../TextInput'
+import { Button } from '../Button'
+import { EditIcon } from '../icons/EditIcon'
+import { Modal } from '../Modal'
+import { TextInput } from '../TextInput'
 
-const CreateLinkModal = () => {
+export const CreateLinkModal = () => {
   const { isModalVisible, toggleModal, createLink, linkText } = useCreateLinkModalStore()
 
   const submitForm = (values: CreateLinkForm) => {
@@ -59,5 +59,3 @@ const CreateLinkModal = () => {
     </>
   )
 }
-
-export default CreateLinkModal

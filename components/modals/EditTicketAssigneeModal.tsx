@@ -5,14 +5,14 @@ import { TicketAssigneeStatusOptions } from '../../constants/options/TicketAssig
 import { useToastStore } from '../../store/ToastStore'
 import { EditTicketAssigneeForm } from '../../types/forms/EditTicketAssigneeForm.type'
 import { TicketAssignee } from '../../types/TicketAssignee.type'
-import Button from '../Button'
-import ClipboardIcon from '../icons/ClipboardIcon'
-import FloppyDiskIcon from '../icons/FloppyDiskIcon'
-import Modal from '../Modal'
-import Select from '../Select'
-import TitleValue from '../TitleValue'
+import { Button } from '../Button'
+import { ClipboardIcon } from '../icons/ClipboardIcon'
+import { FloppyDiskIcon } from '../icons/FloppyDiskIcon'
+import { Modal } from '../Modal'
+import { Select } from '../Select'
+import { TitleValue } from '../TitleValue'
 
-const EditTicketAssigneeModal = ({
+export const EditTicketAssigneeModal = ({
   isVisible,
   onClose,
   ticketAssignee,
@@ -107,5 +107,3 @@ const EditTicketAssigneeModal = ({
     </>
   )
 }
-
-export default EditTicketAssigneeModal

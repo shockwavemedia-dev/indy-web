@@ -1,7 +1,7 @@
 import { useSession } from 'next-auth/react'
 import { ReactElement, useMemo } from 'react'
-import ClientMyFiles from '../components/pages/client/ClientMyFiles'
-import MyFiles from '../components/pages/MyFiles'
+import { ClientMyFiles } from '../components/pages/client/ClientMyFiles'
+import { MyFiles } from '../components/pages/MyFiles'
 import PanelLayout from '../layouts/PanelLayout'
 import { NextPageWithLayout } from '../types/pages/NextPageWithLayout.type'
 

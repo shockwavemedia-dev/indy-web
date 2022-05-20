@@ -1,4 +1,4 @@
-const PencilIcon = ({ className }: { className: string }) => (
+export const PencilIcon = ({ className }: { className: string }) => (
   <svg
     className={className}
     width="18"
@@ -16,5 +16,3 @@ const PencilIcon = ({ className }: { className: string }) => (
     <path d="M6.71405 15.1516L2.84827 11.2858" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 )
-
-export default PencilIcon

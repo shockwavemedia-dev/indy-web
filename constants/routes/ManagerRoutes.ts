@@ -1,5 +1,5 @@
-import ChartIcon from '../../components/icons/ChartIcon'
-import FolderIcon from '../../components/icons/FolderIcon'
+import { ChartIcon } from '../../components/icons/ChartIcon'
+import { FolderIcon } from '../../components/icons/FolderIcon'
 import { Route } from '../../types/Route.type'
 
 export const ManagerRoutes: Array<Route> = [

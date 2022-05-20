@@ -1,4 +1,4 @@
-const TrashIcon = ({ className }: { className: string }) => (
+export const TrashIcon = ({ className }: { className: string }) => (
   <svg
     className={className}
     width="18"
@@ -34,5 +34,3 @@ const TrashIcon = ({ className }: { className: string }) => (
     <path d="M7.125 9.375H10.875" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 )
-
-export default TrashIcon

@@ -1,4 +1,4 @@
-const StrikethroughIcon = ({ className }: { className: string }) => (
+export const StrikethroughIcon = ({ className }: { className: string }) => (
   <svg
     className={className}
     width="10"
@@ -11,5 +11,3 @@ const StrikethroughIcon = ({ className }: { className: string }) => (
     <rect y="5" width="9.16667" height="0.833334" />
   </svg>
 )
-
-export default StrikethroughIcon

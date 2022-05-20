@@ -16,18 +16,18 @@ import { KeyboardEvent, ReactNode, SyntheticEvent, useEffect, useRef, useState }
 import { useCreateLinkModalStore } from '../store/CreateLinkModalStore'
 import { CreateLinkForm } from '../types/forms/CreateLinkForm.type'
 import { Icon } from '../types/Icon.type'
-import FormErrorMessage from './FormErrorMessage'
-import BoldIcon from './icons/BoldIcon'
-import ItalicIcon from './icons/ItalicIcon'
-import LinkIcon from './icons/LinkIcon'
-import StrikethroughIcon from './icons/StrikethroughIcon'
-import TextCenterAlignmentIcon from './icons/TextCenterAlignmentIcon'
-import TextLeftAlignmentIcon from './icons/TextLeftAlignmentIcon'
-import TextRightAlignmentIcon from './icons/TextRightAlignmentIcon'
-import UnderlineIcon from './icons/UnderlineIcon'
-import UnorderedListIcon from './icons/UnorderedListIcon'
+import { FormErrorMessage } from './FormErrorMessage'
+import { BoldIcon } from './icons/BoldIcon'
+import { ItalicIcon } from './icons/ItalicIcon'
+import { LinkIcon } from './icons/LinkIcon'
+import { StrikethroughIcon } from './icons/StrikethroughIcon'
+import { TextCenterAlignmentIcon } from './icons/TextCenterAlignmentIcon'
+import { TextLeftAlignmentIcon } from './icons/TextLeftAlignmentIcon'
+import { TextRightAlignmentIcon } from './icons/TextRightAlignmentIcon'
+import { UnderlineIcon } from './icons/UnderlineIcon'
+import { UnorderedListIcon } from './icons/UnorderedListIcon'
 
-const RichTextInput = ({
+export const RichTextInput = ({
   name,
   Icon,
   placeholder,
@@ -285,5 +285,3 @@ const compositeDecorator = new CompositeDecorator([
     ),
   },
 ])
-
-export default RichTextInput

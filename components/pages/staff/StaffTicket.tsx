@@ -6,25 +6,23 @@ import Head from 'next/head'
 import Image from 'next/image'
 import { Fragment, useState } from 'react'
 import { useQuery, useQueryClient } from 'react-query'
-import Button from '../../../components/Button'
-import Card from '../../../components/Card'
-import DataTable from '../../../components/DataTable'
-import CalendarIcon from '../../../components/icons/CalendarIcon'
-import ColorsIcon from '../../../components/icons/ColorsIcon'
-import EditIcon from '../../../components/icons/EditIcon'
-import EmailIcon from '../../../components/icons/EmailIcon'
-import NoteIcon from '../../../components/icons/NoteIcon'
-import PaperClipIcon from '../../../components/icons/PaperClipIcon'
-import PaperPlaneIcon from '../../../components/icons/PaperPlaneIcon'
-import CreateLinkModal from '../../../components/modals/CreateLinkModal'
-import ViewTicketAssigneeModal from '../../../components/modals/ViewTicketAssigneeModal'
-import RichTextDisplay from '../../../components/RichTextDisplay'
-import RichTextInput from '../../../components/RichTextInput'
-import TextInput from '../../../components/TextInput'
-import ActivityCard from '../../../components/TicketActivityCard'
-import EmailCard from '../../../components/TicketEmailCard'
-import NoteCard from '../../../components/TicketNoteCard'
-import TitleValue from '../../../components/TitleValue'
+import { Button } from '../../../components/Button'
+import { Card } from '../../../components/Card'
+import { DataTable } from '../../../components/DataTable'
+import { CalendarIcon } from '../../../components/icons/CalendarIcon'
+import { ColorsIcon } from '../../../components/icons/ColorsIcon'
+import { EditIcon } from '../../../components/icons/EditIcon'
+import { EmailIcon } from '../../../components/icons/EmailIcon'
+import { NoteIcon } from '../../../components/icons/NoteIcon'
+import { PaperClipIcon } from '../../../components/icons/PaperClipIcon'
+import { PaperPlaneIcon } from '../../../components/icons/PaperPlaneIcon'
+import { CreateLinkModal } from '../../../components/modals/CreateLinkModal'
+import { ViewTicketAssigneeModal } from '../../../components/modals/ViewTicketAssigneeModal'
+import { RichTextDisplay } from '../../../components/RichTextDisplay'
+import { RichTextInput } from '../../../components/RichTextInput'
+import { TextInput } from '../../../components/TextInput'
+import { TicketActivityCard } from '../../../components/TicketActivityCard'
+import { TitleValue } from '../../../components/TitleValue'
 import { ClientTicketAssigneeTableColumns } from '../../../constants/tables/ClientTicketAssigneeTableColumns'
 import DummyCompany from '../../../public/images/dummy-company.png'
 import { CreateEmailFormSchema } from '../../../schemas/CreateEmailFormSchema'
@@ -39,8 +37,10 @@ import { TicketActivity } from '../../../types/TicketActivity.type'
 import { TicketEmail } from '../../../types/TicketEmail.type'
 import { TicketNote } from '../../../types/TicketNote.type'
 import { TicketPageTabs } from '../../../types/TicketPageTabs.type'
+import { TicketEmailCard } from '../../TicketEmailCard'
+import { TicketNoteCard } from '../../TicketNoteCard'
 
-const StaffTicket = ({ ticketId }: { ticketId: number }) => {
+export const StaffTicket = ({ ticketId }: { ticketId: number }) => {
   const { data: session } = useSession()
   const { data: ticket, isSuccess } = useQuery(['ticket', ticketId], async () => {
     const { data } = await axios.get<Ticket>(`/v1/tickets/${ticketId}`)
@@ -311,7 +311,7 @@ const StaffTicket = ({ ticketId }: { ticketId: number }) => {
               </Formik>
               <div className="space-y-5">
                 {notes?.map(({ id, note, createdBy, createdAt }) => (
-                  <NoteCard
+                  <TicketNoteCard
                     key={`note-${id}`}
                     note={note}
                     createdBy={createdBy}
@@ -359,7 +359,7 @@ const StaffTicket = ({ ticketId }: { ticketId: number }) => {
               </Formik>
               <div className="space-y-5">
                 {emails?.map(({ id, title, message, createdAt }) => (
-                  <EmailCard
+                  <TicketEmailCard
                     key={`email-${id}`}
                     title={title}
                     message={message}
@@ -372,7 +372,11 @@ const StaffTicket = ({ ticketId }: { ticketId: number }) => {
           {activeTab === 'activities' && (
             <div className="space-y-5">
               {activities?.map(({ id, activity, createdAt }) => (
-                <ActivityCard key={`activity-${id}`} activity={activity} createdAt={createdAt} />
+                <TicketActivityCard
+                  key={`activity-${id}`}
+                  activity={activity}
+                  createdAt={createdAt}
+                />
               ))}
             </div>
           )}
@@ -387,5 +391,3 @@ const StaffTicket = ({ ticketId }: { ticketId: number }) => {
     </>
   )
 }
-
-export default StaffTicket

@@ -1,4 +1,4 @@
-const VideoIcon = ({ className }: { className: string }) => (
+export const VideoIcon = ({ className }: { className: string }) => (
   <svg
     className={className}
     width="20"
@@ -27,5 +27,3 @@ const VideoIcon = ({ className }: { className: string }) => (
     />
   </svg>
 )
-
-export default VideoIcon

@@ -1,4 +1,4 @@
-const BriefcaseIcon = ({ className }: { className: string }) => (
+export const BriefcaseIcon = ({ className }: { className: string }) => (
   <svg
     className={className}
     width="18"
@@ -44,5 +44,3 @@ const BriefcaseIcon = ({ className }: { className: string }) => (
     />
   </svg>
 )
-
-export default BriefcaseIcon

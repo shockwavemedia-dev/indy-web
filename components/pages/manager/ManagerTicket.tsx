@@ -6,31 +6,29 @@ import Head from 'next/head'
 import Image from 'next/image'
 import { Fragment, useState } from 'react'
 import { useQuery, useQueryClient } from 'react-query'
-import Button from '../../../components/Button'
-import Card from '../../../components/Card'
-import DataTable from '../../../components/DataTable'
-import CalendarIcon from '../../../components/icons/CalendarIcon'
-import ColorsIcon from '../../../components/icons/ColorsIcon'
-import EditIcon from '../../../components/icons/EditIcon'
-import EmailIcon from '../../../components/icons/EmailIcon'
-import NoteIcon from '../../../components/icons/NoteIcon'
-import PaperClipIcon from '../../../components/icons/PaperClipIcon'
-import PaperPlaneIcon from '../../../components/icons/PaperPlaneIcon'
-import PlusIcon from '../../../components/icons/PlusIcon'
-import TrashIcon from '../../../components/icons/TrashIcon'
-import AddTicketAssigneeModal from '../../../components/modals/AddTicketAssigneeModal'
-import CreateLinkModal from '../../../components/modals/CreateLinkModal'
-import DeleteTicketAssigneeModal from '../../../components/modals/DeleteTicketAssigneeModal'
-import DeleteTicketModal from '../../../components/modals/DeleteTicketModal'
-import EditTicketAssigneeModal from '../../../components/modals/EditTicketAssigneeModal'
-import EditTicketModal from '../../../components/modals/EditTicketModal'
-import RichTextDisplay from '../../../components/RichTextDisplay'
-import RichTextInput from '../../../components/RichTextInput'
-import TextInput from '../../../components/TextInput'
-import ActivityCard from '../../../components/TicketActivityCard'
-import EmailCard from '../../../components/TicketEmailCard'
-import NoteCard from '../../../components/TicketNoteCard'
-import TitleValue from '../../../components/TitleValue'
+import { Button } from '../../../components/Button'
+import { Card } from '../../../components/Card'
+import { DataTable } from '../../../components/DataTable'
+import { CalendarIcon } from '../../../components/icons/CalendarIcon'
+import { ColorsIcon } from '../../../components/icons/ColorsIcon'
+import { EditIcon } from '../../../components/icons/EditIcon'
+import { EmailIcon } from '../../../components/icons/EmailIcon'
+import { NoteIcon } from '../../../components/icons/NoteIcon'
+import { PaperClipIcon } from '../../../components/icons/PaperClipIcon'
+import { PaperPlaneIcon } from '../../../components/icons/PaperPlaneIcon'
+import { PlusIcon } from '../../../components/icons/PlusIcon'
+import { TrashIcon } from '../../../components/icons/TrashIcon'
+import { AddTicketAssigneeModal } from '../../../components/modals/AddTicketAssigneeModal'
+import { CreateLinkModal } from '../../../components/modals/CreateLinkModal'
+import { DeleteTicketAssigneeModal } from '../../../components/modals/DeleteTicketAssigneeModal'
+import { DeleteTicketModal } from '../../../components/modals/DeleteTicketModal'
+import { EditTicketAssigneeModal } from '../../../components/modals/EditTicketAssigneeModal'
+import { EditTicketModal } from '../../../components/modals/EditTicketModal'
+import { RichTextDisplay } from '../../../components/RichTextDisplay'
+import { RichTextInput } from '../../../components/RichTextInput'
+import { TextInput } from '../../../components/TextInput'
+import { TicketActivityCard } from '../../../components/TicketActivityCard'
+import { TitleValue } from '../../../components/TitleValue'
 import { ManagerTicketAssigneeTableColumns } from '../../../constants/tables/ManagerTicketAssigneeTableColumns'
 import DummyCompany from '../../../public/images/dummy-company.png'
 import { CreateEmailFormSchema } from '../../../schemas/CreateEmailFormSchema'
@@ -45,8 +43,10 @@ import { TicketActivity } from '../../../types/TicketActivity.type'
 import { TicketEmail } from '../../../types/TicketEmail.type'
 import { TicketNote } from '../../../types/TicketNote.type'
 import { TicketPageTabs } from '../../../types/TicketPageTabs.type'
+import { TicketEmailCard } from '../../TicketEmailCard'
+import { TicketNoteCard } from '../../TicketNoteCard'
 
-const ManagerTicket = ({ ticketId }: { ticketId: number }) => {
+export const ManagerTicket = ({ ticketId }: { ticketId: number }) => {
   const { data: session } = useSession()
   const { data: ticket, isSuccess } = useQuery(['ticket', ticketId], async () => {
     const { data } = await axios.get<Ticket>(`/v1/tickets/${ticketId}`)
@@ -345,7 +345,7 @@ const ManagerTicket = ({ ticketId }: { ticketId: number }) => {
               </Formik>
               <div className="space-y-5">
                 {notes?.map(({ id, note, createdBy, createdAt }) => (
-                  <NoteCard
+                  <TicketNoteCard
                     key={`note-${id}`}
                     note={note}
                     createdBy={createdBy}
@@ -393,7 +393,7 @@ const ManagerTicket = ({ ticketId }: { ticketId: number }) => {
               </Formik>
               <div className="space-y-5">
                 {emails?.map(({ id, title, message, createdAt }) => (
-                  <EmailCard
+                  <TicketEmailCard
                     key={`email-${id}`}
                     title={title}
                     message={message}
@@ -406,7 +406,11 @@ const ManagerTicket = ({ ticketId }: { ticketId: number }) => {
           {activeTab === 'activities' && (
             <div className="space-y-5">
               {activities?.map(({ id, activity, createdAt }) => (
-                <ActivityCard key={`activity-${id}`} activity={activity} createdAt={createdAt} />
+                <TicketActivityCard
+                  key={`activity-${id}`}
+                  activity={activity}
+                  createdAt={createdAt}
+                />
               ))}
             </div>
           )}
@@ -444,5 +448,3 @@ const ManagerTicket = ({ ticketId }: { ticketId: number }) => {
     </>
   )
 }
-
-export default ManagerTicket

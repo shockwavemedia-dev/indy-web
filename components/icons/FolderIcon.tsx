@@ -1,4 +1,4 @@
-const FolderIcon = ({ className }: { className: string }) => (
+export const FolderIcon = ({ className }: { className: string }) => (
   <svg
     className={className}
     width="18"
@@ -14,5 +14,3 @@ const FolderIcon = ({ className }: { className: string }) => (
     />
   </svg>
 )
-
-export default FolderIcon

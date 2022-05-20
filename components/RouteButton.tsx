@@ -1,9 +1,9 @@
 import Link from 'next/link'
 import { Route } from '../types/Route.type'
-import CaretIcon from './icons/CaretIcon'
-import TinyDotIcon from './icons/TinyDotIcon'
+import { CaretIcon } from './icons/CaretIcon'
+import { TinyDotIcon } from './icons/TinyDotIcon'
 
-const RouteButton = ({
+export const RouteButton = ({
   route: { Icon = TinyDotIcon, title, pathname = '#' },
   isCurrentPath,
   hasSubRoutes,
@@ -64,5 +64,3 @@ const RouteButton = ({
     )}
   </div>
 )
-
-export default RouteButton

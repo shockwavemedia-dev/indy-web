@@ -2,7 +2,13 @@ import { format } from 'date-fns'
 import Image from 'next/image'
 import DummyAvatar from '../public/images/dummy-avatar.png'
 
-const TicketActivityCard = ({ activity, createdAt }: { activity: string; createdAt: Date }) => (
+export const TicketActivityCard = ({
+  activity,
+  createdAt,
+}: {
+  activity: string
+  createdAt: Date
+}) => (
   <div className="flex items-center rounded-xl bg-white px-6 py-5 shadow">
     <Image src={DummyAvatar} alt="Dummy" height={32} width={32} className="rounded-full" />
     <div className="ml-3 font-urbanist text-sm font-semibold text-onyx">{activity}</div>
@@ -12,5 +18,3 @@ const TicketActivityCard = ({ activity, createdAt }: { activity: string; created
     </div>
   </div>
 )
-
-export default TicketActivityCard

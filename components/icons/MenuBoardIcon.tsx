@@ -1,4 +1,4 @@
-const MenuBoardIcon = ({ className }: { className: string }) => (
+export const MenuBoardIcon = ({ className }: { className: string }) => (
   <svg
     className={className}
     width="20"
@@ -49,5 +49,3 @@ const MenuBoardIcon = ({ className }: { className: string }) => (
     />
   </svg>
 )
-
-export default MenuBoardIcon

@@ -1,4 +1,4 @@
-const ToastErrorIcon = () => (
+export const ToastErrorIcon = () => (
   <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
     <rect width="26" height="26" rx="13" fill="#FFF0E9" />
     <path
@@ -17,5 +17,3 @@ const ToastErrorIcon = () => (
     />
   </svg>
 )
-
-export default ToastErrorIcon

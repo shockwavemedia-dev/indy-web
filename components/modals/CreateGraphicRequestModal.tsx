@@ -6,15 +6,15 @@ import { CreateGraphicRequestFormSchema } from '../../schemas/CreateGraphicReque
 import { useToastStore } from '../../store/ToastStore'
 import { CreateGraphicRequestForm } from '../../types/forms/CreateGraphicRequestForm.type'
 import { Ticket } from '../../types/Ticket.type'
-import Button from '../Button'
-import DateInput from '../DateInput'
-import EditIcon from '../icons/EditIcon'
-import Modal from '../Modal'
-import RichTextInput from '../RichTextInput'
-import SelectService from '../SelectService'
-import TextInput from '../TextInput'
+import { Button } from '../Button'
+import { DateInput } from '../DateInput'
+import { EditIcon } from '../icons/EditIcon'
+import { Modal } from '../Modal'
+import { RichTextInput } from '../RichTextInput'
+import { SelectService } from '../SelectService'
+import { TextInput } from '../TextInput'
 
-const CreateGraphicRequestModal = ({
+export const CreateGraphicRequestModal = ({
   isVisible,
   onClose,
 }: {
@@ -106,5 +106,3 @@ const CreateGraphicRequestModal = ({
     </>
   )
 }
-
-export default CreateGraphicRequestModal

@@ -1,4 +1,4 @@
-const GearIcon = ({ className }: { className: string }) => (
+export const GearIcon = ({ className }: { className: string }) => (
   <svg
     className={className}
     width="20"
@@ -23,5 +23,3 @@ const GearIcon = ({ className }: { className: string }) => (
     />
   </svg>
 )
-
-export default GearIcon

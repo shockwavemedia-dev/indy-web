@@ -1,4 +1,4 @@
-const BellIcon = ({ className }: { className: string }) => (
+export const BellIcon = ({ className }: { className: string }) => (
   <svg
     className={className}
     width="24"
@@ -21,5 +21,3 @@ const BellIcon = ({ className }: { className: string }) => (
     />
   </svg>
 )
-
-export default BellIcon

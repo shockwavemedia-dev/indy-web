@@ -9,21 +9,21 @@ import { useToastStore } from '../../store/ToastStore'
 import { Client } from '../../types/Client.type'
 import { NewClientUserForm } from '../../types/forms/NewClientUserForm.type'
 import { Page } from '../../types/Page.type'
-import Button from '../Button'
-import DateInput from '../DateInput'
-import BriefcaseIcon from '../icons/BriefcaseIcon'
-import ClipboardIcon from '../icons/ClipboardIcon'
-import EmailIcon from '../icons/EmailIcon'
-import LockIcon from '../icons/LockIcon'
-import PencilIcon from '../icons/PencilIcon'
-import UserIcon from '../icons/UserIcon'
-import Modal from '../Modal'
-import PasswordInput from '../PasswordInput'
+import { Button } from '../Button'
+import { DateInput } from '../DateInput'
+import { BriefcaseIcon } from '../icons/BriefcaseIcon'
+import { ClipboardIcon } from '../icons/ClipboardIcon'
+import { EmailIcon } from '../icons/EmailIcon'
+import { LockIcon } from '../icons/LockIcon'
+import { PencilIcon } from '../icons/PencilIcon'
+import { UserIcon } from '../icons/UserIcon'
+import { Modal } from '../Modal'
+import { PasswordInput } from '../PasswordInput'
 import { computePasswordStrength, PasswordStrengthMeter } from '../PasswordStrengthMeter'
-import Select from '../Select'
-import TextInput from '../TextInput'
+import { Select } from '../Select'
+import { TextInput } from '../TextInput'
 
-const NewClientUserModal = ({
+export const NewClientUserModal = ({
   isVisible,
   onClose,
 }: {
@@ -207,5 +207,3 @@ const NewClientUserModal = ({
     </>
   )
 }
-
-export default NewClientUserModal

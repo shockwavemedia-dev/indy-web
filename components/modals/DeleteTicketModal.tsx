@@ -6,12 +6,12 @@ import { useQueryClient } from 'react-query'
 import DummyCompany from '../../public/images/dummy-company.png'
 import { useToastStore } from '../../store/ToastStore'
 import { Ticket } from '../../types/Ticket.type'
-import Button from '../Button'
-import TrashIcon from '../icons/TrashIcon'
-import Modal from '../Modal'
-import TitleValue from '../TitleValue'
+import { Button } from '../Button'
+import { TrashIcon } from '../icons/TrashIcon'
+import { Modal } from '../Modal'
+import { TitleValue } from '../TitleValue'
 
-const DeleteTicketModal = ({
+export const DeleteTicketModal = ({
   isVisible,
   onClose,
   ticket,
@@ -99,5 +99,3 @@ const DeleteTicketModal = ({
     </>
   )
 }
-
-export default DeleteTicketModal

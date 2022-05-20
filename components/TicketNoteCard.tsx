@@ -1,9 +1,9 @@
 import { format } from 'date-fns'
 import Image from 'next/image'
 import DummyAvatar from '../public/images/dummy-avatar.png'
-import RichTextDisplay from './RichTextDisplay'
+import { RichTextDisplay } from './RichTextDisplay'
 
-const TicketNoteCard = ({
+export const TicketNoteCard = ({
   note,
   createdBy,
   createdAt,
@@ -24,5 +24,3 @@ const TicketNoteCard = ({
     <RichTextDisplay value={note} className="font-urbanist text-sm font-medium text-onyx" />
   </div>
 )
-
-export default TicketNoteCard

@@ -7,16 +7,16 @@ import { EditTicketFormSchema } from '../../schemas/EditTicketFormSchema'
 import { useToastStore } from '../../store/ToastStore'
 import { EditTicketForm } from '../../types/forms/EditTicketForm.type'
 import { Ticket } from '../../types/Ticket.type'
-import Button from '../Button'
-import DateInput from '../DateInput'
-import ClipboardIcon from '../icons/ClipboardIcon'
-import EditIcon from '../icons/EditIcon'
-import FloppyDiskIcon from '../icons/FloppyDiskIcon'
-import Modal from '../Modal'
-import RichTextInput from '../RichTextInput'
-import Select from '../Select'
-import TextInput from '../TextInput'
-const EditTicketModal = ({
+import { Button } from '../Button'
+import { DateInput } from '../DateInput'
+import { ClipboardIcon } from '../icons/ClipboardIcon'
+import { EditIcon } from '../icons/EditIcon'
+import { FloppyDiskIcon } from '../icons/FloppyDiskIcon'
+import { Modal } from '../Modal'
+import { RichTextInput } from '../RichTextInput'
+import { Select } from '../Select'
+import { TextInput } from '../TextInput'
+export const EditTicketModal = ({
   isVisible,
   onClose,
   ticket,
@@ -124,5 +124,3 @@ const EditTicketModal = ({
     </>
   )
 }
-
-export default EditTicketModal

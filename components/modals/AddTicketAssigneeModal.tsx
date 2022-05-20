@@ -8,13 +8,13 @@ import { Department } from '../../types/Department.type'
 import { AddTicketAssigneeForm } from '../../types/forms/AddTicketAssigneeForm.type'
 import { Page } from '../../types/Page.type'
 import { SelectOption } from '../../types/SelectOption.type'
-import Button from '../Button'
-import ClipboardIcon from '../icons/ClipboardIcon'
-import UserIcon from '../icons/UserIcon'
-import Modal from '../Modal'
-import Select from '../Select'
+import { Button } from '../Button'
+import { ClipboardIcon } from '../icons/ClipboardIcon'
+import { UserIcon } from '../icons/UserIcon'
+import { Modal } from '../Modal'
+import { Select } from '../Select'
 
-const AddTicketAssigneeModal = ({
+export const AddTicketAssigneeModal = ({
   isVisible,
   onClose,
   ticketId,
@@ -132,5 +132,3 @@ const AddTicketAssigneeModal = ({
     </>
   )
 }
-
-export default AddTicketAssigneeModal

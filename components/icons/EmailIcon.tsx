@@ -1,4 +1,4 @@
-const EmailIcon = ({ className }: { className: string }) => (
+export const EmailIcon = ({ className }: { className: string }) => (
   <svg
     className={className}
     width="18"
@@ -23,5 +23,3 @@ const EmailIcon = ({ className }: { className: string }) => (
     />
   </svg>
 )
-
-export default EmailIcon

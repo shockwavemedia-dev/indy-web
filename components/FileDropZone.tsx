@@ -1,11 +1,11 @@
 import { useFormikContext } from 'formik'
 import { useEffect, useState } from 'react'
 import { useDropzone } from 'react-dropzone'
-import FormErrorMessage from './FormErrorMessage'
-import FileIcon from './icons/FileIcon'
-import RemoveFileIcon from './icons/RemoveFileIcon'
+import { FormErrorMessage } from './FormErrorMessage'
+import { FileIcon } from './icons/FileIcon'
+import { RemoveFileIcon } from './icons/RemoveFileIcon'
 
-const FileDropZone = ({
+export const FileDropZone = ({
   label,
   name,
   mimeType,
@@ -98,5 +98,3 @@ const FileDropZone = ({
     </div>
   )
 }
-
-export default FileDropZone

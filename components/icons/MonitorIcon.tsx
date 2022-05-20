@@ -1,4 +1,4 @@
-const MonitorIcon = ({ className }: { className: string }) => (
+export const MonitorIcon = ({ className }: { className: string }) => (
   <svg
     className={className}
     width="18"
@@ -18,5 +18,3 @@ const MonitorIcon = ({ className }: { className: string }) => (
     <path d="M5.625 16.5H12.375" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 )
-
-export default MonitorIcon

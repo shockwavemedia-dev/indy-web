@@ -7,20 +7,26 @@ import { UserGenderOptions } from '../../constants/options/UserGenderOptions'
 import { NewAdminUserFormSchema } from '../../schemas/NewAdminUserFormSchema'
 import { useToastStore } from '../../store/ToastStore'
 import { NewAdminUserForm } from '../../types/forms/NewAdminUserForm.type'
-import Button from '../Button'
-import DateInput from '../DateInput'
-import ClipboardIcon from '../icons/ClipboardIcon'
-import EmailIcon from '../icons/EmailIcon'
-import LockIcon from '../icons/LockIcon'
-import PencilIcon from '../icons/PencilIcon'
-import UserIcon from '../icons/UserIcon'
-import Modal from '../Modal'
-import PasswordInput from '../PasswordInput'
+import { Button } from '../Button'
+import { DateInput } from '../DateInput'
+import { ClipboardIcon } from '../icons/ClipboardIcon'
+import { EmailIcon } from '../icons/EmailIcon'
+import { LockIcon } from '../icons/LockIcon'
+import { PencilIcon } from '../icons/PencilIcon'
+import { UserIcon } from '../icons/UserIcon'
+import { Modal } from '../Modal'
+import { PasswordInput } from '../PasswordInput'
 import { computePasswordStrength, PasswordStrengthMeter } from '../PasswordStrengthMeter'
-import Select from '../Select'
-import TextInput from '../TextInput'
+import { Select } from '../Select'
+import { TextInput } from '../TextInput'
 
-const NewAdminUserModal = ({ isVisible, onClose }: { isVisible: boolean; onClose: () => void }) => {
+export const NewAdminUserModal = ({
+  isVisible,
+  onClose,
+}: {
+  isVisible: boolean
+  onClose: () => void
+}) => {
   const queryClient = useQueryClient()
   const { showToast } = useToastStore()
 
@@ -161,5 +167,3 @@ const NewAdminUserModal = ({ isVisible, onClose }: { isVisible: boolean; onClose
     </>
   )
 }
-
-export default NewAdminUserModal

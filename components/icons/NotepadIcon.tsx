@@ -1,4 +1,4 @@
-const NotepadIcon = ({ className }: { className: string }) => (
+export const NotepadIcon = ({ className }: { className: string }) => (
   <svg
     className={className}
     width="18"
@@ -23,5 +23,3 @@ const NotepadIcon = ({ className }: { className: string }) => (
     <path d="M6 12.75H12" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 )
-
-export default NotepadIcon

@@ -1,18 +1,18 @@
 import { useEffect } from 'react'
 import { useToastStore } from '../store/ToastStore'
-import { Toast } from '../types/Toast'
-import CloseToastIcon from './icons/CloseToastIcon'
-import ToastErrorIcon from './icons/ToastErrorIcon'
-import ToastInfoIcon from './icons/ToastInfoIcon'
-import ToastSuccessIcon from './icons/ToastSuccessIcon'
-import ToastWarningIcon from './icons/ToastWarningIcon'
+import { ToastProps } from '../types/ToastProps'
+import { CloseToastIcon } from './icons/CloseToastIcon'
+import { ToastErrorIcon } from './icons/ToastErrorIcon'
+import { ToastInfoIcon } from './icons/ToastInfoIcon'
+import { ToastSuccessIcon } from './icons/ToastSuccessIcon'
+import { ToastWarningIcon } from './icons/ToastWarningIcon'
 
-const Toast = ({
+export const Toast = ({
   id,
   toast: { type, message, duration, persistent },
 }: {
   id: number
-  toast: Toast
+  toast: ToastProps
 }) => {
   const { closeToast } = useToastStore()
 
@@ -45,5 +45,3 @@ const Toast = ({
     </div>
   )
 }
-
-export default Toast

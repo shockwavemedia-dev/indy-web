@@ -1,4 +1,4 @@
-const UserIcon = ({ className }: { className: string }) => (
+export const UserIcon = ({ className }: { className: string }) => (
   <svg
     className={className}
     width="18"
@@ -21,5 +21,3 @@ const UserIcon = ({ className }: { className: string }) => (
     />
   </svg>
 )
-
-export default UserIcon

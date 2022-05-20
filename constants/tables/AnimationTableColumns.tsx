@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { useQueryClient } from 'react-query'
 import { Column } from 'react-table'
-import TrashIcon from '../../components/icons/TrashIcon'
+import { TrashIcon } from '../../components/icons/TrashIcon'
 import { Animation } from '../../types/Animation.type'
 
 export const AnimationTableColumns: Array<Column<Animation>> = [

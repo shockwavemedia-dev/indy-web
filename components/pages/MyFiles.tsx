@@ -3,16 +3,16 @@ import Head from 'next/head'
 import { useState } from 'react'
 import { useQuery } from 'react-query'
 import { SingleValue } from 'react-select'
-import Card from '../../components/Card'
-import File from '../../components/File'
+import { Card } from '../../components/Card'
+import { File } from '../../components/File'
 import { Client } from '../../types/Client.type'
 import { Files } from '../../types/Files.type'
 import { Page } from '../../types/Page.type'
 import { SelectOption } from '../../types/SelectOption.type'
-import UserIcon from '../icons/UserIcon'
-import SelectNoFormik from '../SelectNoFormik'
+import { UserIcon } from '../icons/UserIcon'
+import { SelectNoFormik } from '../SelectNoFormik'
 
-const ClientMyFiles = () => {
+export const MyFiles = () => {
   const [year, setYear] = useState('')
   const [month, setMonth] = useState('')
   const [clientId, setClientId] = useState(-1)
@@ -136,5 +136,3 @@ const ClientMyFiles = () => {
     </>
   )
 }
-
-export default ClientMyFiles

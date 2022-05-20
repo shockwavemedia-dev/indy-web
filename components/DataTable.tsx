@@ -3,12 +3,12 @@ import { ReactNode, useEffect, useMemo, useState } from 'react'
 import { useQuery } from 'react-query'
 import { Column, usePagination, useSortBy, useTable } from 'react-table'
 import { Page } from '../types/Page.type'
-import CalendarIcon from './icons/CalendarIcon'
-import CaretIcon from './icons/CaretIcon'
-import GearIcon from './icons/GearIcon'
-import SortIcon from './icons/SortIcon'
+import { CalendarIcon } from './icons/CalendarIcon'
+import { CaretIcon } from './icons/CaretIcon'
+import { GearIcon } from './icons/GearIcon'
+import { SortIcon } from './icons/SortIcon'
 
-const DataTable = <T extends Record<string, unknown>>({
+export const DataTable = <T extends Record<string, unknown>>({
   tableQueryKey,
   dataEndpoint,
   dataParams,
@@ -262,5 +262,3 @@ const DataTable = <T extends Record<string, unknown>>({
     </>
   )
 }
-
-export default DataTable

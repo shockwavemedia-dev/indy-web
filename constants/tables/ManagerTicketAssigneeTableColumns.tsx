@@ -1,6 +1,6 @@
 import { Column } from 'react-table'
-import EditIcon from '../../components/icons/EditIcon'
-import TrashIcon from '../../components/icons/TrashIcon'
+import { EditIcon } from '../../components/icons/EditIcon'
+import { TrashIcon } from '../../components/icons/TrashIcon'
 import { useTicketAssigneeStore } from '../../store/TicketAssigneeStore'
 import { TicketAssignee } from '../../types/TicketAssignee.type'
 

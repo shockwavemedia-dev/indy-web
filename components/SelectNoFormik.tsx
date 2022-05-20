@@ -9,10 +9,10 @@ import ReactSelect, {
   Props,
 } from 'react-select'
 import { SelectOption } from '../types/SelectOption.type'
-import FormErrorMessage from './FormErrorMessage'
-import CaretIcon from './icons/CaretIcon'
-import ClearSelectIcon from './icons/ClearSelectIcon'
-import RemoveMultiValueIcon from './icons/RemoveMultiValueIcon'
+import { FormErrorMessage } from './FormErrorMessage'
+import { CaretIcon } from './icons/CaretIcon'
+import { ClearSelectIcon } from './icons/ClearSelectIcon'
+import { RemoveMultiValueIcon } from './icons/RemoveMultiValueIcon'
 
 const SelectContainer = <Option, IsMulti extends boolean>({
   children,
@@ -63,7 +63,7 @@ const ClearIndicator = <Option, IsMulti extends boolean, Group extends GroupBase
   </Components.ClearIndicator>
 )
 
-const SelectNoFormik = <
+export const SelectNoFormik = <
   T,
   IsMulti extends boolean = false,
   Group extends GroupBase<SelectOption<T>> = GroupBase<SelectOption<T>>
@@ -167,5 +167,3 @@ const SelectNoFormik = <
     onChange={onChange}
   />
 )
-
-export default SelectNoFormik

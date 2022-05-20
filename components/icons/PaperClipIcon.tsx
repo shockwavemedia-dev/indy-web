@@ -1,4 +1,4 @@
-const PaperClipIcon = ({ className }: { className: string }) => (
+export const PaperClipIcon = ({ className }: { className: string }) => (
   <svg
     width="20"
     height="20"
@@ -15,5 +15,3 @@ const PaperClipIcon = ({ className }: { className: string }) => (
     />
   </svg>
 )
-
-export default PaperClipIcon

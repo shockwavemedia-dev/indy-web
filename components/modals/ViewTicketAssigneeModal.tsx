@@ -1,8 +1,8 @@
 import { TicketAssignee } from '../../types/TicketAssignee.type'
-import Modal from '../Modal'
-import TitleValue from '../TitleValue'
+import { Modal } from '../Modal'
+import { TitleValue } from '../TitleValue'
 
-const ViewTicketAssigneeModal = ({
+export const ViewTicketAssigneeModal = ({
   isVisible,
   onClose,
   ticketAssignee,
@@ -32,5 +32,3 @@ const ViewTicketAssigneeModal = ({
     </>
   )
 }
-
-export default ViewTicketAssigneeModal

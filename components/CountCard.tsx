@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
 
-const CountCard = ({
+export const CountCard = ({
   Icon,
   value,
   description,
@@ -21,5 +21,3 @@ const CountCard = ({
     </div>
   </div>
 )
-
-export default CountCard

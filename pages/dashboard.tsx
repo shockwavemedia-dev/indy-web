@@ -1,8 +1,8 @@
 import { useSession } from 'next-auth/react'
 import { ReactElement, useMemo } from 'react'
-import ClientDashboard from '../components/pages/client/ClientDashboard'
-import ManagerDashboard from '../components/pages/manager/ManagerDashboard'
-import StaffDashboard from '../components/pages/staff/StaffDashboard'
+import { ClientDashboard } from '../components/pages/client/ClientDashboard'
+import { ManagerDashboard } from '../components/pages/manager/ManagerDashboard'
+import { StaffDashboard } from '../components/pages/staff/StaffDashboard'
 import PanelLayout from '../layouts/PanelLayout'
 import { NextPageWithLayout } from '../types/pages/NextPageWithLayout.type'
 

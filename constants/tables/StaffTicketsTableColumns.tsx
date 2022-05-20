@@ -1,7 +1,7 @@
 import { format } from 'date-fns'
 import Link from 'next/link'
 import { Column } from 'react-table'
-import EyeIcon from '../../components/icons/EyeIcon'
+import { EyeIcon } from '../../components/icons/EyeIcon'
 import { Ticket } from '../../types/Ticket.type'
 
 export const StaffTicketsTableColumns: Array<Column<Ticket>> = [

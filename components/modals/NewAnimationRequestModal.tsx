@@ -6,14 +6,14 @@ import { useToastStore } from '../../store/ToastStore'
 import { Animation } from '../../types/Animation.type'
 import { NewAnimationRequestForm } from '../../types/forms/NewAnimationRequestForm.type'
 import { Page } from '../../types/Page.type'
-import Button from '../Button'
-import EditIcon from '../icons/EditIcon'
-import PencilIcon from '../icons/PencilIcon'
-import Modal from '../Modal'
-import RichTextInput from '../RichTextInput'
-import Select from '../Select'
+import { Button } from '../Button'
+import { EditIcon } from '../icons/EditIcon'
+import { PencilIcon } from '../icons/PencilIcon'
+import { Modal } from '../Modal'
+import { RichTextInput } from '../RichTextInput'
+import { Select } from '../Select'
 
-const NewAnimationRequestModal = ({
+export const NewAnimationRequestModal = ({
   isVisible,
   onClose,
 }: {
@@ -130,5 +130,3 @@ const NewAnimationRequestModal = ({
     </>
   )
 }
-
-export default NewAnimationRequestModal

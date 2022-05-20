@@ -1,13 +1,13 @@
 import Head from 'next/head'
 import { StaffTicketsTableColumns } from '../../../constants/tables/StaffTicketsTableColumns'
-import Card from '../../Card'
-import CountCard from '../../CountCard'
-import DataTable from '../../DataTable'
-import GalleryIcon from '../../icons/GalleryIcon'
-import MenuBoardIcon from '../../icons/MenuBoardIcon'
-import VideoIcon from '../../icons/VideoIcon'
+import { Card } from '../../Card'
+import { CountCard } from '../../CountCard'
+import { DataTable } from '../../DataTable'
+import { GalleryIcon } from '../../icons/GalleryIcon'
+import { MenuBoardIcon } from '../../icons/MenuBoardIcon'
+import { VideoIcon } from '../../icons/VideoIcon'
 
-const StaffDashboard = () => {
+export const StaffDashboard = () => {
   return (
     <>
       <Head>
@@ -86,5 +86,3 @@ const StaffDashboard = () => {
     </>
   )
 }
-
-export default StaffDashboard

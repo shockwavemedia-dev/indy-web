@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
 
-const TitleValue = ({
+export const TitleValue = ({
   title,
   children,
   className,
@@ -15,5 +15,3 @@ const TitleValue = ({
       <div className="font-urbanist text-sm font-medium text-onyx">{children}</div>
     </div>
   ) : null
-
-export default TitleValue

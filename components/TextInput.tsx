@@ -1,8 +1,8 @@
 import { Field } from 'formik'
 import { Icon } from '../types/Icon.type'
-import FormErrorMessage from './FormErrorMessage'
+import { FormErrorMessage } from './FormErrorMessage'
 
-const TextInput = ({
+export const TextInput = ({
   type,
   name,
   Icon,
@@ -42,5 +42,3 @@ const TextInput = ({
     <FormErrorMessage name={name} />
   </div>
 )
-
-export default TextInput

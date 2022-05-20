@@ -2,12 +2,12 @@ import axios from 'axios'
 import { useQueryClient } from 'react-query'
 import { useToastStore } from '../../store/ToastStore'
 import { TicketAssignee } from '../../types/TicketAssignee.type'
-import Button from '../Button'
-import TrashIcon from '../icons/TrashIcon'
-import Modal from '../Modal'
-import TitleValue from '../TitleValue'
+import { Button } from '../Button'
+import { TrashIcon } from '../icons/TrashIcon'
+import { Modal } from '../Modal'
+import { TitleValue } from '../TitleValue'
 
-const DeleteTicketAssigneeModal = ({
+export const DeleteTicketAssigneeModal = ({
   isVisible,
   onClose,
   ticketAssignee,
@@ -75,5 +75,3 @@ const DeleteTicketAssigneeModal = ({
     </>
   )
 }
-
-export default DeleteTicketAssigneeModal

@@ -1,4 +1,4 @@
-const ColorsIcon = ({ className }: { className: string }) => (
+export const ColorsIcon = ({ className }: { className: string }) => (
   <svg
     className={className}
     width="18"
@@ -33,5 +33,3 @@ const ColorsIcon = ({ className }: { className: string }) => (
     />
   </svg>
 )
-
-export default ColorsIcon

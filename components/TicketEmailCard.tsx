@@ -1,8 +1,8 @@
 import { format } from 'date-fns'
 import { useState } from 'react'
-import RichTextDisplay from './RichTextDisplay'
+import { RichTextDisplay } from './RichTextDisplay'
 
-const TicketEmailCard = ({
+export const TicketEmailCard = ({
   title,
   message,
   createdAt,
@@ -34,5 +34,3 @@ const TicketEmailCard = ({
     </button>
   )
 }
-
-export default TicketEmailCard

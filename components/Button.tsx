@@ -1,6 +1,6 @@
 import { MouseEventHandler, ReactNode } from 'react'
 
-const Button = ({
+export const Button = ({
   onClick,
   type,
   ariaLabel,
@@ -31,5 +31,3 @@ const Button = ({
     {children}
   </button>
 )
-
-export default Button

@@ -1,7 +1,15 @@
-import FileIcon from './icons/FileIcon'
-import FolderIcon from './icons/FolderIcon'
+import { FileIcon } from './icons/FileIcon'
+import { FolderIcon } from './icons/FolderIcon'
 
-const File = ({ onClick, href, name }: { onClick?: () => void; href?: string; name: string }) =>
+export const File = ({
+  onClick,
+  href,
+  name,
+}: {
+  onClick?: () => void
+  href?: string
+  name: string
+}) =>
   href ? (
     <a
       href={href}
@@ -29,5 +37,3 @@ const File = ({ onClick, href, name }: { onClick?: () => void; href?: string; na
       <div className="font-urbanist text-xxs font-semibold capitalize text-onyx">{name}</div>
     </button>
   )
-
-export default File

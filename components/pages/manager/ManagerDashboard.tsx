@@ -3,23 +3,23 @@ import Head from 'next/head'
 import { useState } from 'react'
 import { ClientTicketsTableColumns } from '../../../constants/tables/ClientTicketsTableColumns'
 import { useTicketStore } from '../../../store/TicketStore'
-import Card from '../../Card'
-import CountCard from '../../CountCard'
-import DataTable from '../../DataTable'
-import FancyButton from '../../FancyButton'
-import CalendarAddIcon from '../../icons/CalendarAddIcon'
-import ClipboardCloseIcon from '../../icons/ClipboardCloseIcon'
-import GalleryIcon from '../../icons/GalleryIcon'
-import LifeBuoyIcon from '../../icons/LifeBuoyIcon'
-import MenuBoardIcon from '../../icons/MenuBoardIcon'
-import PresentationChartIcon from '../../icons/PresentationChartIcon'
-import VideoIcon from '../../icons/VideoIcon'
-import CreateEventModal from '../../modals/CreateEventModal'
-import CreateSupportRequestModal from '../../modals/CreateSupportRequestModal'
-import DeleteTicketModal from '../../modals/DeleteTicketModal'
-import EditTicketModal from '../../modals/EditTicketModal'
+import { Card } from '../../Card'
+import { CountCard } from '../../CountCard'
+import { DataTable } from '../../DataTable'
+import { FancyButton } from '../../FancyButton'
+import { CalendarAddIcon } from '../../icons/CalendarAddIcon'
+import { ClipboardCloseIcon } from '../../icons/ClipboardCloseIcon'
+import { GalleryIcon } from '../../icons/GalleryIcon'
+import { LifeBuoyIcon } from '../../icons/LifeBuoyIcon'
+import { MenuBoardIcon } from '../../icons/MenuBoardIcon'
+import { PresentationChartIcon } from '../../icons/PresentationChartIcon'
+import { VideoIcon } from '../../icons/VideoIcon'
+import { CreateEventModal } from '../../modals/CreateEventModal'
+import { CreateSupportRequestModal } from '../../modals/CreateSupportRequestModal'
+import { DeleteTicketModal } from '../../modals/DeleteTicketModal'
+import { EditTicketModal } from '../../modals/EditTicketModal'
 
-const ManagerDashboard = () => {
+export const ManagerDashboard = () => {
   const { data: session } = useSession()
   const {
     activeTicket,
@@ -176,5 +176,3 @@ const ManagerDashboard = () => {
     </>
   )
 }
-
-export default ManagerDashboard

@@ -1,4 +1,4 @@
-const TextCenterAlignmentIcon = ({ className }: { className: string }) => (
+export const TextCenterAlignmentIcon = ({ className }: { className: string }) => (
   <svg
     className={className}
     width="13"
@@ -13,5 +13,3 @@ const TextCenterAlignmentIcon = ({ className }: { className: string }) => (
     <path d="M2.83301 8.5H10.333" strokeLinecap="square" strokeLinejoin="round" />
   </svg>
 )
-
-export default TextCenterAlignmentIcon

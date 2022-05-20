@@ -1,4 +1,4 @@
-const NoteIcon = ({ className }: { className: string }) => (
+export const NoteIcon = ({ className }: { className: string }) => (
   <svg
     className={className}
     width="19"
@@ -44,5 +44,3 @@ const NoteIcon = ({ className }: { className: string }) => (
     />
   </svg>
 )
-
-export default NoteIcon

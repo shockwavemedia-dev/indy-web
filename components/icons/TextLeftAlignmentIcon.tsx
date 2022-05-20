@@ -1,4 +1,4 @@
-const TextLeftAlignmentIcon = ({ className }: { className: string }) => (
+export const TextLeftAlignmentIcon = ({ className }: { className: string }) => (
   <svg
     className={className}
     width="12"
@@ -13,5 +13,3 @@ const TextLeftAlignmentIcon = ({ className }: { className: string }) => (
     <path d="M8.5 8.5H1" strokeLinecap="square" strokeLinejoin="round" />
   </svg>
 )
-
-export default TextLeftAlignmentIcon

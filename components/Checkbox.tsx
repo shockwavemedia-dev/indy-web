@@ -1,7 +1,7 @@
 import { Field } from 'formik'
-import CheckIcon from './icons/CheckIcon'
+import { CheckIcon } from './icons/CheckIcon'
 
-const Checkbox = ({
+export const Checkbox = ({
   name,
   label,
   className,
@@ -23,5 +23,3 @@ const Checkbox = ({
     </label>
   </div>
 )
-
-export default Checkbox

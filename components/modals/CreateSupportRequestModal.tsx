@@ -9,16 +9,16 @@ import { Department } from '../../types/Department.type'
 import { CreateSupportRequestForm } from '../../types/forms/CreateSupportRequestForm.type'
 import { Page } from '../../types/Page.type'
 import { Ticket } from '../../types/Ticket.type'
-import Button from '../Button'
-import DateInput from '../DateInput'
-import ClipboardIcon from '../icons/ClipboardIcon'
-import EditIcon from '../icons/EditIcon'
-import Modal from '../Modal'
-import RichTextInput from '../RichTextInput'
-import Select from '../Select'
-import TextInput from '../TextInput'
+import { Button } from '../Button'
+import { DateInput } from '../DateInput'
+import { ClipboardIcon } from '../icons/ClipboardIcon'
+import { EditIcon } from '../icons/EditIcon'
+import { Modal } from '../Modal'
+import { RichTextInput } from '../RichTextInput'
+import { Select } from '../Select'
+import { TextInput } from '../TextInput'
 
-const CreateSupportRequestModal = ({
+export const CreateSupportRequestModal = ({
   isVisible,
   onClose,
 }: {
@@ -145,5 +145,3 @@ const CreateSupportRequestModal = ({
     </>
   )
 }
-
-export default CreateSupportRequestModal

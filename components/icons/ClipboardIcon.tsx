@@ -1,4 +1,4 @@
-const ClipboardIcon = ({ className }: { className: string }) => (
+export const ClipboardIcon = ({ className }: { className: string }) => (
   <svg
     className={className}
     width="18"
@@ -27,5 +27,3 @@ const ClipboardIcon = ({ className }: { className: string }) => (
     />
   </svg>
 )
-
-export default ClipboardIcon

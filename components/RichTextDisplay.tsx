@@ -7,7 +7,7 @@ import {
 } from 'draft-js'
 import 'draft-js/dist/Draft.css'
 
-const RichTextDisplay = ({ value, className }: { value: string; className?: string }) => {
+export const RichTextDisplay = ({ value, className }: { value: string; className?: string }) => {
   return (
     <div className={className}>
       <Editor
@@ -42,5 +42,3 @@ const compositeDecorator = new CompositeDecorator([
     ),
   },
 ])
-
-export default RichTextDisplay

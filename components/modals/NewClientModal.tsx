@@ -5,14 +5,20 @@ import { NewClientFormSchema } from '../../schemas/NewClientFormSchema'
 import { useToastStore } from '../../store/ToastStore'
 import { NewClientForm } from '../../types/forms/NewClientForm.type'
 import { objectWithFileToFormData } from '../../utils/FormHelpers'
-import Button from '../Button'
-import DateInput from '../DateInput'
-import EditIcon from '../icons/EditIcon'
-import Modal from '../Modal'
-import RichTextInput from '../RichTextInput'
-import TextInput from '../TextInput'
+import { Button } from '../Button'
+import { DateInput } from '../DateInput'
+import { EditIcon } from '../icons/EditIcon'
+import { Modal } from '../Modal'
+import { RichTextInput } from '../RichTextInput'
+import { TextInput } from '../TextInput'
 
-const NewClientModal = ({ isVisible, onClose }: { isVisible: boolean; onClose: () => void }) => {
+export const NewClientModal = ({
+  isVisible,
+  onClose,
+}: {
+  isVisible: boolean
+  onClose: () => void
+}) => {
   const queryClient = useQueryClient()
   const { showToast } = useToastStore()
 
@@ -126,5 +132,3 @@ const NewClientModal = ({ isVisible, onClose }: { isVisible: boolean; onClose: (
     </>
   )
 }
-
-export default NewClientModal

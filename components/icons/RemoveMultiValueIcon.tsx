@@ -1,4 +1,4 @@
-const RemoveMultiValueIcon = ({ className }: { className: string }) => (
+export const RemoveMultiValueIcon = ({ className }: { className: string }) => (
   <svg
     className={className}
     width="10"
@@ -21,5 +21,3 @@ const RemoveMultiValueIcon = ({ className }: { className: string }) => (
     />
   </svg>
 )
-
-export default RemoveMultiValueIcon

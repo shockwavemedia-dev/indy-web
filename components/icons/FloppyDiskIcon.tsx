@@ -1,4 +1,4 @@
-const FloppyDiskIcon = ({ className }: { className: string }) => (
+export const FloppyDiskIcon = ({ className }: { className: string }) => (
   <svg
     className={className}
     width="20"
@@ -27,5 +27,3 @@ const FloppyDiskIcon = ({ className }: { className: string }) => (
     />
   </svg>
 )
-
-export default FloppyDiskIcon

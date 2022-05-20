@@ -7,13 +7,19 @@ import { CategoryAnimation } from '../../types/CategoryAnimation.type'
 import { NewAnimationForm } from '../../types/forms/NewAnimationForm.type'
 import { Page } from '../../types/Page.type'
 import { objectWithFileToFormData } from '../../utils/FormHelpers'
-import Button from '../Button'
-import PencilIcon from '../icons/PencilIcon'
-import Modal from '../Modal'
-import Select from '../Select'
-import TextInput from '../TextInput'
+import { Button } from '../Button'
+import { PencilIcon } from '../icons/PencilIcon'
+import { Modal } from '../Modal'
+import { Select } from '../Select'
+import { TextInput } from '../TextInput'
 
-const NewAnimationModal = ({ isVisible, onClose }: { isVisible: boolean; onClose: () => void }) => {
+export const NewAnimationModal = ({
+  isVisible,
+  onClose,
+}: {
+  isVisible: boolean
+  onClose: () => void
+}) => {
   const { showToast } = useToastStore()
 
   const { data: categories } = useQuery(
@@ -122,5 +128,3 @@ const NewAnimationModal = ({ isVisible, onClose }: { isVisible: boolean; onClose
     </>
   )
 }
-
-export default NewAnimationModal

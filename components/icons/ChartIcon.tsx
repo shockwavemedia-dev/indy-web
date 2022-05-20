@@ -1,4 +1,4 @@
-const ChartIcon = ({ className }: { className: string }) => (
+export const ChartIcon = ({ className }: { className: string }) => (
   <svg
     className={className}
     width="18"
@@ -27,5 +27,3 @@ const ChartIcon = ({ className }: { className: string }) => (
     />
   </svg>
 )
-
-export default ChartIcon

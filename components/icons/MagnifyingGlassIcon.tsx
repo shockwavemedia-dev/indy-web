@@ -1,4 +1,4 @@
-const MagnifyingGlassIcon = ({ className }: { className: string }) => (
+export const MagnifyingGlassIcon = ({ className }: { className: string }) => (
   <svg
     className={className}
     width="24"
@@ -21,5 +21,3 @@ const MagnifyingGlassIcon = ({ className }: { className: string }) => (
     />
   </svg>
 )
-
-export default MagnifyingGlassIcon

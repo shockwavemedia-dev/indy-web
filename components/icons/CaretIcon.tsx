@@ -1,4 +1,4 @@
-const CaretIcon = ({ className, small = false }: { className: string; small?: boolean }) =>
+export const CaretIcon = ({ className, small = false }: { className: string; small?: boolean }) =>
   small ? (
     <svg
       className={className}
@@ -27,5 +27,3 @@ const CaretIcon = ({ className, small = false }: { className: string; small?: bo
       <path d="M3 10L8 5L13 10" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   )
-
-export default CaretIcon

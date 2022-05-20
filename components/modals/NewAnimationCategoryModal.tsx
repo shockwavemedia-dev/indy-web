@@ -3,12 +3,12 @@ import { Form, Formik } from 'formik'
 import { NewAnimationCategoryFormSchema } from '../../schemas/NewAnimationCategoryFormSchema'
 import { useToastStore } from '../../store/ToastStore'
 import { NewAnimationCategoryForm } from '../../types/forms/NewAnimationCategoryForm.type'
-import Button from '../Button'
-import PencilIcon from '../icons/PencilIcon'
-import Modal from '../Modal'
-import TextInput from '../TextInput'
+import { Button } from '../Button'
+import { PencilIcon } from '../icons/PencilIcon'
+import { Modal } from '../Modal'
+import { TextInput } from '../TextInput'
 
-const NewAnimationCategoryModal = ({
+export const NewAnimationCategoryModal = ({
   isVisible,
   onClose,
 }: {
@@ -79,5 +79,3 @@ const NewAnimationCategoryModal = ({
     </>
   )
 }
-
-export default NewAnimationCategoryModal

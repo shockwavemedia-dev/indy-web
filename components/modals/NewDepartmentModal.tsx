@@ -4,12 +4,12 @@ import { useQueryClient } from 'react-query'
 import { NewDepartmentFormSchema } from '../../schemas/NewDepartmentFormSchema'
 import { useToastStore } from '../../store/ToastStore'
 import { NewDepartmentForm } from '../../types/forms/NewDepartmentForm.type'
-import Button from '../Button'
-import PencilIcon from '../icons/PencilIcon'
-import Modal from '../Modal'
-import TextInput from '../TextInput'
+import { Button } from '../Button'
+import { PencilIcon } from '../icons/PencilIcon'
+import { Modal } from '../Modal'
+import { TextInput } from '../TextInput'
 
-const NewDepartmentModal = ({
+export const NewDepartmentModal = ({
   isVisible,
   onClose,
 }: {
@@ -98,5 +98,3 @@ const NewDepartmentModal = ({
     </>
   )
 }
-
-export default NewDepartmentModal

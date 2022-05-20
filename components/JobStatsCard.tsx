@@ -1,6 +1,6 @@
 import { Icon } from '../types/Icon.type'
 
-const JobsStatusCountCard = ({
+export const JobsStatusCountCard = ({
   Icon,
   value,
   description,
@@ -17,5 +17,3 @@ const JobsStatusCountCard = ({
     <div className="font-urbanist text-xs font-medium text-metallic-silver">{description}</div>
   </div>
 )
-
-export default JobsStatusCountCard

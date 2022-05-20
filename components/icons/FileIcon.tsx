@@ -1,4 +1,4 @@
-const FileIcon = () => (
+export const FileIcon = () => (
   <svg
     className="flex-shrink-0"
     width="22"
@@ -166,5 +166,3 @@ const FileIcon = () => (
     </defs>
   </svg>
 )
-
-export default FileIcon

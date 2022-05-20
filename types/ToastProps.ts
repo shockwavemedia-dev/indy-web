@@ -1,6 +1,6 @@
 import { ToastType } from './ToastType.type'
 
-export type Toast = {
+export type ToastProps = {
   type: ToastType
   message: string
   duration?: number

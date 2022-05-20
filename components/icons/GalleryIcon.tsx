@@ -1,4 +1,4 @@
-const GalleryIcon = ({ className }: { className: string }) => (
+export const GalleryIcon = ({ className }: { className: string }) => (
   <svg
     className={className}
     width="20"
@@ -27,5 +27,3 @@ const GalleryIcon = ({ className }: { className: string }) => (
     />
   </svg>
 )
-
-export default GalleryIcon

@@ -1,4 +1,4 @@
-const UnderlineIcon = ({ className }: { className: string }) => (
+export const UnderlineIcon = ({ className }: { className: string }) => (
   <svg
     className={className}
     width="12"
@@ -11,5 +11,3 @@ const UnderlineIcon = ({ className }: { className: string }) => (
     <rect x="1" y="11.8335" width="9.16667" height="0.833332" />
   </svg>
 )
-
-export default UnderlineIcon

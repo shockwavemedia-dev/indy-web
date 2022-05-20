@@ -1,4 +1,4 @@
-const TinyDotIcon = ({ className }: { className: string }) => (
+export const TinyDotIcon = ({ className }: { className: string }) => (
   <svg
     className={className}
     width="6"
@@ -10,5 +10,3 @@ const TinyDotIcon = ({ className }: { className: string }) => (
     <circle cx="3" cy="3.5" r="3" />
   </svg>
 )
-
-export default TinyDotIcon

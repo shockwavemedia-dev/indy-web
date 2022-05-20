@@ -1,5 +1,5 @@
 import { Column } from 'react-table'
-import EyeIcon from '../../components/icons/EyeIcon'
+import { EyeIcon } from '../../components/icons/EyeIcon'
 import { useTicketAssigneeStore } from '../../store/TicketAssigneeStore'
 import { TicketAssignee } from '../../types/TicketAssignee.type'
 

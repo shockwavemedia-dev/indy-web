@@ -4,10 +4,10 @@ import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { ReactElement, useState } from 'react'
-import Button from '../../components/Button'
-import FloppyDiskIcon from '../../components/icons/FloppyDiskIcon'
-import LockIcon from '../../components/icons/LockIcon'
-import PasswordInput from '../../components/PasswordInput'
+import { Button } from '../../components/Button'
+import { FloppyDiskIcon } from '../../components/icons/FloppyDiskIcon'
+import { LockIcon } from '../../components/icons/LockIcon'
+import { PasswordInput } from '../../components/PasswordInput'
 import {
   computePasswordStrength,
   PasswordStrengthMeter,

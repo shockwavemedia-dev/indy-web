@@ -3,11 +3,11 @@ import { useSession } from 'next-auth/react'
 import Head from 'next/head'
 import { useState } from 'react'
 import { useQuery } from 'react-query'
-import Card from '../../../components/Card'
-import File from '../../../components/File'
+import { Card } from '../../../components/Card'
+import { File } from '../../../components/File'
 import { Files } from '../../../types/Files.type'
 
-const ClientMyFiles = () => {
+export const ClientMyFiles = () => {
   const { data: session } = useSession()
   const [year, setYear] = useState('')
   const [month, setMonth] = useState('')
@@ -61,5 +61,3 @@ const ClientMyFiles = () => {
     </>
   )
 }
-
-export default ClientMyFiles

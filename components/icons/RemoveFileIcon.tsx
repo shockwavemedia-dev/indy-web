@@ -1,4 +1,4 @@
-const RemoveFileIcon = ({ className }: { className: string }) => (
+export const RemoveFileIcon = ({ className }: { className: string }) => (
   <svg
     className={className}
     width="16"
@@ -11,5 +11,3 @@ const RemoveFileIcon = ({ className }: { className: string }) => (
     <path d="M12.5 12.5L3.5 3.5" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 )
-
-export default RemoveFileIcon

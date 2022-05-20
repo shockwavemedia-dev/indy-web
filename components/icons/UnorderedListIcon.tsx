@@ -1,4 +1,4 @@
-const UnorderedListIcon = ({ className }: { className: string }) => (
+export const UnorderedListIcon = ({ className }: { className: string }) => (
   <svg
     className={className}
     width="12"
@@ -17,5 +17,3 @@ const UnorderedListIcon = ({ className }: { className: string }) => (
     <path d="M0.999675 8.5H1.83301" strokeLinecap="square" strokeLinejoin="round" />
   </svg>
 )
-
-export default UnorderedListIcon

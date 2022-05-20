@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
 
-const Card = ({
+export const Card = ({
   title,
   children,
   className,
@@ -14,5 +14,3 @@ const Card = ({
     {children}
   </div>
 )
-
-export default Card

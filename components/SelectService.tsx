@@ -9,10 +9,10 @@ import { Service } from '../types/Service.type'
 import { ServiceOption } from '../types/ServiceOption.type'
 import { ServiceOptionExtraValue } from '../types/ServiceOptionExtraValue.type'
 import { ServiceOptionValue } from '../types/ServiceOptionValue.type'
-import ClipboardIcon from './icons/ClipboardIcon'
-import Select from './Select'
+import { ClipboardIcon } from './icons/ClipboardIcon'
+import { Select } from './Select'
 
-const SelectService = ({ enabled }: { enabled: boolean }) => {
+export const SelectService = ({ enabled }: { enabled: boolean }) => {
   const { data: session } = useSession()
   const { data: services } = useQuery(
     'services',
@@ -135,5 +135,3 @@ const SelectService = ({ enabled }: { enabled: boolean }) => {
     />
   )
 }
-
-export default SelectService

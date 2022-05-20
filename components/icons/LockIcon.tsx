@@ -1,4 +1,4 @@
-const LockIcon = ({ className }: { className: string }) => (
+export const LockIcon = ({ className }: { className: string }) => (
   <svg
     className={className}
     width="18"
@@ -39,5 +39,3 @@ const LockIcon = ({ className }: { className: string }) => (
     />
   </svg>
 )
-
-export default LockIcon

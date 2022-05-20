@@ -1,4 +1,4 @@
-const PaperPlaneIcon = ({ className }: { className: string }) => (
+export const PaperPlaneIcon = ({ className }: { className: string }) => (
   <svg
     className={className}
     width="20"
@@ -21,5 +21,3 @@ const PaperPlaneIcon = ({ className }: { className: string }) => (
     />
   </svg>
 )
-
-export default PaperPlaneIcon

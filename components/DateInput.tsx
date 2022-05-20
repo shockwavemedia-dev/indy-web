@@ -1,10 +1,10 @@
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker'
 import { FormikValues, useFormikContext } from 'formik'
 import { useState } from 'react'
-import FormErrorMessage from './FormErrorMessage'
-import CalendarIcon from './icons/CalendarIcon'
+import { FormErrorMessage } from './FormErrorMessage'
+import { CalendarIcon } from './icons/CalendarIcon'
 
-const DateInput = ({
+export const DateInput = ({
   name,
   placeholder,
   className,
@@ -85,5 +85,3 @@ const DateInput = ({
     />
   )
 }
-
-export default DateInput

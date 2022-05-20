@@ -1,4 +1,4 @@
-const PlusIcon = ({ className }: { className: string }) => (
+export const PlusIcon = ({ className }: { className: string }) => (
   <svg
     className={className}
     width="16"
@@ -11,5 +11,3 @@ const PlusIcon = ({ className }: { className: string }) => (
     <path d="M8 12V4" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 )
-
-export default PlusIcon

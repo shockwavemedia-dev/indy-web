@@ -7,17 +7,23 @@ import { useToastStore } from '../../store/ToastStore'
 import { CreateEventForm } from '../../types/forms/CreateEventForm.type'
 import { Ticket } from '../../types/Ticket.type'
 import { objectWithFileToFormData } from '../../utils/FormHelpers'
-import Button from '../Button'
-import DateInput from '../DateInput'
-import FileDropZone from '../FileDropZone'
-import EditIcon from '../icons/EditIcon'
-import Modal from '../Modal'
-import RichTextInput from '../RichTextInput'
-import SelectService from '../SelectService'
-import TextInput from '../TextInput'
-import CreateLinkModal from './CreateLinkModal'
+import { Button } from '../Button'
+import { DateInput } from '../DateInput'
+import { FileDropZone } from '../FileDropZone'
+import { EditIcon } from '../icons/EditIcon'
+import { Modal } from '../Modal'
+import { RichTextInput } from '../RichTextInput'
+import { SelectService } from '../SelectService'
+import { TextInput } from '../TextInput'
+import { CreateLinkModal } from './CreateLinkModal'
 
-const CreateEventModal = ({ isVisible, onClose }: { isVisible: boolean; onClose: () => void }) => {
+export const CreateEventModal = ({
+  isVisible,
+  onClose,
+}: {
+  isVisible: boolean
+  onClose: () => void
+}) => {
   const { data: session } = useSession()
   const queryClient = useQueryClient()
   const { showToast } = useToastStore()
@@ -107,5 +113,3 @@ const CreateEventModal = ({ isVisible, onClose }: { isVisible: boolean; onClose:
     </>
   )
 }
-
-export default CreateEventModal

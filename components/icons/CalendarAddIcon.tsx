@@ -1,4 +1,4 @@
-const CalendarAddIcon = ({ className }: { className: string }) => (
+export const CalendarAddIcon = ({ className }: { className: string }) => (
   <svg
     className={className}
     width="20"
@@ -76,5 +76,3 @@ const CalendarAddIcon = ({ className }: { className: string }) => (
     />
   </svg>
 )
-
-export default CalendarAddIcon

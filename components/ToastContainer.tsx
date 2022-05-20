@@ -1,7 +1,7 @@
 import { useToastStore } from '../store/ToastStore'
-import Toast from './Toast'
+import { Toast } from './Toast'
 
-const ToastContainer = () => {
+export const ToastContainer = () => {
   const { toasts } = useToastStore()
 
   return (
@@ -12,5 +12,3 @@ const ToastContainer = () => {
     </div>
   )
 }
-
-export default ToastContainer

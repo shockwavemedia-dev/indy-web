@@ -1,9 +1,9 @@
 import { format } from 'date-fns'
 import Link from 'next/link'
 import { Column } from 'react-table'
-import EditIcon from '../../components/icons/EditIcon'
-import EyeIcon from '../../components/icons/EyeIcon'
-import TrashIcon from '../../components/icons/TrashIcon'
+import { EditIcon } from '../../components/icons/EditIcon'
+import { EyeIcon } from '../../components/icons/EyeIcon'
+import { TrashIcon } from '../../components/icons/TrashIcon'
 import { useTicketStore } from '../../store/TicketStore'
 import { Ticket } from '../../types/Ticket.type'
 

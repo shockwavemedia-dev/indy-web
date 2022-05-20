@@ -1,6 +1,6 @@
 import { MouseEventHandler, ReactNode } from 'react'
 
-const FancyButton = ({
+export const FancyButton = ({
   Icon,
   title,
   subtitle,
@@ -28,5 +28,3 @@ const FancyButton = ({
     </div>
   </button>
 )
-
-export default FancyButton
