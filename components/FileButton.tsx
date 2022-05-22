@@ -15,7 +15,7 @@ export const FileButton = ({
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className="flex h-20 w-20 flex-none flex-col items-center justify-center space-y-1 rounded-xl border-2 border border-bright-gray p-3  hover:border-jungle-green"
+      className="flex h-20 w-20 flex-none flex-col items-center justify-center space-y-1 rounded-xl border-2 border-bright-gray p-3  hover:border-jungle-green"
     >
       <div className="relative">
         <FileIcon />
@@ -31,7 +31,7 @@ export const FileButton = ({
     <button
       type="button"
       onClick={onClick}
-      className="flex h-20 w-20 flex-none flex-col items-center justify-center space-y-1 rounded-xl border-2 border border-bright-gray hover:border-jungle-green"
+      className="flex h-20 w-20 flex-none flex-col items-center justify-center space-y-1 rounded-xl border-2 border-bright-gray hover:border-jungle-green"
     >
       <FolderIcon className="stroke-jungle-green" />
       <div className="font-urbanist text-xxs font-semibold capitalize text-onyx">{name}</div>
