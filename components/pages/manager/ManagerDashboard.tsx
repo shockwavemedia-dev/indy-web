@@ -53,6 +53,7 @@ export const ManagerDashboard = () => {
             title="New Event"
             subtitle="Laborerivit rem cones mil"
             onClick={toggleCreateEventModal}
+            className="w-full"
           />
           <FancyButton
             Icon={
@@ -63,7 +64,7 @@ export const ManagerDashboard = () => {
             title="New Project Brief"
             subtitle="Laborerivit rem cones mil"
             onClick={() => {}}
-            className="pointer-events-none cursor-default opacity-50"
+            className="pointer-events-none w-full cursor-default opacity-50"
           />
           <FancyButton
             Icon={
@@ -74,7 +75,7 @@ export const ManagerDashboard = () => {
             title="Analytics"
             subtitle="Laborerivit rem cones mil"
             onClick={() => {}}
-            className="pointer-events-none cursor-default opacity-50"
+            className="pointer-events-none w-full cursor-default opacity-50"
           />
           <FancyButton
             Icon={
@@ -85,6 +86,7 @@ export const ManagerDashboard = () => {
             title="Support Request"
             subtitle="Laborerivit rem cones mil"
             onClick={toggleCreateSupportRequestModal}
+            className="w-full"
           />
         </div>
         <hr className="mb-6 border-t-bright-gray" />
