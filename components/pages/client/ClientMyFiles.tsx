@@ -4,8 +4,8 @@ import Head from 'next/head'
 import { useState } from 'react'
 import { useQuery } from 'react-query'
 import { Card } from '../../../components/Card'
-import { File } from '../../../components/File'
 import { Files } from '../../../types/Files.type'
+import { FileButton } from '../../FileButton'
 
 export const ClientMyFiles = () => {
   const { data: session } = useSession()
@@ -37,22 +37,22 @@ export const ClientMyFiles = () => {
             Object.keys(files).map((year) => {
               const openYearFolder = () => setYear(year)
 
-              return <File key={year} onClick={openYearFolder} name={year} />
+              return <FileButton key={year} onClick={openYearFolder} name={year} />
             })
           ) : month !== '' ? (
             <>
-              <File key={month} onClick={goUpToMonthsFolder} name="../" />
+              <FileButton key={month} onClick={goUpToMonthsFolder} name="../" />
               {files[year][month].map(({ id, originalFilename, url }) => (
-                <File key={id} href={url} name={originalFilename} />
+                <FileButton key={id} href={url} name={originalFilename} />
               ))}
             </>
           ) : (
             <>
-              <File key={month} onClick={goUpToYearsFolder} name="../" />
+              <FileButton key={month} onClick={goUpToYearsFolder} name="../" />
               {Object.keys(files[year]).map((month) => {
                 const openMonthFolder = () => setMonth(month)
 
-                return <File key={month} onClick={openMonthFolder} name={month} />
+                return <FileButton key={month} onClick={openMonthFolder} name={month} />
               })}
             </>
           )}
