@@ -4,15 +4,19 @@ import { Card } from '../components/Card'
 import { DataTable } from '../components/DataTable'
 import { FancyButton } from '../components/FancyButton'
 import { UserIcon } from '../components/icons/UserIcon'
+import { DeleteAdminUserModal } from '../components/modals/DeleteAdminUserModal'
 import { NewAdminUserModal } from '../components/modals/NewAdminUserModal'
 import { AdminUserTableColumns } from '../constants/tables/AdminUserTableColumns'
 import PanelLayout from '../layouts/PanelLayout'
+import { useAdminUserStore } from '../store/AdminUserStore'
 import { NextPageWithLayout } from '../types/pages/NextPageWithLayout.type'
-
 const StaffUserPage: NextPageWithLayout = () => {
   const [isNewAdminUserModalVisible, setNewAdminUserModalVisible] = useState(false)
 
   const toggleNewAdminUserModal = () => setNewAdminUserModalVisible(!isNewAdminUserModalVisible)
+
+  const { activeAdminUser, isDeleteAdminUserModalVisible, toggleDeleteAdminUserModal } =
+    useAdminUserStore()
 
   return (
     <>
@@ -42,6 +46,11 @@ const StaffUserPage: NextPageWithLayout = () => {
           />
         </Card>
       </div>
+      <DeleteAdminUserModal
+        isVisible={isDeleteAdminUserModalVisible}
+        onClose={toggleDeleteAdminUserModal}
+        user={activeAdminUser}
+      />
     </>
   )
 }

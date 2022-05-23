@@ -7,6 +7,7 @@ export type User = {
   firstName: string
   middleName: string
   lastName: string
+  status: string
   userType: {
     id: number
     type: string
