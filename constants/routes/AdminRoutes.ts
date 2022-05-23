@@ -16,6 +16,7 @@ export const AdminRoutes: Array<Route> = [
   },
   {
     title: 'Staffs',
+    pathname: '/staffs',
     Icon: UserIcon,
   },
   {

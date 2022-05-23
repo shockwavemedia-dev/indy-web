@@ -44,7 +44,7 @@ export const NewAdminUserModal = ({
       const { status } = await axios.post('/v1/users/admin', values)
 
       if (status === 200) {
-        queryClient.invalidateQueries('clients')
+        queryClient.invalidateQueries('users')
         onClose()
         showToast({
           type: 'success',
@@ -93,34 +93,38 @@ export const NewAdminUserModal = ({
                   options={AdminUserRoleOptions}
                   className="mb-5"
                 />
-                <TextInput
-                  type="text"
-                  Icon={UserIcon}
-                  placeholder="Enter First Name"
-                  name="firstName"
-                  className="mb-5"
-                />
-                <TextInput
-                  type="text"
-                  Icon={UserIcon}
-                  placeholder="Enter Middle Name"
-                  name="middleName"
-                  className="mb-5"
-                />
-                <TextInput
-                  type="text"
-                  Icon={UserIcon}
-                  placeholder="Enter Last Name"
-                  name="lastName"
-                  className="mb-5"
-                />
-                <Select
-                  name="gender"
-                  Icon={UserIcon}
-                  placeholder="Select Gender"
-                  options={UserGenderOptions}
-                  className="mb-5"
-                />
+                <div className="mb-5 flex space-x-5">
+                  <TextInput
+                    type="text"
+                    Icon={UserIcon}
+                    placeholder="Enter First Name"
+                    name="firstName"
+                    className="mb-5"
+                  />
+                  <TextInput
+                    type="text"
+                    Icon={UserIcon}
+                    placeholder="Enter Middle Name"
+                    name="middleName"
+                    className="mb-5"
+                  />
+                </div>
+                <div className="mb-5 flex space-x-5">
+                  <TextInput
+                    type="text"
+                    Icon={UserIcon}
+                    placeholder="Enter Last Name"
+                    name="lastName"
+                    className="mb-5"
+                  />
+                  <Select
+                    name="gender"
+                    Icon={UserIcon}
+                    placeholder="Select Gender"
+                    options={UserGenderOptions}
+                    className="mb-5"
+                  />
+                </div>
                 <div className="mb-5 flex space-x-5">
                   <DateInput name="birthDate" placeholder="Enter Birth Date" />
                   <TextInput
