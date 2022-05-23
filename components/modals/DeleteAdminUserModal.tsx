@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { format } from 'date-fns'
 import { useQueryClient } from 'react-query'
 import { useToastStore } from '../../store/ToastStore'
 import { User } from '../../types/User.type'
@@ -44,9 +45,19 @@ export const DeleteAdminUserModal = ({
       {isVisible && (
         <Modal title="Are you sure you want to deactivate?" onClose={onClose}>
           <div className="mb-8 flex w-140 flex-col">
-            <div className="mb-8 flex space-x-20">
+            <div className="mb-8 grid w-full grid-cols-4 grid-rows-2 gap-y-5">
+              <TitleValue title="Email">{user.email}</TitleValue>
               <TitleValue title="Name" className="capitalize">
-                {user.firstName}
+                {user.fullName}
+              </TitleValue>
+              <TitleValue title="Gender" className="capitalize">
+                {user.gender}
+              </TitleValue>
+              <TitleValue title="Birth Date" className="capitalize">
+                {format(user.birthDate, "yy MMM''dd")}
+              </TitleValue>
+              <TitleValue title="Phone" className="capitalize">
+                {user.contactNumber}
               </TitleValue>
               <TitleValue title="Role" className="capitalize">
                 {user.userType.role}

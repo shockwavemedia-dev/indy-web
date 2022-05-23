@@ -6,8 +6,15 @@ import { User } from '../../types/User.type'
 
 export const AdminUserTableColumns: Array<Column<User>> = [
   {
+    Header: 'Email',
+    accessor: 'email',
+    Cell: ({ value }) => (
+      <div className="font-urbanist text-sm font-semibold text-onyx">{value}</div>
+    ),
+  },
+  {
     Header: 'Name',
-    accessor: 'firstName',
+    accessor: 'fullName',
     Cell: ({ value }) => (
       <div className="font-urbanist text-sm font-semibold text-onyx">{value}</div>
     ),
