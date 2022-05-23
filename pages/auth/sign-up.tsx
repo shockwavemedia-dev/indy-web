@@ -31,12 +31,7 @@ const SignUpPage: NextPageWithLayout = () => {
   const updatePasswordStrength = (password: string) =>
     setPasswordStrength(computePasswordStrength(password))
 
-  const submitForm = async (
-    signUpFormValues: SignUpForm,
-    { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
-  ) => {
-    setSubmitting(true)
-
+  const submitForm = async (signUpFormValues: SignUpForm) => {
     try {
       const { status } = await axios.post('/signup/client-lead', signUpFormValues)
 
@@ -48,7 +43,6 @@ const SignUpPage: NextPageWithLayout = () => {
         })
       }
     } catch (e) {
-      setSubmitting(false)
       showToast({
         type: 'error',
         message: 'Something went wrong',

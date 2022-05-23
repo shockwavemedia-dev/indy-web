@@ -51,12 +51,7 @@ export const AddTicketAssigneeModal = ({
   const selectDepartment = (newValue: SingleValue<SelectOption<number>>) =>
     setDepartment(newValue?.value || null)
 
-  const submitForm = async (
-    values: AddTicketAssigneeForm,
-    { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
-  ) => {
-    setSubmitting(true)
-
+  const submitForm = async (values: AddTicketAssigneeForm) => {
     try {
       const { status } = await axios.post(`/v1/tickets/${ticketId}/assign`, values)
 
@@ -74,8 +69,6 @@ export const AddTicketAssigneeModal = ({
         message: 'Something went wrong',
       })
     }
-
-    setSubmitting(false)
   }
 
   return (

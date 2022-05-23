@@ -25,11 +25,7 @@ export const CreateGraphicRequestModal = ({
   const queryClient = useQueryClient()
   const { showToast } = useToastStore()
 
-  const submitForm = async (
-    values: CreateGraphicRequestForm,
-    { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
-  ) => {
-    setSubmitting(true)
+  const submitForm = async (values: CreateGraphicRequestForm) => {
     values.extras = ['DL', 'A4']
     try {
       const {
@@ -51,8 +47,6 @@ export const CreateGraphicRequestModal = ({
         message: 'Something went wrong',
       })
     }
-
-    setSubmitting(false)
   }
 
   return (

@@ -28,12 +28,7 @@ export const EditTicketModal = ({
   const queryClient = useQueryClient()
   const { showToast } = useToastStore()
 
-  const submitForm = async (
-    values: EditTicketForm,
-    { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
-  ) => {
-    setSubmitting(true)
-
+  const submitForm = async (values: EditTicketForm) => {
     try {
       const { status } = await axios.put(`/v1/tickets/${ticket.id}`, values)
 
@@ -53,8 +48,6 @@ export const EditTicketModal = ({
         message: 'Something went wrong',
       })
     }
-
-    setSubmitting(false)
   }
 
   return (

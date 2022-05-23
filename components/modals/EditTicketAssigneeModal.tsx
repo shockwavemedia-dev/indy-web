@@ -26,12 +26,7 @@ export const EditTicketAssigneeModal = ({
   const queryClient = useQueryClient()
   const { showToast } = useToastStore()
 
-  const submitForm = async (
-    values: EditTicketAssigneeForm,
-    { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
-  ) => {
-    setSubmitting(true)
-
+  const submitForm = async (values: EditTicketAssigneeForm) => {
     try {
       const { status } = await axios.put(
         `/v1/ticket-assignees/${ticketAssignee.ticketAssigneeId}`,
@@ -52,8 +47,6 @@ export const EditTicketAssigneeModal = ({
         message: 'Something went wrong',
       })
     }
-
-    setSubmitting(false)
   }
 
   return (

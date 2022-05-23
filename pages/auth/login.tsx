@@ -22,13 +22,8 @@ const LoginPage: NextPageWithLayout = () => {
   const { replace } = useRouter()
   const { showToast } = useToastStore()
 
-  const submitForm = async (
-    signInFormValues: LoginForm,
-    { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
-  ) => {
+  const submitForm = async (signInFormValues: LoginForm) => {
     start()
-
-    setSubmitting(true)
 
     const res = await signIn<'credentials'>('credentials', {
       email: signInFormValues.email,
@@ -44,7 +39,6 @@ const LoginPage: NextPageWithLayout = () => {
           type: 'error',
           message: res.error,
         })
-        setSubmitting(false)
       }
     }
 

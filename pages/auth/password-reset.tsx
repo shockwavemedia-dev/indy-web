@@ -27,12 +27,7 @@ const PasswordResetPage: NextPageWithLayout = () => {
 
   const validateForm = ({ password }: { password: string }) => updatePasswordStrength(password)
 
-  const submitForm = async (
-    values: PasswordResetForm,
-    { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
-  ) => {
-    setSubmitting(true)
-
+  const submitForm = async (values: PasswordResetForm) => {
     try {
       const { status } = await axios.put('/reset-password', values)
 
@@ -44,7 +39,6 @@ const PasswordResetPage: NextPageWithLayout = () => {
         })
       }
     } catch (e) {
-      setSubmitting(false)
       showToast({
         type: 'error',
         message: 'Something went wrong',

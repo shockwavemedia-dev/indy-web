@@ -16,18 +16,12 @@ import { NextPageWithLayout } from '../../types/pages/NextPageWithLayout.type'
 const EmailVerificationRequestPage: NextPageWithLayout = () => {
   const { replace } = useRouter()
 
-  const submitForm = async (
-    values: ForgotPasswordForm,
-    { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
-  ) => {
-    setSubmitting(true)
-
+  const submitForm = async (values: ForgotPasswordForm) => {
     const { status } = await axios.post('/v1/send-email-verification', values)
 
     if (status === 200) {
       replace('/auth/login')
     } else {
-      setSubmitting(false)
     }
   }
 

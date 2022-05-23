@@ -18,12 +18,7 @@ const ForgotPasswordPage: NextPageWithLayout = () => {
   const { replace } = useRouter()
   const { showToast } = useToastStore()
 
-  const submitForm = async (
-    values: ForgotPasswordForm,
-    { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
-  ) => {
-    setSubmitting(true)
-
+  const submitForm = async (values: ForgotPasswordForm) => {
     try {
       const { status } = await axios.post('/forgot-password', values)
 
@@ -35,7 +30,6 @@ const ForgotPasswordPage: NextPageWithLayout = () => {
         })
       }
     } catch (e) {
-      setSubmitting(false)
       showToast({
         type: 'error',
         message: 'Something went wrong',

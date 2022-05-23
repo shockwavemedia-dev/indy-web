@@ -17,12 +17,7 @@ export const NewAnimationCategoryModal = ({
 }) => {
   const { showToast } = useToastStore()
 
-  const submitForm = async (
-    values: NewAnimationCategoryForm,
-    { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
-  ) => {
-    setSubmitting(true)
-
+  const submitForm = async (values: NewAnimationCategoryForm) => {
     try {
       const { status } = await axios.post('/v1/library-categories', values)
 
@@ -39,8 +34,6 @@ export const NewAnimationCategoryModal = ({
         message: 'Something went wrong',
       })
     }
-
-    setSubmitting(false)
   }
 
   return (

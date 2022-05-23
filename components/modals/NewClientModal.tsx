@@ -22,12 +22,7 @@ export const NewClientModal = ({
   const queryClient = useQueryClient()
   const { showToast } = useToastStore()
 
-  const submitForm = async (
-    values: NewClientForm,
-    { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
-  ) => {
-    setSubmitting(true)
-
+  const submitForm = async (values: NewClientForm) => {
     try {
       const { status } = await axios.post('/v1/clients', objectWithFileToFormData(values))
 

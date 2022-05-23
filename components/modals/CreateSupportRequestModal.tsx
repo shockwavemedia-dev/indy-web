@@ -46,12 +46,7 @@ export const CreateSupportRequestModal = ({
     }
   )
 
-  const submitForm = async (
-    values: CreateSupportRequestForm,
-    { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
-  ) => {
-    setSubmitting(true)
-
+  const submitForm = async (values: CreateSupportRequestForm) => {
     try {
       const {
         status,
@@ -72,8 +67,6 @@ export const CreateSupportRequestModal = ({
         message: 'Something went wrong',
       })
     }
-
-    setSubmitting(false)
   }
 
   return (

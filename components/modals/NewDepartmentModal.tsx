@@ -19,12 +19,7 @@ export const NewDepartmentModal = ({
   const queryClient = useQueryClient()
   const { showToast } = useToastStore()
 
-  const submitForm = async (
-    values: NewDepartmentForm,
-    { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
-  ) => {
-    setSubmitting(true)
-
+  const submitForm = async (values: NewDepartmentForm) => {
     try {
       const { status } = await axios.post('/v1/departments', values)
 
@@ -42,8 +37,6 @@ export const NewDepartmentModal = ({
         message: 'Something went wrong',
       })
     }
-
-    setSubmitting(false)
   }
 
   return (

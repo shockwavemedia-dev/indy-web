@@ -48,12 +48,7 @@ export const NewAnimationModal = ({
     label: category.name,
   }))
 
-  const submitForm = async (
-    values: NewAnimationForm,
-    { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
-  ) => {
-    setSubmitting(true)
-
+  const submitForm = async (values: NewAnimationForm) => {
     try {
       const { status } = await axios.post('/v1/libraries', objectWithFileToFormData(values))
 
@@ -70,8 +65,6 @@ export const NewAnimationModal = ({
         message: 'Something went wrong',
       })
     }
-
-    setSubmitting(false)
   }
 
   return (

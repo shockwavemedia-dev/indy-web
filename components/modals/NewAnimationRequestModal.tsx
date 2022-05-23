@@ -48,12 +48,7 @@ export const NewAnimationRequestModal = ({
     label: library.title,
   }))
 
-  const submitForm = async (
-    values: NewAnimationRequestForm,
-    { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
-  ) => {
-    setSubmitting(true)
-
+  const submitForm = async (values: NewAnimationRequestForm) => {
     try {
       const {
         status,
@@ -73,8 +68,6 @@ export const NewAnimationRequestModal = ({
         message: 'Something went wrong',
       })
     }
-
-    setSubmitting(false)
   }
 
   return (

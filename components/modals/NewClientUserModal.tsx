@@ -66,12 +66,7 @@ export const NewClientUserModal = ({
       label: name,
     }))
 
-  const submitForm = async (
-    values: NewClientUserForm,
-    { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
-  ) => {
-    setSubmitting(true)
-
+  const submitForm = async (values: NewClientUserForm) => {
     try {
       const { status } = await axios.post('/v1/users/client', values)
 
@@ -89,8 +84,6 @@ export const NewClientUserModal = ({
         message: 'Something went wrong',
       })
     }
-
-    setSubmitting(false)
   }
 
   const validateForm = ({ password }: { password: string }) => updatePasswordStrength(password)
