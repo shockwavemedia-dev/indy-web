@@ -5,6 +5,7 @@ import { DataTable } from '../components/DataTable'
 import { FancyButton } from '../components/FancyButton'
 import { UserIcon } from '../components/icons/UserIcon'
 import { DeleteAdminUserModal } from '../components/modals/DeleteAdminUserModal'
+import { EditAdminUserModal } from '../components/modals/EditAdminUserModal'
 import { NewAdminUserModal } from '../components/modals/NewAdminUserModal'
 import { AdminUserTableColumns } from '../constants/tables/AdminUserTableColumns'
 import PanelLayout from '../layouts/PanelLayout'
@@ -15,8 +16,13 @@ const StaffUserPage: NextPageWithLayout = () => {
 
   const toggleNewAdminUserModal = () => setNewAdminUserModalVisible(!isNewAdminUserModalVisible)
 
-  const { activeAdminUser, isDeleteAdminUserModalVisible, toggleDeleteAdminUserModal } =
-    useAdminUserStore()
+  const {
+    activeAdminUser,
+    isEditAdminUserModalVisible,
+    isDeleteAdminUserModalVisible,
+    toggleEditAdminUserModal,
+    toggleDeleteAdminUserModal,
+  } = useAdminUserStore()
 
   return (
     <>
@@ -49,6 +55,11 @@ const StaffUserPage: NextPageWithLayout = () => {
       <DeleteAdminUserModal
         isVisible={isDeleteAdminUserModalVisible}
         onClose={toggleDeleteAdminUserModal}
+        user={activeAdminUser}
+      />
+      <EditAdminUserModal
+        isVisible={isEditAdminUserModalVisible}
+        onClose={toggleEditAdminUserModal}
         user={activeAdminUser}
       />
     </>

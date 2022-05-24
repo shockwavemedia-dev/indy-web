@@ -46,7 +46,6 @@ export const DeleteAdminUserModal = ({
         <Modal title="Are you sure you want to deactivate?" onClose={onClose}>
           <div className="mb-8 flex w-140 flex-col">
             <div className="mb-8 grid w-full grid-cols-4 grid-rows-2 gap-y-5">
-              <TitleValue title="Email">{user.email}</TitleValue>
               <TitleValue title="Name" className="capitalize">
                 {user.fullName}
               </TitleValue>
@@ -65,6 +64,7 @@ export const DeleteAdminUserModal = ({
               <TitleValue title="Status" className="capitalize">
                 {user.status}
               </TitleValue>
+              <TitleValue title="Email">{user.email}</TitleValue>
             </div>
             <div className="flex space-x-5">
               <Button ariaLabel="Cancel" onClick={onClose} type="button" light>
