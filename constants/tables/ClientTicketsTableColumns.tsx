@@ -44,7 +44,7 @@ export const ClientTicketsTableColumns: Array<Column<Ticket>> = [
               ? 'bg-bleu-de-france'
               : value === 'pending'
               ? 'bg-waterloo'
-              : value === 'on_hold'
+              : value === 'on hold'
               ? 'bg-deep-saffron'
               : 'bg-tart-orange'
           }`}

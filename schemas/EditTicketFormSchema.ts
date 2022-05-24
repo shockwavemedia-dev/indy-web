@@ -7,6 +7,6 @@ export const EditTicketFormSchema: SchemaOf<EditTicketForm> = object().shape({
   duedate: date().required().nullable(),
   status: mixed()
     .required()
-    .oneOf(['closed', 'new', 'pending', 'on_hold', 'open', 'resolved', 'deleted']),
+    .oneOf(['closed', 'new', 'pending', 'on hold', 'open', 'resolved', 'deleted']),
   type: mixed().required().oneOf(['email', 'event', 'graphic', 'print', 'task']),
 })

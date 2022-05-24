@@ -2,7 +2,7 @@ export type TicketStatus =
   | 'closed'
   | 'new'
   | 'pending'
-  | 'on_hold'
+  | 'on hold'
   | 'open'
   | 'resolved'
   | 'deleted'
