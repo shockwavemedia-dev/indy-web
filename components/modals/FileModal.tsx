@@ -106,8 +106,8 @@ export const FileModal = ({ ticketId }: { ticketId: number }) => {
       {!!ticketFile && !!ticketFileId && (
         <Modal onClose={closeFileModal} bgColor="bg-ghost-white">
           <div className="flex w-270 space-x-6">
-            <div>
-              <div className="mb-6">
+            <div className="space-y-6">
+              <div>
                 <Image
                   src={DummyFile}
                   height={512}
@@ -116,7 +116,7 @@ export const FileModal = ({ ticketId }: { ticketId: number }) => {
                   className="rounded-xl"
                 />
               </div>
-              <div className="mb-6 space-y-2">
+              <div className="space-y-2">
                 <TitleValue title="ID" className="flex items-center justify-between">
                   {ticketFile.id}
                 </TitleValue>
@@ -144,19 +144,18 @@ export const FileModal = ({ ticketId }: { ticketId: number }) => {
                     value={ticketFile.status}
                   />
                 </TitleValue>
-                <TitleValue
-                  title="Approval Status"
-                  className="mb-6 flex items-center justify-between"
-                >
+                <TitleValue title="Approval Status" className="flex items-center justify-between">
                   <Pill
                     pillColor={ticketFile.isApproved ? 'bg-jungle-green' : 'bg-tart-orange'}
                     value={ticketFile.isApproved ? 'Approved' : 'Not Approved'}
                   />
                 </TitleValue>
               </div>
-              <Button ariaLabel="Approve Ticket File" type="button" onClick={approveTicketFile}>
-                Approve
-              </Button>
+              {!ticketFile.isApproved && (
+                <Button ariaLabel="Approve Ticket File" type="button" onClick={approveTicketFile}>
+                  Approve
+                </Button>
+              )}
             </div>
             <div className="w-full space-y-5">
               <Formik

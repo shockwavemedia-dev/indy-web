@@ -41,8 +41,11 @@ import { Page } from '../../../types/Page.type'
 import { Ticket } from '../../../types/Ticket.type'
 import { TicketActivity } from '../../../types/TicketActivity.type'
 import { TicketEmail } from '../../../types/TicketEmail.type'
+import { TicketFile } from '../../../types/TicketFile.type'
 import { TicketNote } from '../../../types/TicketNote.type'
 import { TicketPageTabs } from '../../../types/TicketPageTabs.type'
+import { FileButton } from '../../FileButton'
+import { FileModal, useFileModalStore } from '../../modals/FileModal'
 import { TicketEmailCard } from '../../TicketEmailCard'
 import { TicketNoteCard } from '../../TicketNoteCard'
 
@@ -53,6 +56,8 @@ export const ManagerTicket = ({ ticketId }: { ticketId: number }) => {
   const [isEditTicketModalVisible, setEditTicketModalVisible] = useState(false)
   const [isDeleteTicketModalVisible, setDeleteTicketModalVisible] = useState(false)
   const [isAddTicketAssigneeModalVisible, setAddTicketAssigneeModalVisible] = useState(false)
+
+  const { toggleFileModal } = useFileModalStore()
 
   const queryClient = useQueryClient()
   const {
@@ -85,6 +90,17 @@ export const ManagerTicket = ({ ticketId }: { ticketId: number }) => {
       enabled: activeTab === 'notes',
     }
   )
+
+  const { data: ticketFiles } = useQuery(['ticketFiles', ticketId], async () => {
+    const {
+      data: { data },
+    } = await axios.get<{
+      data: Array<TicketFile>
+      page: Page
+    }>(`/v1/tickets/${ticketId}/files`)
+
+    return data
+  })
 
   const { data: emails } = useQuery(
     ['emails', ticketId],
@@ -291,6 +307,29 @@ export const ManagerTicket = ({ ticketId }: { ticketId: number }) => {
               }
             />
           </Card>
+          <Card title="Files">
+            <div className="flex flex-wrap gap-4">
+              {!!ticketFiles ? (
+                ticketFiles.map(({ id, name }) => {
+                  const openFileModal = () => toggleFileModal(id)
+
+                  return (
+                    <FileButton
+                      key={`ticketFile-${id}`}
+                      className="h-22 w-22"
+                      onClick={openFileModal}
+                      name={name}
+                      fileModal
+                    />
+                  )
+                })
+              ) : (
+                <div className="m-auto font-urbanist text-base text-metallic-silver">
+                  No files found.
+                </div>
+              )}
+            </div>
+          </Card>
         </div>
         <div className="w-full min-w-0">
           <div className="flex justify-between">
@@ -447,6 +486,7 @@ export const ManagerTicket = ({ ticketId }: { ticketId: number }) => {
         ticketId={ticket!.id}
       />
       <CreateLinkModal />
+      <FileModal ticketId={ticketId} />
     </>
   )
 }
