@@ -6,7 +6,7 @@ export type NewAdminUserForm = {
   contactNumber: string
   firstName: string
   lastName: string
-  middleName?: string
+  middleName?: string | null
   gender: 'female' | 'male' | null
   role: 'admin' | 'account_manager' | 'manager' | 'staff' | null
 }
