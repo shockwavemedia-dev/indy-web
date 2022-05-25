@@ -92,16 +92,22 @@ export const ManagerDashboard = () => {
         <hr className="mb-6 border-t-bright-gray" />
         <div className="mb-6 flex h-155 space-x-6">
           <Card title="Project Status Table" className="flex w-228 flex-col">
-            <DataTable
-              columns={ClientTicketsTableColumns}
-              dataEndpoint={`/v1/departments/${
-                session?.user.userType.departments.shift()?.id
-              }/tickets`}
-              tableQueryKey={['tickets']}
-              ofString="Projects"
-              settings
-              periodicFilter
-            />
+            {!!session && session.user.userType.departments.length > 0 ? (
+              <DataTable
+                columns={ClientTicketsTableColumns}
+                dataEndpoint={`/v1/departments/${
+                  session?.user.userType.departments.shift()?.id
+                }/tickets`}
+                tableQueryKey={['tickets']}
+                ofString="Projects"
+                settings
+                periodicFilter
+              />
+            ) : (
+              <div className="m-auto w-fit font-urbanist text-base text-metallic-silver">
+                No projects to display. 😶
+              </div>
+            )}
           </Card>
           <div className="flex flex-1 flex-col">
             <div className="mb-3 flex space-x-3">
