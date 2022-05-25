@@ -1,10 +1,10 @@
 import axios from 'axios'
 import { format } from 'date-fns'
-import { Form, Formik, FormikState } from 'formik'
+import { Form, Formik } from 'formik'
 import { useSession } from 'next-auth/react'
 import Head from 'next/head'
 import Image from 'next/image'
-import { Fragment, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { useQuery, useQueryClient } from 'react-query'
 import { Button } from '../../../components/Button'
 import { Card } from '../../../components/Card'
@@ -38,25 +38,32 @@ import { Page } from '../../../types/Page.type'
 import { Ticket } from '../../../types/Ticket.type'
 import { TicketActivity } from '../../../types/TicketActivity.type'
 import { TicketEmail } from '../../../types/TicketEmail.type'
+import { TicketFile } from '../../../types/TicketFile.type'
 import { TicketNote } from '../../../types/TicketNote.type'
 import { TicketPageTabs } from '../../../types/TicketPageTabs.type'
+import { FileButton } from '../../FileButton'
+import { FileModal, useFileModalStore } from '../../modals/FileModal'
+import { Pill } from '../../Pill'
 import { TicketEmailCard } from '../../TicketEmailCard'
 import { TicketNoteCard } from '../../TicketNoteCard'
 
 export const ClientTicket = ({ ticketId }: { ticketId: number }) => {
   const { data: session } = useSession()
-  const { data: ticket, isSuccess } = useQuery(['ticket', ticketId], async () => {
-    const { data } = await axios.get<Ticket>(`/v1/tickets/${ticketId}`)
-
-    return data
-  })
-  const queryClient = useQueryClient()
-  const { activeTicketAssignee, isViewTicketAssigneeModalVisible, toggleViewTicketAssigneeModal } =
-    useTicketAssigneeStore()
 
   const [activeTab, setActiveTab] = useState<TicketPageTabs>('notes')
   const [isEditTicketModalVisible, setEditTicketModalVisible] = useState(false)
   const [isDeleteTicketModalVisible, setDeleteTicketModalVisible] = useState(false)
+
+  const { toggleFileModal } = useFileModalStore()
+  const { activeTicketAssignee, isViewTicketAssigneeModalVisible, toggleViewTicketAssigneeModal } =
+    useTicketAssigneeStore()
+  const queryClient = useQueryClient()
+
+  const { data: ticket, isSuccess: ticketSuccess } = useQuery(['ticket', ticketId], async () => {
+    const { data } = await axios.get<Ticket>(`/v1/tickets/${ticketId}`)
+
+    return data
+  })
 
   const { data: notes } = useQuery(
     ['notes', ticketId],
@@ -74,6 +81,17 @@ export const ClientTicket = ({ ticketId }: { ticketId: number }) => {
       enabled: activeTab === 'notes',
     }
   )
+
+  const { data: ticketFiles } = useQuery(['ticketFiles', ticketId], async () => {
+    const {
+      data: { data },
+    } = await axios.get<{
+      data: Array<TicketFile>
+      page: Page
+    }>(`/v1/tickets/${ticketId}/files`)
+
+    return data
+  })
 
   const { data: emails } = useQuery(
     ['emails', ticketId],
@@ -113,7 +131,7 @@ export const ClientTicket = ({ ticketId }: { ticketId: number }) => {
   const toggleDeleteTicketModal = () => setDeleteTicketModalVisible(!isDeleteTicketModalVisible)
   const submitEmailForm = async (
     values: CreateEmailForm,
-    { resetForm }: { resetForm: (nextState?: Partial<FormikState<CreateEmailForm>>) => void }
+    { resetForm }: { resetForm: () => void }
   ) => {
     const { status } = await axios.post(`/v1/tickets/${ticketId}/emails`, values)
 
@@ -181,7 +199,11 @@ export const ClientTicket = ({ ticketId }: { ticketId: number }) => {
     )
   }
 
-  if (!isSuccess) {
+  useEffect(() => {
+    toggleFileModal()
+  }, [])
+
+  if (!ticketSuccess) {
     // todo create loading skeleton
     return null
   }
@@ -239,19 +261,11 @@ export const ClientTicket = ({ ticketId }: { ticketId: number }) => {
               </TitleValue>
               <TitleValue title="Services">
                 <div className="flex flex-wrap gap-1">
-                  {ticket!.services?.map(({ serviceName, extras, serviceId }, i) => (
+                  {ticket!.services?.map(({ serviceName, extras }, i) => (
                     <Fragment key={`${serviceName}-${i}`}>
-                      <div className="rounded-lg border border-bright-gray px-2.5">
-                        {serviceId}
-                        {serviceName}
-                      </div>
+                      <Pill value={serviceName} />
                       {extras.map((extra) => (
-                        <div
-                          key={`${serviceName}-${extra}`}
-                          className="rounded-lg border border-bright-gray px-2.5"
-                        >
-                          {extra}
-                        </div>
+                        <Pill key={`${serviceName}-${extra}`} value={extra} />
                       ))}
                     </Fragment>
                   ))}
@@ -269,6 +283,29 @@ export const ClientTicket = ({ ticketId }: { ticketId: number }) => {
               tableQueryKey={['assignees', ticketId]}
               ofString="Assignee"
             />
+          </Card>
+          <Card title="Files">
+            <div className="flex flex-wrap gap-4">
+              {!!ticketFiles ? (
+                ticketFiles.map(({ id, name }) => {
+                  const openFileModal = () => toggleFileModal(id)
+
+                  return (
+                    <FileButton
+                      key={`ticketFile-${id}`}
+                      className="h-22 w-22"
+                      onClick={openFileModal}
+                      name={name}
+                      fileModal
+                    />
+                  )
+                })
+              ) : (
+                <div className="m-auto font-urbanist text-base text-metallic-silver">
+                  No files found.
+                </div>
+              )}
+            </div>
           </Card>
         </div>
         <div className="w-full min-w-0">
@@ -305,8 +342,8 @@ export const ClientTicket = ({ ticketId }: { ticketId: number }) => {
                       name="note"
                       inputActions={
                         <div className="absolute right-6 bottom-6 z-10 flex items-center space-x-6">
-                          <input type="file" name="attachment" id="note-attachment" hidden />
-                          <label htmlFor="note-attachment" className="cursor-pointer">
+                          <input type="file" name="attachment" id="feedback-attachment" hidden />
+                          <label htmlFor="feedback-attachment" className="cursor-pointer">
                             <PaperClipIcon className="stroke-waterloo" />
                           </label>
                           <Button
@@ -414,6 +451,7 @@ export const ClientTicket = ({ ticketId }: { ticketId: number }) => {
         ticketAssignee={activeTicketAssignee}
       />
       <CreateLinkModal />
+      <FileModal ticketId={ticketId} />
     </>
   )
 }

@@ -73,22 +73,46 @@ export const MyFiles = () => {
                 Object.keys(files).map((year) => {
                   const openYearFolder = () => setYear(year)
 
-                  return <FileButton key={year} onClick={openYearFolder} name={year} />
+                  return (
+                    <FileButton
+                      className="h-20 w-20"
+                      key={year}
+                      onClick={openYearFolder}
+                      name={year}
+                    />
+                  )
                 })
               ) : month !== '' ? (
                 <>
-                  <FileButton key={month} onClick={goUpToMonthsFolder} name="../" />
+                  <FileButton
+                    className="h-20 w-20"
+                    key={month}
+                    onClick={goUpToMonthsFolder}
+                    name="../"
+                  />
                   {files[year][month].map(({ id, originalFilename, url }) => (
-                    <FileButton key={id} href={url} name={originalFilename} />
+                    <FileButton className="h-20 w-20" key={id} href={url} name={originalFilename} />
                   ))}
                 </>
               ) : (
                 <>
-                  <FileButton key={month} onClick={goUpToYearsFolder} name="../" />
+                  <FileButton
+                    className="h-20 w-20"
+                    key={month}
+                    onClick={goUpToYearsFolder}
+                    name="../"
+                  />
                   {Object.keys(files[year]).map((month) => {
                     const openMonthFolder = () => setMonth(month)
 
-                    return <FileButton key={month} onClick={openMonthFolder} name={month} />
+                    return (
+                      <FileButton
+                        className="h-20 w-20"
+                        key={month}
+                        onClick={openMonthFolder}
+                        name={month}
+                      />
+                    )
                   })}
                 </>
               )

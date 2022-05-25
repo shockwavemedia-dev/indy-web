@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { format } from 'date-fns'
-import { Form, Formik, FormikState } from 'formik'
+import { Form, Formik } from 'formik'
 import { useSession } from 'next-auth/react'
 import Head from 'next/head'
 import Image from 'next/image'
@@ -42,16 +42,18 @@ import { TicketNoteCard } from '../../TicketNoteCard'
 
 export const StaffTicket = ({ ticketId }: { ticketId: number }) => {
   const { data: session } = useSession()
+  const { activeTicketAssignee, isViewTicketAssigneeModalVisible, toggleViewTicketAssigneeModal } =
+    useTicketAssigneeStore()
+
+  const [activeTab, setActiveTab] = useState<TicketPageTabs>('notes')
+
+  const queryClient = useQueryClient()
+
   const { data: ticket, isSuccess } = useQuery(['ticket', ticketId], async () => {
     const { data } = await axios.get<Ticket>(`/v1/tickets/${ticketId}`)
 
     return data
   })
-  const queryClient = useQueryClient()
-  const { activeTicketAssignee, isViewTicketAssigneeModalVisible, toggleViewTicketAssigneeModal } =
-    useTicketAssigneeStore()
-
-  const [activeTab, setActiveTab] = useState<TicketPageTabs>('notes')
 
   const { data: notes } = useQuery(
     ['notes', ticketId],
@@ -106,7 +108,7 @@ export const StaffTicket = ({ ticketId }: { ticketId: number }) => {
 
   const submitEmailForm = async (
     values: CreateEmailForm,
-    { resetForm }: { resetForm: (nextState?: Partial<FormikState<CreateEmailForm>>) => void }
+    { resetForm }: { resetForm: () => void }
   ) => {
     const { status } = await axios.post(`/v1/tickets/${ticketId}/emails`, values)
 

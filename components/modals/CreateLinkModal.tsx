@@ -18,7 +18,7 @@ export const CreateLinkModal = () => {
   return (
     <>
       {isModalVisible && (
-        <Modal title="Create Link" onClose={toggleModal} className="z-20">
+        <Modal title="Create Link" onClose={toggleModal}>
           <Formik
             validationSchema={CreateLinkFormSchema}
             initialValues={{

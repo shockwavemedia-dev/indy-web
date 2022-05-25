@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { format } from 'date-fns'
-import { Form, Formik, FormikState } from 'formik'
+import { Form, Formik } from 'formik'
 import { useSession } from 'next-auth/react'
 import Head from 'next/head'
 import Image from 'next/image'
@@ -48,11 +48,12 @@ import { TicketNoteCard } from '../../TicketNoteCard'
 
 export const ManagerTicket = ({ ticketId }: { ticketId: number }) => {
   const { data: session } = useSession()
-  const { data: ticket, isSuccess } = useQuery(['ticket', ticketId], async () => {
-    const { data } = await axios.get<Ticket>(`/v1/tickets/${ticketId}`)
 
-    return data
-  })
+  const [activeTab, setActiveTab] = useState<TicketPageTabs>('notes')
+  const [isEditTicketModalVisible, setEditTicketModalVisible] = useState(false)
+  const [isDeleteTicketModalVisible, setDeleteTicketModalVisible] = useState(false)
+  const [isAddTicketAssigneeModalVisible, setAddTicketAssigneeModalVisible] = useState(false)
+
   const queryClient = useQueryClient()
   const {
     activeTicketAssignee,
@@ -62,10 +63,11 @@ export const ManagerTicket = ({ ticketId }: { ticketId: number }) => {
     toggleDeleteTicketAssigneeModal,
   } = useTicketAssigneeStore()
 
-  const [activeTab, setActiveTab] = useState<TicketPageTabs>('notes')
-  const [isEditTicketModalVisible, setEditTicketModalVisible] = useState(false)
-  const [isDeleteTicketModalVisible, setDeleteTicketModalVisible] = useState(false)
-  const [isAddTicketAssigneeModalVisible, setAddTicketAssigneeModalVisible] = useState(false)
+  const { data: ticket, isSuccess } = useQuery(['ticket', ticketId], async () => {
+    const { data } = await axios.get<Ticket>(`/v1/tickets/${ticketId}`)
+
+    return data
+  })
 
   const { data: notes } = useQuery(
     ['notes', ticketId],
@@ -124,7 +126,7 @@ export const ManagerTicket = ({ ticketId }: { ticketId: number }) => {
     setAddTicketAssigneeModalVisible(!isAddTicketAssigneeModalVisible)
   const submitEmailForm = async (
     values: CreateEmailForm,
-    { resetForm }: { resetForm: (nextState?: Partial<FormikState<CreateEmailForm>>) => void }
+    { resetForm }: { resetForm: () => void }
   ) => {
     const { status } = await axios.post(`/v1/tickets/${ticketId}/emails`, values)
 

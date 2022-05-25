@@ -254,7 +254,7 @@ export const DataTable = <T extends Record<string, unknown>>({
         </>
       ) : (
         !isLoading && (
-          <div className="my-auto text-center font-urbanist text-base text-metallic-silver">
+          <div className="m-auto w-fit font-urbanist text-base text-metallic-silver">
             No entries found in {ofString} table
           </div>
         )
