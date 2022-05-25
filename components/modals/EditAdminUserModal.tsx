@@ -4,6 +4,7 @@ import { useQueryClient } from 'react-query'
 import { AdminUserRoleOptions } from '../../constants/options/AdminUserRoleOptions'
 import { UserGenderOptions } from '../../constants/options/UserGenderOptions'
 import { UserStatusOptions } from '../../constants/options/UserStatusOptions'
+import { EditAdminUserFormSchema } from '../../schemas/EditAdminUserFormSchema'
 import { useToastStore } from '../../store/ToastStore'
 import { EditAdminUserForm } from '../../types/forms/EditAdminUserForm.type'
 import { User } from '../../types/User.type'
@@ -55,6 +56,7 @@ export const EditAdminUserModal = ({
       {isVisible && (
         <Modal title="Edit User" onClose={onClose}>
           <Formik
+            validationSchema={EditAdminUserFormSchema}
             initialValues={{
               firstName: user.firstName,
               middleName: user.middleName,
