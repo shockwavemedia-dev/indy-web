@@ -92,7 +92,9 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
                 >
                   {s.replace('-', ' ')}
                 </div>
-                <CaretIcon className="mr-3 rotate-90 stroke-lavender-gray" small />
+                {i + 1 !== paths.length && (
+                  <CaretIcon className="mr-3 rotate-90 stroke-lavender-gray" small />
+                )}
               </Fragment>
             ))}
           <MagnifyingGlassIcon className="mr-6 stroke-waterloo" />
