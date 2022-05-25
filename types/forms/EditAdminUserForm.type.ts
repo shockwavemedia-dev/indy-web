@@ -4,6 +4,7 @@ export type EditAdminUserForm = {
   firstName: string
   lastName: string
   middleName?: string | null
-  gender: string | null
+  gender: 'female' | 'male' | null
   role: string
+  status: 'active' | 'inactive' | 'guest' | 'not_verified' | 'revoked' | 'deleted' | null
 }

@@ -1,3 +1,4 @@
+import { Department } from './Department.type'
 import { UserRole } from './UserRole.type'
 
 export type User = {
@@ -8,15 +9,15 @@ export type User = {
   firstName: string
   middleName: string
   lastName: string
-  status: string
+  status: 'active' | 'inactive' | 'guest' | 'not_verified' | 'revoked' | 'deleted' | null
   email: string
   contactNumber: string
-  gender: string
+  gender: 'female' | 'male' | null
   birthDate: Date
   userType: {
     id: number
     type: string
     role: string
-    departments: []
+    departments: Array<Department>
   }
 }

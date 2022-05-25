@@ -30,17 +30,12 @@ export const EditAdminUserModal = ({
   const queryClient = useQueryClient()
   const { showToast } = useToastStore()
 
-  const submitForm = async (
-    values: EditAdminUserForm,
-    { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
-  ) => {
-    setSubmitting(true)
-
+  const submitForm = async (values: EditAdminUserForm) => {
     try {
       const { status } = await axios.put(`/v1/users/${user.id}`, values)
 
       if (status === 200) {
-        queryClient.invalidateQueries(['users'])
+        queryClient.invalidateQueries('users')
         onClose()
         showToast({
           type: 'success',
@@ -53,8 +48,6 @@ export const EditAdminUserModal = ({
         message: 'Something went wrong',
       })
     }
-
-    setSubmitting(false)
   }
 
   return (
@@ -70,6 +63,7 @@ export const EditAdminUserModal = ({
               contactNumber: user.contactNumber,
               gender: user.gender,
               role: user.userType.role,
+              status: user.status,
             }}
             onSubmit={submitForm}
           >
@@ -82,7 +76,7 @@ export const EditAdminUserModal = ({
                   <div className="mb-5 flex space-x-5">
                     <Select
                       label="Role"
-                      name="status"
+                      name="role"
                       Icon={ClipboardIcon}
                       options={AdminUserRoleOptions}
                       defaultValue={AdminUserRoleOptions.find(

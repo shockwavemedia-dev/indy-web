@@ -25,7 +25,7 @@ export const DeleteAdminUserModal = ({
       const { status } = await axios.delete(`/v1/users/${user.id}`)
 
       if (status === 200) {
-        queryClient.invalidateQueries(['users'])
+        queryClient.invalidateQueries('users')
         onClose()
         showToast({
           type: 'success',

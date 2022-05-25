@@ -35,11 +35,7 @@ export const NewAdminUserModal = ({
   const updatePasswordStrength = (password: string) =>
     setPasswordStrength(computePasswordStrength(password))
 
-  const submitForm = async (
-    values: NewAdminUserForm,
-    { setSubmitting }: { setSubmitting: (isSubmitting: boolean) => void }
-  ) => {
-    setSubmitting(true)
+  const submitForm = async (values: NewAdminUserForm) => {
     try {
       const { status } = await axios.post('/v1/users/admin', values)
 
@@ -57,8 +53,6 @@ export const NewAdminUserModal = ({
         message: 'Something went wrong',
       })
     }
-
-    setSubmitting(false)
   }
 
   const validateForm = ({ password }: { password: string }) => updatePasswordStrength(password)
