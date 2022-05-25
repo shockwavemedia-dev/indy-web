@@ -1,3 +1,4 @@
+import { useSession } from 'next-auth/react'
 import Head from 'next/head'
 import { useState } from 'react'
 import { ClientTicketsTableColumns } from '../../../constants/tables/ClientTicketsTableColumns'
@@ -19,6 +20,7 @@ import { DeleteTicketModal } from '../../modals/DeleteTicketModal'
 import { EditTicketModal } from '../../modals/EditTicketModal'
 
 export const ClientDashboard = () => {
+  const { data: session } = useSession()
   const {
     activeTicket,
     isEditTicketModalVisible,
@@ -92,7 +94,7 @@ export const ClientDashboard = () => {
           <Card title="Project Status Table" className="flex w-228 flex-col">
             <DataTable
               columns={ClientTicketsTableColumns}
-              dataEndpoint="/v1/tickets"
+              dataEndpoint={`/v1/clients/${session?.user.userType.clientId}/tickets`}
               tableQueryKey={['tickets']}
               ofString="Projects"
               settings
