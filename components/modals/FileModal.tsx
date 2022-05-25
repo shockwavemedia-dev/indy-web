@@ -195,7 +195,7 @@ export const FileModal = ({ ticketId }: { ticketId: number }) => {
                   <TicketFileFeedbackCard
                     key={`ticket-file-feedback-${id}`}
                     feedback={feedback}
-                    createdAt={createdAt ?? new Date()}
+                    createdAt={createdAt}
                     createdBy={feedbackBy}
                   />
                 ))}
