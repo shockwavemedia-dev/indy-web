@@ -7,14 +7,12 @@ import { Card } from '../../Card'
 import { CountCard } from '../../CountCard'
 import { DataTable } from '../../DataTable'
 import { FancyButton } from '../../FancyButton'
-import { CalendarAddIcon } from '../../icons/CalendarAddIcon'
 import { ClipboardCloseIcon } from '../../icons/ClipboardCloseIcon'
 import { GalleryIcon } from '../../icons/GalleryIcon'
 import { LifeBuoyIcon } from '../../icons/LifeBuoyIcon'
 import { MenuBoardIcon } from '../../icons/MenuBoardIcon'
 import { PresentationChartIcon } from '../../icons/PresentationChartIcon'
 import { VideoIcon } from '../../icons/VideoIcon'
-import { CreateEventModal } from '../../modals/CreateEventModal'
 import { CreateSupportRequestModal } from '../../modals/CreateSupportRequestModal'
 import { DeleteTicketModal } from '../../modals/DeleteTicketModal'
 import { EditTicketModal } from '../../modals/EditTicketModal'
@@ -29,10 +27,8 @@ export const ManagerDashboard = () => {
     toggleDeleteTicketModal,
   } = useTicketStore()
 
-  const [isCreateEventModalVisible, setCreateEventModalVisible] = useState(false)
   const [isCreateSupportRequestModalVisible, setCreateSupportRequestModalVisible] = useState(false)
 
-  const toggleCreateEventModal = () => setCreateEventModalVisible(!isCreateEventModalVisible)
   const toggleCreateSupportRequestModal = () =>
     setCreateSupportRequestModalVisible(!isCreateSupportRequestModalVisible)
 
@@ -44,17 +40,6 @@ export const ManagerDashboard = () => {
       <div className="mb-5 font-urbanist text-xxl font-semibold text-onyx">Dashboard</div>
       <div className="mx-auto flex h-full w-full max-w-7xl flex-col">
         <div className="mb-6 flex space-x-6">
-          <FancyButton
-            Icon={
-              <div className="grid h-11 w-11 flex-none place-items-center rounded-lg bg-honeydew">
-                <CalendarAddIcon className="stroke-jungle-green" />
-              </div>
-            }
-            title="New Event"
-            subtitle="Laborerivit rem cones mil"
-            onClick={toggleCreateEventModal}
-            className="w-full"
-          />
           <FancyButton
             Icon={
               <div className="grid h-11 w-11 flex-none place-items-center rounded-lg bg-alice-blue">
@@ -166,7 +151,6 @@ export const ManagerDashboard = () => {
           </Card>
         </div>
       </div>
-      <CreateEventModal isVisible={isCreateEventModalVisible} onClose={toggleCreateEventModal} />
       <CreateSupportRequestModal
         isVisible={isCreateSupportRequestModalVisible}
         onClose={toggleCreateSupportRequestModal}
