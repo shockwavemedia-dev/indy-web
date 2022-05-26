@@ -36,7 +36,7 @@ export const FileModal = ({ ticketId }: { ticketId: number }) => {
       return data
     },
     {
-      enabled: !!ticketFileId,
+      enabled: ticketFileId !== -1,
     }
   )
 
@@ -53,7 +53,7 @@ export const FileModal = ({ ticketId }: { ticketId: number }) => {
       return data
     },
     {
-      enabled: !!ticketFileId,
+      enabled: ticketFileId !== -1,
     }
   )
 
@@ -80,7 +80,7 @@ export const FileModal = ({ ticketId }: { ticketId: number }) => {
     } catch (e) {
       showToast({
         type: 'error',
-        message: 'Something went wrong 😵',
+        message: 'Something went wrong! 😵',
       })
     }
   }
@@ -96,14 +96,14 @@ export const FileModal = ({ ticketId }: { ticketId: number }) => {
     } catch (e) {
       showToast({
         type: 'error',
-        message: 'Something went wrong 😵',
+        message: 'Something went wrong! 😵',
       })
     }
   }
 
   return (
     <>
-      {!!ticketFile && !!ticketFileId && (
+      {!!ticketFile && ticketFileId !== -1 && (
         <Modal onClose={closeFileModal} bgColor="bg-ghost-white">
           <div className="flex w-270 space-x-6">
             <div className="space-y-6">
@@ -214,7 +214,7 @@ export const useFileModalStore = createStore(
       ticketFileId: -1,
     },
     (set) => ({
-      toggleFileModal: (ticketFileId?: number) => set(() => ({ ticketFileId })),
+      toggleFileModal: (ticketFileId?: number) => set(() => ({ ticketFileId: ticketFileId ?? -1 })),
     })
   )
 )

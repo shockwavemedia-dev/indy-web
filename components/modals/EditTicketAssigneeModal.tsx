@@ -44,7 +44,7 @@ export const EditTicketAssigneeModal = ({
     } catch (e) {
       showToast({
         type: 'error',
-        message: 'Something went wrong 😵',
+        message: 'Something went wrong! 😵',
       })
     }
   }

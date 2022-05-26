@@ -46,6 +46,7 @@ import { TicketNote } from '../../../types/TicketNote.type'
 import { TicketPageTabs } from '../../../types/TicketPageTabs.type'
 import { FileButton } from '../../FileButton'
 import { FileModal, useFileModalStore } from '../../modals/FileModal'
+import { Pill } from '../../Pill'
 import { TicketEmailCard } from '../../TicketEmailCard'
 import { TicketNoteCard } from '../../TicketNoteCard'
 
@@ -267,24 +268,18 @@ export const ManagerTicket = ({ ticketId }: { ticketId: number }) => {
                 {format(ticket!.createdAt, "yy MMM''dd")}
               </TitleValue>
               <TitleValue title="Services">
-                <div className="flex flex-wrap gap-1">
-                  {ticket!.services?.map(({ serviceName, extras, serviceId }, i) => (
-                    <Fragment key={`${serviceName}-${i}`}>
-                      <div className="rounded-lg border border-bright-gray px-2.5">
-                        {serviceId}
-                        {serviceName}
-                      </div>
-                      {extras.map((extra) => (
-                        <div
-                          key={`${serviceName}-${extra}`}
-                          className="rounded-lg border border-bright-gray px-2.5"
-                        >
-                          {extra}
-                        </div>
-                      ))}
-                    </Fragment>
-                  ))}
-                </div>
+                {!!ticket!.services && ticket!.services?.length > 0 && (
+                  <div className="flex flex-wrap gap-1">
+                    {ticket!.services?.map(({ serviceName, extras }, i) => (
+                      <Fragment key={`${serviceName}-${i}`}>
+                        <Pill value={serviceName} />
+                        {extras.map((extra) => (
+                          <Pill key={`${serviceName}-${extra}`} value={extra} />
+                        ))}
+                      </Fragment>
+                    ))}
+                  </div>
+                )}
               </TitleValue>
               <TitleValue title="Description">
                 <RichTextDisplay value={ticket!.description} />

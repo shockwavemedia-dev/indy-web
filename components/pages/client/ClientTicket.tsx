@@ -260,16 +260,18 @@ export const ClientTicket = ({ ticketId }: { ticketId: number }) => {
                 {format(ticket!.createdAt, "yy MMM''dd")}
               </TitleValue>
               <TitleValue title="Services">
-                <div className="flex flex-wrap gap-1">
-                  {ticket!.services?.map(({ serviceName, extras }, i) => (
-                    <Fragment key={`${serviceName}-${i}`}>
-                      <Pill value={serviceName} />
-                      {extras.map((extra) => (
-                        <Pill key={`${serviceName}-${extra}`} value={extra} />
-                      ))}
-                    </Fragment>
-                  ))}
-                </div>
+                {!!ticket!.services && ticket!.services?.length > 0 && (
+                  <div className="flex flex-wrap gap-1">
+                    {ticket!.services?.map(({ serviceName, extras }, i) => (
+                      <Fragment key={`${serviceName}-${i}`}>
+                        <Pill value={serviceName} />
+                        {extras.map((extra) => (
+                          <Pill key={`${serviceName}-${extra}`} value={extra} />
+                        ))}
+                      </Fragment>
+                    ))}
+                  </div>
+                )}
               </TitleValue>
               <TitleValue title="Description">
                 <RichTextDisplay value={ticket!.description} />

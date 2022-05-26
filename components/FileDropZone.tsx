@@ -14,7 +14,7 @@ export const FileDropZone = ({
   multiple = false,
   className,
 }: {
-  label: string
+  label?: string
   name: string
   mimeType: string
   accept: Array<string>
@@ -30,7 +30,8 @@ export const FileDropZone = ({
     accept: {
       [mimeType]: accept,
     },
-    onDrop: (acceptedFiles: Array<File>) => setFiles([...files, ...acceptedFiles]),
+    onDrop: (acceptedFiles: Array<File>) =>
+      setFiles(multiple ? [...files, ...acceptedFiles] : acceptedFiles),
     maxSize: maxSize * 1000000,
     multiple,
     noClick: true,
@@ -38,12 +39,12 @@ export const FileDropZone = ({
   })
 
   useEffect(() => {
-    setFieldValue(name, multiple ? files : files?.pop())
+    setFieldValue(name, multiple ? files : files[0] ?? null)
   }, [files])
 
   return (
     <div className={className}>
-      <div className="mb-2 font-urbanist text-base font-medium text-onyx">{label}</div>
+      <div className="mb-2 font-urbanist text-base font-medium text-onyx empty:hidden">{label}</div>
       <div
         {...getRootProps()}
         className={`flex h-35 cursor-default items-center justify-center overflow-hidden rounded-xl border border-dashed ${
@@ -70,30 +71,32 @@ export const FileDropZone = ({
         </div>
         <input {...getInputProps()} />
       </div>
-      <div className="mt-4 space-y-3">
-        {files?.map(({ name }) => {
-          const removeFile = () =>
-            setFiles(files?.filter(({ name: fileName }) => fileName !== name))
+      {files.length > 0 && (
+        <div className="mt-4 space-y-3">
+          {files.map(({ name }) => {
+            const removeFile = () =>
+              setFiles(files?.filter(({ name: fileName }) => fileName !== name))
 
-          return (
-            <div
-              key={`${name}`}
-              className="flex h-14 items-center rounded-xl border border-bright-gray px-6"
-            >
-              <div className="relative mr-3.5">
-                <FileIcon />
-                <div className="absolute top-3 left-1/2 -translate-x-1/2 font-varela-round text-tiny uppercase text-white">
-                  {name.split(/\./).pop()}
+            return (
+              <div
+                key={`${name}`}
+                className="flex h-14 items-center rounded-xl border border-bright-gray px-6"
+              >
+                <div className="relative mr-3.5">
+                  <FileIcon />
+                  <div className="absolute top-3 left-1/2 -translate-x-1/2 font-varela-round text-tiny uppercase text-white">
+                    {name.split(/\./).pop()}
+                  </div>
                 </div>
+                <div className="mr-auto font-urbanist text-xs font-semibold text-onyx">{name}</div>
+                <button type="button" className="group" onClick={removeFile}>
+                  <RemoveFileIcon className="stroke-lavender-gray group-hover:stroke-tart-orange" />
+                </button>
               </div>
-              <div className="mr-auto font-urbanist text-xs font-semibold text-onyx">{name}</div>
-              <button type="button" className="group" onClick={removeFile}>
-                <RemoveFileIcon className="stroke-lavender-gray group-hover:stroke-tart-orange" />
-              </button>
-            </div>
-          )
-        })}
-      </div>
+            )
+          })}
+        </div>
+      )}
       <FormErrorMessage name={name} />
     </div>
   )

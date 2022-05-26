@@ -15,7 +15,7 @@ export const ViewTicketAssigneeModal = ({
     <>
       {isVisible && (
         <Modal title="Ticket Assignee" onClose={onClose}>
-          <div className="flex w-140 space-x-20">
+          <div className="flex w-fit space-x-20">
             <TitleValue title="Department">{ticketAssignee.departmentName}</TitleValue>
             <TitleValue title="Name" className="capitalize">
               {ticketAssignee.fullName}

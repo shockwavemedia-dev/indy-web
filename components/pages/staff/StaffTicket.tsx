@@ -39,7 +39,13 @@ import { TicketFile } from '../../../types/TicketFile.type'
 import { TicketNote } from '../../../types/TicketNote.type'
 import { TicketPageTabs } from '../../../types/TicketPageTabs.type'
 import { FileButton } from '../../FileButton'
+import { PlusIcon } from '../../icons/PlusIcon'
 import { FileModal, useFileModalStore } from '../../modals/FileModal'
+import {
+  UploadTicketFileModal,
+  useUploadTicketFileModalStore,
+} from '../../modals/UploadTicketFileModal'
+import { Pill } from '../../Pill'
 import { TicketEmailCard } from '../../TicketEmailCard'
 import { TicketNoteCard } from '../../TicketNoteCard'
 
@@ -51,6 +57,7 @@ export const StaffTicket = ({ ticketId }: { ticketId: number }) => {
   const [activeTab, setActiveTab] = useState<TicketPageTabs>('notes')
 
   const { toggleFileModal } = useFileModalStore()
+  const { toggleUploadTicketFileModal } = useUploadTicketFileModalStore()
 
   const queryClient = useQueryClient()
 
@@ -241,24 +248,18 @@ export const StaffTicket = ({ ticketId }: { ticketId: number }) => {
                 {format(ticket!.createdAt, "yy MMM''dd")}
               </TitleValue>
               <TitleValue title="Services">
-                <div className="flex flex-wrap gap-1">
-                  {ticket!.services?.map(({ serviceName, extras, serviceId }, i) => (
-                    <Fragment key={`${serviceName}-${i}`}>
-                      <div className="rounded-lg border border-bright-gray px-2.5">
-                        {serviceId}
-                        {serviceName}
-                      </div>
-                      {extras.map((extra) => (
-                        <div
-                          key={`${serviceName}-${extra}`}
-                          className="rounded-lg border border-bright-gray px-2.5"
-                        >
-                          {extra}
-                        </div>
-                      ))}
-                    </Fragment>
-                  ))}
-                </div>
+                {!!ticket!.services && ticket!.services?.length > 0 && (
+                  <div className="flex flex-wrap gap-1">
+                    {ticket!.services?.map(({ serviceName, extras }, i) => (
+                      <Fragment key={`${serviceName}-${i}`}>
+                        <Pill value={serviceName} />
+                        {extras.map((extra) => (
+                          <Pill key={`${serviceName}-${extra}`} value={extra} />
+                        ))}
+                      </Fragment>
+                    ))}
+                  </div>
+                )}
               </TitleValue>
               <TitleValue title="Description">
                 <RichTextDisplay value={ticket!.description} />
@@ -274,6 +275,16 @@ export const StaffTicket = ({ ticketId }: { ticketId: number }) => {
             />
           </Card>
           <Card title="Files">
+            <button
+              className="absolute top-6 right-6 flex space-x-2"
+              type="button"
+              onClick={toggleUploadTicketFileModal}
+            >
+              <PlusIcon className="stroke-jungle-green" />
+              <div className="font-urbanist text-sm font-semibold text-jungle-green">
+                Upload File
+              </div>
+            </button>
             <div className="flex flex-wrap gap-4">
               {!!ticketFiles ? (
                 ticketFiles.map(({ id, name }) => {
@@ -430,6 +441,7 @@ export const StaffTicket = ({ ticketId }: { ticketId: number }) => {
       />
       <CreateLinkModal />
       <FileModal ticketId={ticketId} />
+      <UploadTicketFileModal ticketId={ticketId} />
     </>
   )
 }
