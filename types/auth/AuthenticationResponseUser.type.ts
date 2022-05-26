@@ -19,8 +19,8 @@ export type AuthenticationResponseUser = {
       | 'staff'
       | 'account manager'
       | 'marketing'
-      | 'marketing_manager'
-      | 'group_manager'
+      | 'marketing manager'
+      | 'group manager'
     clientId: number
     departments: Array<Department>
   }

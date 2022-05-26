@@ -6,7 +6,7 @@ export type TicketFile = {
   signedUrlExpiration: Date | null
   directory: string
   description: string | null
-  status: 'approved' | 'back from review' | 'deleted' | 'in_progress' | 'for_review' | 'new'
+  status: 'approved' | 'back from review' | 'deleted' | 'in progress' | 'for review' | 'new'
   isApproved: boolean
   approvedById: number | null
   version: string

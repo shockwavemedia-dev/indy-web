@@ -8,6 +8,6 @@ export type NewClientUserForm = {
   lastName: string
   middleName?: string
   gender: 'female' | 'male' | null
-  role: 'group_manager' | 'marketing_manager' | 'marketing' | null
+  role: 'group manager' | 'marketing manager' | 'marketing' | null
   clientId: number
 }
