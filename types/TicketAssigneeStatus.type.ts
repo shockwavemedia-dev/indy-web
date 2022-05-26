@@ -1,1 +1,1 @@
-export type TicketAssigneeStatus = 'completed' | 'in_progress' | 'open'
+export type TicketAssigneeStatus = 'completed' | 'in progress' | 'open'

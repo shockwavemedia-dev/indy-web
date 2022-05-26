@@ -5,7 +5,7 @@ export const UserStatusOptions: Options<SelectOption<string>> = [
   { label: 'Active', value: 'active' },
   { label: 'Guest', value: 'guest' },
   { label: 'Inactive', value: 'inactive' },
-  { label: 'Not Verified', value: 'not_verified' },
+  { label: 'Not Verified', value: 'not verified' },
   { label: 'Revoked', value: 'revoked' },
   { label: 'Deleted', value: 'deleted' },
 ]

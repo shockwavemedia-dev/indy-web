@@ -133,9 +133,9 @@ export const FileModal = ({ ticketId }: { ticketId: number }) => {
                           return 'bg-bleu-de-france'
                         case 'deleted':
                           return 'bg-tart-orange'
-                        case 'in_progress':
+                        case 'in progress':
                           return 'bg-jungle-green'
-                        case 'for_review':
+                        case 'for review':
                           return 'bg-bleu-de-france'
                         case 'new':
                           return 'bg-jungle-green'
