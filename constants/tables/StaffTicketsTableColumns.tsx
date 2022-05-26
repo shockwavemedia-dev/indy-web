@@ -46,9 +46,7 @@ export const StaffTicketsTableColumns: Array<Column<Ticket>> = [
               : 'bg-tart-orange'
           }`}
         />
-        <div className="font-urbanist text-sm font-medium capitalize text-onyx">
-          {value.replace(/_/g, ' ')}
-        </div>
+        <div className="font-urbanist text-sm font-medium capitalize text-onyx">{value}</div>
       </div>
     ),
   },

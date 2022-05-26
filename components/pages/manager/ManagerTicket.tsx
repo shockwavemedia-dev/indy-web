@@ -45,6 +45,7 @@ import { TicketFile } from '../../../types/TicketFile.type'
 import { TicketNote } from '../../../types/TicketNote.type'
 import { TicketPageTabs } from '../../../types/TicketPageTabs.type'
 import { FileButton } from '../../FileButton'
+import { NotepadIcon } from '../../icons/NotepadIcon'
 import { FileModal, useFileModalStore } from '../../modals/FileModal'
 import { Pill } from '../../Pill'
 import { TicketEmailCard } from '../../TicketEmailCard'
@@ -281,9 +282,6 @@ export const ManagerTicket = ({ ticketId }: { ticketId: number }) => {
                   </div>
                 )}
               </TitleValue>
-              <TitleValue title="Description">
-                <RichTextDisplay value={ticket!.description} />
-              </TitleValue>
             </div>
           </Card>
           <Card title="Assignees">
@@ -328,6 +326,7 @@ export const ManagerTicket = ({ ticketId }: { ticketId: number }) => {
         </div>
         <div className="w-full min-w-0">
           <div className="flex justify-between">
+            <Tab title="Description" Icon={NotepadIcon} tabName="description" />
             <Tab title="Notes" Icon={NoteIcon} tabName="notes" />
             <Tab title="Email" Icon={EmailIcon} tabName="email" />
             <Tab title="Activities" Icon={CalendarIcon} tabName="activities" />
@@ -335,16 +334,23 @@ export const ManagerTicket = ({ ticketId }: { ticketId: number }) => {
           </div>
           <div className="h-px bg-bright-gray" />
           <div
-            className={`-mt-0.5 mb-4 h-0.75 w-1/4 rounded bg-jungle-green fill-jungle-green ${
-              activeTab === 'email'
-                ? 'ml-1/4'
+            className={`-mt-0.5 mb-4 h-0.75 w-1/5 rounded bg-jungle-green fill-jungle-green ${
+              activeTab === 'description'
+                ? 'ml-0'
+                : activeTab === 'notes'
+                ? 'ml-1/5'
+                : activeTab === 'email'
+                ? 'ml-2/5'
                 : activeTab === 'activities'
-                ? 'ml-1/2'
-                : activeTab === 'style_guide'
-                ? 'ml-3/4'
-                : 'ml-0'
+                ? 'ml-3/5'
+                : 'ml-auto'
             }`}
           />
+          {activeTab === 'description' && (
+            <Card>
+              <RichTextDisplay value={ticket!.description} />
+            </Card>
+          )}
           {activeTab === 'notes' && (
             <>
               <Formik
