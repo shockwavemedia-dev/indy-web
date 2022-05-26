@@ -10,6 +10,6 @@ export const NewAdminUserFormSchema: SchemaOf<NewAdminUserForm> = object().shape
   lastName: string().required(),
   middleName: string().optional().nullable(),
   gender: mixed().required().oneOf(['female', 'male']),
-  role: mixed().required().oneOf(['admin', 'account_manager', 'manager', 'staff']),
+  role: mixed().required().oneOf(['admin', 'account manager', 'manager', 'staff']),
   birthDate: date().required(),
 })

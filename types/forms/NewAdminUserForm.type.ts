@@ -8,5 +8,5 @@ export type NewAdminUserForm = {
   lastName: string
   middleName?: string | null
   gender: 'female' | 'male' | null
-  role: 'admin' | 'account_manager' | 'manager' | 'staff' | null
+  role: 'admin' | 'account manager' | 'manager' | 'staff' | null
 }

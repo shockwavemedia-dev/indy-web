@@ -29,7 +29,7 @@ const nextAuth = NextAuth({
             accessToken: accessToken,
             isAdmin: type === 'admin_users' && role === 'admin',
             isClient: type === 'client_users',
-            isManager: type === 'admin_users' && (role === 'account_manager' || role === 'manager'),
+            isManager: type === 'admin_users' && (role === 'account manager' || role === 'manager'),
             isStaff: type === 'admin_users' && role === 'staff',
           }
         } catch (e) {

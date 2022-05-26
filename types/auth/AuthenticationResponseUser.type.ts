@@ -17,7 +17,7 @@ export type AuthenticationResponseUser = {
       | 'admin'
       | 'manager'
       | 'staff'
-      | 'account_manager'
+      | 'account manager'
       | 'marketing'
       | 'marketing_manager'
       | 'group_manager'
