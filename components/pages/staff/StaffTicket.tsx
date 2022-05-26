@@ -55,7 +55,7 @@ export const StaffTicket = ({ ticketId }: { ticketId: number }) => {
   const { activeTicketAssignee, isViewTicketAssigneeModalVisible, toggleViewTicketAssigneeModal } =
     useTicketAssigneeStore()
 
-  const [activeTab, setActiveTab] = useState<TicketPageTabs>('notes')
+  const [activeTab, setActiveTab] = useState<TicketPageTabs>('description')
 
   const { toggleFileModal } = useFileModalStore()
   const { toggleUploadTicketFileModal } = useUploadTicketFileModalStore()

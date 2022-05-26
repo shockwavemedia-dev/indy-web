@@ -54,7 +54,7 @@ import { TicketNoteCard } from '../../TicketNoteCard'
 export const ManagerTicket = ({ ticketId }: { ticketId: number }) => {
   const { data: session } = useSession()
 
-  const [activeTab, setActiveTab] = useState<TicketPageTabs>('notes')
+  const [activeTab, setActiveTab] = useState<TicketPageTabs>('description')
   const [isEditTicketModalVisible, setEditTicketModalVisible] = useState(false)
   const [isDeleteTicketModalVisible, setDeleteTicketModalVisible] = useState(false)
   const [isAddTicketAssigneeModalVisible, setAddTicketAssigneeModalVisible] = useState(false)
