@@ -80,9 +80,7 @@ export const ManagerDashboard = () => {
             {!!session && session.user.userType.departments.length > 0 ? (
               <DataTable
                 columns={ClientTicketsTableColumns}
-                dataEndpoint={`/v1/departments/${
-                  session?.user.userType.departments.shift()?.id
-                }/tickets`}
+                dataEndpoint={`/v1/departments/${session?.user.userType.departments[0].id}/tickets`}
                 tableQueryKey={['tickets']}
                 ofString="Projects"
                 settings
