@@ -5,6 +5,7 @@ import { useQuery, useQueryClient } from 'react-query'
 import { TicketTypeOptions } from '../../constants/options/TicketTypeOptions'
 import { CreateSupportRequestFormSchema } from '../../schemas/CreateSupportRequestFormSchema'
 import { useToastStore } from '../../store/ToastStore'
+import { Client } from '../../types/Client.type'
 import { Department } from '../../types/Department.type'
 import { CreateSupportRequestForm } from '../../types/forms/CreateSupportRequestForm.type'
 import { Page } from '../../types/Page.type'
@@ -38,6 +39,23 @@ export const CreateSupportRequestModal = ({
         data: Array<Department>
         page: Page
       }>('/v1/departments')
+
+      return data
+    },
+    {
+      enabled: isVisible,
+    }
+  )
+
+  const { data: clients } = useQuery(
+    'clients',
+    async () => {
+      const {
+        data: { data },
+      } = await axios.get<{
+        data: Array<Client>
+        page: Page
+      }>('/v1/clients')
 
       return data
     },
@@ -88,6 +106,20 @@ export const CreateSupportRequestModal = ({
           >
             {({ isSubmitting }) => (
               <Form className="flex w-140 flex-col">
+                {session?.user.userType.type == 'admin_users' && (
+                  <Select
+                    name="clientId"
+                    Icon={ClipboardIcon}
+                    placeholder="Select Client"
+                    options={
+                      clients?.map((client) => ({
+                        value: client.id,
+                        label: client.name,
+                      })) ?? []
+                    }
+                    className="mb-5"
+                  />
+                )}
                 <TextInput
                   type="text"
                   Icon={EditIcon}
