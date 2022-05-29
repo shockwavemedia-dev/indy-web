@@ -4,7 +4,7 @@ import { CaretIcon } from './icons/CaretIcon'
 import { TinyDotIcon } from './icons/TinyDotIcon'
 
 export const RouteButton = ({
-  route: { Icon = TinyDotIcon, title, pathname = '#' },
+  route: { Icon = TinyDotIcon, title, pathname = '#', target = '_self' },
   isCurrentPath,
   hasSubRoutes,
   subRoute = false,
@@ -27,6 +27,7 @@ export const RouteButton = ({
         className={`flex items-center ${subRoute ? 'my-2 ml-15' : 'my-3.5 ml-5 '} ${
           pathname === '#' ? 'pointer-events-none opacity-20' : ''
         }`}
+        target={target}
       >
         <Icon
           className={`${

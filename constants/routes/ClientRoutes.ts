@@ -25,6 +25,8 @@ export const ClientRoutes: Array<Route> = [
   {
     title: 'SMS Marketing',
     Icon: EmailIcon,
+    pathname: 'https://c7s.transmitsms.com/',
+    target: '_blank',
   },
   {
     title: 'Marketing Planning',

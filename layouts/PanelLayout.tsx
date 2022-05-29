@@ -59,17 +59,17 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
           <JobsStatusCountCard Icon={BriefcaseIcon} value={12} description="Pending Jobs" />
           <JobsStatusCountCard Icon={EyeIcon} value={4} description="Jobs To Review" />
         </div>
-        {routes.map(({ title, Icon, pathname, subRoutes = [] }, i) => (
+        {routes.map(({ title, Icon, pathname, subRoutes = [], target }, i) => (
           <Fragment key={`route-group-${i}`}>
             <RouteButton
-              route={{ title, Icon, pathname }}
+              route={{ title, Icon, pathname, target }}
               hasSubRoutes={subRoutes.length > 0}
               isCurrentPath={pathname === asPath}
             />
-            {subRoutes.map(({ title, Icon, pathname }) => (
+            {subRoutes.map(({ title, Icon, pathname, target }) => (
               <RouteButton
                 key={`sub-${title}-${pathname}`}
-                route={{ title, Icon, pathname }}
+                route={{ title, Icon, pathname, target }}
                 isCurrentPath={pathname === asPath}
                 subRoute
               />
