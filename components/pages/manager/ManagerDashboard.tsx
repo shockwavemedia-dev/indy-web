@@ -34,14 +34,12 @@ export const ManagerDashboard = () => {
       <div className="mb-5 font-urbanist text-xxl font-semibold text-onyx">Dashboard</div>
       <div className="mx-auto h-full w-full max-w-8xl space-y-6">
         <FancyButton
-          Icon={
-            <div className="grid h-11 w-11 flex-none place-items-center rounded-lg bg-linen">
-              <LifeBuoyIcon className="fill-vivid-red-tangelo" />
-            </div>
-          }
+          Icon={<LifeBuoyIcon className="fill-white" />}
           title="Support Request"
           subtitle="Laborerivit rem cones mil"
           onClick={toggleCreateSupportRequestModal}
+          twBackgroundColor="bg-vivid-red-tangelo"
+          twIconBackgroundColor="bg-dark-pastel-red"
           className="w-fit"
         />
         <hr className="border-t-bright-gray" />

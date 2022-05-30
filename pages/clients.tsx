@@ -22,14 +22,12 @@ const ClientPage: NextPageWithLayout = () => {
       </Head>
       <div className="mx-auto h-full w-full max-w-8xl space-y-6">
         <FancyButton
-          Icon={
-            <div className="grid h-11 w-11 flex-none place-items-center rounded-lg bg-honeydew">
-              <UserIcon className="stroke-jungle-green" />
-            </div>
-          }
+          Icon={<UserIcon className="stroke-white" />}
           title="Create Client"
           subtitle="Laborerivit rem cones mil"
           onClick={toggleNewClientModal}
+          twBackgroundColor="bg-jungle-green"
+          twIconBackgroundColor="bg-illuminating-emerald"
           className="w-fit"
         />
         <Card title="Clients">
