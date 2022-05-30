@@ -225,7 +225,7 @@ export const ManagerTicket = ({ ticketId }: { ticketId: number }) => {
       <div className="mb-5 font-urbanist text-xxl font-semibold text-onyx">
         Ticket {ticket!.ticketCode}
       </div>
-      <div className="mx-auto flex w-full max-w-7xl space-x-6">
+      <div className="mx-auto flex w-full max-w-8xl space-x-6">
         <div className="w-86 flex-none space-y-6">
           <Card title="Details">
             <div className="absolute top-6 right-6 space-x-4">

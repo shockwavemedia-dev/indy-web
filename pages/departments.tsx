@@ -19,7 +19,7 @@ const DepartmentsPage: NextPageWithLayout = () => {
       <Head>
         <title>Daily Press - Client</title>
       </Head>
-      <div className="mx-auto flex h-full w-full max-w-7xl flex-col space-y-6">
+      <div className="mx-auto h-full w-full max-w-8xl space-y-6">
         <FancyButton
           Icon={
             <div className="grid h-11 w-11 flex-none place-items-center rounded-lg bg-honeydew">
@@ -35,7 +35,6 @@ const DepartmentsPage: NextPageWithLayout = () => {
           <DataTable
             dataEndpoint="/v1/departments"
             columns={DepartmentTableColumns}
-            initialPageSize={20}
             tableQueryKey={['departments']}
             ofString="Departments"
           />

@@ -20,7 +20,7 @@ const AnimationPage: NextPageWithLayout = () => {
       <Head>
         <title>Daily Press - Client</title>
       </Head>
-      <div className="mx-auto flex h-full w-full max-w-7xl flex-col space-y-6">
+      <div className="mx-auto flex h-full w-full max-w-8xl flex-col space-y-6">
         <FancyButton
           Icon={
             <div className="grid h-11 w-11 flex-none place-items-center rounded-lg bg-honeydew">
@@ -39,7 +39,6 @@ const AnimationPage: NextPageWithLayout = () => {
               types: 'library',
             }}
             columns={AnimationTableColumns}
-            initialPageSize={20}
             tableQueryKey={['libraries']}
             ofString="Animations"
           />

@@ -28,9 +28,9 @@ const StaffUserPage: NextPageWithLayout = () => {
     <>
       <NewAdminUserModal isVisible={isNewAdminUserModalVisible} onClose={toggleNewAdminUserModal} />
       <Head>
-        <title>Daily Press - Staff User</title>
+        <title>Daily Press - Staffs</title>
       </Head>
-      <div className="mx-auto flex h-full w-full max-w-7xl flex-col space-y-6">
+      <div className="mx-auto h-full w-full max-w-8xl space-y-6">
         <FancyButton
           Icon={
             <div className="grid h-11 w-11 flex-none place-items-center rounded-lg bg-honeydew">
@@ -46,7 +46,6 @@ const StaffUserPage: NextPageWithLayout = () => {
           <DataTable
             dataEndpoint="/v1/users"
             columns={AdminUserTableColumns}
-            initialPageSize={20}
             tableQueryKey={['users']}
             ofString="Users"
           />

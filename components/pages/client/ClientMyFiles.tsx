@@ -31,7 +31,7 @@ export const ClientMyFiles = () => {
         <title>Daily Press - My Files</title>
       </Head>
       <div className="mb-5 font-urbanist text-xxl font-semibold text-onyx">My Files</div>
-      <div className="mx-auto w-full max-w-7xl">
+      <div className="mx-auto w-full max-w-8xl">
         <Card className="flex flex-wrap gap-4">
           {year === '' ? (
             Object.keys(files).map((year) => {

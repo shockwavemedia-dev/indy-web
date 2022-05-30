@@ -43,6 +43,7 @@ import { TicketNote } from '../../../types/TicketNote.type'
 import { TicketPageTabs } from '../../../types/TicketPageTabs.type'
 import { FileButton } from '../../FileButton'
 import { NotepadIcon } from '../../icons/NotepadIcon'
+import { AddTicketAssigneeModal } from '../../modals/AddTicketAssigneeModal'
 import { FileModal, useFileModalStore } from '../../modals/FileModal'
 import { Pill } from '../../Pill'
 import { TicketEmailCard } from '../../TicketEmailCard'
@@ -54,6 +55,7 @@ export const ClientTicket = ({ ticketId }: { ticketId: number }) => {
   const [activeTab, setActiveTab] = useState<TicketPageTabs>('description')
   const [isEditTicketModalVisible, setEditTicketModalVisible] = useState(false)
   const [isDeleteTicketModalVisible, setDeleteTicketModalVisible] = useState(false)
+  const [isAddTicketAssigneeModalVisible, setAddTicketAssigneeModalVisible] = useState(false)
 
   const { toggleFileModal } = useFileModalStore()
   const { activeTicketAssignee, isViewTicketAssigneeModalVisible, toggleViewTicketAssigneeModal } =
@@ -130,6 +132,8 @@ export const ClientTicket = ({ ticketId }: { ticketId: number }) => {
 
   const toggleEditTicketModal = () => setEditTicketModalVisible(!isEditTicketModalVisible)
   const toggleDeleteTicketModal = () => setDeleteTicketModalVisible(!isDeleteTicketModalVisible)
+  const toggleAddTicketAssigneeModal = () =>
+    setAddTicketAssigneeModalVisible(!isAddTicketAssigneeModalVisible)
   const submitEmailForm = async (
     values: CreateEmailForm,
     { resetForm }: { resetForm: () => void }
@@ -217,7 +221,7 @@ export const ClientTicket = ({ ticketId }: { ticketId: number }) => {
       <div className="mb-5 font-urbanist text-xxl font-semibold text-onyx">
         Ticket {ticket!.ticketCode}
       </div>
-      <div className="mx-auto flex w-full max-w-7xl space-x-6">
+      <div className="mx-auto flex w-full max-w-8xl space-x-6">
         <div className="w-86 flex-none space-y-6">
           <Card title="Details">
             <div className="absolute top-6 right-6 space-x-4">
@@ -452,6 +456,11 @@ export const ClientTicket = ({ ticketId }: { ticketId: number }) => {
         onClose={toggleDeleteTicketModal}
         ticket={ticket!}
         minimal
+      />
+      <AddTicketAssigneeModal
+        isVisible={isAddTicketAssigneeModalVisible}
+        onClose={toggleAddTicketAssigneeModal}
+        ticketId={ticket!.id}
       />
       <ViewTicketAssigneeModal
         isVisible={isViewTicketAssigneeModalVisible}

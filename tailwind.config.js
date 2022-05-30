@@ -20,6 +20,9 @@ module.exports = {
         xxl: ['1.375rem', '1.875rem'],
         '2.5xl': ['1.75rem', '2.125rem'],
       },
+      maxWidth: {
+        '8xl': '88rem',
+      },
       spacing: {
         0.75: '0.1875rem',
         4.5: '1.125rem',
@@ -53,6 +56,7 @@ module.exports = {
         175: '43.75rem',
         212.5: '53.125rem',
         228: '57rem',
+        260: '65rem',
         262.5: '65.625rem',
         270: '67.5rem',
         320: '80rem',
@@ -61,7 +65,7 @@ module.exports = {
         '3/5': '60%',
       },
     },
-    backgroundImage: {
+    backgroundI1ge: {
       auth: "url('/images/auth-bg.png')",
     },
     boxShadow: {

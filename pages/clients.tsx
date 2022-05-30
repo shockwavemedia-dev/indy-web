@@ -18,9 +18,9 @@ const ClientPage: NextPageWithLayout = () => {
     <>
       <NewClientModal isVisible={isNewClientModalVisible} onClose={toggleNewClientModal} />
       <Head>
-        <title>Daily Press - Client</title>
+        <title>Daily Press - Clients</title>
       </Head>
-      <div className="mx-auto flex h-full w-full max-w-7xl flex-col space-y-6">
+      <div className="mx-auto h-full w-full max-w-8xl space-y-6">
         <FancyButton
           Icon={
             <div className="grid h-11 w-11 flex-none place-items-center rounded-lg bg-honeydew">
@@ -32,11 +32,10 @@ const ClientPage: NextPageWithLayout = () => {
           onClick={toggleNewClientModal}
           className="w-fit"
         />
-        <Card title="Clients" className="flex flex-col">
+        <Card title="Clients">
           <DataTable
             dataEndpoint="/v1/clients"
             columns={ClientTableColumns}
-            initialPageSize={20}
             tableQueryKey={['clients']}
             ofString="Clients"
           />

@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { Form, Formik } from 'formik'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useQuery, useQueryClient } from 'react-query'
 import { SingleValue } from 'react-select'
 import { useToastStore } from '../../store/ToastStore'
@@ -70,6 +70,10 @@ export const AddTicketAssigneeModal = ({
       })
     }
   }
+
+  useEffect(() => {
+    setDepartment(null)
+  }, [isVisible])
 
   return (
     <>

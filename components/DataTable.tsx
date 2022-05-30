@@ -3,9 +3,7 @@ import { ReactNode, useEffect, useMemo, useState } from 'react'
 import { useQuery } from 'react-query'
 import { Column, usePagination, useSortBy, useTable } from 'react-table'
 import { Page } from '../types/Page.type'
-import { CalendarIcon } from './icons/CalendarIcon'
 import { CaretIcon } from './icons/CaretIcon'
-import { GearIcon } from './icons/GearIcon'
 import { SortIcon } from './icons/SortIcon'
 
 export const DataTable = <T extends Record<string, unknown>>({
@@ -15,9 +13,6 @@ export const DataTable = <T extends Record<string, unknown>>({
   columns,
   ofString,
   tableActions,
-  initialPageSize = 10,
-  periodicFilter = false,
-  settings = false,
 }: {
   tableQueryKey: Array<string | number>
   dataEndpoint: string
@@ -25,12 +20,9 @@ export const DataTable = <T extends Record<string, unknown>>({
   columns: Array<Column<T>>
   ofString: string
   tableActions?: ReactNode
-  initialPageSize?: number
-  periodicFilter?: boolean
   settings?: boolean
 }) => {
   const [queryPageIndex, setQueryPageIndex] = useState(0)
-  const [queryPageSize, setQueryPageSize] = useState(initialPageSize)
 
   const {
     data: pagination,
@@ -38,7 +30,7 @@ export const DataTable = <T extends Record<string, unknown>>({
     isFetching,
     isLoading,
   } = useQuery(
-    [...tableQueryKey, queryPageIndex, queryPageSize],
+    [...tableQueryKey, queryPageIndex],
     async () => {
       const { data } = await axios.get<{
         data: Array<T>
@@ -46,7 +38,7 @@ export const DataTable = <T extends Record<string, unknown>>({
       }>(dataEndpoint, {
         params: {
           page_number: queryPageIndex + 1,
-          size: queryPageSize,
+          size: 20,
           ...dataParams,
         },
       })
@@ -75,7 +67,7 @@ export const DataTable = <T extends Record<string, unknown>>({
     {
       columns: memoizedColumns,
       data: (isSuccess && pagination && pagination.data) || [],
-      initialState: { pageIndex: queryPageIndex, pageSize: queryPageSize },
+      initialState: { pageIndex: queryPageIndex, pageSize: 20 },
       manualPagination: true,
       pageCount: isSuccess && pagination ? pagination.page.lastPage : 0,
       autoResetSortBy: false,
@@ -85,21 +77,10 @@ export const DataTable = <T extends Record<string, unknown>>({
   )
 
   useEffect(() => setQueryPageIndex(pageIndex), [pageIndex])
-  useEffect(() => setQueryPageSize(pageSize), [pageSize])
 
   return (
     <>
-      <div className="absolute right-6 top-6 flex items-center">
-        {tableActions}
-        {periodicFilter && (
-          <>
-            <CalendarIcon className="mr-2 stroke-metallic-silver" />
-            <div className="mr-2 font-urbanist text-sm font-medium text-onyx">Last Week</div>
-            <CaretIcon className="mr-5 rotate-180 stroke-waterloo" small />
-          </>
-        )}
-        {settings && <GearIcon className="stroke-waterloo" />}
-      </div>
+      <div className="absolute right-6 top-6 flex items-center">{tableActions}</div>
       {rows.length > 0 ? (
         <>
           <div className="mb-auto h-full overflow-y-auto">
@@ -245,11 +226,6 @@ export const DataTable = <T extends Record<string, unknown>>({
                 small
               />
             </button>
-            <div className="absolute right-11 font-urbanist text-sm font-medium text-metallic-silver">
-              Show
-            </div>
-            <div className="absolute right-5 font-urbanist text-sm font-semibold text-onyx">10</div>
-            <CaretIcon className="absolute right-0 rotate-180 stroke-waterloo" small />
           </div>
         </>
       ) : (

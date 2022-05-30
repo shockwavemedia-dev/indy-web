@@ -12,8 +12,8 @@ export const StaffTicketsTableColumns: Array<Column<Ticket>> = [
     Cell: ({ value }) => <div className="font-urbanist text-sm font-medium text-onyx">{value}</div>,
   },
   {
-    Header: 'Ticket Code',
-    accessor: 'ticketCode',
+    Header: 'Client',
+    accessor: 'clientName',
     Cell: ({ value }) => <div className="font-urbanist text-sm font-medium text-onyx">{value}</div>,
   },
   {
@@ -51,7 +51,7 @@ export const StaffTicketsTableColumns: Array<Column<Ticket>> = [
     ),
   },
   {
-    Header: 'Create Date',
+    Header: 'Created',
     accessor: 'createdAt',
     sortType: 'datetime',
     Cell: ({ value }) => (
@@ -61,7 +61,17 @@ export const StaffTicketsTableColumns: Array<Column<Ticket>> = [
     ),
   },
   {
-    Header: 'Actions',
+    Header: 'Deadline',
+    accessor: 'duedate',
+    sortType: 'datetime',
+    Cell: ({ value }) => (
+      <div className="font-urbanist text-sm font-medium text-onyx">
+        {format(value, "yy MMM''dd")}
+      </div>
+    ),
+  },
+  {
+    Header: '',
     accessor: 'id',
     id: 'actions',
     disableSortBy: true,

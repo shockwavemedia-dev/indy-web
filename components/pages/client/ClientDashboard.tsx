@@ -8,11 +8,9 @@ import { CountCard } from '../../CountCard'
 import { DataTable } from '../../DataTable'
 import { FancyButton } from '../../FancyButton'
 import { CalendarAddIcon } from '../../icons/CalendarAddIcon'
-import { ClipboardCloseIcon } from '../../icons/ClipboardCloseIcon'
 import { GalleryIcon } from '../../icons/GalleryIcon'
 import { LifeBuoyIcon } from '../../icons/LifeBuoyIcon'
 import { MenuBoardIcon } from '../../icons/MenuBoardIcon'
-import { PresentationChartIcon } from '../../icons/PresentationChartIcon'
 import { VideoIcon } from '../../icons/VideoIcon'
 import { CreateEventModal } from '../../modals/CreateEventModal'
 import { CreateSupportRequestModal } from '../../modals/CreateSupportRequestModal'
@@ -42,7 +40,7 @@ export const ClientDashboard = () => {
         <title>Daily Press - Dashboard</title>
       </Head>
       <div className="mb-5 font-urbanist text-xxl font-semibold text-onyx">Dashboard</div>
-      <div className="mx-auto flex h-full w-full max-w-7xl flex-col">
+      <div className="mx-auto h-full w-full max-w-8xl">
         <div className="mb-6 flex space-x-6">
           <FancyButton
             Icon={
@@ -53,29 +51,7 @@ export const ClientDashboard = () => {
             title="New Event"
             subtitle="Laborerivit rem cones mil"
             onClick={toggleCreateEventModal}
-            className="w-full"
-          />
-          <FancyButton
-            Icon={
-              <div className="grid h-11 w-11 flex-none place-items-center rounded-lg bg-alice-blue">
-                <ClipboardCloseIcon className="stroke-bleu-de-france" />
-              </div>
-            }
-            title="New Project Brief"
-            subtitle="Laborerivit rem cones mil"
-            onClick={() => {}}
-            className="pointer-events-none w-full cursor-default opacity-50"
-          />
-          <FancyButton
-            Icon={
-              <div className="bas grid h-11 w-11 flex-none place-items-center rounded-lg bg-cosmic-latte">
-                <PresentationChartIcon className="stroke-deep-saffron" />
-              </div>
-            }
-            title="Analytics"
-            subtitle="Laborerivit rem cones mil"
-            onClick={() => {}}
-            className="pointer-events-none w-full cursor-default opacity-50"
+            className="w-fit"
           />
           <FancyButton
             Icon={
@@ -86,19 +62,18 @@ export const ClientDashboard = () => {
             title="Support Request"
             subtitle="Laborerivit rem cones mil"
             onClick={toggleCreateSupportRequestModal}
-            className="w-full"
+            className="w-fit"
           />
         </div>
         <hr className="mb-6 border-t-bright-gray" />
         <div className="mb-6 flex h-155 space-x-6">
-          <Card title="Project Status Table" className="flex w-228 flex-col">
+          <Card title="Project Status Table" className="flex w-260 flex-col">
             <DataTable
               columns={ClientTicketsTableColumns}
               dataEndpoint={`/v1/clients/${session?.user.userType.clientId}/tickets`}
               tableQueryKey={['tickets']}
               ofString="Projects"
               settings
-              periodicFilter
             />
           </Card>
           <div className="flex flex-1 flex-col">
@@ -144,18 +119,7 @@ export const ClientDashboard = () => {
                 className="w-36"
               />
             </div>
-            <Card title="Notifications" className="h-full w-full opacity-50">
-              <div></div>
-            </Card>
           </div>
-        </div>
-        <div className="flex h-102 space-x-6">
-          <Card title="Number of Projects" className="w-228 opacity-50">
-            <></>
-          </Card>
-          <Card title="Requests" className="flex-1 opacity-50">
-            <></>
-          </Card>
         </div>
       </div>
       <CreateEventModal isVisible={isCreateEventModalVisible} onClose={toggleCreateEventModal} />
