@@ -43,25 +43,21 @@ export const ClientDashboard = () => {
       <div className="mx-auto h-full w-full max-w-8xl">
         <div className="mb-6 flex space-x-6">
           <FancyButton
-            Icon={
-              <div className="grid h-11 w-11 flex-none place-items-center rounded-lg bg-honeydew">
-                <CalendarAddIcon className="stroke-jungle-green" />
-              </div>
-            }
+            Icon={<CalendarAddIcon className="stroke-white" />}
             title="New Event"
             subtitle="Laborerivit rem cones mil"
             onClick={toggleCreateEventModal}
+            twBackgroundColor="bg-jungle-green"
+            twIconBackgroundColor="bg-illuminating-emerald"
             className="w-fit"
           />
           <FancyButton
-            Icon={
-              <div className="grid h-11 w-11 flex-none place-items-center rounded-lg bg-linen">
-                <LifeBuoyIcon className="fill-vivid-red-tangelo" />
-              </div>
-            }
+            Icon={<LifeBuoyIcon className="fill-white" />}
             title="Support Request"
             subtitle="Laborerivit rem cones mil"
             onClick={toggleCreateSupportRequestModal}
+            twBackgroundColor="bg-vivid-red-tangelo"
+            twIconBackgroundColor="bg-dark-pastel-red"
             className="w-fit"
           />
         </div>
@@ -79,44 +75,36 @@ export const ClientDashboard = () => {
           <div className="flex flex-1 flex-col">
             <div className="mb-3 flex space-x-3">
               <CountCard
-                Icon={
-                  <div className="grid h-11.5 w-11.5 flex-none place-items-center rounded-lg bg-cosmic-latte">
-                    <VideoIcon className="stroke-deep-saffron" />
-                  </div>
-                }
+                Icon={<VideoIcon className="stroke-white" />}
                 value={5}
                 description="Animations Remaining"
                 className="w-36"
+                twBackgroundColor="bg-vivid-red-tangelo"
+                twIconBackgroundColor="bg-dark-pastel-red"
               />
               <CountCard
-                Icon={
-                  <div className="grid h-11.5 w-11.5 flex-none place-items-center rounded-lg bg-honeydew">
-                    <GalleryIcon className="stroke-jungle-green" />
-                  </div>
-                }
+                Icon={<GalleryIcon className="stroke-white" />}
                 value={2}
                 description="Photoshoots Remaining"
+                twBackgroundColor="bg-jungle-green"
+                twIconBackgroundColor="bg-illuminating-emerald"
               />
             </div>
             <div className="mb-6 flex space-x-3">
               <CountCard
-                Icon={
-                  <div className="grid h-11.5 w-11.5 flex-none place-items-center rounded-lg bg-alice-blue">
-                    <MenuBoardIcon className="stroke-bleu-de-france" />
-                  </div>
-                }
+                Icon={<MenuBoardIcon className="stroke-white" />}
                 value={3}
                 description="Marketing Strategy Remaining"
+                twBackgroundColor="bg-bleu-de-france"
+                twIconBackgroundColor="bg-bright-navy-blue"
               />
               <CountCard
-                Icon={
-                  <div className="grid h-11.5 w-11.5 flex-none place-items-center rounded-lg bg-magnolia">
-                    <VideoIcon className="stroke-purple-x11" />
-                  </div>
-                }
+                Icon={<VideoIcon className="stroke-white" />}
                 value={1}
                 description="Videoshoots Remaining"
                 className="w-36"
+                twBackgroundColor="bg-purple-x11"
+                twIconBackgroundColor="bg-dark-orchid"
               />
             </div>
           </div>

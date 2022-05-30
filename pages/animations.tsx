@@ -28,25 +28,21 @@ const AnimationsPage: NextPageWithLayout = () => {
       <div className="mx-auto h-full w-full max-w-8xl space-y-6">
         <div className="flex space-x-6">
           <FancyButton
-            Icon={
-              <div className="grid h-11 w-11 flex-none place-items-center rounded-lg bg-honeydew">
-                <UserIcon className="stroke-jungle-green" />
-              </div>
-            }
+            Icon={<UserIcon className="stroke-white" />}
             title="Create Animation Category"
             subtitle="Laborerivit rem cones mil"
             onClick={toggleNewAnimationCategoryModal}
+            twBackgroundColor="bg-bleu-de-france"
+            twIconBackgroundColor="bg-bright-navy-blue"
             className="w-fit"
           />
           <FancyButton
-            Icon={
-              <div className="grid h-11 w-11 flex-none place-items-center rounded-lg bg-honeydew">
-                <VideoIcon className="stroke-jungle-green" />
-              </div>
-            }
+            Icon={<VideoIcon className="stroke-white" />}
             title="Create Animation"
             subtitle="Laborerivit rem cones mil"
             onClick={toggleNewAnimationModal}
+            twIconBackgroundColor="bg-carrot-orange"
+            twBackgroundColor="bg-deep-saffron"
             className="w-fit"
           />
         </div>
