@@ -41,6 +41,7 @@ import { TicketPageTabs } from '../../../types/TicketPageTabs.type'
 import { FileButton } from '../../FileButton'
 import { NotepadIcon } from '../../icons/NotepadIcon'
 import { PlusIcon } from '../../icons/PlusIcon'
+import { AddTicketAssigneeModal } from '../../modals/AddTicketAssigneeModal'
 import { FileModal, useFileModalStore } from '../../modals/FileModal'
 import {
   UploadTicketFileModal,
@@ -52,6 +53,7 @@ import { TicketNoteCard } from '../../TicketNoteCard'
 
 export const StaffTicket = ({ ticketId }: { ticketId: number }) => {
   const { data: session } = useSession()
+  const [isAddTicketAssigneeModalVisible, setAddTicketAssigneeModalVisible] = useState(false)
   const { activeTicketAssignee, isViewTicketAssigneeModalVisible, toggleViewTicketAssigneeModal } =
     useTicketAssigneeStore()
 
@@ -200,6 +202,9 @@ export const StaffTicket = ({ ticketId }: { ticketId: number }) => {
     )
   }
 
+  const toggleAddTicketAssigneeModal = () =>
+    setAddTicketAssigneeModalVisible(!isAddTicketAssigneeModalVisible)
+
   if (!isSuccess) {
     // todo create loading skeleton
     return null
@@ -270,6 +275,14 @@ export const StaffTicket = ({ ticketId }: { ticketId: number }) => {
               dataEndpoint={`/v1/tickets/${ticketId}/assignees`}
               tableQueryKey={['assignees', ticketId]}
               ofString="Assignee"
+              tableActions={
+                <button className="flex space-x-2" onClick={toggleAddTicketAssigneeModal}>
+                  <PlusIcon className="stroke-jungle-green" />
+                  <div className="font-urbanist text-sm font-semibold text-jungle-green">
+                    Add Assignee
+                  </div>
+                </button>
+              }
             />
           </Card>
           <Card title="Files">
@@ -444,6 +457,11 @@ export const StaffTicket = ({ ticketId }: { ticketId: number }) => {
         isVisible={isViewTicketAssigneeModalVisible}
         onClose={toggleViewTicketAssigneeModal}
         ticketAssignee={activeTicketAssignee}
+      />
+      <AddTicketAssigneeModal
+        isVisible={isAddTicketAssigneeModalVisible}
+        onClose={toggleAddTicketAssigneeModal}
+        ticketId={ticket!.id}
       />
       <CreateLinkModal />
       <FileModal ticketId={ticketId} />
