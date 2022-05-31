@@ -36,27 +36,24 @@ const GraphicPage: NextPageWithLayout = () => {
         <title>Daily Press - Graphics Design</title>
       </Head>
       <div className="mb-5 font-urbanist text-xxl font-semibold text-onyx">Graphics Design</div>
-      <div className="mx-auto h-full w-full max-w-8xl">
-        <div className="mb-6 flex space-x-6">
-          <FancyButton
-            Icon={<GalleryIcon className="stroke-white" />}
-            title="Requet Graphics"
-            subtitle="Laborerivit rem cones mil"
-            onClick={toggleCreateGraphicModal}
-            twBackgroundColor="bg-jungle-green"
-            twIconBackgroundColor="bg-illuminating-emerald"
-            className="w-fit"
-          />
-        </div>
-        <hr className="mb-6 border-t-bright-gray" />
-        <div className="mb-6 flex h-155 space-x-6">
+      <div className="mx-auto h-full w-full max-w-8xl space-y-6">
+        <FancyButton
+          Icon={<GalleryIcon className="stroke-white" />}
+          title="Requet Graphics"
+          subtitle="Laborerivit rem cones mil"
+          onClick={toggleCreateGraphicModal}
+          twBackgroundColor="bg-jungle-green"
+          twIconBackgroundColor="bg-illuminating-emerald"
+          className="w-fit"
+        />
+        <hr className="border-t-bright-gray" />
+        <div className="flex h-155 space-x-6">
           <Card title="Project Status Table" className="flex w-260 flex-col">
             <DataTable
               columns={ClientTicketsTableColumns}
               dataEndpoint={`/v1/clients/${session?.user.userType.clientId}/graphics`}
               tableQueryKey={['graphics']}
               ofString="Projects"
-              settings
             />
           </Card>
           <div className="flex flex-1 flex-col">

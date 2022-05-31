@@ -37,13 +37,11 @@ export const EditTicketModal = ({
       if (status === 200) {
         if (graphic) {
           queryClient.invalidateQueries('graphics')
-          queryClient.invalidateQueries(['ticket', ticket.id])
-          queryClient.invalidateQueries(['activities', ticket.id])
         } else {
           queryClient.invalidateQueries('tickets')
-          queryClient.invalidateQueries(['ticket', ticket.id])
-          queryClient.invalidateQueries(['activities', ticket.id])
         }
+        queryClient.invalidateQueries(['ticket', ticket.id])
+        queryClient.invalidateQueries(['activities', ticket.id])
         onClose()
         showToast({
           type: 'success',

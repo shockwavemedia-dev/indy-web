@@ -18,11 +18,15 @@ export const ClientRoutes: Array<Route> = [
     pathname: 'https://c7s.transmitsms.com/',
     target: '_blank',
   },
-
   {
     title: 'My Files',
     pathname: '/my-files',
     Icon: FolderIcon,
+  },
+  {
+    title: 'Graphics Design',
+    pathname: '/graphics-design',
+    Icon: GalleryIcon,
   },
   {
     title: 'Service Request',
@@ -33,10 +37,5 @@ export const ClientRoutes: Array<Route> = [
         pathname: '/service-request/animations',
       },
     ],
-  },
-  {
-    title: 'Graphics Design',
-    pathname: '/graphics',
-    Icon: GalleryIcon,
   },
 ]

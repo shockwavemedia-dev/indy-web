@@ -10,7 +10,7 @@ export const GraphicExtraOptions: Options<SelectOption<string>> = [
   { label: 'POS', value: 'POS' },
   { label: 'Pull-up Banner', value: 'Pull-up Banner' },
   { label: 'Whats on Guide', value: 'Whats on Guide' },
-  { label: 'Hi apps', value: 'Hi apps' },
+  { label: 'Hi Apps', value: 'Hi apps' },
   { label: 'Facebook', value: 'Facebook' },
   { label: 'Instagram', value: 'Instagram' },
   { label: 'TV Screen', value: 'TV Screen' },

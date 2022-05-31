@@ -82,7 +82,6 @@ export const CreateGraphicRequestModal = ({
                   Icon={ClipboardIcon}
                   placeholder="Select Services"
                   options={GraphicExtraOptions}
-                  className="mb-5"
                   isMulti
                 />
                 <DateInput name="duedate" placeholder="Enter due date" />

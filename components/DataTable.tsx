@@ -20,7 +20,6 @@ export const DataTable = <T extends Record<string, unknown>>({
   columns: Array<Column<T>>
   ofString: string
   tableActions?: ReactNode
-  settings?: boolean
 }) => {
   const [queryPageIndex, setQueryPageIndex] = useState(0)
 

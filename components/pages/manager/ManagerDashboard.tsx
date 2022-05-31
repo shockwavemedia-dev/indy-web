@@ -50,7 +50,6 @@ export const ManagerDashboard = () => {
               dataEndpoint={`/v1/departments/${session?.user.userType.departments[0].id}/tickets`}
               tableQueryKey={['tickets']}
               ofString="Projects"
-              settings
             />
           ) : (
             <div className="m-auto w-fit font-urbanist text-base text-metallic-silver">

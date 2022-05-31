@@ -17,7 +17,6 @@ export const StaffDashboard = () => {
             dataEndpoint="/v1/my-tickets"
             tableQueryKey={['tickets']}
             ofString="Projects"
-            settings
           />
         </Card>
       </div>

@@ -69,7 +69,6 @@ export const ClientDashboard = () => {
               dataEndpoint={`/v1/clients/${session?.user.userType.clientId}/tickets`}
               tableQueryKey={['tickets']}
               ofString="Projects"
-              settings
             />
           </Card>
           <div className="flex flex-1 flex-col">
