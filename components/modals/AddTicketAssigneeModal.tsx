@@ -33,9 +33,8 @@ export const AddTicketAssigneeModal = ({
       } = await axios.get<{
         data: Array<Department>
         page: Page
-      }>('/v1/departments', {
+      }>('/v1/departments/staff-list', {
         params: {
-          with_users: true,
           size: 100,
         },
       })
