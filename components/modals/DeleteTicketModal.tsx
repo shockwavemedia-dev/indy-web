@@ -16,11 +16,13 @@ export const DeleteTicketModal = ({
   onClose,
   ticket,
   minimal = false,
+  graphic = false,
 }: {
   isVisible: boolean
   onClose: () => void
   ticket: Ticket
   minimal?: boolean
+  graphic?: boolean
 }) => {
   const { replace } = useRouter()
   const queryClient = useQueryClient()
@@ -34,9 +36,14 @@ export const DeleteTicketModal = ({
       } = await axios.delete(`/v1/tickets/${ticket.id}`)
 
       if (status === 200) {
-        queryClient.invalidateQueries('tickets')
+        if (graphic) {
+          queryClient.invalidateQueries('graphics')
+          replace('/graphics')
+        } else {
+          queryClient.invalidateQueries('tickets')
+          replace('/dashboard')
+        }
         onClose()
-        replace('/dashboard')
         showToast({
           type: 'success',
           message: `Ticket ${ticketCode} successfully deleted!`,
