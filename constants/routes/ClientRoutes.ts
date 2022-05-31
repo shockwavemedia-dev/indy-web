@@ -2,6 +2,7 @@ import { ChartIcon } from '../../components/icons/ChartIcon'
 import { ClipboardIcon } from '../../components/icons/ClipboardIcon'
 import { EmailIcon } from '../../components/icons/EmailIcon'
 import { FolderIcon } from '../../components/icons/FolderIcon'
+import { GalleryIcon } from '../../components/icons/GalleryIcon'
 import { Route } from '../../types/Route.type'
 
 export const ClientRoutes: Array<Route> = [
@@ -32,5 +33,10 @@ export const ClientRoutes: Array<Route> = [
         pathname: '/service-request/animations',
       },
     ],
+  },
+  {
+    title: 'Graphics Design',
+    pathname: '/graphics',
+    Icon: GalleryIcon,
   },
 ]

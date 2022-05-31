@@ -20,10 +20,12 @@ export const EditTicketModal = ({
   isVisible,
   onClose,
   ticket,
+  graphic = false,
 }: {
   isVisible: boolean
   onClose: () => void
   ticket: Ticket
+  graphic?: boolean
 }) => {
   const queryClient = useQueryClient()
   const { showToast } = useToastStore()
@@ -33,9 +35,15 @@ export const EditTicketModal = ({
       const { status } = await axios.put(`/v1/tickets/${ticket.id}`, values)
 
       if (status === 200) {
-        queryClient.invalidateQueries('tickets')
-        queryClient.invalidateQueries(['ticket', ticket.id])
-        queryClient.invalidateQueries(['activities', ticket.id])
+        if (graphic) {
+          queryClient.invalidateQueries('graphics')
+          queryClient.invalidateQueries(['ticket', ticket.id])
+          queryClient.invalidateQueries(['activities', ticket.id])
+        } else {
+          queryClient.invalidateQueries('tickets')
+          queryClient.invalidateQueries(['ticket', ticket.id])
+          queryClient.invalidateQueries(['activities', ticket.id])
+        }
         onClose()
         showToast({
           type: 'success',
