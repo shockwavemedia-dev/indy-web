@@ -2,16 +2,19 @@ import axios from 'axios'
 import { Form, Formik } from 'formik'
 import { useSession } from 'next-auth/react'
 import { useQueryClient } from 'react-query'
+import { GraphicExtraOptions } from '../../constants/options/GraphicExtraOptions'
 import { CreateGraphicRequestFormSchema } from '../../schemas/CreateGraphicRequestFormSchema'
 import { useToastStore } from '../../store/ToastStore'
 import { CreateGraphicRequestForm } from '../../types/forms/CreateGraphicRequestForm.type'
 import { Ticket } from '../../types/Ticket.type'
 import { Button } from '../Button'
 import { DateInput } from '../DateInput'
+import { FileDropZone } from '../FileDropZone'
+import { ClipboardIcon } from '../icons/ClipboardIcon'
 import { EditIcon } from '../icons/EditIcon'
 import { Modal } from '../Modal'
 import { RichTextInput } from '../RichTextInput'
-import { SelectService } from '../SelectService'
+import { Select } from '../Select'
 import { TextInput } from '../TextInput'
 
 export const CreateGraphicRequestModal = ({
@@ -26,7 +29,6 @@ export const CreateGraphicRequestModal = ({
   const { showToast } = useToastStore()
 
   const submitForm = async (values: CreateGraphicRequestForm) => {
-    values.extras = ['DL', 'A4']
     try {
       const {
         status,
@@ -34,7 +36,7 @@ export const CreateGraphicRequestModal = ({
       } = await axios.post<Ticket>('/v1/graphics', values)
 
       if (status === 200) {
-        queryClient.invalidateQueries('tickets')
+        queryClient.invalidateQueries('graphics')
         onClose()
         showToast({
           type: 'success',
@@ -75,7 +77,14 @@ export const CreateGraphicRequestModal = ({
                 className="mb-5"
               />
               <div className="mb-5 flex space-x-5">
-                <SelectService enabled={isVisible} />
+                <Select
+                  name="extras"
+                  Icon={ClipboardIcon}
+                  placeholder="Select Services"
+                  options={GraphicExtraOptions}
+                  className="mb-5"
+                  isMulti
+                />
                 <DateInput name="duedate" placeholder="Enter due date" />
               </div>
               <RichTextInput
@@ -84,7 +93,15 @@ export const CreateGraphicRequestModal = ({
                 name="description"
                 className="mb-5"
               />
-              {/* <FileDropZone label="Upload Assets" name="attachments" className="mb-8" multiple /> */}
+              <FileDropZone
+                label="Upload Assets"
+                name="attachments"
+                className="mb-8"
+                maxSize={250}
+                mimeType="image/gif"
+                accept={['.gif', '.jpeg', '.mp4', '.png']}
+                multiple
+              />
               <div className="flex space-x-5">
                 <Button ariaLabel="Cancel" onClick={onClose} type="button" light>
                   Cancel
