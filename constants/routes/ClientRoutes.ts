@@ -2,7 +2,6 @@ import { ChartIcon } from '../../components/icons/ChartIcon'
 import { ClipboardIcon } from '../../components/icons/ClipboardIcon'
 import { EmailIcon } from '../../components/icons/EmailIcon'
 import { FolderIcon } from '../../components/icons/FolderIcon'
-import { GalleryIcon } from '../../components/icons/GalleryIcon'
 import { Route } from '../../types/Route.type'
 
 export const ClientRoutes: Array<Route> = [
@@ -24,17 +23,16 @@ export const ClientRoutes: Array<Route> = [
     Icon: FolderIcon,
   },
   {
-    title: 'Graphics Design',
-    pathname: '/graphics-design',
-    Icon: GalleryIcon,
-  },
-  {
     title: 'Service Request',
     Icon: ClipboardIcon,
     subRoutes: [
       {
         title: 'Animations',
         pathname: '/service-request/animations',
+      },
+      {
+        title: 'Graphics Design',
+        pathname: '/graphics-design',
       },
     ],
   },
