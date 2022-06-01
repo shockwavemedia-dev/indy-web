@@ -31,8 +31,8 @@ export const ClientRoutes: Array<Route> = [
         pathname: '/service-request/animations',
       },
       {
-        title: 'Graphics Design',
-        pathname: '/graphics-design',
+        title: 'Graphic Design',
+        pathname: '/service-request/graphics-design',
       },
     ],
   },

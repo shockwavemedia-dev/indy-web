@@ -1,20 +1,20 @@
 import { useSession } from 'next-auth/react'
 import Head from 'next/head'
 import { ReactElement, useState } from 'react'
-import { Card } from '../components/Card'
-import { CountCard } from '../components/CountCard'
-import { DataTable } from '../components/DataTable'
-import { FancyButton } from '../components/FancyButton'
-import { GalleryIcon } from '../components/icons/GalleryIcon'
-import { MenuBoardIcon } from '../components/icons/MenuBoardIcon'
-import { VideoIcon } from '../components/icons/VideoIcon'
-import { CreateGraphicRequestModal } from '../components/modals/CreateGraphicRequestModal'
-import { DeleteTicketModal } from '../components/modals/DeleteTicketModal'
-import { EditTicketModal } from '../components/modals/EditTicketModal'
-import { ClientTicketsTableColumns } from '../constants/tables/ClientTicketsTableColumns'
-import PanelLayout from '../layouts/PanelLayout'
-import { useTicketStore } from '../store/TicketStore'
-import { NextPageWithLayout } from '../types/pages/NextPageWithLayout.type'
+import { Card } from '../../components/Card'
+import { CountCard } from '../../components/CountCard'
+import { DataTable } from '../../components/DataTable'
+import { FancyButton } from '../../components/FancyButton'
+import { GalleryIcon } from '../../components/icons/GalleryIcon'
+import { MenuBoardIcon } from '../../components/icons/MenuBoardIcon'
+import { VideoIcon } from '../../components/icons/VideoIcon'
+import { CreateGraphicRequestModal } from '../../components/modals/CreateGraphicRequestModal'
+import { DeleteTicketModal } from '../../components/modals/DeleteTicketModal'
+import { EditTicketModal } from '../../components/modals/EditTicketModal'
+import { ClientTicketsTableColumns } from '../../constants/tables/ClientTicketsTableColumns'
+import PanelLayout from '../../layouts/PanelLayout'
+import { useTicketStore } from '../../store/TicketStore'
+import { NextPageWithLayout } from '../../types/pages/NextPageWithLayout.type'
 
 const GraphicPage: NextPageWithLayout = () => {
   const { data: session } = useSession()
@@ -33,13 +33,13 @@ const GraphicPage: NextPageWithLayout = () => {
   return (
     <>
       <Head>
-        <title>Daily Press - Graphics Design</title>
+        <title>Daily Press - Graphic Design</title>
       </Head>
-      <div className="mb-5 font-urbanist text-xxl font-semibold text-onyx">Graphics Design</div>
+      <div className="mb-5 font-urbanist text-xxl font-semibold text-onyx">Graphic Design</div>
       <div className="mx-auto h-full w-full max-w-8xl space-y-6">
         <FancyButton
           Icon={<GalleryIcon className="stroke-white" />}
-          title="Requet Graphics"
+          title="Requet Graphic"
           subtitle="Laborerivit rem cones mil"
           onClick={toggleCreateGraphicModal}
           twBackgroundColor="bg-jungle-green"
