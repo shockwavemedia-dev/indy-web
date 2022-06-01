@@ -10,7 +10,6 @@ export const ClientRoutes: Array<Route> = [
     pathname: '/dashboard',
     Icon: ChartIcon,
   },
-
   {
     title: 'SMS Marketing',
     Icon: EmailIcon,
@@ -28,11 +27,11 @@ export const ClientRoutes: Array<Route> = [
     subRoutes: [
       {
         title: 'Animations',
-        pathname: '/service-request/animations',
+        pathname: '/animations',
       },
       {
         title: 'Graphic Design',
-        pathname: '/service-request/graphic-design',
+        pathname: '/graphic-design',
       },
     ],
   },

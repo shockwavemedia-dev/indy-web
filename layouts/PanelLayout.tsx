@@ -2,6 +2,7 @@ import { signOut as nextAuthSignOut, useSession } from 'next-auth/react'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { Fragment, ReactNode, useMemo } from 'react'
+import { Crumbs } from '../components/Crumbs'
 import { BellIcon } from '../components/icons/BellIcon'
 import { BriefcaseIcon } from '../components/icons/BriefcaseIcon'
 import { CaretIcon } from '../components/icons/CaretIcon'
@@ -79,24 +80,7 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
       </div>
       <div className="flex w-full flex-col overflow-y-scroll p-6">
         <div className="mb-3.5 flex items-center">
-          {[panelName, ...asPath.split('/')]
-            .filter((s) => s !== '')
-            .map((s, i, paths) => (
-              <Fragment key={`crumbs-${i}`}>
-                <div
-                  className={`font-urbanist text-xs capitalize ${
-                    i + 1 === paths.length
-                      ? 'mr-auto font-semibold text-onyx'
-                      : 'mr-3 font-medium text-waterloo'
-                  } `}
-                >
-                  {s.replace('-', ' ')}
-                </div>
-                {i + 1 !== paths.length && (
-                  <CaretIcon className="mr-3 rotate-90 stroke-lavender-gray" small />
-                )}
-              </Fragment>
-            ))}
+          <Crumbs panelName={panelName} />
           <MagnifyingGlassIcon className="mr-6 stroke-waterloo" />
           <button className="relative mr-8">
             <BellIcon className="stroke-waterloo" />

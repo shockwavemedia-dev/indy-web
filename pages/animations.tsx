@@ -1,67 +1,28 @@
-import Head from 'next/head'
-import { ReactElement, useState } from 'react'
-import { Card } from '../components/Card'
-import { DataTable } from '../components/DataTable'
-import { FancyButton } from '../components/FancyButton'
-import { UserIcon } from '../components/icons/UserIcon'
-import { VideoIcon } from '../components/icons/VideoIcon'
-import { NewAnimationCategoryModal } from '../components/modals/NewAnimationCategoryModal'
-import { NewAnimationModal } from '../components/modals/NewAnimationModal'
-import { AnimationTableColumns } from '../constants/tables/AnimationTableColumns'
+import { useSession } from 'next-auth/react'
+import { useRouter } from 'next/router'
+import { ReactElement } from 'react'
+import { AdminAnimations } from '../components/pages/admin/AdminAnimations'
+import { ClientAnimations } from '../components/pages/client/ClientAnimations'
 import PanelLayout from '../layouts/PanelLayout'
 import { NextPageWithLayout } from '../types/pages/NextPageWithLayout.type'
 
 const AnimationsPage: NextPageWithLayout = () => {
-  const [isNewAnimationCategoryModalVisible, setNewAnimationCategoryModalVisible] = useState(false)
-  const [isNewAnimationModalVisible, setNewAnimationModalVisible] = useState(false)
+  const { replace } = useRouter()
+  const { status, data: session } = useSession()
 
-  const toggleNewAnimationCategoryModal = () =>
-    setNewAnimationCategoryModalVisible(!isNewAnimationCategoryModalVisible)
+  if (status === 'unauthenticated') {
+    replace('/auth/login')
+  } else if (status === 'authenticated') {
+    const { isAdmin, isClient } = session
 
-  const toggleNewAnimationModal = () => setNewAnimationModalVisible(!isNewAnimationModalVisible)
+    if (isAdmin) {
+      return <AdminAnimations />
+    } else if (isClient) {
+      return <ClientAnimations />
+    }
+  }
 
-  return (
-    <>
-      <Head>
-        <title>Daily Press - Animations</title>
-      </Head>
-      <div className="mx-auto h-full w-full max-w-8xl space-y-6">
-        <div className="flex space-x-6">
-          <FancyButton
-            Icon={<UserIcon className="stroke-white" />}
-            title="Create Animation Category"
-            subtitle="Laborerivit rem cones mil"
-            onClick={toggleNewAnimationCategoryModal}
-            twBackgroundColor="bg-bleu-de-france"
-            twIconBackgroundColor="bg-bright-navy-blue"
-            className="w-fit"
-          />
-          <FancyButton
-            Icon={<VideoIcon className="stroke-white" />}
-            title="Create Animation"
-            subtitle="Laborerivit rem cones mil"
-            onClick={toggleNewAnimationModal}
-            twIconBackgroundColor="bg-carrot-orange"
-            twBackgroundColor="bg-deep-saffron"
-            className="w-fit"
-          />
-        </div>
-        <Card title="Animations">
-          <DataTable
-            dataEndpoint="/v1/libraries"
-            columns={AnimationTableColumns}
-            tableQueryKey={['libraries']}
-            ofString="Animations"
-          />
-        </Card>
-      </div>
-      <NewAnimationCategoryModal
-        isVisible={isNewAnimationCategoryModalVisible}
-        onClose={toggleNewAnimationCategoryModal}
-      />
-      <NewAnimationModal isVisible={isNewAnimationModalVisible} onClose={toggleNewAnimationModal} />
-    </>
-  )
+  return null
 }
 
 AnimationsPage.getLayout = (page: ReactElement) => <PanelLayout>{page}</PanelLayout>

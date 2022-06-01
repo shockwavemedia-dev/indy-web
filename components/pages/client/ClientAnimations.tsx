@@ -1,15 +1,13 @@
 import Head from 'next/head'
-import { ReactElement, useState } from 'react'
-import { Card } from '../../components/Card'
-import { DataTable } from '../../components/DataTable'
-import { FancyButton } from '../../components/FancyButton'
-import { UserIcon } from '../../components/icons/UserIcon'
-import { NewAnimationRequestModal } from '../../components/modals/NewAnimationRequestModal'
-import { AnimationTableColumns } from '../../constants/tables/AnimationTableColumns'
-import PanelLayout from '../../layouts/PanelLayout'
-import { NextPageWithLayout } from '../../types/pages/NextPageWithLayout.type'
+import { useState } from 'react'
+import { AnimationTableColumns } from '../../../constants/tables/AnimationTableColumns'
+import { Card } from '../../Card'
+import { DataTable } from '../../DataTable'
+import { FancyButton } from '../../FancyButton'
+import { UserIcon } from '../../icons/UserIcon'
+import { NewAnimationRequestModal } from '../../modals/NewAnimationRequestModal'
 
-const AnimationPage: NextPageWithLayout = () => {
+export const ClientAnimations = () => {
   const [isNewAnimationRequestModalVisible, setNewAnimationRequestModalVisible] = useState(false)
 
   const toggleNewAnimationRequestModal = () =>
@@ -20,6 +18,7 @@ const AnimationPage: NextPageWithLayout = () => {
       <Head>
         <title>Daily Press - Client</title>
       </Head>
+      <div className="mb-5 font-urbanist text-xxl font-semibold text-onyx">Animations</div>
       <div className="mx-auto flex h-full w-full max-w-8xl flex-col space-y-6">
         <FancyButton
           Icon={<UserIcon className="stroke-white" />}
@@ -49,7 +48,3 @@ const AnimationPage: NextPageWithLayout = () => {
     </>
   )
 }
-
-AnimationPage.getLayout = (page: ReactElement) => <PanelLayout>{page}</PanelLayout>
-
-export default AnimationPage
