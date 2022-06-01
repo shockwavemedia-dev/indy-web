@@ -39,7 +39,7 @@ const GraphicPage: NextPageWithLayout = () => {
       <div className="mx-auto h-full w-full max-w-8xl space-y-6">
         <FancyButton
           Icon={<GalleryIcon className="stroke-white" />}
-          title="Requet Graphic"
+          title="Request Graphic"
           subtitle="Laborerivit rem cones mil"
           onClick={toggleCreateGraphicModal}
           twBackgroundColor="bg-jungle-green"
