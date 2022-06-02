@@ -1,6 +1,6 @@
 import { format } from 'date-fns'
 import { useState } from 'react'
-import { RichTextDisplay } from './RichTextDisplay'
+import { RichTextDisplay } from '../RichTextDisplay'
 
 export const TicketEmailCard = ({
   title,

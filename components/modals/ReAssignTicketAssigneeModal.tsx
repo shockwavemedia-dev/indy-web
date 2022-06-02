@@ -1,12 +1,13 @@
 import axios from 'axios'
 import { Form, Formik } from 'formik'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useQuery, useQueryClient } from 'react-query'
 import { SingleValue } from 'react-select'
-import { AddTicketAssigneeFormSchema } from '../../schemas/AddTicketAssigneeFormSchema'
+import { ReAssignTicketAssigneeFormSchema } from '../../schemas/ReAssignTicketAssigneeFormSchema'
+import { useTicketAssigneeStore } from '../../store/TicketAssigneeStore'
 import { useToastStore } from '../../store/ToastStore'
 import { Department } from '../../types/Department.type'
-import { AddTicketAssigneeForm } from '../../types/forms/AddTicketAssigneeForm.type'
+import { ReAssignTicketAssigneeForm } from '../../types/forms/ReAssignTicketAssigneeForm.type'
 import { Page } from '../../types/Page.type'
 import { SelectOption } from '../../types/SelectOption.type'
 import { Button } from '../Button'
@@ -15,7 +16,7 @@ import { UserIcon } from '../icons/UserIcon'
 import { Modal } from '../Modal'
 import { Select } from '../Select'
 
-export const AddTicketAssigneeModal = ({
+export const ReAssignTicketAssigneeModal = ({
   isVisible,
   onClose,
   ticketId,
@@ -26,6 +27,8 @@ export const AddTicketAssigneeModal = ({
 }) => {
   const queryClient = useQueryClient()
   const { showToast } = useToastStore()
+  const { activeTicketAssignee } = useTicketAssigneeStore()
+
   const { data: departments } = useQuery(
     'departmentsWithUsers',
     async () => {
@@ -46,21 +49,24 @@ export const AddTicketAssigneeModal = ({
       enabled: isVisible,
     }
   )
-  const [department, setDepartment] = useState<number | null>(null)
+  const [department, setDepartment] = useState<number>(activeTicketAssignee.departmentId)
 
   const selectDepartment = (newValue: SingleValue<SelectOption<number>>) =>
-    setDepartment(newValue?.value || null)
+    setDepartment(newValue?.value ?? -1)
 
-  const submitForm = async (values: AddTicketAssigneeForm) => {
+  const submitForm = async (values: ReAssignTicketAssigneeForm) => {
     try {
-      const { status } = await axios.post(`/v1/tickets/${ticketId}/assign`, values)
+      const { status } = await axios.put(
+        `/v1/ticket-assignees/${activeTicketAssignee.ticketAssigneeId}`,
+        values
+      )
 
       if (status === 200) {
         queryClient.invalidateQueries(['assignees', Number(ticketId)])
         onClose()
         showToast({
           type: 'success',
-          message: 'New Ticket Assignee successfully created!',
+          message: 'New Ticket Assignee successfully re-assigned!',
         })
       }
     } catch (e) {
@@ -71,20 +77,15 @@ export const AddTicketAssigneeModal = ({
     }
   }
 
-  useEffect(() => {
-    setDepartment(null)
-  }, [isVisible])
-
   return (
     <>
       {isVisible && (
-        <Modal title="Add Ticket Assignee" onClose={onClose}>
+        <Modal title="Re-assign Ticket Assignee" onClose={onClose}>
           <Formik
             initialValues={{
-              adminUserId: -1,
-              links: [],
+              adminUserId: activeTicketAssignee.adminUserId,
             }}
-            validationSchema={AddTicketAssigneeFormSchema}
+            validationSchema={ReAssignTicketAssigneeFormSchema}
             onSubmit={submitForm}
           >
             {({ isSubmitting }) => (
@@ -99,6 +100,18 @@ export const AddTicketAssigneeModal = ({
                     })) || []
                   }
                   className="mb-5"
+                  defaultValue={(() => {
+                    const department = departments?.find(
+                      ({ name }) => name === activeTicketAssignee.departmentName
+                    )
+
+                    if (department) {
+                      return {
+                        label: department.name,
+                        value: department.id,
+                      }
+                    }
+                  })()}
                   onChange={selectDepartment}
                 />
                 <Select
@@ -114,6 +127,10 @@ export const AddTicketAssigneeModal = ({
                       })) || []
                   }
                   className="mb-8"
+                  defaultValue={{
+                    label: activeTicketAssignee.fullName,
+                    value: activeTicketAssignee.adminUserId,
+                  }}
                 />
                 <div className="flex space-x-5">
                   <Button ariaLabel="Cancel" onClick={onClose} type="button" light>

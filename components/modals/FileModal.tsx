@@ -19,7 +19,7 @@ import { PaperPlaneIcon } from '../icons/PaperPlaneIcon'
 import { Modal } from '../Modal'
 import { Pill } from '../Pill'
 import { RichTextInput } from '../RichTextInput'
-import { TicketFileFeedbackCard } from '../TicketFileFeedbackCard'
+import { TicketFileFeedbackCard } from '../tickets/TicketFileFeedbackCard'
 import { TitleValue } from '../TitleValue'
 
 export const FileModal = ({ ticketId }: { ticketId: number }) => {

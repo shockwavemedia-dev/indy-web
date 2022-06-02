@@ -1,6 +1,6 @@
 import { format } from 'date-fns'
 import Image from 'next/image'
-import DummyAvatar from '../public/images/dummy-avatar.png'
+import DummyAvatar from '../../public/images/dummy-avatar.png'
 
 export const TicketActivityCard = ({
   activity,

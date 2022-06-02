@@ -9,6 +9,7 @@ export const useTicketAssigneeStore = createStore(
       isEditTicketAssigneeModalVisible: false,
       isDeleteTicketAssigneeModalVisible: false,
       isViewTicketAssigneeModalVisible: false,
+      isReAssignTicketAssigneeModalVisible: false,
     },
     (set, get) => ({
       setActiveTicketAssignee: (ticketAssignee: TicketAssignee) =>
@@ -21,6 +22,10 @@ export const useTicketAssigneeStore = createStore(
         })),
       toggleViewTicketAssigneeModal: () =>
         set(() => ({ isViewTicketAssigneeModalVisible: !get().isViewTicketAssigneeModalVisible })),
+      toggleReAssignTicketAssigneeModal: () =>
+        set(() => ({
+          isReAssignTicketAssigneeModalVisible: !get().isReAssignTicketAssigneeModalVisible,
+        })),
     })
   )
 )

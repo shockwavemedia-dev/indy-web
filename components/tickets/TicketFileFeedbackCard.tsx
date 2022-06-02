@@ -1,14 +1,14 @@
 import { format } from 'date-fns'
 import Image from 'next/image'
-import DummyAvatar from '../public/images/dummy-avatar.png'
-import { RichTextDisplay } from './RichTextDisplay'
+import DummyAvatar from '../../public/images/dummy-avatar.png'
+import { RichTextDisplay } from '../RichTextDisplay'
 
-export const TicketNoteCard = ({
-  note,
+export const TicketFileFeedbackCard = ({
+  feedback,
   createdBy,
   createdAt,
 }: {
-  note: string
+  feedback: string
   createdBy: string
   createdAt: Date
 }) => (
@@ -21,6 +21,6 @@ export const TicketNoteCard = ({
         {format(createdAt, "yy MMM''dd")}
       </div>
     </div>
-    <RichTextDisplay value={note} className="font-urbanist text-sm font-medium text-onyx" />
+    <RichTextDisplay value={feedback} className="font-urbanist text-sm font-medium text-onyx" />
   </div>
 )

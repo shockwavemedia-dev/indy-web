@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { useQueryClient } from 'react-query'
+import { useTicketAssigneeStore } from '../../store/TicketAssigneeStore'
 import { useToastStore } from '../../store/ToastStore'
-import { TicketAssignee } from '../../types/TicketAssignee.type'
 import { Button } from '../Button'
 import { TrashIcon } from '../icons/TrashIcon'
 import { Modal } from '../Modal'
@@ -10,21 +10,20 @@ import { TitleValue } from '../TitleValue'
 export const DeleteTicketAssigneeModal = ({
   isVisible,
   onClose,
-  ticketAssignee,
   ticketId,
 }: {
   isVisible: boolean
   onClose: () => void
-  ticketAssignee: TicketAssignee
   ticketId: number
 }) => {
   const queryClient = useQueryClient()
+  const { activeTicketAssignee } = useTicketAssigneeStore()
   const { showToast } = useToastStore()
 
   const deleteTicketAssignee = async () => {
     try {
       const { status } = await axios.delete(
-        `/v1/ticket-assignees/${ticketAssignee.ticketAssigneeId}`
+        `/v1/ticket-assignees/${activeTicketAssignee.ticketAssigneeId}`
       )
 
       if (status === 200) {
@@ -47,17 +46,17 @@ export const DeleteTicketAssigneeModal = ({
     <>
       {isVisible && (
         <Modal title="Are you sure you want to delete Ticket Assignee?" onClose={onClose}>
-          <div className="mb-8 flex w-140 flex-col">
-            <div className="mb-8 flex space-x-20">
-              <TitleValue title="Department">{ticketAssignee.departmentName}</TitleValue>
+          <div className="w-140">
+            <div className="mx-auto mb-8 flex w-fit space-x-10">
+              <TitleValue title="Department">{activeTicketAssignee.departmentName}</TitleValue>
               <TitleValue title="Name" className="capitalize">
-                {ticketAssignee.fullName}
+                {activeTicketAssignee.fullName}
               </TitleValue>
               <TitleValue title="Role" className="capitalize">
-                {ticketAssignee.role}
+                {activeTicketAssignee.role}
               </TitleValue>
               <TitleValue title="Status" className="capitalize">
-                {ticketAssignee.status}
+                {activeTicketAssignee.status}
               </TitleValue>
             </div>
             <div className="flex space-x-5">

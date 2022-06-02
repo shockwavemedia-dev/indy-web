@@ -22,12 +22,10 @@ import { AddTicketAssigneeModal } from '../../../components/modals/AddTicketAssi
 import { CreateLinkModal } from '../../../components/modals/CreateLinkModal'
 import { DeleteTicketAssigneeModal } from '../../../components/modals/DeleteTicketAssigneeModal'
 import { DeleteTicketModal } from '../../../components/modals/DeleteTicketModal'
-import { EditTicketAssigneeModal } from '../../../components/modals/EditTicketAssigneeModal'
 import { EditTicketModal } from '../../../components/modals/EditTicketModal'
 import { RichTextDisplay } from '../../../components/RichTextDisplay'
 import { RichTextInput } from '../../../components/RichTextInput'
 import { TextInput } from '../../../components/TextInput'
-import { TicketActivityCard } from '../../../components/TicketActivityCard'
 import { TitleValue } from '../../../components/TitleValue'
 import { ManagerTicketAssigneeTableColumns } from '../../../constants/tables/ManagerTicketAssigneeTableColumns'
 import DummyCompany from '../../../public/images/dummy-company.png'
@@ -46,10 +44,12 @@ import { TicketNote } from '../../../types/TicketNote.type'
 import { TicketPageTabs } from '../../../types/TicketPageTabs.type'
 import { FileButton } from '../../FileButton'
 import { NotepadIcon } from '../../icons/NotepadIcon'
+import { EditTicketAssigneeModal } from '../../modals/EditTicketAssigneeModal'
 import { FileModal, useFileModalStore } from '../../modals/FileModal'
 import { Pill } from '../../Pill'
-import { TicketEmailCard } from '../../TicketEmailCard'
-import { TicketNoteCard } from '../../TicketNoteCard'
+import { TicketActivityCard } from '../../tickets/TicketActivityCard'
+import { TicketEmailCard } from '../../tickets/TicketEmailCard'
+import { TicketNoteCard } from '../../tickets/TicketNoteCard'
 
 export const ManagerTicket = ({ ticketId }: { ticketId: number }) => {
   const { data: session } = useSession()
@@ -63,7 +63,6 @@ export const ManagerTicket = ({ ticketId }: { ticketId: number }) => {
 
   const queryClient = useQueryClient()
   const {
-    activeTicketAssignee,
     isEditTicketAssigneeModalVisible,
     isDeleteTicketAssigneeModalVisible,
     toggleEditTicketAssigneeModal,
@@ -477,13 +476,11 @@ export const ManagerTicket = ({ ticketId }: { ticketId: number }) => {
       <EditTicketAssigneeModal
         isVisible={isEditTicketAssigneeModalVisible}
         onClose={toggleEditTicketAssigneeModal}
-        ticketAssignee={activeTicketAssignee}
         ticketId={ticket!.id}
       />
       <DeleteTicketAssigneeModal
         isVisible={isDeleteTicketAssigneeModalVisible}
         onClose={toggleDeleteTicketAssigneeModal}
-        ticketAssignee={activeTicketAssignee}
         ticketId={ticket!.id}
       />
       <CreateLinkModal />

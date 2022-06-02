@@ -40,7 +40,7 @@ export const StaffTicketsTableColumns: Array<Column<Ticket>> = [
               : value === 'new' || value === 'open'
               ? 'bg-bleu-de-france'
               : value === 'pending'
-              ? 'bg-waterloo'
+              ? 'bg-deep-saffron'
               : value === 'on hold'
               ? 'bg-deep-saffron'
               : 'bg-tart-orange'

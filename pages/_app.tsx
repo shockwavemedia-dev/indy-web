@@ -9,6 +9,7 @@ import React from 'react'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import snakecaseKeys from 'snakecase-keys'
 import { ToastContainer } from '../components/ToastContainer'
+import { EXCLUDE_KEYS } from '../constants/ExcludeKeys'
 import { API_BASE_URL } from '../constants/Http'
 import '../styles/globals.css'
 import { AppPropsWithLayout } from '../types/pages/AppPropsWithLayout.type'
@@ -25,7 +26,7 @@ axios.interceptors.request.use(
     }
 
     if (config.data && config.data.constructor.name !== 'FormData') {
-      config.data = snakecaseKeys(config.data, { deep: true })
+      config.data = snakecaseKeys(config.data, { deep: true, exclude: EXCLUDE_KEYS })
     }
 
     return {
@@ -51,7 +52,7 @@ axios.interceptors.response.use(
     }
 
     if (response.data) {
-      response.data = camelcaseKeys(response.data, { deep: true })
+      response.data = camelcaseKeys(response.data, { deep: true, exclude: EXCLUDE_KEYS })
       parseDates(response.data)
     }
 

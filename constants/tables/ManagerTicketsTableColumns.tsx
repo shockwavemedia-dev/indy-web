@@ -76,7 +76,7 @@ export const ManagerTicketsTableColumns: Array<Column<Ticket>> = [
   {
     Header: '',
     accessor: 'id',
-    id: 'actions',
+    id: '',
     disableSortBy: true,
     Cell: ({ row: { original: ticket } }) => {
       const { setActiveTicket, toggleEditTicketModal, toggleDeleteTicketModal } = useTicketStore()

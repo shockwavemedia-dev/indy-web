@@ -1,3 +1,4 @@
+import { Link } from './Link.type'
 import { TicketAssigneeStatus } from './TicketAssigneeStatus.type'
 import { UserRole } from './UserRole.type'
 
@@ -9,4 +10,8 @@ export type TicketAssignee = {
   fullName: string
   ticketAssigneeId: number
   status: TicketAssigneeStatus | null
+  links: {
+    blocks: Array<Link>
+    'blocked by': Array<Link>
+  }
 }

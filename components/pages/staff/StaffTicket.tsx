@@ -21,9 +21,8 @@ import { ViewTicketAssigneeModal } from '../../../components/modals/ViewTicketAs
 import { RichTextDisplay } from '../../../components/RichTextDisplay'
 import { RichTextInput } from '../../../components/RichTextInput'
 import { TextInput } from '../../../components/TextInput'
-import { TicketActivityCard } from '../../../components/TicketActivityCard'
 import { TitleValue } from '../../../components/TitleValue'
-import { ClientTicketAssigneeTableColumns } from '../../../constants/tables/ClientTicketAssigneeTableColumns'
+import { StaffTicketAssigneeTableColumns } from '../../../constants/tables/StaffTicketAssigneeTableColumns'
 import DummyCompany from '../../../public/images/dummy-company.png'
 import { CreateEmailFormSchema } from '../../../schemas/CreateEmailFormSchema'
 import { CreateNoteFormSchema } from '../../../schemas/CreateNoteFormSchema'
@@ -42,20 +41,33 @@ import { FileButton } from '../../FileButton'
 import { NotepadIcon } from '../../icons/NotepadIcon'
 import { PlusIcon } from '../../icons/PlusIcon'
 import { AddTicketAssigneeModal } from '../../modals/AddTicketAssigneeModal'
+import { DeleteTicketAssigneeModal } from '../../modals/DeleteTicketAssigneeModal'
+import { EditTicketAssigneeModal } from '../../modals/EditTicketAssigneeModal'
 import { FileModal, useFileModalStore } from '../../modals/FileModal'
+import { ReAssignTicketAssigneeModal } from '../../modals/ReAssignTicketAssigneeModal'
 import {
   UploadTicketFileModal,
   useUploadTicketFileModalStore,
 } from '../../modals/UploadTicketFileModal'
 import { Pill } from '../../Pill'
-import { TicketEmailCard } from '../../TicketEmailCard'
-import { TicketNoteCard } from '../../TicketNoteCard'
+import { TicketActivityCard } from '../../tickets/TicketActivityCard'
+import { TicketEmailCard } from '../../tickets/TicketEmailCard'
+import { TicketNoteCard } from '../../tickets/TicketNoteCard'
 
 export const StaffTicket = ({ ticketId }: { ticketId: number }) => {
   const { data: session } = useSession()
   const [isAddTicketAssigneeModalVisible, setAddTicketAssigneeModalVisible] = useState(false)
-  const { activeTicketAssignee, isViewTicketAssigneeModalVisible, toggleViewTicketAssigneeModal } =
-    useTicketAssigneeStore()
+  const {
+    activeTicketAssignee,
+    isViewTicketAssigneeModalVisible,
+    toggleViewTicketAssigneeModal,
+    isEditTicketAssigneeModalVisible,
+    toggleEditTicketAssigneeModal,
+    isDeleteTicketAssigneeModalVisible,
+    toggleDeleteTicketAssigneeModal,
+    isReAssignTicketAssigneeModalVisible,
+    toggleReAssignTicketAssigneeModal,
+  } = useTicketAssigneeStore()
 
   const [activeTab, setActiveTab] = useState<TicketPageTabs>('description')
 
@@ -271,7 +283,7 @@ export const StaffTicket = ({ ticketId }: { ticketId: number }) => {
           </Card>
           <Card title="Assignees">
             <DataTable
-              columns={ClientTicketAssigneeTableColumns}
+              columns={StaffTicketAssigneeTableColumns}
               dataEndpoint={`/v1/tickets/${ticketId}/assignees`}
               tableQueryKey={['assignees', ticketId]}
               ofString="Assignee"
@@ -461,6 +473,21 @@ export const StaffTicket = ({ ticketId }: { ticketId: number }) => {
       <AddTicketAssigneeModal
         isVisible={isAddTicketAssigneeModalVisible}
         onClose={toggleAddTicketAssigneeModal}
+        ticketId={ticket!.id}
+      />
+      <EditTicketAssigneeModal
+        isVisible={isEditTicketAssigneeModalVisible}
+        onClose={toggleEditTicketAssigneeModal}
+        ticketId={ticket!.id}
+      />
+      <ReAssignTicketAssigneeModal
+        isVisible={isReAssignTicketAssigneeModalVisible}
+        onClose={toggleReAssignTicketAssigneeModal}
+        ticketId={ticket!.id}
+      />
+      <DeleteTicketAssigneeModal
+        isVisible={isDeleteTicketAssigneeModalVisible}
+        onClose={toggleDeleteTicketAssigneeModal}
         ticketId={ticket!.id}
       />
       <CreateLinkModal />
