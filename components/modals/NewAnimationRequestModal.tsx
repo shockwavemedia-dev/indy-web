@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { Form, Formik } from 'formik'
-import { useQuery } from 'react-query'
+import { useQuery, useQueryClient } from 'react-query'
 import { NewAnimationRequestFormSchema } from '../../schemas/NewAnimationRequestFormSchema'
 import { useToastStore } from '../../store/ToastStore'
 import { Animation } from '../../types/Animation.type'
@@ -21,6 +21,7 @@ export const NewAnimationRequestModal = ({
   onClose: () => void
 }) => {
   const { showToast } = useToastStore()
+  const queryClient = useQueryClient()
 
   const { data: libraries } = useQuery(
     'libraries',
@@ -56,6 +57,7 @@ export const NewAnimationRequestModal = ({
       } = await axios.post(`/v1/libraries/${values.libraryId}/ticket`, values)
 
       if (status === 200) {
+        queryClient.invalidateQueries('animations')
         onClose()
         showToast({
           type: 'success',
@@ -98,15 +100,11 @@ export const NewAnimationRequestModal = ({
                   name="description"
                   className="mb-5"
                 />
-
-                <video
-                  muted
-                  autoPlay
-                  loop
-                  style={{ width: '500px', height: '500px', marginTop: '-90px' }}
-                >
-                  <source src="https://s3.ap-southeast-2.amazonaws.com/depixed-2019-ezypro/_Libraries/AFL%20V1_15338826195b6d30fb9575c.mp4" />
-                </video>
+                <div className="mb-5 flex w-140">
+                  <video muted autoPlay loop>
+                    <source src="https://s3.ap-southeast-2.amazonaws.com/depixed-2019-ezypro/_Libraries/AFL%20V1_15338826195b6d30fb9575c.mp4" />
+                  </video>
+                </div>
                 <div className="flex space-x-5">
                   <Button ariaLabel="Cancel" onClick={onClose} type="button" light>
                     Cancel
