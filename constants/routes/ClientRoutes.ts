@@ -33,6 +33,10 @@ export const ClientRoutes: Array<Route> = [
         title: 'Graphic Design',
         pathname: '/graphic-design',
       },
+      {
+        title: 'Website Services',
+        pathname: '/website-services',
+      },
     ],
   },
 ]

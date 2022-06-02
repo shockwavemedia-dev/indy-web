@@ -45,7 +45,7 @@ export const DeleteTicketModal = ({
           replace('/animations')
         } else if (website) {
           queryClient.invalidateQueries('websites')
-          replace('/websites')
+          replace('/website-services')
         } else {
           queryClient.invalidateQueries('tickets')
           replace('/dashboard')
