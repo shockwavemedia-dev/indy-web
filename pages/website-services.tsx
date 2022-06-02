@@ -1,14 +1,12 @@
 import { useSession } from 'next-auth/react'
 import Head from 'next/head'
-import { ReactElement, useState } from 'react'
+import { ReactElement } from 'react'
 import { Card } from '../components/Card'
 import { CountCard } from '../components/CountCard'
 import { DataTable } from '../components/DataTable'
-import { FancyButton } from '../components/FancyButton'
 import { GalleryIcon } from '../components/icons/GalleryIcon'
 import { MenuBoardIcon } from '../components/icons/MenuBoardIcon'
 import { VideoIcon } from '../components/icons/VideoIcon'
-import { CreateGraphicRequestModal } from '../components/modals/CreateGraphicRequestModal'
 import { DeleteTicketModal } from '../components/modals/DeleteTicketModal'
 import { EditTicketModal } from '../components/modals/EditTicketModal'
 import { ClientTicketsTableColumns } from '../constants/tables/ClientTicketsTableColumns'
@@ -16,7 +14,7 @@ import PanelLayout from '../layouts/PanelLayout'
 import { useTicketStore } from '../store/TicketStore'
 import { NextPageWithLayout } from '../types/pages/NextPageWithLayout.type'
 
-const GraphicPage: NextPageWithLayout = () => {
+const WebsitePage: NextPageWithLayout = () => {
   const { data: session } = useSession()
   const {
     activeTicket,
@@ -26,33 +24,19 @@ const GraphicPage: NextPageWithLayout = () => {
     toggleDeleteTicketModal,
   } = useTicketStore()
 
-  const [isCreateGraphicModalVisible, setCreateeGraphicModalVisible] = useState(false)
-
-  const toggleCreateGraphicModal = () => setCreateeGraphicModalVisible(!isCreateGraphicModalVisible)
-
   return (
     <>
       <Head>
-        <title>Daily Press - Graphic Design</title>
+        <title>Daily Press - Website Services</title>
       </Head>
-      <div className="mb-5 font-urbanist text-xxl font-semibold text-onyx">Graphic Design</div>
+      <div className="mb-5 font-urbanist text-xxl font-semibold text-onyx">Website Services</div>
       <div className="mx-auto h-full w-full max-w-8xl space-y-6">
-        <FancyButton
-          Icon={<GalleryIcon className="stroke-white" />}
-          title="Request Graphic"
-          subtitle="Laborerivit rem cones mil"
-          onClick={toggleCreateGraphicModal}
-          twBackgroundColor="bg-jungle-green"
-          twIconBackgroundColor="bg-illuminating-emerald"
-          className="w-fit"
-        />
-        <hr className="border-t-bright-gray" />
         <div className="flex h-155 space-x-6">
           <Card title="Project Status Table" className="flex w-260 flex-col">
             <DataTable
               columns={ClientTicketsTableColumns}
-              dataEndpoint={`/v1/clients/${session?.user.userType.clientId}/graphics`}
-              tableQueryKey={['graphics']}
+              dataEndpoint={`/v1/clients/${session?.user.userType.clientId}/websites`}
+              tableQueryKey={['websites']}
               ofString="Projects"
             />
           </Card>
@@ -94,26 +78,22 @@ const GraphicPage: NextPageWithLayout = () => {
           </div>
         </div>
       </div>
-      <CreateGraphicRequestModal
-        isVisible={isCreateGraphicModalVisible}
-        onClose={toggleCreateGraphicModal}
-      />
       <EditTicketModal
         isVisible={isEditTicketModalVisible}
         onClose={toggleEditTicketModal}
         ticket={activeTicket}
-        graphic
+        website
       />
       <DeleteTicketModal
         isVisible={isDeleteTicketModalVisible}
         onClose={toggleDeleteTicketModal}
         ticket={activeTicket}
-        graphic
+        website
       />
     </>
   )
 }
 
-GraphicPage.getLayout = (page: ReactElement) => <PanelLayout>{page}</PanelLayout>
+WebsitePage.getLayout = (page: ReactElement) => <PanelLayout>{page}</PanelLayout>
 
-export default GraphicPage
+export default WebsitePage

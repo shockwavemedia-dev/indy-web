@@ -17,12 +17,16 @@ export const DeleteTicketModal = ({
   ticket,
   minimal = false,
   graphic = false,
+  animation = false,
+  website = false,
 }: {
   isVisible: boolean
   onClose: () => void
   ticket: Ticket
   minimal?: boolean
   graphic?: boolean
+  animation?: boolean
+  website?: boolean
 }) => {
   const { replace } = useRouter()
   const queryClient = useQueryClient()
@@ -30,15 +34,18 @@ export const DeleteTicketModal = ({
 
   const deleteTicket = async () => {
     try {
-      const {
-        status,
-        data: { ticketCode },
-      } = await axios.delete(`/v1/tickets/${ticket.id}`)
+      const { status } = await axios.delete(`/v1/tickets/${ticket.id}`)
 
       if (status === 200) {
         if (graphic) {
           queryClient.invalidateQueries('graphics')
-          replace('/graphics')
+          replace('/graphic-design')
+        } else if (animation) {
+          queryClient.invalidateQueries('animations')
+          replace('/animations')
+        } else if (website) {
+          queryClient.invalidateQueries('websites')
+          replace('/website-services')
         } else {
           queryClient.invalidateQueries('tickets')
           replace('/dashboard')
@@ -46,7 +53,7 @@ export const DeleteTicketModal = ({
         onClose()
         showToast({
           type: 'success',
-          message: `Ticket ${ticketCode} successfully deleted!`,
+          message: `Ticket successfully deleted!`,
         })
       }
     } catch (e) {
