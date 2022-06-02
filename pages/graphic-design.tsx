@@ -108,6 +108,7 @@ const GraphicPage: NextPageWithLayout = () => {
         isVisible={isDeleteTicketModalVisible}
         onClose={toggleDeleteTicketModal}
         ticket={activeTicket}
+        graphic
       />
     </>
   )

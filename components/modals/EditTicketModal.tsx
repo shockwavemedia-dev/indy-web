@@ -21,11 +21,15 @@ export const EditTicketModal = ({
   onClose,
   ticket,
   graphic = false,
+  animation = false,
+  website = false,
 }: {
   isVisible: boolean
   onClose: () => void
   ticket: Ticket
   graphic?: boolean
+  animation?: boolean
+  website?: boolean
 }) => {
   const queryClient = useQueryClient()
   const { showToast } = useToastStore()
@@ -37,6 +41,10 @@ export const EditTicketModal = ({
       if (status === 200) {
         if (graphic) {
           queryClient.invalidateQueries('graphics')
+        } else if (animation) {
+          queryClient.invalidateQueries('animations')
+        } else if (website) {
+          queryClient.invalidateQueries('websites')
         } else {
           queryClient.invalidateQueries('tickets')
         }

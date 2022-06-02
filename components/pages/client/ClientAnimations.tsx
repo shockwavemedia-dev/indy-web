@@ -100,12 +100,13 @@ export const ClientAnimations = () => {
         isVisible={isEditTicketModalVisible}
         onClose={toggleEditTicketModal}
         ticket={activeTicket}
-        graphic
+        animation
       />
       <DeleteTicketModal
         isVisible={isDeleteTicketModalVisible}
         onClose={toggleDeleteTicketModal}
         ticket={activeTicket}
+        animation
       />
     </>
   )
