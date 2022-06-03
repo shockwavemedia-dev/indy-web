@@ -4,6 +4,7 @@ import { Column } from 'react-table'
 import { EditIcon } from '../../components/icons/EditIcon'
 import { EyeIcon } from '../../components/icons/EyeIcon'
 import { TrashIcon } from '../../components/icons/TrashIcon'
+import { Pill } from '../../components/Pill'
 import { useTicketStore } from '../../store/TicketStore'
 import { Ticket } from '../../types/Ticket.type'
 
@@ -35,22 +36,21 @@ export const ClientTicketsTableColumns: Array<Column<Ticket>> = [
     Header: 'Status',
     accessor: 'status',
     Cell: ({ value }) => (
-      <div className="flex h-6 w-fit items-center space-x-1.5 rounded-lg border border-bright-gray px-2.5">
-        <div
-          className={`h-1.5 w-1.5 rounded-full ${
-            value === 'closed' || value === 'resolved'
-              ? 'bg-jungle-green'
-              : value === 'new' || value === 'open'
-              ? 'bg-bleu-de-france'
-              : value === 'pending'
-              ? 'bg-waterloo'
-              : value === 'on hold'
-              ? 'bg-deep-saffron'
-              : 'bg-tart-orange'
-          }`}
-        />
-        <div className="font-urbanist text-sm font-medium capitalize text-onyx">{value}</div>
-      </div>
+      <Pill
+        twBackgroundColor={(() => {
+          switch (value) {
+            case 'closed' || 'resolved':
+              return 'bg-jungle-green'
+            case 'new' || 'open':
+              return 'bg-bleu-de-france'
+            case 'pending':
+              return 'bg-tart-orange'
+            case 'on hold':
+              return 'bg-deep-saffron'
+          }
+        })()}
+        value={value}
+      />
     ),
   },
   {
