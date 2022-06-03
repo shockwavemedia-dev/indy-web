@@ -8,6 +8,7 @@ import { CreateEventForm } from '../../types/forms/CreateEventForm.type'
 import { Ticket } from '../../types/Ticket.type'
 import { objectWithFileToFormData } from '../../utils/FormHelpers'
 import { Button } from '../Button'
+import { Checkbox } from '../Checkbox'
 import { DateInput } from '../DateInput'
 import { FileDropZone } from '../FileDropZone'
 import { EditIcon } from '../icons/EditIcon'
@@ -87,6 +88,7 @@ export const CreateEventModal = ({
                   name="description"
                   className="mb-5"
                 />
+                <Checkbox label="Add to Marketing Plan" name="marketingPlan" className="mb-5" />
                 <FileDropZone
                   label="Upload Assets"
                   name="attachments"
