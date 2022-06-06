@@ -78,7 +78,7 @@ const GraphicPage: NextPageWithLayout = () => {
               <CountCard
                 Icon={<MenuBoardIcon className="stroke-white" />}
                 value={3}
-                description="Marketing Strategy Remaining"
+                description="Graphics Remaining"
                 twBackgroundColor="bg-bleu-de-france"
                 twIconBackgroundColor="bg-bright-navy-blue"
               />
