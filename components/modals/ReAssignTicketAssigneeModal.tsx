@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { Form, Formik } from 'formik'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useQuery, useQueryClient } from 'react-query'
 import { SingleValue } from 'react-select'
 import { ReAssignTicketAssigneeFormSchema } from '../../schemas/ReAssignTicketAssigneeFormSchema'
@@ -49,10 +49,9 @@ export const ReAssignTicketAssigneeModal = ({
       enabled: isVisible,
     }
   )
-  const [department, setDepartment] = useState<number>(activeTicketAssignee.departmentId)
 
-  const selectDepartment = (newValue: SingleValue<SelectOption<number>>) =>
-    setDepartment(newValue?.value ?? -1)
+  const [department, setDepartment] = useState<SingleValue<SelectOption<number>>>()
+  const [employee, setEmployee] = useState<SingleValue<SelectOption<number>>>()
 
   const submitForm = async (values: ReAssignTicketAssigneeForm) => {
     try {
@@ -75,6 +74,22 @@ export const ReAssignTicketAssigneeModal = ({
         message: 'Something went wrong! 😵',
       })
     }
+  }
+
+  useEffect(() => {
+    setDepartment({
+      label: activeTicketAssignee.departmentName,
+      value: activeTicketAssignee.departmentId,
+    })
+    setEmployee({
+      label: activeTicketAssignee.fullName,
+      value: activeTicketAssignee.adminUserId,
+    })
+  }, [isVisible])
+
+  const selectDepartment = (department: SingleValue<SelectOption<number>>) => {
+    setDepartment(department)
+    setEmployee(null)
   }
 
   return (
@@ -100,18 +115,7 @@ export const ReAssignTicketAssigneeModal = ({
                     })) || []
                   }
                   className="mb-5"
-                  defaultValue={(() => {
-                    const department = departments?.find(
-                      ({ name }) => name === activeTicketAssignee.departmentName
-                    )
-
-                    if (department) {
-                      return {
-                        label: department.name,
-                        value: department.id,
-                      }
-                    }
-                  })()}
+                  value={department}
                   onChange={selectDepartment}
                 />
                 <Select
@@ -120,17 +124,15 @@ export const ReAssignTicketAssigneeModal = ({
                   placeholder="Select Employee"
                   options={
                     departments
-                      ?.find(({ id }) => id === department)
+                      ?.find(({ id }) => id === department?.value)
                       ?.users?.map(({ adminUserId, firstName, lastName }) => ({
                         label: `${firstName} ${lastName}`,
                         value: adminUserId,
-                      })) || []
+                      })) ?? []
                   }
                   className="mb-8"
-                  defaultValue={{
-                    label: activeTicketAssignee.fullName,
-                    value: activeTicketAssignee.adminUserId,
-                  }}
+                  value={employee}
+                  onChange={setEmployee}
                 />
                 <div className="flex space-x-5">
                   <Button ariaLabel="Cancel" onClick={onClose} type="button" light>

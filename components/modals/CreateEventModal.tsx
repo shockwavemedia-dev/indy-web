@@ -55,7 +55,11 @@ export const CreateEventModal = ({
   return (
     <>
       {isVisible && (
-        <Modal title="Create Event" onClose={onClose}>
+        <Modal
+          title="Create Event"
+          onClose={onClose}
+          className="-translate-x-[calc(50%_+_7.125rem)]"
+        >
           <Formik
             validationSchema={CreateEventFormSchema}
             initialValues={{
@@ -78,10 +82,7 @@ export const CreateEventModal = ({
                   name="subject"
                   className="mb-5"
                 />
-                <div className="mb-5 flex space-x-5">
-                  <SelectService enabled={isVisible} />
-                  <DateInput name="duedate" placeholder="Enter due date" />
-                </div>
+                <DateInput name="duedate" placeholder="Enter due date" className="mb-5" />
                 <RichTextInput
                   Icon={EditIcon}
                   placeholder="Enter description"
@@ -98,6 +99,7 @@ export const CreateEventModal = ({
                   accept={['.gif', '.jpeg', '.mp4', '.png']}
                   multiple
                 />
+                <SelectService enabled={isVisible} />
                 <div className="flex space-x-5">
                   <Button ariaLabel="Cancel" onClick={onClose} type="button" light>
                     Cancel

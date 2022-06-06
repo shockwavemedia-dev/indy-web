@@ -46,10 +46,7 @@ export const AddTicketAssigneeModal = ({
       enabled: isVisible,
     }
   )
-  const [department, setDepartment] = useState<number | null>(null)
-
-  const selectDepartment = (newValue: SingleValue<SelectOption<number>>) =>
-    setDepartment(newValue?.value || null)
+  const [department, setDepartment] = useState<SingleValue<SelectOption<number>>>()
 
   const submitForm = async (values: AddTicketAssigneeForm) => {
     try {
@@ -99,7 +96,7 @@ export const AddTicketAssigneeModal = ({
                     })) || []
                   }
                   className="mb-5"
-                  onChange={selectDepartment}
+                  onChange={setDepartment}
                 />
                 <Select
                   name="adminUserId"
@@ -107,7 +104,7 @@ export const AddTicketAssigneeModal = ({
                   placeholder="Select Employee"
                   options={
                     departments
-                      ?.find(({ id }) => id === department)
+                      ?.find(({ id }) => id === department?.value)
                       ?.users?.map(({ adminUserId, firstName, lastName }) => ({
                         label: `${firstName} ${lastName}`,
                         value: adminUserId,
