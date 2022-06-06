@@ -1,1 +1,1 @@
-export type TicketType = 'email' | 'event' | 'graphic' | 'print' | 'task'
+export type TicketType = 'email' | 'event' | 'graphic' | 'print' | 'task' | 'library'

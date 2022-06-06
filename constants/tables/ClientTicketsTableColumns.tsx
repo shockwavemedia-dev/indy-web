@@ -21,16 +21,50 @@ export const ClientTicketsTableColumns: Array<Column<Ticket>> = [
     Cell: ({ value }) => <div className="font-urbanist text-sm font-medium text-onyx">{value}</div>,
   },
   {
-    Header: 'Subject',
-    accessor: 'subject',
-    Cell: ({ value }) => <div className="font-urbanist text-sm font-medium text-onyx">{value}</div>,
-  },
-  {
     Header: 'Type',
     accessor: 'type',
     Cell: ({ value }) => (
-      <div className="font-urbanist text-sm font-medium capitalize text-onyx">{value}</div>
+      <Pill
+        twBackgroundColor={(() => {
+          switch (value) {
+            case 'email':
+              return 'bg-light-red-crimson'
+            case 'library':
+              return 'bg-light-golden-rod'
+            case 'event':
+              return 'bg-light-navy'
+            case 'graphic':
+              return 'bg-light-forest-green'
+            case 'print':
+              return 'bg-light-orange'
+            case 'task':
+              return 'bg-light-orchid'
+          }
+        })()}
+        twTextColor={(() => {
+          switch (value) {
+            case 'email':
+              return 'text-red-crimson'
+            case 'library':
+              return 'text-golden-rod'
+            case 'event':
+              return 'text-navy'
+            case 'graphic':
+              return 'text-forest-green'
+            case 'print':
+              return 'text-orange'
+            case 'task':
+              return 'text-orchid'
+          }
+        })()}
+        value={value}
+      />
     ),
+  },
+  {
+    Header: 'Subject',
+    accessor: 'subject',
+    Cell: ({ value }) => <div className="font-urbanist text-sm font-medium text-onyx">{value}</div>,
   },
   {
     Header: 'Status',
@@ -39,14 +73,30 @@ export const ClientTicketsTableColumns: Array<Column<Ticket>> = [
       <Pill
         twBackgroundColor={(() => {
           switch (value) {
-            case 'closed' || 'resolved':
-              return 'bg-jungle-green'
-            case 'new' || 'open':
-              return 'bg-bleu-de-france'
+            case 'closed':
+            case 'resolved':
+              return 'bg-honeydew'
+            case 'open':
+            case 'new':
+              return 'bg-alice-blue'
             case 'pending':
-              return 'bg-tart-orange'
+              return 'bg-light-tart-orange'
             case 'on hold':
-              return 'bg-deep-saffron'
+              return 'bg-light-deep-saffron'
+          }
+        })()}
+        twTextColor={(() => {
+          switch (value) {
+            case 'closed':
+            case 'resolved':
+              return 'text-jungle-green'
+            case 'open':
+            case 'new':
+              return 'text-bleu-de-france'
+            case 'pending':
+              return 'text-tart-orange'
+            case 'on hold':
+              return 'text-deep-saffron'
           }
         })()}
         value={value}
