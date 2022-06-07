@@ -9,6 +9,7 @@ import { Service } from '../types/Service.type'
 import { Button } from './Button'
 import { CheckIcon } from './icons/CheckIcon'
 import { FloppyDiskIcon } from './icons/FloppyDiskIcon'
+import { ServiceCheckIcon } from './icons/ServiceCheckIcon'
 
 export const SelectService = ({ enabled }: { enabled: boolean }) => {
   const { data: session } = useSession()
@@ -35,9 +36,10 @@ export const SelectService = ({ enabled }: { enabled: boolean }) => {
   const removeActiveService = () => setActiveService(null)
 
   return (
-    <div className="absolute -right-5 top-0 flex w-52 translate-x-full flex-col space-y-2 rounded-xl bg-white p-5">
-      {!activeService &&
-        services?.map((service) => {
+    <>
+      <div className="absolute -right-5 top-0 flex w-60 translate-x-full flex-col items-center space-y-2 rounded-xl bg-white p-5">
+        <div className="mb-3 font-urbanist text-lg font-semibold text-onyx">Select Services</div>
+        {services?.map((service) => {
           const toggleService = () => {
             if (values.services.find(({ serviceId }) => serviceId === service.serviceId)) {
               removeActiveService()
@@ -70,27 +72,31 @@ export const SelectService = ({ enabled }: { enabled: boolean }) => {
             />
           )
         })}
+      </div>
       {activeService && activeService.extras.length > 0 && (
-        <>
-          {activeService.extras.map((extras) => (
-            <Extras
-              key={`${activeService.serviceId}-${extras}`}
-              extrasName={extras}
-              serviceId={activeService.serviceId}
-            />
-          ))}
+        <div className="absolute -right-70 top-0 flex w-52 translate-x-full flex-col items-center rounded-xl bg-white p-5">
+          <div className="mb-3 font-urbanist text-lg font-semibold text-onyx">Select Extras</div>
+          <div className="space-y-2">
+            {activeService.extras.map((extras) => (
+              <Extras
+                key={`${activeService.serviceId}-${extras}`}
+                extrasName={extras}
+                serviceId={activeService.serviceId}
+              />
+            ))}
+          </div>
           <Button
             ariaLabel="Save Extras"
             onClick={removeActiveService}
             type="button"
-            className="!mt-10"
+            className="mt-6"
           >
             <FloppyDiskIcon className="stroke-white" />
             <div>Save</div>
           </Button>
-        </>
+        </div>
       )}
-    </div>
+    </>
   )
 }
 
@@ -106,13 +112,18 @@ const ServiceButton = ({
   <button
     type="button"
     onClick={onClick}
-    className={`h-11 whitespace-nowrap rounded-xl px-6 text-left font-urbanist text-sm font-medium ${
-      selected
-        ? 'bg-jungle-green text-white'
-        : 'border-1.5 border-solid border-bright-gray bg-white text-onyx'
+    className={`flex h-11 w-full items-center justify-between whitespace-nowrap rounded-xl px-6 ${
+      selected ? 'bg-jungle-green' : 'border-1.5 border-solid border-bright-gray bg-white'
     }`}
   >
-    {serviceName}
+    <div
+      className={`text-left font-urbanist text-sm font-medium ${
+        selected ? 'text-white' : 'text-onyx'
+      }`}
+    >
+      {serviceName}
+    </div>
+    {selected && <ServiceCheckIcon />}
   </button>
 )
 

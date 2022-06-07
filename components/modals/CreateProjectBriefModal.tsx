@@ -58,7 +58,7 @@ export const CreateProjectBriefModal = ({
         <Modal
           title="Create Project Brief"
           onClose={onClose}
-          className="-translate-x-[calc(50%_+_7.125rem)]"
+          className="-translate-x-[calc(50%_+_15.25rem)]"
         >
           <Formik
             validationSchema={CreateProjectBriefFormSchema}
@@ -74,7 +74,7 @@ export const CreateProjectBriefModal = ({
             onSubmit={submitForm}
           >
             {({ isSubmitting }) => (
-              <Form className="flex w-140 flex-col">
+              <Form className="flex w-130 flex-col">
                 <TextInput
                   type="text"
                   Icon={EditIcon}
