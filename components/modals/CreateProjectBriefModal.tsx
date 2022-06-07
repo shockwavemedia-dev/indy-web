@@ -2,9 +2,9 @@ import axios from 'axios'
 import { Form, Formik } from 'formik'
 import { useSession } from 'next-auth/react'
 import { useQueryClient } from 'react-query'
-import { CreateEventFormSchema } from '../../schemas/CreateEventFormSchema'
+import { CreateProjectBriefFormSchema } from '../../schemas/CreateProjectBriefFormSchema'
 import { useToastStore } from '../../store/ToastStore'
-import { CreateEventForm } from '../../types/forms/CreateEventForm.type'
+import { CreateProjectBriefForm } from '../../types/forms/CreateProjectBriefForm'
 import { Ticket } from '../../types/Ticket.type'
 import { objectWithFileToFormData } from '../../utils/FormHelpers'
 import { Button } from '../Button'
@@ -18,7 +18,7 @@ import { SelectService } from '../SelectService'
 import { TextInput } from '../TextInput'
 import { CreateLinkModal } from './CreateLinkModal'
 
-export const CreateEventModal = ({
+export const CreateProjectBriefModal = ({
   isVisible,
   onClose,
 }: {
@@ -29,7 +29,7 @@ export const CreateEventModal = ({
   const queryClient = useQueryClient()
   const { showToast } = useToastStore()
 
-  const submitForm = async (values: CreateEventForm) => {
+  const submitForm = async (values: CreateProjectBriefForm) => {
     try {
       const {
         status,
@@ -61,7 +61,7 @@ export const CreateEventModal = ({
           className="-translate-x-[calc(50%_+_7.125rem)]"
         >
           <Formik
-            validationSchema={CreateEventFormSchema}
+            validationSchema={CreateProjectBriefFormSchema}
             initialValues={{
               requestedBy: session?.user.id || -1,
               clientId: session?.user.userType.clientId || -1,

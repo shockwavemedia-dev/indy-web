@@ -1,7 +1,7 @@
 import { array, date, mixed, number, object, SchemaOf, string } from 'yup'
-import { CreateEventForm } from '../types/forms/CreateEventForm.type'
+import { CreateProjectBriefForm } from '../types/forms/CreateProjectBriefForm'
 
-export const CreateEventFormSchema: SchemaOf<CreateEventForm> = object().shape({
+export const CreateProjectBriefFormSchema: SchemaOf<CreateProjectBriefForm> = object().shape({
   requestedBy: number().required(),
   clientId: number().required(),
   subject: string().required(),

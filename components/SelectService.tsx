@@ -3,7 +3,7 @@ import { useFormikContext } from 'formik'
 import { useSession } from 'next-auth/react'
 import { ChangeEvent, useState } from 'react'
 import { useQuery } from 'react-query'
-import { CreateEventForm } from '../types/forms/CreateEventForm.type'
+import { CreateProjectBriefForm } from '../types/forms/CreateProjectBriefForm'
 import { Page } from '../types/Page.type'
 import { Service } from '../types/Service.type'
 import { Button } from './Button'
@@ -12,7 +12,7 @@ import { FloppyDiskIcon } from './icons/FloppyDiskIcon'
 
 export const SelectService = ({ enabled }: { enabled: boolean }) => {
   const { data: session } = useSession()
-  const { values, setFieldValue } = useFormikContext<CreateEventForm>()
+  const { values, setFieldValue } = useFormikContext<CreateProjectBriefForm>()
   const [activeService, setActiveService] = useState<Service | null>(null)
 
   const { data: services } = useQuery(
@@ -117,7 +117,7 @@ const ServiceButton = ({
 )
 
 const Extras = ({ serviceId, extrasName }: { serviceId: number; extrasName: string }) => {
-  const { values, setFieldValue } = useFormikContext<CreateEventForm>()
+  const { values, setFieldValue } = useFormikContext<CreateProjectBriefForm>()
 
   const toggleExtras = ({ currentTarget: { checked } }: ChangeEvent<HTMLInputElement>) => {
     const services = values.services.filter(({ serviceId: sid }) => sid !== serviceId)

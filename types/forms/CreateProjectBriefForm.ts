@@ -1,4 +1,4 @@
-export type CreateEventForm = {
+export type CreateProjectBriefForm = {
   requestedBy: number
   clientId: number
   subject: string
