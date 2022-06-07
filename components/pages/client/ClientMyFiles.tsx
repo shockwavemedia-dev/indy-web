@@ -38,25 +38,25 @@ export const ClientMyFiles = () => {
               const openYearFolder = () => setYear(year)
 
               return (
-                <FileButton className="h-20 w-20" key={year} onClick={openYearFolder} name={year} />
+                <FileButton className="h-35 w-35" key={year} onClick={openYearFolder} name={year} />
               )
             })
           ) : month !== '' ? (
             <>
               <FileButton
-                className="h-20 w-20"
+                className="h-35 w-35"
                 key={month}
                 onClick={goUpToMonthsFolder}
                 name="../"
               />
               {files[year][month].map(({ id, originalFilename, url }) => (
-                <FileButton className="h-20 w-20" key={id} href={url} name={originalFilename} />
+                <FileButton className="h-35 w-35" key={id} href={url} name={originalFilename} />
               ))}
             </>
           ) : (
             <>
               <FileButton
-                className="h-20 w-20"
+                className="h-35 w-35"
                 key={month}
                 onClick={goUpToYearsFolder}
                 name="../"
@@ -66,7 +66,7 @@ export const ClientMyFiles = () => {
 
                 return (
                   <FileButton
-                    className="h-20 w-20"
+                    className="h-35 w-35"
                     key={month}
                     onClick={openMonthFolder}
                     name={month}
