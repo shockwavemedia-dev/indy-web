@@ -44,7 +44,7 @@ export const ClientDashboard = () => {
         <div className="mb-6 flex space-x-6">
           <FancyButton
             Icon={<CalendarAddIcon className="stroke-white" />}
-            title="New Event"
+            title="New Project Brief"
             subtitle="Laborerivit rem cones mil"
             onClick={toggleCreateEventModal}
             twBackgroundColor="bg-jungle-green"

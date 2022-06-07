@@ -56,7 +56,7 @@ export const CreateEventModal = ({
     <>
       {isVisible && (
         <Modal
-          title="Create Event"
+          title="Create Project Brief"
           onClose={onClose}
           className="-translate-x-[calc(50%_+_7.125rem)]"
         >
