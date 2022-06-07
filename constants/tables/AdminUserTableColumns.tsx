@@ -1,6 +1,7 @@
 import { Column } from 'react-table'
 import { EditIcon } from '../../components/icons/EditIcon'
 import { TrashIcon } from '../../components/icons/TrashIcon'
+import { Pill } from '../../components/Pill'
 import { useAdminUserStore } from '../../store/AdminUserStore'
 import { User } from '../../types/User.type'
 
@@ -13,6 +14,39 @@ export const AdminUserTableColumns: Array<Column<User>> = [
     ),
   },
   {
+    Header: 'Role',
+    accessor: 'userType',
+    Cell: ({ value }) => (
+      <Pill
+        twBackgroundColor={(() => {
+          switch (value.role) {
+            case 'account manager':
+              return 'bg-light-orchid'
+            case 'admin':
+              return 'bg-light-golden-rod'
+            case 'manager':
+              return 'bg-light-navy'
+            case 'staff':
+              return 'bg-light-forest-green'
+          }
+        })()}
+        twTextColor={(() => {
+          switch (value.role) {
+            case 'account manager':
+              return 'text-orchid'
+            case 'admin':
+              return 'text-golden-rod'
+            case 'manager':
+              return 'text-navy'
+            case 'staff':
+              return 'text-forest-green'
+          }
+        })()}
+        value={value.role}
+      />
+    ),
+  },
+  {
     Header: 'Name',
     accessor: 'fullName',
     Cell: ({ value }) => (
@@ -20,21 +54,40 @@ export const AdminUserTableColumns: Array<Column<User>> = [
     ),
   },
   {
-    Header: 'Role',
-    accessor: 'userType',
-    Cell: ({ value }) => (
-      <div className="font-urbanist text-sm font-medium text-onyx first-letter:capitalize">
-        {value.role}
-      </div>
-    ),
-  },
-  {
     Header: 'Status',
     accessor: 'status',
     Cell: ({ value }) => (
-      <div className="font-urbanist text-sm font-medium text-onyx first-letter:capitalize">
-        {value}
-      </div>
+      <Pill
+        twBackgroundColor={(() => {
+          switch (value) {
+            case 'active':
+              return 'bg-honeydew'
+            case 'guest':
+              return 'bg-alice-blue'
+            case 'revoked':
+            case 'deleted':
+              return 'bg-light-tart-orange'
+            case 'inactive':
+            case 'not verified':
+              return 'bg-light-deep-saffron'
+          }
+        })()}
+        twTextColor={(() => {
+          switch (value) {
+            case 'active':
+              return 'text-jungle-green'
+            case 'guest':
+              return 'text-bleu-de-france'
+            case 'revoked':
+            case 'deleted':
+              return 'text-tart-orange'
+            case 'inactive':
+            case 'not verified':
+              return 'text-deep-saffron'
+          }
+        })()}
+        value={value}
+      />
     ),
   },
   {

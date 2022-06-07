@@ -1,4 +1,5 @@
 import { Column } from 'react-table'
+import { Pill } from '../../components/Pill'
 import { Department } from '../../types/Department.type'
 
 export const DepartmentTableColumns: Array<Column<Department>> = [
@@ -23,7 +24,31 @@ export const DepartmentTableColumns: Array<Column<Department>> = [
     Header: 'Status',
     accessor: 'status',
     Cell: ({ value }) => (
-      <div className="font-urbanist text-sm font-medium capitalize text-onyx">{value}</div>
+      <Pill
+        twBackgroundColor={(() => {
+          switch (value) {
+            case 'active':
+              return 'bg-honeydew'
+            case 'inactive':
+              return 'bg-alice-blue'
+            case 'deleted':
+              return 'bg-light-tart-orange'
+            case 'inactive':
+              return 'bg-light-deep-saffron'
+          }
+        })()}
+        twTextColor={(() => {
+          switch (value) {
+            case 'active':
+              return 'text-jungle-green'
+            case 'inactive':
+              return 'text-bleu-de-france'
+            case 'deleted':
+              return 'text-tart-orange'
+          }
+        })()}
+        value={value}
+      />
     ),
   },
   {

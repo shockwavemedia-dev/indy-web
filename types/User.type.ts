@@ -9,7 +9,7 @@ export type User = {
   firstName: string
   middleName: string
   lastName: string
-  status: 'active' | 'inactive' | 'guest' | 'not verified' | 'revoked' | 'deleted' | null
+  status: 'active' | 'inactive' | 'guest' | 'not verified' | 'revoked' | 'deleted'
   email: string
   contactNumber: string
   gender: 'female' | 'male' | null
