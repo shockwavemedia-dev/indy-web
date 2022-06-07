@@ -2,6 +2,8 @@ import { ChartIcon } from '../../components/icons/ChartIcon'
 import { ClipboardIcon } from '../../components/icons/ClipboardIcon'
 import { EmailIcon } from '../../components/icons/EmailIcon'
 import { FolderIcon } from '../../components/icons/FolderIcon'
+import { MonitorIcon } from '../../components/icons/MonitorIcon'
+import { NotepadIcon } from '../../components/icons/NotepadIcon'
 import { Route } from '../../types/Route.type'
 
 export const ClientRoutes: Array<Route> = [
@@ -15,6 +17,14 @@ export const ClientRoutes: Array<Route> = [
     Icon: EmailIcon,
     pathname: 'https://c7s.transmitsms.com/',
     target: '_blank',
+  },
+  {
+    title: 'Event Manager',
+    Icon: NotepadIcon,
+  },
+  {
+    title: 'Screen Manager',
+    Icon: MonitorIcon,
   },
   {
     title: 'My Files',
@@ -36,6 +46,48 @@ export const ClientRoutes: Array<Route> = [
       {
         title: 'Website Services',
         pathname: '/website-services',
+      },
+      {
+        title: 'Graphic Design',
+      },
+      {
+        title: 'Website',
+      },
+      {
+        title: 'EDM',
+      },
+      {
+        title: 'Social Media',
+      },
+      {
+        title: 'Data Analytics',
+      },
+      {
+        title: 'Photography',
+      },
+      {
+        title: 'Videography',
+      },
+      {
+        title: 'Print',
+      },
+    ],
+  },
+  {
+    title: 'Analytics',
+    Icon: ChartIcon,
+    subRoutes: [
+      {
+        title: 'App',
+      },
+      {
+        title: 'Website',
+      },
+      {
+        title: 'ClevaQ',
+      },
+      {
+        title: 'Social Media Ads',
       },
     ],
   },

@@ -24,7 +24,9 @@ export const RouteButton = ({
     )}
     <Link href={pathname}>
       <a
-        className={`flex items-center ${subRoute ? 'my-2 ml-15' : 'my-3.5 ml-5 '}`}
+        className={`flex items-center ${subRoute ? 'my-2 ml-15' : 'my-3.5 ml-5 '} ${
+          pathname === '#' ? 'pointer-events-none opacity-20' : ''
+        }`}
         target={target}
       >
         <Icon
@@ -54,6 +56,12 @@ export const RouteButton = ({
       </a>
     </Link>
     {/* todo add conditional color */}
-    {hasSubRoutes && <CaretIcon className="ml-auto mr-7 rotate-180 stroke-lavender-gray" />}
+    {hasSubRoutes && (
+      <CaretIcon
+        className={`ml-auto mr-7 rotate-180 stroke-lavender-gray ${
+          pathname === '#' ? 'opacity-20' : ''
+        }`}
+      />
+    )}
   </div>
 )
