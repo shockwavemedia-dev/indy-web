@@ -14,13 +14,6 @@ export const AdminUserTableColumns: Array<Column<User>> = [
     ),
   },
   {
-    Header: 'Name',
-    accessor: 'fullName',
-    Cell: ({ value }) => (
-      <div className="font-urbanist text-sm font-semibold text-onyx">{value}</div>
-    ),
-  },
-  {
     Header: 'Role',
     accessor: 'userType',
     Cell: ({ value }) => (
@@ -28,7 +21,7 @@ export const AdminUserTableColumns: Array<Column<User>> = [
         twBackgroundColor={(() => {
           switch (value.role) {
             case 'account manager':
-              return 'bg-light-red-crimson'
+              return 'bg-light-orchid'
             case 'admin':
               return 'bg-light-golden-rod'
             case 'manager':
@@ -40,7 +33,7 @@ export const AdminUserTableColumns: Array<Column<User>> = [
         twTextColor={(() => {
           switch (value.role) {
             case 'account manager':
-              return 'text-red-crimson'
+              return 'text-orchid'
             case 'admin':
               return 'text-golden-rod'
             case 'manager':
@@ -51,6 +44,13 @@ export const AdminUserTableColumns: Array<Column<User>> = [
         })()}
         value={value.role}
       />
+    ),
+  },
+  {
+    Header: 'Name',
+    accessor: 'fullName',
+    Cell: ({ value }) => (
+      <div className="font-urbanist text-sm font-semibold text-onyx">{value}</div>
     ),
   },
   {
