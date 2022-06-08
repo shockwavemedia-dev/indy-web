@@ -36,7 +36,7 @@ export const ClientMyFiles = () => {
       </Head>
       <div className="mb-5 font-urbanist text-xxl font-semibold text-onyx">My Files</div>
       <hr className="mb-6 border-t-bright-gray" />
-      <div className="mx-auto w-full max-w-8xl">
+      <div className="mx-auto h-4/5 w-full max-w-8xl">
         <div className="flex space-x-6">
           <Card className="flex w-260 flex-wrap gap-4">
             {year === '' ? (
@@ -122,6 +122,9 @@ export const ClientMyFiles = () => {
                 twIconBackgroundColor="bg-dark-orchid"
               />
             </div>
+            <Card title="Notifications" className="h-full w-full opacity-50">
+              <div></div>
+            </Card>
           </div>
         </div>
       </div>
