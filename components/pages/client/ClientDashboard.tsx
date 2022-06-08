@@ -106,6 +106,9 @@ export const ClientDashboard = () => {
                 twIconBackgroundColor="bg-dark-orchid"
               />
             </div>
+            <Card title="Notifications" className="h-full w-full opacity-50">
+              <div></div>
+            </Card>
           </div>
         </div>
       </div>
