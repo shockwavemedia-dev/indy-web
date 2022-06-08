@@ -1,3 +1,4 @@
+import { Tooltip } from '@mui/material'
 import axios from 'axios'
 import { useFormikContext } from 'formik'
 import { useSession } from 'next-auth/react'
@@ -66,6 +67,7 @@ export const SelectService = ({ enabled }: { enabled: boolean }) => {
           return (
             <ServiceButton
               key={`service-${service.serviceId}`}
+              disabled={!service.isEnabled}
               onClick={toggleService}
               serviceName={service.serviceName}
               selected={values.services.some(({ serviceId: sid }) => sid === service.serviceId)}
@@ -75,15 +77,29 @@ export const SelectService = ({ enabled }: { enabled: boolean }) => {
       </div>
       {activeService && activeService.extras.length > 0 && (
         <div className="absolute -right-70 top-0 flex w-52 translate-x-full flex-col items-center rounded-xl bg-white p-5">
-          <div className="mb-3 font-urbanist text-lg font-semibold text-onyx">Select Extras</div>
+          <div className="mb-3 font-urbanist text-lg font-semibold text-onyx">
+            Select {activeService.extraQuota > 0 && activeService.extraQuota} Extras
+          </div>
           <div className="space-y-2">
-            {activeService.extras.map((extras) => (
-              <Extras
-                key={`${activeService.serviceId}-${extras}`}
-                extrasName={extras}
-                serviceId={activeService.serviceId}
-              />
-            ))}
+            {activeService.extras.map((extras) => {
+              const foundedExtras = values.services.find(
+                ({ serviceId }) => serviceId === activeService.serviceId
+              )?.extras
+
+              return (
+                <Extras
+                  disabled={
+                    activeService.extraQuota === 0
+                      ? false
+                      : foundedExtras?.length === activeService.extraQuota &&
+                        !foundedExtras?.includes(extras)
+                  }
+                  key={`${activeService.serviceId}-${extras}`}
+                  extrasName={extras}
+                  serviceId={activeService.serviceId}
+                />
+              )
+            })}
           </div>
           <Button
             ariaLabel="Save Extras"
@@ -103,31 +119,51 @@ export const SelectService = ({ enabled }: { enabled: boolean }) => {
 const ServiceButton = ({
   serviceName,
   selected,
+  disabled,
   onClick,
 }: {
   serviceName: string
   selected: boolean
+  disabled: boolean
   onClick: () => void
-}) => (
-  <button
-    type="button"
-    onClick={onClick}
-    className={`flex h-11 w-full items-center justify-between whitespace-nowrap rounded-xl px-6 ${
-      selected ? 'bg-jungle-green' : 'border-1.5 border-solid border-bright-gray bg-white'
-    }`}
-  >
-    <div
-      className={`text-left font-urbanist text-sm font-medium ${
-        selected ? 'text-white' : 'text-onyx'
-      }`}
+}) => {
+  const serviceButton = (
+    <button
+      type="button"
+      onClick={disabled ? () => {} : onClick}
+      className={`flex h-11 w-full items-center justify-between whitespace-nowrap rounded-xl px-6 disabled:opacity-50 ${
+        selected ? 'bg-jungle-green' : 'border-1.5 border-solid border-bright-gray bg-white'
+      } ${disabled ? 'cursor-default opacity-40' : ''}`}
     >
-      {serviceName}
-    </div>
-    {selected && <ServiceCheckIcon />}
-  </button>
-)
+      <div
+        className={`text-left font-urbanist text-sm font-medium ${
+          selected ? 'text-white' : 'text-onyx'
+        }`}
+      >
+        {serviceName}
+      </div>
+      {selected && <ServiceCheckIcon />}
+    </button>
+  )
 
-const Extras = ({ serviceId, extrasName }: { serviceId: number; extrasName: string }) => {
+  return disabled ? (
+    <Tooltip title="Sorry but you no longer have access to this service." placement="top">
+      {serviceButton}
+    </Tooltip>
+  ) : (
+    serviceButton
+  )
+}
+
+const Extras = ({
+  disabled,
+  serviceId,
+  extrasName,
+}: {
+  disabled: boolean
+  serviceId: number
+  extrasName: string
+}) => {
   const { values, setFieldValue } = useFormikContext<CreateProjectBriefForm>()
 
   const toggleExtras = ({ currentTarget: { checked } }: ChangeEvent<HTMLInputElement>) => {
@@ -145,19 +181,28 @@ const Extras = ({ serviceId, extrasName }: { serviceId: number; extrasName: stri
     setFieldValue('services', [...services, activeService])
   }
 
-  return (
-    <div className="relative flex items-center">
+  const extras = (
+    <div className={`relative flex items-center ${disabled ? 'cursor-default opacity-40' : ''}`}>
       <input
         type="checkbox"
         name={extrasName}
         id={extrasName}
         className="mr-3 h-4 w-4 appearance-none rounded bg-white ring-1 ring-inset ring-bright-gray checked:bg-jungle-green checked:ring-0"
-        onChange={toggleExtras}
+        onChange={disabled ? () => {} : toggleExtras}
+        disabled={disabled}
       />
       <CheckIcon className="pointer-events-none absolute left-0.75 stroke-white" />
       <label htmlFor={extrasName} className="font-urbanist text-sm font-medium text-onyx">
         {extrasName}
       </label>
     </div>
+  )
+
+  return disabled ? (
+    <Tooltip title="Sorry but you have reached your extras quota." placement="top">
+      {extras}
+    </Tooltip>
+  ) : (
+    extras
   )
 }
