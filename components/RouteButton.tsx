@@ -14,11 +14,11 @@ export const RouteButton = ({
   hasSubRoutes?: boolean
   subRoute?: boolean
 }) => (
-  <div className={`flex items-center ${isCurrentPath && !subRoute ? 'bg-ghost-white' : ''}`}>
+  <div className={`flex items-center ${isCurrentPath && !subRoute ? 'bg-halloween-orange' : ''}`}>
     {!subRoute && (
       <div
         className={`h-full rounded-r border-r-4 ${
-          isCurrentPath ? 'border-r-jungle-green' : 'border-r-transparent'
+          isCurrentPath ? 'border-r-halloween-orange' : 'border-r-transparent'
         }`}
       />
     )}
@@ -29,38 +29,14 @@ export const RouteButton = ({
         }`}
         target={target}
       >
-        <Icon
-          className={`${
-            subRoute
-              ? isCurrentPath
-                ? 'fill-jungle-green'
-                : 'fill-lavender-gray'
-              : isCurrentPath
-              ? 'stroke-jungle-green'
-              : 'stroke-lavender-gray'
-          }`}
-        />
-        <div
-          className={`ml-3 font-urbanist text-sm ${
-            subRoute
-              ? isCurrentPath
-                ? 'font-medium text-onyx'
-                : 'font-normal text-waterloo'
-              : isCurrentPath
-              ? 'font-semibold text-jungle-green'
-              : 'font-medium text-waterloo'
-          }`}
-        >
-          {title}
-        </div>
+        <Icon className={`${subRoute ? 'fill-white' : 'stroke-white'}`} />
+        <div className="ml-3 font-urbanist text-sm text-white">{title}</div>
       </a>
     </Link>
     {/* todo add conditional color */}
     {hasSubRoutes && (
       <CaretIcon
-        className={`ml-auto mr-7 rotate-180 stroke-lavender-gray ${
-          pathname === '#' ? 'opacity-20' : ''
-        }`}
+        className={`ml-auto mr-7 rotate-180 stroke-white ${pathname === '#' ? 'opacity-20' : ''}`}
       />
     )}
   </div>

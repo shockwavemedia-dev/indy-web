@@ -5,10 +5,11 @@ import { useState } from 'react'
 import { useQuery } from 'react-query'
 import { Card } from '../../../components/Card'
 import { Files } from '../../../types/Files.type'
-import { FancyButton } from '../../FancyButton'
+import { CountCard } from '../../CountCard'
 import { FileButton } from '../../FileButton'
-import { CalendarAddIcon } from '../../icons/CalendarAddIcon'
-import { CreateProjectBriefModal } from '../../modals/CreateProjectBriefModal'
+import { GalleryIcon } from '../../icons/GalleryIcon'
+import { MenuBoardIcon } from '../../icons/MenuBoardIcon'
+import { VideoIcon } from '../../icons/VideoIcon'
 
 export const ClientMyFiles = () => {
   const { data: session } = useSession()
@@ -24,10 +25,6 @@ export const ClientMyFiles = () => {
   const goUpToYearsFolder = () => setYear('')
   const goUpToMonthsFolder = () => setMonth('')
 
-  const [isCreateProjectBriefModalVisible, setCreateProjectBriefModalVisible] = useState(false)
-  const toggleCreateProjectBriefModal = () =>
-    setCreateProjectBriefModalVisible(!isCreateProjectBriefModalVisible)
-
   if (!isSuccess) {
     return null
   }
@@ -38,65 +35,98 @@ export const ClientMyFiles = () => {
         <title>Daily Press - My Files</title>
       </Head>
       <div className="mb-5 font-urbanist text-xxl font-semibold text-onyx">My Files</div>
-      <div className="mx-auto w-full max-w-8xl">
-        <FancyButton
-          Icon={<CalendarAddIcon className="stroke-white" />}
-          title="New Project Brief"
-          subtitle="Laborerivit rem cones mil"
-          onClick={toggleCreateProjectBriefModal}
-          twBackgroundColor="bg-jungle-green"
-          twIconBackgroundColor="bg-illuminating-emerald"
-          className="mb-8 w-fit"
-        />
-        <hr className="mb-6 border-t-bright-gray" />
-        <Card className="flex flex-wrap gap-4">
-          {year === '' ? (
-            Object.keys(files).map((year) => {
-              const openYearFolder = () => setYear(year)
-
-              return (
-                <FileButton className="h-20 w-20" key={year} onClick={openYearFolder} name={year} />
-              )
-            })
-          ) : month !== '' ? (
-            <>
-              <FileButton
-                className="h-20 w-20"
-                key={month}
-                onClick={goUpToMonthsFolder}
-                name="../"
-              />
-              {files[year][month].map(({ id, originalFilename, url }) => (
-                <FileButton className="h-20 w-20" key={id} href={url} name={originalFilename} />
-              ))}
-            </>
-          ) : (
-            <>
-              <FileButton
-                className="h-20 w-20"
-                key={month}
-                onClick={goUpToYearsFolder}
-                name="../"
-              />
-              {Object.keys(files[year]).map((month) => {
-                const openMonthFolder = () => setMonth(month)
+      <hr className="mb-6 border-t-bright-gray" />
+      <div className="mx-auto h-4/5 w-full max-w-8xl">
+        <div className="flex space-x-6">
+          <Card className="flex w-260 flex-wrap gap-4">
+            {year === '' ? (
+              Object.keys(files).map((year) => {
+                const openYearFolder = () => setYear(year)
 
                 return (
                   <FileButton
-                    className="h-20 w-20"
-                    key={month}
-                    onClick={openMonthFolder}
-                    name={month}
+                    className="h-35 w-35"
+                    key={year}
+                    onClick={openYearFolder}
+                    name={year}
                   />
                 )
-              })}
-            </>
-          )}
-        </Card>
-        <CreateProjectBriefModal
-          isVisible={isCreateProjectBriefModalVisible}
-          onClose={toggleCreateProjectBriefModal}
-        />
+              })
+            ) : month !== '' ? (
+              <>
+                <FileButton
+                  className="h-35 w-35"
+                  key={month}
+                  onClick={goUpToMonthsFolder}
+                  name="../"
+                />
+                {files[year][month].map(({ id, originalFilename, url }) => (
+                  <FileButton className="h-35 w-35" key={id} href={url} name={originalFilename} />
+                ))}
+              </>
+            ) : (
+              <>
+                <FileButton
+                  className="h-35 w-35"
+                  key={month}
+                  onClick={goUpToYearsFolder}
+                  name="../"
+                />
+                {Object.keys(files[year]).map((month) => {
+                  const openMonthFolder = () => setMonth(month)
+
+                  return (
+                    <FileButton
+                      className="h-35 w-35"
+                      key={month}
+                      onClick={openMonthFolder}
+                      name={month}
+                    />
+                  )
+                })}
+              </>
+            )}
+          </Card>
+          <div className="flex flex-1 flex-col">
+            <div className="mb-3 flex space-x-3">
+              <CountCard
+                Icon={<VideoIcon className="stroke-white" />}
+                value={5}
+                description="Animations Remaining"
+                className="w-36"
+                twBackgroundColor="bg-vivid-red-tangelo"
+                twIconBackgroundColor="bg-dark-pastel-red"
+              />
+              <CountCard
+                Icon={<GalleryIcon className="stroke-white" />}
+                value={2}
+                description="Photoshoots Remaining"
+                twBackgroundColor="bg-jungle-green"
+                twIconBackgroundColor="bg-illuminating-emerald"
+              />
+            </div>
+            <div className="mb-6 flex space-x-3">
+              <CountCard
+                Icon={<MenuBoardIcon className="stroke-white" />}
+                value={3}
+                description="Graphics Remaining"
+                twBackgroundColor="bg-bleu-de-france"
+                twIconBackgroundColor="bg-bright-navy-blue"
+              />
+              <CountCard
+                Icon={<VideoIcon className="stroke-white" />}
+                value={1}
+                description="Videoshoots Remaining"
+                className="w-36"
+                twBackgroundColor="bg-purple-x11"
+                twIconBackgroundColor="bg-dark-orchid"
+              />
+            </div>
+            <Card title="Notifications" className="h-full w-full opacity-50">
+              <div></div>
+            </Card>
+          </div>
+        </div>
       </div>
     </>
   )
