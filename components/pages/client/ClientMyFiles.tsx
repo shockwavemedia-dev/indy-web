@@ -6,10 +6,13 @@ import { useQuery } from 'react-query'
 import { Card } from '../../../components/Card'
 import { Files } from '../../../types/Files.type'
 import { CountCard } from '../../CountCard'
+import { FancyButton } from '../../FancyButton'
 import { FileButton } from '../../FileButton'
+import { CalendarAddIcon } from '../../icons/CalendarAddIcon'
 import { GalleryIcon } from '../../icons/GalleryIcon'
 import { MenuBoardIcon } from '../../icons/MenuBoardIcon'
 import { VideoIcon } from '../../icons/VideoIcon'
+import { CreateProjectBriefModal } from '../../modals/CreateProjectBriefModal'
 
 export const ClientMyFiles = () => {
   const { data: session } = useSession()
@@ -25,6 +28,10 @@ export const ClientMyFiles = () => {
   const goUpToYearsFolder = () => setYear('')
   const goUpToMonthsFolder = () => setMonth('')
 
+  const [isCreateProjectBriefModalVisible, setCreateProjectBriefModalVisible] = useState(false)
+  const toggleCreateProjectBriefModal = () =>
+    setCreateProjectBriefModalVisible(!isCreateProjectBriefModalVisible)
+
   if (!isSuccess) {
     return null
   }
@@ -35,8 +42,17 @@ export const ClientMyFiles = () => {
         <title>Daily Press - My Files</title>
       </Head>
       <div className="mb-5 font-urbanist text-xxl font-semibold text-onyx">My Files</div>
-      <hr className="mb-6 border-t-bright-gray" />
       <div className="mx-auto h-4/5 w-full max-w-8xl">
+        <FancyButton
+          Icon={<CalendarAddIcon className="stroke-white" />}
+          title="New Project Brief"
+          subtitle="Laborerivit rem cones mil"
+          onClick={toggleCreateProjectBriefModal}
+          twBackgroundColor="bg-jungle-green"
+          twIconBackgroundColor="bg-illuminating-emerald"
+          className="mb-8 w-fit"
+        />
+        <hr className="mb-6 border-t-bright-gray" />
         <div className="flex space-x-6">
           <Card className="flex w-260 flex-wrap gap-4">
             {year === '' ? (
@@ -49,6 +65,7 @@ export const ClientMyFiles = () => {
                     key={year}
                     onClick={openYearFolder}
                     name={year}
+                    textClassName="text-sm"
                   />
                 )
               })
@@ -81,6 +98,7 @@ export const ClientMyFiles = () => {
                       key={month}
                       onClick={openMonthFolder}
                       name={month}
+                      textClassName="text-xs"
                     />
                   )
                 })}
@@ -127,6 +145,10 @@ export const ClientMyFiles = () => {
             </Card>
           </div>
         </div>
+        <CreateProjectBriefModal
+          isVisible={isCreateProjectBriefModalVisible}
+          onClose={toggleCreateProjectBriefModal}
+        />
       </div>
     </>
   )
