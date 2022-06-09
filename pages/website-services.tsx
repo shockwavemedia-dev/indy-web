@@ -1,12 +1,15 @@
 import { useSession } from 'next-auth/react'
 import Head from 'next/head'
-import { ReactElement } from 'react'
+import { ReactElement, useState } from 'react'
 import { Card } from '../components/Card'
 import { CountCard } from '../components/CountCard'
 import { DataTable } from '../components/DataTable'
+import { FancyButton } from '../components/FancyButton'
+import { CalendarAddIcon } from '../components/icons/CalendarAddIcon'
 import { GalleryIcon } from '../components/icons/GalleryIcon'
 import { MenuBoardIcon } from '../components/icons/MenuBoardIcon'
 import { VideoIcon } from '../components/icons/VideoIcon'
+import { CreateProjectBriefModal } from '../components/modals/CreateProjectBriefModal'
 import { DeleteTicketModal } from '../components/modals/DeleteTicketModal'
 import { EditTicketModal } from '../components/modals/EditTicketModal'
 import { ClientTicketsTableColumns } from '../constants/tables/ClientTicketsTableColumns'
@@ -24,6 +27,10 @@ const WebsitePage: NextPageWithLayout = () => {
     toggleDeleteTicketModal,
   } = useTicketStore()
 
+  const [isCreateProjectBriefModalVisible, setCreateProjectBriefModalVisible] = useState(false)
+  const toggleCreateProjectBriefModal = () =>
+    setCreateProjectBriefModalVisible(!isCreateProjectBriefModalVisible)
+
   return (
     <>
       <Head>
@@ -31,6 +38,15 @@ const WebsitePage: NextPageWithLayout = () => {
       </Head>
       <div className="mb-5 font-urbanist text-xxl font-semibold text-onyx">Website Services</div>
       <div className="mx-auto h-full w-full max-w-8xl space-y-6">
+        <FancyButton
+          Icon={<CalendarAddIcon className="stroke-white" />}
+          title="New Project Brief"
+          subtitle="Laborerivit rem cones mil"
+          onClick={toggleCreateProjectBriefModal}
+          twBackgroundColor="bg-jungle-green"
+          twIconBackgroundColor="bg-illuminating-emerald"
+          className="w-fit"
+        />
         <div className="flex h-155 space-x-6">
           <Card title="Project Status Table" className="flex w-260 flex-col">
             <DataTable
@@ -81,6 +97,10 @@ const WebsitePage: NextPageWithLayout = () => {
           </div>
         </div>
       </div>
+      <CreateProjectBriefModal
+        isVisible={isCreateProjectBriefModalVisible}
+        onClose={toggleCreateProjectBriefModal}
+      />
       <EditTicketModal
         isVisible={isEditTicketModalVisible}
         onClose={toggleEditTicketModal}

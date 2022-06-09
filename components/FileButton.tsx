@@ -7,12 +7,14 @@ export const FileButton = ({
   name,
   className,
   fileModal = false,
+  textClassName,
 }: {
   onClick?: () => void
   href?: string
   name: string
   className?: string
   fileModal?: boolean
+  textClassName?: string
 }) =>
   href ? (
     <a
@@ -48,9 +50,9 @@ export const FileButton = ({
         <FolderIcon className="stroke-jungle-green" />
       )}
       <div
-        className={`font-urbanist text-xxs font-semibold text-onyx ${
-          !fileModal ? 'capitalize' : ''
-        }`}
+        className={` ${
+          textClassName ? textClassName : 'text-xxs'
+        } font-urbanist font-semibold text-onyx ${!fileModal ? 'capitalize' : ''}`}
       >
         {name}
       </div>

@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { Form, Formik } from 'formik'
 import { useSession } from 'next-auth/react'
+import { useRouter } from 'next/router'
 import { useQueryClient } from 'react-query'
 import { GraphicExtraOptions } from '../../constants/options/GraphicExtraOptions'
 import { CreateGraphicRequestFormSchema } from '../../schemas/CreateGraphicRequestFormSchema'
@@ -27,6 +28,7 @@ export const CreateGraphicRequestModal = ({
   const { data: session } = useSession()
   const queryClient = useQueryClient()
   const { showToast } = useToastStore()
+  const { replace } = useRouter()
 
   const submitForm = async (values: CreateGraphicRequestForm) => {
     try {
@@ -36,7 +38,8 @@ export const CreateGraphicRequestModal = ({
       } = await axios.post<Ticket>('/v1/graphics', values)
 
       if (status === 200) {
-        queryClient.invalidateQueries('graphics')
+        queryClient.invalidateQueries('tickets')
+        replace('/dashboard')
         onClose()
         showToast({
           type: 'success',

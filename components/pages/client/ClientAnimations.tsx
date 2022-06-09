@@ -7,9 +7,11 @@ import { Card } from '../../Card'
 import { CountCard } from '../../CountCard'
 import { DataTable } from '../../DataTable'
 import { FancyButton } from '../../FancyButton'
+import { CalendarAddIcon } from '../../icons/CalendarAddIcon'
 import { GalleryIcon } from '../../icons/GalleryIcon'
 import { MenuBoardIcon } from '../../icons/MenuBoardIcon'
 import { VideoIcon } from '../../icons/VideoIcon'
+import { CreateProjectBriefModal } from '../../modals/CreateProjectBriefModal'
 import { DeleteTicketModal } from '../../modals/DeleteTicketModal'
 import { EditTicketModal } from '../../modals/EditTicketModal'
 import { NewAnimationRequestModal } from '../../modals/NewAnimationRequestModal'
@@ -24,9 +26,12 @@ export const ClientAnimations = () => {
   } = useTicketStore()
 
   const [isCreateAnimationModalVisible, setCreateAnimationModalVisible] = useState(false)
+  const [isCreateProjectBriefModalVisible, setCreateProjectBriefModalVisible] = useState(false)
 
   const toggleCreateAnimationModal = () =>
     setCreateAnimationModalVisible(!isCreateAnimationModalVisible)
+  const toggleCreateProjectBriefModal = () =>
+    setCreateProjectBriefModalVisible(!isCreateProjectBriefModalVisible)
 
   return (
     <>
@@ -35,15 +40,26 @@ export const ClientAnimations = () => {
       </Head>
       <div className="mb-5 font-urbanist text-xxl font-semibold text-onyx">Animations</div>
       <div className="mx-auto h-full w-full max-w-8xl space-y-6">
-        <FancyButton
-          Icon={<VideoIcon className="stroke-white" />}
-          title="Request Animation"
-          subtitle="Laborerivit rem cones mil"
-          onClick={toggleCreateAnimationModal}
-          twBackgroundColor="bg-vivid-red-tangelo"
-          twIconBackgroundColor="bg-dark-pastel-red"
-          className="w-fit"
-        />
+        <div className="mb-6 flex space-x-6">
+          <FancyButton
+            Icon={<CalendarAddIcon className="stroke-white" />}
+            title="New Project Brief"
+            subtitle="Laborerivit rem cones mil"
+            onClick={toggleCreateProjectBriefModal}
+            twBackgroundColor="bg-jungle-green"
+            twIconBackgroundColor="bg-illuminating-emerald"
+            className="w-fit"
+          />
+          <FancyButton
+            Icon={<VideoIcon className="stroke-white" />}
+            title="Request Animation"
+            subtitle="Laborerivit rem cones mil"
+            onClick={toggleCreateAnimationModal}
+            twBackgroundColor="bg-vivid-red-tangelo"
+            twIconBackgroundColor="bg-dark-pastel-red"
+            className="w-fit"
+          />
+        </div>
         <hr className="border-t-bright-gray" />
         <div className="flex h-155 space-x-6">
           <Card title="Project Status Table" className="flex w-260 flex-col">
@@ -95,6 +111,10 @@ export const ClientAnimations = () => {
           </div>
         </div>
       </div>
+      <CreateProjectBriefModal
+        isVisible={isCreateProjectBriefModalVisible}
+        onClose={toggleCreateProjectBriefModal}
+      />
       <NewAnimationRequestModal
         isVisible={isCreateAnimationModalVisible}
         onClose={toggleCreateAnimationModal}
