@@ -125,20 +125,36 @@ export const FileModal = ({ ticketId }: { ticketId: number }) => {
                 </TitleValue>
                 <TitleValue title="Status" className="flex items-center justify-between">
                   <Pill
-                    pillColor={(() => {
+                    twBackgroundColor={(() => {
                       switch (ticketFile.status) {
                         case 'approved':
-                          return 'bg-jungle-green'
+                          return 'bg-honeydew'
                         case 'back from review':
-                          return 'bg-bleu-de-france'
+                          return 'bg-alice-blue'
                         case 'deleted':
-                          return 'bg-tart-orange'
+                          return 'bg-light-tart-orange'
                         case 'in progress':
-                          return 'bg-jungle-green'
+                          return 'bg-honeydew'
                         case 'for review':
-                          return 'bg-bleu-de-france'
+                          return 'bg-light-navy'
                         case 'new':
-                          return 'bg-jungle-green'
+                          return 'bg-alice-blue'
+                      }
+                    })()}
+                    twTextColor={(() => {
+                      switch (ticketFile.status) {
+                        case 'approved':
+                          return 'text-jungle-green'
+                        case 'back from review':
+                          return 'text-bleu-de-france'
+                        case 'deleted':
+                          return 'text-tart-orange'
+                        case 'in progress':
+                          return 'text-jungle-green'
+                        case 'for review':
+                          return 'text-bleu-de-france'
+                        case 'new':
+                          return 'text-bleu-de-france'
                       }
                     })()}
                     value={ticketFile.status}
@@ -146,7 +162,10 @@ export const FileModal = ({ ticketId }: { ticketId: number }) => {
                 </TitleValue>
                 <TitleValue title="Approval Status" className="flex items-center justify-between">
                   <Pill
-                    pillColor={ticketFile.isApproved ? 'bg-jungle-green' : 'bg-tart-orange'}
+                    twBackgroundColor={
+                      ticketFile.isApproved ? 'bg-honeydew' : 'bg-light-tart-orange'
+                    }
+                    twTextColor={ticketFile.isApproved ? 'text-jungle-green' : 'text-tart-orange'}
                     value={ticketFile.isApproved ? 'Approved' : 'Not Approved'}
                   />
                 </TitleValue>
