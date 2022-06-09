@@ -27,10 +27,11 @@ export const ClientDashboard = () => {
     toggleDeleteTicketModal,
   } = useTicketStore()
 
-  const [isCreateEventModalVisible, setCreateEventModalVisible] = useState(false)
+  const [isCreateProjectBriefModalVisible, setCreateProjectBriefModalVisible] = useState(false)
   const [isCreateSupportRequestModalVisible, setCreateSupportRequestModalVisible] = useState(false)
 
-  const toggleCreateEventModal = () => setCreateEventModalVisible(!isCreateEventModalVisible)
+  const toggleCreateProjectBriefModal = () =>
+    setCreateProjectBriefModalVisible(!isCreateProjectBriefModalVisible)
   const toggleCreateSupportRequestModal = () =>
     setCreateSupportRequestModalVisible(!isCreateSupportRequestModalVisible)
 
@@ -46,7 +47,7 @@ export const ClientDashboard = () => {
             Icon={<CalendarAddIcon className="stroke-white" />}
             title="New Project Brief"
             subtitle="Laborerivit rem cones mil"
-            onClick={toggleCreateEventModal}
+            onClick={toggleCreateProjectBriefModal}
             twBackgroundColor="bg-jungle-green"
             twIconBackgroundColor="bg-illuminating-emerald"
             className="w-fit"
@@ -110,8 +111,8 @@ export const ClientDashboard = () => {
         </div>
       </div>
       <CreateProjectBriefModal
-        isVisible={isCreateEventModalVisible}
-        onClose={toggleCreateEventModal}
+        isVisible={isCreateProjectBriefModalVisible}
+        onClose={toggleCreateProjectBriefModal}
       />
       <CreateSupportRequestModal
         isVisible={isCreateSupportRequestModalVisible}

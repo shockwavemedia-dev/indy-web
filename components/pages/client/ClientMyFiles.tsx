@@ -5,7 +5,10 @@ import { useState } from 'react'
 import { useQuery } from 'react-query'
 import { Card } from '../../../components/Card'
 import { Files } from '../../../types/Files.type'
+import { FancyButton } from '../../FancyButton'
 import { FileButton } from '../../FileButton'
+import { CalendarAddIcon } from '../../icons/CalendarAddIcon'
+import { CreateProjectBriefModal } from '../../modals/CreateProjectBriefModal'
 
 export const ClientMyFiles = () => {
   const { data: session } = useSession()
@@ -21,6 +24,10 @@ export const ClientMyFiles = () => {
   const goUpToYearsFolder = () => setYear('')
   const goUpToMonthsFolder = () => setMonth('')
 
+  const [isCreateProjectBriefModalVisible, setCreateProjectBriefModalVisible] = useState(false)
+  const toggleCreateProjectBriefModal = () =>
+    setCreateProjectBriefModalVisible(!isCreateProjectBriefModalVisible)
+
   if (!isSuccess) {
     return null
   }
@@ -32,6 +39,16 @@ export const ClientMyFiles = () => {
       </Head>
       <div className="mb-5 font-urbanist text-xxl font-semibold text-onyx">My Files</div>
       <div className="mx-auto w-full max-w-8xl">
+        <FancyButton
+          Icon={<CalendarAddIcon className="stroke-white" />}
+          title="New Project Brief"
+          subtitle="Laborerivit rem cones mil"
+          onClick={toggleCreateProjectBriefModal}
+          twBackgroundColor="bg-jungle-green"
+          twIconBackgroundColor="bg-illuminating-emerald"
+          className="mb-8 w-fit"
+        />
+        <hr className="mb-6 border-t-bright-gray" />
         <Card className="flex flex-wrap gap-4">
           {year === '' ? (
             Object.keys(files).map((year) => {
@@ -76,6 +93,10 @@ export const ClientMyFiles = () => {
             </>
           )}
         </Card>
+        <CreateProjectBriefModal
+          isVisible={isCreateProjectBriefModalVisible}
+          onClose={toggleCreateProjectBriefModal}
+        />
       </div>
     </>
   )

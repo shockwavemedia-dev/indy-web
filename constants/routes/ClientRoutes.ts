@@ -3,7 +3,6 @@ import { ClipboardIcon } from '../../components/icons/ClipboardIcon'
 import { EmailIcon } from '../../components/icons/EmailIcon'
 import { FolderIcon } from '../../components/icons/FolderIcon'
 import { MonitorIcon } from '../../components/icons/MonitorIcon'
-import { NotepadIcon } from '../../components/icons/NotepadIcon'
 import { Route } from '../../types/Route.type'
 
 export const ClientRoutes: Array<Route> = [
@@ -17,10 +16,6 @@ export const ClientRoutes: Array<Route> = [
     Icon: EmailIcon,
     pathname: 'https://c7s.transmitsms.com/',
     target: '_blank',
-  },
-  {
-    title: 'Event Manager',
-    Icon: NotepadIcon,
   },
   {
     title: 'Screen Manager',
