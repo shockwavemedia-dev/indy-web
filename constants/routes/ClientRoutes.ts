@@ -31,8 +31,8 @@ export const ClientRoutes: Array<Route> = [
     Icon: ClipboardIcon,
     subRoutes: [
       {
-        title: 'Animations',
-        pathname: '/animations',
+        title: 'Animation Library',
+        pathname: '/animation-library',
       },
       {
         title: 'Graphic Design',
