@@ -6,7 +6,7 @@ export const Card = ({
   className,
 }: {
   title?: string
-  children: ReactNode
+  children?: ReactNode
   className?: string
 }) => (
   <div className={`relative rounded-xl bg-white p-6 shadow ${className}`}>

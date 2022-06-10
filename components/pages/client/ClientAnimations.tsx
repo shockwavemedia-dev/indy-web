@@ -36,9 +36,9 @@ export const ClientAnimations = () => {
   return (
     <>
       <Head>
-        <title>Daily Press - Animations</title>
+        <title>Daily Press - Animation Library</title>
       </Head>
-      <div className="mb-5 font-urbanist text-xxl font-semibold text-onyx">Animations</div>
+      <div className="mb-5 font-urbanist text-xxl font-semibold text-onyx">Animation Library</div>
       <div className="mx-auto h-full w-full max-w-8xl space-y-6">
         <div className="mb-6 flex space-x-6">
           <FancyButton
