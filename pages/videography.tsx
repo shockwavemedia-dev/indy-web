@@ -30,7 +30,7 @@ const VideographyPage: NextPageWithLayout = () => {
   return (
     <>
       <Head>
-        <title>Daily Press - Videography</title>
+        <title>Indy - Videography</title>
       </Head>
       <div className="mb-5 font-urbanist text-xxl font-semibold text-onyx">Videography</div>
       <div className="mx-auto h-full w-full max-w-8xl space-y-6">

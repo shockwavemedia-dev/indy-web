@@ -39,7 +39,7 @@ export const ClientMyFiles = () => {
   return (
     <>
       <Head>
-        <title>Daily Press - My Files</title>
+        <title>Indy - My Files</title>
       </Head>
       <div className="mb-5 font-urbanist text-xxl font-semibold text-onyx">My Files</div>
       <div className="mx-auto h-4/5 w-full max-w-8xl">

@@ -30,7 +30,7 @@ const AppPage: NextPageWithLayout = () => {
   return (
     <>
       <Head>
-        <title>Daily Press - App</title>
+        <title>Indy - App</title>
       </Head>
       <div className="mb-5 font-urbanist text-xxl font-semibold text-onyx">App</div>
       <div className="mx-auto h-full w-full max-w-8xl space-y-6">

@@ -225,7 +225,7 @@ export const StaffTicket = ({ ticketId }: { ticketId: number }) => {
   return (
     <>
       <Head>
-        <title>Daily Press - Ticket {ticket!.ticketCode}</title>
+        <title>Indy - Ticket {ticket!.ticketCode}</title>
       </Head>
       <div className="mb-5 font-urbanist text-xxl font-semibold text-onyx">
         Ticket {ticket!.ticketCode}

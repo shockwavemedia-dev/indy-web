@@ -7,7 +7,7 @@ export const StaffDashboard = () => {
   return (
     <>
       <Head>
-        <title>Daily Press - Dashboard</title>
+        <title>Indy - Dashboard</title>
       </Head>
       <div className="mb-5 font-urbanist text-xxl font-semibold text-onyx">Dashboard</div>
       <div className="mx-auto h-full w-full max-w-8xl">

@@ -21,7 +21,7 @@ export const AdminAnimations = () => {
   return (
     <>
       <Head>
-        <title>Daily Press - Animations</title>
+        <title>Indy - Animations</title>
       </Head>
       <div className="mx-auto h-full w-full max-w-8xl space-y-6">
         <div className="flex space-x-6">

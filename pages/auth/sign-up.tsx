@@ -55,7 +55,7 @@ const SignUpPage: NextPageWithLayout = () => {
   return (
     <>
       <Head>
-        <title>Daily Press - Sign Up</title>
+        <title>Indy - Sign Up</title>
       </Head>
       <Formik
         validationSchema={SignUpFormSchema}
@@ -127,7 +127,7 @@ const SignUpPage: NextPageWithLayout = () => {
 }
 
 SignUpPage.getLayout = (page: ReactElement) => (
-  <AuthLayout title="Welcome to Daily Press" subtitle="Please sign up and start the adventure">
+  <AuthLayout title="" subtitle="Please sign up and start the adventure">
     {page}
   </AuthLayout>
 )

@@ -36,7 +36,7 @@ export const ClientAnimations = () => {
   return (
     <>
       <Head>
-        <title>Daily Press - Animation Library</title>
+        <title>Indy - Animation Library</title>
       </Head>
       <div className="mb-5 font-urbanist text-xxl font-semibold text-onyx">Animation Library</div>
       <div className="mx-auto h-full w-full max-w-8xl space-y-6">

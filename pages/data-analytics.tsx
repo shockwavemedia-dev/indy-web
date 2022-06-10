@@ -30,7 +30,7 @@ const DataAnalyticsPage: NextPageWithLayout = () => {
   return (
     <>
       <Head>
-        <title>Daily Press - Data Analytics</title>
+        <title>Indy - Data Analytics</title>
       </Head>
       <div className="mb-5 font-urbanist text-xxl font-semibold text-onyx">Data Analytics</div>
       <div className="mx-auto h-full w-full max-w-8xl space-y-6">

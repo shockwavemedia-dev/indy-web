@@ -48,7 +48,7 @@ const LoginPage: NextPageWithLayout = () => {
   return (
     <>
       <Head>
-        <title>Daily Press - Login</title>
+        <title>Indy - Login</title>
       </Head>
       <Formik
         validationSchema={LoginFormSchema}
@@ -102,7 +102,7 @@ const LoginPage: NextPageWithLayout = () => {
 
 LoginPage.getLayout = (page: ReactElement) => (
   <AuthLayout
-    title="Welcome to Daily Press"
+    title="Where Marketing, Data and Creativity meet."
     subtitle="Please log in to your account and start the adventure"
   >
     {page}

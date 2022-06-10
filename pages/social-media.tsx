@@ -30,7 +30,7 @@ const SocialMediaPage: NextPageWithLayout = () => {
   return (
     <>
       <Head>
-        <title>Daily Press - EDM</title>
+        <title>Indy - EDM</title>
       </Head>
       <div className="mb-5 font-urbanist text-xxl font-semibold text-onyx">EDM</div>
       <div className="mx-auto h-full w-full max-w-8xl space-y-6">

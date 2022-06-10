@@ -30,7 +30,7 @@ const ClevaQPage: NextPageWithLayout = () => {
   return (
     <>
       <Head>
-        <title>Daily Press - ClevaQ</title>
+        <title>Indy - ClevaQ</title>
       </Head>
       <div className="mb-5 font-urbanist text-xxl font-semibold text-onyx">ClevaQ</div>
       <div className="mx-auto h-full w-full max-w-8xl space-y-6">

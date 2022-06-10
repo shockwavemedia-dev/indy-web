@@ -30,7 +30,7 @@ const ScreenManagerPage: NextPageWithLayout = () => {
   return (
     <>
       <Head>
-        <title>Daily Press - Screen Manager</title>
+        <title>Indy - Screen Manager</title>
       </Head>
       <div className="mb-5 font-urbanist text-xxl font-semibold text-onyx">Screen Manager</div>
       <div className="mx-auto h-full w-full max-w-8xl space-y-6">

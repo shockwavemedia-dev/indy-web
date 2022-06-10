@@ -28,7 +28,7 @@ const StaffUserPage: NextPageWithLayout = () => {
     <>
       <NewAdminUserModal isVisible={isNewAdminUserModalVisible} onClose={toggleNewAdminUserModal} />
       <Head>
-        <title>Daily Press - Staffs</title>
+        <title>Indy - Staffs</title>
       </Head>
       <div className="mx-auto h-full w-full max-w-8xl space-y-6">
         <FancyButton

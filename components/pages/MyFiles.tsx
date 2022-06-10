@@ -48,7 +48,7 @@ export const MyFiles = () => {
   return (
     <>
       <Head>
-        <title>Daily Press - My Files</title>
+        <title>Indy - My Files</title>
       </Head>
       <div className="mb-5 font-urbanist text-xxl font-semibold text-onyx">My Files</div>
       <div className="mx-auto w-full max-w-7xl space-y-6">

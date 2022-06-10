@@ -40,7 +40,7 @@ const ForgotPasswordPage: NextPageWithLayout = () => {
   return (
     <>
       <Head>
-        <title>Daily Press - Forgot Password</title>
+        <title>Indy - Forgot Password</title>
       </Head>
       <Formik
         validationSchema={ForgotPasswordFormSchema}

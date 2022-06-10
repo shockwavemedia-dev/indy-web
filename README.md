@@ -1,4 +1,4 @@
-# Daily Press CRM
+# Indy CRM
 
 ## 💻 Workspace Setup
 

@@ -49,7 +49,7 @@ const PasswordResetPage: NextPageWithLayout = () => {
   return (
     <>
       <Head>
-        <title>Daily Press - Create New Password</title>
+        <title>Indy - Create New Password</title>
       </Head>
       <Formik
         initialValues={{

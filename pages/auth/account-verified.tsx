@@ -28,7 +28,7 @@ const AccountVerifiedPage: NextPageWithLayout = () => {
   return (
     <>
       <Head>
-        <title>Daily Press - Verification</title>
+        <title>Indy - Verification</title>
       </Head>
 
       <Link href="/auth/login">

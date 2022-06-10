@@ -76,6 +76,7 @@ module.exports = {
     fontFamily: {
       urbanist: ['Urbanist'],
       'varela-round': ['Varela Round'],
+      'circular-std': ['Circular Std'],
     },
     colors: {
       transparent: 'transparent',

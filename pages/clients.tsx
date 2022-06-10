@@ -18,7 +18,7 @@ const ClientPage: NextPageWithLayout = () => {
     <>
       <NewClientModal isVisible={isNewClientModalVisible} onClose={toggleNewClientModal} />
       <Head>
-        <title>Daily Press - Clients</title>
+        <title>Indy - Clients</title>
       </Head>
       <div className="mx-auto h-full w-full max-w-8xl space-y-6">
         <FancyButton

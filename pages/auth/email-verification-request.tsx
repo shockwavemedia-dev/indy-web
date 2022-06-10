@@ -28,7 +28,7 @@ const EmailVerificationRequestPage: NextPageWithLayout = () => {
   return (
     <>
       <Head>
-        <title>Daily Press - Send Email Verification</title>
+        <title>Indy - Send Email Verification</title>
       </Head>
       <Formik
         validationSchema={ForgotPasswordFormSchema}

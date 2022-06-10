@@ -30,7 +30,7 @@ const SocialMediaAdsPage: NextPageWithLayout = () => {
   return (
     <>
       <Head>
-        <title>Daily Press - Social Media Ads</title>
+        <title>Indy - Social Media Ads</title>
       </Head>
       <div className="mb-5 font-urbanist text-xxl font-semibold text-onyx">Social Media Ads</div>
       <div className="mx-auto h-full w-full max-w-8xl space-y-6">

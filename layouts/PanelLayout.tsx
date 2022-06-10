@@ -14,7 +14,6 @@ import { AdminRoutes } from '../constants/routes/AdminRoutes'
 import { ClientRoutes } from '../constants/routes/ClientRoutes'
 import { ManagerRoutes } from '../constants/routes/ManagerRoutes'
 import { StaffRoutes } from '../constants/routes/StaffRoutes'
-import DailyPressLogo from '../public/images/daily-press-logo.png'
 import DummyAvatar from '../public/images/dummy-avatar.png'
 
 const PanelLayout = ({ children }: { children: ReactNode }) => {
@@ -53,8 +52,8 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
   return (
     <div className="flex min-h-screen overflow-x-clip bg-cultured">
       <div className="w-75 flex-none bg-charleston-green pt-6">
-        <div className="mb-5 pl-6">
-          <Image draggable={false} src={DailyPressLogo} alt="Daily Press" height={50} width={50} />
+        <div className="mb-5 px-6 font-circular-std text-5xl text-white">
+          Indy<span className="text-halloween-orange">.</span>
         </div>
         <div className="mb-5 flex space-x-3 px-6">
           <JobsStatusCountCard Icon={BriefcaseIcon} value={12} description="Pending Jobs" />

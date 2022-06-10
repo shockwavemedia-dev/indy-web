@@ -38,7 +38,7 @@ const GraphicPage: NextPageWithLayout = () => {
   return (
     <>
       <Head>
-        <title>Daily Press - Graphic Design</title>
+        <title>Indy - Graphic Design</title>
       </Head>
       <div className="mb-5 font-urbanist text-xxl font-semibold text-onyx">Graphic Design</div>
       <div className="mx-auto h-full w-full max-w-8xl space-y-6">
