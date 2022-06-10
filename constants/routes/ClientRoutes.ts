@@ -19,6 +19,7 @@ export const ClientRoutes: Array<Route> = [
   },
   {
     title: 'Screen Manager',
+    pathname: '/screen-manager',
     Icon: MonitorIcon,
   },
   {
@@ -43,28 +44,28 @@ export const ClientRoutes: Array<Route> = [
         pathname: '/website-services',
       },
       {
-        title: 'Graphic Design',
-      },
-      {
-        title: 'Website',
-      },
-      {
         title: 'EDM',
+        pathname: '/edm',
       },
       {
         title: 'Social Media',
+        pathname: '/social-media',
       },
       {
         title: 'Data Analytics',
+        pathname: '/data-analytics',
       },
       {
         title: 'Photography',
+        pathname: '/photography',
       },
       {
         title: 'Videography',
+        pathname: '/videography',
       },
       {
         title: 'Print',
+        pathname: '/print',
       },
     ],
   },
@@ -74,15 +75,19 @@ export const ClientRoutes: Array<Route> = [
     subRoutes: [
       {
         title: 'App',
+        pathname: '/app',
       },
       {
         title: 'Website',
+        pathname: '/website',
       },
       {
         title: 'ClevaQ',
+        pathname: '/clevaq',
       },
       {
         title: 'Social Media Ads',
+        pathname: '/social-media-ads',
       },
     ],
   },
