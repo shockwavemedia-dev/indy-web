@@ -69,8 +69,8 @@ export const DateInput = ({
             <input
               ref={inputRef}
               {...inputProps}
-              className={`h-12.5 w-full rounded-xl bg-transparent px-13 font-urbanist text-sm font-medium text-onyx placeholder-metallic-silver focus:ring-2 focus:ring-jungle-green read-only:focus:ring-1 read-only:focus:ring-bright-gray ${
-                isPickerVisible ? 'ring-2 ring-jungle-green' : 'ring-1 ring-bright-gray'
+              className={`h-12.5 w-full rounded-xl bg-transparent px-13 font-urbanist text-sm font-medium text-onyx placeholder-metallic-silver focus:ring-2 focus:ring-halloween-orange read-only:focus:ring-1 read-only:focus:ring-bright-gray ${
+                isPickerVisible ? 'ring-2 ring-halloween-orange' : 'ring-1 ring-bright-gray'
               } ${readOnly ? 'read-only:cursor-auto' : 'read-only:cursor-pointer'}`}
               name={name}
               spellCheck={false}

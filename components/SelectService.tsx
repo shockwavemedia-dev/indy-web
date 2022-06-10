@@ -132,7 +132,7 @@ const ServiceButton = ({
       type="button"
       onClick={disabled ? () => {} : onClick}
       className={`flex h-11 w-full items-center justify-between whitespace-nowrap rounded-xl px-6 disabled:opacity-50 ${
-        selected ? 'bg-jungle-green' : 'border-1.5 border-solid border-bright-gray bg-white'
+        selected ? 'bg-halloween-orange' : 'border-1.5 border-solid border-bright-gray bg-white'
       } ${disabled ? 'cursor-default opacity-40' : ''}`}
     >
       <div
@@ -187,7 +187,7 @@ const Extras = ({
         type="checkbox"
         name={extrasName}
         id={extrasName}
-        className="mr-3 h-4 w-4 appearance-none rounded bg-white ring-1 ring-inset ring-bright-gray checked:bg-jungle-green checked:ring-0"
+        className="mr-3 h-4 w-4 appearance-none rounded bg-white ring-1 ring-inset ring-bright-gray checked:bg-halloween-orange checked:ring-0"
         onChange={disabled ? () => {} : toggleExtras}
         disabled={disabled}
       />

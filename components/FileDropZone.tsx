@@ -48,14 +48,16 @@ export const FileDropZone = ({
       <div
         {...getRootProps()}
         className={`flex h-35 cursor-default items-center justify-center overflow-hidden rounded-xl border border-dashed ${
-          isDragAccept ? 'border-jungle-green bg-mint-cream' : 'border-lavender-gray bg-ghost-white'
+          isDragAccept
+            ? 'border-halloween-orange bg-mint-cream'
+            : 'border-lavender-gray bg-ghost-white'
         }`}
       >
         <div className="cursor absolute flex flex-col items-center">
           <div className="mb-1.5 font-urbanist text-sm font-medium text-onyx">
             Drag {'&'} drop you assets, or{' '}
             <button
-              className="font-semibold text-jungle-green underline underline-offset-1"
+              className="font-semibold text-halloween-orange underline underline-offset-1"
               onClick={open}
               type="button"
             >

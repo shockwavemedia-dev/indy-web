@@ -89,6 +89,7 @@ module.exports = {
       orange: '#FFA500',
       orchid: '#DA70D6',
       quartz: '#4B494A',
+      cultured: '#F9F9F7',
       'bright-gray': '#E8E8EF',
       'metallic-silver': '#ABABB9',
       'cosmic-latte': '#FFF6EA',

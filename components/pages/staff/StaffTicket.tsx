@@ -196,8 +196,8 @@ export const StaffTicket = ({ ticketId }: { ticketId: number }) => {
           <Icon
             className={`mr-2.5 ${
               isActiveTab
-                ? 'stroke-jungle-green'
-                : 'stroke-lavender-gray group-hover:stroke-jungle-green group-disabled:stroke-lavender-gray'
+                ? 'stroke-halloween-orange'
+                : 'stroke-lavender-gray group-hover:stroke-halloween-orange group-disabled:stroke-lavender-gray'
             }`}
           />
           <div
@@ -289,8 +289,8 @@ export const StaffTicket = ({ ticketId }: { ticketId: number }) => {
               ofString="Assignee"
               tableActions={
                 <button className="flex space-x-2" onClick={toggleAddTicketAssigneeModal}>
-                  <PlusIcon className="stroke-jungle-green" />
-                  <div className="font-urbanist text-sm font-semibold text-jungle-green">
+                  <PlusIcon className="stroke-halloween-orange" />
+                  <div className="font-urbanist text-sm font-semibold text-halloween-orange">
                     Add Assignee
                   </div>
                 </button>
@@ -303,8 +303,8 @@ export const StaffTicket = ({ ticketId }: { ticketId: number }) => {
               type="button"
               onClick={toggleUploadTicketFileModal}
             >
-              <PlusIcon className="stroke-jungle-green" />
-              <div className="font-urbanist text-sm font-semibold text-jungle-green">
+              <PlusIcon className="stroke-halloween-orange" />
+              <div className="font-urbanist text-sm font-semibold text-halloween-orange">
                 Upload File
               </div>
             </button>
@@ -341,7 +341,7 @@ export const StaffTicket = ({ ticketId }: { ticketId: number }) => {
           </div>
           <div className="h-px bg-bright-gray" />
           <div
-            className={`-mt-0.5 mb-4 h-0.75 w-1/5 rounded bg-jungle-green fill-jungle-green ${
+            className={`-mt-0.5 mb-4 h-0.75 w-1/5 rounded bg-halloween-orange fill-halloween-orange ${
               activeTab === 'description'
                 ? 'ml-0'
                 : activeTab === 'notes'

@@ -21,7 +21,7 @@ export const FileButton = ({
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className={`flex flex-none flex-col items-center justify-center space-y-1 rounded-xl border-2 border-bright-gray p-3 hover:border-jungle-green ${className}`}
+      className={`flex flex-none flex-col items-center justify-center space-y-1 rounded-xl border-2 border-bright-gray p-3 hover:border-halloween-orange ${className}`}
     >
       <div className="relative">
         <FileIcon />
@@ -37,7 +37,7 @@ export const FileButton = ({
     <button
       type="button"
       onClick={onClick}
-      className={`flex flex-none flex-col items-center justify-center space-y-1 rounded-xl border-2 border-bright-gray p-3 hover:border-jungle-green ${className}`}
+      className={`flex flex-none flex-col items-center justify-center space-y-1 rounded-xl border-2 border-bright-gray p-3 hover:border-halloween-orange ${className}`}
     >
       {fileModal ? (
         <div className="relative">
@@ -47,7 +47,7 @@ export const FileButton = ({
           </div>
         </div>
       ) : (
-        <FolderIcon className="stroke-jungle-green" />
+        <FolderIcon className="stroke-halloween-orange" />
       )}
       <div
         className={` ${

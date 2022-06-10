@@ -80,7 +80,7 @@ export const StaffTicketsTableColumns: Array<Column<Ticket>> = [
         <div className="flex space-x-2">
           <Link href={`/ticket/${ticket.id}`}>
             <a className="group">
-              <EyeIcon className="stroke-waterloo group-hover:stroke-jungle-green" />
+              <EyeIcon className="stroke-waterloo group-hover:stroke-halloween-orange" />
             </a>
           </Link>
         </div>

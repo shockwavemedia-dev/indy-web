@@ -153,7 +153,7 @@ export const RichTextInput = ({
       </label>
       <div
         className={`relative overflow-hidden rounded-xl bg-white ${
-          isEditorFocused ? 'ring-2 ring-jungle-green' : 'ring-1 ring-bright-gray '
+          isEditorFocused ? 'ring-2 ring-halloween-orange' : 'ring-1 ring-bright-gray '
         }`}
         id="rich-text-input"
       >
@@ -247,7 +247,7 @@ const StyleButton = ({
     }}
     type="button"
     className={`group grid h-5 w-5 place-items-center rounded ${
-      isActive ? 'bg-jungle-green' : 'hover:bg-jungle-green'
+      isActive ? 'bg-halloween-orange' : 'hover:bg-halloween-orange'
     }`}
     tabIndex={-1}
   >

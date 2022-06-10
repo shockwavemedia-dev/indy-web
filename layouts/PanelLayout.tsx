@@ -51,7 +51,7 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
   const signOut = () => nextAuthSignOut()
 
   return (
-    <div className="flex min-h-screen overflow-x-clip bg-ghost-white">
+    <div className="flex min-h-screen overflow-x-clip bg-cultured">
       <div className="w-75 flex-none bg-charleston-green pt-6">
         <div className="mb-5 pl-6">
           <Image draggable={false} src={DailyPressLogo} alt="Daily Press" height={50} width={50} />

@@ -25,7 +25,7 @@ export const PasswordInput = ({
       <div className="relative flex items-center">
         <Icon className="pointer-events-none absolute left-6 stroke-lavender-gray" />
         <Field
-          className="h-12.5 w-full rounded-xl px-13 font-urbanist text-sm font-medium text-onyx placeholder-metallic-silver ring-1 ring-bright-gray focus:ring-2 focus:ring-jungle-green"
+          className="h-12.5 w-full rounded-xl px-13 font-urbanist text-sm font-medium text-onyx placeholder-metallic-silver ring-1 ring-bright-gray focus:ring-2 focus:ring-halloween-orange"
           type={isShowPassword ? 'text' : 'password'}
           name={name}
           id={name}
@@ -41,9 +41,9 @@ export const PasswordInput = ({
           type="button"
         >
           {isShowPassword ? (
-            <EyeSlashIcon className="stroke-lavender-gray group-hover:stroke-jungle-green" />
+            <EyeSlashIcon className="stroke-lavender-gray group-hover:stroke-halloween-orange" />
           ) : (
-            <EyeIcon className="stroke-lavender-gray group-hover:stroke-jungle-green" />
+            <EyeIcon className="stroke-lavender-gray group-hover:stroke-halloween-orange" />
           )}
         </button>
       </div>

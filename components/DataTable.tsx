@@ -113,13 +113,13 @@ export const DataTable = <T extends Record<string, unknown>>({
                                 <SortIcon
                                   className={
                                     isSorted && !isSortedDesc
-                                      ? 'fill-jungle-green'
+                                      ? 'fill-halloween-orange'
                                       : 'fill-bright-gray'
                                   }
                                 />
                                 <SortIcon
                                   className={`rotate-180 ${
-                                    isSortedDesc ? 'fill-jungle-green' : 'fill-bright-gray'
+                                    isSortedDesc ? 'fill-halloween-orange' : 'fill-bright-gray'
                                   }`}
                                 />
                               </div>
@@ -167,7 +167,7 @@ export const DataTable = <T extends Record<string, unknown>>({
               className="group"
             >
               <CaretIcon
-                className="-rotate-90 stroke-jungle-green group-disabled:stroke-bright-gray"
+                className="-rotate-90 stroke-halloween-orange group-disabled:stroke-bright-gray"
                 small
               />
             </button>
@@ -179,7 +179,7 @@ export const DataTable = <T extends Record<string, unknown>>({
                     className={`text-metallic-silver ${
                       isFetching
                         ? 'disabled:text-bright-gray'
-                        : 'disabled:font-bold disabled:text-jungle-green'
+                        : 'disabled:font-bold disabled:text-halloween-orange'
                     }`}
                     disabled={isFetching}
                   >
@@ -205,7 +205,7 @@ export const DataTable = <T extends Record<string, unknown>>({
                       className={`text-metallic-silver ${
                         isFetching
                           ? 'disabled:text-bright-gray'
-                          : 'disabled:font-bold disabled:text-jungle-green'
+                          : 'disabled:font-bold disabled:text-halloween-orange'
                       }`}
                     >
                       {pageNumber + 1}
@@ -221,7 +221,7 @@ export const DataTable = <T extends Record<string, unknown>>({
               className="group"
             >
               <CaretIcon
-                className="rotate-90 stroke-jungle-green group-disabled:stroke-bright-gray"
+                className="rotate-90 stroke-halloween-orange group-disabled:stroke-bright-gray"
                 small
               />
             </button>

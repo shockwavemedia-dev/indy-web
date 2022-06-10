@@ -14,7 +14,7 @@ export const RouteButton = ({
   hasSubRoutes?: boolean
   subRoute?: boolean
 }) => (
-  <div className={`flex items-center ${isCurrentPath && !subRoute ? 'bg-halloween-orange' : ''}`}>
+  <div className={`flex items-center ${isCurrentPath ? 'bg-halloween-orange' : ''}`}>
     {!subRoute && (
       <div
         className={`h-full rounded-r border-r-4 ${

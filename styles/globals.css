@@ -4,7 +4,7 @@
 
 ::selection {
   color: #ffffff;
-  background: #2bb67d;
+  background: #f25d23;
 }
 
 input:focus-visible,
@@ -18,7 +18,7 @@ input:-webkit-autofill {
 }
 
 input:-webkit-autofill:focus {
-  -webkit-box-shadow: 0 0 0 2px #2bb67d, inset 0 0 0 100px #ffffff !important;
+  -webkit-box-shadow: 0 0 0 2px #f25d23, inset 0 0 0 100px #ffffff !important;
 }
 
 ::-webkit-scrollbar {
@@ -28,24 +28,24 @@ input:-webkit-autofill:focus {
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #2bb67d;
+  background-color: #f25d23;
   border-radius: 5px;
 }
 
 #nprogress .bar {
-  background-color: #2bb67d;
+  background-color: #f25d23;
   height: 4px;
 }
 
 #nprogress .bar {
-  box-shadow: 0 0 10px #2bb67d, 0 0 5px #2bb67d;
+  box-shadow: 0 0 10px #f25d23, 0 0 5px #f25d23;
 }
 
 #nprogress .spinner-icon {
   width: 20px;
   height: 20px;
-  border-top-color: #2bb67d;
-  border-left-color: #2bb67d;
+  border-top-color: #f25d23;
+  border-left-color: #f25d23;
 }
 
 .MuiPaper-root {
@@ -80,21 +80,21 @@ input:-webkit-autofill:focus {
 
 .MuiButtonBase-root:hover,
 .PrivatePickersYear-yearButton:hover {
-  background-color: #e9faf3 !important;
+  background-color: ##f25d231a !important;
 }
 
 .MuiPickersDay-today {
-  border-color: #2bb67d !important;
+  border-color: #f25d23 !important;
   background-color: transparent !important;
 }
 
 .Mui-selected {
-  background-color: #2bb67d !important;
+  background-color: #f25d23 !important;
   color: #ffffff !important;
 }
 
 .Mui-selected:hover {
-  background-color: #2bb67d !important;
+  background-color: #f25d23 !important;
 }
 
 .MuiPaper-root {

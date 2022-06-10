@@ -50,13 +50,13 @@ export const ManagerTicketAssigneeTableColumns: Array<Column<TicketAssignee>> = 
       return (
         <div className="flex space-x-2">
           <button onClick={editTicketAssignee} className="group">
-            <EditIcon className="stroke-waterloo group-hover:stroke-jungle-green" />
+            <EditIcon className="stroke-waterloo group-hover:stroke-halloween-orange" />
           </button>
           <button onClick={reAssignTicketAssignee} className="group">
-            <UserIcon className="stroke-waterloo group-hover:stroke-jungle-green" />
+            <UserIcon className="stroke-waterloo group-hover:stroke-halloween-orange" />
           </button>
           <button onClick={deleteTicketAssignee} className="group">
-            <TrashIcon className="stroke-waterloo group-hover:stroke-jungle-green" />
+            <TrashIcon className="stroke-waterloo group-hover:stroke-halloween-orange" />
           </button>
         </div>
       )

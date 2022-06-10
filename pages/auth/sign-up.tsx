@@ -114,7 +114,7 @@ const SignUpPage: NextPageWithLayout = () => {
             <div className="font-urbanist text-sm font-medium text-metallic-silver">
               Already have an account?{' '}
               <Link href="/auth/login">
-                <a className="font-urbanist text-sm font-semibold text-jungle-green underline-offset-1 hover:underline">
+                <a className="font-urbanist text-sm font-semibold text-halloween-orange underline-offset-1 hover:underline">
                   Login
                 </a>
               </Link>

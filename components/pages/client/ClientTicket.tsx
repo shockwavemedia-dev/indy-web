@@ -186,8 +186,8 @@ export const ClientTicket = ({ ticketId }: { ticketId: number }) => {
           <Icon
             className={`mr-2.5 ${
               isActiveTab
-                ? 'stroke-jungle-green'
-                : 'stroke-lavender-gray group-hover:stroke-jungle-green group-disabled:stroke-lavender-gray'
+                ? 'stroke-halloween-orange'
+                : 'stroke-lavender-gray group-hover:stroke-halloween-orange group-disabled:stroke-lavender-gray'
             }`}
           />
           <div
@@ -226,10 +226,10 @@ export const ClientTicket = ({ ticketId }: { ticketId: number }) => {
           <Card title="Details">
             <div className="absolute top-6 right-6 space-x-4">
               <button className="group" onClick={toggleEditTicketModal}>
-                <EditIcon className="stroke-waterloo group-hover:stroke-jungle-green" />
+                <EditIcon className="stroke-waterloo group-hover:stroke-halloween-orange" />
               </button>
               <button className="group" onClick={toggleDeleteTicketModal}>
-                <TrashIcon className="stroke-waterloo group-hover:stroke-jungle-green" />
+                <TrashIcon className="stroke-waterloo group-hover:stroke-halloween-orange" />
               </button>
             </div>
             <div className="mb-6 flex space-x-5">
@@ -322,7 +322,7 @@ export const ClientTicket = ({ ticketId }: { ticketId: number }) => {
           </div>
           <div className="h-px bg-bright-gray" />
           <div
-            className={`-mt-0.5 mb-4 h-0.75 w-1/5 rounded bg-jungle-green fill-jungle-green ${
+            className={`-mt-0.5 mb-4 h-0.75 w-1/5 rounded bg-halloween-orange fill-halloween-orange ${
               activeTab === 'description'
                 ? 'ml-0'
                 : activeTab === 'notes'

@@ -33,7 +33,7 @@ export const ClientTicketAssigneeTableColumns: Array<Column<TicketAssignee>> = [
       return (
         <div className="flex space-x-2">
           <button onClick={viewTicketAssignee}>
-            <EyeIcon className="stroke-waterloo group-hover:stroke-jungle-green" />
+            <EyeIcon className="stroke-waterloo group-hover:stroke-halloween-orange" />
           </button>
         </div>
       )

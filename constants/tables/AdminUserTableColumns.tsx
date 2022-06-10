@@ -111,10 +111,10 @@ export const AdminUserTableColumns: Array<Column<User>> = [
       return (
         <div className="flex space-x-2">
           <button onClick={editAdminUser} className="group">
-            <EditIcon className="stroke-waterloo group-hover:stroke-jungle-green" />
+            <EditIcon className="stroke-waterloo group-hover:stroke-halloween-orange" />
           </button>
           <button onClick={deleteAdminUser} className="group">
-            <TrashIcon className="stroke-waterloo group-hover:stroke-jungle-green" />
+            <TrashIcon className="stroke-waterloo group-hover:stroke-halloween-orange" />
           </button>
         </div>
       )
