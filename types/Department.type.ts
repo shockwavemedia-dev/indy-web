@@ -1,3 +1,5 @@
+import { DepartmentMember } from './pages/DepartmentMember.type'
+import { Service } from './Service.type'
 import { User } from './User.type'
 
 export type Department = {
@@ -7,4 +9,6 @@ export type Department = {
   status: 'active' | 'deleted' | 'inactive'
   minDeliveryDays: number
   users?: Array<User>
+  services?: Array<Service>
+  members?: Array<DepartmentMember>
 }

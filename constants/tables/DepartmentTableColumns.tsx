@@ -1,4 +1,6 @@
+import Link from 'next/link'
 import { Column } from 'react-table'
+import { EyeIcon } from '../../components/icons/EyeIcon'
 import { Pill } from '../../components/Pill'
 import { Department } from '../../types/Department.type'
 
@@ -55,5 +57,22 @@ export const DepartmentTableColumns: Array<Column<Department>> = [
     Header: 'Minimum Delivery Days',
     accessor: 'minDeliveryDays',
     Cell: ({ value }) => <div className="font-urbanist text-sm font-medium text-onyx">{value}</div>,
+  },
+  {
+    Header: '',
+    accessor: 'id',
+    id: 'actions',
+    disableSortBy: true,
+    Cell: ({
+      row: {
+        original: { id },
+      },
+    }) => (
+      <Link href={`/departments/${id}`}>
+        <a className="group">
+          <EyeIcon className="stroke-waterloo group-hover:stroke-halloween-orange" />
+        </a>
+      </Link>
+    ),
   },
 ]
