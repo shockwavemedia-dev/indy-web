@@ -10,7 +10,7 @@ export const AdminRoutes: Array<Route> = [
     Icon: UserIcon,
   },
   {
-    title: 'Animations',
+    title: 'Library',
     pathname: '/animation-library',
     Icon: VideoIcon,
   },
