@@ -48,7 +48,7 @@ export const AdminAnimations = () => {
           <DataTable
             dataEndpoint="/v1/libraries"
             columns={AnimationTableColumns}
-            tableQueryKey={['libraries']}
+            tableQueryKey={['animations']}
             ofString="Animations"
           />
         </Card>
