@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { Form, Formik } from 'formik'
 import { useQuery, useQueryClient } from 'react-query'
-import { EditTicketFormSchema } from '../../schemas/EditTicketFormSchema'
+import { EditAnimationFormSchema } from '../../schemas/EditAnimationFormSchema'
 import { useToastStore } from '../../store/ToastStore'
 import { Animation } from '../../types/Animation.type'
 import { CategoryAnimation } from '../../types/CategoryAnimation.type'
@@ -28,18 +28,14 @@ export const EditAnimationModal = ({
   const { showToast } = useToastStore()
 
   const { data: categories } = useQuery(
-    'categories',
+    'clients',
     async () => {
       const {
         data: { data },
       } = await axios.get<{
         data: Array<CategoryAnimation>
         page: Page
-      }>('/v1/library-categories', {
-        params: {
-          size: 100,
-        },
-      })
+      }>('/v1/library-categories')
 
       return data
     },
@@ -84,42 +80,51 @@ export const EditAnimationModal = ({
               description: animation.description,
               libraryCategoryId: animation.libraryCategoryId,
               file: animation.file,
-              _method: 'PUT',
             }}
-            validationSchema={EditTicketFormSchema}
+            validationSchema={EditAnimationFormSchema}
             onSubmit={submitForm}
           >
             {({ isSubmitting }) => (
-              <Form className="flex w-130 flex-col">
-                <TextInput
-                  type="text"
-                  Icon={PencilIcon}
-                  placeholder="Animation Title"
-                  name="title"
-                  className="mb-5"
-                />
-                <Select
-                  name="libraryCategoryId"
-                  Icon={PencilIcon}
-                  placeholder="Select Category Animation"
-                  options={categoryOptions || []}
-                  className="mb-5"
-                />
-                <TextInput
-                  type="text"
-                  Icon={PencilIcon}
-                  placeholder="Description"
-                  name="description"
-                  className="mb-5"
-                />
-                <FileDropZone
-                  label="Upload Assets"
-                  name="file"
-                  className="mb-8"
-                  maxSize={250}
-                  mimeType="image/gif"
-                  accept={['.mp4']}
-                />
+              <Form className="flex w-140 flex-col">
+                <div className="mb-5 flex flex-col">
+                  <TextInput
+                    type="text"
+                    Icon={PencilIcon}
+                    placeholder="Animation Title"
+                    name="title"
+                    className="mb-5"
+                  />
+                  <Select
+                    name="libraryCategoryId"
+                    Icon={PencilIcon}
+                    placeholder="Select Category Animation"
+                    className="mb-5"
+                    options={categoryOptions}
+                    defaultValue={categoryOptions?.find(
+                      ({ value }) => value === animation.libraryCategoryId
+                    )}
+                  />
+                  <TextInput
+                    type="text"
+                    Icon={PencilIcon}
+                    placeholder="Description"
+                    name="description"
+                    className="mb-5"
+                  />
+                  <FileDropZone
+                    label="Upload Assets"
+                    name="file"
+                    className="mb-5"
+                    maxSize={250}
+                    mimeType="image/gif"
+                    accept={['.mp4']}
+                  />
+                </div>
+                <div className="mb-5 flex w-140">
+                  <video muted autoPlay loop>
+                    <source src={animation.videoLink} />
+                  </video>
+                </div>
                 <div className="flex space-x-5">
                   <Button ariaLabel="Cancel" onClick={onClose} type="button" light>
                     Cancel

@@ -24,7 +24,7 @@ export const DeleteAnimationModal = ({
       const { status } = await axios.delete(`/v1/libraries/${animation.id}`)
 
       if (status === 200) {
-        queryClient.invalidateQueries('animation')
+        queryClient.invalidateQueries('animations')
         onClose()
         showToast({
           type: 'success',
@@ -44,17 +44,24 @@ export const DeleteAnimationModal = ({
       {isVisible && (
         <Modal title="Are you sure you want to delete Animation?" onClose={onClose}>
           <div className="w-140">
-            <div className="mx-auto mb-8 flex w-fit space-x-10">
+            <div className="mb-5 flex space-x-25">
               <TitleValue title="Title">{animation.title}</TitleValue>
-              <TitleValue title="Description" className="capitalize">
-                {animation.description}
-              </TitleValue>
               <TitleValue title="Library Category Name" className="capitalize">
                 {animation.libraryCategoryName}
               </TitleValue>
-              <TitleValue title="Video" className="capitalize">
-                {animation.videoLink}
+            </div>
+            <div className="mb-5 flex">
+              <TitleValue title="Description" className="capitalize">
+                {animation.description}
               </TitleValue>
+            </div>
+            <div className="mb-5 flex">
+              <div className="font-urbanist text-xs font-medium text-metallic-silver">Video</div>
+            </div>
+            <div className="mb-5 flex w-140">
+              <video muted autoPlay loop>
+                <source src={animation.videoLink} />
+              </video>
             </div>
             <div className="flex space-x-5">
               <Button ariaLabel="Cancel" onClick={onClose} type="button" light>
