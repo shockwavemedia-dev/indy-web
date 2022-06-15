@@ -1,11 +1,14 @@
 import Head from 'next/head'
 import { useState } from 'react'
 import { AnimationTableColumns } from '../../../constants/tables/AnimationTableColumns'
+import { useAnimationStore } from '../../../store/AnimationStore'
 import { Card } from '../../Card'
 import { DataTable } from '../../DataTable'
 import { FancyButton } from '../../FancyButton'
 import { UserIcon } from '../../icons/UserIcon'
 import { VideoIcon } from '../../icons/VideoIcon'
+import { DeleteAnimationModal } from '../../modals/DeleteAnimationModal'
+import { EditAnimationModal } from '../../modals/EditAnimationModal'
 import { NewAnimationCategoryModal } from '../../modals/NewAnimationCategoryModal'
 import { NewAnimationModal } from '../../modals/NewAnimationModal'
 
@@ -17,6 +20,14 @@ export const AdminAnimations = () => {
     setNewAnimationCategoryModalVisible(!isNewAnimationCategoryModalVisible)
 
   const toggleNewAnimationModal = () => setNewAnimationModalVisible(!isNewAnimationModalVisible)
+
+  const {
+    activeAnimation,
+    isEditAnimationModalVisible,
+    isDeleteAnimationModalVisible,
+    toggleEditAnimationModal,
+    toggleDeleteAnimationModal,
+  } = useAnimationStore()
 
   return (
     <>
@@ -58,6 +69,16 @@ export const AdminAnimations = () => {
         onClose={toggleNewAnimationCategoryModal}
       />
       <NewAnimationModal isVisible={isNewAnimationModalVisible} onClose={toggleNewAnimationModal} />
+      <EditAnimationModal
+        isVisible={isEditAnimationModalVisible}
+        onClose={toggleEditAnimationModal}
+        animation={activeAnimation}
+      />
+      <DeleteAnimationModal
+        isVisible={isDeleteAnimationModalVisible}
+        onClose={toggleDeleteAnimationModal}
+        animation={activeAnimation}
+      />
     </>
   )
 }

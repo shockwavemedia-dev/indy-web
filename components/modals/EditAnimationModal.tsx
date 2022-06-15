@@ -1,28 +1,31 @@
 import axios from 'axios'
 import { Form, Formik } from 'formik'
 import { useQuery, useQueryClient } from 'react-query'
-import { NewAnimationFormSchema } from '../../schemas/NewAnimationFormSchema'
+import { EditTicketFormSchema } from '../../schemas/EditTicketFormSchema'
 import { useToastStore } from '../../store/ToastStore'
+import { Animation } from '../../types/Animation.type'
 import { CategoryAnimation } from '../../types/CategoryAnimation.type'
-import { NewAnimationForm } from '../../types/forms/NewAnimationForm.type'
+import { EditAnimationForm } from '../../types/forms/EditAnimationForm.type'
 import { Page } from '../../types/Page.type'
-import { objectWithFileToFormData } from '../../utils/FormHelpers'
 import { Button } from '../Button'
 import { FileDropZone } from '../FileDropZone'
+import { FloppyDiskIcon } from '../icons/FloppyDiskIcon'
 import { PencilIcon } from '../icons/PencilIcon'
 import { Modal } from '../Modal'
 import { Select } from '../Select'
 import { TextInput } from '../TextInput'
 
-export const NewAnimationModal = ({
+export const EditAnimationModal = ({
   isVisible,
   onClose,
+  animation,
 }: {
   isVisible: boolean
   onClose: () => void
+  animation: Animation
 }) => {
-  const { showToast } = useToastStore()
   const queryClient = useQueryClient()
+  const { showToast } = useToastStore()
 
   const { data: categories } = useQuery(
     'categories',
@@ -50,16 +53,17 @@ export const NewAnimationModal = ({
     label: category.name,
   }))
 
-  const submitForm = async (values: NewAnimationForm) => {
+  const submitForm = async (values: EditAnimationForm) => {
     try {
-      const { status } = await axios.post('/v1/libraries', objectWithFileToFormData(values))
+      const { status } = await axios.put(`/v1/libraries/${animation.id}`, values)
 
       if (status === 200) {
         queryClient.invalidateQueries('animations')
+        queryClient.invalidateQueries(['animations', animation.id])
         onClose()
         showToast({
           type: 'success',
-          message: 'New Animation successfully created!',
+          message: 'All changes was successfully saved',
         })
       }
     } catch (e) {
@@ -73,19 +77,20 @@ export const NewAnimationModal = ({
   return (
     <>
       {isVisible && (
-        <Modal title="New Animation" onClose={onClose}>
+        <Modal title="Edit Animation" onClose={onClose}>
           <Formik
-            validationSchema={NewAnimationFormSchema}
             initialValues={{
-              title: '',
-              description: '',
-              libraryCategoryId: -1,
-              file: null,
+              title: animation.title,
+              description: animation.description,
+              libraryCategoryId: animation.libraryCategoryId,
+              file: animation.file,
+              _method: 'PUT',
             }}
+            validationSchema={EditTicketFormSchema}
             onSubmit={submitForm}
           >
             {({ isSubmitting }) => (
-              <Form className="flex w-140 flex-col">
+              <Form className="flex w-130 flex-col">
                 <TextInput
                   type="text"
                   Icon={PencilIcon}
@@ -120,7 +125,8 @@ export const NewAnimationModal = ({
                     Cancel
                   </Button>
                   <Button ariaLabel="Submit" disabled={isSubmitting} type="submit">
-                    Submit
+                    <FloppyDiskIcon className="stroke-white" />
+                    <div>Save</div>
                   </Button>
                 </div>
               </Form>

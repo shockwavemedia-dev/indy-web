@@ -1,5 +1,6 @@
 import createStore from 'zustand'
 import { combine } from 'zustand/middleware'
+import { Animation } from '../types/Animation.type'
 
 export const useAnimationStore = createStore(
   combine(

@@ -1,7 +1,7 @@
 export type EditAnimationForm = {
   title: string
-  description: string
+  description: string | null
   libraryCategoryId: number
-  file: File
+  file: File | null
   _method: string
 }
