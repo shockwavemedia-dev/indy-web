@@ -221,8 +221,10 @@ export const StaffTicket = ({ ticketId }: { ticketId: number }) => {
     setAddTicketAssigneeModalVisible(!isAddTicketAssigneeModalVisible)
 
   useEffect(() => {
-    setHeader(`Ticket {ticket!.ticketCode}`)
-  }, [])
+    if (ticket) {
+      setHeader(`Ticket ${ticket.ticketCode}`)
+    }
+  }, [ticket])
 
   if (!isSuccess) {
     // todo create loading skeleton

@@ -208,8 +208,13 @@ export const ClientTicket = ({ ticketId }: { ticketId: number }) => {
 
   useEffect(() => {
     toggleFileModal()
-    setHeader(`Ticket ${ticket!.ticketCode}`)
   }, [])
+
+  useEffect(() => {
+    if (ticket) {
+      setHeader(`Ticket ${ticket.ticketCode}`)
+    }
+  }, [ticket])
 
   if (!ticketSuccess) {
     // todo create loading skeleton

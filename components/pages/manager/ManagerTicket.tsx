@@ -214,8 +214,10 @@ export const ManagerTicket = ({ ticketId }: { ticketId: number }) => {
   }
 
   useEffect(() => {
-    setHeader(`Ticket {ticket!.ticketCode}`)
-  }, [])
+    if (ticket) {
+      setHeader(`Ticket ${ticket.ticketCode}`)
+    }
+  }, [ticket])
 
   if (!isSuccess) {
     // todo create loading skeleton
