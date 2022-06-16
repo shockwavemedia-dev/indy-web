@@ -58,7 +58,7 @@ export const DeleteAnimationModal = ({
             <div className="mb-5 flex">
               <div className="font-urbanist text-xs font-medium text-metallic-silver">Video</div>
             </div>
-            <div className="mb-5 flex w-140">
+            <div className="mb-8 flex w-140">
               <video muted autoPlay loop>
                 <source src={animation.videoLink} />
               </video>

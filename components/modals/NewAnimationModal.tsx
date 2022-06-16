@@ -112,7 +112,7 @@ export const NewAnimationModal = ({
                   name="file"
                   className="mb-8"
                   maxSize={250}
-                  mimeType="image/gif"
+                  mimeType="video/mp4"
                   accept={['.mp4']}
                 />
                 <div className="flex space-x-5">
