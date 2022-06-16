@@ -88,7 +88,7 @@ export const CreateSupportRequestModal = ({
                   Icon={EditIcon}
                   placeholder="Enter Message"
                   name="message"
-                  className="mb-5"
+                  className="mb-8"
                 />
                 <div className="flex space-x-5">
                   <Button ariaLabel="Cancel" onClick={onClose} type="button" light>
