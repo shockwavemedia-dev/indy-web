@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { Form, Formik } from 'formik'
-import { useQuery, useQueryClient } from 'react-query'
+import { useQuery } from 'react-query'
 import { CreateSupportRequestFormSchema } from '../../schemas/CreateSupportRequestFormSchema'
 import { useToastStore } from '../../store/ToastStore'
 import { Department } from '../../types/Department.type'
@@ -11,7 +11,7 @@ import { ClipboardIcon } from '../icons/ClipboardIcon'
 import { EditIcon } from '../icons/EditIcon'
 import { Modal } from '../Modal'
 import { Select } from '../Select'
-import { TextInput } from '../TextInput'
+import { TextAreaInput } from '../TextAreaInput'
 
 export const CreateSupportRequestModal = ({
   isVisible,
@@ -20,7 +20,6 @@ export const CreateSupportRequestModal = ({
   isVisible: boolean
   onClose: () => void
 }) => {
-  const queryClient = useQueryClient()
   const { showToast } = useToastStore()
 
   const { data: departments } = useQuery(
@@ -76,7 +75,7 @@ export const CreateSupportRequestModal = ({
                 <Select
                   name="departmentId"
                   Icon={ClipboardIcon}
-                  placeholder="Select department"
+                  placeholder="Select Department"
                   options={
                     departments?.map((department) => ({
                       value: department.id,
@@ -85,8 +84,7 @@ export const CreateSupportRequestModal = ({
                   }
                   className="mb-5"
                 />
-                <TextInput
-                  type="text"
+                <TextAreaInput
                   Icon={EditIcon}
                   placeholder="Enter Message"
                   name="message"
