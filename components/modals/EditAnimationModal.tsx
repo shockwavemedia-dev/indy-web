@@ -85,8 +85,15 @@ export const EditAnimationModal = ({
             onSubmit={submitForm}
           >
             {({ isSubmitting }) => (
-              <Form className="flex w-140 flex-col">
-                <div className="mb-5 flex flex-col">
+              <Form className="flex w-270 space-x-6">
+                <div className="space-y-6">
+                  <div className="flex w-130">
+                    <video muted autoPlay loop>
+                      <source src={animation.videoLink} />
+                    </video>
+                  </div>
+                </div>
+                <div className="w-full space-y-5">
                   <TextInput
                     type="text"
                     Icon={PencilIcon}
@@ -94,16 +101,18 @@ export const EditAnimationModal = ({
                     name="title"
                     className="mb-5"
                   />
-                  <Select
-                    name="libraryCategoryId"
-                    Icon={PencilIcon}
-                    placeholder="Select Category Animation"
-                    className="mb-5"
-                    options={categoryOptions}
-                    defaultValue={categoryOptions?.find(
-                      ({ value }) => value === animation.libraryCategoryId
-                    )}
-                  />
+                  {categoryOptions && categoryOptions.length > 0 && (
+                    <Select
+                      name="libraryCategoryId"
+                      Icon={PencilIcon}
+                      placeholder="Select Category Animation"
+                      className="mb-5"
+                      options={categoryOptions}
+                      defaultValue={categoryOptions.find(
+                        ({ value }) => value === animation.libraryCategoryId
+                      )}
+                    />
+                  )}
                   <TextInput
                     type="text"
                     Icon={PencilIcon}
@@ -119,20 +128,15 @@ export const EditAnimationModal = ({
                     mimeType="image/gif"
                     accept={['.mp4']}
                   />
-                </div>
-                <div className="mb-5 flex w-140">
-                  <video muted autoPlay loop>
-                    <source src={animation.videoLink} />
-                  </video>
-                </div>
-                <div className="flex space-x-5">
-                  <Button ariaLabel="Cancel" onClick={onClose} type="button" light>
-                    Cancel
-                  </Button>
-                  <Button ariaLabel="Submit" disabled={isSubmitting} type="submit">
-                    <FloppyDiskIcon className="stroke-white" />
-                    <div>Save</div>
-                  </Button>
+                  <div className="flex space-x-5">
+                    <Button ariaLabel="Cancel" onClick={onClose} type="button" light>
+                      Cancel
+                    </Button>
+                    <Button ariaLabel="Submit" disabled={isSubmitting} type="submit">
+                      <FloppyDiskIcon className="stroke-white" />
+                      <div>Save</div>
+                    </Button>
+                  </div>
                 </div>
               </Form>
             )}
