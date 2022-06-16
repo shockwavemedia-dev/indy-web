@@ -13,7 +13,7 @@ import { LifeBuoyIcon } from '../../icons/LifeBuoyIcon'
 import { MenuBoardIcon } from '../../icons/MenuBoardIcon'
 import { VideoIcon } from '../../icons/VideoIcon'
 import { CreateProjectBriefModal } from '../../modals/CreateProjectBriefModal'
-import { CreateSupportTicketModal } from '../../modals/CreateSupportTicketModal'
+import { CreateSupportRequestModal } from '../../modals/CreateSupportRequestModal'
 import { DeleteTicketModal } from '../../modals/DeleteTicketModal'
 import { EditTicketModal } from '../../modals/EditTicketModal'
 export const ClientDashboard = () => {
@@ -116,7 +116,7 @@ export const ClientDashboard = () => {
         isVisible={isCreateProjectBriefModalVisible}
         onClose={toggleCreateProjectBriefModal}
       />
-      <CreateSupportTicketModal
+      <CreateSupportRequestModal
         isVisible={isCreateSupportRequestModalVisible}
         onClose={toggleCreateSupportRequestModal}
       />
