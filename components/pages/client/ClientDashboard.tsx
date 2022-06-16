@@ -13,10 +13,9 @@ import { LifeBuoyIcon } from '../../icons/LifeBuoyIcon'
 import { MenuBoardIcon } from '../../icons/MenuBoardIcon'
 import { VideoIcon } from '../../icons/VideoIcon'
 import { CreateProjectBriefModal } from '../../modals/CreateProjectBriefModal'
-import { CreateSupportRequestModal } from '../../modals/CreateSupportRequestModal'
+import { CreateSupportTicketModal } from '../../modals/CreateSupportTicketModal'
 import { DeleteTicketModal } from '../../modals/DeleteTicketModal'
 import { EditTicketModal } from '../../modals/EditTicketModal'
-
 export const ClientDashboard = () => {
   const { data: session } = useSession()
   const {
@@ -117,7 +116,7 @@ export const ClientDashboard = () => {
         isVisible={isCreateProjectBriefModalVisible}
         onClose={toggleCreateProjectBriefModal}
       />
-      <CreateSupportRequestModal
+      <CreateSupportTicketModal
         isVisible={isCreateSupportRequestModalVisible}
         onClose={toggleCreateSupportRequestModal}
       />

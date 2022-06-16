@@ -3,11 +3,11 @@ import { Form, Formik } from 'formik'
 import { useSession } from 'next-auth/react'
 import { useQuery, useQueryClient } from 'react-query'
 import { TicketTypeOptions } from '../../constants/options/TicketTypeOptions'
-import { CreateSupportRequestFormSchema } from '../../schemas/CreateSupportRequestFormSchema'
+import { CreateSupportTicketFormSchema } from '../../schemas/CreateSupportTicketFormSchema'
 import { useToastStore } from '../../store/ToastStore'
 import { Client } from '../../types/Client.type'
 import { Department } from '../../types/Department.type'
-import { CreateSupportRequestForm } from '../../types/forms/CreateSupportRequestForm.type'
+import { CreateSupportTicketForm } from '../../types/forms/CreateSupportTicketForm.type'
 import { Page } from '../../types/Page.type'
 import { Ticket } from '../../types/Ticket.type'
 import { Button } from '../Button'
@@ -19,7 +19,7 @@ import { RichTextInput } from '../RichTextInput'
 import { Select } from '../Select'
 import { TextInput } from '../TextInput'
 
-export const CreateSupportRequestModal = ({
+export const CreateSupportTicketModal = ({
   isVisible,
   onClose,
 }: {
@@ -64,7 +64,7 @@ export const CreateSupportRequestModal = ({
     }
   )
 
-  const submitForm = async (values: CreateSupportRequestForm) => {
+  const submitForm = async (values: CreateSupportTicketForm) => {
     try {
       const {
         status,
@@ -92,7 +92,7 @@ export const CreateSupportRequestModal = ({
       {isVisible && (
         <Modal title="Create Support Request" onClose={onClose}>
           <Formik
-            validationSchema={CreateSupportRequestFormSchema}
+            validationSchema={CreateSupportTicketFormSchema}
             initialValues={{
               subject: '',
               description: '',
