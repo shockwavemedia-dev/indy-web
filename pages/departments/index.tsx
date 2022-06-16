@@ -21,12 +21,10 @@ const DepartmentsPage: NextPageWithLayout = () => {
       </Head>
       <div className="mx-auto h-full w-full max-w-8xl space-y-6">
         <FancyButton
-          Icon={<UserIcon className="stroke-white" />}
+          Icon={<UserIcon className="stroke-halloween-orange" />}
           title="Create Department"
           subtitle="Laborerivit rem cones mil"
           onClick={toggleNewDepartmentModal}
-          twBackgroundColor="bg-bleu-de-france"
-          twIconBackgroundColor="bg-bright-navy-blue"
           className="w-fit"
         />
         <Card title="Departments" className="flex flex-col">

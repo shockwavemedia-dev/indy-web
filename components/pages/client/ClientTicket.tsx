@@ -26,6 +26,7 @@ import { RichTextInput } from '../../../components/RichTextInput'
 import { TextInput } from '../../../components/TextInput'
 import { TitleValue } from '../../../components/TitleValue'
 import { ClientTicketAssigneeTableColumns } from '../../../constants/tables/ClientTicketAssigneeTableColumns'
+import { usePanelLayoutStore } from '../../../layouts/PanelLayout'
 import DummyCompany from '../../../public/images/dummy-company.png'
 import { CreateEmailFormSchema } from '../../../schemas/CreateEmailFormSchema'
 import { CreateNoteFormSchema } from '../../../schemas/CreateNoteFormSchema'
@@ -51,6 +52,7 @@ import { TicketNoteCard } from '../../tickets/TicketNoteCard'
 
 export const ClientTicket = ({ ticketId }: { ticketId: number }) => {
   const { data: session } = useSession()
+  const { setHeader } = usePanelLayoutStore()
 
   const [activeTab, setActiveTab] = useState<TicketPageTabs>('description')
   const [isEditTicketModalVisible, setEditTicketModalVisible] = useState(false)
@@ -206,6 +208,7 @@ export const ClientTicket = ({ ticketId }: { ticketId: number }) => {
 
   useEffect(() => {
     toggleFileModal()
+    setHeader(`Ticket ${ticket!.ticketCode}`)
   }, [])
 
   if (!ticketSuccess) {
@@ -218,9 +221,6 @@ export const ClientTicket = ({ ticketId }: { ticketId: number }) => {
       <Head>
         <title>Indy - Ticket {ticket!.ticketCode}</title>
       </Head>
-      <div className="mb-5 font-urbanist text-xxl font-semibold text-onyx">
-        Ticket {ticket!.ticketCode}
-      </div>
       <div className="mx-auto flex w-full max-w-8xl space-x-6">
         <div className="w-86 flex-none space-y-6">
           <Card title="Details">

@@ -26,21 +26,17 @@ export const AdminAnimations = () => {
       <div className="mx-auto h-full w-full max-w-8xl space-y-6">
         <div className="flex space-x-6">
           <FancyButton
-            Icon={<UserIcon className="stroke-white" />}
+            Icon={<UserIcon className="stroke-halloween-orange" />}
             title="Create Animation Category"
             subtitle="Laborerivit rem cones mil"
             onClick={toggleNewAnimationCategoryModal}
-            twBackgroundColor="bg-bleu-de-france"
-            twIconBackgroundColor="bg-bright-navy-blue"
             className="w-fit"
           />
           <FancyButton
-            Icon={<VideoIcon className="stroke-white" />}
+            Icon={<VideoIcon className="stroke-halloween-orange" />}
             title="Create Animation"
             subtitle="Laborerivit rem cones mil"
             onClick={toggleNewAnimationModal}
-            twIconBackgroundColor="bg-carrot-orange"
-            twBackgroundColor="bg-deep-saffron"
             className="w-fit"
           />
         </div>

@@ -101,10 +101,7 @@ const LoginPage: NextPageWithLayout = () => {
 }
 
 LoginPage.getLayout = (page: ReactElement) => (
-  <AuthLayout
-    title="Where Marketing, Data and Creativity meet."
-    subtitle="Please log in to your account and start the adventure"
-  >
+  <AuthLayout title="" subtitle="Please log in to your account and start the adventure">
     {page}
   </AuthLayout>
 )

@@ -1,9 +1,10 @@
 import axios from 'axios'
 import Head from 'next/head'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useQuery } from 'react-query'
 import { SingleValue } from 'react-select'
 import { Card } from '../../components/Card'
+import { usePanelLayoutStore } from '../../layouts/PanelLayout'
 import { Client } from '../../types/Client.type'
 import { Files } from '../../types/Files.type'
 import { Page } from '../../types/Page.type'
@@ -13,6 +14,7 @@ import { UserIcon } from '../icons/UserIcon'
 import { SelectNoFormik } from '../SelectNoFormik'
 
 export const MyFiles = () => {
+  const { setHeader } = usePanelLayoutStore()
   const [year, setYear] = useState('')
   const [month, setMonth] = useState('')
   const [clientId, setClientId] = useState(-1)
@@ -45,12 +47,15 @@ export const MyFiles = () => {
   const selectClient = (newValue: SingleValue<SelectOption<number>>) =>
     setClientId(newValue?.value || -1)
 
+  useEffect(() => {
+    setHeader('My Files')
+  }, [])
+
   return (
     <>
       <Head>
         <title>Indy - My Files</title>
       </Head>
-      <div className="mb-5 font-urbanist text-xxl font-semibold text-onyx">My Files</div>
       <div className="mx-auto w-full max-w-7xl space-y-6">
         <SelectNoFormik
           Icon={UserIcon}

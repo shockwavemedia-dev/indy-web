@@ -1,7 +1,8 @@
 import { useSession } from 'next-auth/react'
 import Head from 'next/head'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { ClientTicketsTableColumns } from '../../../constants/tables/ClientTicketsTableColumns'
+import { usePanelLayoutStore } from '../../../layouts/PanelLayout'
 import { useTicketStore } from '../../../store/TicketStore'
 import { Card } from '../../Card'
 import { CountCard } from '../../CountCard'
@@ -24,6 +25,7 @@ export const ClientAnimations = () => {
     toggleEditTicketModal,
     toggleDeleteTicketModal,
   } = useTicketStore()
+  const { setHeader } = usePanelLayoutStore()
 
   const [isCreateAnimationModalVisible, setCreateAnimationModalVisible] = useState(false)
   const [isCreateProjectBriefModalVisible, setCreateProjectBriefModalVisible] = useState(false)
@@ -33,30 +35,29 @@ export const ClientAnimations = () => {
   const toggleCreateProjectBriefModal = () =>
     setCreateProjectBriefModalVisible(!isCreateProjectBriefModalVisible)
 
+  useEffect(() => {
+    setHeader('Animation Library')
+  }, [])
+
   return (
     <>
       <Head>
         <title>Indy - Animation Library</title>
       </Head>
-      <div className="mb-5 font-urbanist text-xxl font-semibold text-onyx">Animation Library</div>
       <div className="mx-auto h-full w-full max-w-8xl space-y-6">
         <div className="mb-6 flex space-x-6">
           <FancyButton
-            Icon={<CalendarAddIcon className="stroke-white" />}
+            Icon={<CalendarAddIcon className="stroke-halloween-orange" />}
             title="New Project Brief"
             subtitle="Laborerivit rem cones mil"
             onClick={toggleCreateProjectBriefModal}
-            twBackgroundColor="bg-jungle-green"
-            twIconBackgroundColor="bg-illuminating-emerald"
             className="w-fit"
           />
           <FancyButton
-            Icon={<VideoIcon className="stroke-white" />}
+            Icon={<VideoIcon className="stroke-halloween-orange" />}
             title="Request Animation"
             subtitle="Laborerivit rem cones mil"
             onClick={toggleCreateAnimationModal}
-            twBackgroundColor="bg-vivid-red-tangelo"
-            twIconBackgroundColor="bg-dark-pastel-red"
             className="w-fit"
           />
         </div>
@@ -73,36 +74,30 @@ export const ClientAnimations = () => {
           <div className="flex flex-1 flex-col">
             <div className="mb-3 flex space-x-3">
               <CountCard
+                className="bg-deep-space-sparkle"
                 Icon={<VideoIcon className="stroke-white" />}
                 value={5}
                 description="Animations Remaining"
-                className="w-36"
-                twBackgroundColor="bg-vivid-red-tangelo"
-                twIconBackgroundColor="bg-dark-pastel-red"
               />
               <CountCard
+                className="bg-charleston-green"
                 Icon={<GalleryIcon className="stroke-white" />}
                 value={2}
                 description="Photoshoots Remaining"
-                twBackgroundColor="bg-jungle-green"
-                twIconBackgroundColor="bg-illuminating-emerald"
               />
             </div>
             <div className="mb-6 flex space-x-3">
               <CountCard
+                className="bg-halloween-orange"
                 Icon={<MenuBoardIcon className="stroke-white" />}
                 value={3}
                 description="Graphics Remaining"
-                twBackgroundColor="bg-bleu-de-france"
-                twIconBackgroundColor="bg-bright-navy-blue"
               />
               <CountCard
+                className="bg-maximum-yellow-red"
                 Icon={<VideoIcon className="stroke-white" />}
                 value={1}
                 description="Videoshoots Remaining"
-                className="w-36"
-                twBackgroundColor="bg-purple-x11"
-                twIconBackgroundColor="bg-dark-orchid"
               />
             </div>
             <Card title="Notifications" className="h-full w-full opacity-50">
