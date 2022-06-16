@@ -1,11 +1,14 @@
 import Head from 'next/head'
 import { useState } from 'react'
 import { AnimationTableColumns } from '../../../constants/tables/AnimationTableColumns'
+import { useAnimationStore } from '../../../store/AnimationStore'
 import { Card } from '../../Card'
 import { DataTable } from '../../DataTable'
 import { FancyButton } from '../../FancyButton'
 import { UserIcon } from '../../icons/UserIcon'
 import { VideoIcon } from '../../icons/VideoIcon'
+import { DeleteAnimationModal } from '../../modals/DeleteAnimationModal'
+import { EditAnimationModal } from '../../modals/EditAnimationModal'
 import { NewAnimationCategoryModal } from '../../modals/NewAnimationCategoryModal'
 import { NewAnimationModal } from '../../modals/NewAnimationModal'
 
@@ -18,6 +21,14 @@ export const AdminAnimations = () => {
 
   const toggleNewAnimationModal = () => setNewAnimationModalVisible(!isNewAnimationModalVisible)
 
+  const {
+    activeAnimation,
+    isEditAnimationModalVisible,
+    isDeleteAnimationModalVisible,
+    toggleEditAnimationModal,
+    toggleDeleteAnimationModal,
+  } = useAnimationStore()
+
   return (
     <>
       <Head>
@@ -26,21 +37,17 @@ export const AdminAnimations = () => {
       <div className="mx-auto h-full w-full max-w-8xl space-y-6">
         <div className="flex space-x-6">
           <FancyButton
-            Icon={<UserIcon className="stroke-white" />}
+            Icon={<UserIcon className="stroke-halloween-orange" />}
             title="Create Animation Category"
             subtitle="Laborerivit rem cones mil"
             onClick={toggleNewAnimationCategoryModal}
-            twBackgroundColor="bg-bleu-de-france"
-            twIconBackgroundColor="bg-bright-navy-blue"
             className="w-fit"
           />
           <FancyButton
-            Icon={<VideoIcon className="stroke-white" />}
+            Icon={<VideoIcon className="stroke-halloween-orange" />}
             title="Create Animation"
             subtitle="Laborerivit rem cones mil"
             onClick={toggleNewAnimationModal}
-            twIconBackgroundColor="bg-carrot-orange"
-            twBackgroundColor="bg-deep-saffron"
             className="w-fit"
           />
         </div>
@@ -48,7 +55,7 @@ export const AdminAnimations = () => {
           <DataTable
             dataEndpoint="/v1/libraries"
             columns={AnimationTableColumns}
-            tableQueryKey={['libraries']}
+            tableQueryKey={['animations']}
             ofString="Animations"
           />
         </Card>
@@ -58,6 +65,16 @@ export const AdminAnimations = () => {
         onClose={toggleNewAnimationCategoryModal}
       />
       <NewAnimationModal isVisible={isNewAnimationModalVisible} onClose={toggleNewAnimationModal} />
+      <EditAnimationModal
+        isVisible={isEditAnimationModalVisible}
+        onClose={toggleEditAnimationModal}
+        animation={activeAnimation}
+      />
+      <DeleteAnimationModal
+        isVisible={isDeleteAnimationModalVisible}
+        onClose={toggleDeleteAnimationModal}
+        animation={activeAnimation}
+      />
     </>
   )
 }

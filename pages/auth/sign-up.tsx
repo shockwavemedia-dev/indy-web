@@ -125,7 +125,10 @@ const SignUpPage: NextPageWithLayout = () => {
 }
 
 SignUpPage.getLayout = (page: ReactElement) => (
-  <AuthLayout title="" subtitle="Please sign up and start the adventure">
+  <AuthLayout
+    title="Where Marketing, Data and Creativity meet."
+    subtitle="Please sign up and start the adventure"
+  >
     {page}
   </AuthLayout>
 )

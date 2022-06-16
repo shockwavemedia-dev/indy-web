@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import { ReactElement, useState } from 'react'
+import { ReactElement, useEffect, useState } from 'react'
 import { Card } from '../components/Card'
 import { CountCard } from '../components/CountCard'
 import { FancyButton } from '../components/FancyButton'
@@ -10,7 +10,7 @@ import { VideoIcon } from '../components/icons/VideoIcon'
 import { CreateProjectBriefModal } from '../components/modals/CreateProjectBriefModal'
 import { DeleteTicketModal } from '../components/modals/DeleteTicketModal'
 import { EditTicketModal } from '../components/modals/EditTicketModal'
-import PanelLayout from '../layouts/PanelLayout'
+import PanelLayout, { usePanelLayoutStore } from '../layouts/PanelLayout'
 import { useTicketStore } from '../store/TicketStore'
 import { NextPageWithLayout } from '../types/pages/NextPageWithLayout.type'
 
@@ -22,25 +22,27 @@ const PrintPage: NextPageWithLayout = () => {
     toggleEditTicketModal,
     toggleDeleteTicketModal,
   } = useTicketStore()
+  const { setHeader } = usePanelLayoutStore()
 
   const [isCreateProjectBriefModalVisible, setCreateProjectBriefModalVisible] = useState(false)
   const toggleCreateProjectBriefModal = () =>
     setCreateProjectBriefModalVisible(!isCreateProjectBriefModalVisible)
+
+  useEffect(() => {
+    setHeader('Print')
+  }, [])
 
   return (
     <>
       <Head>
         <title>Indy - Print</title>
       </Head>
-      <div className="mb-5 font-urbanist text-xxl font-semibold text-onyx">Print</div>
       <div className="mx-auto h-full w-full max-w-8xl space-y-6">
         <FancyButton
-          Icon={<CalendarAddIcon className="stroke-white" />}
+          Icon={<CalendarAddIcon className="stroke-halloween-orange" />}
           title="New Project Brief"
           subtitle="Laborerivit rem cones mil"
           onClick={toggleCreateProjectBriefModal}
-          twBackgroundColor="bg-jungle-green"
-          twIconBackgroundColor="bg-illuminating-emerald"
           className="w-fit"
         />
         <div className="flex h-155 space-x-6">
@@ -48,36 +50,30 @@ const PrintPage: NextPageWithLayout = () => {
           <div className="flex flex-1 flex-col">
             <div className="mb-3 flex space-x-3">
               <CountCard
+                className="bg-deep-space-sparkle"
                 Icon={<VideoIcon className="stroke-white" />}
                 value={5}
                 description="Animations Remaining"
-                className="w-36"
-                twBackgroundColor="bg-vivid-red-tangelo"
-                twIconBackgroundColor="bg-dark-pastel-red"
               />
               <CountCard
+                className="bg-charleston-green"
                 Icon={<GalleryIcon className="stroke-white" />}
                 value={2}
                 description="Photoshoots Remaining"
-                twBackgroundColor="bg-jungle-green"
-                twIconBackgroundColor="bg-illuminating-emerald"
               />
             </div>
             <div className="mb-6 flex space-x-3">
               <CountCard
+                className="bg-halloween-orange"
                 Icon={<MenuBoardIcon className="stroke-white" />}
                 value={3}
                 description="Graphics Remaining"
-                twBackgroundColor="bg-bleu-de-france"
-                twIconBackgroundColor="bg-bright-navy-blue"
               />
               <CountCard
+                className="bg-maximum-yellow-red"
                 Icon={<VideoIcon className="stroke-white" />}
                 value={1}
                 description="Videoshoots Remaining"
-                className="w-36"
-                twBackgroundColor="bg-purple-x11"
-                twIconBackgroundColor="bg-dark-orchid"
               />
             </div>
             <Card title="Notifications" className="h-full w-full opacity-50">

@@ -1,7 +1,8 @@
 import { useSession } from 'next-auth/react'
 import Head from 'next/head'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { ClientTicketsTableColumns } from '../../../constants/tables/ClientTicketsTableColumns'
+import { usePanelLayoutStore } from '../../../layouts/PanelLayout'
 import { useTicketStore } from '../../../store/TicketStore'
 import { Card } from '../../Card'
 import { DataTable } from '../../DataTable'
@@ -20,26 +21,33 @@ export const ManagerDashboard = () => {
     toggleEditTicketModal,
     toggleDeleteTicketModal,
   } = useTicketStore()
+  const { setHeader, setSubHeader } = usePanelLayoutStore()
 
   const [isCreateSupportRequestModalVisible, setCreateSupportRequestModalVisible] = useState(false)
 
   const toggleCreateSupportRequestModal = () =>
     setCreateSupportRequestModalVisible(!isCreateSupportRequestModalVisible)
 
+  useEffect(() => {
+    setHeader('Dashboard')
+    setSubHeader(`Welcome back, ${session?.user.firstName}`)
+
+    return () => {
+      setSubHeader('')
+    }
+  }, [])
+
   return (
     <>
       <Head>
         <title>Indy - Dashboard</title>
       </Head>
-      <div className="mb-5 font-urbanist text-xxl font-semibold text-onyx">Dashboard</div>
       <div className="mx-auto h-full w-full max-w-8xl space-y-6">
         <FancyButton
-          Icon={<LifeBuoyIcon className="fill-white" />}
+          Icon={<LifeBuoyIcon className="fill-halloween-orange" />}
           title="Support Request"
           subtitle="Laborerivit rem cones mil"
           onClick={toggleCreateSupportRequestModal}
-          twBackgroundColor="bg-vivid-red-tangelo"
-          twIconBackgroundColor="bg-dark-pastel-red"
           className="w-fit"
         />
         <hr className="border-t-bright-gray" />

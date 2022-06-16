@@ -114,7 +114,7 @@ export const Select = <
         control: (base, { isFocused }) => ({
           ...base,
           minHeight: '3.125rem',
-          boxShadow: isFocused ? '0 0 0 2px #2BB67D' : '0 0 0 1px #E8E8EF',
+          boxShadow: isFocused ? '0 0 0 2px #F25D23' : '0 0 0 1px #E8E8EF',
           border: 'none',
           borderRadius: '.75rem',
           padding: '0 1.5rem 0',
@@ -142,7 +142,7 @@ export const Select = <
           ...base,
           color: isSelected ? '#FFFFFF' : '#32343D',
           font: '500 0.875rem/1.25rem Urbanist',
-          backgroundColor: isSelected ? '#2BB67D !important' : '#FFFFFF',
+          backgroundColor: isSelected ? '#F25D23 !important' : '#FFFFFF',
           ':hover': {
             backgroundColor: '#E9FAF3',
           },

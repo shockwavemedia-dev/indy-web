@@ -4,7 +4,7 @@ import { Form, Formik } from 'formik'
 import { useSession } from 'next-auth/react'
 import Head from 'next/head'
 import Image from 'next/image'
-import { Fragment, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { useQuery, useQueryClient } from 'react-query'
 import { Button } from '../../../components/Button'
 import { Card } from '../../../components/Card'
@@ -28,6 +28,7 @@ import { RichTextInput } from '../../../components/RichTextInput'
 import { TextInput } from '../../../components/TextInput'
 import { TitleValue } from '../../../components/TitleValue'
 import { ManagerTicketAssigneeTableColumns } from '../../../constants/tables/ManagerTicketAssigneeTableColumns'
+import { usePanelLayoutStore } from '../../../layouts/PanelLayout'
 import DummyCompany from '../../../public/images/dummy-company.png'
 import { CreateEmailFormSchema } from '../../../schemas/CreateEmailFormSchema'
 import { CreateNoteFormSchema } from '../../../schemas/CreateNoteFormSchema'
@@ -68,6 +69,7 @@ export const ManagerTicket = ({ ticketId }: { ticketId: number }) => {
     toggleEditTicketAssigneeModal,
     toggleDeleteTicketAssigneeModal,
   } = useTicketAssigneeStore()
+  const { setHeader } = usePanelLayoutStore()
 
   const { data: ticket, isSuccess } = useQuery(['ticket', ticketId], async () => {
     const { data } = await axios.get<Ticket>(`/v1/tickets/${ticketId}`)
@@ -211,6 +213,12 @@ export const ManagerTicket = ({ ticketId }: { ticketId: number }) => {
     )
   }
 
+  useEffect(() => {
+    if (ticket) {
+      setHeader(`Ticket ${ticket.ticketCode}`)
+    }
+  }, [ticket])
+
   if (!isSuccess) {
     // todo create loading skeleton
     return null
@@ -221,9 +229,6 @@ export const ManagerTicket = ({ ticketId }: { ticketId: number }) => {
       <Head>
         <title>Indy - Ticket {ticket!.ticketCode}</title>
       </Head>
-      <div className="mb-5 font-urbanist text-xxl font-semibold text-onyx">
-        Ticket {ticket!.ticketCode}
-      </div>
       <div className="mx-auto flex w-full max-w-8xl space-x-6">
         <div className="w-86 flex-none space-y-6">
           <Card title="Details">

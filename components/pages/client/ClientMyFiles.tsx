@@ -1,9 +1,10 @@
 import axios from 'axios'
 import { useSession } from 'next-auth/react'
 import Head from 'next/head'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useQuery } from 'react-query'
 import { Card } from '../../../components/Card'
+import { usePanelLayoutStore } from '../../../layouts/PanelLayout'
 import { Files } from '../../../types/Files.type'
 import { CountCard } from '../../CountCard'
 import { FancyButton } from '../../FancyButton'
@@ -15,6 +16,7 @@ import { VideoIcon } from '../../icons/VideoIcon'
 import { CreateProjectBriefModal } from '../../modals/CreateProjectBriefModal'
 
 export const ClientMyFiles = () => {
+  const { setHeader } = usePanelLayoutStore()
   const { data: session } = useSession()
   const [year, setYear] = useState('')
   const [month, setMonth] = useState('')
@@ -32,6 +34,10 @@ export const ClientMyFiles = () => {
   const toggleCreateProjectBriefModal = () =>
     setCreateProjectBriefModalVisible(!isCreateProjectBriefModalVisible)
 
+  useEffect(() => {
+    setHeader('My Files')
+  }, [])
+
   if (!isSuccess) {
     return null
   }
@@ -41,15 +47,12 @@ export const ClientMyFiles = () => {
       <Head>
         <title>Indy - My Files</title>
       </Head>
-      <div className="mb-5 font-urbanist text-xxl font-semibold text-onyx">My Files</div>
       <div className="mx-auto h-4/5 w-full max-w-8xl">
         <FancyButton
-          Icon={<CalendarAddIcon className="stroke-white" />}
+          Icon={<CalendarAddIcon className="stroke-halloween-orange" />}
           title="New Project Brief"
           subtitle="Laborerivit rem cones mil"
           onClick={toggleCreateProjectBriefModal}
-          twBackgroundColor="bg-jungle-green"
-          twIconBackgroundColor="bg-illuminating-emerald"
           className="mb-8 w-fit"
         />
         <hr className="mb-6 border-t-bright-gray" />
@@ -108,36 +111,30 @@ export const ClientMyFiles = () => {
           <div className="flex flex-1 flex-col">
             <div className="mb-3 flex space-x-3">
               <CountCard
+                className="bg-deep-space-sparkle"
                 Icon={<VideoIcon className="stroke-white" />}
                 value={5}
                 description="Animations Remaining"
-                className="w-36"
-                twBackgroundColor="bg-vivid-red-tangelo"
-                twIconBackgroundColor="bg-dark-pastel-red"
               />
               <CountCard
+                className="bg-charleston-green"
                 Icon={<GalleryIcon className="stroke-white" />}
                 value={2}
                 description="Photoshoots Remaining"
-                twBackgroundColor="bg-jungle-green"
-                twIconBackgroundColor="bg-illuminating-emerald"
               />
             </div>
             <div className="mb-6 flex space-x-3">
               <CountCard
+                className="bg-halloween-orange"
                 Icon={<MenuBoardIcon className="stroke-white" />}
                 value={3}
                 description="Graphics Remaining"
-                twBackgroundColor="bg-bleu-de-france"
-                twIconBackgroundColor="bg-bright-navy-blue"
               />
               <CountCard
+                className="bg-maximum-yellow-red"
                 Icon={<VideoIcon className="stroke-white" />}
                 value={1}
                 description="Videoshoots Remaining"
-                className="w-36"
-                twBackgroundColor="bg-purple-x11"
-                twIconBackgroundColor="bg-dark-orchid"
               />
             </div>
             <Card title="Notifications" className="h-full w-full opacity-50">

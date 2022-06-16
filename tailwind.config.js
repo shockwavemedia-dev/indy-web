@@ -35,6 +35,7 @@ module.exports = {
         14.5: '3.625rem',
         15.5: '3.875rem',
         15: '3.75rem',
+        17.5: '4.375rem',
         18.5: '4.625rem',
         21.5: '5.375rem',
         22: '5.5rem',
@@ -66,12 +67,9 @@ module.exports = {
         '2/5': '40%',
         '3/5': '60%',
       },
-    },
-    backgroundI1ge: {
-      auth: "url('/images/auth-bg.png')",
-    },
-    boxShadow: {
-      DEFAULT: '0px 4px 10px #2a2a3408',
+      boxShadow: {
+        DEFAULT: '0px 4px 10px #2a2a3408',
+      },
     },
     fontFamily: {
       urbanist: ['Urbanist'],
@@ -122,6 +120,8 @@ module.exports = {
       'light-orchid': '#f5d6f4',
       'charleston-green': '#2B2D2C',
       'halloween-orange': '#F25D23',
+      'deep-space-sparkle': '#446A73',
+      'maximum-yellow-red': '#ECB54E',
     },
   },
   plugins: [require('@tailwindcss/line-clamp')],

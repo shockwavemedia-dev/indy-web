@@ -1,7 +1,7 @@
-import axios from 'axios'
-import { useQueryClient } from 'react-query'
 import { Column } from 'react-table'
+import { EditIcon } from '../../components/icons/EditIcon'
 import { TrashIcon } from '../../components/icons/TrashIcon'
+import { useAnimationStore } from '../../store/AnimationStore'
 import { Animation } from '../../types/Animation.type'
 
 export const AnimationTableColumns: Array<Column<Animation>> = [
@@ -27,24 +27,33 @@ export const AnimationTableColumns: Array<Column<Animation>> = [
     ),
   },
   {
-    Header: 'Actions',
+    Header: '',
     accessor: 'id',
+    id: 'actions',
     disableSortBy: true,
-    Cell: ({ value }) => {
-      const queryClient = useQueryClient()
+    Cell: ({ row: { original: animation } }) => {
+      const { setActiveAnimation, toggleEditAnimationModal, toggleDeleteAnimationModal } =
+        useAnimationStore()
 
-      const deleteAnimation = async () => {
-        const { status } = await axios.delete(`/v1/libraries/${value}`)
+      const editAnimation = () => {
+        setActiveAnimation(animation)
+        toggleEditAnimationModal()
+      }
 
-        if (status === 200) {
-          queryClient.invalidateQueries('libraries')
-        }
+      const deleteAnimation = () => {
+        setActiveAnimation(animation)
+        toggleDeleteAnimationModal()
       }
 
       return (
-        <button onClick={deleteAnimation}>
-          <TrashIcon className="stroke-waterloo" />
-        </button>
+        <div className="flex space-x-2">
+          <button onClick={editAnimation} className="group">
+            <EditIcon className="stroke-waterloo group-hover:stroke-halloween-orange" />
+          </button>
+          <button onClick={deleteAnimation} className="group">
+            <TrashIcon className="stroke-waterloo group-hover:stroke-halloween-orange" />
+          </button>
+        </div>
       )
     },
   },
