@@ -8,7 +8,7 @@ import { Card } from '../../Card'
 import { DataTable } from '../../DataTable'
 import { FancyButton } from '../../FancyButton'
 import { LifeBuoyIcon } from '../../icons/LifeBuoyIcon'
-import { CreateSupportRequestModal } from '../../modals/CreateSupportRequestModal'
+import { CreateSupportTicketModal } from '../../modals/CreateSupportTicketModal'
 import { DeleteTicketModal } from '../../modals/DeleteTicketModal'
 import { EditTicketModal } from '../../modals/EditTicketModal'
 
@@ -66,7 +66,7 @@ export const ManagerDashboard = () => {
           )}
         </Card>
       </div>
-      <CreateSupportRequestModal
+      <CreateSupportTicketModal
         isVisible={isCreateSupportRequestModalVisible}
         onClose={toggleCreateSupportRequestModal}
       />

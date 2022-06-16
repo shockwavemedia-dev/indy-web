@@ -17,7 +17,6 @@ import { CreateProjectBriefModal } from '../../modals/CreateProjectBriefModal'
 import { CreateSupportRequestModal } from '../../modals/CreateSupportRequestModal'
 import { DeleteTicketModal } from '../../modals/DeleteTicketModal'
 import { EditTicketModal } from '../../modals/EditTicketModal'
-
 export const ClientDashboard = () => {
   const { data: session } = useSession()
   const {

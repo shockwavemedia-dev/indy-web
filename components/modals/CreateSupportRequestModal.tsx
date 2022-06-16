@@ -1,23 +1,17 @@
 import axios from 'axios'
 import { Form, Formik } from 'formik'
-import { useSession } from 'next-auth/react'
-import { useQuery, useQueryClient } from 'react-query'
-import { TicketTypeOptions } from '../../constants/options/TicketTypeOptions'
+import { useQuery } from 'react-query'
 import { CreateSupportRequestFormSchema } from '../../schemas/CreateSupportRequestFormSchema'
 import { useToastStore } from '../../store/ToastStore'
-import { Client } from '../../types/Client.type'
 import { Department } from '../../types/Department.type'
 import { CreateSupportRequestForm } from '../../types/forms/CreateSupportRequestForm.type'
 import { Page } from '../../types/Page.type'
-import { Ticket } from '../../types/Ticket.type'
 import { Button } from '../Button'
-import { DateInput } from '../DateInput'
 import { ClipboardIcon } from '../icons/ClipboardIcon'
 import { EditIcon } from '../icons/EditIcon'
 import { Modal } from '../Modal'
-import { RichTextInput } from '../RichTextInput'
 import { Select } from '../Select'
-import { TextInput } from '../TextInput'
+import { TextAreaInput } from '../TextAreaInput'
 
 export const CreateSupportRequestModal = ({
   isVisible,
@@ -26,8 +20,6 @@ export const CreateSupportRequestModal = ({
   isVisible: boolean
   onClose: () => void
 }) => {
-  const { data: session } = useSession()
-  const queryClient = useQueryClient()
   const { showToast } = useToastStore()
 
   const { data: departments } = useQuery(
@@ -47,36 +39,15 @@ export const CreateSupportRequestModal = ({
     }
   )
 
-  const { data: clients } = useQuery(
-    'clients',
-    async () => {
-      const {
-        data: { data },
-      } = await axios.get<{
-        data: Array<Client>
-        page: Page
-      }>('/v1/clients')
-
-      return data
-    },
-    {
-      enabled: isVisible,
-    }
-  )
-
   const submitForm = async (values: CreateSupportRequestForm) => {
     try {
-      const {
-        status,
-        data: { ticketCode },
-      } = await axios.post<Ticket>('/v1/tickets', values)
+      const { status } = await axios.post('/v1/support-request', values)
 
-      if (status === 200) {
-        queryClient.invalidateQueries('tickets')
+      if (status === 201) {
         onClose()
         showToast({
           type: 'success',
-          message: `New Ticket ${ticketCode} successfully created!`,
+          message: `Support Request successfully created!`,
         })
       }
     } catch (e) {
@@ -94,52 +65,17 @@ export const CreateSupportRequestModal = ({
           <Formik
             validationSchema={CreateSupportRequestFormSchema}
             initialValues={{
-              subject: '',
-              description: '',
-              type: '',
-              requestedBy: session?.user.id || -1,
-              clientId: session?.user.userType.clientId || -1,
+              message: '',
               departmentId: -1,
-              duedate: null,
             }}
             onSubmit={submitForm}
           >
             {({ isSubmitting }) => (
               <Form className="flex w-140 flex-col">
-                {session?.user.userType.type == 'admin_users' && (
-                  <Select
-                    name="clientId"
-                    Icon={ClipboardIcon}
-                    placeholder="Select Client"
-                    options={
-                      clients?.map((client) => ({
-                        value: client.id,
-                        label: client.name,
-                      })) ?? []
-                    }
-                    className="mb-5"
-                  />
-                )}
-                <TextInput
-                  type="text"
-                  Icon={EditIcon}
-                  placeholder="Enter Subject"
-                  name="subject"
-                  className="mb-5"
-                />
-                <div className="mb-5 flex space-x-5">
-                  <Select
-                    name="type"
-                    Icon={ClipboardIcon}
-                    placeholder="Select Type"
-                    options={TicketTypeOptions}
-                  />
-                  <DateInput name="duedate" placeholder="Enter due date" />
-                </div>
                 <Select
                   name="departmentId"
                   Icon={ClipboardIcon}
-                  placeholder="Select department"
+                  placeholder="Select Department"
                   options={
                     departments?.map((department) => ({
                       value: department.id,
@@ -148,10 +84,10 @@ export const CreateSupportRequestModal = ({
                   }
                   className="mb-5"
                 />
-                <RichTextInput
+                <TextAreaInput
                   Icon={EditIcon}
-                  placeholder="Enter Description"
-                  name="description"
+                  placeholder="Enter Message"
+                  name="message"
                   className="mb-8"
                 />
                 <div className="flex space-x-5">
