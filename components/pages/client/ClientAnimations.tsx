@@ -1,23 +1,28 @@
-import { useSession } from 'next-auth/react'
+import axios from 'axios'
 import Head from 'next/head'
+import Link from 'next/link'
 import { useEffect, useState } from 'react'
-import { ClientTicketsTableColumns } from '../../../constants/tables/ClientTicketsTableColumns'
+import { useQuery } from 'react-query'
 import { usePanelLayoutStore } from '../../../layouts/PanelLayout'
 import { useTicketStore } from '../../../store/TicketStore'
+import { Animation } from '../../../types/Animation.type'
+import { Page } from '../../../types/Page.type'
 import { Card } from '../../Card'
 import { CountCard } from '../../CountCard'
-import { DataTable } from '../../DataTable'
 import { FancyButton } from '../../FancyButton'
 import { CalendarAddIcon } from '../../icons/CalendarAddIcon'
 import { GalleryIcon } from '../../icons/GalleryIcon'
 import { MenuBoardIcon } from '../../icons/MenuBoardIcon'
 import { VideoIcon } from '../../icons/VideoIcon'
+import {
+  CreateAnimationRequestModal,
+  useCreateAnimationRequestModal,
+} from '../../modals/CreateAnimationRequestModal'
 import { CreateProjectBriefModal } from '../../modals/CreateProjectBriefModal'
 import { DeleteTicketModal } from '../../modals/DeleteTicketModal'
 import { EditTicketModal } from '../../modals/EditTicketModal'
-import { NewAnimationRequestModal } from '../../modals/NewAnimationRequestModal'
+
 export const ClientAnimations = () => {
-  const { data: session } = useSession()
   const {
     activeTicket,
     isEditTicketModalVisible,
@@ -27,13 +32,19 @@ export const ClientAnimations = () => {
   } = useTicketStore()
   const { setHeader } = usePanelLayoutStore()
 
-  const [isCreateAnimationModalVisible, setCreateAnimationModalVisible] = useState(false)
   const [isCreateProjectBriefModalVisible, setCreateProjectBriefModalVisible] = useState(false)
 
-  const toggleCreateAnimationModal = () =>
-    setCreateAnimationModalVisible(!isCreateAnimationModalVisible)
   const toggleCreateProjectBriefModal = () =>
     setCreateProjectBriefModalVisible(!isCreateProjectBriefModalVisible)
+
+  const { data: animationPagination } = useQuery('animations', async () => {
+    const { data } = await axios.get<{
+      data: Array<Animation>
+      page: Page
+    }>('/v1/libraries')
+
+    return data
+  })
 
   useEffect(() => {
     setHeader('Animation Library')
@@ -53,23 +64,19 @@ export const ClientAnimations = () => {
             onClick={toggleCreateProjectBriefModal}
             className="w-fit"
           />
-          <FancyButton
-            Icon={<VideoIcon className="stroke-halloween-orange" />}
-            title="Request Animation"
-            subtitle="Laborerivit rem cones mil"
-            onClick={toggleCreateAnimationModal}
-            className="w-fit"
-          />
         </div>
         <hr className="border-t-bright-gray" />
-        <div className="flex h-155 space-x-6">
-          <Card title="Project Status Table" className="flex w-260 flex-col">
-            <DataTable
-              columns={ClientTicketsTableColumns}
-              dataEndpoint={`/v1/clients/${session?.user.userType.clientId}/libraries`}
-              tableQueryKey={['animations']}
-              ofString="Projects"
-            />
+        <div className="flex space-x-6">
+          <Card className="flex h-fit w-257.5 flex-wrap gap-5">
+            {animationPagination &&
+            animationPagination.data &&
+            animationPagination.data.length > 0 ? (
+              animationPagination.data.map((animation) => (
+                <AnimationButton key={`animation-${animation.id}`} animation={animation} />
+              ))
+            ) : (
+              <div>No animation libraries to display.</div>
+            )}
           </Card>
           <div className="flex flex-1 flex-col">
             <div className="mb-3 flex space-x-3">
@@ -110,10 +117,7 @@ export const ClientAnimations = () => {
         isVisible={isCreateProjectBriefModalVisible}
         onClose={toggleCreateProjectBriefModal}
       />
-      <NewAnimationRequestModal
-        isVisible={isCreateAnimationModalVisible}
-        onClose={toggleCreateAnimationModal}
-      />
+      <CreateAnimationRequestModal />
       <EditTicketModal
         isVisible={isEditTicketModalVisible}
         onClose={toggleEditTicketModal}
@@ -127,5 +131,46 @@ export const ClientAnimations = () => {
         animation
       />
     </>
+  )
+}
+
+const AnimationButton = ({ animation }: { animation: Animation }) => {
+  const [failedToLoad, setFailedToLoad] = useState(false)
+  const { toggleCreateAnimationRequestModal } = useCreateAnimationRequestModal()
+
+  const failed = () => setFailedToLoad(true)
+  const toggleAnimation = () => toggleCreateAnimationRequestModal(animation.id)
+
+  return failedToLoad ? (
+    <div className="grid h-44 w-78.5 place-content-center rounded-xl border border-halloween-orange font-urbanist text-sm font-medium text-onyx">
+      <div>
+        Failed to load{' '}
+        <Link href={animation.videoLink}>
+          <a
+            target="_blank"
+            className="font-urbanist text-sm font-semibold text-halloween-orange underline-offset-1 hover:underline"
+          >
+            {animation.title}
+          </a>
+        </Link>{' '}
+        😵
+      </div>
+    </div>
+  ) : (
+    <video
+      key={`animation-${animation.id}`}
+      className="h-44 w-78.5 cursor-pointer rounded-xl"
+      onMouseOver={(event) => event.currentTarget.play()}
+      onMouseOut={(event) => {
+        event.currentTarget.currentTime = 0
+        event.currentTarget.pause()
+      }}
+      onClick={toggleAnimation}
+      onError={failed}
+      loop
+      muted
+    >
+      <source src={animation.videoLink} />
+    </video>
   )
 }

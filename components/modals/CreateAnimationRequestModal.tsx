@@ -1,53 +1,54 @@
 import axios from 'axios'
 import { Form, Formik } from 'formik'
 import { useQuery, useQueryClient } from 'react-query'
+import createStore from 'zustand'
+import { combine } from 'zustand/middleware'
 import { NewAnimationRequestFormSchema } from '../../schemas/NewAnimationRequestFormSchema'
 import { useToastStore } from '../../store/ToastStore'
 import { Animation } from '../../types/Animation.type'
 import { NewAnimationRequestForm } from '../../types/forms/NewAnimationRequestForm.type'
-import { Page } from '../../types/Page.type'
 import { Button } from '../Button'
 import { EditIcon } from '../icons/EditIcon'
-import { PencilIcon } from '../icons/PencilIcon'
 import { Modal } from '../Modal'
 import { RichTextInput } from '../RichTextInput'
-import { Select } from '../Select'
 
-export const NewAnimationRequestModal = ({
-  isVisible,
-  onClose,
-}: {
-  isVisible: boolean
-  onClose: () => void
-}) => {
+export const useCreateAnimationRequestModal = createStore(
+  combine(
+    {
+      animationId: -1,
+    },
+    (set) => ({
+      toggleCreateAnimationRequestModal: (animationId?: number) =>
+        set(() => ({
+          animationId: animationId ?? -1,
+        })),
+    })
+  )
+)
+
+export const CreateAnimationRequestModal = ({ onClose }: { onClose?: () => void }) => {
   const { showToast } = useToastStore()
   const queryClient = useQueryClient()
+  const { animationId, toggleCreateAnimationRequestModal } = useCreateAnimationRequestModal()
 
-  const { data: libraries } = useQuery(
-    'libraries',
+  const { data: animation } = useQuery(
+    ['animation', animationId],
     async () => {
-      const {
-        data: { data },
-      } = await axios.get<{
-        data: Array<Animation>
-        page: Page
-      }>('/v1/libraries', {
-        params: {
-          size: 100,
-        },
-      })
+      const { data } = await axios.get<Animation>(`/v1/libraries/${animationId}`)
 
       return data
     },
     {
-      enabled: isVisible,
+      enabled: animationId > -1,
     }
   )
 
-  const libraryOptions = libraries?.map((library) => ({
-    value: library.id,
-    label: library.title,
-  }))
+  const closeModal = () => {
+    if (onClose) {
+      onClose()
+    }
+    toggleCreateAnimationRequestModal()
+  }
 
   const submitForm = async (values: NewAnimationRequestForm) => {
     try {
@@ -58,7 +59,7 @@ export const NewAnimationRequestModal = ({
 
       if (status === 200) {
         queryClient.invalidateQueries('animations')
-        onClose()
+        closeModal()
         showToast({
           type: 'success',
           message: `New Ticket ${ticketCode} successfully created!`,
@@ -74,8 +75,8 @@ export const NewAnimationRequestModal = ({
 
   return (
     <>
-      {isVisible && (
-        <Modal title="Request New Animation" onClose={onClose}>
+      {animationId > -1 && animation && (
+        <Modal title={`Request ${animation.title} Animation`} onClose={closeModal}>
           <Formik
             validationSchema={NewAnimationRequestFormSchema}
             initialValues={{
@@ -86,27 +87,17 @@ export const NewAnimationRequestModal = ({
           >
             {({ isSubmitting }) => (
               <Form className="flex w-140 flex-col">
-                <Select
-                  name="libraryId"
-                  Icon={PencilIcon}
-                  placeholder="Select Animation"
-                  options={libraryOptions || []}
-                  className="mb-5"
-                />
-
                 <RichTextInput
                   Icon={EditIcon}
                   placeholder="Enter description"
                   name="description"
                   className="mb-5"
                 />
-                <div className="mb-5 flex w-140">
-                  <video muted autoPlay loop>
-                    <source src="https://s3.ap-southeast-2.amazonaws.com/depixed-2019-ezypro/_Libraries/AFL%20V1_15338826195b6d30fb9575c.mp4" />
-                  </video>
-                </div>
+                <video className="mb-5 w-140 rounded-xl" muted controls>
+                  <source src={animation.videoLink} />
+                </video>
                 <div className="flex space-x-5">
-                  <Button ariaLabel="Cancel" onClick={onClose} type="button" light>
+                  <Button ariaLabel="Cancel" onClick={closeModal} type="button" light>
                     Cancel
                   </Button>
                   <Button ariaLabel="Submit" disabled={isSubmitting} type="submit">
