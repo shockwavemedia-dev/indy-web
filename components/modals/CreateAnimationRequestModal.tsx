@@ -80,7 +80,7 @@ export const CreateAnimationRequestModal = ({ onClose }: { onClose?: () => void 
           <Formik
             validationSchema={NewAnimationRequestFormSchema}
             initialValues={{
-              libraryId: -1,
+              libraryId: animationId,
               description: '',
             }}
             onSubmit={submitForm}
