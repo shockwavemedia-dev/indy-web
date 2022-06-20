@@ -10,11 +10,6 @@ import { Ticket } from '../../types/Ticket.type'
 
 export const ClientTicketsTableColumns: Array<Column<Ticket>> = [
   {
-    Header: 'Client',
-    accessor: 'clientName',
-    Cell: ({ value }) => <div className="font-urbanist text-sm font-medium text-onyx">{value}</div>,
-  },
-  {
     Header: 'Type',
     accessor: 'type',
     Cell: ({ value }) => (
