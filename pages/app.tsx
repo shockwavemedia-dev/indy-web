@@ -1,5 +1,6 @@
 import Head from 'next/head'
-import { ReactElement, useEffect, useState } from 'react'
+import Link from 'next/link'
+import { ReactElement, useEffect } from 'react'
 import { Card } from '../components/Card'
 import { CountCard } from '../components/CountCard'
 import { FancyButton } from '../components/FancyButton'
@@ -7,7 +8,6 @@ import { CalendarAddIcon } from '../components/icons/CalendarAddIcon'
 import { GalleryIcon } from '../components/icons/GalleryIcon'
 import { MenuBoardIcon } from '../components/icons/MenuBoardIcon'
 import { VideoIcon } from '../components/icons/VideoIcon'
-import { CreateProjectBriefModal } from '../components/modals/CreateProjectBriefModal'
 import { DeleteTicketModal } from '../components/modals/DeleteTicketModal'
 import { EditTicketModal } from '../components/modals/EditTicketModal'
 import PanelLayout, { usePanelLayoutStore } from '../layouts/PanelLayout'
@@ -24,10 +24,6 @@ const AppPage: NextPageWithLayout = () => {
   } = useTicketStore()
   const { setHeader } = usePanelLayoutStore()
 
-  const [isCreateProjectBriefModalVisible, setCreateProjectBriefModalVisible] = useState(false)
-  const toggleCreateProjectBriefModal = () =>
-    setCreateProjectBriefModalVisible(!isCreateProjectBriefModalVisible)
-
   useEffect(() => {
     setHeader('App')
   }, [])
@@ -38,13 +34,14 @@ const AppPage: NextPageWithLayout = () => {
         <title>Indy - App</title>
       </Head>
       <div className="mx-auto h-full w-full max-w-8xl space-y-6">
-        <FancyButton
-          Icon={<CalendarAddIcon className="stroke-halloween-orange" />}
-          title="New Project Brief"
-          subtitle="Laborerivit rem cones mil"
-          onClick={toggleCreateProjectBriefModal}
-          className="w-fit"
-        />
+        <Link href="/project-brief">
+          <FancyButton
+            Icon={<CalendarAddIcon className="stroke-halloween-orange" />}
+            title="New Project Brief"
+            subtitle="Laborerivit rem cones mil"
+            className="w-fit"
+          />
+        </Link>
         <div className="flex h-155 space-x-6">
           <Card className="flex w-260 flex-col opacity-50"></Card>
           <div className="flex flex-1 flex-col">
@@ -82,10 +79,6 @@ const AppPage: NextPageWithLayout = () => {
           </div>
         </div>
       </div>
-      <CreateProjectBriefModal
-        isVisible={isCreateProjectBriefModalVisible}
-        onClose={toggleCreateProjectBriefModal}
-      />
       <EditTicketModal
         isVisible={isEditTicketModalVisible}
         onClose={toggleEditTicketModal}

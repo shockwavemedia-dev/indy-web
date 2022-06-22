@@ -1,5 +1,6 @@
 import { useSession } from 'next-auth/react'
 import Head from 'next/head'
+import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { ClientTicketsTableColumns } from '../../../constants/tables/ClientTicketsTableColumns'
 import { usePanelLayoutStore } from '../../../layouts/PanelLayout'
@@ -13,11 +14,11 @@ import { GalleryIcon } from '../../icons/GalleryIcon'
 import { LifeBuoyIcon } from '../../icons/LifeBuoyIcon'
 import { MenuBoardIcon } from '../../icons/MenuBoardIcon'
 import { VideoIcon } from '../../icons/VideoIcon'
-import { CreateProjectBriefModal } from '../../modals/CreateProjectBriefModal'
 import { CreateSupportRequestModal } from '../../modals/CreateSupportRequestModal'
 import { DeleteTicketModal } from '../../modals/DeleteTicketModal'
 import { EditTicketModal } from '../../modals/EditTicketModal'
 import { Notifications } from '../../Notifications'
+
 export const ClientDashboard = () => {
   const { data: session } = useSession()
   const {
@@ -29,11 +30,8 @@ export const ClientDashboard = () => {
   } = useTicketStore()
   const { setHeader, setSubHeader } = usePanelLayoutStore()
 
-  const [isCreateProjectBriefModalVisible, setCreateProjectBriefModalVisible] = useState(false)
   const [isCreateSupportRequestModalVisible, setCreateSupportRequestModalVisible] = useState(false)
 
-  const toggleCreateProjectBriefModal = () =>
-    setCreateProjectBriefModalVisible(!isCreateProjectBriefModalVisible)
   const toggleCreateSupportRequestModal = () =>
     setCreateSupportRequestModalVisible(!isCreateSupportRequestModalVisible)
 
@@ -53,13 +51,14 @@ export const ClientDashboard = () => {
       </Head>
       <div className="mx-auto h-full w-full max-w-8xl">
         <div className="mb-6 flex space-x-6">
-          <FancyButton
-            Icon={<CalendarAddIcon className="stroke-halloween-orange" />}
-            title="New Project Brief"
-            subtitle="Laborerivit rem cones mil"
-            onClick={toggleCreateProjectBriefModal}
-            className="w-fit"
-          />
+          <Link href="/project-brief">
+            <FancyButton
+              Icon={<CalendarAddIcon className="stroke-halloween-orange" />}
+              title="New Project Brief"
+              subtitle="Laborerivit rem cones mil"
+              className="w-fit"
+            />
+          </Link>
           <FancyButton
             Icon={<LifeBuoyIcon className="fill-halloween-orange" />}
             title="Support Request"
@@ -111,10 +110,6 @@ export const ClientDashboard = () => {
           </div>
         </div>
       </div>
-      <CreateProjectBriefModal
-        isVisible={isCreateProjectBriefModalVisible}
-        onClose={toggleCreateProjectBriefModal}
-      />
       <CreateSupportRequestModal
         isVisible={isCreateSupportRequestModalVisible}
         onClose={toggleCreateSupportRequestModal}

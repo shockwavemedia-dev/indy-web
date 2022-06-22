@@ -10,7 +10,7 @@ export const FancyButton = ({
   Icon: ReactNode
   title: string
   subtitle: string
-  onClick: MouseEventHandler<HTMLButtonElement>
+  onClick?: MouseEventHandler<HTMLButtonElement>
   className?: string
 }) => (
   <button

@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { useSession } from 'next-auth/react'
 import Head from 'next/head'
+import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { useQuery } from 'react-query'
 import { Card } from '../../../components/Card'
@@ -13,7 +14,6 @@ import { CalendarAddIcon } from '../../icons/CalendarAddIcon'
 import { GalleryIcon } from '../../icons/GalleryIcon'
 import { MenuBoardIcon } from '../../icons/MenuBoardIcon'
 import { VideoIcon } from '../../icons/VideoIcon'
-import { CreateProjectBriefModal } from '../../modals/CreateProjectBriefModal'
 
 export const ClientMyFiles = () => {
   const { setHeader } = usePanelLayoutStore()
@@ -30,10 +30,6 @@ export const ClientMyFiles = () => {
   const goUpToYearsFolder = () => setYear('')
   const goUpToMonthsFolder = () => setMonth('')
 
-  const [isCreateProjectBriefModalVisible, setCreateProjectBriefModalVisible] = useState(false)
-  const toggleCreateProjectBriefModal = () =>
-    setCreateProjectBriefModalVisible(!isCreateProjectBriefModalVisible)
-
   useEffect(() => {
     setHeader('My Files')
   }, [])
@@ -48,13 +44,14 @@ export const ClientMyFiles = () => {
         <title>Indy - My Files</title>
       </Head>
       <div className="mx-auto h-4/5 w-full max-w-8xl">
-        <FancyButton
-          Icon={<CalendarAddIcon className="stroke-halloween-orange" />}
-          title="New Project Brief"
-          subtitle="Laborerivit rem cones mil"
-          onClick={toggleCreateProjectBriefModal}
-          className="mb-8 w-fit"
-        />
+        <Link href="/project-brief">
+          <FancyButton
+            Icon={<CalendarAddIcon className="stroke-halloween-orange" />}
+            title="New Project Brief"
+            subtitle="Laborerivit rem cones mil"
+            className="mb-5 w-fit"
+          />
+        </Link>
         <hr className="mb-6 border-t-bright-gray" />
         <div className="flex space-x-6">
           <Card className="flex w-260 flex-wrap gap-4">
@@ -142,10 +139,6 @@ export const ClientMyFiles = () => {
             </Card>
           </div>
         </div>
-        <CreateProjectBriefModal
-          isVisible={isCreateProjectBriefModalVisible}
-          onClose={toggleCreateProjectBriefModal}
-        />
       </div>
     </>
   )

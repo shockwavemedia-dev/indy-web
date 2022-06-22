@@ -1,5 +1,6 @@
 import { useSession } from 'next-auth/react'
 import Head from 'next/head'
+import Link from 'next/link'
 import { ReactElement, useEffect, useState } from 'react'
 import { Card } from '../components/Card'
 import { CountCard } from '../components/CountCard'
@@ -10,7 +11,6 @@ import { GalleryIcon } from '../components/icons/GalleryIcon'
 import { MenuBoardIcon } from '../components/icons/MenuBoardIcon'
 import { VideoIcon } from '../components/icons/VideoIcon'
 import { CreateGraphicRequestModal } from '../components/modals/CreateGraphicRequestModal'
-import { CreateProjectBriefModal } from '../components/modals/CreateProjectBriefModal'
 import { DeleteTicketModal } from '../components/modals/DeleteTicketModal'
 import { EditTicketModal } from '../components/modals/EditTicketModal'
 import { ClientTicketsTableColumns } from '../constants/tables/ClientTicketsTableColumns'
@@ -30,11 +30,8 @@ const GraphicPage: NextPageWithLayout = () => {
   const { setHeader } = usePanelLayoutStore()
 
   const [isCreateGraphicModalVisible, setCreateeGraphicModalVisible] = useState(false)
-  const [isCreateProjectBriefModalVisible, setCreateProjectBriefModalVisible] = useState(false)
 
   const toggleCreateGraphicModal = () => setCreateeGraphicModalVisible(!isCreateGraphicModalVisible)
-  const toggleCreateProjectBriefModal = () =>
-    setCreateProjectBriefModalVisible(!isCreateProjectBriefModalVisible)
 
   useEffect(() => {
     setHeader('Graphic Design')
@@ -47,13 +44,14 @@ const GraphicPage: NextPageWithLayout = () => {
       </Head>
       <div className="mx-auto h-full w-full max-w-8xl space-y-6">
         <div className="mb-6 flex space-x-6">
-          <FancyButton
-            Icon={<CalendarAddIcon className="stroke-halloween-orange" />}
-            title="New Project Brief"
-            subtitle="Laborerivit rem cones mil"
-            onClick={toggleCreateProjectBriefModal}
-            className="w-fit"
-          />
+          <Link href="/project-brief">
+            <FancyButton
+              Icon={<CalendarAddIcon className="stroke-halloween-orange" />}
+              title="New Project Brief"
+              subtitle="Laborerivit rem cones mil"
+              className="w-fit"
+            />
+          </Link>
           <FancyButton
             Icon={<GalleryIcon className="stroke-halloween-orange" />}
             title="Request Graphic"
@@ -104,10 +102,6 @@ const GraphicPage: NextPageWithLayout = () => {
           </div>
         </div>
       </div>
-      <CreateProjectBriefModal
-        isVisible={isCreateProjectBriefModalVisible}
-        onClose={toggleCreateProjectBriefModal}
-      />
       <CreateGraphicRequestModal
         isVisible={isCreateGraphicModalVisible}
         onClose={toggleCreateGraphicModal}

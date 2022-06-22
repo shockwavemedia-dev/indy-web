@@ -18,7 +18,6 @@ import {
   CreateAnimationRequestModal,
   useCreateAnimationRequestModal,
 } from '../../modals/CreateAnimationRequestModal'
-import { CreateProjectBriefModal } from '../../modals/CreateProjectBriefModal'
 import { DeleteTicketModal } from '../../modals/DeleteTicketModal'
 import { EditTicketModal } from '../../modals/EditTicketModal'
 
@@ -31,11 +30,6 @@ export const ClientAnimations = () => {
     toggleDeleteTicketModal,
   } = useTicketStore()
   const { setHeader } = usePanelLayoutStore()
-
-  const [isCreateProjectBriefModalVisible, setCreateProjectBriefModalVisible] = useState(false)
-
-  const toggleCreateProjectBriefModal = () =>
-    setCreateProjectBriefModalVisible(!isCreateProjectBriefModalVisible)
 
   const { data: animationPagination } = useQuery('animations', async () => {
     const { data } = await axios.get<{
@@ -57,13 +51,14 @@ export const ClientAnimations = () => {
       </Head>
       <div className="mx-auto h-full w-full max-w-8xl space-y-6">
         <div className="mb-6 flex space-x-6">
-          <FancyButton
-            Icon={<CalendarAddIcon className="stroke-halloween-orange" />}
-            title="New Project Brief"
-            subtitle="Laborerivit rem cones mil"
-            onClick={toggleCreateProjectBriefModal}
-            className="w-fit"
-          />
+          <Link href="/project-brief">
+            <FancyButton
+              Icon={<CalendarAddIcon className="stroke-halloween-orange" />}
+              title="New Project Brief"
+              subtitle="Laborerivit rem cones mil"
+              className="w-fit"
+            />
+          </Link>
         </div>
         <hr className="border-t-bright-gray" />
         <div className="flex space-x-6">
@@ -113,10 +108,6 @@ export const ClientAnimations = () => {
           </div>
         </div>
       </div>
-      <CreateProjectBriefModal
-        isVisible={isCreateProjectBriefModalVisible}
-        onClose={toggleCreateProjectBriefModal}
-      />
       <CreateAnimationRequestModal />
       <EditTicketModal
         isVisible={isEditTicketModalVisible}
