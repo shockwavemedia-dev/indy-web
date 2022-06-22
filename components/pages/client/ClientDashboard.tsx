@@ -17,6 +17,7 @@ import { CreateProjectBriefModal } from '../../modals/CreateProjectBriefModal'
 import { CreateSupportRequestModal } from '../../modals/CreateSupportRequestModal'
 import { DeleteTicketModal } from '../../modals/DeleteTicketModal'
 import { EditTicketModal } from '../../modals/EditTicketModal'
+import { Notifications } from '../../Notifications'
 export const ClientDashboard = () => {
   const { data: session } = useSession()
   const {
@@ -106,9 +107,7 @@ export const ClientDashboard = () => {
                 description="Videoshoots Remaining"
               />
             </div>
-            <Card title="Notifications" className="h-full w-full opacity-50">
-              <div></div>
-            </Card>
+            <Notifications />
           </div>
         </div>
       </div>
