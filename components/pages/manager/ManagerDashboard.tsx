@@ -1,7 +1,7 @@
 import { useSession } from 'next-auth/react'
 import Head from 'next/head'
 import { useEffect, useState } from 'react'
-import { ClientTicketsTableColumns } from '../../../constants/tables/ClientTicketsTableColumns'
+import { ManagerTicketsTableColumns } from '../../../constants/tables/ManagerTicketsTableColumns'
 import { usePanelLayoutStore } from '../../../layouts/PanelLayout'
 import { useTicketStore } from '../../../store/TicketStore'
 import { Card } from '../../Card'
@@ -54,7 +54,7 @@ export const ManagerDashboard = () => {
         <Card title="Project Status Table">
           {!!session && session.user.userType.departments.length > 0 ? (
             <DataTable
-              columns={ClientTicketsTableColumns}
+              columns={ManagerTicketsTableColumns}
               dataEndpoint={`/v1/departments/${session?.user.userType.departments[0].id}/tickets`}
               tableQueryKey={['tickets']}
               ofString="Projects"
