@@ -1,9 +1,6 @@
-import { useQuery } from 'react-query'
 import { Card } from './Card'
 
 export const Notifications = () => {
-  const { data: notifications } = useQuery('notifications', async () => {})
-
   return (
     <Card title="Notifications">
       <div className="relative">
