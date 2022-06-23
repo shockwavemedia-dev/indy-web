@@ -12,6 +12,7 @@ import { MenuBoardIcon } from '../components/icons/MenuBoardIcon'
 import { VideoIcon } from '../components/icons/VideoIcon'
 import { DeleteTicketModal } from '../components/modals/DeleteTicketModal'
 import { EditTicketModal } from '../components/modals/EditTicketModal'
+import { Notifications } from '../components/Notifications'
 import { ClientTicketsTableColumns } from '../constants/tables/ClientTicketsTableColumns'
 import PanelLayout, { usePanelLayoutStore } from '../layouts/PanelLayout'
 import { useTicketStore } from '../store/TicketStore'
@@ -84,9 +85,7 @@ const WebsitePage: NextPageWithLayout = () => {
                 description="Videoshoots Remaining"
               />
             </div>
-            <Card title="Notifications" className="h-full w-full opacity-50">
-              <div></div>
-            </Card>
+            <Notifications />
           </div>
         </div>
       </div>

@@ -14,6 +14,7 @@ import { CalendarAddIcon } from '../../icons/CalendarAddIcon'
 import { GalleryIcon } from '../../icons/GalleryIcon'
 import { MenuBoardIcon } from '../../icons/MenuBoardIcon'
 import { VideoIcon } from '../../icons/VideoIcon'
+import { Notifications } from '../../Notifications'
 
 export const ClientMyFiles = () => {
   const { setHeader } = usePanelLayoutStore()
@@ -134,9 +135,7 @@ export const ClientMyFiles = () => {
                 description="Videoshoots Remaining"
               />
             </div>
-            <Card title="Notifications" className="h-full w-full opacity-50">
-              <div></div>
-            </Card>
+            <Notifications />
           </div>
         </div>
       </div>

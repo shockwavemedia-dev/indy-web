@@ -20,6 +20,7 @@ import {
 } from '../../modals/CreateAnimationRequestModal'
 import { DeleteTicketModal } from '../../modals/DeleteTicketModal'
 import { EditTicketModal } from '../../modals/EditTicketModal'
+import { Notifications } from '../../Notifications'
 
 export const ClientAnimations = () => {
   const {
@@ -102,9 +103,7 @@ export const ClientAnimations = () => {
                 description="Videoshoots Remaining"
               />
             </div>
-            <Card title="Notifications" className="h-full w-full opacity-50">
-              <div></div>
-            </Card>
+            <Notifications />
           </div>
         </div>
       </div>
