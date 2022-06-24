@@ -127,7 +127,7 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
           <div className="mb-6 flex items-center">
             <Crumbs panelName={panelName} />
           </div>
-          <div className="font-urbanist text-xxl font-semibold text-onyx">{header}</div>
+          <div className="font-urbanist text-3xl font-bold text-onyx">{header}</div>
           <div className="mb-10 font-urbanist font-semibold text-halloween-orange">{subHeader}</div>
           <div className="absolute right-0 top-25 px-6 font-circular-std text-5xl text-charleston-green">
             Indy<span className="text-halloween-orange">.</span>

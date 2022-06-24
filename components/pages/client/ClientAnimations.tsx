@@ -12,7 +12,7 @@ import { Page } from '../../../types/Page.type'
 import { SelectOption } from '../../../types/SelectOption.type'
 import { Card } from '../../Card'
 import { CountCard } from '../../CountCard'
-import { FancyButton } from '../../FancyButton'
+import { FancyLink } from '../../FancyLink'
 import { CalendarAddIcon } from '../../icons/CalendarAddIcon'
 import { ClipboardIcon } from '../../icons/ClipboardIcon'
 import { GalleryIcon } from '../../icons/GalleryIcon'
@@ -69,14 +69,14 @@ export const ClientAnimations = () => {
       </Head>
       <div className="mx-auto h-full w-full max-w-8xl space-y-6">
         <div className="mb-6 flex space-x-6">
-          <Link href="/project-brief">
-            <FancyButton
-              Icon={<CalendarAddIcon className="stroke-halloween-orange" />}
-              title="New Project Brief"
-              subtitle="Laborerivit rem cones mil"
-              className="w-fit"
-            />
-          </Link>
+          <FancyLink
+            href="/project-brief"
+            target="_blank"
+            Icon={<CalendarAddIcon className="stroke-halloween-orange" />}
+            title="New Project Brief"
+            subtitle="Laborerivit rem cones mil"
+            className="w-fit"
+          />
         </div>
         <hr className="border-t-bright-gray" />
         <div className="flex space-x-6">

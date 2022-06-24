@@ -1,6 +1,5 @@
 import { useSession } from 'next-auth/react'
 import Head from 'next/head'
-import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { ClientTicketsTableColumns } from '../../../constants/tables/ClientTicketsTableColumns'
 import { usePanelLayoutStore } from '../../../layouts/PanelLayout'
@@ -9,6 +8,7 @@ import { Card } from '../../Card'
 import { CountCard } from '../../CountCard'
 import { DataTable } from '../../DataTable'
 import { FancyButton } from '../../FancyButton'
+import { FancyLink } from '../../FancyLink'
 import { CalendarAddIcon } from '../../icons/CalendarAddIcon'
 import { GalleryIcon } from '../../icons/GalleryIcon'
 import { LifeBuoyIcon } from '../../icons/LifeBuoyIcon'
@@ -51,14 +51,14 @@ export const ClientDashboard = () => {
       </Head>
       <div className="mx-auto h-full w-full max-w-8xl">
         <div className="mb-6 flex space-x-6">
-          <Link href="/project-brief">
-            <FancyButton
-              Icon={<CalendarAddIcon className="stroke-halloween-orange" />}
-              title="New Project Brief"
-              subtitle="Laborerivit rem cones mil"
-              className="w-fit"
-            />
-          </Link>
+          <FancyLink
+            href="/project-brief"
+            target="_blank"
+            Icon={<CalendarAddIcon className="stroke-halloween-orange" />}
+            title="New Project Brief"
+            subtitle="Laborerivit rem cones mil"
+            className="w-fit"
+          />
           <FancyButton
             Icon={<LifeBuoyIcon className="fill-halloween-orange" />}
             title="Support Request"

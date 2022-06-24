@@ -1,14 +1,13 @@
 import axios from 'axios'
 import { useSession } from 'next-auth/react'
 import Head from 'next/head'
-import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { useQuery } from 'react-query'
 import { Card } from '../../../components/Card'
 import { usePanelLayoutStore } from '../../../layouts/PanelLayout'
 import { Files } from '../../../types/Files.type'
 import { CountCard } from '../../CountCard'
-import { FancyButton } from '../../FancyButton'
+import { FancyLink } from '../../FancyLink'
 import { FileButton } from '../../FileButton'
 import { CalendarAddIcon } from '../../icons/CalendarAddIcon'
 import { GalleryIcon } from '../../icons/GalleryIcon'
@@ -45,14 +44,14 @@ export const ClientMyFiles = () => {
         <title>Indy - My Files</title>
       </Head>
       <div className="mx-auto h-4/5 w-full max-w-8xl">
-        <Link href="/project-brief">
-          <FancyButton
-            Icon={<CalendarAddIcon className="stroke-halloween-orange" />}
-            title="New Project Brief"
-            subtitle="Laborerivit rem cones mil"
-            className="mb-5 w-fit"
-          />
-        </Link>
+        <FancyLink
+          href="/project-brief"
+          target="_blank"
+          Icon={<CalendarAddIcon className="stroke-halloween-orange" />}
+          title="New Project Brief"
+          subtitle="Laborerivit rem cones mil"
+          className="w-fit"
+        />
         <hr className="mb-6 border-t-bright-gray" />
         <div className="flex space-x-6">
           <Card className="flex w-260 flex-wrap gap-4">
