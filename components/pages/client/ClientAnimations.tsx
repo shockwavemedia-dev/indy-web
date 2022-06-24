@@ -3,14 +3,18 @@ import Head from 'next/head'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { useQuery } from 'react-query'
+import { SingleValue } from 'react-select'
 import { usePanelLayoutStore } from '../../../layouts/PanelLayout'
 import { useTicketStore } from '../../../store/TicketStore'
 import { Animation } from '../../../types/Animation.type'
+import { AnimationCategory } from '../../../types/AnimationCategory.type'
 import { Page } from '../../../types/Page.type'
+import { SelectOption } from '../../../types/SelectOption.type'
 import { Card } from '../../Card'
 import { CountCard } from '../../CountCard'
 import { FancyButton } from '../../FancyButton'
 import { CalendarAddIcon } from '../../icons/CalendarAddIcon'
+import { ClipboardIcon } from '../../icons/ClipboardIcon'
 import { GalleryIcon } from '../../icons/GalleryIcon'
 import { MenuBoardIcon } from '../../icons/MenuBoardIcon'
 import { VideoIcon } from '../../icons/VideoIcon'
@@ -21,6 +25,7 @@ import {
 import { DeleteTicketModal } from '../../modals/DeleteTicketModal'
 import { EditTicketModal } from '../../modals/EditTicketModal'
 import { Notifications } from '../../Notifications'
+import { SelectNoFormik } from '../../SelectNoFormik'
 
 export const ClientAnimations = () => {
   const {
@@ -31,6 +36,10 @@ export const ClientAnimations = () => {
     toggleDeleteTicketModal,
   } = useTicketStore()
   const { setHeader } = usePanelLayoutStore()
+  const [category, setCategory] = useState<SingleValue<SelectOption<number>>>({
+    label: 'All Categories',
+    value: -1,
+  })
 
   const { data: animationPagination } = useQuery('animations', async () => {
     const { data } = await axios.get<{
@@ -44,6 +53,14 @@ export const ClientAnimations = () => {
   useEffect(() => {
     setHeader('Animation Library')
   }, [])
+
+  const { data: categories } = useQuery('animation-categories', async () => {
+    const {
+      data: { data },
+    } = await axios.get<{ data: Array<AnimationCategory>; page: Page }>('/v1/library-categories')
+
+    return data
+  })
 
   return (
     <>
@@ -63,16 +80,41 @@ export const ClientAnimations = () => {
         </div>
         <hr className="border-t-bright-gray" />
         <div className="flex space-x-6">
-          <Card className="flex h-fit w-257.5 flex-wrap gap-5">
-            {animationPagination &&
-            animationPagination.data &&
-            animationPagination.data.length > 0 ? (
-              animationPagination.data.map((animation) => (
-                <AnimationButton key={`animation-${animation.id}`} animation={animation} />
-              ))
-            ) : (
-              <div>No animation libraries to display.</div>
-            )}
+          <Card className="h-fit w-257.5">
+            <div className="mb-6 w-64">
+              <SelectNoFormik
+                Icon={ClipboardIcon}
+                label="Filter by Category"
+                options={[
+                  {
+                    label: 'All Categories',
+                    value: -1,
+                  },
+                  ...(categories?.map(({ id, name }) => ({
+                    label: name,
+                    value: id,
+                  })) || []),
+                ]}
+                value={category}
+                onChange={setCategory}
+              />
+            </div>
+            <div className="flex flex-wrap gap-5">
+              {animationPagination &&
+              animationPagination.data &&
+              animationPagination.data.length > 0 ? (
+                animationPagination.data
+                  .filter(
+                    ({ libraryCategoryId }) =>
+                      category?.value === -1 || libraryCategoryId === category?.value
+                  )
+                  .map((animation) => (
+                    <AnimationButton key={`animation-${animation.id}`} animation={animation} />
+                  ))
+              ) : (
+                <div>No animation libraries to display.</div>
+              )}
+            </div>
           </Card>
           <div className="flex flex-1 flex-col">
             <div className="mb-3 flex space-x-3">

@@ -4,7 +4,7 @@ import { useQuery, useQueryClient } from 'react-query'
 import { EditAnimationFormSchema } from '../../schemas/EditAnimationFormSchema'
 import { useToastStore } from '../../store/ToastStore'
 import { Animation } from '../../types/Animation.type'
-import { CategoryAnimation } from '../../types/CategoryAnimation.type'
+import { AnimationCategory } from '../../types/AnimationCategory.type'
 import { EditAnimationForm } from '../../types/forms/EditAnimationForm.type'
 import { Page } from '../../types/Page.type'
 import { Button } from '../Button'
@@ -33,7 +33,7 @@ export const EditAnimationModal = ({
       const {
         data: { data },
       } = await axios.get<{
-        data: Array<CategoryAnimation>
+        data: Array<AnimationCategory>
         page: Page
       }>('/v1/library-categories')
 

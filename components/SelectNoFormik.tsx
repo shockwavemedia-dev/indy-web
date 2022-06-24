@@ -116,7 +116,7 @@ export const SelectNoFormik = <
         font: '500 0.875rem/1.25rem Urbanist',
         backgroundColor: isSelected ? '#F25D23 !important' : '#FFFFFF',
         ':hover': {
-          backgroundColor: '#E9FAF3',
+          backgroundColor: '#F25D2333',
         },
       }),
       menu: (base) => ({

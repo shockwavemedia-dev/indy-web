@@ -3,7 +3,7 @@ import { Form, Formik } from 'formik'
 import { useQuery, useQueryClient } from 'react-query'
 import { NewAnimationFormSchema } from '../../schemas/NewAnimationFormSchema'
 import { useToastStore } from '../../store/ToastStore'
-import { CategoryAnimation } from '../../types/CategoryAnimation.type'
+import { AnimationCategory } from '../../types/AnimationCategory.type'
 import { NewAnimationForm } from '../../types/forms/NewAnimationForm.type'
 import { Page } from '../../types/Page.type'
 import { objectWithFileToFormData } from '../../utils/FormHelpers'
@@ -30,7 +30,7 @@ export const NewAnimationModal = ({
       const {
         data: { data },
       } = await axios.get<{
-        data: Array<CategoryAnimation>
+        data: Array<AnimationCategory>
         page: Page
       }>('/v1/library-categories', {
         params: {
