@@ -16,7 +16,7 @@ export const Notifications = () => {
     <Card title="Notifications">
       <div className="relative">
         <div className="absolute left-1 top-1.5 h-[calc(100%_-_.75rem)] w-px bg-bright-gray" />
-        <div className="space-y-6">
+        <div className="-ml-1 max-h-102 space-y-6 overflow-y-scroll pl-1 pr-5 pt-1">
           {notifications?.map(({ id, title, url }, i) =>
             i === 0 ? (
               <div key={`notification-${id}`} className="relative flex">
