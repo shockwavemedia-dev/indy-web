@@ -44,7 +44,7 @@ import { TicketPageTabs } from '../../../types/TicketPageTabs.type'
 import { FileButton } from '../../FileButton'
 import { NotepadIcon } from '../../icons/NotepadIcon'
 import { AddTicketAssigneeModal } from '../../modals/AddTicketAssigneeModal'
-import { FileModal, useFileModalStore } from '../../modals/FileModal'
+import { useFileModalStore } from '../../modals/FileModal'
 import { Pill } from '../../Pill'
 import { TicketActivityCard } from '../../tickets/TicketActivityCard'
 import { TicketEmailCard } from '../../tickets/TicketEmailCard'
@@ -471,7 +471,6 @@ export const ClientTicket = ({ ticketId }: { ticketId: number }) => {
         ticketAssignee={activeTicketAssignee}
       />
       <CreateLinkModal />
-      <FileModal ticketId={ticketId} />
     </>
   )
 }

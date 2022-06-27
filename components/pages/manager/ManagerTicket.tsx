@@ -46,7 +46,6 @@ import { TicketPageTabs } from '../../../types/TicketPageTabs.type'
 import { FileButton } from '../../FileButton'
 import { NotepadIcon } from '../../icons/NotepadIcon'
 import { EditTicketAssigneeModal } from '../../modals/EditTicketAssigneeModal'
-import { FileModal, useFileModalStore } from '../../modals/FileModal'
 import { Pill } from '../../Pill'
 import { TicketActivityCard } from '../../tickets/TicketActivityCard'
 import { TicketEmailCard } from '../../tickets/TicketEmailCard'
@@ -59,8 +58,6 @@ export const ManagerTicket = ({ ticketId }: { ticketId: number }) => {
   const [isEditTicketModalVisible, setEditTicketModalVisible] = useState(false)
   const [isDeleteTicketModalVisible, setDeleteTicketModalVisible] = useState(false)
   const [isAddTicketAssigneeModalVisible, setAddTicketAssigneeModalVisible] = useState(false)
-
-  const { toggleFileModal } = useFileModalStore()
 
   const queryClient = useQueryClient()
   const {
@@ -308,13 +305,11 @@ export const ManagerTicket = ({ ticketId }: { ticketId: number }) => {
             <div className="flex flex-wrap gap-4">
               {!!ticketFiles ? (
                 ticketFiles.map(({ id, name }) => {
-                  const openFileModal = () => toggleFileModal(id)
-
                   return (
                     <FileButton
                       key={`ticketFile-${id}`}
                       className="h-22 w-22"
-                      onClick={openFileModal}
+                      href={`/ticket/file/${id}`}
                       name={name}
                       fileModal
                     />
@@ -489,7 +484,6 @@ export const ManagerTicket = ({ ticketId }: { ticketId: number }) => {
         ticketId={ticket!.id}
       />
       <CreateLinkModal />
-      <FileModal ticketId={ticketId} />
     </>
   )
 }
