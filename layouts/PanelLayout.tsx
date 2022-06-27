@@ -123,7 +123,7 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
             </div>
           </div>
         </div>
-        <div className="flex w-full flex-col overflow-x-hidden p-6">
+        <div className="flex w-full flex-col p-6">
           <div className="mb-6 flex items-center">
             <Crumbs panelName={panelName} />
           </div>

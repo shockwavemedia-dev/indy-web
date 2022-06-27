@@ -11,6 +11,7 @@ import { LifeBuoyIcon } from '../../icons/LifeBuoyIcon'
 import { CreateSupportTicketModal } from '../../modals/CreateSupportTicketModal'
 import { DeleteTicketModal } from '../../modals/DeleteTicketModal'
 import { EditTicketModal } from '../../modals/EditTicketModal'
+import { Notifications } from '../../Notifications'
 
 export const ManagerDashboard = () => {
   const { data: session } = useSession()
@@ -51,20 +52,23 @@ export const ManagerDashboard = () => {
           className="w-fit"
         />
         <hr className="border-t-bright-gray" />
-        <Card title="Project Status Table">
-          {!!session && session.user.userType.departments.length > 0 ? (
-            <DataTable
-              columns={ManagerTicketsTableColumns}
-              dataEndpoint={`/v1/departments/${session?.user.userType.departments[0].id}/tickets`}
-              tableQueryKey={['tickets']}
-              ofString="Projects"
-            />
-          ) : (
-            <div className="m-auto w-fit font-urbanist text-base text-metallic-silver">
-              No projects to display. 😶
-            </div>
-          )}
-        </Card>
+        <div className="flex flex-row space-x-6">
+          <Card title="Project Status Table" className="w-full">
+            {!!session && session.user.userType.departments.length > 0 ? (
+              <DataTable
+                columns={ManagerTicketsTableColumns}
+                dataEndpoint={`/v1/departments/${session?.user.userType.departments[0].id}/tickets`}
+                tableQueryKey={['tickets']}
+                ofString="Projects"
+              />
+            ) : (
+              <div className="m-auto w-fit font-urbanist text-base text-metallic-silver">
+                No projects to display. 😶
+              </div>
+            )}
+          </Card>
+          <Notifications />
+        </div>
       </div>
       <CreateSupportTicketModal
         isVisible={isCreateSupportRequestModalVisible}

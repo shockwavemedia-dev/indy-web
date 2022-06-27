@@ -13,7 +13,7 @@ export const Notifications = () => {
   })
 
   return (
-    <Card title="Notifications">
+    <Card title="Notifications" className="h-fit">
       <div className="relative">
         <div className="absolute left-1 top-1.5 h-[calc(100%_-_.75rem)] w-px bg-bright-gray" />
         <div className="-ml-1 max-h-102 space-y-6 overflow-y-scroll pl-1 pr-5 pt-1">

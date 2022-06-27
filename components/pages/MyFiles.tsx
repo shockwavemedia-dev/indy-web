@@ -11,6 +11,7 @@ import { Page } from '../../types/Page.type'
 import { SelectOption } from '../../types/SelectOption.type'
 import { FileButton } from '../FileButton'
 import { UserIcon } from '../icons/UserIcon'
+import { Notifications } from '../Notifications'
 import { SelectNoFormik } from '../SelectNoFormik'
 
 export const MyFiles = () => {
@@ -56,111 +57,92 @@ export const MyFiles = () => {
       <Head>
         <title>Indy - My Files</title>
       </Head>
-      <div className="mx-auto w-full max-w-7xl space-y-6">
-        <SelectNoFormik
-          Icon={UserIcon}
-          onChange={selectClient}
-          className="max-w-xs"
-          placeholder="Select Client"
-          options={
-            !!clients
-              ? clients.map(({ name, id }) => ({
-                  label: name,
-                  value: id,
-                }))
-              : []
-          }
-        />
-        <Card className="flex flex-wrap gap-4">
-          {clientId !== -1 ? (
-            !Array.isArray(files) && filesSucess ? (
-              year === '' ? (
-                Object.keys(files).map((year) => {
-                  const openYearFolder = () => setYear(year)
-
-                  return (
-                    <FileButton
-                      className="h-20 w-20"
-                      key={year}
-                      onClick={openYearFolder}
-                      name={year}
-                    />
-                  )
-                })
-              ) : month !== '' ? (
-                <>
-                  <FileButton
-                    className="h-20 w-20"
-                    key={month}
-                    onClick={goUpToMonthsFolder}
-                    name="../"
-                  />
-                  {files[year][month].map(({ id, originalFilename, url }) => (
-                    <FileButton className="h-20 w-20" key={id} href={url} name={originalFilename} />
-                  ))}
-                </>
-              ) : (
-                <>
-                  <FileButton
-                    className="h-20 w-20"
-                    key={month}
-                    onClick={goUpToYearsFolder}
-                    name="../"
-                  />
-                  {Object.keys(files[year]).map((month) => {
-                    const openMonthFolder = () => setMonth(month)
+      <div className="mx-auto flex w-full max-w-8xl space-x-6">
+        <div className="w-full space-y-6">
+          <SelectNoFormik
+            Icon={UserIcon}
+            onChange={selectClient}
+            className="max-w-xs"
+            placeholder="Select Client"
+            options={
+              !!clients
+                ? clients.map(({ name, id }) => ({
+                    label: name,
+                    value: id,
+                  }))
+                : []
+            }
+          />
+          <Card className="flex flex-wrap gap-4">
+            {clientId !== -1 ? (
+              !Array.isArray(files) && filesSucess ? (
+                year === '' ? (
+                  Object.keys(files).map((year) => {
+                    const openYearFolder = () => setYear(year)
 
                     return (
                       <FileButton
                         className="h-20 w-20"
-                        key={month}
-                        onClick={openMonthFolder}
-                        name={month}
+                        key={year}
+                        onClick={openYearFolder}
+                        name={year}
                       />
                     )
-                  })}
-                </>
+                  })
+                ) : month !== '' ? (
+                  <>
+                    <FileButton
+                      className="h-20 w-20"
+                      key={month}
+                      onClick={goUpToMonthsFolder}
+                      name="../"
+                    />
+                    {files[year][month].map(({ id, originalFilename, url }) => (
+                      <FileButton
+                        className="h-20 w-20"
+                        key={id}
+                        href={url}
+                        name={originalFilename}
+                      />
+                    ))}
+                  </>
+                ) : (
+                  <>
+                    <FileButton
+                      className="h-20 w-20"
+                      key={month}
+                      onClick={goUpToYearsFolder}
+                      name="../"
+                    />
+                    {Object.keys(files[year]).map((month) => {
+                      const openMonthFolder = () => setMonth(month)
+
+                      return (
+                        <FileButton
+                          className="h-20 w-20"
+                          key={month}
+                          onClick={openMonthFolder}
+                          name={month}
+                        />
+                      )
+                    })}
+                  </>
+                )
+              ) : (
+                <div className="grid h-20 w-full place-items-center">
+                  <div className="font-urbanist text-base text-metallic-silver">
+                    No files found.
+                  </div>
+                </div>
               )
             ) : (
               <div className="grid h-20 w-full place-items-center">
-                <div className="font-urbanist text-base text-metallic-silver">No files found.</div>
+                <div className="font-urbanist text-base text-metallic-silver">Select a Client.</div>
               </div>
-            )
-          ) : (
-            <div className="grid h-20 w-full place-items-center">
-              <div className="font-urbanist text-base text-metallic-silver">Select a Client.</div>
-            </div>
-          )}
-          {/* {clientId && filesSucess && !Array.isArray(files) ? (
-            year === '' ? (
-              Object.keys(files).map((year) => {
-                const openYearFolder = () => setYear(year)
-
-                return <File key={year} onClick={openYearFolder} name={year} />
-              })
-            ) : month !== '' ? (
-              <>
-                <File key={month} onClick={goUpToMonthsFolder} name="../" />
-                {files[year][month].map(({ id, originalFilename, url }) => (
-                  <File key={id} href={url} name={originalFilename} />
-                ))}
-              </>
-            ) : (
-              <>
-                <File key={month} onClick={goUpToYearsFolder} name="../" />
-                {Object.keys(files[year]).map((month) => {
-                  const openMonthFolder = () => setMonth(month)
-
-                  return <File key={month} onClick={openMonthFolder} name={month} />
-                })}
-              </>
-            )
-          ) : (
-            <div className="grid h-20 w-full place-items-center">
-              <div className="font-urbanist text-base text-metallic-silver">No files found.</div>
-            </div>
-          )} */}
-        </Card>
+            )}
+          </Card>
+        </div>
+        <Notifications />
       </div>
     </>
   )
