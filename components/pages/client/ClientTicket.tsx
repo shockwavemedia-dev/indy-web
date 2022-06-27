@@ -297,13 +297,11 @@ export const ClientTicket = ({ ticketId }: { ticketId: number }) => {
             <div className="flex flex-wrap gap-4">
               {!!ticketFiles ? (
                 ticketFiles.map(({ id, name }) => {
-                  const openFileModal = () => toggleFileModal(id)
-
                   return (
                     <FileButton
                       key={`ticketFile-${id}`}
                       className="h-22 w-22"
-                      onClick={openFileModal}
+                      href={`/ticket/file/${id}`}
                       name={name}
                       fileModal
                     />
