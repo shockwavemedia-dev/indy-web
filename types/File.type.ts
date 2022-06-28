@@ -15,4 +15,5 @@ export type File = {
   updatedAt: Date | null
   deletedAt: Date | null
   bucket: string
+  thumbnailUrl: string
 }

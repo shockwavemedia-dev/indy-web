@@ -54,7 +54,7 @@ export const ClientMyFiles = () => {
         />
         <hr className="mb-6 border-t-bright-gray" />
         <div className="flex space-x-6">
-          <Card className="flex w-260 flex-wrap gap-4">
+          <Card className="flex h-fit w-260 flex-wrap gap-4">
             {year === '' ? (
               Object.keys(files).map((year) => {
                 const openYearFolder = () => setYear(year)
@@ -77,8 +77,14 @@ export const ClientMyFiles = () => {
                   onClick={goUpToMonthsFolder}
                   name="../"
                 />
-                {files[year][month].map(({ id, originalFilename, url }) => (
-                  <FileButton className="h-35 w-35" key={id} href={url} name={originalFilename} />
+                {files[year][month].map(({ id, originalFilename, url, thumbnailUrl }) => (
+                  <FileButton
+                    className="h-35 w-35"
+                    key={id}
+                    href={url}
+                    name={originalFilename}
+                    thumbnailUrl={thumbnailUrl}
+                  />
                 ))}
               </>
             ) : (
