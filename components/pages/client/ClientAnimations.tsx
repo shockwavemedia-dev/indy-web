@@ -75,6 +75,10 @@ export const ClientAnimations = () => {
     setHeader('Animation Library')
   }, [])
 
+  useEffect(() => {
+    setPage(1)
+  }, [category])
+
   const goToFirstPage = () => setPage(1)
   const goToPreviousPage = () => setPage(page - 1)
   const goToNextPage = () => setPage(page + 1)
