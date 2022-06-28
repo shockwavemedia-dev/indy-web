@@ -44,7 +44,6 @@ import { PlusIcon } from '../../icons/PlusIcon'
 import { AddTicketAssigneeModal } from '../../modals/AddTicketAssigneeModal'
 import { DeleteTicketAssigneeModal } from '../../modals/DeleteTicketAssigneeModal'
 import { EditTicketAssigneeModal } from '../../modals/EditTicketAssigneeModal'
-import { FileModal, useFileModalStore } from '../../modals/FileModal'
 import { ReAssignTicketAssigneeModal } from '../../modals/ReAssignTicketAssigneeModal'
 import {
   UploadTicketFileModal,
@@ -74,7 +73,6 @@ export const StaffTicket = ({ ticketId }: { ticketId: number }) => {
 
   const [activeTab, setActiveTab] = useState<TicketPageTabs>('description')
 
-  const { toggleFileModal } = useFileModalStore()
   const { toggleUploadTicketFileModal } = useUploadTicketFileModalStore()
 
   const queryClient = useQueryClient()
@@ -317,13 +315,11 @@ export const StaffTicket = ({ ticketId }: { ticketId: number }) => {
             <div className="flex flex-wrap gap-4">
               {!!ticketFiles ? (
                 ticketFiles.map(({ id, name }) => {
-                  const openFileModal = () => toggleFileModal(id)
-
                   return (
                     <FileButton
                       key={`ticketFile-${id}`}
                       className="h-22 w-22"
-                      onClick={openFileModal}
+                      href={`/ticket/file/${id}`}
                       name={name}
                       fileModal
                     />
@@ -497,7 +493,6 @@ export const StaffTicket = ({ ticketId }: { ticketId: number }) => {
         ticketId={ticket!.id}
       />
       <CreateLinkModal />
-      <FileModal ticketId={ticketId} />
       <UploadTicketFileModal ticketId={ticketId} />
     </>
   )
