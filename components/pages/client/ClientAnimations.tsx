@@ -14,6 +14,7 @@ import { Card } from '../../Card'
 import { CountCard } from '../../CountCard'
 import { FancyLink } from '../../FancyLink'
 import { CalendarAddIcon } from '../../icons/CalendarAddIcon'
+import { CaretIcon } from '../../icons/CaretIcon'
 import { ClipboardIcon } from '../../icons/ClipboardIcon'
 import { GalleryIcon } from '../../icons/GalleryIcon'
 import { MenuBoardIcon } from '../../icons/MenuBoardIcon'
@@ -28,6 +29,8 @@ import { Notifications } from '../../Notifications'
 import { SelectNoFormik } from '../../SelectNoFormik'
 
 export const ClientAnimations = () => {
+  const [page, setPage] = useState(1)
+
   const {
     activeTicket,
     isEditTicketModalVisible,
@@ -41,11 +44,29 @@ export const ClientAnimations = () => {
     value: -1,
   })
 
-  const { data: animationPagination } = useQuery('animations', async () => {
+  const {
+    data: animationPagination,
+    isLoading: animationsLoading,
+    isFetching: animationsFetching,
+  } = useQuery(['animations', category?.value, page], async () => {
     const { data } = await axios.get<{
       data: Array<Animation>
       page: Page
-    }>('/v1/libraries')
+    }>('/v1/libraries', {
+      params: {
+        library_category_id: category?.value === -1 ? '' : category?.value,
+        size: 15,
+        page_number: page,
+      },
+    })
+
+    return data
+  })
+
+  const { data: categories } = useQuery(['animation-categories'], async () => {
+    const { data } = await axios.get<{ data: Array<AnimationCategory>; page: Page }>(
+      '/v1/library-categories'
+    )
 
     return data
   })
@@ -54,13 +75,9 @@ export const ClientAnimations = () => {
     setHeader('Animation Library')
   }, [])
 
-  const { data: categories } = useQuery('animation-categories', async () => {
-    const {
-      data: { data },
-    } = await axios.get<{ data: Array<AnimationCategory>; page: Page }>('/v1/library-categories')
-
-    return data
-  })
+  const goToFirstPage = () => setPage(1)
+  const goToPreviousPage = () => setPage(page - 1)
+  const goToNextPage = () => setPage(page + 1)
 
   return (
     <>
@@ -90,7 +107,7 @@ export const ClientAnimations = () => {
                     label: 'All Categories',
                     value: -1,
                   },
-                  ...(categories?.map(({ id, name }) => ({
+                  ...(categories?.data?.map(({ id, name }) => ({
                     label: name,
                     value: id,
                   })) || []),
@@ -99,7 +116,7 @@ export const ClientAnimations = () => {
                 onChange={setCategory}
               />
             </div>
-            <div className="flex flex-wrap gap-5">
+            <div className="mb-5 flex flex-wrap gap-5">
               {animationPagination &&
               animationPagination.data &&
               animationPagination.data.length > 0 ? (
@@ -111,10 +128,103 @@ export const ClientAnimations = () => {
                   .map((animation) => (
                     <AnimationButton key={`animation-${animation.id}`} animation={animation} />
                   ))
+              ) : animationsLoading ? (
+                [...Array(5)].map((_, i) => (
+                  <div
+                    key={`animation-loading-skeleton-${i}`}
+                    className="h-44 w-78.5 animate-pulse cursor-pointer rounded-xl bg-bright-gray"
+                  />
+                ))
               ) : (
-                <div>No animation libraries to display.</div>
+                <div className="m-auto w-fit font-urbanist text-base text-metallic-silver">
+                  No animations to display. 😶
+                </div>
               )}
             </div>
+            {animationPagination && (
+              <div className="relative flex items-center justify-center">
+                <div className="absolute left-0 font-urbanist text-sm font-medium text-metallic-silver">
+                  {animationPagination.page.from} - {animationPagination.page.to} of{' '}
+                  {animationPagination.page.total} Animations
+                </div>
+                <button
+                  onClick={goToPreviousPage}
+                  type="button"
+                  disabled={animationPagination.page.currentPage === 1 || animationsFetching}
+                  className="group"
+                >
+                  <CaretIcon
+                    className="-rotate-90 stroke-halloween-orange group-disabled:stroke-bright-gray"
+                    small
+                  />
+                </button>
+                <div className="mx-5 flex space-x-4 font-urbanist text-sm font-medium">
+                  {animationPagination.page.currentPage > 2 && (
+                    <>
+                      <button
+                        onClick={goToFirstPage}
+                        className={`text-metallic-silver ${
+                          animationsFetching
+                            ? 'disabled:text-bright-gray'
+                            : 'disabled:font-bold disabled:text-halloween-orange'
+                        }`}
+                        disabled={animationsFetching}
+                      >
+                        1
+                      </button>
+                      <div
+                        className={animationsFetching ? 'text-bright-gray' : 'text-metallic-silver'}
+                      >
+                        ...
+                      </div>
+                    </>
+                  )}
+                  {[...Array.from({ length: animationPagination.page.lastPage }, (_, i) => i + 1)]
+                    .slice(
+                      animationPagination.page.currentPage > 1
+                        ? animationPagination.page.currentPage - 2
+                        : animationPagination.page.currentPage - 1,
+                      animationPagination.page.currentPage + 4
+                    )
+                    .map((pageNumber) => {
+                      const gotoThisPage = () => setPage(pageNumber)
+
+                      return (
+                        <button
+                          onClick={gotoThisPage}
+                          key={`goto-page-${pageNumber}`}
+                          disabled={
+                            pageNumber === animationPagination.page.currentPage ||
+                            animationsFetching
+                          }
+                          className={`text-metallic-silver ${
+                            animationsFetching
+                              ? 'disabled:text-bright-gray'
+                              : 'disabled:font-bold disabled:text-halloween-orange'
+                          }`}
+                        >
+                          {pageNumber}
+                        </button>
+                      )
+                    })}
+                  {/* todo add conditional last page button here */}
+                </div>
+                <button
+                  onClick={goToNextPage}
+                  type="button"
+                  disabled={
+                    animationPagination.page.currentPage === animationPagination.page.lastPage ||
+                    animationsFetching
+                  }
+                  className="group"
+                >
+                  <CaretIcon
+                    className="rotate-90 stroke-halloween-orange group-disabled:stroke-bright-gray"
+                    small
+                  />
+                </button>
+              </div>
+            )}
           </Card>
           <div className="flex flex-1 flex-col">
             <div className="mb-3 flex space-x-3">
