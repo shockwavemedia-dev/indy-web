@@ -1,3 +1,5 @@
+import { TicketFile } from '../../../types/TicketFile.type'
+
 export type File = {
   id: number
   fileName: string
@@ -16,4 +18,5 @@ export type File = {
   deletedAt: Date | null
   bucket: string
   thumbnailUrl: string
+  clientTicketFile: Array<TicketFile>
 }
