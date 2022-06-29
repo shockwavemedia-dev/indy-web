@@ -82,21 +82,6 @@ export const StaffTicketFile = ({ ticketFileId }: { ticketFileId: number }) => {
     }
   }
 
-  const approveTicketFile = async () => {
-    try {
-      const { status } = await axios.post(`/v1/ticket-files/${ticketFileId}/approve`)
-
-      if (status === 200) {
-        queryClient.invalidateQueries(['ticketFile', ticketFileId])
-      }
-    } catch (e) {
-      showToast({
-        type: 'error',
-        message: 'Something went wrong! 😵',
-      })
-    }
-  }
-
   useEffect(() => {
     setHeader('Ticket File')
   }, [])
@@ -168,11 +153,6 @@ export const StaffTicketFile = ({ ticketFileId }: { ticketFileId: number }) => {
                 />
               </TitleValue>
             </div>
-            {!ticketFile.isApproved && (
-              <Button ariaLabel="Approve Ticket File" type="button" onClick={approveTicketFile}>
-                Approve
-              </Button>
-            )}
           </div>
           <div className="w-140 space-y-5">
             <Formik

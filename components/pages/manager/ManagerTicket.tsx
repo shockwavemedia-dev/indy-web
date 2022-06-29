@@ -304,14 +304,15 @@ export const ManagerTicket = ({ ticketId }: { ticketId: number }) => {
           <Card title="Files">
             <div className="flex flex-wrap gap-4">
               {!!ticketFiles ? (
-                ticketFiles.map(({ id, name }) => {
+                ticketFiles.map(({ id, name, thumbnailUrl }) => {
                   return (
                     <FileButton
                       key={`ticketFile-${id}`}
-                      className="h-22 w-22"
+                      className="h-35 w-35"
                       href={`/ticket/file/${id}`}
                       name={name}
                       fileModal
+                      thumbnailUrl={thumbnailUrl}
                     />
                   )
                 })

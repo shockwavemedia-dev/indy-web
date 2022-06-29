@@ -13,4 +13,5 @@ export type TicketFile = {
   approvedAt: Date | null
   fileType: string
   ticketId: number
+  thumbnailUrl: string
 }

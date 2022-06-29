@@ -77,15 +77,21 @@ export const ClientMyFiles = () => {
                   onClick={goUpToMonthsFolder}
                   name="../"
                 />
-                {files[year][month].map(({ id, originalFilename, url, thumbnailUrl }) => (
-                  <FileButton
-                    className="h-35 w-35"
-                    key={id}
-                    href={url}
-                    name={originalFilename}
-                    thumbnailUrl={thumbnailUrl}
-                  />
-                ))}
+                {files[year][month].map(
+                  ({ id, originalFilename, url, thumbnailUrl, clientTicketFile }) => {
+                    const fileUrl = clientTicketFile ? `/ticket/file/${clientTicketFile.id}` : url
+
+                    return (
+                      <FileButton
+                        className="h-35 w-35"
+                        key={id}
+                        href={fileUrl}
+                        name={originalFilename}
+                        thumbnailUrl={thumbnailUrl}
+                      />
+                    )
+                  }
+                )}
               </>
             ) : (
               <>

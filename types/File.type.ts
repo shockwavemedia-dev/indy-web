@@ -16,4 +16,19 @@ export type File = {
   deletedAt: Date | null
   bucket: string
   thumbnailUrl: string
+  clientTicketFile: {
+    id: number
+    name: string
+    generatedName: string
+    signedUrlExpiration: Date | null
+    directory: string
+    description: string | null
+    status: 'approved' | 'back from review' | 'deleted' | 'in progress' | 'for review' | 'new'
+    isApproved: boolean
+    approvedById: number | null
+    version: string
+    approvedAt: Date | null
+    fileType: string
+    ticketId: number
+  }
 }
