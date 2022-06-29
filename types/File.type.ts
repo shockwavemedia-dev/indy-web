@@ -1,5 +1,3 @@
-import { TicketFile } from '../../../types/TicketFile.type'
-
 export type File = {
   id: number
   fileName: string
