@@ -305,9 +305,9 @@ export const ManagerTicket = ({ ticketId }: { ticketId: number }) => {
               activeTab === 'description'
                 ? 'ml-0'
                 : activeTab === 'notes'
-                ? 'ml-2/0'
+                ? 'ml-1/4'
                 : activeTab === 'activities'
-                ? 'ml-3/0'
+                ? 'ml-1/2'
                 : 'ml-auto'
             }`}
           />

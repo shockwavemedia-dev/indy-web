@@ -291,13 +291,13 @@ export const ClientTicket = ({ ticketId }: { ticketId: number }) => {
           </div>
           <div className="h-px bg-bright-gray" />
           <div
-            className={`-mt-0.5 mb-4 h-0.75 w-1/5 rounded bg-halloween-orange fill-halloween-orange ${
+            className={`-mt-0.5 mb-4 h-0.75 w-1/4 rounded bg-halloween-orange fill-halloween-orange ${
               activeTab === 'description'
                 ? 'ml-0'
                 : activeTab === 'notes'
-                ? 'ml-2/0'
+                ? 'ml-1/4'
                 : activeTab === 'activities'
-                ? 'ml-3/0'
+                ? 'ml-1/2'
                 : 'ml-auto'
             }`}
           />
