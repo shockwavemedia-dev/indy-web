@@ -1,7 +1,6 @@
 import axios from 'axios'
 import { format } from 'date-fns'
 import { Form, Formik } from 'formik'
-import { useSession } from 'next-auth/react'
 import Head from 'next/head'
 import Image from 'next/image'
 import { Fragment, useEffect, useState } from 'react'
@@ -12,7 +11,6 @@ import { DataTable } from '../../../components/DataTable'
 import { CalendarIcon } from '../../../components/icons/CalendarIcon'
 import { ColorsIcon } from '../../../components/icons/ColorsIcon'
 import { EditIcon } from '../../../components/icons/EditIcon'
-import { EmailIcon } from '../../../components/icons/EmailIcon'
 import { NoteIcon } from '../../../components/icons/NoteIcon'
 import { PaperClipIcon } from '../../../components/icons/PaperClipIcon'
 import { PaperPlaneIcon } from '../../../components/icons/PaperPlaneIcon'
@@ -25,21 +23,17 @@ import { DeleteTicketModal } from '../../../components/modals/DeleteTicketModal'
 import { EditTicketModal } from '../../../components/modals/EditTicketModal'
 import { RichTextDisplay } from '../../../components/RichTextDisplay'
 import { RichTextInput } from '../../../components/RichTextInput'
-import { TextInput } from '../../../components/TextInput'
 import { TitleValue } from '../../../components/TitleValue'
 import { ManagerTicketAssigneeTableColumns } from '../../../constants/tables/ManagerTicketAssigneeTableColumns'
 import { usePanelLayoutStore } from '../../../layouts/PanelLayout'
 import DummyCompany from '../../../public/images/dummy-company.png'
-import { CreateEmailFormSchema } from '../../../schemas/CreateEmailFormSchema'
 import { CreateNoteFormSchema } from '../../../schemas/CreateNoteFormSchema'
 import { useTicketAssigneeStore } from '../../../store/TicketAssigneeStore'
-import { CreateEmailForm } from '../../../types/forms/CreateEmailForm.type'
 import { CreateNoteForm } from '../../../types/forms/CreateNoteForm.type'
 import { Icon } from '../../../types/Icon.type'
 import { Page } from '../../../types/Page.type'
 import { Ticket } from '../../../types/Ticket.type'
 import { TicketActivity } from '../../../types/TicketActivity.type'
-import { TicketEmail } from '../../../types/TicketEmail.type'
 import { TicketFile } from '../../../types/TicketFile.type'
 import { TicketNote } from '../../../types/TicketNote.type'
 import { TicketPageTabs } from '../../../types/TicketPageTabs.type'
@@ -48,12 +42,9 @@ import { NotepadIcon } from '../../icons/NotepadIcon'
 import { EditTicketAssigneeModal } from '../../modals/EditTicketAssigneeModal'
 import { Pill } from '../../Pill'
 import { TicketActivityCard } from '../../tickets/TicketActivityCard'
-import { TicketEmailCard } from '../../tickets/TicketEmailCard'
 import { TicketNoteCard } from '../../tickets/TicketNoteCard'
 
 export const ManagerTicket = ({ ticketId }: { ticketId: number }) => {
-  const { data: session } = useSession()
-
   const [activeTab, setActiveTab] = useState<TicketPageTabs>('description')
   const [isEditTicketModalVisible, setEditTicketModalVisible] = useState(false)
   const [isDeleteTicketModalVisible, setDeleteTicketModalVisible] = useState(false)
@@ -102,23 +93,6 @@ export const ManagerTicket = ({ ticketId }: { ticketId: number }) => {
     return data
   })
 
-  const { data: emails } = useQuery(
-    ['emails', ticketId],
-    async () => {
-      const {
-        data: { data },
-      } = await axios.get<{
-        data: Array<TicketEmail>
-        page: Page
-      }>(`/v1/tickets/${ticketId}/emails`)
-
-      return data
-    },
-    {
-      enabled: activeTab === 'email',
-    }
-  )
-
   const { data: activities } = useQuery(
     ['activities', ticketId],
     async () => {
@@ -140,17 +114,7 @@ export const ManagerTicket = ({ ticketId }: { ticketId: number }) => {
   const toggleDeleteTicketModal = () => setDeleteTicketModalVisible(!isDeleteTicketModalVisible)
   const toggleAddTicketAssigneeModal = () =>
     setAddTicketAssigneeModalVisible(!isAddTicketAssigneeModalVisible)
-  const submitEmailForm = async (
-    values: CreateEmailForm,
-    { resetForm }: { resetForm: () => void }
-  ) => {
-    const { status } = await axios.post(`/v1/tickets/${ticketId}/emails`, values)
 
-    if (status === 200) {
-      queryClient.invalidateQueries(['emails', ticketId])
-      resetForm()
-    }
-  }
   const submitNoteForm = async (
     values: CreateNoteForm,
     {
@@ -328,7 +292,6 @@ export const ManagerTicket = ({ ticketId }: { ticketId: number }) => {
           <div className="flex justify-between">
             <Tab title="Description" Icon={NotepadIcon} tabName="description" />
             <Tab title="Notes" Icon={NoteIcon} tabName="notes" />
-            <Tab title="Email" Icon={EmailIcon} tabName="email" />
             <Tab title="Activities" Icon={CalendarIcon} tabName="activities" />
             <Tab title="Style Guide" Icon={ColorsIcon} tabName="style_guide" disabled />
           </div>
@@ -338,11 +301,9 @@ export const ManagerTicket = ({ ticketId }: { ticketId: number }) => {
               activeTab === 'description'
                 ? 'ml-0'
                 : activeTab === 'notes'
-                ? 'ml-1/5'
-                : activeTab === 'email'
-                ? 'ml-2/5'
+                ? 'ml-1/4'
                 : activeTab === 'activities'
-                ? 'ml-3/5'
+                ? 'ml-1/2'
                 : 'ml-auto'
             }`}
           />
@@ -391,54 +352,6 @@ export const ManagerTicket = ({ ticketId }: { ticketId: number }) => {
                     key={`note-${id}`}
                     note={note}
                     createdBy={createdBy}
-                    createdAt={createdAt}
-                  />
-                ))}
-              </div>
-            </>
-          )}
-          {activeTab === 'email' && (
-            <>
-              <Formik
-                validationSchema={CreateEmailFormSchema}
-                initialValues={{ cc: session?.user.email ?? '', title: '', message: '' }}
-                onSubmit={submitEmailForm}
-              >
-                {({ isSubmitting }) => (
-                  <Form className="mb-5 space-y-5">
-                    <TextInput type="text" Icon={EditIcon} name="title" placeholder="Input title" />
-                    <RichTextInput
-                      Icon={EditIcon}
-                      placeholder="Enter message"
-                      name="message"
-                      className="mb-5"
-                      inputActions={
-                        <div className="absolute right-6 bottom-6 z-10 flex items-center space-x-6">
-                          <input type="file" name="attachment" id="email-attachment" hidden />
-                          <label htmlFor="email-attachment" className="cursor-pointer">
-                            <PaperClipIcon className="stroke-waterloo" />
-                          </label>
-                          <Button
-                            ariaLabel="Submit Email"
-                            type="submit"
-                            className="!w-fit px-10"
-                            disabled={isSubmitting}
-                          >
-                            <PaperPlaneIcon className="stroke-white" />
-                            <div>Send</div>
-                          </Button>
-                        </div>
-                      }
-                    />
-                  </Form>
-                )}
-              </Formik>
-              <div className="space-y-5">
-                {emails?.map(({ id, title, message, createdAt }) => (
-                  <TicketEmailCard
-                    key={`email-${id}`}
-                    title={title}
-                    message={message}
                     createdAt={createdAt}
                   />
                 ))}
