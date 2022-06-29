@@ -51,6 +51,7 @@ export const AdminAnimations = () => {
             className="w-fit"
           />
         </div>
+        <hr className="mb-6 border-t-bright-gray" />
         <Card title="Animations">
           <DataTable
             dataEndpoint="/v1/libraries"

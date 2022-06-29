@@ -28,6 +28,7 @@ const ClientPage: NextPageWithLayout = () => {
           onClick={toggleNewClientModal}
           className="w-fit"
         />
+        <hr className="mb-6 border-t-bright-gray" />
         <Card title="Clients">
           <DataTable
             dataEndpoint="/v1/clients"

@@ -27,6 +27,7 @@ const DepartmentsPage: NextPageWithLayout = () => {
           onClick={toggleNewDepartmentModal}
           className="w-fit"
         />
+        <hr className="mb-6 border-t-bright-gray" />
         <Card title="Departments" className="flex flex-col">
           <DataTable
             dataEndpoint="/v1/departments"

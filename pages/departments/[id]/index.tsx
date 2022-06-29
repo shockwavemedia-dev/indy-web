@@ -1,14 +1,19 @@
 import axios from 'axios'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import { ReactElement } from 'react'
+import { ReactElement, useEffect } from 'react'
 import { useQuery } from 'react-query'
 import { Card } from '../../../components/Card'
+import { PlusIcon } from '../../../components/icons/PlusIcon'
+import {
+  AddDepartmentMemberModal,
+  useAddDepartmentMemberModalStore,
+} from '../../../components/modals/AddDepartmentMemberModal'
 import { Pill } from '../../../components/Pill'
 import { Table } from '../../../components/Table'
 import { TitleValue } from '../../../components/TitleValue'
-import { DepartmentMemberColumns } from '../../../constants/tables/DepartmentMemberColumns'
-import PanelLayout from '../../../layouts/PanelLayout'
+import { DepartmentMemberTableColumns } from '../../../constants/tables/DepartmentMemberTableColumns'
+import PanelLayout, { usePanelLayoutStore } from '../../../layouts/PanelLayout'
 import { Department } from '../../../types/Department.type'
 import { NextPageWithLayout } from '../../../types/pages/NextPageWithLayout.type'
 
@@ -16,6 +21,8 @@ const DapartmentPage: NextPageWithLayout = () => {
   const {
     query: { id },
   } = useRouter()
+  const { setHeader } = usePanelLayoutStore()
+  const { toggleModal } = useAddDepartmentMemberModalStore()
 
   const { data: department } = useQuery(['department', Number(id)], async () => {
     const { data } = await axios.get<Department>(`/v1/departments/${id}/members`)
@@ -23,19 +30,23 @@ const DapartmentPage: NextPageWithLayout = () => {
     return data
   })
 
+  useEffect(() => {
+    if (department) {
+      setHeader(department.name)
+    }
+  }, [department])
+
   return (
     <>
       <Head>
         <title>Indy - Departments</title>
       </Head>
       <div className="mx-auto flex w-full max-w-8xl space-x-6">
-        <Card className="w-86 flex-none">
+        <Card className="h-fit w-86 flex-none">
           <TitleValue title="ID" className="flex items-center justify-between">
             {department?.id}
           </TitleValue>
-          <TitleValue title="Name" className="flex items-center justify-between">
-            {department?.name}
-          </TitleValue>
+
           <TitleValue title="Status" className="flex items-center justify-between">
             <Pill
               twBackgroundColor={(() => {
@@ -70,14 +81,21 @@ const DapartmentPage: NextPageWithLayout = () => {
             {department?.description}
           </TitleValue>
         </Card>
-        <Card className="w-full">
+        <Card className="w-full" title="Members">
+          <button className="absolute top-6 right-6 flex space-x-2" onClick={toggleModal}>
+            <PlusIcon className="stroke-halloween-orange" />
+            <div className="font-urbanist text-sm font-semibold text-halloween-orange">
+              Add Member
+            </div>
+          </button>
           <Table
-            columns={DepartmentMemberColumns}
+            columns={DepartmentMemberTableColumns}
             data={department?.members || []}
             ofString="Department Members"
           />
         </Card>
       </div>
+      <AddDepartmentMemberModal />
     </>
   )
 }

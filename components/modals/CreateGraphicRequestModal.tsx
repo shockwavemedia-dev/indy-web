@@ -86,6 +86,7 @@ export const CreateGraphicRequestModal = ({
                   placeholder="Select Services"
                   options={GraphicExtraOptions}
                   isMulti
+                  closeMenuOnSelect={false}
                 />
                 <DateInput name="duedate" placeholder="Enter due date" />
               </div>

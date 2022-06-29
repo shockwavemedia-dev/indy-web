@@ -1,8 +1,13 @@
+import axios from 'axios'
+import { useRouter } from 'next/router'
+import { useQueryClient } from 'react-query'
 import { Column } from 'react-table'
+import { TrashIcon } from '../../components/icons/TrashIcon'
 import { Pill } from '../../components/Pill'
+import { useToastStore } from '../../store/ToastStore'
 import { DepartmentMember } from '../../types/pages/DepartmentMember.type'
 
-export const DepartmentMemberColumns: Array<Column<DepartmentMember>> = [
+export const DepartmentMemberTableColumns: Array<Column<DepartmentMember>> = [
   {
     Header: 'Admin User ID',
     accessor: 'adminUserId',
@@ -55,5 +60,50 @@ export const DepartmentMemberColumns: Array<Column<DepartmentMember>> = [
     Header: 'Last Name',
     accessor: 'lastName',
     Cell: ({ value }) => <div className="font-urbanist text-sm font-medium text-onyx">{value}</div>,
+  },
+  {
+    Header: '',
+    accessor: 'adminUserId',
+    id: 'actions',
+    disableSortBy: true,
+    Cell: ({ value }) => {
+      const { asPath } = useRouter()
+      const queryClient = useQueryClient()
+      const { showToast } = useToastStore()
+
+      const departmentId = asPath.split('/').pop()
+
+      const deleteMember = async () => {
+        try {
+          const { status } = await axios.delete(
+            `/v1/departments/${asPath.split('/').pop()}/members`,
+            {
+              data: {
+                admin_users: [value],
+              },
+            }
+          )
+
+          if (status === 200) {
+            queryClient.invalidateQueries(['department', Number(departmentId)])
+            showToast({
+              type: 'success',
+              message: 'Department member successfully deleted!',
+            })
+          }
+        } catch (e) {
+          showToast({
+            type: 'error',
+            message: 'Something went wrong! 😵',
+          })
+        }
+      }
+
+      return (
+        <button onClick={deleteMember} className="group">
+          <TrashIcon className="stroke-waterloo group-hover:stroke-halloween-orange" />
+        </button>
+      )
+    },
   },
 ]

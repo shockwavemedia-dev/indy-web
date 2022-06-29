@@ -8,36 +8,36 @@
     src: url('/fonts/CircularStd-Black.woff') format('woff');
     font-weight: 900;
   }
-}
 
-::selection {
-  color: #ffffff;
-  background: #f25d23;
-}
+  ::selection {
+    color: #ffffff;
+    background-color: #f25d23;
+  }
 
-input:focus-visible,
-button:focus-visible,
-textarea:focus-visible {
-  outline: none;
-}
+  input:focus-visible,
+  button:focus-visible,
+  textarea:focus-visible {
+    outline: none;
+  }
 
-input:-webkit-autofill {
-  -webkit-box-shadow: 0 0 0 1px #e8e8ef, inset 0 0 0 100px #ffffff !important;
-}
+  input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 1px #e8e8ef, inset 0 0 0 100px #ffffff !important;
+  }
 
-input:-webkit-autofill:focus {
-  -webkit-box-shadow: 0 0 0 2px #f25d23, inset 0 0 0 100px #ffffff !important;
-}
+  input:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 2px #f25d23, inset 0 0 0 100px #ffffff !important;
+  }
 
-::-webkit-scrollbar {
-  width: 5px;
-  height: 5px;
-  background-color: #fafafc;
-}
+  ::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+    background-color: #fafafc;
+  }
 
-::-webkit-scrollbar-thumb {
-  background-color: #f25d23;
-  border-radius: 5px;
+  ::-webkit-scrollbar-thumb {
+    background-color: #f25d23;
+    border-radius: 5px;
+  }
 }
 
 #nprogress .bar {

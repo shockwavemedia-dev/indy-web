@@ -38,6 +38,7 @@ const StaffUserPage: NextPageWithLayout = () => {
           onClick={toggleNewAdminUserModal}
           className="w-fit"
         />
+        <hr className="mb-6 border-t-bright-gray" />
         <Card title="Admin Users" className="flex flex-col">
           <DataTable
             dataEndpoint="/v1/users"
