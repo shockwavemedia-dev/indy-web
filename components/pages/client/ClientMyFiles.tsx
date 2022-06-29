@@ -78,8 +78,8 @@ export const ClientMyFiles = () => {
                   name="../"
                 />
                 {files[year][month].map(({ id, originalFilename, url, clientTicketFile }) => {
-                  
-                  const fileUrl = clientTicketFile  ?
+
+                  const fileUrl = (clientTicketFile && clientTicketFile.id)  ?
                   `/ticket/file/${clientTicketFile.id}` : url
 
                   return (
