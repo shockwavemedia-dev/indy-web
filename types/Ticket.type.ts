@@ -1,3 +1,4 @@
+import { Attachment } from './Attachment.type'
 import { Service } from './Service.type'
 import { TicketStatus } from './TicketStatus.type'
 import { TicketType } from './TicketType.type'
@@ -14,9 +15,6 @@ export type Ticket = {
   type: TicketType
   status: TicketStatus
   createdAt: Date
-  attachments: {
-    id: string
-    url: string
-  }
+  attachments: Array<Attachment>
   services?: Array<Service>
 }

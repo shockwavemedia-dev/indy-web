@@ -114,6 +114,7 @@ export const ClientTicketFile = ({ ticketFileId }: { ticketFileId: number }) => 
                 imageWidth={560}
                 imageAlt={ticketFile.name}
                 className="rounded-xl"
+                videoClassName="w-140 rounded-xl"
               />
             </div>
             <div className="space-y-2">
