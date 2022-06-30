@@ -1,12 +1,14 @@
 import axios from 'axios'
 import { Form, Formik } from 'formik'
 import { useState } from 'react'
-import { useQueryClient } from 'react-query'
+import { useQuery, useQueryClient } from 'react-query'
 import { AdminUserRoleOptions } from '../../constants/options/AdminUserRoleOptions'
 import { UserGenderOptions } from '../../constants/options/UserGenderOptions'
 import { NewAdminUserFormSchema } from '../../schemas/NewAdminUserFormSchema'
 import { useToastStore } from '../../store/ToastStore'
+import { Department } from '../../types/Department.type'
 import { NewAdminUserForm } from '../../types/forms/NewAdminUserForm.type'
+import { Page } from '../../types/Page.type'
 import { Button } from '../Button'
 import { DateInput } from '../DateInput'
 import { ClipboardIcon } from '../icons/ClipboardIcon'
@@ -34,6 +36,23 @@ export const NewAdminUserModal = ({
 
   const updatePasswordStrength = (password: string) =>
     setPasswordStrength(computePasswordStrength(password))
+
+  const { data: departments } = useQuery(
+    'departments',
+    async () => {
+      const {
+        data: { data },
+      } = await axios.get<{
+        data: Array<Department>
+        page: Page
+      }>('/v1/departments')
+
+      return data
+    },
+    {
+      enabled: isVisible,
+    }
+  )
 
   const submitForm = async (values: NewAdminUserForm) => {
     try {
@@ -74,19 +93,34 @@ export const NewAdminUserModal = ({
               middleName: '',
               gender: null,
               role: null,
+              departmentId: -1,
             }}
             onSubmit={submitForm}
             validate={validateForm}
           >
             {({ isSubmitting }) => (
               <Form className="flex w-140 flex-col">
-                <Select
-                  name="role"
-                  Icon={ClipboardIcon}
-                  placeholder="Select Role"
-                  options={AdminUserRoleOptions}
-                  className="mb-5"
-                />
+                <div className="mb-5 flex space-x-5">
+                  <Select
+                    name="role"
+                    Icon={ClipboardIcon}
+                    placeholder="Select Role"
+                    options={AdminUserRoleOptions}
+                    className="mb-5"
+                  />
+                  <Select
+                    name="departmentId"
+                    Icon={ClipboardIcon}
+                    placeholder="Select Department"
+                    options={
+                      departments?.map((department) => ({
+                        value: department.id,
+                        label: department.name,
+                      })) ?? []
+                    }
+                    className="mb-5"
+                  />
+                </div>
                 <div className="mb-5 flex space-x-5">
                   <TextInput
                     type="text"
