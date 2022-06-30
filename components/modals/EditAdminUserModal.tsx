@@ -1,12 +1,14 @@
 import axios from 'axios'
 import { Form, Formik } from 'formik'
-import { useQueryClient } from 'react-query'
+import { useQuery, useQueryClient } from 'react-query'
 import { AdminUserRoleOptions } from '../../constants/options/AdminUserRoleOptions'
 import { UserGenderOptions } from '../../constants/options/UserGenderOptions'
 import { UserStatusOptions } from '../../constants/options/UserStatusOptions'
 import { EditAdminUserFormSchema } from '../../schemas/EditAdminUserFormSchema'
 import { useToastStore } from '../../store/ToastStore'
+import { Department } from '../../types/Department.type'
 import { EditAdminUserForm } from '../../types/forms/EditAdminUserForm.type'
+import { Page } from '../../types/Page.type'
 import { User } from '../../types/User.type'
 import { Button } from '../Button'
 import { DateInput } from '../DateInput'
@@ -30,6 +32,28 @@ export const EditAdminUserModal = ({
 }) => {
   const queryClient = useQueryClient()
   const { showToast } = useToastStore()
+
+  const { data: departments } = useQuery(
+    'departments',
+    async () => {
+      const {
+        data: { data },
+      } = await axios.get<{
+        data: Array<Department>
+        page: Page
+      }>('/v1/departments')
+
+      return data
+    },
+    {
+      enabled: isVisible,
+    }
+  )
+
+  const departmentOptions = departments?.map((department) => ({
+    value: department.id,
+    label: department.name,
+  }))
 
   const submitForm = async (values: EditAdminUserForm) => {
     try {
@@ -66,6 +90,7 @@ export const EditAdminUserModal = ({
               gender: user.gender,
               role: user.userType.role,
               status: user.status,
+              departmentId: user.userType.departments[0].id,
             }}
             onSubmit={submitForm}
           >
@@ -75,6 +100,19 @@ export const EditAdminUserModal = ({
                   <div className="mb-5 flex space-x-20">
                     <TitleValue title="Email">{user.email}</TitleValue>
                   </div>
+                  {departmentOptions && departmentOptions.length > 0 && (
+                    <Select
+                      label="Deparment"
+                      name="departmentId"
+                      Icon={PencilIcon}
+                      placeholder="Select Department"
+                      className="mb-5"
+                      options={departmentOptions}
+                      defaultValue={departmentOptions.find(
+                        ({ value }) => value === user.userType.departments[0].id
+                      )}
+                    />
+                  )}
                   <div className="mb-5 flex space-x-5">
                     <Select
                       label="Role"

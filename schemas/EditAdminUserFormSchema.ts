@@ -1,4 +1,4 @@
-import { date, mixed, object, SchemaOf, string } from 'yup'
+import { date, mixed, number, object, SchemaOf, string } from 'yup'
 import { EditAdminUserForm } from '../types/forms/EditAdminUserForm.type'
 
 export const EditAdminUserFormSchema: SchemaOf<EditAdminUserForm> = object().shape({
@@ -12,4 +12,5 @@ export const EditAdminUserFormSchema: SchemaOf<EditAdminUserForm> = object().sha
   status: mixed()
     .required()
     .oneOf(['active', 'inactive', 'guest', 'not_verified', 'revoked', 'deleted']),
+  departmentId: number().optional().nullable(),
 })
