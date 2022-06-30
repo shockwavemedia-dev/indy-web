@@ -89,7 +89,7 @@ export const StaffTicketFile = ({ ticketFileId }: { ticketFileId: number }) => {
   return (
     <>
       {!!ticketFile && ticketFileId !== -1 && (
-        <div className="flex w-280 space-x-6">
+        <div className="mx-auto flex h-full w-full max-w-8xl space-x-6">
           <div className="w-140 space-y-6">
             <div>
               <FileDisplay
@@ -99,6 +99,7 @@ export const StaffTicketFile = ({ ticketFileId }: { ticketFileId: number }) => {
                 imageWidth={560}
                 imageAlt={ticketFile.name}
                 className="rounded-xl"
+                videoClassName="w-140 rounded-xl"
               />
             </div>
             <div className="space-y-2">
