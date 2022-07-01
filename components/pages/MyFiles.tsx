@@ -82,7 +82,7 @@ export const MyFiles = () => {
 
                     return (
                       <FileButton
-                        className="h-20 w-20"
+                        className="h-35 w-35"
                         key={year}
                         onClick={openYearFolder}
                         name={year}
@@ -92,24 +92,33 @@ export const MyFiles = () => {
                 ) : month !== '' ? (
                   <>
                     <FileButton
-                      className="h-20 w-20"
+                      className="h-35 w-35"
                       key={month}
                       onClick={goUpToMonthsFolder}
                       name="../"
                     />
-                    {files[year][month].map(({ id, originalFilename, url }) => (
-                      <FileButton
-                        className="h-20 w-20"
-                        key={id}
-                        href={url}
-                        name={originalFilename}
-                      />
-                    ))}
+                    {files[year][month].map(
+                      ({ id, originalFilename, url, thumbnailUrl, clientTicketFile }) => {
+                        const fileUrl = clientTicketFile
+                          ? `/ticket/file/${clientTicketFile.id}`
+                          : url
+
+                        return (
+                          <FileButton
+                            className="h-35 w-35"
+                            key={id}
+                            href={fileUrl}
+                            name={originalFilename}
+                            thumbnailUrl={thumbnailUrl}
+                          />
+                        )
+                      }
+                    )}
                   </>
                 ) : (
                   <>
                     <FileButton
-                      className="h-20 w-20"
+                      className="h-35 w-35"
                       key={month}
                       onClick={goUpToYearsFolder}
                       name="../"
@@ -119,7 +128,7 @@ export const MyFiles = () => {
 
                       return (
                         <FileButton
-                          className="h-20 w-20"
+                          className="h-35 w-35"
                           key={month}
                           onClick={openMonthFolder}
                           name={month}
