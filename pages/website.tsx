@@ -36,7 +36,6 @@ const WebsitePage: NextPageWithLayout = () => {
       <div className="mx-auto h-full w-full max-w-8xl space-y-6">
         <FancyLink
           href="/project-brief"
-          target="_blank"
           Icon={<CalendarAddIcon className="stroke-halloween-orange" />}
           title="New Project Brief"
           subtitle="Laborerivit rem cones mil"

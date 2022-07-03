@@ -46,7 +46,6 @@ export const ClientMyFiles = () => {
       <div className="mx-auto h-4/5 w-full max-w-8xl">
         <FancyLink
           href="/project-brief"
-          target="_blank"
           Icon={<CalendarAddIcon className="stroke-halloween-orange" />}
           title="New Project Brief"
           subtitle="Laborerivit rem cones mil"
