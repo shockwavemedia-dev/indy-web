@@ -184,6 +184,7 @@ export const ClientTicketFile = ({ ticketFileId }: { ticketFileId: number }) => 
               {({ isSubmitting }) => (
                 <Form>
                   <RichTextInput
+                    label="Enter Feedback"
                     Icon={EditIcon}
                     placeholder="Enter feedback"
                     name="feedback"

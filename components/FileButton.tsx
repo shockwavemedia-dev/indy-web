@@ -22,7 +22,6 @@ export const FileButton = ({
   href ? (
     <a
       href={href}
-      target="_blank"
       rel="noopener noreferrer"
       className={`flex flex-none flex-col items-center justify-center space-y-1 rounded-xl border-2 border-bright-gray p-3 hover:border-halloween-orange ${className}`}
     >
