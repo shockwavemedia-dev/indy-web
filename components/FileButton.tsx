@@ -1,6 +1,5 @@
 import Image from 'next/image'
 import { BadgeCheckIcon } from './icons/BadgeCheckIcon'
-import { CheckIcon } from './icons/CheckIcon'
 import { FileIcon } from './icons/FileIcon'
 import { FolderIcon } from './icons/FolderIcon'
 
