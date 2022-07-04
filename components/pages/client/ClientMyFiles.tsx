@@ -78,6 +78,7 @@ export const ClientMyFiles = () => {
                 />
                 {files[year][month].map(
                   ({ id, originalFilename, url, thumbnailUrl, clientTicketFile }) => {
+                    const status = clientTicketFile?.status ?? null
                     const fileUrl = clientTicketFile ? `/ticket/file/${clientTicketFile.id}` : url
 
                     return (
@@ -87,6 +88,7 @@ export const ClientMyFiles = () => {
                         href={fileUrl}
                         name={originalFilename}
                         thumbnailUrl={thumbnailUrl}
+                        fileStatus={status}
                       />
                     )
                   }
