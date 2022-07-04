@@ -46,7 +46,6 @@ const GraphicPage: NextPageWithLayout = () => {
         <div className="mb-6 flex space-x-6">
           <FancyLink
             href="/project-brief"
-            target="_blank"
             Icon={<CalendarAddIcon className="stroke-halloween-orange" />}
             title="New Project Brief"
             subtitle="Laborerivit rem cones mil"
