@@ -1,4 +1,6 @@
 import Image from 'next/image'
+import { BadgeCheckIcon } from './icons/BadgeCheckIcon'
+import { CheckIcon } from './icons/CheckIcon'
 import { FileIcon } from './icons/FileIcon'
 import { FolderIcon } from './icons/FolderIcon'
 
@@ -10,6 +12,7 @@ export const FileButton = ({
   fileModal = false,
   textClassName,
   thumbnailUrl = null,
+  fileStatus = null,
 }: {
   onClick?: () => void
   href?: string
@@ -18,6 +21,7 @@ export const FileButton = ({
   fileModal?: boolean
   textClassName?: string
   thumbnailUrl?: string | null
+  fileStatus?: string | null
 }) =>
   href ? (
     <a
@@ -40,6 +44,11 @@ export const FileButton = ({
       <div className="w-full break-words text-center font-urbanist text-xxs font-semibold text-onyx">
         {name}
       </div>
+      {fileStatus === 'approved' ? (
+        <BadgeCheckIcon className="text-forest-green"></BadgeCheckIcon>
+      ) : (
+        <div className="w-full break-words text-center font-urbanist text-xxs font-semibold text-onyx"></div>
+      )}
     </a>
   ) : (
     <button

@@ -52,7 +52,7 @@ export const UploadTicketFileModal = ({ ticketId }: { ticketId: number }) => {
                   className="mb-8"
                   maxSize={250}
                   mimeType="image/gif"
-                  accept={['.gif', '.jpeg', '.mp4', '.png']}
+                  accept={['.gif', '.Graphics', '.mp4', '.png', '.jpeg', '.jpg']}
                 />
                 <div className="flex space-x-5">
                   <Button
