@@ -11,14 +11,10 @@ import { AnimationCategory } from '../../../types/AnimationCategory.type'
 import { Page } from '../../../types/Page.type'
 import { SelectOption } from '../../../types/SelectOption.type'
 import { Card } from '../../Card'
-import { CountCard } from '../../CountCard'
 import { FancyLink } from '../../FancyLink'
 import { CalendarAddIcon } from '../../icons/CalendarAddIcon'
 import { CaretIcon } from '../../icons/CaretIcon'
 import { ClipboardIcon } from '../../icons/ClipboardIcon'
-import { GalleryIcon } from '../../icons/GalleryIcon'
-import { MenuBoardIcon } from '../../icons/MenuBoardIcon'
-import { VideoIcon } from '../../icons/VideoIcon'
 import {
   CreateAnimationRequestModal,
   useCreateAnimationRequestModal,
@@ -27,6 +23,7 @@ import { DeleteTicketModal } from '../../modals/DeleteTicketModal'
 import { EditTicketModal } from '../../modals/EditTicketModal'
 import { Notifications } from '../../Notifications'
 import { SelectNoFormik } from '../../SelectNoFormik'
+import { StatusCountCard } from '../../StatusCountCard'
 
 export const ClientAnimations = () => {
   const [page, setPage] = useState(1)
@@ -230,32 +227,35 @@ export const ClientAnimations = () => {
             )}
           </Card>
           <div className="flex flex-1 flex-col">
-            <div className="mb-3 flex space-x-3">
-              <CountCard
+            <div className="mb-2 flex space-x-1">
+              <StatusCountCard
+                value={8}
                 className="bg-deep-space-sparkle"
-                Icon={<VideoIcon className="stroke-white" />}
-                value={5}
-                description="Animations Remaining"
+                description="Graphics Design"
               />
-              <CountCard
-                className="bg-charleston-green"
-                Icon={<GalleryIcon className="stroke-white" />}
-                value={2}
-                description="Photoshoots Remaining"
+              <StatusCountCard value={5} className="bg-charleston-green" description="Animations" />
+              <StatusCountCard
+                value={5}
+                className="bg-halloween-orange"
+                description="Web Updates"
               />
             </div>
-            <div className="mb-6 flex space-x-3">
-              <CountCard
-                className="bg-halloween-orange"
-                Icon={<MenuBoardIcon className="stroke-white" />}
-                value={3}
-                description="Graphics Remaining"
-              />
-              <CountCard
+            <div className="mb-2 flex space-x-1">
+              <StatusCountCard
+                value={8}
                 className="bg-maximum-yellow-red"
-                Icon={<VideoIcon className="stroke-white" />}
-                value={1}
-                description="Videoshoots Remaining"
+                description="Photo Shoots"
+              />
+              <StatusCountCard value={3} className="bg-navy" description="Video Shoots" />
+              <StatusCountCard value={11} className="bg-red-crimson" description="Social Posts" />
+            </div>
+            <div className="mb-2 flex space-x-1">
+              <StatusCountCard value={9} className="bg-orchid" description="Marketing" />
+              <StatusCountCard value={7} className="bg-forest-green" description="Health Check" />
+              <StatusCountCard
+                value={15}
+                className="bg-bright-navy-blue"
+                description="App Updates"
               />
             </div>
             <Notifications />

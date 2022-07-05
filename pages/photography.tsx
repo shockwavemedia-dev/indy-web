@@ -1,15 +1,12 @@
 import Head from 'next/head'
 import { ReactElement, useEffect } from 'react'
 import { Card } from '../components/Card'
-import { CountCard } from '../components/CountCard'
 import { FancyLink } from '../components/FancyLink'
 import { CalendarAddIcon } from '../components/icons/CalendarAddIcon'
-import { GalleryIcon } from '../components/icons/GalleryIcon'
-import { MenuBoardIcon } from '../components/icons/MenuBoardIcon'
-import { VideoIcon } from '../components/icons/VideoIcon'
 import { DeleteTicketModal } from '../components/modals/DeleteTicketModal'
 import { EditTicketModal } from '../components/modals/EditTicketModal'
 import { Notifications } from '../components/Notifications'
+import { StatusCountCard } from '../components/StatusCountCard'
 import PanelLayout, { usePanelLayoutStore } from '../layouts/PanelLayout'
 import { useTicketStore } from '../store/TicketStore'
 import { NextPageWithLayout } from '../types/pages/NextPageWithLayout.type'
@@ -44,32 +41,35 @@ const PhotographyPage: NextPageWithLayout = () => {
         <div className="flex h-155 space-x-6">
           <Card className="flex w-260 flex-col opacity-50"></Card>
           <div className="flex flex-1 flex-col">
-            <div className="mb-3 flex space-x-3">
-              <CountCard
+            <div className="mb-2 flex space-x-1">
+              <StatusCountCard
+                value={8}
                 className="bg-deep-space-sparkle"
-                Icon={<VideoIcon className="stroke-white" />}
-                value={5}
-                description="Animations Remaining"
+                description="Graphics Design"
               />
-              <CountCard
-                className="bg-charleston-green"
-                Icon={<GalleryIcon className="stroke-white" />}
-                value={2}
-                description="Photoshoots Remaining"
+              <StatusCountCard value={5} className="bg-charleston-green" description="Animations" />
+              <StatusCountCard
+                value={5}
+                className="bg-halloween-orange"
+                description="Web Updates"
               />
             </div>
-            <div className="mb-6 flex space-x-3">
-              <CountCard
-                className="bg-halloween-orange"
-                Icon={<MenuBoardIcon className="stroke-white" />}
-                value={3}
-                description="Graphics Remaining"
-              />
-              <CountCard
+            <div className="mb-2 flex space-x-1">
+              <StatusCountCard
+                value={8}
                 className="bg-maximum-yellow-red"
-                Icon={<VideoIcon className="stroke-white" />}
-                value={1}
-                description="Videoshoots Remaining"
+                description="Photo Shoots"
+              />
+              <StatusCountCard value={3} className="bg-navy" description="Video Shoots" />
+              <StatusCountCard value={11} className="bg-red-crimson" description="Social Posts" />
+            </div>
+            <div className="mb-2 flex space-x-1">
+              <StatusCountCard value={9} className="bg-orchid" description="Marketing" />
+              <StatusCountCard value={7} className="bg-forest-green" description="Health Check" />
+              <StatusCountCard
+                value={15}
+                className="bg-bright-navy-blue"
+                description="App Updates"
               />
             </div>
             <Notifications />
