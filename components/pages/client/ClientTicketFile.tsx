@@ -12,6 +12,8 @@ import { TicketFileFeedback } from '../../../types/TicketFileFeedback.type'
 import { objectWithFileToFormData } from '../../../utils/FormHelpers'
 import { Button } from '../../Button'
 import { FileDisplay } from '../../FileDisplay'
+import { CheckIcon } from '../../icons/CheckIcon'
+import { DownloadIcon } from '../../icons/DownloadIcon'
 import { EditIcon } from '../../icons/EditIcon'
 import { PaperClipIcon } from '../../icons/PaperClipIcon'
 import { PaperPlaneIcon } from '../../icons/PaperPlaneIcon'
@@ -184,17 +186,32 @@ export const ClientTicketFile = ({ ticketFileId }: { ticketFileId: number }) => 
             </div>
             {!ticketFile.isApproved && (
               <div className="flex space-x-5">
-                <Button ariaLabel="Cancel" onClick={downloadFile} type="button" light>
-                  Download
+                <Button
+                  ariaLabel="Download"
+                  className="text-bleu-de-france"
+                  type="button"
+                  onClick={downloadFile}
+                  light
+                >
+                  <DownloadIcon className="stroke-bleu-de-france" />
+                  <div>Download</div>
                 </Button>
                 <Button ariaLabel="Approve Ticket File" type="button" onClick={approveTicketFile}>
-                  Approve
+                  <CheckIcon className="stroke-white" />
+                  <div>Approve</div>
                 </Button>
               </div>
             )}
             {ticketFile.isApproved && (
-              <Button ariaLabel="Cancel" onClick={downloadFile} type="button" light>
-                Download
+              <Button
+                ariaLabel="Download"
+                className="text-bleu-de-france"
+                type="button"
+                onClick={downloadFile}
+                light
+              >
+                <DownloadIcon className="stroke-bleu-de-france" />
+                <div>Download</div>
               </Button>
             )}
           </div>
