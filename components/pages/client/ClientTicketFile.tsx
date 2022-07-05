@@ -57,7 +57,7 @@ export const ClientTicketFile = ({ ticketFileId }: { ticketFileId: number }) => 
   )
 
   const downloadFile = () => {
-    if (!!ticketFile && ticketFileId !== -1) {
+    if (!!ticketFile && ticketFile?.signedUrl !== null) {
       fetch(ticketFile.signedUrl)
         .then((res) => res.blob())
         .then((blob) => {

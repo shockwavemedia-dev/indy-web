@@ -56,7 +56,7 @@ export const ManagerTicketFile = ({ ticketFileId }: { ticketFileId: number }) =>
   )
 
   const downloadFile = () => {
-    if (!!ticketFile && ticketFileId !== -1) {
+    if (!!ticketFile && ticketFile?.signedUrl !== null) {
       fetch(ticketFile.signedUrl)
         .then((res) => res.blob())
         .then((blob) => {
@@ -167,18 +167,16 @@ export const ManagerTicketFile = ({ ticketFileId }: { ticketFileId: number }) =>
                   value={ticketFile.isApproved ? 'Approved' : 'Not Approved'}
                 />
               </TitleValue>
-              {ticketFile.isApproved && (
-                <Button
-                  ariaLabel="Download"
-                  className="text-bleu-de-france"
-                  type="button"
-                  onClick={downloadFile}
-                  light
-                >
-                  <DownloadIcon className="stroke-bleu-de-france" />
-                  <div>Download</div>
-                </Button>
-              )}
+              <Button
+                ariaLabel="Download"
+                className="text-bleu-de-france"
+                type="button"
+                onClick={downloadFile}
+                light
+              >
+                <DownloadIcon className="stroke-bleu-de-france" />
+                <div>Download</div>
+              </Button>
             </div>
           </div>
           <div className="w-140 space-y-5">
