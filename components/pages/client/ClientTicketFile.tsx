@@ -37,8 +37,6 @@ export const ClientTicketFile = ({ ticketFileId }: { ticketFileId: number }) => 
     }
   )
 
-  console.log(ticketFile)
-
   const { data: fileFeedbacks } = useQuery(
     ['fileFeedbacks', ticketFileId],
     async () => {
@@ -55,6 +53,21 @@ export const ClientTicketFile = ({ ticketFileId }: { ticketFileId: number }) => 
       enabled: ticketFileId !== -1,
     }
   )
+
+  const downloadFile = () => {
+    if (!!ticketFile && ticketFileId !== -1) {
+      fetch(ticketFile.signedUrl)
+        .then((res) => res.blob())
+        .then((blob) => {
+          const url = window.URL.createObjectURL(blob)
+          const link = document.createElement('a')
+          link.href = url
+          link.setAttribute('download', ticketFile.fileType)
+          document.body.appendChild(link)
+          link.click()
+        })
+    }
+  }
 
   const submitForm = async (
     values: CreateFileFeedbackForm,
@@ -170,8 +183,18 @@ export const ClientTicketFile = ({ ticketFileId }: { ticketFileId: number }) => 
               </TitleValue>
             </div>
             {!ticketFile.isApproved && (
-              <Button ariaLabel="Approve Ticket File" type="button" onClick={approveTicketFile}>
-                Approve
+              <div className="flex space-x-5">
+                <Button ariaLabel="Cancel" onClick={downloadFile} type="button" light>
+                  Download
+                </Button>
+                <Button ariaLabel="Approve Ticket File" type="button" onClick={approveTicketFile}>
+                  Approve
+                </Button>
+              </div>
+            )}
+            {ticketFile.isApproved && (
+              <Button ariaLabel="Cancel" onClick={downloadFile} type="button" light>
+                Download
               </Button>
             )}
           </div>
