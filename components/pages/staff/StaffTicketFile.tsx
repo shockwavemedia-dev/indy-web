@@ -63,7 +63,7 @@ export const StaffTicketFile = ({ ticketFileId }: { ticketFileId: number }) => {
           const url = window.URL.createObjectURL(blob)
           const link = document.createElement('a')
           link.href = url
-          link.setAttribute('download', ticketFile.fileType)
+          link.setAttribute('download', ticketFile.name)
           document.body.appendChild(link)
           link.click()
         })
