@@ -12,6 +12,7 @@ import { TicketFileFeedback } from '../../../types/TicketFileFeedback.type'
 import { objectWithFileToFormData } from '../../../utils/FormHelpers'
 import { Button } from '../../Button'
 import { FileDisplay } from '../../FileDisplay'
+import { DownloadIcon } from '../../icons/DownloadIcon'
 import { EditIcon } from '../../icons/EditIcon'
 import { PaperClipIcon } from '../../icons/PaperClipIcon'
 import { PaperPlaneIcon } from '../../icons/PaperPlaneIcon'
@@ -37,8 +38,6 @@ export const StaffTicketFile = ({ ticketFileId }: { ticketFileId: number }) => {
     }
   )
 
-  console.log(ticketFile)
-
   const { data: fileFeedbacks } = useQuery(
     ['fileFeedbacks', ticketFileId],
     async () => {
@@ -55,6 +54,21 @@ export const StaffTicketFile = ({ ticketFileId }: { ticketFileId: number }) => {
       enabled: ticketFileId !== -1,
     }
   )
+
+  const downloadFile = () => {
+    if (!!ticketFile && ticketFile?.signedUrl !== null) {
+      fetch(ticketFile.signedUrl)
+        .then((res) => res.blob())
+        .then((blob) => {
+          const url = window.URL.createObjectURL(blob)
+          const link = document.createElement('a')
+          link.href = url
+          link.setAttribute('download', ticketFile.name)
+          document.body.appendChild(link)
+          link.click()
+        })
+    }
+  }
 
   const submitForm = async (
     values: CreateFileFeedbackForm,
@@ -153,6 +167,16 @@ export const StaffTicketFile = ({ ticketFileId }: { ticketFileId: number }) => {
                   value={ticketFile.isApproved ? 'Approved' : 'Not Approved'}
                 />
               </TitleValue>
+              <Button
+                ariaLabel="Download"
+                className="text-bleu-de-france"
+                type="button"
+                onClick={downloadFile}
+                light
+              >
+                <DownloadIcon className="stroke-bleu-de-france" />
+                <div>Download</div>
+              </Button>
             </div>
           </div>
           <div className="w-140 space-y-5">

@@ -90,7 +90,7 @@ export const CreateSupportTicketModal = ({
   return (
     <>
       {isVisible && (
-        <Modal title="Create Support Request" onClose={onClose}>
+        <Modal title="Create New Ticket" onClose={onClose}>
           <Formik
             validationSchema={CreateSupportTicketFormSchema}
             initialValues={{

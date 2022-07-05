@@ -12,6 +12,8 @@ import { TicketFileFeedback } from '../../../types/TicketFileFeedback.type'
 import { objectWithFileToFormData } from '../../../utils/FormHelpers'
 import { Button } from '../../Button'
 import { FileDisplay } from '../../FileDisplay'
+import { CheckIcon } from '../../icons/CheckIcon'
+import { DownloadIcon } from '../../icons/DownloadIcon'
 import { EditIcon } from '../../icons/EditIcon'
 import { PaperClipIcon } from '../../icons/PaperClipIcon'
 import { PaperPlaneIcon } from '../../icons/PaperPlaneIcon'
@@ -37,8 +39,6 @@ export const ClientTicketFile = ({ ticketFileId }: { ticketFileId: number }) => 
     }
   )
 
-  console.log(ticketFile)
-
   const { data: fileFeedbacks } = useQuery(
     ['fileFeedbacks', ticketFileId],
     async () => {
@@ -55,6 +55,21 @@ export const ClientTicketFile = ({ ticketFileId }: { ticketFileId: number }) => 
       enabled: ticketFileId !== -1,
     }
   )
+
+  const downloadFile = () => {
+    if (!!ticketFile && ticketFile?.signedUrl !== null) {
+      fetch(ticketFile.signedUrl)
+        .then((res) => res.blob())
+        .then((blob) => {
+          const url = window.URL.createObjectURL(blob)
+          const link = document.createElement('a')
+          link.href = url
+          link.setAttribute('download', ticketFile.name)
+          document.body.appendChild(link)
+          link.click()
+        })
+    }
+  }
 
   const submitForm = async (
     values: CreateFileFeedbackForm,
@@ -170,8 +185,33 @@ export const ClientTicketFile = ({ ticketFileId }: { ticketFileId: number }) => 
               </TitleValue>
             </div>
             {!ticketFile.isApproved && (
-              <Button ariaLabel="Approve Ticket File" type="button" onClick={approveTicketFile}>
-                Approve
+              <div className="flex space-x-5">
+                <Button
+                  ariaLabel="Download"
+                  className="text-bleu-de-france"
+                  type="button"
+                  onClick={downloadFile}
+                  light
+                >
+                  <DownloadIcon className="stroke-bleu-de-france" />
+                  <div>Download</div>
+                </Button>
+                <Button ariaLabel="Approve Ticket File" type="button" onClick={approveTicketFile}>
+                  <CheckIcon className="stroke-white" />
+                  <div>Approve</div>
+                </Button>
+              </div>
+            )}
+            {ticketFile.isApproved && (
+              <Button
+                ariaLabel="Download"
+                className="text-bleu-de-france"
+                type="button"
+                onClick={downloadFile}
+                light
+              >
+                <DownloadIcon className="stroke-bleu-de-france" />
+                <div>Download</div>
               </Button>
             )}
           </div>

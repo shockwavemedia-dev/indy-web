@@ -46,7 +46,7 @@ export const ManagerDashboard = () => {
       <div className="mx-auto h-full w-full max-w-8xl space-y-6">
         <FancyButton
           Icon={<LifeBuoyIcon className="fill-halloween-orange" />}
-          title="Support Request"
+          title="New Ticket"
           subtitle="Laborerivit rem cones mil"
           onClick={toggleCreateSupportRequestModal}
           className="w-fit"
