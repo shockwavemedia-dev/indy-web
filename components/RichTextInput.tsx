@@ -34,6 +34,8 @@ export const RichTextInput = ({
   className,
   label,
   inputActions,
+  labelClassName,
+  size,
 }: {
   name: string
   Icon: Icon
@@ -41,6 +43,8 @@ export const RichTextInput = ({
   className?: string
   label?: string
   inputActions?: ReactNode
+  labelClassName?: string
+  size?: string
 }) => {
   const { handleBlur, setFieldValue, getFieldProps } = useFormikContext()
   const { toggleModal, setCreateLink, setLinkText } = useCreateLinkModalStore()
@@ -147,12 +151,12 @@ export const RichTextInput = ({
     <div className={className}>
       <label
         htmlFor={name}
-        className="mb-2 inline-block font-urbanist text-xs font-medium text-metallic-silver empty:hidden"
+        className={`mb-2 inline-block font-urbanist font-medium text-metallic-silver empty:hidden ${labelClassName}`}
       >
         {label}
       </label>
       <div
-        className={`relative overflow-hidden rounded-xl bg-white ${
+        className={`${size} relative overflow-hidden rounded-xl bg-white ${
           isEditorFocused ? 'ring-2 ring-halloween-orange' : 'ring-1 ring-bright-gray '
         }`}
         id="rich-text-input"

@@ -225,6 +225,8 @@ export const ClientTicketFile = ({ ticketFileId }: { ticketFileId: number }) => 
                 <Form>
                   <RichTextInput
                     label="Enter Feedback"
+                    labelClassName="text-2xl"
+                    size="h-86"
                     Icon={EditIcon}
                     placeholder="Enter feedback"
                     name="feedback"
@@ -237,7 +239,7 @@ export const ClientTicketFile = ({ ticketFileId }: { ticketFileId: number }) => 
                         <Button
                           ariaLabel="Submit Notes"
                           type="submit"
-                          className="!w-fit px-10"
+                          className="relative !w-fit px-10"
                           disabled={isSubmitting}
                         >
                           <PaperPlaneIcon className="stroke-white" />

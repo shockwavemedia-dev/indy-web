@@ -188,6 +188,9 @@ export const ManagerTicketFile = ({ ticketFileId }: { ticketFileId: number }) =>
               {({ isSubmitting }) => (
                 <Form>
                   <RichTextInput
+                    label="Enter Feedback"
+                    labelClassName="text-2xl"
+                    size="h-86"
                     Icon={EditIcon}
                     placeholder="Enter feedback"
                     name="feedback"
