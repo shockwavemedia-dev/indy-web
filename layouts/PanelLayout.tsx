@@ -1,22 +1,25 @@
+import axios from 'axios'
 import { signOut as nextAuthSignOut, useSession } from 'next-auth/react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { Fragment, ReactNode, useMemo } from 'react'
+import { useQuery } from 'react-query'
 import createStore from 'zustand'
 import { combine } from 'zustand/middleware'
 import { Crumbs } from '../components/Crumbs'
 import { IndyIcon } from '../components/icons/IndyIcon'
 import { LogoutIcon } from '../components/icons/LogoutIcon'
 import { MagnifyingGlassIcon } from '../components/icons/MagnifyingGlassIcon'
-import { JobsStatusCountCard } from '../components/JobStatsCard'
 import { RouteButton } from '../components/RouteButton'
+import { TicketsAndNotifacationsCountCard } from '../components/TicketsAndNotifacationsCountCard'
 import { AdminRoutes } from '../constants/routes/AdminRoutes'
 import { ClientRoutes } from '../constants/routes/ClientRoutes'
 import { ManagerRoutes } from '../constants/routes/ManagerRoutes'
 import { StaffRoutes } from '../constants/routes/StaffRoutes'
 import DailyPressLogoWhite from '../public/images/daily-press-logo-white.png'
 import DummyAvatar from '../public/images/dummy-avatar.png'
+import { TicketsAndNotifacationsCount } from '../types/TicketsAndNotifacationsCount.type'
 
 export const usePanelLayoutStore = createStore(
   combine(
@@ -40,6 +43,23 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
   })
   const { replace, asPath } = useRouter()
   const { header, subHeader } = usePanelLayoutStore()
+
+  const { data: ticketsAndNotifacationsCount, isLoading: ticketsAndNotifacationsCountIsLoading } =
+    useQuery(
+      'tickes-and-notifications-count',
+      async () => {
+        const { data } = await axios.get<TicketsAndNotifacationsCount>(
+          `/v1/${
+            session?.isClient ? `clients/${session.user.userType.clientId}` : 'backend-users'
+          }/ticket-notification-counts`
+        )
+
+        return data
+      },
+      {
+        enabled: !!session && !session.isAdmin,
+      }
+    )
 
   const { panelName, routes } = useMemo(() => {
     if (!!session) {
@@ -95,10 +115,25 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
       </div>
       <div className="flex min-h-screen bg-cultured pt-14">
         <div className="relative w-75 flex-none bg-charleston-green pt-6">
-          <div className="mb-5 flex space-x-3 px-6">
-            <JobsStatusCountCard value={12} description="Pending Jobs" />
-            <JobsStatusCountCard value={4} description="Jobs To Review" />
-          </div>
+          {!session.isAdmin && (
+            <div className="mb-5 flex space-x-3 px-6">
+              <TicketsAndNotifacationsCountCard
+                isLoading={ticketsAndNotifacationsCountIsLoading}
+                value={ticketsAndNotifacationsCount?.openTicketCount}
+                description="Pending Jobs"
+              />
+              <TicketsAndNotifacationsCountCard
+                isLoading={ticketsAndNotifacationsCountIsLoading}
+                value={ticketsAndNotifacationsCount?.newTicketCount}
+                description="Jobs To Review"
+              />
+              <TicketsAndNotifacationsCountCard
+                isLoading={ticketsAndNotifacationsCountIsLoading}
+                value={ticketsAndNotifacationsCount?.newNotificationCount}
+                description="Jobs To Review"
+              />
+            </div>
+          )}
           {routes.map(({ title, Icon, pathname, subRoutes = [], target }, i) => (
             <Fragment key={`route-group-${i}`}>
               <RouteButton
