@@ -1,6 +1,7 @@
 export type Service = {
   id: number
   serviceId: number
+  name: string
   serviceName: string
   marketingQuota: number
   extraQuota: number

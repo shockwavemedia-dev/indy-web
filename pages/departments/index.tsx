@@ -4,6 +4,7 @@ import { Card } from '../../components/Card'
 import { DataTable } from '../../components/DataTable'
 import { FancyButton } from '../../components/FancyButton'
 import { UserIcon } from '../../components/icons/UserIcon'
+import { EditDepartmentModal } from '../../components/modals/EditDepartmentModal'
 import { NewDepartmentModal } from '../../components/modals/NewDepartmentModal'
 import { DepartmentTableColumns } from '../../constants/tables/DepartmentTableColumns'
 import PanelLayout from '../../layouts/PanelLayout'
@@ -36,11 +37,12 @@ const DepartmentsPage: NextPageWithLayout = () => {
             ofString="Departments"
           />
         </Card>
-        <NewDepartmentModal
-          isVisible={isNewDepartmentModalVisible}
-          onClose={toggleNewDepartmentModal}
-        />
       </div>
+      <NewDepartmentModal
+        isVisible={isNewDepartmentModalVisible}
+        onClose={toggleNewDepartmentModal}
+      />
+      <EditDepartmentModal />
     </>
   )
 }

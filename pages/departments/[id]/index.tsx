@@ -77,6 +77,15 @@ const DapartmentPage: NextPageWithLayout = () => {
           <TitleValue title="Min. Delivery Days" className="flex items-center justify-between">
             {department?.minDeliveryDays}
           </TitleValue>
+          <TitleValue title="Services">
+            {department?.services && department.services.length > 0 && (
+              <div className="flex flex-wrap gap-1">
+                {department.services.map(({ serviceId, name }) => (
+                  <Pill key={`service-${serviceId}`} value={name} />
+                ))}
+              </div>
+            )}
+          </TitleValue>
           <TitleValue title="Description" className="flex items-center justify-between">
             {department?.description}
           </TitleValue>

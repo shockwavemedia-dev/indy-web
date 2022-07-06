@@ -1,6 +1,8 @@
 import Link from 'next/link'
 import { Column } from 'react-table'
+import { EditIcon } from '../../components/icons/EditIcon'
 import { EyeIcon } from '../../components/icons/EyeIcon'
+import { useEditDepartmentModal } from '../../components/modals/EditDepartmentModal'
 import { Pill } from '../../components/Pill'
 import { Department } from '../../types/Department.type'
 
@@ -63,16 +65,23 @@ export const DepartmentTableColumns: Array<Column<Department>> = [
     accessor: 'id',
     id: 'actions',
     disableSortBy: true,
-    Cell: ({
-      row: {
-        original: { id },
-      },
-    }) => (
-      <Link href={`/departments/${id}`}>
-        <a className="group">
-          <EyeIcon className="stroke-waterloo group-hover:stroke-halloween-orange" />
-        </a>
-      </Link>
-    ),
+    Cell: ({ row: { original: department } }) => {
+      const { toggleModal } = useEditDepartmentModal()
+
+      const editDepartment = () => toggleModal(department)
+
+      return (
+        <div className="flex space-x-2">
+          <button onClick={editDepartment} className="group">
+            <EditIcon className="stroke-waterloo group-hover:stroke-halloween-orange" />
+          </button>
+          <Link href={`/departments/${department.id}`}>
+            <a className="group">
+              <EyeIcon className="stroke-waterloo group-hover:stroke-halloween-orange" />
+            </a>
+          </Link>
+        </div>
+      )
+    },
   },
 ]

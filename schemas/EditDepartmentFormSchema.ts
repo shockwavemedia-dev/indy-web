@@ -1,8 +1,7 @@
 import { array, number, object, SchemaOf, string } from 'yup'
-import { NewDepartmentForm } from '../types/forms/NewDepartmentForm.type'
+import { EditDepartmentForm } from '../types/forms/EditDepartmentForm.type'
 
-export const NewDepartmentFormSchema: SchemaOf<NewDepartmentForm> = object().shape({
-  name: string().required(),
+export const EditDepartmentFormSchema: SchemaOf<EditDepartmentForm> = object().shape({
   description: string().optional(),
   minDeliveryDays: number().optional(),
   services: array().of(number().required()).min(1),
