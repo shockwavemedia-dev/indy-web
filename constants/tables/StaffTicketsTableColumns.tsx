@@ -1,3 +1,4 @@
+import { Tooltip } from '@mui/material'
 import { format } from 'date-fns'
 import Link from 'next/link'
 import { Column } from 'react-table'
@@ -127,9 +128,11 @@ export const StaffTicketsTableColumns: Array<Column<Ticket>> = [
       return (
         <div className="flex space-x-2">
           <Link href={`/ticket/${ticket.id}`}>
-            <a className="group">
-              <EyeIcon className="stroke-waterloo group-hover:stroke-halloween-orange" />
-            </a>
+            <Tooltip title="View Ticket" placement="top">
+              <a className="group">
+                <EyeIcon className="stroke-waterloo group-hover:stroke-halloween-orange" />
+              </a>
+            </Tooltip>
           </Link>
         </div>
       )
