@@ -239,7 +239,7 @@ export const ClientTicketFile = ({ ticketFileId }: { ticketFileId: number }) => 
                         <Button
                           ariaLabel="Submit Notes"
                           type="submit"
-                          className="relative !w-fit px-10"
+                          className="!w-fit px-10"
                           disabled={isSubmitting}
                         >
                           <PaperPlaneIcon className="stroke-white" />
