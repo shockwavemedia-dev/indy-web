@@ -7,7 +7,6 @@ import { useRouter } from 'next/router'
 import { ChangeEvent, ReactElement, useEffect, useState } from 'react'
 import { useQuery, useQueryClient } from 'react-query'
 import { Button } from '../components/Button'
-import { Card } from '../components/Card'
 import { Checkbox } from '../components/Checkbox'
 import { DateInput } from '../components/DateInput'
 import { FileDropZone } from '../components/FileDropZone'
@@ -101,19 +100,11 @@ const ProjectBriefPage: NextPageWithLayout = () => {
                       name="description"
                       className="mb-5"
                     />
-                    <Card title="Marketing Plan" className="mb-5 rounded-xl bg-ghost-white">
-                      <Checkbox
-                        label="Add to Marketing Plan"
-                        name="marketingPlan"
-                        className="mb-5"
-                      />
-                      <DateInput
-                        name="marketingPlanStartDate"
-                        placeholder="Enter Start Date"
-                        className="mb-5"
-                      />
+                    <Checkbox label="Add to Marketing Plan" name="marketingPlan" className="mb-5" />
+                    <div className="mb-5 flex space-x-5">
+                      <DateInput name="marketingPlanStartDate" placeholder="Enter Start Date" />
                       <DateInput name="marketingPlanEndDate" placeholder="Enter End Date" />
-                    </Card>
+                    </div>
                     <FileDropZone
                       label="Upload Assets"
                       name="attachments"
