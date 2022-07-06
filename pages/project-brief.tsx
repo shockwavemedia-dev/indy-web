@@ -95,11 +95,16 @@ const ProjectBriefPage: NextPageWithLayout = () => {
                     <DateInput name="duedate" placeholder="Enter due date" className="mb-5" />
                     <RichTextInput
                       Icon={EditIcon}
+                      size="h-86"
                       placeholder="Enter description"
                       name="description"
                       className="mb-5"
                     />
                     <Checkbox label="Add to Marketing Plan" name="marketingPlan" className="mb-5" />
+                    <div className="mb-5 flex space-x-5">
+                      <DateInput name="marketingPlanStartDate" placeholder="Enter Start Date" />
+                      <DateInput name="marketingPlanEndDate" placeholder="Enter End Date" />
+                    </div>
                     <FileDropZone
                       label="Upload Assets"
                       name="attachments"
