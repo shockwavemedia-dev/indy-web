@@ -138,7 +138,7 @@ export const ClientTicketsTableColumns: Array<Column<Ticket>> = [
       return (
         <div className="flex space-x-2">
           <Link href={`/ticket/${ticket.id}`}>
-            <Tooltip title="View Ticket" placement="top">
+            <Tooltip title="View Ticket" placement="top" className="cursor-pointer">
               <a className="group">
                 <EyeIcon className="stroke-waterloo group-hover:stroke-halloween-orange" />
               </a>
