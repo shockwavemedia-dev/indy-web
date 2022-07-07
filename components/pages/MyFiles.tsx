@@ -13,11 +13,11 @@ import { FileButton } from '../FileButton'
 import { UserIcon } from '../icons/UserIcon'
 import { Notifications } from '../Notifications'
 import { SelectNoFormik } from '../SelectNoFormik'
-
 export const MyFiles = () => {
   const { setHeader } = usePanelLayoutStore()
   const [year, setYear] = useState('')
   const [month, setMonth] = useState('')
+  const [department, setDepartment] = useState('')
   const [clientId, setClientId] = useState(-1)
 
   const { data: clients } = useQuery('clients', async () => {
@@ -45,6 +45,7 @@ export const MyFiles = () => {
 
   const goUpToYearsFolder = () => setYear('')
   const goUpToMonthsFolder = () => setMonth('')
+  const goUpToDepartmentsFolder = () => setDepartment('')
   const selectClient = (newValue: SingleValue<SelectOption<number>>) =>
     setClientId(newValue?.value || -1)
 
@@ -90,31 +91,60 @@ export const MyFiles = () => {
                     )
                   })
                 ) : month !== '' ? (
-                  <>
-                    <FileButton
-                      className="h-35 w-35"
-                      key={month}
-                      onClick={goUpToMonthsFolder}
-                      name="../"
-                    />
-                    {files[year][month].map(
-                      ({ id, originalFilename, url, thumbnailUrl, clientTicketFile }) => {
-                        const fileUrl = clientTicketFile
-                          ? `/ticket/file/${clientTicketFile.id}`
-                          : url
+                  department !== '' ? (
+                    <>
+                      <FileButton
+                        className="h-35 w-35"
+                        key={department}
+                        onClick={goUpToDepartmentsFolder}
+                        name="../"
+                      />
+                      {files[year][month][department].map(
+                        ({ id, originalFilename, url, thumbnailUrl, clientTicketFile }) => {
+                          const status = clientTicketFile?.status ?? null
+                          const fileUrl = clientTicketFile
+                            ? `/ticket/file/${clientTicketFile.id}`
+                            : url
+
+                          return (
+                            <FileButton
+                              className="h-35 w-35"
+                              key={id}
+                              href={fileUrl}
+                              name={originalFilename}
+                              thumbnailUrl={thumbnailUrl}
+                              fileStatus={status}
+                            />
+                          )
+                        }
+                      )}
+                    </>
+                  ) : (
+                    <>
+                      <FileButton
+                        className="h-35 w-35"
+                        key={department}
+                        onClick={goUpToMonthsFolder}
+                        name="../"
+                      />
+                      {Object.keys(files[year][month]).map((department) => {
+                        const openDepartmentFolder = () => setDepartment(department)
+                        const departmentname = department
+                          .replace(/([A-Z])/g, ' $1')
+                          .replace(/^./, (s) => s.toUpperCase())
 
                         return (
                           <FileButton
                             className="h-35 w-35"
-                            key={id}
-                            href={fileUrl}
-                            name={originalFilename}
-                            thumbnailUrl={thumbnailUrl}
+                            key={department}
+                            onClick={openDepartmentFolder}
+                            name={departmentname}
+                            textClassName="text-xs"
                           />
                         )
-                      }
-                    )}
-                  </>
+                      })}
+                    </>
+                  )
                 ) : (
                   <>
                     <FileButton
