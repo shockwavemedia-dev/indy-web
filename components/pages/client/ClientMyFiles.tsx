@@ -17,6 +17,7 @@ export const ClientMyFiles = () => {
   const { data: session } = useSession()
   const [year, setYear] = useState('')
   const [month, setMonth] = useState('')
+  const [department, setDepartment] = useState('')
 
   const { data: files, isSuccess } = useQuery('files', async () => {
     const { data } = await axios.get<Files>(`/v1/clients/${session?.user.userType.clientId}/files`)
@@ -26,6 +27,7 @@ export const ClientMyFiles = () => {
 
   const goUpToYearsFolder = () => setYear('')
   const goUpToMonthsFolder = () => setMonth('')
+  const goUpToDepartmentsFolder = () => setDepartment('')
 
   useEffect(() => {
     setHeader('My Files')
@@ -66,31 +68,58 @@ export const ClientMyFiles = () => {
                 )
               })
             ) : month !== '' ? (
-              <>
-                <FileButton
-                  className="h-35 w-35"
-                  key={month}
-                  onClick={goUpToMonthsFolder}
-                  name="../"
-                />
-                {files[year][month].map(
-                  ({ id, originalFilename, url, thumbnailUrl, clientTicketFile }) => {
-                    const status = clientTicketFile?.status ?? null
-                    const fileUrl = clientTicketFile ? `/ticket/file/${clientTicketFile.id}` : url
+              department !== '' ? (
+                <>
+                  <FileButton
+                    className="h-35 w-35"
+                    key={department}
+                    onClick={goUpToDepartmentsFolder}
+                    name="../"
+                  />
+                  {files[year][month][department].map(
+                    ({ id, originalFilename, url, thumbnailUrl, clientTicketFile }) => {
+                      const status = clientTicketFile?.status ?? null
+                      const fileUrl = clientTicketFile ? `/ticket/file/${clientTicketFile.id}` : url
+
+                      return (
+                        <FileButton
+                          className="h-35 w-35"
+                          key={id}
+                          href={fileUrl}
+                          name={originalFilename}
+                          thumbnailUrl={thumbnailUrl}
+                          fileStatus={status}
+                        />
+                      )
+                    }
+                  )}
+                </>
+              ) : (
+                <>
+                  <FileButton
+                    className="h-35 w-35"
+                    key={department}
+                    onClick={goUpToMonthsFolder}
+                    name="../"
+                  />
+                  {Object.keys(files[year][month]).map((department) => {
+                    const openDepartmentFolder = () => setDepartment(department)
+                    const departmentname = department
+                      .replace(/([A-Z])/g, ' $1')
+                      .replace(/^./, (s) => s.toUpperCase())
 
                     return (
                       <FileButton
                         className="h-35 w-35"
-                        key={id}
-                        href={fileUrl}
-                        name={originalFilename}
-                        thumbnailUrl={thumbnailUrl}
-                        fileStatus={status}
+                        key={department}
+                        onClick={openDepartmentFolder}
+                        name={departmentname}
+                        textClassName="text-sm text-center"
                       />
                     )
-                  }
-                )}
-              </>
+                  })}
+                </>
+              )
             ) : (
               <>
                 <FileButton
