@@ -120,17 +120,17 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
               <TicketsAndNotifacationsCountCard
                 isLoading={ticketsAndNotifacationsCountIsLoading}
                 value={ticketsAndNotifacationsCount?.openTicketCount}
-                description="Pending Jobs"
+                description="Open Ticket"
               />
               <TicketsAndNotifacationsCountCard
                 isLoading={ticketsAndNotifacationsCountIsLoading}
                 value={ticketsAndNotifacationsCount?.newTicketCount}
-                description="Jobs To Review"
+                description="New Ticket"
               />
               <TicketsAndNotifacationsCountCard
                 isLoading={ticketsAndNotifacationsCountIsLoading}
                 value={ticketsAndNotifacationsCount?.newNotificationCount}
-                description="Jobs To Review"
+                description="New Notification"
               />
             </div>
           )}
