@@ -1,5 +1,6 @@
 import {
   CompositeDecorator,
+  ContentBlock,
   convertFromRaw,
   convertToRaw,
   DraftDecoratorComponentProps,
@@ -22,7 +23,6 @@ import { ItalicIcon } from './icons/ItalicIcon'
 import { LinkIcon } from './icons/LinkIcon'
 import { StrikethroughIcon } from './icons/StrikethroughIcon'
 import { TextCenterAlignmentIcon } from './icons/TextCenterAlignmentIcon'
-import { TextLeftAlignmentIcon } from './icons/TextLeftAlignmentIcon'
 import { TextRightAlignmentIcon } from './icons/TextRightAlignmentIcon'
 import { UnderlineIcon } from './icons/UnderlineIcon'
 import { UnorderedListIcon } from './icons/UnorderedListIcon'
@@ -57,7 +57,6 @@ export const RichTextInput = ({
       : EditorState.createEmpty(compositeDecorator)
   )
   const [isEditorFocused, setEditorFocused] = useState(false)
-  const [textAlignment, setTextAlignment] = useState<'left' | 'center' | 'right'>('left')
   const [isPlaceholderVisible, setPlaceHolderVisible] = useState(true)
 
   const editorRef = useRef<Editor>(null)
@@ -96,9 +95,10 @@ export const RichTextInput = ({
     setEditorState(RichUtils.toggleInlineStyle(editorState, 'UNDERLINE'))
   const strikethroughOnClick = () =>
     setEditorState(RichUtils.toggleInlineStyle(editorState, 'STRIKETHROUGH'))
-  const textLeftAlignmentOnClick = () => setTextAlignment('left')
-  const textCenterAlignmentOnClick = () => setTextAlignment('center')
-  const textRightAlignmentOnClick = () => setTextAlignment('right')
+  const textCenterAlignmentOnClick = () =>
+    setEditorState(RichUtils.toggleBlockType(editorState, 'center-align'))
+  const textRightAlignmentOnClick = () =>
+    setEditorState(RichUtils.toggleBlockType(editorState, 'right-align'))
   const unorderedListOnClick = () =>
     setEditorState(RichUtils.toggleBlockType(editorState, 'unordered-list-item'))
   const toggleCreateLinkModal = () => {
@@ -132,6 +132,17 @@ export const RichTextInput = ({
         .slice(selection.getStartOffset(), selection.getEndOffset())
     )
     toggleModal()
+  }
+  const blockStyleFn = (contentBlock: ContentBlock) => {
+    const type = contentBlock.getType()
+
+    if (type === 'right-align') {
+      return 'flex justify-end'
+    } else if (type === 'center-align') {
+      return 'flex justify-center'
+    }
+
+    return ''
   }
 
   useEffect(() => {
@@ -184,21 +195,15 @@ export const RichTextInput = ({
           />
           <StyleButton Icon={LinkIcon} onClick={toggleCreateLinkModal} />
           <StyleButton
-            Icon={TextLeftAlignmentIcon}
-            onClick={textLeftAlignmentOnClick}
-            isActive={textAlignment === 'left'}
-            stroke
-          />
-          <StyleButton
             Icon={TextCenterAlignmentIcon}
             onClick={textCenterAlignmentOnClick}
-            isActive={textAlignment === 'center'}
+            isActive={RichUtils.getCurrentBlockType(editorState) === 'center-align'}
             stroke
           />
           <StyleButton
             Icon={TextRightAlignmentIcon}
             onClick={textRightAlignmentOnClick}
-            isActive={textAlignment === 'right'}
+            isActive={RichUtils.getCurrentBlockType(editorState) === 'right-align'}
             stroke
           />
           <StyleButton
@@ -215,6 +220,7 @@ export const RichTextInput = ({
         </div>
         <Icon className="pointer-events-none absolute ml-6 mt-4 stroke-lavender-gray" />
         <Editor
+          blockStyleFn={blockStyleFn}
           placeholder={isPlaceholderVisible ? placeholder : undefined}
           editorState={editorState}
           onChange={onChange}
@@ -222,7 +228,6 @@ export const RichTextInput = ({
           onFocus={onFocus}
           onBlur={onBlur}
           spellCheck={false}
-          textAlignment={textAlignment}
           keyBindingFn={keyBindingFn}
           ref={editorRef}
         />
