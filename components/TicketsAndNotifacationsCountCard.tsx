@@ -7,7 +7,7 @@ export const TicketsAndNotifacationsCountCard = ({
   description: string
   isLoading: boolean
 }) => (
-  <div className="flex aspect-square w-full flex-col items-center justify-center space-y-1 rounded-xl bg-quartz">
+  <div className="flex aspect-square flex-col items-center justify-center space-y-1 rounded-xl bg-quartz">
     {isLoading ? (
       <div className="h-7 w-7 animate-pulse rounded-md bg-bright-gray" />
     ) : (
@@ -19,7 +19,7 @@ export const TicketsAndNotifacationsCountCard = ({
         <div className="mx-auto h-3 w-1/2 animate-pulse rounded-sm bg-bright-gray px-2" />
       </div>
     ) : (
-      <div className="px-3 text-center font-urbanist text-xs font-medium text-white">
+      <div className="px-4 text-center font-urbanist text-xs font-medium text-white">
         {description}
       </div>
     )}

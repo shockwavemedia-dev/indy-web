@@ -116,21 +116,21 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
       <div className="flex min-h-screen bg-cultured pt-14">
         <div className="relative w-75 flex-none bg-charleston-green pt-6">
           {!session.isAdmin && (
-            <div className="mb-5 flex space-x-3 px-6">
+            <div className="mb-5 grid grid-cols-3 grid-rows-1 gap-2 px-6">
               <TicketsAndNotifacationsCountCard
                 isLoading={ticketsAndNotifacationsCountIsLoading}
                 value={ticketsAndNotifacationsCount?.openTicketCount}
-                description="Open Ticket"
+                description="Pending Jobs"
               />
               <TicketsAndNotifacationsCountCard
                 isLoading={ticketsAndNotifacationsCountIsLoading}
                 value={ticketsAndNotifacationsCount?.newTicketCount}
-                description="New Ticket"
+                description="New Jobs"
               />
               <TicketsAndNotifacationsCountCard
                 isLoading={ticketsAndNotifacationsCountIsLoading}
                 value={ticketsAndNotifacationsCount?.newNotificationCount}
-                description="New Notification"
+                description="New Notifications"
               />
             </div>
           )}
