@@ -19,7 +19,7 @@ export const TicketsAndNotifacationsCountCard = ({
         <div className="mx-auto h-3 w-1/2 animate-pulse rounded-sm bg-bright-gray px-2" />
       </div>
     ) : (
-      <div className="px-2 text-center font-urbanist text-xs font-medium text-white">
+      <div className="px-3 text-center font-urbanist text-xs font-medium text-white">
         {description}
       </div>
     )}
