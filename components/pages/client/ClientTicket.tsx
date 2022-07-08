@@ -262,7 +262,7 @@ export const ClientTicket = ({ ticketId }: { ticketId: number }) => {
           <Card title="Files">
             <div className="flex flex-wrap gap-4">
               {!!ticketFiles ? (
-                ticketFiles.map(({ id, name, thumbnailUrl }) => {
+                ticketFiles.map(({ id, name, thumbnailUrl, status }) => {
                   return (
                     <FileButton
                       key={`ticketFile-${id}`}
@@ -271,6 +271,7 @@ export const ClientTicket = ({ ticketId }: { ticketId: number }) => {
                       name={name}
                       fileModal
                       thumbnailUrl={thumbnailUrl}
+                      fileStatus={status}
                     />
                   )
                 })
