@@ -103,8 +103,8 @@ export const ManagerTicketFile = ({ ticketFileId }: { ticketFileId: number }) =>
   return (
     <>
       {!!ticketFile && ticketFileId !== -1 && (
-        <div className="mx-auto flex h-full w-full max-w-8xl space-x-6">
-          <div className="w-140 space-y-6">
+        <div className="mx-auto flex h-full w-full max-w-8xl space-x-5">
+          <div className="w-140 space-y-5">
             <div>
               <FileDisplay
                 src={ticketFile.signedUrl}
@@ -179,7 +179,7 @@ export const ManagerTicketFile = ({ ticketFileId }: { ticketFileId: number }) =>
               </Button>
             </div>
           </div>
-          <div className="w-140 space-y-5">
+          <div className="flex-1 space-y-5">
             <Formik
               validationSchema={CreateFileFeedbackFormSchema}
               initialValues={{ feedback: '', attachment: [] }}
@@ -195,7 +195,7 @@ export const ManagerTicketFile = ({ ticketFileId }: { ticketFileId: number }) =>
                     placeholder="Enter feedback"
                     name="feedback"
                     inputActions={
-                      <div className="absolute right-6 bottom-6 z-10 flex items-center space-x-6">
+                      <div className="absolute right-6 bottom-6 z-10 flex items-center space-x-5">
                         <input type="file" name="attachment" id="attachment" hidden />
                         <label htmlFor="note-attachment" className="cursor-pointer">
                           <PaperClipIcon className="stroke-waterloo" />
