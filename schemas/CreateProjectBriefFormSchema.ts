@@ -11,6 +11,7 @@ export const CreateProjectBriefFormSchema: SchemaOf<CreateProjectBriefForm> = ob
         .shape({
           serviceId: number().required(),
           extras: array().of(string().required()),
+          customFields: array().of(string().optional()),
         })
         .required()
     )

@@ -209,7 +209,7 @@ const SelectService = () => {
         })}
       </div>
       {activeService && activeService.extras.length > 0 && (
-        <div className="flex h-fit w-52 flex-col items-center rounded-xl bg-white p-5">
+        <div className="flex h-fit flex-col items-center rounded-xl bg-white p-5">
           <div className="mb-3 font-urbanist text-lg font-semibold text-onyx">
             Select {activeService.extraQuota > 0 && activeService.extraQuota} Extras
           </div>
@@ -218,7 +218,6 @@ const SelectService = () => {
               const foundedExtras = values.services.find(
                 ({ serviceId }) => serviceId === activeService.serviceId
               )?.extras
-
               return (
                 <Extras
                   disabled={
@@ -298,6 +297,7 @@ const Extras = ({
   extrasName: string
 }) => {
   const { values, setFieldValue } = useFormikContext<CreateProjectBriefForm>()
+  const [isShownCustomField, setIsShownCustomField] = useState(false)
 
   const toggleExtras = ({ currentTarget: { checked } }: ChangeEvent<HTMLInputElement>) => {
     const services = values.services.filter(({ serviceId: sid }) => sid !== serviceId)
@@ -306,8 +306,12 @@ const Extras = ({
     if (activeService) {
       if (checked) {
         activeService.extras.push(extrasName)
+        if (serviceId == 2 && extrasName === 'Custom') {
+          setIsShownCustomField(checked)
+        }
       } else {
         activeService.extras = activeService.extras.filter((extras) => extras !== extrasName)
+        setIsShownCustomField(false)
       }
     }
 
@@ -315,19 +319,36 @@ const Extras = ({
   }
 
   const extras = (
-    <div className={`relative flex items-center ${disabled ? 'cursor-default opacity-40' : ''}`}>
-      <input
-        type="checkbox"
-        name={extrasName}
-        id={extrasName}
-        className="mr-3 h-4 w-4 appearance-none rounded bg-white ring-1 ring-inset ring-bright-gray checked:bg-halloween-orange checked:ring-0"
-        onChange={disabled ? () => {} : toggleExtras}
-        disabled={disabled}
-      />
-      <CheckIcon className="pointer-events-none absolute left-0.75 stroke-white" />
-      <label htmlFor={extrasName} className="font-urbanist text-sm font-medium text-onyx">
-        {extrasName}
-      </label>
+    <div>
+      <div
+        className={`relative flex items-center ${isShownCustomField ? 'w-86' : 'w-52'}  ${
+          disabled ? 'cursor-default opacity-40' : ''
+        }`}
+      >
+        <input
+          type="checkbox"
+          name={extrasName}
+          id={extrasName}
+          className="mr-3 h-4 w-4 appearance-none rounded bg-white ring-1 ring-inset ring-bright-gray checked:bg-halloween-orange checked:ring-0"
+          onChange={disabled ? () => {} : toggleExtras}
+          disabled={disabled}
+        />
+        <CheckIcon className="pointer-events-none absolute left-0.75 stroke-white" />
+        <label htmlFor={extrasName} className="font-urbanist text-sm font-medium text-onyx">
+          {extrasName}
+        </label>
+      </div>
+      <div>
+        {isShownCustomField && (
+          <TextInput
+            type="text"
+            Icon={EditIcon}
+            placeholder="Custom"
+            name="custom"
+            className="my-5"
+          />
+        )}
+      </div>
     </div>
   )
 
