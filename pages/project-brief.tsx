@@ -7,7 +7,6 @@ import { useRouter } from 'next/router'
 import { ChangeEvent, ReactElement, useEffect, useState } from 'react'
 import { useQuery, useQueryClient } from 'react-query'
 import { Button } from '../components/Button'
-import { Checkbox } from '../components/Checkbox'
 import { DateInput } from '../components/DateInput'
 import { FileDropZone } from '../components/FileDropZone'
 import { CheckIcon } from '../components/icons/CheckIcon'
@@ -33,6 +32,7 @@ const ProjectBriefPage: NextPageWithLayout = () => {
   const { showToast } = useToastStore()
   const { replace } = useRouter()
   const queryClient = useQueryClient()
+  const [isShownMarketingDate, setIsShownMarketingDate] = useState(false)
 
   const submitForm = async (values: CreateProjectBriefForm) => {
     try {
@@ -54,6 +54,14 @@ const ProjectBriefPage: NextPageWithLayout = () => {
         type: 'error',
         message: 'Something went wrong! 😵',
       })
+    }
+  }
+
+  const toggleMarketingDate = ({ currentTarget: { checked } }: ChangeEvent<HTMLInputElement>) => {
+    if (checked) {
+      setIsShownMarketingDate(true)
+    } else {
+      setIsShownMarketingDate(false)
     }
   }
 
@@ -100,11 +108,28 @@ const ProjectBriefPage: NextPageWithLayout = () => {
                       name="description"
                       className="mb-5"
                     />
-                    <Checkbox label="Add to Marketing Plan" name="marketingPlan" className="mb-5" />
-                    <div className="mb-5 flex space-x-5">
-                      <DateInput name="marketingPlanStartDate" placeholder="Enter Start Date" />
-                      <DateInput name="marketingPlanEndDate" placeholder="Enter End Date" />
+                    <div className="relative mb-5 flex items-center">
+                      <input
+                        type="checkbox"
+                        name="marketingPlan"
+                        id="marketingPlan"
+                        className="mr-3 h-4 w-4 appearance-none rounded bg-white ring-1 ring-inset ring-bright-gray checked:bg-halloween-orange checked:ring-0"
+                        onChange={toggleMarketingDate}
+                      />
+                      <CheckIcon className="pointer-events-none absolute left-0.75 stroke-white" />
+                      <label
+                        htmlFor="marketingPlan"
+                        className="font-urbanist text-sm font-medium text-halloween-orange"
+                      >
+                        Add to Marketing Plan
+                      </label>
                     </div>
+                    {isShownMarketingDate && (
+                      <div className="mb-5 flex space-x-5">
+                        <DateInput name="marketingPlanStartDate" placeholder="Enter Start Date" />
+                        <DateInput name="marketingPlanEndDate" placeholder="Enter End Date" />
+                      </div>
+                    )}
                     <FileDropZone
                       label="Upload Assets"
                       name="attachments"
