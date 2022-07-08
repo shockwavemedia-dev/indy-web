@@ -57,13 +57,8 @@ const ProjectBriefPage: NextPageWithLayout = () => {
     }
   }
 
-  const toggleMarketingDate = ({ currentTarget: { checked } }: ChangeEvent<HTMLInputElement>) => {
-    if (checked) {
-      setIsShownMarketingDate(true)
-    } else {
-      setIsShownMarketingDate(false)
-    }
-  }
+  const toggleMarketingDate = ({ currentTarget: { checked } }: ChangeEvent<HTMLInputElement>) =>
+    setIsShownMarketingDate(checked)
 
   useEffect(() => {
     setHeader('Project Brief')
