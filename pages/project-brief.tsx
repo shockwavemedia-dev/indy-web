@@ -40,7 +40,6 @@ const ProjectBriefPage: NextPageWithLayout = () => {
         status,
         data: { ticketCode },
       } = await axios.post<Ticket>('/v1/tickets/event', objectWithFileToFormData(values))
-
       if (status === 200) {
         queryClient.invalidateQueries('tickets')
         replace('/dashboard')
@@ -318,6 +317,10 @@ const Extras = ({
     setFieldValue('services', [...services, activeService])
   }
 
+  const getCustomFieldValue = ({ currentTarget: { value } }: ChangeEvent<HTMLInputElement>) => {
+    values.services[0].customFields = [value]
+  }
+
   const extras = (
     <div>
       <div
@@ -339,15 +342,23 @@ const Extras = ({
         </label>
       </div>
       <div>
-        {isShownCustomField && (
-          <TextInput
-            type="text"
-            Icon={EditIcon}
-            placeholder="Custom"
-            name="custom"
-            className="my-5"
-          />
-        )}
+        <div>
+          {isShownCustomField && (
+            <div>
+              <div className="relative mt-5 flex items-center">
+                <EditIcon className="pointer-events-none absolute left-6 stroke-lavender-gray" />
+                <input
+                  type="text"
+                  className="h-12.5 w-full rounded-xl px-13 font-urbanist text-sm font-medium text-onyx placeholder-metallic-silver ring-1 ring-bright-gray read-only:cursor-auto focus:ring-2 focus:ring-halloween-orange read-only:focus:ring-1 read-only:focus:ring-bright-gray"
+                  name="custom"
+                  id="custom"
+                  placeholder="Enter Custom"
+                  onChange={getCustomFieldValue}
+                />
+              </div>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   )
