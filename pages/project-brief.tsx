@@ -318,7 +318,11 @@ const Extras = ({
   }
 
   const getCustomFieldValue = ({ currentTarget: { value } }: ChangeEvent<HTMLInputElement>) => {
-    values.services[0].customFields = [value]
+    values.services?.map((service, index) => {
+      if (service.serviceId == 2) {
+        values.services[index].customFields = [value]
+      }
+    })
   }
 
   const extras = (
