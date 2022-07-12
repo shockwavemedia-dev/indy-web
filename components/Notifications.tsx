@@ -6,6 +6,7 @@ import { Notification } from '../types/Notification.type'
 import { Card } from './Card'
 import { EyeIcon } from './icons/EyeIcon'
 import { TrashIcon } from './icons/TrashIcon'
+import { XCircleIcon } from './icons/XCircleIcon'
 
 export const Notifications = ({ className = '' }: { className?: string }) => {
   const { showToast } = useToastStore()
@@ -58,12 +59,12 @@ export const Notifications = ({ className = '' }: { className?: string }) => {
   return (
     <Card title="Notifications" className={`h-fit ${className}`}>
       <div className="absolute top-6 right-6 space-x-2">
-        <Tooltip title="Clear All" placement="top">
+        <Tooltip title="Mark as read all" placement="top">
           <button className="group" onClick={markAsReadAll}>
             <EyeIcon className="stroke-waterloo group-hover:stroke-halloween-orange" />
           </button>
         </Tooltip>
-        <Tooltip title="Delete All" placement="top">
+        <Tooltip title="Clear all" placement="top">
           <button className="group" onClick={deleteAll}>
             <TrashIcon className="stroke-waterloo group-hover:stroke-halloween-orange" />
           </button>
@@ -98,7 +99,7 @@ export const Notifications = ({ className = '' }: { className?: string }) => {
                 <div key={`notification-${id}`} className="relative flex">
                   <div className="absolute top-1 h-2.25 w-2.25 rounded-lg bg-halloween-orange ring-4 ring-halloween-orange ring-opacity-20" />
                   <a
-                    className={`pl-8 font-urbanist text-sm font-medium underline-offset-1 hover:text-halloween-orange hover:underline ${
+                    className={`pl-8 pr-2 font-urbanist text-sm font-medium underline-offset-1 hover:text-halloween-orange hover:underline ${
                       i === notifications.length - 1 ? 'bg-white' : ''
                     } ${isRead ? 'text-lavender-gray' : 'text-onyx'}`}
                     href={url}
@@ -106,9 +107,11 @@ export const Notifications = ({ className = '' }: { className?: string }) => {
                   >
                     {title}
                   </a>
-                  <button className="group mr-2" onClick={deleteById}>
-                    <TrashIcon className="stroke-waterloo group-hover:stroke-halloween-orange" />
-                  </button>
+                  <Tooltip title="Delete" placement="top">
+                    <button className="group mr-2" onClick={deleteById}>
+                      <XCircleIcon className="stroke-waterloo group-hover:stroke-halloween-orange" />
+                    </button>
+                  </Tooltip>
                 </div>
               )
             })
