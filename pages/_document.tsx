@@ -15,7 +15,7 @@ const Document = () => (
       />
       <link rel="icon" href="/favicon.ico" />
     </Head>
-    <body>
+    <body className="overflow-y-hidden bg-cultured">
       <Main />
       <NextScript />
     </body>

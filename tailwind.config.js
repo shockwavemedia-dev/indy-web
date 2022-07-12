@@ -36,8 +36,10 @@ module.exports = {
         14.5: '3.625rem',
         15.5: '3.875rem',
         15: '3.75rem',
+        16.5: '4.125rem',
         17.5: '4.375rem',
         18.5: '4.625rem',
+        20.5: '5.125rem',
         21.5: '5.375rem',
         22: '5.5rem',
         25: '6.25rem',
@@ -76,6 +78,13 @@ module.exports = {
       boxShadow: {
         DEFAULT: '0px 4px 10px #2a2a3408',
       },
+    },
+    screens: {
+      '2xl': { max: '1535px' },
+      xl: { max: '1279px' },
+      lg: { max: '1023px' },
+      md: { max: '767px' },
+      sm: { max: '639px' },
     },
     fontFamily: {
       urbanist: ['Urbanist'],

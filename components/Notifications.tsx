@@ -3,7 +3,7 @@ import { useQuery } from 'react-query'
 import { Notification } from '../types/Notification.type'
 import { Card } from './Card'
 
-export const Notifications = () => {
+export const Notifications = ({ className = '' }: { className?: string }) => {
   const { data: notifications } = useQuery('notifications', async () => {
     const {
       data: { data },
@@ -13,7 +13,7 @@ export const Notifications = () => {
   })
 
   return (
-    <Card title="Notifications" className="h-fit">
+    <Card title="Notifications" className={`h-fit ${className}`}>
       <div className="relative">
         <div className="absolute left-1 top-1.5 h-[calc(100%_-_.75rem)] w-px bg-bright-gray" />
         <div className="-ml-1 max-h-102 space-y-6 overflow-y-scroll pl-1 pr-5 pt-1">

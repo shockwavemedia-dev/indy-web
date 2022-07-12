@@ -69,7 +69,7 @@ const ProjectBriefPage: NextPageWithLayout = () => {
       <Head>
         <title>Indy - Project Brief</title>
       </Head>
-      <div className="mx-auto h-full w-full max-w-8xl">
+      <div className="mx-auto w-full max-w-8xl">
         <Formik
           validationSchema={CreateProjectBriefFormSchema}
           initialValues={{

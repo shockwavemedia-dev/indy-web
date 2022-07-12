@@ -2,8 +2,8 @@ import { Card } from './Card'
 import { StatusCountCard } from './StatusCountCard'
 
 export const RetainerInclusions = () => (
-  <Card title="Retainer Inclusions">
-    <div className="grid grid-cols-3 grid-rows-3 gap-3">
+  <Card title="Retainer Inclusions" className="h-fit flex-none">
+    <div className="grid aspect-square grid-cols-3 grid-rows-3 gap-3">
       <StatusCountCard value={8} className="bg-deep-space-sparkle" description="Graphics Design" />
       <StatusCountCard value={5} className="bg-charleston-green" description="Animations" />
       <StatusCountCard value={5} className="bg-halloween-orange" description="Web Updates" />

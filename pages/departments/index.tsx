@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import { ReactElement, useState } from 'react'
+import { ReactElement, useEffect, useState } from 'react'
 import { Card } from '../../components/Card'
 import { DataTable } from '../../components/DataTable'
 import { FancyButton } from '../../components/FancyButton'
@@ -7,29 +7,36 @@ import { UserIcon } from '../../components/icons/UserIcon'
 import { EditDepartmentModal } from '../../components/modals/EditDepartmentModal'
 import { NewDepartmentModal } from '../../components/modals/NewDepartmentModal'
 import { DepartmentTableColumns } from '../../constants/tables/DepartmentTableColumns'
-import PanelLayout from '../../layouts/PanelLayout'
+import PanelLayout, { usePanelLayoutStore } from '../../layouts/PanelLayout'
 import { NextPageWithLayout } from '../../types/pages/NextPageWithLayout.type'
 
 const DepartmentsPage: NextPageWithLayout = () => {
+  const { setHeader, setButtons } = usePanelLayoutStore()
   const [isNewDepartmentModalVisible, setNewDepartmentModalVisible] = useState(false)
 
   const toggleNewDepartmentModal = () => setNewDepartmentModalVisible(!isNewDepartmentModalVisible)
+
+  useEffect(() => {
+    setHeader('Staffs')
+
+    setButtons(
+      <FancyButton
+        Icon={<UserIcon className="stroke-halloween-orange" />}
+        title="Create Department"
+        subtitle="Laborerivit rem cones mil"
+        onClick={toggleNewDepartmentModal}
+        className="w-fit"
+      />
+    )
+  }, [])
 
   return (
     <>
       <Head>
         <title>Indy - Departments</title>
       </Head>
-      <div className="mx-auto h-full w-full max-w-8xl space-y-6">
-        <FancyButton
-          Icon={<UserIcon className="stroke-halloween-orange" />}
-          title="Create Department"
-          subtitle="Laborerivit rem cones mil"
-          onClick={toggleNewDepartmentModal}
-          className="w-fit"
-        />
-        <hr className="mb-6 border-t-bright-gray" />
-        <Card title="Departments" className="flex flex-col">
+      <div className="mx-auto w-full max-w-8xl space-y-6">
+        <Card title="Departments" className="flex max-h-155 flex-col">
           <DataTable
             dataEndpoint="/v1/departments"
             columns={DepartmentTableColumns}

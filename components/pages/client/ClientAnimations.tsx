@@ -11,8 +11,6 @@ import { AnimationCategory } from '../../../types/AnimationCategory.type'
 import { Page } from '../../../types/Page.type'
 import { SelectOption } from '../../../types/SelectOption.type'
 import { Card } from '../../Card'
-import { FancyLink } from '../../FancyLink'
-import { CalendarAddIcon } from '../../icons/CalendarAddIcon'
 import { CaretIcon } from '../../icons/CaretIcon'
 import { ClipboardIcon } from '../../icons/ClipboardIcon'
 import {
@@ -85,19 +83,9 @@ export const ClientAnimations = () => {
       <Head>
         <title>Indy - Animation Library</title>
       </Head>
-      <div className="mx-auto h-full w-full max-w-8xl space-y-6">
-        <div className="mb-6 flex space-x-6">
-          <FancyLink
-            href="/project-brief"
-            Icon={<CalendarAddIcon className="stroke-halloween-orange" />}
-            title="New Project Brief"
-            subtitle="Laborerivit rem cones mil"
-            className="w-fit"
-          />
-        </div>
-        <hr className="border-t-bright-gray" />
+      <div className="mx-auto w-full max-w-8xl space-y-6">
         <div className="flex space-x-6">
-          <Card className="h-fit w-257.5">
+          <Card className="h-fit flex-1">
             <div className="mb-6 w-64">
               <SelectNoFormik
                 Icon={ClipboardIcon}
@@ -226,7 +214,7 @@ export const ClientAnimations = () => {
               </div>
             )}
           </Card>
-          <div className="flex flex-1 flex-col space-y-6">
+          <div className="flex w-86 flex-none flex-col gap-6">
             <RetainerInclusions />
             <Notifications />
           </div>

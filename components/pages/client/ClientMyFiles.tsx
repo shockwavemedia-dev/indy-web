@@ -6,9 +6,7 @@ import { useQuery } from 'react-query'
 import { Card } from '../../../components/Card'
 import { usePanelLayoutStore } from '../../../layouts/PanelLayout'
 import { Files } from '../../../types/Files.type'
-import { FancyLink } from '../../FancyLink'
 import { FileButton } from '../../FileButton'
-import { CalendarAddIcon } from '../../icons/CalendarAddIcon'
 import { Notifications } from '../../Notifications'
 import { RetainerInclusions } from '../../RetainerInclusions'
 
@@ -42,17 +40,9 @@ export const ClientMyFiles = () => {
       <Head>
         <title>Indy - My Files</title>
       </Head>
-      <div className="mx-auto h-4/5 w-full max-w-8xl">
-        <FancyLink
-          href="/project-brief"
-          Icon={<CalendarAddIcon className="stroke-halloween-orange" />}
-          title="New Project Brief"
-          subtitle="Laborerivit rem cones mil"
-          className="w-fit"
-        />
-        <hr className="mb-6 border-t-bright-gray" />
-        <div className="flex space-x-6">
-          <Card className="flex h-fit w-260 flex-wrap gap-4">
+      <div className="mx-auto w-full max-w-8xl">
+        <div className="flex gap-6 transition-all lg:flex-col">
+          <Card className="flex h-fit flex-1 flex-wrap gap-4">
             {year === '' ? (
               Object.keys(files).map((year) => {
                 const openYearFolder = () => setYear(year)
@@ -144,9 +134,9 @@ export const ClientMyFiles = () => {
               </>
             )}
           </Card>
-          <div className="flex flex-1 flex-col space-y-6">
+          <div className="flex w-86 flex-col gap-6 transition-all lg:w-full lg:flex-row">
             <RetainerInclusions />
-            <Notifications />
+            <Notifications className="flex-1" />
           </div>
         </div>
       </div>

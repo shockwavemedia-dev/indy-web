@@ -1,6 +1,7 @@
 import Head from 'next/head'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { AnimationTableColumns } from '../../../constants/tables/AnimationTableColumns'
+import { usePanelLayoutStore } from '../../../layouts/PanelLayout'
 import { useAnimationStore } from '../../../store/AnimationStore'
 import { Card } from '../../Card'
 import { DataTable } from '../../DataTable'
@@ -15,6 +16,7 @@ import { NewAnimationModal } from '../../modals/NewAnimationModal'
 export const AdminAnimations = () => {
   const [isNewAnimationCategoryModalVisible, setNewAnimationCategoryModalVisible] = useState(false)
   const [isNewAnimationModalVisible, setNewAnimationModalVisible] = useState(false)
+  const { setHeader, setButtons } = usePanelLayoutStore()
 
   const toggleNewAnimationCategoryModal = () =>
     setNewAnimationCategoryModalVisible(!isNewAnimationCategoryModalVisible)
@@ -29,30 +31,36 @@ export const AdminAnimations = () => {
     toggleDeleteAnimationModal,
   } = useAnimationStore()
 
+  useEffect(() => {
+    setHeader('Animations')
+
+    setButtons(
+      <>
+        <FancyButton
+          Icon={<UserIcon className="stroke-halloween-orange" />}
+          title="Create Animation Category"
+          subtitle="Laborerivit rem cones mil"
+          onClick={toggleNewAnimationCategoryModal}
+          className="w-fit"
+        />
+        <FancyButton
+          Icon={<VideoIcon className="stroke-halloween-orange" />}
+          title="Create Animation"
+          subtitle="Laborerivit rem cones mil"
+          onClick={toggleNewAnimationModal}
+          className="w-fit"
+        />
+      </>
+    )
+  }, [])
+
   return (
     <>
       <Head>
         <title>Indy - Animations</title>
       </Head>
-      <div className="mx-auto h-full w-full max-w-8xl space-y-6">
-        <div className="flex space-x-6">
-          <FancyButton
-            Icon={<UserIcon className="stroke-halloween-orange" />}
-            title="Create Animation Category"
-            subtitle="Laborerivit rem cones mil"
-            onClick={toggleNewAnimationCategoryModal}
-            className="w-fit"
-          />
-          <FancyButton
-            Icon={<VideoIcon className="stroke-halloween-orange" />}
-            title="Create Animation"
-            subtitle="Laborerivit rem cones mil"
-            onClick={toggleNewAnimationModal}
-            className="w-fit"
-          />
-        </div>
-        <hr className="mb-6 border-t-bright-gray" />
-        <Card title="Animations">
+      <div className="mx-auto w-full max-w-8xl space-y-6">
+        <Card title="Animations" className="flex max-h-155 flex-col">
           <DataTable
             dataEndpoint="/v1/libraries"
             columns={AnimationTableColumns}

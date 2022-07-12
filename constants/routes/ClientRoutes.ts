@@ -83,7 +83,7 @@ export const ClientRoutes: Array<Route> = [
       },
       {
         title: 'ClevaQ',
-        pathname: '/clevaQ',
+        pathname: '/clevaq',
       },
       {
         title: 'Social Media Ads',

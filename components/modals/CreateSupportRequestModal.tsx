@@ -1,6 +1,8 @@
 import axios from 'axios'
 import { Form, Formik } from 'formik'
 import { useQuery } from 'react-query'
+import createStore from 'zustand'
+import { combine } from 'zustand/middleware'
 import { CreateSupportRequestFormSchema } from '../../schemas/CreateSupportRequestFormSchema'
 import { useToastStore } from '../../store/ToastStore'
 import { Department } from '../../types/Department.type'
@@ -13,13 +15,19 @@ import { Modal } from '../Modal'
 import { Select } from '../Select'
 import { TextAreaInput } from '../TextAreaInput'
 
-export const CreateSupportRequestModal = ({
-  isVisible,
-  onClose,
-}: {
-  isVisible: boolean
-  onClose: () => void
-}) => {
+export const useCreateSupportRequestModalStore = createStore(
+  combine(
+    {
+      isModalVisible: false,
+    },
+    (set, get) => ({
+      toggleModal: () => set(() => ({ isModalVisible: !get().isModalVisible })),
+    })
+  )
+)
+
+export const CreateSupportRequestModal = () => {
+  const { isModalVisible, toggleModal } = useCreateSupportRequestModalStore()
   const { showToast } = useToastStore()
 
   const { data: departments } = useQuery(
@@ -35,7 +43,7 @@ export const CreateSupportRequestModal = ({
       return data
     },
     {
-      enabled: isVisible,
+      enabled: isModalVisible,
     }
   )
 
@@ -44,7 +52,7 @@ export const CreateSupportRequestModal = ({
       const { status } = await axios.post('/v1/support-request', values)
 
       if (status === 201) {
-        onClose()
+        toggleModal()
         showToast({
           type: 'success',
           message: `Support Request successfully created!`,
@@ -60,8 +68,8 @@ export const CreateSupportRequestModal = ({
 
   return (
     <>
-      {isVisible && (
-        <Modal title="Create Support Request" onClose={onClose}>
+      {isModalVisible && (
+        <Modal title="Create Support Request" onClose={toggleModal}>
           <Formik
             validationSchema={CreateSupportRequestFormSchema}
             initialValues={{
@@ -91,7 +99,7 @@ export const CreateSupportRequestModal = ({
                   className="mb-8"
                 />
                 <div className="flex space-x-5">
-                  <Button ariaLabel="Cancel" onClick={onClose} type="button" light>
+                  <Button ariaLabel="Cancel" onClick={toggleModal} type="button" light>
                     Cancel
                   </Button>
                   <Button ariaLabel="Submit" disabled={isSubmitting} type="submit">

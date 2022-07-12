@@ -3,14 +3,25 @@ import { signOut as nextAuthSignOut, useSession } from 'next-auth/react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { Fragment, ReactNode, useMemo } from 'react'
+import { Fragment, ReactNode, useEffect, useMemo } from 'react'
 import { useQuery } from 'react-query'
 import createStore from 'zustand'
 import { combine } from 'zustand/middleware'
-import { Crumbs } from '../components/Crumbs'
+import { FancyButton } from '../components/FancyButton'
+import { FancyLink } from '../components/FancyLink'
+import { CalendarAddIcon } from '../components/icons/CalendarAddIcon'
 import { IndyIcon } from '../components/icons/IndyIcon'
+import { LifeBuoyIcon } from '../components/icons/LifeBuoyIcon'
 import { LogoutIcon } from '../components/icons/LogoutIcon'
 import { MagnifyingGlassIcon } from '../components/icons/MagnifyingGlassIcon'
+import {
+  CreateSupportRequestModal,
+  useCreateSupportRequestModalStore,
+} from '../components/modals/CreateSupportRequestModal'
+import {
+  CreateSupportTicketModal,
+  useCreateSupportTicketModalStore,
+} from '../components/modals/CreateSupportTicketModal'
 import { RouteButton } from '../components/RouteButton'
 import { TicketsAndNotifacationsCountCard } from '../components/TicketsAndNotifacationsCountCard'
 import { AdminRoutes } from '../constants/routes/AdminRoutes'
@@ -26,10 +37,12 @@ export const usePanelLayoutStore = createStore(
     {
       header: '',
       subHeader: '',
+      buttons: (<></>) as ReactNode,
     },
     (set) => ({
       setHeader: (header: string) => set(() => ({ header })),
       setSubHeader: (subHeader: string) => set(() => ({ subHeader })),
+      setButtons: (buttons: ReactNode) => set(() => ({ buttons })),
     })
   )
 )
@@ -42,7 +55,9 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
     },
   })
   const { replace, asPath } = useRouter()
-  const { header, subHeader } = usePanelLayoutStore()
+  const { header, subHeader, buttons, setButtons } = usePanelLayoutStore()
+  const { toggleModal: toggleSupportRequestModal } = useCreateSupportRequestModalStore()
+  const { toggleModal: toggleSupportTicketModal } = useCreateSupportTicketModalStore()
 
   const { data: ticketsAndNotifacationsCount, isLoading: ticketsAndNotifacationsCountIsLoading } =
     useQuery(
@@ -62,7 +77,7 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
     )
 
   const { panelName, routes } = useMemo(() => {
-    if (!!session) {
+    if (session) {
       const { isAdmin, isClient, isManager, isStaff } = session
 
       if (isAdmin) {
@@ -77,9 +92,46 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
     }
 
     return { panelName: null, routes: [] }
-  }, [!!session])
+  }, [session])
 
-  if (status === 'loading' || !!!panelName) {
+  useEffect(() => {
+    if (session) {
+      const { isClient, isManager } = session
+
+      if (isClient) {
+        setButtons(
+          <>
+            <FancyLink
+              href="/project-brief"
+              Icon={<CalendarAddIcon className="stroke-halloween-orange" />}
+              title="New Project Brief"
+              subtitle="Laborerivit rem cones mil"
+              className="w-fit"
+            />
+            <FancyButton
+              Icon={<LifeBuoyIcon className="fill-halloween-orange" />}
+              title="Support Request"
+              subtitle="Laborerivit rem cones mil"
+              onClick={toggleSupportRequestModal}
+              className="w-fit"
+            />
+          </>
+        )
+      } else if (isManager) {
+        setButtons(
+          <FancyButton
+            Icon={<LifeBuoyIcon className="fill-halloween-orange" />}
+            title="New Ticket"
+            subtitle="Laborerivit rem cones mil"
+            onClick={toggleSupportTicketModal}
+            className="w-fit"
+          />
+        )
+      }
+    }
+  }, [session])
+
+  if (status === 'loading' || !panelName) {
     return null
   }
 
@@ -87,7 +139,7 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
 
   return (
     <>
-      <div className="fixed z-10 flex w-full items-center bg-white py-1 px-6 shadow-md">
+      <div className="fixed z-20 flex w-full items-center bg-white py-1 px-6 shadow-md">
         <div className="mr-102 whitespace-nowrap font-urbanist font-semibold text-onyx">
           Broncos Club
         </div>
@@ -113,10 +165,10 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
           <LogoutIcon className="rotate-180 stroke-waterloo" />
         </button>
       </div>
-      <div className="flex min-h-screen bg-cultured pt-14">
-        <div className="relative w-75 flex-none bg-charleston-green pt-6">
+      <div className="fixed z-10 flex h-screen w-75 flex-none flex-col justify-between overflow-y-scroll bg-charleston-green pt-20.5 transition-all 2xl:w-20 2xl:pt-16.5">
+        <div>
           {!session.isAdmin && (
-            <div className="mb-5 grid grid-cols-3 grid-rows-1 gap-2 px-6">
+            <div className="mb-5 grid grid-cols-3 grid-rows-1 gap-2 px-6 transition-all 2xl:grid-cols-1 2xl:grid-rows-3 2xl:px-2 2xl:pt-6">
               <TicketsAndNotifacationsCountCard
                 isLoading={ticketsAndNotifacationsCountIsLoading}
                 value={ticketsAndNotifacationsCount?.openTicketCount}
@@ -131,6 +183,13 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
                 isLoading={ticketsAndNotifacationsCountIsLoading}
                 value={ticketsAndNotifacationsCount?.newNotificationCount}
                 description="New Notifications"
+                className="2xl:hidden"
+              />
+              <TicketsAndNotifacationsCountCard
+                isLoading={ticketsAndNotifacationsCountIsLoading}
+                value={ticketsAndNotifacationsCount?.newNotificationCount}
+                description="New Notifs"
+                className="hidden 2xl:flex"
               />
             </div>
           )}
@@ -151,25 +210,32 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
               ))}
             </Fragment>
           ))}
-          <div className="absolute bottom-0 flex w-full items-center justify-center space-x-2 border-t border-t-white border-opacity-20 py-5">
-            <Image src={DailyPressLogoWhite} alt="DailyPress" height={25} width={25} />
-            <div className="font-urbanist text-xs text-metallic-silver">
-              Copyright Daily Press {new Date().getFullYear()}
-            </div>
-          </div>
         </div>
-        <div className="flex w-full flex-col p-6">
-          <div className="mb-6 flex items-center">
-            <Crumbs panelName={panelName} />
+        <div className="flex w-full items-center justify-center border-t border-t-white border-opacity-20 py-5 2xl:flex-col 2xl:space-y-2">
+          <Image src={DailyPressLogoWhite} alt="DailyPress" height={25} width={25} />
+          <div className="ml-3 font-urbanist text-xs text-metallic-silver 2xl:ml-0 2xl:text-center">
+            Copyright Daily Press {new Date().getFullYear()}
           </div>
-          <div className="font-urbanist text-3xl font-bold text-onyx">{header}</div>
-          <div className="mb-10 font-urbanist font-semibold text-halloween-orange">{subHeader}</div>
-          <div className="absolute right-0 top-25 px-6 font-circular-std text-5xl text-charleston-green">
-            Indy<span className="text-halloween-orange">.</span>
-          </div>
-          {children}
         </div>
       </div>
+      <div className="flex h-screen bg-cultured pt-14.5 pl-75 transition-all 2xl:pl-20">
+        <div className="w-full overflow-y-scroll p-6">
+          <div className="mb-10 flex items-end justify-between">
+            <div>
+              <div className="font-urbanist text-3xl font-bold text-onyx">{header}</div>
+              <div className="font-urbanist font-semibold text-halloween-orange">{subHeader}</div>
+            </div>
+            <div className="font-circular-std text-5xl text-charleston-green">
+              Indy<span className="text-halloween-orange">.</span>
+            </div>
+          </div>
+          <div className="mb-6 flex space-x-6 empty:hidden">{buttons}</div>
+          <hr className="mb-6 border-t-bright-gray" />
+          <div>{children}</div>
+        </div>
+      </div>
+      {session.isClient && <CreateSupportRequestModal />}
+      {session.isManager && <CreateSupportTicketModal />}
     </>
   )
 }

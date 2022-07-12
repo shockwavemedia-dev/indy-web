@@ -2,6 +2,8 @@ import axios from 'axios'
 import { Form, Formik } from 'formik'
 import { useSession } from 'next-auth/react'
 import { useQuery, useQueryClient } from 'react-query'
+import createStore from 'zustand'
+import { combine } from 'zustand/middleware'
 import { TicketTypeOptions } from '../../constants/options/TicketTypeOptions'
 import { CreateSupportTicketFormSchema } from '../../schemas/CreateSupportTicketFormSchema'
 import { useToastStore } from '../../store/ToastStore'
@@ -19,16 +21,22 @@ import { RichTextInput } from '../RichTextInput'
 import { Select } from '../Select'
 import { TextInput } from '../TextInput'
 
-export const CreateSupportTicketModal = ({
-  isVisible,
-  onClose,
-}: {
-  isVisible: boolean
-  onClose: () => void
-}) => {
+export const useCreateSupportTicketModalStore = createStore(
+  combine(
+    {
+      isModalVisible: false,
+    },
+    (set, get) => ({
+      toggleModal: () => set(() => ({ isModalVisible: !get().isModalVisible })),
+    })
+  )
+)
+
+export const CreateSupportTicketModal = () => {
   const { data: session } = useSession()
   const queryClient = useQueryClient()
   const { showToast } = useToastStore()
+  const { isModalVisible, toggleModal } = useCreateSupportTicketModalStore()
 
   const { data: departments } = useQuery(
     'departments',
@@ -43,7 +51,7 @@ export const CreateSupportTicketModal = ({
       return data
     },
     {
-      enabled: isVisible,
+      enabled: isModalVisible,
     }
   )
 
@@ -60,7 +68,7 @@ export const CreateSupportTicketModal = ({
       return data
     },
     {
-      enabled: isVisible,
+      enabled: isModalVisible,
     }
   )
 
@@ -73,7 +81,7 @@ export const CreateSupportTicketModal = ({
 
       if (status === 200) {
         queryClient.invalidateQueries('tickets')
-        onClose()
+        toggleModal()
         showToast({
           type: 'success',
           message: `New Ticket ${ticketCode} successfully created!`,
@@ -89,8 +97,8 @@ export const CreateSupportTicketModal = ({
 
   return (
     <>
-      {isVisible && (
-        <Modal title="Create New Ticket" onClose={onClose}>
+      {isModalVisible && (
+        <Modal title="Create New Ticket" onClose={toggleModal}>
           <Formik
             validationSchema={CreateSupportTicketFormSchema}
             initialValues={{
@@ -155,7 +163,7 @@ export const CreateSupportTicketModal = ({
                   className="mb-8"
                 />
                 <div className="flex space-x-5">
-                  <Button ariaLabel="Cancel" onClick={onClose} type="button" light>
+                  <Button ariaLabel="Cancel" onClick={toggleModal} type="button" light>
                     Cancel
                   </Button>
                   <Button ariaLabel="Submit" disabled={isSubmitting} type="submit">

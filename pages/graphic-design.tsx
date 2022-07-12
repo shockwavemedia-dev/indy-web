@@ -7,26 +7,19 @@ import { FancyButton } from '../components/FancyButton'
 import { FancyLink } from '../components/FancyLink'
 import { CalendarAddIcon } from '../components/icons/CalendarAddIcon'
 import { GalleryIcon } from '../components/icons/GalleryIcon'
+import { LifeBuoyIcon } from '../components/icons/LifeBuoyIcon'
 import { CreateGraphicRequestModal } from '../components/modals/CreateGraphicRequestModal'
-import { DeleteTicketModal } from '../components/modals/DeleteTicketModal'
-import { EditTicketModal } from '../components/modals/EditTicketModal'
+import { useCreateSupportRequestModalStore } from '../components/modals/CreateSupportRequestModal'
 import { Notifications } from '../components/Notifications'
 import { RetainerInclusions } from '../components/RetainerInclusions'
 import { ClientTicketsTableColumns } from '../constants/tables/ClientTicketsTableColumns'
 import PanelLayout, { usePanelLayoutStore } from '../layouts/PanelLayout'
-import { useTicketStore } from '../store/TicketStore'
 import { NextPageWithLayout } from '../types/pages/NextPageWithLayout.type'
 
 const GraphicPage: NextPageWithLayout = () => {
   const { data: session } = useSession()
-  const {
-    activeTicket,
-    isEditTicketModalVisible,
-    isDeleteTicketModalVisible,
-    toggleEditTicketModal,
-    toggleDeleteTicketModal,
-  } = useTicketStore()
-  const { setHeader } = usePanelLayoutStore()
+  const { setHeader, setButtons } = usePanelLayoutStore()
+  const { toggleModal: toggleSupportRequestModal } = useCreateSupportRequestModalStore()
 
   const [isCreateGraphicModalVisible, setCreateeGraphicModalVisible] = useState(false)
 
@@ -34,15 +27,36 @@ const GraphicPage: NextPageWithLayout = () => {
 
   useEffect(() => {
     setHeader('Graphic Design')
-  }, [])
 
-  return (
-    <>
-      <Head>
-        <title>Indy - Graphic Design</title>
-      </Head>
-      <div className="mx-auto h-full w-full max-w-8xl space-y-6">
-        <div className="mb-6 flex space-x-6">
+    setButtons(
+      <>
+        <FancyLink
+          href="/project-brief"
+          Icon={<CalendarAddIcon className="stroke-halloween-orange" />}
+          title="New Project Brief"
+          subtitle="Laborerivit rem cones mil"
+          className="w-fit"
+        />
+        <FancyButton
+          Icon={<LifeBuoyIcon className="fill-halloween-orange" />}
+          title="Support Request"
+          subtitle="Laborerivit rem cones mil"
+          onClick={toggleSupportRequestModal}
+          className="w-fit"
+        />
+        <FancyButton
+          Icon={<GalleryIcon className="stroke-halloween-orange" />}
+          title="Request Graphic"
+          subtitle="Laborerivit rem cones mil"
+          onClick={toggleCreateGraphicModal}
+          className="w-fit"
+        />
+      </>
+    )
+
+    return () => {
+      setButtons(
+        <>
           <FancyLink
             href="/project-brief"
             Icon={<CalendarAddIcon className="stroke-halloween-orange" />}
@@ -51,44 +65,41 @@ const GraphicPage: NextPageWithLayout = () => {
             className="w-fit"
           />
           <FancyButton
-            Icon={<GalleryIcon className="stroke-halloween-orange" />}
-            title="Request Graphic"
+            Icon={<LifeBuoyIcon className="fill-halloween-orange" />}
+            title="Support Request"
             subtitle="Laborerivit rem cones mil"
-            onClick={toggleCreateGraphicModal}
+            onClick={toggleSupportRequestModal}
             className="w-fit"
           />
-        </div>
-        <hr className="border-t-bright-gray" />
-        <div className="flex h-155 space-x-6">
-          <Card title="Project Status Table" className="flex w-260 flex-col">
+        </>
+      )
+    }
+  }, [])
+
+  return (
+    <>
+      <Head>
+        <title>Indy - Screen Manager</title>
+      </Head>
+      <div className="mx-auto w-full max-w-8xl space-y-6">
+        <div className="flex gap-6 transition-all lg:flex-col">
+          <Card title="Project Status Table" className="flex flex-1 flex-col">
             <DataTable
               columns={ClientTicketsTableColumns}
               dataEndpoint={`/v1/clients/${session?.user.userType.clientId}/graphics`}
               tableQueryKey={['graphics']}
-              ofString="Projects"
+              ofString="Graphics"
             />
           </Card>
-          <div className="flex flex-1 flex-col space-y-6">
+          <div className="flex w-86 flex-col gap-6 transition-all lg:w-full lg:flex-row">
             <RetainerInclusions />
-            <Notifications />
+            <Notifications className="flex-1" />
           </div>
         </div>
       </div>
       <CreateGraphicRequestModal
         isVisible={isCreateGraphicModalVisible}
         onClose={toggleCreateGraphicModal}
-      />
-      <EditTicketModal
-        isVisible={isEditTicketModalVisible}
-        onClose={toggleEditTicketModal}
-        ticket={activeTicket}
-        graphic
-      />
-      <DeleteTicketModal
-        isVisible={isDeleteTicketModalVisible}
-        onClose={toggleDeleteTicketModal}
-        ticket={activeTicket}
-        graphic
       />
     </>
   )

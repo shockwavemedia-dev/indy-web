@@ -58,8 +58,8 @@ export const MyFiles = () => {
       <Head>
         <title>Indy - My Files</title>
       </Head>
-      <div className="mx-auto flex w-full max-w-8xl space-x-6">
-        <div className="w-full space-y-6">
+      <div className="mx-auto flex w-full max-w-8xl gap-6 lg:flex-col">
+        <div className="flex-1 space-y-6">
           <SelectNoFormik
             Icon={UserIcon}
             onChange={selectClient}
@@ -181,7 +181,7 @@ export const MyFiles = () => {
             )}
           </Card>
         </div>
-        <Notifications />
+        <Notifications className="w-86 lg:w-1/2" />
       </div>
     </>
   )

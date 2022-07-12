@@ -25,8 +25,8 @@ export const StaffDashboard = () => {
       <Head>
         <title>Indy - Dashboard</title>
       </Head>
-      <div className="mx-auto flex h-full w-full max-w-8xl space-x-6">
-        <Card title="My Tickets" className="flex w-full flex-col">
+      <div className="mx-auto flex w-full max-w-8xl gap-6 lg:flex-col">
+        <Card title="My Tickets" className="flex flex-1 flex-col">
           <DataTable
             columns={StaffTicketsTableColumns}
             dataEndpoint="/v1/my-tickets"
@@ -34,7 +34,7 @@ export const StaffDashboard = () => {
             ofString="Projects"
           />
         </Card>
-        <Notifications />
+        <Notifications className="w-86 lg:w-1/2" />
       </div>
     </>
   )

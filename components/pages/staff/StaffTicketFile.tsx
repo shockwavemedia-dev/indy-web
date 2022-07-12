@@ -103,7 +103,7 @@ export const StaffTicketFile = ({ ticketFileId }: { ticketFileId: number }) => {
   return (
     <>
       {!!ticketFile && ticketFileId !== -1 && (
-        <div className="mx-auto flex h-full w-full max-w-8xl space-x-5">
+        <div className="mx-auto flex w-full max-w-8xl space-x-6">
           <div className="w-140 space-y-5">
             <div>
               <FileDisplay
