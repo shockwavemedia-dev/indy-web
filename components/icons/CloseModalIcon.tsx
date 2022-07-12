@@ -1,8 +1,16 @@
-export const CloseModalIcon = ({ className }: { className: string }) => (
+export const CloseModalIcon = ({
+  className,
+  width,
+  height,
+}: {
+  className: string
+  width?: string
+  height?: string
+}) => (
   <svg
     className={className}
-    width="20"
-    height="20"
+    width={`${width ? width : '20'}`}
+    height={`${height ? width : '20'}`}
     viewBox="0 0 20 20"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"

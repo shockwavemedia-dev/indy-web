@@ -4,10 +4,9 @@ import { useQuery, useQueryClient } from 'react-query'
 import { useToastStore } from '../store/ToastStore'
 import { Notification } from '../types/Notification.type'
 import { Card } from './Card'
+import { CloseModalIcon } from './icons/CloseModalIcon'
 import { EyeIcon } from './icons/EyeIcon'
 import { TrashIcon } from './icons/TrashIcon'
-import { XCircleIcon } from './icons/XCircleIcon'
-
 export const Notifications = ({ className = '' }: { className?: string }) => {
   const { showToast } = useToastStore()
   const queryClient = useQueryClient()
@@ -23,11 +22,12 @@ export const Notifications = ({ className = '' }: { className?: string }) => {
   const deleteAll = async () => {
     try {
       const { status } = await axios.delete('/v1/notifications')
+
       if (status === 200) {
         queryClient.invalidateQueries('notifications')
         showToast({
           type: 'success',
-          message: 'All notification successfully deleted!',
+          message: 'All notifications successfully deleted!',
         })
       }
     } catch (e) {
@@ -38,14 +38,15 @@ export const Notifications = ({ className = '' }: { className?: string }) => {
     }
   }
 
-  const markAsReadAll = async () => {
+  const markAllAsRead = async () => {
     try {
       const { status } = await axios.post('/v1/notifications/mark-as-read')
+
       if (status === 200) {
         queryClient.invalidateQueries('notifications')
         showToast({
           type: 'success',
-          message: 'All notification successfully mark as read!',
+          message: 'All notifications successfully marked as read!',
         })
       }
     } catch (e) {
@@ -59,8 +60,8 @@ export const Notifications = ({ className = '' }: { className?: string }) => {
   return (
     <Card title="Notifications" className={`h-fit ${className}`}>
       <div className="absolute top-6 right-6 space-x-2">
-        <Tooltip title="Mark as read all" placement="top">
-          <button className="group" onClick={markAsReadAll}>
+        <Tooltip title="Mark all as read" placement="top">
+          <button className="group" onClick={markAllAsRead}>
             <EyeIcon className="stroke-waterloo group-hover:stroke-halloween-orange" />
           </button>
         </Tooltip>
@@ -73,8 +74,8 @@ export const Notifications = ({ className = '' }: { className?: string }) => {
       <div className="relative">
         <div className="absolute left-1 top-1.5 h-[calc(100%_-_.75rem)] w-px bg-bright-gray" />
         <div className="-ml-1 max-h-102 space-y-6 overflow-y-scroll pl-1 pr-5 pt-1">
-          {!!notifications && notifications?.length > 0 ? (
-            notifications?.map(({ id, title, url, status }, i) => {
+          {notifications && notifications.length > 0 ? (
+            notifications.map(({ id, title, url, status }, i) => {
               const readNotification = async () => axios.post(`v1/notifications/${id}/mark-as-read`)
               const isRead = status === 'read'
               const deleteById = async () => {
@@ -109,7 +110,11 @@ export const Notifications = ({ className = '' }: { className?: string }) => {
                   </a>
                   <Tooltip title="Delete" placement="top">
                     <button className="group mr-2" onClick={deleteById}>
-                      <XCircleIcon className="stroke-waterloo group-hover:stroke-halloween-orange" />
+                      <CloseModalIcon
+                        width="12"
+                        height="12"
+                        className="stroke-waterloo group-hover:stroke-halloween-orange"
+                      />
                     </button>
                   </Tooltip>
                 </div>
