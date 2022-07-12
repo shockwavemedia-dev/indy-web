@@ -27,12 +27,11 @@ import { objectWithFileToFormData } from '../utils/FormHelpers'
 
 const ProjectBriefPage: NextPageWithLayout = () => {
   const { setHeader } = usePanelLayoutStore()
-
   const { data: session } = useSession()
   const { showToast } = useToastStore()
   const { replace } = useRouter()
   const queryClient = useQueryClient()
-  const [isShownMarketingDate, setIsShownMarketingDate] = useState(false)
+  const [marketingDateVisible, setMarketingDateVisible] = useState(false)
 
   const submitForm = async (values: CreateProjectBriefForm) => {
     try {
@@ -40,6 +39,7 @@ const ProjectBriefPage: NextPageWithLayout = () => {
         status,
         data: { ticketCode },
       } = await axios.post<Ticket>('/v1/tickets/event', objectWithFileToFormData(values))
+
       if (status === 200) {
         queryClient.invalidateQueries('tickets')
         replace('/dashboard')
@@ -57,7 +57,7 @@ const ProjectBriefPage: NextPageWithLayout = () => {
   }
 
   const toggleMarketingDate = ({ currentTarget: { checked } }: ChangeEvent<HTMLInputElement>) =>
-    setIsShownMarketingDate(checked)
+    setMarketingDateVisible(checked)
 
   useEffect(() => {
     setHeader('Project Brief')
@@ -118,7 +118,7 @@ const ProjectBriefPage: NextPageWithLayout = () => {
                         Add to Marketing Plan
                       </label>
                     </div>
-                    {isShownMarketingDate && (
+                    {marketingDateVisible && (
                       <div className="mb-5 flex space-x-5">
                         <DateInput name="marketingPlanStartDate" placeholder="Enter Start Date" />
                         <DateInput name="marketingPlanEndDate" placeholder="Enter End Date" />
@@ -208,12 +208,12 @@ const SelectService = () => {
         })}
       </div>
       {activeService && activeService.extras.length > 0 && (
-        <div className="flex h-fit flex-col items-center rounded-xl bg-white p-5">
-          <div className="mb-3 font-urbanist text-lg font-semibold text-onyx">
+        <div className="h-fit w-60 rounded-xl bg-white p-5">
+          <div className="mb-3 text-center font-urbanist text-lg font-semibold text-onyx">
             Select {activeService.extraQuota > 0 && activeService.extraQuota} Extras
           </div>
           <div className="space-y-2">
-            {activeService.extras.map((extras) => {
+            {activeService.extras.map((extras, i) => {
               const foundedExtras = values.services.find(
                 ({ serviceId }) => serviceId === activeService.serviceId
               )?.extras
@@ -225,7 +225,7 @@ const SelectService = () => {
                       : foundedExtras?.length === activeService.extraQuota &&
                         !foundedExtras?.includes(extras)
                   }
-                  key={`${activeService.serviceId}-${extras}`}
+                  key={`${activeService.serviceId}-${i}-${extras}`}
                   extrasName={extras}
                   serviceId={activeService.serviceId}
                 />
@@ -296,42 +296,36 @@ const Extras = ({
   extrasName: string
 }) => {
   const { values, setFieldValue } = useFormikContext<CreateProjectBriefForm>()
-  const [isShownCustomField, setIsShownCustomField] = useState(false)
+
+  const services = values.services.filter(({ serviceId: sid }) => sid !== serviceId)
+  const activeService = values.services.find(({ serviceId: sid }) => sid === serviceId)
+
+  const [customFieldVisible, setCustomFieldVisible] = useState(false)
+
+  const toggleCustomField = () => setCustomFieldVisible(!customFieldVisible)
 
   const toggleExtras = ({ currentTarget: { checked } }: ChangeEvent<HTMLInputElement>) => {
-    const services = values.services.filter(({ serviceId: sid }) => sid !== serviceId)
-    const activeService = values.services.find(({ serviceId: sid }) => sid === serviceId)
-
     if (activeService) {
       if (checked) {
         activeService.extras.push(extrasName)
-        if (serviceId == 2 && extrasName === 'Custom') {
-          setIsShownCustomField(checked)
-        }
       } else {
         activeService.extras = activeService.extras.filter((extras) => extras !== extrasName)
-        setIsShownCustomField(false)
+      }
+
+      if (serviceId === 2 && extrasName === 'Custom') {
+        toggleCustomField()
       }
     }
 
     setFieldValue('services', [...services, activeService])
   }
 
-  const getCustomFieldValue = ({ currentTarget: { value } }: ChangeEvent<HTMLInputElement>) => {
-    values.services?.map((service, index) => {
-      if (service.serviceId == 2) {
-        values.services[index].customFields = [value]
-      }
-    })
-  }
+  const setCustomFieldValue = ({ currentTarget: { value } }: ChangeEvent<HTMLInputElement>) =>
+    setFieldValue('services', [...services, { ...activeService, customFields: [value] }])
 
   const extras = (
-    <div>
-      <div
-        className={`relative flex items-center ${isShownCustomField ? 'w-86' : 'w-52'}  ${
-          disabled ? 'cursor-default opacity-40' : ''
-        }`}
-      >
+    <>
+      <div className={`relative flex items-center ${disabled ? 'cursor-default opacity-40' : ''}`}>
         <input
           type="checkbox"
           name={extrasName}
@@ -345,26 +339,18 @@ const Extras = ({
           {extrasName}
         </label>
       </div>
-      <div>
-        <div>
-          {isShownCustomField && (
-            <div>
-              <div className="relative mt-5 flex items-center">
-                <EditIcon className="pointer-events-none absolute left-6 stroke-lavender-gray" />
-                <input
-                  type="text"
-                  className="h-12.5 w-full rounded-xl px-13 font-urbanist text-sm font-medium text-onyx placeholder-metallic-silver ring-1 ring-bright-gray read-only:cursor-auto focus:ring-2 focus:ring-halloween-orange read-only:focus:ring-1 read-only:focus:ring-bright-gray"
-                  name="custom"
-                  id="custom"
-                  placeholder="Enter Custom"
-                  onChange={getCustomFieldValue}
-                />
-              </div>
-            </div>
-          )}
+      {customFieldVisible && (
+        <div className="relative mt-5 flex items-center">
+          <EditIcon className="pointer-events-none absolute left-6 stroke-lavender-gray" />
+          <input
+            type="text"
+            className="h-12.5 w-full rounded-xl px-13 font-urbanist text-sm font-medium text-onyx placeholder-metallic-silver ring-1 ring-bright-gray read-only:cursor-auto focus:ring-2 focus:ring-halloween-orange read-only:focus:ring-1 read-only:focus:ring-bright-gray"
+            placeholder="Enter Custom"
+            onChange={setCustomFieldValue}
+          />
         </div>
-      </div>
-    </div>
+      )}
+    </>
   )
 
   return disabled ? (
