@@ -1,4 +1,3 @@
-import { Tooltip } from '@mui/material'
 import Link from 'next/link'
 import { Route } from '../types/Route.type'
 import { CaretIcon } from './icons/CaretIcon'
@@ -17,29 +16,24 @@ export const RouteButton = ({
 }) => (
   <div className={`flex items-center ${isCurrentPath ? 'bg-halloween-orange' : ''}`}>
     <Link href={pathname}>
-      <Tooltip title={title} placement="right" className="cursor-pointer">
-        <a
-          className={`flex items-center ${subRoute ? 'my-2 ml-15' : 'my-3.5 ml-5'} hidden`}
-          target={target}
-        >
-          <Icon className={`${subRoute ? 'fill-white' : 'stroke-white'}`} />
-          <div className="ml-3 font-urbanist text-sm text-white">{title}</div>
-        </a>
-      </Tooltip>
-    </Link>
-    <Link href={pathname}>
       <a
-        className={`flex items-center ${subRoute ? 'my-2 ml-15' : 'my-3.5 ml-5 '}`}
+        className={`flex items-center transition-all ${
+          subRoute
+            ? 'my-2 ml-15 2xl:hidden 2xl:group-hover:flex'
+            : 'my-3.5 ml-5 2xl:mx-auto 2xl:group-hover:ml-5'
+        }`}
         target={target}
       >
         <Icon className={`${subRoute ? 'fill-white' : 'stroke-white'}`} />
-        <div className="ml-3 font-urbanist text-sm text-white">{title}</div>
+        <div className="ml-3 font-urbanist text-sm text-white transition-all 2xl:hidden 2xl:group-hover:flex">
+          {title}
+        </div>
       </a>
     </Link>
     {/* todo add conditional color */}
     {hasSubRoutes && (
       <CaretIcon
-        className={`ml-auto mr-7 rotate-180 stroke-white ${pathname === '#' ? 'opacity-20' : ''}`}
+        className={`ml-auto mr-7 rotate-180 stroke-white transition-all 2xl:hidden 2xl:group-hover:flex`}
       />
     )}
   </div>

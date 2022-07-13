@@ -165,10 +165,10 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
           <LogoutIcon className="rotate-180 stroke-waterloo" />
         </button>
       </div>
-      <div className="fixed z-10 flex h-screen w-75 flex-none flex-col justify-between overflow-y-scroll bg-charleston-green pt-20.5 transition-all">
+      <div className="group fixed z-10 flex h-screen w-75 flex-none flex-col justify-between overflow-y-auto bg-charleston-green pt-20.5 transition-all 2xl:w-20 2xl:pt-16.5 2xl:hover:w-75">
         <div>
           {!session.isAdmin && (
-            <div className="mb-5 grid grid-cols-3 grid-rows-1 gap-2 px-6 transition-all">
+            <div className="mb-5 grid grid-cols-3 grid-rows-1 gap-2 px-6 transition-all 2xl:grid-cols-1 2xl:grid-rows-3 2xl:px-2 2xl:pt-6 2xl:group-hover:grid-cols-3 2xl:group-hover:grid-rows-1 2xl:group-hover:px-6 2xl:group-hover:pt-4">
               <TicketsAndNotifacationsCountCard
                 isLoading={ticketsAndNotifacationsCountIsLoading}
                 value={ticketsAndNotifacationsCount?.openTicketCount}
@@ -183,14 +183,14 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
                 isLoading={ticketsAndNotifacationsCountIsLoading}
                 value={ticketsAndNotifacationsCount?.newNotificationCount}
                 description="New Notifications"
-                // className="2xl:hidden"
+                className="2xl:hidden 2xl:group-hover:flex"
               />
-              {/* <TicketsAndNotifacationsCountCard
+              <TicketsAndNotifacationsCountCard
                 isLoading={ticketsAndNotifacationsCountIsLoading}
                 value={ticketsAndNotifacationsCount?.newNotificationCount}
                 description="New Notifs"
-                className="hidden 2xl:flex"
-              /> */}
+                className="hidden 2xl:flex 2xl:group-hover:hidden"
+              />
             </div>
           )}
           {routes.map(({ title, Icon, pathname, subRoutes = [], target }, i) => (
@@ -218,8 +218,8 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
           </div>
         </div>
       </div>
-      <div className="flex h-screen bg-cultured pt-14.5 pl-75 transition-all">
-        <div className="w-full overflow-y-scroll p-6">
+      <div className="flex h-screen bg-cultured pt-14.5 pl-75 transition-all 2xl:pl-20">
+        <div className="w-full overflow-y-auto p-6">
           <div className="mb-10 flex items-end justify-between">
             <div>
               <div className="font-urbanist text-3xl font-bold text-onyx">{header}</div>

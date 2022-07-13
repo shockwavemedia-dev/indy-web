@@ -16,7 +16,7 @@ export const Notifications = ({ className = '' }: { className?: string }) => {
     <Card title="Notifications" className={`h-fit ${className}`}>
       <div className="relative">
         <div className="absolute left-1 top-1.5 h-[calc(100%_-_.75rem)] w-px bg-bright-gray" />
-        <div className="-ml-1 max-h-102 space-y-6 overflow-y-scroll pl-1 pr-5 pt-1">
+        <div className="-ml-1 max-h-102 space-y-6 overflow-y-auto pl-1 pr-5 pt-1">
           {notifications?.map(({ id, title, url, status }, i) => {
             const readNotification = async () => axios.post(`v1/notifications/${id}/mark-as-read`)
             const isRead = status === 'read'
