@@ -19,19 +19,17 @@ export const RouteButton = ({
     <Link href={pathname}>
       <Tooltip title={title} placement="right" className="cursor-pointer">
         <a
-          className={`flex items-center ${
-            subRoute ? 'my-2 ml-15 2xl:hidden' : 'my-3.5 ml-5'
-          } hidden 2xl:mx-auto 2xl:flex`}
+          className={`flex items-center ${subRoute ? 'my-2 ml-15' : 'my-3.5 ml-5'} hidden`}
           target={target}
         >
           <Icon className={`${subRoute ? 'fill-white' : 'stroke-white'}`} />
-          <div className="ml-3 font-urbanist text-sm text-white 2xl:hidden">{title}</div>
+          <div className="ml-3 font-urbanist text-sm text-white">{title}</div>
         </a>
       </Tooltip>
     </Link>
     <Link href={pathname}>
       <a
-        className={`flex items-center ${subRoute ? 'my-2 ml-15' : 'my-3.5 ml-5 '} 2xl:hidden`}
+        className={`flex items-center ${subRoute ? 'my-2 ml-15' : 'my-3.5 ml-5 '}`}
         target={target}
       >
         <Icon className={`${subRoute ? 'fill-white' : 'stroke-white'}`} />
@@ -41,9 +39,7 @@ export const RouteButton = ({
     {/* todo add conditional color */}
     {hasSubRoutes && (
       <CaretIcon
-        className={`ml-auto mr-7 rotate-180 stroke-white ${
-          pathname === '#' ? 'opacity-20' : ''
-        } 2xl:hidden`}
+        className={`ml-auto mr-7 rotate-180 stroke-white ${pathname === '#' ? 'opacity-20' : ''}`}
       />
     )}
   </div>
