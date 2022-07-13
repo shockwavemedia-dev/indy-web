@@ -105,6 +105,7 @@ export const ClientMyFiles = () => {
                         onClick={openDepartmentFolder}
                         name={departmentname}
                         textClassName="text-sm text-center"
+                        showAction
                       />
                     )
                   })}
@@ -128,6 +129,7 @@ export const ClientMyFiles = () => {
                       onClick={openMonthFolder}
                       name={month}
                       textClassName="text-xs"
+                      showAction
                     />
                   )
                 })}
