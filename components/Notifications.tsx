@@ -77,7 +77,6 @@ export const Notifications = ({ className = '' }: { className?: string }) => {
           {notifications && notifications.length > 0 ? (
             notifications.map(({ id, title, url, status }, i) => {
               const readNotification = async () => axios.post(`v1/notifications/${id}/mark-as-read`)
-              const isRead = status === 'read'
               const deleteById = async () => {
                 try {
                   const { status } = await axios.delete(`/v1/notifications/${id}`)
@@ -102,7 +101,7 @@ export const Notifications = ({ className = '' }: { className?: string }) => {
                   <a
                     className={`pl-8 pr-2 font-urbanist text-sm font-medium underline-offset-1 hover:text-halloween-orange hover:underline ${
                       i === notifications.length - 1 ? 'bg-white' : ''
-                    } ${isRead ? 'text-lavender-gray' : 'text-onyx'}`}
+                    } ${status === 'read' ? 'text-lavender-gray' : 'text-onyx'}`}
                     href={url}
                     onClick={readNotification}
                   >
