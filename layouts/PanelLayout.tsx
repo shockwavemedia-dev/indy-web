@@ -165,10 +165,10 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
           <LogoutIcon className="rotate-180 stroke-waterloo" />
         </button>
       </div>
-      <div className="fixed z-10 flex h-screen w-75 flex-none flex-col justify-between overflow-y-scroll bg-charleston-green pt-20.5 transition-all 2xl:w-20 2xl:pt-16.5">
+      <div className="fixed z-10 flex h-screen w-75 flex-none flex-col justify-between overflow-y-scroll bg-charleston-green pt-20.5 transition-all">
         <div>
           {!session.isAdmin && (
-            <div className="mb-5 grid grid-cols-3 grid-rows-1 gap-2 px-6 transition-all 2xl:grid-cols-1 2xl:grid-rows-3 2xl:px-2 2xl:pt-6">
+            <div className="mb-5 grid grid-cols-3 grid-rows-1 gap-2 px-6 transition-all">
               <TicketsAndNotifacationsCountCard
                 isLoading={ticketsAndNotifacationsCountIsLoading}
                 value={ticketsAndNotifacationsCount?.openTicketCount}
@@ -183,14 +183,14 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
                 isLoading={ticketsAndNotifacationsCountIsLoading}
                 value={ticketsAndNotifacationsCount?.newNotificationCount}
                 description="New Notifications"
-                className="2xl:hidden"
+                // className="2xl:hidden"
               />
-              <TicketsAndNotifacationsCountCard
+              {/* <TicketsAndNotifacationsCountCard
                 isLoading={ticketsAndNotifacationsCountIsLoading}
                 value={ticketsAndNotifacationsCount?.newNotificationCount}
                 description="New Notifs"
                 className="hidden 2xl:flex"
-              />
+              /> */}
             </div>
           )}
           {routes.map(({ title, Icon, pathname, subRoutes = [], target }, i) => (
@@ -218,7 +218,7 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
           </div>
         </div>
       </div>
-      <div className="flex h-screen bg-cultured pt-14.5 pl-75 transition-all 2xl:pl-20">
+      <div className="flex h-screen bg-cultured pt-14.5 pl-75 transition-all">
         <div className="w-full overflow-y-scroll p-6">
           <div className="mb-10 flex items-end justify-between">
             <div>
