@@ -1,5 +1,9 @@
 import Image from 'next/image'
 import { useState } from 'react'
+import {
+  FileFolderRenameModal,
+  useFileFolderRenameModalStore,
+} from '../components/modals/FileFolderRenameModal'
 import { BadgeCheckIcon } from './icons/BadgeCheckIcon'
 import { DotsHorizontalIcon } from './icons/DotsHorizontalIcon'
 import { FileIcon } from './icons/FileIcon'
@@ -30,6 +34,8 @@ export const FileButton = ({
 
   const toggleAction = () => setActionVisible(!actionVisible)
 
+  const { toggleModal: toggleFileFolderRenameModal } = useFileFolderRenameModalStore()
+
   return href ? (
     <a
       href={href}
@@ -59,31 +65,37 @@ export const FileButton = ({
     </a>
   ) : (
     <div>
-      <button
-        type="button"
-        onClick={onClick}
-        className={`flex flex-none flex-col items-center justify-center space-y-1 rounded-xl border-2 border-bright-gray p-3 hover:border-halloween-orange ${className}`}
+      <div
+        className={`flex flex-col items-center justify-center space-y-1 rounded-xl border-2 border-bright-gray p-3 hover:border-halloween-orange ${className}`}
       >
-        {fileModal ? (
-          <div className="relative">
-            <FileIcon />
-            <div className="absolute top-3 left-1/2 -translate-x-1/2 font-varela-round text-tiny uppercase text-white">
-              {name.split(/\./).pop()}
+        <div className={`flex flex-none flex-col items-center justify-center space-y-1 p-3`}>
+          <button
+            type="button"
+            onClick={onClick}
+            className="flex flex-none flex-col items-center justify-center space-y-1"
+          >
+            {fileModal ? (
+              <div className="relative">
+                <FileIcon />
+                <div className="absolute top-3 left-1/2 -translate-x-1/2 font-varela-round text-tiny uppercase text-white">
+                  {name.split(/\./).pop()}
+                </div>
+              </div>
+            ) : (
+              <FolderIcon className="stroke-halloween-orange" />
+            )}
+            <div
+              className={` ${
+                textClassName ? textClassName : 'text-xxs'
+              } font-urbanist font-semibold text-onyx ${!fileModal ? 'capitalize' : ''}`}
+            >
+              {name}
             </div>
-          </div>
-        ) : (
-          <FolderIcon className="stroke-halloween-orange" />
-        )}
-        <div
-          className={` ${
-            textClassName ? textClassName : 'text-xxs'
-          } font-urbanist font-semibold text-onyx ${!fileModal ? 'capitalize' : ''}`}
-        >
-          {name}
+          </button>
         </div>
-      </button>
+      </div>
       {showAction && (
-        <button className="group" onClick={toggleAction}>
+        <button className="flex justify-end" onClick={toggleAction}>
           <DotsHorizontalIcon className="stroke-waterloo group-hover:stroke-halloween-orange" />
         </button>
       )}
@@ -91,9 +103,13 @@ export const FileButton = ({
         <div className="z-10 w-full divide-y rounded bg-ghost-white shadow">
           <ul className="text-gray-700 dark:text-gray-200 py-1 text-sm">
             <li>
-              <button className="hover:bg-gray-100 dark:hover:bg-gray-600 block px-4 py-2 dark:hover:text-halloween-orange">
+              <button
+                onClick={toggleFileFolderRenameModal}
+                className="hover:bg-gray-100 dark:hover:bg-gray-600 block px-4 py-2 dark:hover:text-halloween-orange"
+              >
                 Rename
               </button>
+              <FileFolderRenameModal folderId={1} folderName="grand child folder C" />
             </li>
             <li>
               <button className="hover:bg-gray-100 dark:hover:bg-gray-600 block px-4 py-2 dark:hover:text-halloween-orange">
