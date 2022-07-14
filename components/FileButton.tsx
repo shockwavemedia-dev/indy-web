@@ -1,6 +1,10 @@
 import Image from 'next/image'
 import { useState } from 'react'
 import {
+  FileFolderDeleteModal,
+  useFileFolderDeleteModalStore,
+} from '../components/modals/FileFolderDeleteModal'
+import {
   FileFolderRenameModal,
   useFileFolderRenameModalStore,
 } from '../components/modals/FileFolderRenameModal'
@@ -35,6 +39,8 @@ export const FileButton = ({
   const toggleAction = () => setActionVisible(!actionVisible)
 
   const { toggleModal: toggleFileFolderRenameModal } = useFileFolderRenameModalStore()
+
+  const { toggleModal: toggleFileFolderDeleteModal } = useFileFolderDeleteModalStore()
 
   return href ? (
     <a
@@ -101,20 +107,24 @@ export const FileButton = ({
       )}
       {actionVisible && (
         <div className="z-10 w-full divide-y rounded bg-ghost-white shadow">
-          <ul className="text-gray-700 dark:text-gray-200 py-1 text-sm">
+          <ul className="py-1 text-sm">
             <li>
               <button
                 onClick={toggleFileFolderRenameModal}
-                className="hover:bg-gray-100 dark:hover:bg-gray-600 block px-4 py-2 dark:hover:text-halloween-orange"
+                className="block px-4 py-2 dark:hover:text-halloween-orange"
               >
                 Rename
               </button>
               <FileFolderRenameModal folderId={1} folderName="grand child folder C" />
             </li>
             <li>
-              <button className="hover:bg-gray-100 dark:hover:bg-gray-600 block px-4 py-2 dark:hover:text-halloween-orange">
+              <button
+                onClick={toggleFileFolderDeleteModal}
+                className="block px-4 py-2 dark:hover:text-halloween-orange"
+              >
                 Delete
               </button>
+              <FileFolderDeleteModal folderId={1} folderName="grand child folder C" />
             </li>
           </ul>
         </div>

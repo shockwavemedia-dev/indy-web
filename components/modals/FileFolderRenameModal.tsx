@@ -33,7 +33,7 @@ export const FileFolderRenameModal = ({
   const { showToast } = useToastStore()
   const { isModalVisible, toggleModal } = useFileFolderRenameModalStore()
 
-  const submitFileRenameForm = async (values: FileFolderRenameForm) => {
+  const submitFileFolderRenameForm = async (values: FileFolderRenameForm) => {
     try {
       const { status } = await axios.put(`/v1/folders/${folderId}`, values)
 
@@ -42,12 +42,17 @@ export const FileFolderRenameModal = ({
         queryClient.invalidateQueries('files')
         showToast({
           type: 'success',
-          message: `Folder successfully renamed!`,
+          message: 'Folder successfully renamed!',
         })
       }
     } catch (error) {
       if (((x): x is AxiosError<{ message: string }> => axios.isAxiosError(x))(error)) {
-        return Promise.reject(new Error(error.response?.data.message))
+        if (error.response?.data.message) {
+          showToast({
+            type: 'error',
+            message: error.response?.data.message,
+          })
+        }
       }
     }
   }
@@ -61,7 +66,7 @@ export const FileFolderRenameModal = ({
             initialValues={{
               name: folderName,
             }}
-            onSubmit={submitFileRenameForm}
+            onSubmit={submitFileFolderRenameForm}
           >
             {({ isSubmitting }) => (
               <Form className="flex w-140 flex-col">
