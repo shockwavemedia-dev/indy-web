@@ -235,20 +235,31 @@ export const ClientTicket = ({ ticketId }: { ticketId: number }) => {
               <TitleValue title="Date Created" className="flex items-center justify-between">
                 {format(ticket!.createdAt, "yy MMM''dd")}
               </TitleValue>
-              <TitleValue title="Services">
-                {!!ticket!.services && ticket!.services?.length > 0 && (
+              {!!ticket!.services && ticket!.services?.length > 0 && (
+                <TitleValue title="Services">
                   <div className="flex flex-wrap gap-1">
-                    {ticket!.services?.map(({ serviceName, extras }, i) => (
+                    {ticket!.services?.map(({ serviceName, extras, customFields }, i) => (
                       <Fragment key={`${serviceName}-${i}`}>
-                        <Pill value={serviceName} />
-                        {extras.map((extra) => (
-                          <Pill key={`${serviceName}-${extra}`} value={extra} />
-                        ))}
+                        <div className="flex flex-wrap gap-1">
+                          <Pill value={serviceName} />
+                          {extras.map((extra) => (
+                            <Pill key={`${serviceName}-${extra}`} value={extra} />
+                          ))}
+                        </div>
+                        {customFields?.length > 0 && (
+                          <div className="mt-2 flex flex-wrap gap-1">
+                            <TitleValue title="Custom">
+                              {customFields.map((custom) => (
+                                <Pill key={`${custom}`} value={custom} />
+                              ))}
+                            </TitleValue>
+                          </div>
+                        )}
                       </Fragment>
                     ))}
                   </div>
-                )}
-              </TitleValue>
+                </TitleValue>
+              )}
             </div>
           </Card>
           <Card title="Assignees">
