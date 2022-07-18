@@ -39,7 +39,7 @@ export const FileBrowser = ({ clientId }: { clientId: number }) => {
   }, [clientId])
 
   return (
-    <Card>
+    <Card className="h-fit flex-1">
       <div className="flex flex-wrap gap-4">
         {clientId !== -1 ? (
           filesSucess && !Array.isArray(folder) ? (
