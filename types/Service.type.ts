@@ -10,4 +10,5 @@ export type Service = {
   extras: Array<string>
   createdBy: number
   updatedBy: number
+  customFields: Array<string>
 }
