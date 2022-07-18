@@ -4,15 +4,15 @@ import { useSession } from 'next-auth/react'
 import { useQueryClient } from 'react-query'
 import createStore from 'zustand'
 import { combine } from 'zustand/middleware'
-import { CreateFileFolderFormSchema } from '../../schemas/CreateFileFolderFormSchema'
+import { CreateFolderFormSchema } from '../../schemas/CreateFolderFormSchema'
 import { useToastStore } from '../../store/ToastStore'
-import { CreateFileFolderForm } from '../../types/forms/CreateFileFolderForm.type'
+import { CreateFolderForm } from '../../types/forms/CreateFolderForm.type'
 import { Button } from '../Button'
 import { EditIcon } from '../icons/EditIcon'
 import { Modal } from '../Modal'
 import { TextInput } from '../TextInput'
 
-export const useCreateFileFolderModalStore = createStore(
+export const useCreateFolderModalStore = createStore(
   combine(
     {
       isModalVisible: false,
@@ -23,13 +23,13 @@ export const useCreateFileFolderModalStore = createStore(
   )
 )
 
-export const CreateFileFolderModal = ({ parentFolderId }: { parentFolderId?: number }) => {
+export const CreateFolderModal = ({ parentFolderId = null }: { parentFolderId: number | null }) => {
   const { data: session } = useSession()
   const queryClient = useQueryClient()
   const { showToast } = useToastStore()
-  const { isModalVisible, toggleModal } = useCreateFileFolderModalStore()
+  const { isModalVisible, toggleModal } = useCreateFolderModalStore()
 
-  const submitForm = async (values: CreateFileFolderForm) => {
+  const submitForm = async (values: CreateFolderForm) => {
     try {
       const { status } = await axios.post(
         `/v1/clients/${session?.user.userType.clientId}/folders`,
@@ -61,9 +61,9 @@ export const CreateFileFolderModal = ({ parentFolderId }: { parentFolderId?: num
       {isModalVisible && (
         <Modal title="Create Folder" onClose={toggleModal}>
           <Formik
-            validationSchema={CreateFileFolderFormSchema}
+            validationSchema={CreateFolderFormSchema}
             initialValues={{
-              parentFolderId: parentFolderId ? parentFolderId : null,
+              parentFolderId,
               name: '',
             }}
             onSubmit={submitForm}
@@ -76,7 +76,7 @@ export const CreateFileFolderModal = ({ parentFolderId }: { parentFolderId?: num
                   Icon={EditIcon}
                   placeholder="Enter Folder Name"
                   name="name"
-                  className="mb-5"
+                  className="mb-8"
                 />
                 <div className="flex space-x-5">
                   <Button ariaLabel="Cancel" onClick={toggleModal} type="button" light>

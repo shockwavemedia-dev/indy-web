@@ -8,7 +8,7 @@ import { FolderIcon } from '../icons/FolderIcon'
 import { TrashIcon } from '../icons/TrashIcon'
 import { Modal } from '../Modal'
 
-export const useFileFolderDeleteModalStore = createStore(
+export const useDeleteFolderModalStore = createStore(
   combine(
     {
       isModalVisible: false,
@@ -19,7 +19,7 @@ export const useFileFolderDeleteModalStore = createStore(
   )
 )
 
-export const FileFolderDeleteModal = ({
+export const DeleteFolderModal = ({
   folderId,
   folderName,
 }: {
@@ -28,9 +28,9 @@ export const FileFolderDeleteModal = ({
 }) => {
   const queryClient = useQueryClient()
   const { showToast } = useToastStore()
-  const { isModalVisible, toggleModal } = useFileFolderDeleteModalStore()
+  const { isModalVisible, toggleModal } = useDeleteFolderModalStore()
 
-  const fileFolderDelete = async () => {
+  const deleteFolder = async () => {
     try {
       const { status } = await axios.delete(`/v1/folders/${folderId}`)
 
@@ -59,7 +59,7 @@ export const FileFolderDeleteModal = ({
       {isModalVisible && (
         <Modal title="Are you sure you want to delete this folder?" onClose={toggleModal}>
           <div className="w-full">
-            <div className="mb-5 flex flex-col items-center justify-center space-y-1">
+            <div className="mb-8 flex flex-col items-center justify-center space-y-1">
               <FolderIcon className="h-8 w-8 stroke-halloween-orange" />
               <div className="font-urbanist text-lg font-medium text-metallic-silver">
                 {folderName}
@@ -69,7 +69,7 @@ export const FileFolderDeleteModal = ({
               <Button ariaLabel="Cancel" onClick={toggleModal} type="button" light>
                 Cancel
               </Button>
-              <Button ariaLabel="Submit" onClick={fileFolderDelete} type="submit">
+              <Button ariaLabel="Submit" onClick={deleteFolder} type="submit">
                 <TrashIcon className="stroke-white" />
                 <div>Delete</div>
               </Button>

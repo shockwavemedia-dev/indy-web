@@ -3,15 +3,15 @@ import { Form, Formik } from 'formik'
 import { useQueryClient } from 'react-query'
 import createStore from 'zustand'
 import { combine } from 'zustand/middleware'
-import { FileFolderRenameFormSchema } from '../../schemas/FileFolderRenameFormSchema'
+import { RenameFolderFormSchema } from '../../schemas/RenameFolderFormSchema'
 import { useToastStore } from '../../store/ToastStore'
-import { FileFolderRenameForm } from '../../types/forms/FileFolderRenameForm.type'
+import { RenameFolderForm } from '../../types/forms/RenameFolderForm.type'
 import { Button } from '../Button'
 import { EditIcon } from '../icons/EditIcon'
 import { Modal } from '../Modal'
 import { TextInput } from '../TextInput'
 
-export const useFileFolderRenameModalStore = createStore(
+export const useRenameFolderModalStore = createStore(
   combine(
     {
       isModalVisible: false,
@@ -22,7 +22,7 @@ export const useFileFolderRenameModalStore = createStore(
   )
 )
 
-export const FileFolderRenameModal = ({
+export const RenameFolderModal = ({
   folderId,
   folderName,
 }: {
@@ -31,9 +31,9 @@ export const FileFolderRenameModal = ({
 }) => {
   const queryClient = useQueryClient()
   const { showToast } = useToastStore()
-  const { isModalVisible, toggleModal } = useFileFolderRenameModalStore()
+  const { isModalVisible, toggleModal } = useRenameFolderModalStore()
 
-  const submitFileFolderRenameForm = async (values: FileFolderRenameForm) => {
+  const submitRenameFolderForm = async (values: RenameFolderForm) => {
     try {
       const { status } = await axios.put(`/v1/folders/${folderId}`, values)
 
@@ -62,11 +62,11 @@ export const FileFolderRenameModal = ({
       {isModalVisible && (
         <Modal title="Rename Folder" onClose={toggleModal}>
           <Formik
-            validationSchema={FileFolderRenameFormSchema}
+            validationSchema={RenameFolderFormSchema}
             initialValues={{
               name: folderName,
             }}
-            onSubmit={submitFileFolderRenameForm}
+            onSubmit={submitRenameFolderForm}
           >
             {({ isSubmitting }) => (
               <Form className="flex w-140 flex-col">
@@ -76,7 +76,7 @@ export const FileFolderRenameModal = ({
                   Icon={EditIcon}
                   placeholder="Enter Folder Name"
                   name="name"
-                  className="mb-5"
+                  className="mb-8"
                 />
                 <div className="flex space-x-5">
                   <Button ariaLabel="Cancel" onClick={toggleModal} type="button" light>
