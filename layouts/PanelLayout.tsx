@@ -115,6 +115,13 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
               onClick={toggleSupportRequestModal}
               className="w-fit"
             />
+            <FancyLink
+              href="/marketing-planner"
+              Icon={<CalendarAddIcon className="stroke-halloween-orange" />}
+              title="New Marketing Planner"
+              subtitle="Laborerivit rem cones mil"
+              className="w-fit"
+            />
           </>
         )
       } else if (isManager) {
