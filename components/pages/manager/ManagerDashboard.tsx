@@ -46,7 +46,7 @@ export const ManagerDashboard = () => {
                 ofString="Projects"
               />
             ) : (
-              <div className="m-auto w-fit font-urbanist text-base text-metallic-silver">
+              <div className="m-auto w-fit text-base text-metallic-silver">
                 No projects to display. 😶
               </div>
             )}

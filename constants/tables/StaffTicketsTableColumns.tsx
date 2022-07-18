@@ -10,7 +10,7 @@ export const StaffTicketsTableColumns: Array<Column<Ticket>> = [
   {
     Header: 'Client',
     accessor: 'clientName',
-    Cell: ({ value }) => <div className="font-urbanist text-sm font-medium text-onyx">{value}</div>,
+    Cell: ({ value }) => <div className=" text-sm font-medium text-onyx">{value}</div>,
   },
   {
     Header: 'Type',
@@ -56,7 +56,7 @@ export const StaffTicketsTableColumns: Array<Column<Ticket>> = [
   {
     Header: 'Subject',
     accessor: 'subject',
-    Cell: ({ value }) => <div className="font-urbanist text-sm font-medium text-onyx">{value}</div>,
+    Cell: ({ value }) => <div className=" text-sm font-medium text-onyx">{value}</div>,
   },
   {
     Header: 'Status',
@@ -104,9 +104,7 @@ export const StaffTicketsTableColumns: Array<Column<Ticket>> = [
     accessor: 'createdAt',
     sortType: 'datetime',
     Cell: ({ value }) => (
-      <div className="font-urbanist text-sm font-medium text-onyx">
-        {format(value, "yy MMM''dd")}
-      </div>
+      <div className=" text-sm font-medium text-onyx">{format(value, "yy MMM''dd")}</div>
     ),
   },
   {
@@ -114,9 +112,7 @@ export const StaffTicketsTableColumns: Array<Column<Ticket>> = [
     accessor: 'duedate',
     sortType: 'datetime',
     Cell: ({ value }) => (
-      <div className="font-urbanist text-sm font-medium text-onyx">
-        {format(value, "yy MMM''dd")}
-      </div>
+      <div className=" text-sm font-medium text-onyx">{format(value, "yy MMM''dd")}</div>
     ),
   },
   {
@@ -128,9 +124,9 @@ export const StaffTicketsTableColumns: Array<Column<Ticket>> = [
       return (
         <div className="flex space-x-2">
           <Link href={`/ticket/${ticket.id}`}>
-            <Tooltip title="View Ticket" placement="top">
+            <Tooltip title="View Ticket" placement="top" className="cursor-pointer">
               <a className="group">
-                <EyeIcon className="stroke-waterloo group-hover:stroke-halloween-orange" />
+                <EyeIcon className="stroke-waterloo transition-all group-hover:stroke-halloween-orange" />
               </a>
             </Tooltip>
           </Link>

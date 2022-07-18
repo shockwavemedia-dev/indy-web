@@ -60,7 +60,7 @@ export const DateInput = ({
         <div className={`w-full ${className}`}>
           <label
             htmlFor={name}
-            className="mb-2 inline-block font-urbanist text-xs font-medium text-metallic-silver empty:hidden"
+            className="mb-2 inline-block text-xs font-medium text-metallic-silver empty:hidden"
           >
             {label}
           </label>
@@ -69,7 +69,7 @@ export const DateInput = ({
             <input
               ref={inputRef}
               {...inputProps}
-              className={`h-12.5 w-full rounded-xl bg-transparent px-13 font-urbanist text-sm font-medium text-onyx placeholder-metallic-silver focus:ring-2 focus:ring-halloween-orange read-only:focus:ring-1 read-only:focus:ring-bright-gray ${
+              className={`h-12.5 w-full rounded-xl bg-transparent px-13  text-sm font-medium text-onyx placeholder-metallic-silver focus:ring-2 focus:ring-halloween-orange read-only:focus:ring-1 read-only:focus:ring-bright-gray ${
                 isPickerVisible ? 'ring-2 ring-halloween-orange' : 'ring-1 ring-bright-gray'
               } ${readOnly ? 'read-only:cursor-auto' : 'read-only:cursor-pointer'}`}
               name={name}

@@ -32,7 +32,7 @@ const AccountVerifiedPage: NextPageWithLayout = () => {
       </Head>
 
       <Link href="/auth/login">
-        <a className="font-urbanist text-sm font-semibold text-halloween-orange underline-offset-1 hover:underline">
+        <a className=" text-sm font-semibold text-halloween-orange underline-offset-1 hover:underline">
           Proceed to login page.
         </a>
       </Link>

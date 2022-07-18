@@ -44,7 +44,7 @@ export const FileDropZone = ({
 
   return (
     <div className={className}>
-      <div className="mb-2 font-urbanist text-base font-medium text-onyx empty:hidden">{label}</div>
+      <div className="mb-2 text-base font-medium text-onyx empty:hidden">{label}</div>
       <div
         {...getRootProps()}
         className={`flex h-35 cursor-default items-center justify-center overflow-hidden rounded-xl border border-dashed ${
@@ -54,7 +54,7 @@ export const FileDropZone = ({
         }`}
       >
         <div className="cursor absolute flex flex-col items-center">
-          <div className="mb-1.5 font-urbanist text-sm font-medium text-onyx">
+          <div className="mb-1.5 text-sm font-medium text-onyx">
             Drag {'&'} drop you assets, or{' '}
             <button
               className="font-semibold text-halloween-orange underline underline-offset-1"
@@ -64,7 +64,7 @@ export const FileDropZone = ({
               browse it
             </button>
           </div>
-          <div className="text-center font-urbanist text-xs font-normal text-metallic-silver">
+          <div className="text-center text-xs font-normal text-metallic-silver">
             Files Supported:{' '}
             <span className="uppercase">{accept.join(', ').replace(/\./g, '')}</span>
             <br />
@@ -90,7 +90,7 @@ export const FileDropZone = ({
                     {name.split(/\./).pop()}
                   </div>
                 </div>
-                <div className="mr-auto font-urbanist text-xs font-semibold text-onyx">{name}</div>
+                <div className="mr-auto text-xs font-semibold text-onyx">{name}</div>
                 <button type="button" className="group" onClick={removeFile}>
                   <RemoveFileIcon className="stroke-lavender-gray group-hover:stroke-tart-orange" />
                 </button>

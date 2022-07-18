@@ -162,7 +162,7 @@ export const RichTextInput = ({
     <div className={className}>
       <label
         htmlFor={name}
-        className={`mb-2 inline-block font-urbanist font-medium text-metallic-silver empty:hidden ${labelClassName}`}
+        className={`mb-2 inline-block  font-medium text-metallic-silver empty:hidden ${labelClassName}`}
       >
         {label}
       </label>

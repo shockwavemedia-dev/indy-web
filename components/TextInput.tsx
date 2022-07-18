@@ -22,14 +22,14 @@ export const TextInput = ({
   <div className={`w-full ${className}`}>
     <label
       htmlFor={name}
-      className="mb-2 inline-block font-urbanist text-xs font-medium text-metallic-silver empty:hidden"
+      className="mb-2 inline-block text-xs font-medium text-metallic-silver empty:hidden"
     >
       {label}
     </label>
     <div className="relative flex items-center">
       <Icon className="pointer-events-none absolute left-6 stroke-lavender-gray" />
       <Field
-        className="h-12.5 w-full rounded-xl px-13 font-urbanist text-sm font-medium text-onyx placeholder-metallic-silver ring-1 ring-bright-gray read-only:cursor-auto focus:ring-2 focus:ring-halloween-orange read-only:focus:ring-1 read-only:focus:ring-bright-gray"
+        className="h-12.5 w-full rounded-xl px-13 text-sm font-medium text-onyx placeholder-metallic-silver ring-1 ring-bright-gray read-only:cursor-auto focus:ring-2 focus:ring-halloween-orange read-only:focus:ring-1 read-only:focus:ring-bright-gray"
         type={type}
         name={name}
         id={name}

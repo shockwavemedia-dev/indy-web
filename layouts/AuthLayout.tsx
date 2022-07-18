@@ -17,12 +17,10 @@ const AuthLayout = ({
             Indy<span className="text-halloween-orange">.</span>
           </div>
         </div>
-        <div className="mb-2 font-urbanist text-2.5xl font-semibold text-halloween-orange empty:hidden">
+        <div className="mb-2 text-2.5xl font-semibold text-halloween-orange empty:hidden">
           {title}
         </div>
-        <div className="mb-5 text-center font-urbanist text-base font-medium text-white">
-          {subtitle}
-        </div>
+        <div className="mb-5 text-center text-base font-medium text-white">{subtitle}</div>
         {children}
       </div>
     </div>

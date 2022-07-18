@@ -161,7 +161,7 @@ export const ManagerTicket = ({ ticketId }: { ticketId: number }) => {
             }`}
           />
           <div
-            className={`font-urbanist text-base ${
+            className={` text-base ${
               isActiveTab
                 ? 'font-semibold text-onyx'
                 : 'font-medium text-metallic-silver group-hover:font-semibold group-hover:text-onyx group-disabled:font-medium group-disabled:text-metallic-silver'
@@ -269,9 +269,7 @@ export const ManagerTicket = ({ ticketId }: { ticketId: number }) => {
               tableActions={
                 <button className="flex space-x-2" onClick={toggleAddTicketAssigneeModal}>
                   <PlusIcon className="stroke-halloween-orange" />
-                  <div className="font-urbanist text-sm font-semibold text-halloween-orange">
-                    Add Assignee
-                  </div>
+                  <div className=" text-sm font-semibold text-halloween-orange">Add Assignee</div>
                 </button>
               }
             />
@@ -286,16 +284,13 @@ export const ManagerTicket = ({ ticketId }: { ticketId: number }) => {
                       className="h-35 w-35"
                       href={`/ticket/file/${id}`}
                       name={name}
-                      fileModal
                       thumbnailUrl={thumbnailUrl}
                       fileStatus={status}
                     />
                   )
                 })
               ) : (
-                <div className="m-auto font-urbanist text-base text-metallic-silver">
-                  No files found.
-                </div>
+                <div className="m-auto text-base text-metallic-silver">No files found.</div>
               )}
             </div>
           </Card>
@@ -309,7 +304,7 @@ export const ManagerTicket = ({ ticketId }: { ticketId: number }) => {
           </div>
           <div className="h-px bg-bright-gray" />
           <div
-            className={`-mt-0.5 mb-4 h-0.75 w-1/5 rounded bg-halloween-orange fill-halloween-orange ${
+            className={`-mt-0.5 mb-4 h-0.75 w-1/4 rounded bg-halloween-orange fill-halloween-orange transition-all ${
               activeTab === 'description'
                 ? 'ml-0'
                 : activeTab === 'notes'

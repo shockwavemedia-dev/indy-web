@@ -15,6 +15,6 @@ export const Pill = ({
     }  flex w-fit items-center space-x-1.5 rounded-lg py-0.5 px-2.5`}
   >
     {pillColor && <div className={`h-1.5 w-1.5 rounded-full ${pillColor}`} />}
-    <div className={`${twTextColor} font-urbanist text-sm font-medium capitalize`}>{value}</div>
+    <div className={`${twTextColor}  text-sm font-medium capitalize`}>{value}</div>
   </div>
 )

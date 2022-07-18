@@ -93,9 +93,7 @@ const DapartmentPage: NextPageWithLayout = () => {
         <Card className="w-full" title="Members">
           <button className="absolute top-6 right-6 flex space-x-2" onClick={toggleModal}>
             <PlusIcon className="stroke-halloween-orange" />
-            <div className="font-urbanist text-sm font-semibold text-halloween-orange">
-              Add Member
-            </div>
+            <div className=" text-sm font-semibold text-halloween-orange">Add Member</div>
           </button>
           <Table
             columns={DepartmentMemberTableColumns}

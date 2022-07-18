@@ -25,10 +25,10 @@ export const FancyLink = ({
         {Icon}
       </div>
       <div>
-        <div className="text-left font-urbanist text-base font-semibold text-halloween-orange line-clamp-1">
+        <div className="text-left text-base font-semibold text-halloween-orange line-clamp-1">
           {title}
         </div>
-        <div className="text-left font-urbanist text-xs font-normal text-halloween-orange line-clamp-1">
+        <div className="text-left text-xs font-normal text-halloween-orange line-clamp-1">
           {subtitle}
         </div>
       </div>

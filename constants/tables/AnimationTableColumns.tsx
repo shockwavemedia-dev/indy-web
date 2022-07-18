@@ -8,23 +8,17 @@ export const AnimationTableColumns: Array<Column<Animation>> = [
   {
     Header: 'Title',
     accessor: 'title',
-    Cell: ({ value }) => (
-      <div className="font-urbanist text-sm font-semibold text-onyx">{value}</div>
-    ),
+    Cell: ({ value }) => <div className=" text-sm font-semibold text-onyx">{value}</div>,
   },
   {
     Header: 'Category',
     accessor: 'libraryCategoryName',
-    Cell: ({ value }) => (
-      <div className="font-urbanist text-sm font-semibold text-onyx">{value}</div>
-    ),
+    Cell: ({ value }) => <div className=" text-sm font-semibold text-onyx">{value}</div>,
   },
   {
     Header: 'Description',
     accessor: 'description',
-    Cell: ({ value }) => (
-      <div className="font-urbanist text-sm font-semibold text-onyx">{value}</div>
-    ),
+    Cell: ({ value }) => <div className=" text-sm font-semibold text-onyx">{value}</div>,
   },
   {
     Header: '',

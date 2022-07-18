@@ -56,7 +56,7 @@ export const DeleteAnimationModal = ({
               </TitleValue>
             </div>
             <div className="mb-5 flex">
-              <div className="font-urbanist text-xs font-medium text-metallic-silver">Video</div>
+              <div className=" text-xs font-medium text-metallic-silver">Video</div>
             </div>
             <div className="mb-8 flex w-140">
               <video muted autoPlay loop>

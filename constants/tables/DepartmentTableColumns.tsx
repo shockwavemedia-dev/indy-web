@@ -10,19 +10,17 @@ export const DepartmentTableColumns: Array<Column<Department>> = [
   {
     Header: 'ID',
     accessor: 'id',
-    Cell: ({ value }) => <div className="font-urbanist text-sm font-medium text-onyx">{value}</div>,
+    Cell: ({ value }) => <div className=" text-sm font-medium text-onyx">{value}</div>,
   },
   {
     Header: 'Department Name',
     accessor: 'name',
-    Cell: ({ value }) => (
-      <div className="font-urbanist text-sm font-semibold text-onyx">{value}</div>
-    ),
+    Cell: ({ value }) => <div className=" text-sm font-semibold text-onyx">{value}</div>,
   },
   {
     Header: 'Description',
     accessor: 'description',
-    Cell: ({ value }) => <div className="font-urbanist text-sm font-medium text-onyx">{value}</div>,
+    Cell: ({ value }) => <div className=" text-sm font-medium text-onyx">{value}</div>,
   },
   {
     Header: 'Status',
@@ -58,7 +56,7 @@ export const DepartmentTableColumns: Array<Column<Department>> = [
   {
     Header: 'Minimum Delivery Days',
     accessor: 'minDeliveryDays',
-    Cell: ({ value }) => <div className="font-urbanist text-sm font-medium text-onyx">{value}</div>,
+    Cell: ({ value }) => <div className=" text-sm font-medium text-onyx">{value}</div>,
   },
   {
     Header: '',

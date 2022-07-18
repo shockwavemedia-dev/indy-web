@@ -113,7 +113,7 @@ const ProjectBriefPage: NextPageWithLayout = () => {
                       <CheckIcon className="pointer-events-none absolute left-0.75 stroke-white" />
                       <label
                         htmlFor="marketingPlan"
-                        className="font-urbanist text-sm font-medium text-halloween-orange"
+                        className=" text-sm font-medium text-halloween-orange"
                       >
                         Add to Marketing Plan
                       </label>
@@ -171,7 +171,7 @@ const SelectService = () => {
   return (
     <>
       <div className="flex h-fit w-60 flex-col items-center space-y-2 rounded-xl bg-white p-5">
-        <div className="mb-3 font-urbanist text-lg font-semibold text-onyx">Select Services</div>
+        <div className="mb-3 text-lg font-semibold text-onyx">Select Services</div>
         {services?.map((service) => {
           const toggleService = () => {
             if (values.services.find(({ serviceId }) => serviceId === service.serviceId)) {
@@ -209,7 +209,7 @@ const SelectService = () => {
       </div>
       {activeService && activeService.extras.length > 0 && (
         <div className="h-fit w-60 rounded-xl bg-white p-5">
-          <div className="mb-3 text-center font-urbanist text-lg font-semibold text-onyx">
+          <div className="mb-3 text-center text-lg font-semibold text-onyx">
             Select {activeService.extraQuota > 0 && activeService.extraQuota} Extras
           </div>
           <div className="space-y-2">
@@ -266,11 +266,7 @@ const ServiceButton = ({
         selected ? 'bg-halloween-orange' : 'border-1.5 border-solid border-bright-gray bg-white'
       } ${disabled ? 'cursor-default opacity-40' : ''}`}
     >
-      <div
-        className={`text-left font-urbanist text-sm font-medium ${
-          selected ? 'text-white' : 'text-onyx'
-        }`}
-      >
+      <div className={`text-left  text-sm font-medium ${selected ? 'text-white' : 'text-onyx'}`}>
         {serviceName}
       </div>
       {selected && <ServiceCheckIcon />}
@@ -335,7 +331,7 @@ const Extras = ({
           disabled={disabled}
         />
         <CheckIcon className="pointer-events-none absolute left-0.75 stroke-white" />
-        <label htmlFor={extrasName} className="font-urbanist text-sm font-medium text-onyx">
+        <label htmlFor={extrasName} className=" text-sm font-medium text-onyx">
           {extrasName}
         </label>
       </div>
@@ -344,7 +340,7 @@ const Extras = ({
           <EditIcon className="pointer-events-none absolute left-6 stroke-lavender-gray" />
           <input
             type="text"
-            className="h-12.5 w-full rounded-xl px-13 font-urbanist text-sm font-medium text-onyx placeholder-metallic-silver ring-1 ring-bright-gray read-only:cursor-auto focus:ring-2 focus:ring-halloween-orange read-only:focus:ring-1 read-only:focus:ring-bright-gray"
+            className="h-12.5 w-full rounded-xl px-13 text-sm font-medium text-onyx placeholder-metallic-silver ring-1 ring-bright-gray read-only:cursor-auto focus:ring-2 focus:ring-halloween-orange read-only:focus:ring-1 read-only:focus:ring-bright-gray"
             placeholder="Enter Custom"
             onChange={setCustomFieldValue}
           />

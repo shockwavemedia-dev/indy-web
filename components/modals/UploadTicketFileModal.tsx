@@ -9,9 +9,16 @@ import { UploadTicketFile } from '../../types/forms/UploadTicketFile.type'
 import { objectWithFileToFormData } from '../../utils/FormHelpers'
 import { Button } from '../Button'
 import { FileDropZone } from '../FileDropZone'
+import { FolderSelect } from '../FolderSelect'
 import { Modal } from '../Modal'
 
-export const UploadTicketFileModal = ({ ticketId }: { ticketId: number }) => {
+export const UploadTicketFileModal = ({
+  ticketId,
+  clientId,
+}: {
+  ticketId: number
+  clientId: number
+}) => {
   const { isUploadTicketFileModalVisible, toggleUploadTicketFileModal } =
     useUploadTicketFileModalStore()
   const { showToast } = useToastStore()
@@ -42,18 +49,20 @@ export const UploadTicketFileModal = ({ ticketId }: { ticketId: number }) => {
         <Modal title="Upload Ticket File" onClose={toggleUploadTicketFileModal}>
           <Formik
             validationSchema={UploadTicketFileSchema}
-            initialValues={{ file: null }}
+            initialValues={{ file: null, folderId: '' }}
             onSubmit={submitTicketFile}
           >
             {({ isSubmitting }) => (
-              <Form className="w-130">
-                <FileDropZone
-                  name="file"
-                  className="mb-8"
-                  maxSize={250}
-                  mimeType="image/gif"
-                  accept={['.gif', '.Graphics', '.mp4', '.png', '.jpeg', '.jpg']}
-                />
+              <Form className="w-130 space-y-8">
+                <div className="space-y-5">
+                  <FileDropZone
+                    name="file"
+                    maxSize={250}
+                    mimeType="image/gif"
+                    accept={['.gif', '.Graphics', '.mp4', '.png', '.jpeg', '.jpg']}
+                  />
+                  <FolderSelect clientId={clientId} />
+                </div>
                 <div className="flex space-x-5">
                   <Button
                     ariaLabel="Cancel"

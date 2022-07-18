@@ -25,7 +25,7 @@ export const Modal = ({
       <button className="absolute top-6 right-6" onClick={onClose}>
         <CloseModalIcon className="stroke-lavender-gray" />
       </button>
-      <div className="mb-6 font-urbanist text-xl font-semibold text-onyx">{title}</div>
+      <div className="mb-6 text-xl font-semibold text-onyx">{title}</div>
       {children}
     </div>
   </>

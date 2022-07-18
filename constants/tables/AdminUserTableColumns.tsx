@@ -9,9 +9,7 @@ export const AdminUserTableColumns: Array<Column<User>> = [
   {
     Header: 'Email',
     accessor: 'email',
-    Cell: ({ value }) => (
-      <div className="font-urbanist text-sm font-semibold text-onyx">{value}</div>
-    ),
+    Cell: ({ value }) => <div className=" text-sm font-semibold text-onyx">{value}</div>,
   },
   {
     Header: 'Role',
@@ -49,9 +47,7 @@ export const AdminUserTableColumns: Array<Column<User>> = [
   {
     Header: 'Name',
     accessor: 'fullName',
-    Cell: ({ value }) => (
-      <div className="font-urbanist text-sm font-semibold text-onyx">{value}</div>
-    ),
+    Cell: ({ value }) => <div className=" text-sm font-semibold text-onyx">{value}</div>,
   },
   {
     Header: 'Status',

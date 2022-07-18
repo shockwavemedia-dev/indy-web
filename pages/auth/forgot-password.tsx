@@ -68,7 +68,7 @@ const ForgotPasswordPage: NextPageWithLayout = () => {
               <CaretIcon className="rotate-90 stroke-white" />
             </Button>
             <Link href="/auth/login">
-              <a className="font-urbanist text-sm font-medium text-metallic-silver underline-offset-1 hover:underline">
+              <a className=" text-sm font-medium text-metallic-silver underline-offset-1 hover:underline">
                 Cancel
               </a>
             </Link>

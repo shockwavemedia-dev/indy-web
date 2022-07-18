@@ -22,14 +22,14 @@ export const TicketEmailCard = ({
       className="w-full space-y-3 rounded-xl bg-white px-6 py-5 shadow"
     >
       <div className="flex items-center space-x-2">
-        <div className="font-urbanist text-sm font-semibold text-onyx">{title}</div>
+        <div className=" text-sm font-semibold text-onyx">{title}</div>
         <div className="h-1 w-1 rounded bg-bright-gray" />
-        <div className="font-urbanist text-xs font-medium text-lavender-gray">
+        <div className=" text-xs font-medium text-lavender-gray">
           {format(createdAt, "yy MMM''dd")}
         </div>
       </div>
       {isMessageVisible && (
-        <RichTextDisplay value={message} className="font-urbanist text-sm font-medium text-onyx" />
+        <RichTextDisplay value={message} className=" text-sm font-medium text-onyx" />
       )}
     </button>
   )
