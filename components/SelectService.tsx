@@ -29,7 +29,7 @@ export const SelectService = ({ enabled }: { enabled: boolean }) => {
   return (
     <>
       <div className="absolute -right-6 top-0 flex w-60 translate-x-full flex-col items-center space-y-2 rounded-xl bg-white p-5">
-        <div className="mb-3 font-urbanist text-lg font-semibold text-onyx">Select Services</div>
+        <div className="mb-3 text-lg font-semibold text-onyx">Select Services</div>
         {services?.map((service) => {
           const toggleService = () => {
             if (values.services.includes(service.id)) {
@@ -74,11 +74,7 @@ const ServiceButton = ({
         selected ? 'bg-halloween-orange' : 'border-1.5 border-solid border-bright-gray bg-white'
       }`}
     >
-      <div
-        className={`text-left font-urbanist text-sm font-medium ${
-          selected ? 'text-white' : 'text-onyx'
-        }`}
-      >
+      <div className={`text-left  text-sm font-medium ${selected ? 'text-white' : 'text-onyx'}`}>
         {serviceName}
       </div>
       {selected && <ServiceCheckIcon />}

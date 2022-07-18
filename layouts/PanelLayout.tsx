@@ -7,6 +7,7 @@ import { Fragment, ReactNode, useEffect, useMemo } from 'react'
 import { useQuery } from 'react-query'
 import createStore from 'zustand'
 import { combine } from 'zustand/middleware'
+import { Crumbs } from '../components/Crumbs'
 import { FancyButton } from '../components/FancyButton'
 import { FancyLink } from '../components/FancyLink'
 import { CalendarAddIcon } from '../components/icons/CalendarAddIcon'
@@ -147,24 +148,22 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
   return (
     <>
       <div className="fixed z-20 flex w-full items-center bg-white py-1 px-6 shadow-md">
-        <div className="mr-102 whitespace-nowrap font-urbanist font-semibold text-onyx">
-          Broncos Club
-        </div>
+        <div className="mr-102 whitespace-nowrap font-semibold text-onyx">Broncos Club</div>
         <MagnifyingGlassIcon className="mr-6 stroke-waterloo" />
         <Link href="#">
-          <a className="mr-6 whitespace-nowrap font-urbanist font-semibold text-onyx underline-offset-1 hover:underline">
+          <a className="mr-6 whitespace-nowrap font-semibold text-onyx underline-offset-1 hover:underline">
             Edit Profile
           </a>
         </Link>
         <Link href="#">
-          <a className="whitespace-nowrap font-urbanist font-semibold text-onyx underline-offset-1 hover:underline">
+          <a className="whitespace-nowrap font-semibold text-onyx underline-offset-1 hover:underline">
             Settings
           </a>
         </Link>
         <IndyIcon className="m-0 ml-auto -mr-20 scale-50 p-0" />
         <Image src={DummyAvatar} alt="Dummy" height={32} width={32} className="rounded-full" />
         <div className="ml-3 mr-5 flex flex-col">
-          <div className="font-urbanist text-sm font-medium text-onyx">
+          <div className=" text-sm font-medium text-onyx">
             {session?.user.firstName} {session?.user.lastName}
           </div>
         </div>
@@ -220,17 +219,18 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
         </div>
         <div className="flex w-full items-center justify-center border-t border-t-white border-opacity-20 py-5 2xl:flex-col 2xl:space-y-2">
           <Image src={DailyPressLogoWhite} alt="DailyPress" height={25} width={25} />
-          <div className="ml-3 font-urbanist text-xs text-metallic-silver 2xl:ml-0 2xl:text-center">
+          <div className="ml-3 text-xs text-metallic-silver 2xl:ml-0 2xl:text-center">
             Copyright Daily Press {new Date().getFullYear()}
           </div>
         </div>
       </div>
       <div className="flex h-screen bg-cultured pt-14.5 pl-75 transition-all 2xl:pl-20">
         <div className="w-full overflow-y-auto p-6">
-          <div className="mb-10 flex items-end justify-between">
+          <Crumbs panelName={panelName} />
+          <div className="mb-10 mt-5 flex items-end justify-between">
             <div>
-              <div className="font-urbanist text-3xl font-bold text-onyx">{header}</div>
-              <div className="font-urbanist font-semibold text-halloween-orange">{subHeader}</div>
+              <div className=" text-3xl font-bold text-onyx">{header}</div>
+              <div className=" font-semibold text-halloween-orange">{subHeader}</div>
             </div>
             <div className="font-circular-std text-5xl text-charleston-green">
               Indy<span className="text-halloween-orange">.</span>

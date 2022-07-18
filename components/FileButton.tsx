@@ -8,25 +8,24 @@ export const FileButton = ({
   href,
   name,
   className,
-  fileModal = false,
-  textClassName,
   thumbnailUrl = null,
-  fileStatus = null,
+  fileStatus = '',
+  openNewTab = false,
 }: {
   onClick?: () => void
   href?: string
   name: string
   className?: string
-  fileModal?: boolean
-  textClassName?: string
   thumbnailUrl?: string | null
-  fileStatus?: string | null
+  fileStatus?: string
+  openNewTab?: boolean
 }) =>
   href ? (
     <a
       href={href}
+      target={openNewTab ? '_blank' : '_self'}
       rel="noopener noreferrer"
-      className={`flex flex-none flex-col items-center justify-center space-y-1 rounded-xl border-2 border-bright-gray p-3 hover:border-halloween-orange ${className}`}
+      className={`grid h-35 w-35 flex-none place-items-center space-y-1 rounded-xl border-2 border-bright-gray p-3 hover:border-halloween-orange ${className}`}
     >
       <div className="relative">
         {thumbnailUrl ? (
@@ -40,37 +39,16 @@ export const FileButton = ({
           </div>
         )}
       </div>
-      <div className="w-full break-words text-center font-urbanist text-xxs font-semibold text-onyx">
-        {name}
-      </div>
-      {fileStatus === 'approved' ? (
-        <BadgeCheckIcon className="text-forest-green"></BadgeCheckIcon>
-      ) : (
-        <div className="w-full break-words text-center font-urbanist text-xxs font-semibold text-onyx"></div>
-      )}
+      <div className="w-full break-words text-center text-xxs font-semibold text-onyx">{name}</div>
+      {fileStatus === 'approved' && <BadgeCheckIcon className="h-5 text-forest-green" />}
     </a>
   ) : (
     <button
       type="button"
       onClick={onClick}
-      className={`flex flex-none flex-col items-center justify-center space-y-1 rounded-xl border-2 border-bright-gray p-3 hover:border-halloween-orange ${className}`}
+      className={`flex h-35 w-35 flex-none flex-col items-center justify-center space-y-3 rounded-xl border-2 border-bright-gray p-3 hover:border-halloween-orange ${className}`}
     >
-      {fileModal ? (
-        <div className="relative">
-          <FileIcon />
-          <div className="absolute top-3 left-1/2 -translate-x-1/2 font-varela-round text-tiny uppercase text-white">
-            {name.split(/\./).pop()}
-          </div>
-        </div>
-      ) : (
-        <FolderIcon className="stroke-halloween-orange" />
-      )}
-      <div
-        className={` ${
-          textClassName ? textClassName : 'text-xxs'
-        } font-urbanist font-semibold text-onyx ${!fileModal ? 'capitalize' : ''}`}
-      >
-        {name}
-      </div>
+      <FolderIcon className="stroke-halloween-orange" />
+      <div className="break-words text-xs text-onyx">{name}</div>
     </button>
   )

@@ -21,7 +21,7 @@ export const Button = ({
     type={type}
     aria-label={ariaLabel}
     disabled={disabled}
-    className={`flex h-12.5 w-full items-center justify-center space-x-2 rounded-xl font-urbanist text-base font-semibold ${
+    className={`flex h-12.5 w-full items-center justify-center space-x-2 rounded-xl  text-base font-semibold ${
       light
         ? 'border-1.5 border-solid border-bright-gray bg-white text-onyx'
         : 'bg-halloween-orange text-white'

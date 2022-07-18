@@ -105,7 +105,7 @@ export const DataTable = <T extends Record<string, unknown>>({
                           {...getHeaderProps(getSortByToggleProps({ title: undefined }))}
                         >
                           <div className="flex items-center space-x-2">
-                            <div className="font-urbanist text-xs font-medium text-metallic-silver">
+                            <div className=" text-xs font-medium text-metallic-silver">
                               {render('Header')}
                             </div>
                             {canSort && (
@@ -153,7 +153,7 @@ export const DataTable = <T extends Record<string, unknown>>({
             </table>
           </div>
           <div className="relative flex items-center justify-center">
-            <div className="absolute left-0 font-urbanist text-sm font-medium text-metallic-silver">
+            <div className="absolute left-0 text-sm font-medium text-metallic-silver">
               {pageIndex * pageSize + 1}-
               {pageIndex + 1 === pagination?.page.lastPage
                 ? pagination.page.total
@@ -171,7 +171,7 @@ export const DataTable = <T extends Record<string, unknown>>({
                 small
               />
             </button>
-            <div className="mx-5 flex space-x-4 font-urbanist text-sm font-medium">
+            <div className="mx-5 flex space-x-4 text-sm font-medium">
               {pageIndex > 1 && (
                 <>
                   <button
@@ -229,7 +229,7 @@ export const DataTable = <T extends Record<string, unknown>>({
         </>
       ) : (
         !isLoading && (
-          <div className="m-auto w-fit font-urbanist text-base text-metallic-silver">
+          <div className="m-auto w-fit text-base text-metallic-silver">
             No entries found in {ofString} table. 😶
           </div>
         )

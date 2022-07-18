@@ -70,7 +70,7 @@ const PasswordResetPage: NextPageWithLayout = () => {
               className="mb-3"
             />
             <PasswordStrengthMeter strength={passwordStrength} className="mr-auto mb-2" />
-            <div className="mr-auto mb-5 font-urbanist text-xxs font-medium text-metallic-silver">
+            <div className="mr-auto mb-5 text-xxs font-medium text-metallic-silver">
               Should be at least 8 symbols and contain one small and one big character, special
               <br />
               character and number
@@ -91,7 +91,7 @@ const PasswordResetPage: NextPageWithLayout = () => {
               <div>Save New Password</div>
             </Button>
             <Link href="/auth/login">
-              <a className="font-urbanist text-sm font-medium text-metallic-silver underline-offset-1 hover:underline">
+              <a className=" text-sm font-medium text-metallic-silver underline-offset-1 hover:underline">
                 Cancel
               </a>
             </Link>

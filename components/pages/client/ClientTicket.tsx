@@ -155,14 +155,14 @@ export const ClientTicket = ({ ticketId }: { ticketId: number }) => {
             className={`mr-2.5 ${
               isActiveTab
                 ? 'stroke-halloween-orange'
-                : 'stroke-lavender-gray group-hover:stroke-halloween-orange group-disabled:stroke-lavender-gray'
+                : 'stroke-lavender-gray transition-all group-hover:stroke-halloween-orange group-disabled:stroke-lavender-gray'
             }`}
           />
           <div
-            className={`font-urbanist text-base ${
+            className={` text-base ${
               isActiveTab
                 ? 'font-semibold text-onyx'
-                : 'font-medium text-metallic-silver group-hover:font-semibold group-hover:text-onyx group-disabled:font-medium group-disabled:text-metallic-silver'
+                : 'font-medium text-metallic-silver transition-all group-hover:font-semibold group-hover:text-onyx group-disabled:font-medium group-disabled:text-metallic-silver'
             }`}
           >
             {title}
@@ -235,20 +235,31 @@ export const ClientTicket = ({ ticketId }: { ticketId: number }) => {
               <TitleValue title="Date Created" className="flex items-center justify-between">
                 {format(ticket!.createdAt, "yy MMM''dd")}
               </TitleValue>
-              <TitleValue title="Services">
-                {!!ticket!.services && ticket!.services?.length > 0 && (
+              {!!ticket!.services && ticket!.services?.length > 0 && (
+                <TitleValue title="Services">
                   <div className="flex flex-wrap gap-1">
-                    {ticket!.services?.map(({ serviceName, extras }, i) => (
+                    {ticket!.services?.map(({ serviceName, extras, customFields }, i) => (
                       <Fragment key={`${serviceName}-${i}`}>
-                        <Pill value={serviceName} />
-                        {extras.map((extra) => (
-                          <Pill key={`${serviceName}-${extra}`} value={extra} />
-                        ))}
+                        <div className="flex flex-wrap gap-1">
+                          <Pill value={serviceName} />
+                          {extras.map((extra) => (
+                            <Pill key={`${serviceName}-${extra}`} value={extra} />
+                          ))}
+                        </div>
+                        {customFields?.length > 0 && (
+                          <div className="mt-2 flex flex-wrap gap-1">
+                            <TitleValue title="Custom">
+                              {customFields.map((custom) => (
+                                <Pill key={`${custom}`} value={custom} />
+                              ))}
+                            </TitleValue>
+                          </div>
+                        )}
                       </Fragment>
                     ))}
                   </div>
-                )}
-              </TitleValue>
+                </TitleValue>
+              )}
             </div>
           </Card>
           <Card title="Assignees">
@@ -269,16 +280,13 @@ export const ClientTicket = ({ ticketId }: { ticketId: number }) => {
                       className="h-35 w-35"
                       href={`/ticket/file/${id}`}
                       name={name}
-                      fileModal
                       thumbnailUrl={thumbnailUrl}
                       fileStatus={status}
                     />
                   )
                 })
               ) : (
-                <div className="m-auto font-urbanist text-base text-metallic-silver">
-                  No files found.
-                </div>
+                <div className="m-auto text-base text-metallic-silver">No files found.</div>
               )}
             </div>
           </Card>
@@ -292,7 +300,7 @@ export const ClientTicket = ({ ticketId }: { ticketId: number }) => {
           </div>
           <div className="h-px bg-bright-gray" />
           <div
-            className={`-mt-0.5 mb-4 h-0.75 w-1/4 rounded bg-halloween-orange fill-halloween-orange ${
+            className={`-mt-0.5 mb-4 h-0.75 w-1/4 rounded bg-halloween-orange fill-halloween-orange transition-all ${
               activeTab === 'description'
                 ? 'ml-0'
                 : activeTab === 'notes'
@@ -326,9 +334,7 @@ export const ClientTicket = ({ ticketId }: { ticketId: number }) => {
                       />
                     ))
                   ) : (
-                    <div className="font-urbanist text-xs text-metallic-silver">
-                      No attachment to display.
-                    </div>
+                    <div className=" text-xs text-metallic-silver">No attachment to display.</div>
                   )}
                 </div>
               </Card>

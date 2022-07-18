@@ -11,7 +11,7 @@ export const DepartmentMemberTableColumns: Array<Column<DepartmentMember>> = [
   {
     Header: 'Admin User ID',
     accessor: 'adminUserId',
-    Cell: ({ value }) => <div className="font-urbanist text-sm font-medium text-onyx">{value}</div>,
+    Cell: ({ value }) => <div className=" text-sm font-medium text-onyx">{value}</div>,
   },
   {
     Header: 'Role',
@@ -49,17 +49,17 @@ export const DepartmentMemberTableColumns: Array<Column<DepartmentMember>> = [
   {
     Header: 'First Name',
     accessor: 'firstName',
-    Cell: ({ value }) => <div className="font-urbanist text-sm font-medium text-onyx">{value}</div>,
+    Cell: ({ value }) => <div className=" text-sm font-medium text-onyx">{value}</div>,
   },
   {
     Header: 'Middle Name',
     accessor: 'middleName',
-    Cell: ({ value }) => <div className="font-urbanist text-sm font-medium text-onyx">{value}</div>,
+    Cell: ({ value }) => <div className=" text-sm font-medium text-onyx">{value}</div>,
   },
   {
     Header: 'Last Name',
     accessor: 'lastName',
-    Cell: ({ value }) => <div className="font-urbanist text-sm font-medium text-onyx">{value}</div>,
+    Cell: ({ value }) => <div className=" text-sm font-medium text-onyx">{value}</div>,
   },
   {
     Header: '',

@@ -49,7 +49,7 @@ export const Table = <T extends Record<string, unknown>>({
                           {...getHeaderProps(getSortByToggleProps({ title: undefined }))}
                         >
                           <div className="flex items-center space-x-2">
-                            <div className="font-urbanist text-xs font-medium text-metallic-silver">
+                            <div className=" text-xs font-medium text-metallic-silver">
                               {render('Header')}
                             </div>
                             {canSort && (
@@ -98,7 +98,7 @@ export const Table = <T extends Record<string, unknown>>({
           </div>
         </>
       ) : (
-        <div className="m-auto w-fit font-urbanist text-base text-metallic-silver">
+        <div className="m-auto w-fit text-base text-metallic-silver">
           No entries found in {ofString} table. 😶
         </div>
       )}

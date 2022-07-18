@@ -7,14 +7,14 @@ export const Crumbs = ({ panelName }: { panelName: string }) => {
   const { asPath } = useRouter()
 
   return (
-    <>
+    <div className="flex items-center">
       {[panelName, ...asPath.split('/')]
         .filter((s) => s !== '')
         .map((s, i, paths) => (
           <Fragment key={`crumbs-${i}`}>
             <Link href={i === 0 ? '/' : '#'}>
               <a
-                className={`font-urbanist text-xs capitalize underline-offset-1 hover:text-halloween-orange hover:underline ${
+                className={` text-xs capitalize underline-offset-1 hover:text-halloween-orange hover:underline ${
                   i + 1 === paths.length
                     ? 'mr-auto font-semibold text-halloween-orange'
                     : 'mr-3 font-medium text-waterloo'
@@ -28,6 +28,6 @@ export const Crumbs = ({ panelName }: { panelName: string }) => {
             )}
           </Fragment>
         ))}
-    </>
+    </div>
   )
 }

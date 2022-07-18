@@ -124,14 +124,14 @@ export const ClientAnimations = () => {
                   />
                 ))
               ) : (
-                <div className="m-auto w-fit font-urbanist text-base text-metallic-silver">
+                <div className="m-auto w-fit text-base text-metallic-silver">
                   No animations to display. 😶
                 </div>
               )}
             </div>
             {animationPagination && (
               <div className="relative flex items-center justify-center">
-                <div className="absolute left-0 font-urbanist text-sm font-medium text-metallic-silver">
+                <div className="absolute left-0 text-sm font-medium text-metallic-silver">
                   {animationPagination.page.from} - {animationPagination.page.to} of{' '}
                   {animationPagination.page.total} Animations
                 </div>
@@ -146,7 +146,7 @@ export const ClientAnimations = () => {
                     small
                   />
                 </button>
-                <div className="mx-5 flex space-x-4 font-urbanist text-sm font-medium">
+                <div className="mx-5 flex space-x-4 text-sm font-medium">
                   {animationPagination.page.currentPage > 2 && (
                     <>
                       <button
@@ -245,13 +245,13 @@ const AnimationButton = ({ animation }: { animation: Animation }) => {
   const toggleAnimation = () => toggleCreateAnimationRequestModal(animation.id)
 
   return failedToLoad ? (
-    <div className="grid h-44 w-78.5 place-content-center rounded-xl border border-halloween-orange font-urbanist text-sm font-medium text-onyx">
+    <div className="grid h-44 w-78.5 place-content-center rounded-xl border border-halloween-orange text-sm font-medium text-onyx">
       <div>
         Failed to load{' '}
         <Link href={animation.videoLink}>
           <a
             target="_blank"
-            className="font-urbanist text-sm font-semibold text-halloween-orange underline-offset-1 hover:underline"
+            className=" text-sm font-semibold text-halloween-orange underline-offset-1 hover:underline"
           >
             {animation.title}
           </a>

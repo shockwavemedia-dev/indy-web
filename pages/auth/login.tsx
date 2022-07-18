@@ -76,7 +76,7 @@ const LoginPage: NextPageWithLayout = () => {
             <div className="mb-8 flex w-full justify-between">
               <Checkbox name="rememberMe" label="Remember me" />
               <Link href="/auth/forgot-password">
-                <a className="font-urbanist text-sm font-semibold text-halloween-orange underline-offset-1 hover:underline">
+                <a className=" text-sm font-semibold text-halloween-orange underline-offset-1 hover:underline">
                   Forgot Password?
                 </a>
               </Link>
@@ -85,10 +85,10 @@ const LoginPage: NextPageWithLayout = () => {
               <div>Log In</div>
               <CaretIcon className="rotate-90 stroke-white" />
             </Button>
-            <div className="font-urbanist text-sm font-medium text-metallic-silver">
+            <div className=" text-sm font-medium text-metallic-silver">
               Don{"'"}t have an account?{' '}
               <Link href="/auth/sign-up">
-                <a className="font-urbanist text-sm font-semibold text-halloween-orange underline-offset-1 hover:underline">
+                <a className=" text-sm font-semibold text-halloween-orange underline-offset-1 hover:underline">
                   Sign Up
                 </a>
               </Link>

@@ -100,7 +100,7 @@ const SignUpPage: NextPageWithLayout = () => {
               />
             </div>
             <PasswordStrengthMeter strength={passwordStrength} className="mr-auto mb-2" />
-            <div className="mr-auto mb-8 font-urbanist text-xxs font-medium text-metallic-silver">
+            <div className="mr-auto mb-8 text-xxs font-medium text-metallic-silver">
               Should be at least 8 symbols and contain one small
               <br />
               and one big character, special character and number
@@ -109,10 +109,10 @@ const SignUpPage: NextPageWithLayout = () => {
               <div>Sign Up</div>
               <CaretIcon className="rotate-90 stroke-white" />
             </Button>
-            <div className="font-urbanist text-sm font-medium text-metallic-silver">
+            <div className=" text-sm font-medium text-metallic-silver">
               Already have an account?{' '}
               <Link href="/auth/login">
-                <a className="font-urbanist text-sm font-semibold text-halloween-orange underline-offset-1 hover:underline">
+                <a className=" text-sm font-semibold text-halloween-orange underline-offset-1 hover:underline">
                   Login
                 </a>
               </Link>

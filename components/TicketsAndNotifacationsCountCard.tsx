@@ -14,7 +14,7 @@ export const TicketsAndNotifacationsCountCard = ({
   >
     {isLoading ? (
       <>
-        <div className="h-7 w-7 animate-pulse rounded-md bg-bright-gray" />
+        <div className="mb-1 h-7 w-7 animate-pulse rounded-md bg-bright-gray" />
         <div className="w-full space-y-1">
           <div className="mx-auto h-2 w-3/4 animate-pulse rounded-sm bg-bright-gray px-2" />
           <div className="mx-auto h-2 w-1/2 animate-pulse rounded-sm bg-bright-gray px-2" />
@@ -22,10 +22,8 @@ export const TicketsAndNotifacationsCountCard = ({
       </>
     ) : (
       <>
-        <div className="font-urbanist text-xl font-semibold text-white">{value}</div>
-        <div className="px-4 text-center font-urbanist text-xs font-medium text-white">
-          {description}
-        </div>
+        <div className=" text-xl font-semibold text-white">{value}</div>
+        <div className="px-4 text-center text-xs font-medium text-white">{description}</div>
       </>
     )}
   </div>

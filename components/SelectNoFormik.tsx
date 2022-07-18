@@ -19,7 +19,7 @@ const SelectContainer = <Option, IsMulti extends boolean>({
   ...props
 }: ContainerProps<Option, IsMulti>) => (
   <Components.SelectContainer {...props}>
-    <label className="mb-2 inline-block font-urbanist text-xs font-medium text-metallic-silver empty:hidden">
+    <label className="mb-2 inline-block text-xs font-medium text-metallic-silver empty:hidden">
       {props.selectProps.label}
     </label>
     {children}

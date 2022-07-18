@@ -179,7 +179,7 @@ export const NewClientUserModal = ({
                   />
                 </div>
                 <PasswordStrengthMeter strength={passwordStrength} className="mr-auto mb-2" />
-                <div className="mr-auto mb-8 font-urbanist text-xxs font-medium text-metallic-silver">
+                <div className="mr-auto mb-8 text-xxs font-medium text-metallic-silver">
                   Should be at least 8 symbols and contain one small
                   <br />
                   and one big character, special character and number

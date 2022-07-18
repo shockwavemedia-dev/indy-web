@@ -25,7 +25,7 @@ export const RouteButton = ({
         target={target}
       >
         <Icon className={`${subRoute ? 'fill-white' : 'stroke-white'}`} />
-        <div className="ml-3 font-urbanist text-sm text-white transition-all 2xl:hidden 2xl:group-hover:flex">
+        <div className="ml-3 text-sm text-white transition-all 2xl:hidden 2xl:group-hover:flex">
           {title}
         </div>
       </a>

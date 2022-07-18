@@ -54,7 +54,7 @@ export const ClientTicketsTableColumns: Array<Column<Ticket>> = [
   {
     Header: 'Subject',
     accessor: 'subject',
-    Cell: ({ value }) => <div className="font-urbanist text-sm font-medium text-onyx">{value}</div>,
+    Cell: ({ value }) => <div className=" text-sm font-medium text-onyx">{value}</div>,
   },
   {
     Header: 'Status',
@@ -102,9 +102,7 @@ export const ClientTicketsTableColumns: Array<Column<Ticket>> = [
     accessor: 'createdAt',
     sortType: 'datetime',
     Cell: ({ value }) => (
-      <div className="font-urbanist text-sm font-medium text-onyx">
-        {format(value, "yy MMM''dd")}
-      </div>
+      <div className=" text-sm font-medium text-onyx">{format(value, "yy MMM''dd")}</div>
     ),
   },
   {
@@ -112,9 +110,7 @@ export const ClientTicketsTableColumns: Array<Column<Ticket>> = [
     accessor: 'duedate',
     sortType: 'datetime',
     Cell: ({ value }) => (
-      <div className="font-urbanist text-sm font-medium text-onyx">
-        {format(value, "yy MMM''dd")}
-      </div>
+      <div className=" text-sm font-medium text-onyx">{format(value, "yy MMM''dd")}</div>
     ),
   },
   {
