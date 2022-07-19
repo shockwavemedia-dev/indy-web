@@ -5,6 +5,6 @@ export type CreateMarketingPlannerForm = {
   todoList?: Array<string>
   startDate: Date | null
   endDate: Date | null
-  isRecurring: boolean | undefined | null
+  isRecurring: boolean
   attachments?: Array<File>
 }

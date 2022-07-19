@@ -9,6 +9,6 @@ export const CreateMarketingPlannerFormSchema: SchemaOf<CreateMarketingPlannerFo
     taskManagement: array().of(string().required()).optional(),
     todoList: array().of(string().required()).optional(),
     endDate: date().required(),
-    isRecurring: boolean(),
+    isRecurring: boolean().required(),
     attachments: array().of(mixed().optional()),
   })

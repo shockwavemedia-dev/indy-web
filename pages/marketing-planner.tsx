@@ -38,7 +38,7 @@ const MarketingPlannerPage: NextPageWithLayout = () => {
         objectWithFileToFormData(values)
       )
 
-      if (status === 200) {
+      if (status === 201) {
         queryClient.invalidateQueries('marketingPlanner')
         replace('/dashboard')
         showToast({
