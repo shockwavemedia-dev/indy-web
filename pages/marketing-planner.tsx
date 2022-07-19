@@ -116,7 +116,7 @@ const MarketingPlannerPage: NextPageWithLayout = () => {
                     />
                   </div>
                 </div>
-                <div className="h-fit w-60 rounded-xl bg-white p-5">
+                <div className="h-fit w-75 rounded-xl bg-white p-5">
                   <div className="mb-5 text-center text-sm font-semibold text-onyx">
                     Step 2: To do List
                   </div>
