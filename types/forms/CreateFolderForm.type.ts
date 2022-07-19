@@ -1,4 +1,4 @@
 export type CreateFolderForm = {
   name: string
-  parentFolderId: number | null
+  parentFolderId?: number
 }

@@ -1,20 +1,28 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { useQuery } from 'react-query'
-import { File } from '../types/File.type'
 import { Files } from '../types/Files.type'
 import { Folder } from '../types/Folder.type'
 import { Card } from './Card'
 import { FileButton } from './FileButton'
+import { CaretIcon } from './icons/CaretIcon'
+import { PlusIcon } from './icons/PlusIcon'
+import { CreateFolderModal, useCreateFolderModalStore } from './modals/CreateFolderModal'
 
 export const FileBrowser = ({ clientId }: { clientId: number }) => {
-  const [foldersStack, setFoldersStack] = useState<Array<string>>([])
-  const [folderIdStack, setfolderIdStack] = useState<Array<number>>([])
+  const { toggleModal: toggleCreateFolderModal } = useCreateFolderModalStore()
+  const [foldersStack, setFoldersStack] = useState<
+    Array<{
+      key: string
+      id: number
+      files: Files
+    }>
+  >([])
   const [yearFolder, setYearFolder] = useState('')
   const [monthFolder, setMonthFolder] = useState('')
 
-  const { data: folder, isSuccess: filesSucess } = useQuery(
-    ['files', clientId],
+  const { data: folder, isSuccess: filesSuccess } = useQuery(
+    ['clientFiles', clientId],
     async () => {
       const { data } = await axios.get<Folder>(`/v2/clients/${clientId}/files`)
 
@@ -39,91 +47,100 @@ export const FileBrowser = ({ clientId }: { clientId: number }) => {
   }, [clientId])
 
   return (
-    <Card className="h-fit flex-1">
-      <div className="flex flex-wrap gap-4">
-        {clientId !== -1 ? (
-          filesSucess && !Array.isArray(folder) ? (
-            <>
-              {foldersStack.length > 0 && <FileButton name="../" onClick={goUpOneFolder} />}
-              {Object.entries(
-                foldersStack.reduce((currentFolder, folderName) => {
-                  if (
-                    ((x: Folder | Files): x is Folder => {
-                      const keys = Object.keys(x)
+    <>
+      <Card className="h-fit flex-1">
+        {!yearFolder && (
+          <button className="absolute right-6 flex space-x-2" onClick={toggleCreateFolderModal}>
+            <PlusIcon className="stroke-halloween-orange" />
+            <div className=" text-sm font-semibold text-halloween-orange">Create Folder</div>
+          </button>
+        )}
+        <div className="flex max-h-155 flex-wrap gap-4 overflow-y-auto pt-5">
+          {clientId !== -1 ? (
+            filesSuccess && (
+              <>
+                {foldersStack.length > 0 && (
+                  <FileButton
+                    name="Go back"
+                    Icon={<CaretIcon className="-rotate-90 stroke-halloween-orange" />}
+                    onClick={goUpOneFolder}
+                  />
+                )}
+                {!yearFolder &&
+                  Object.entries(
+                    foldersStack.reduce((currentFolder, { key }) => {
+                      const folders = currentFolder[key].folders
 
-                      if (keys.length > 0) {
-                        return !!x[keys[0]].name
+                      if (folders && !Array.isArray(folders[0])) {
+                        return folders.reduce((folders, folder) => ({ ...folders, ...folder }), {})
                       }
 
-                      return false
-                    })(currentFolder)
-                  ) {
-                    const folders = currentFolder[folderName].folders
+                      return {}
+                    }, folder)
+                  ).map(([k, { id, name, files }]) => {
+                    const enterFolder = () =>
+                      setFoldersStack([
+                        ...foldersStack,
+                        {
+                          key: k,
+                          id: id,
+                          files,
+                        },
+                      ])
 
-                    if (folders && !Array.isArray(folders[0])) {
-                      return folders.reduce((folders, folder) => ({ ...folders, ...folder }), {})
-                    } else {
-                      return currentFolder[folderName].files
+                    return <FileButton key={name} name={name} onClick={enterFolder} />
+                  })}
+                {!yearFolder &&
+                  foldersStack.length > 0 &&
+                  Object.keys(foldersStack[foldersStack.length - 1].files).map((year) => {
+                    const enterYearFolder = () => setYearFolder(year)
+
+                    return <FileButton key={year} name={year} onClick={enterYearFolder} />
+                  })}
+                {yearFolder &&
+                  !monthFolder &&
+                  Object.keys(foldersStack[foldersStack.length - 1].files[yearFolder]).map(
+                    (month) => {
+                      const enterMonthFolder = () => setMonthFolder(month)
+
+                      return (
+                        <FileButton
+                          key={month}
+                          name={`${month.charAt(0).toUpperCase()}${month.slice(1)}`}
+                          onClick={enterMonthFolder}
+                        />
+                      )
                     }
-                  } else {
-                    return currentFolder
-                  }
-                }, folder as Folder | Files)
-              ).map(([k, v]) => {
-                const enterFolder = () => {
-                  setFoldersStack([...foldersStack, k])
-                  setfolderIdStack([...folderIdStack, v.id])
-                }
-
-                if (v.name) {
-                  return <FileButton key={v.name} name={v.name} onClick={enterFolder} />
-                }
-
-                if (monthFolder && ((x: unknown): x is Record<string, Array<File>> => !!x)(v)) {
-                  return v[monthFolder].map(
-                    ({ originalFilename, fileName, thumbnailUrl, url, clientTicketFile }) => (
+                  )}
+                {monthFolder &&
+                  foldersStack[foldersStack.length - 1].files[yearFolder][monthFolder].map(
+                    ({
+                      fileName,
+                      originalFilename,
+                      thumbnailUrl,
+                      clientTicketFile: { status, id },
+                    }) => (
                       <FileButton
                         key={fileName}
                         name={originalFilename}
                         thumbnailUrl={thumbnailUrl}
-                        href={clientTicketFile ? `/ticket/file/${clientTicketFile.id}` : url}
-                        fileStatus={clientTicketFile ? clientTicketFile.status : ''}
-                        openNewTab={!clientTicketFile}
+                        href={`/ticket/file/${id}`}
+                        fileStatus={status}
                       />
                     )
-                  )
-                } else if (yearFolder === k) {
-                  return Object.keys(v).map((month) => {
-                    const enterMonthFolder = () => setMonthFolder(month)
-
-                    return (
-                      <FileButton
-                        key={month}
-                        name={`${month.charAt(0).toUpperCase()}${month.slice(1)}`}
-                        onClick={enterMonthFolder}
-                      />
-                    )
-                  })
-                }
-
-                const enterYearFolder = () => setYearFolder(k)
-
-                return (
-                  <FileButton
-                    key={k}
-                    name={`${k.charAt(0).toUpperCase()}${k.slice(1)}`}
-                    onClick={enterYearFolder}
-                  />
-                )
-              })}
-            </>
+                  )}
+              </>
+            )
           ) : (
-            <div className="flex-1 text-center text-xs text-metallic-silver">No files found.</div>
-          )
-        ) : (
-          <div className="flex-1 text-center text-xs text-metallic-silver">Select a Client.</div>
-        )}
-      </div>
-    </Card>
+            <div className="flex-1 text-center text-xs text-metallic-silver">Select a Client.</div>
+          )}
+        </div>
+      </Card>
+      <CreateFolderModal
+        parentFolderId={
+          foldersStack.length > 0 ? foldersStack[foldersStack.length - 1].id : undefined
+        }
+      />
+    </>
   )
 }

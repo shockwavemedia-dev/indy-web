@@ -18,7 +18,7 @@ export const FolderSelect = ({ clientId }: { clientId: number }) => {
   const [yearFolder, setYearFolder] = useState('')
   const [monthFolder, setMonthFolder] = useState('')
 
-  const { data: folder, isSuccess: filesSucess } = useQuery(['files', clientId], async () => {
+  const { data: folder, isSuccess: filesSucess } = useQuery(['clientFiles', clientId], async () => {
     const { data } = await axios.get<Folder>(`/v2/clients/${clientId}/files`)
 
     return data

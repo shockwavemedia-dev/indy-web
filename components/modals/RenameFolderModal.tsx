@@ -39,7 +39,7 @@ export const RenameFolderModal = ({
 
       if (status === 200) {
         toggleModal()
-        queryClient.invalidateQueries('files')
+        queryClient.invalidateQueries('clientFiles')
         showToast({
           type: 'success',
           message: 'Folder successfully renamed!',

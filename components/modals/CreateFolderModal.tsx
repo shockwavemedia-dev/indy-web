@@ -23,7 +23,7 @@ export const useCreateFolderModalStore = createStore(
   )
 )
 
-export const CreateFolderModal = ({ parentFolderId = null }: { parentFolderId: number | null }) => {
+export const CreateFolderModal = ({ parentFolderId }: { parentFolderId?: number }) => {
   const { data: session } = useSession()
   const queryClient = useQueryClient()
   const { showToast } = useToastStore()
@@ -38,7 +38,7 @@ export const CreateFolderModal = ({ parentFolderId = null }: { parentFolderId: n
 
       if (status === 200) {
         toggleModal()
-        queryClient.invalidateQueries('files')
+        queryClient.invalidateQueries('clientFiles')
         showToast({
           type: 'success',
           message: 'Folder successfully created!',
@@ -63,8 +63,8 @@ export const CreateFolderModal = ({ parentFolderId = null }: { parentFolderId: n
           <Formik
             validationSchema={CreateFolderFormSchema}
             initialValues={{
-              parentFolderId,
               name: '',
+              parentFolderId: parentFolderId,
             }}
             onSubmit={submitForm}
           >

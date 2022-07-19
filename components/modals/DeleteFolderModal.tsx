@@ -35,7 +35,7 @@ export const DeleteFolderModal = ({
       const { status } = await axios.delete(`/v1/folders/${folderId}`)
 
       if (status === 200) {
-        queryClient.invalidateQueries('files')
+        queryClient.invalidateQueries('clientFiles')
         toggleModal()
         showToast({
           type: 'success',

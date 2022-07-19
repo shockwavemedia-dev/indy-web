@@ -1,4 +1,4 @@
-export const DotsHorizontalIcon = ({ className }: { className: string }) => (
+export const HorizontalDotsIcon = ({ className }: { className: string }) => (
   <svg
     className={className}
     xmlns="http://www.w3.org/2000/svg"

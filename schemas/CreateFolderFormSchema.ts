@@ -3,5 +3,5 @@ import { CreateFolderForm } from '../types/forms/CreateFolderForm.type'
 
 export const CreateFolderFormSchema: SchemaOf<CreateFolderForm> = object().shape({
   name: string().required(),
-  parentFolderId: number().required().nullable(),
+  parentFolderId: number().optional(),
 })
