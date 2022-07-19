@@ -2,6 +2,7 @@ import axios from 'axios'
 import { Form, Formik } from 'formik'
 import { useSession } from 'next-auth/react'
 import Head from 'next/head'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { ReactElement, useEffect } from 'react'
 import { useQueryClient } from 'react-query'
@@ -10,8 +11,11 @@ import { Checkbox } from '../components/Checkbox'
 import { DateInput } from '../components/DateInput'
 import { FileDropZone } from '../components/FileDropZone'
 import { EditIcon } from '../components/icons/EditIcon'
+import { FloppyDiskIcon } from '../components/icons/FloppyDiskIcon'
 import { RichTextInput } from '../components/RichTextInput'
 import { TextInput } from '../components/TextInput'
+import { MarketingMyTaskManagementOptions } from '../constants/options/MarketingMyTaskManagementOptions'
+import { MarketingTodoListOptions } from '../constants/options/MarketingTodoListOptions'
 import PanelLayout, { usePanelLayoutStore } from '../layouts/PanelLayout'
 import { CreateMarketingPlannerFormSchema } from '../schemas/CreateMarketingPlannerFormSchema'
 import { useToastStore } from '../store/ToastStore'
@@ -29,6 +33,7 @@ const MarketingPlannerPage: NextPageWithLayout = () => {
 
   const submitForm = async (values: CreateMarketingPlannerForm) => {
     try {
+      console.log(values)
       const { status } = await axios.post<MarketingPlanner>(
         `/v1/clients/${session?.user.userType.clientId}/marketing-planners`,
         objectWithFileToFormData(values)
@@ -63,7 +68,6 @@ const MarketingPlannerPage: NextPageWithLayout = () => {
         <Formik
           validationSchema={CreateMarketingPlannerFormSchema}
           initialValues={{
-            clientId: session?.user.userType.clientId || -1,
             eventName: '',
             description: '',
             startDate: null,
@@ -80,6 +84,9 @@ const MarketingPlannerPage: NextPageWithLayout = () => {
               <div className="flex justify-center space-x-6">
                 <div className="w-130 space-y-5 rounded-xl bg-white">
                   <div className="p-6">
+                    <div className="mb-3 text-center text-sm font-semibold text-onyx">
+                      Step 1: Event Details
+                    </div>
                     <TextInput
                       type="text"
                       Icon={EditIcon}
@@ -91,6 +98,7 @@ const MarketingPlannerPage: NextPageWithLayout = () => {
                       <DateInput name="startDate" placeholder="Select Start Date" />
                       <DateInput name="endDate" placeholder="Select End Date" />
                     </div>
+                    <Checkbox name="isRecurring" label="Recurring Event" className="mb-5" />
                     <RichTextInput
                       Icon={EditIcon}
                       size="h-86"
@@ -98,7 +106,6 @@ const MarketingPlannerPage: NextPageWithLayout = () => {
                       name="description"
                       className="mb-5"
                     />
-                    <Checkbox name="isRecurring" label="Recurring" className="mb-5" />
                     <FileDropZone
                       label="Upload Assets"
                       name="attachments"
@@ -108,9 +115,51 @@ const MarketingPlannerPage: NextPageWithLayout = () => {
                       accept={['.gif', '.jpeg', '.mp4', '.png']}
                       multiple
                     />
+                  </div>
+                </div>
+                <div className="h-fit w-60 rounded-xl bg-white p-5">
+                  <div className="mb-3 text-center text-sm font-semibold text-onyx">
+                    Step 2: To do List
+                  </div>
+                  {MarketingTodoListOptions?.map((todo) => {
+                    return (
+                      <Checkbox
+                        key={`${todo.value}-todo`}
+                        name="todoList"
+                        label={todo.label}
+                        value={todo.value}
+                        className="mb-5"
+                      />
+                    )
+                  })}
+                </div>
+                <div className="h-fit w-75">
+                  <div className="rounded-xl bg-white p-5">
+                    <div className="mb-3 text-center text-sm font-semibold text-onyx">
+                      Step 3: My Task Management
+                    </div>
+                    {MarketingMyTaskManagementOptions?.map((mytask) => {
+                      return (
+                        <Checkbox
+                          key={`${mytask.value}-my-task`}
+                          name="taskManagement"
+                          label={mytask.label}
+                          value={mytask.value}
+                          className="mb-5"
+                        />
+                      )
+                    })}
+                  </div>
+                  <div className="mt-8 rounded-xl bg-white p-5">
                     <div className="flex space-x-5">
+                      <Link href="/dashboard">
+                        <Button ariaLabel="Cancel" type="button" light>
+                          Cancel
+                        </Button>
+                      </Link>
                       <Button ariaLabel="Submit" disabled={isSubmitting} type="submit">
-                        Submit
+                        <FloppyDiskIcon className="stroke-white" />
+                        <div>Save</div>
                       </Button>
                     </div>
                   </div>

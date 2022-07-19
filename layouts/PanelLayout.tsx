@@ -10,6 +10,7 @@ import { combine } from 'zustand/middleware'
 import { Crumbs } from '../components/Crumbs'
 import { FancyButton } from '../components/FancyButton'
 import { FancyLink } from '../components/FancyLink'
+import { BriefcaseIcon } from '../components/icons/BriefcaseIcon'
 import { CalendarAddIcon } from '../components/icons/CalendarAddIcon'
 import { IndyIcon } from '../components/icons/IndyIcon'
 import { LifeBuoyIcon } from '../components/icons/LifeBuoyIcon'
@@ -109,18 +110,18 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
               subtitle="Laborerivit rem cones mil"
               className="w-fit"
             />
+            <FancyLink
+              href="/marketing-planner"
+              Icon={<BriefcaseIcon className="stroke-halloween-orange" />}
+              title="New Marketing Planner"
+              subtitle="Laborerivit rem cones mil"
+              className="w-fit"
+            />
             <FancyButton
               Icon={<LifeBuoyIcon className="fill-halloween-orange" />}
               title="Support Request"
               subtitle="Laborerivit rem cones mil"
               onClick={toggleSupportRequestModal}
-              className="w-fit"
-            />
-            <FancyLink
-              href="/marketing-planner"
-              Icon={<CalendarAddIcon className="stroke-halloween-orange" />}
-              title="New Marketing Planner"
-              subtitle="Laborerivit rem cones mil"
               className="w-fit"
             />
           </>
