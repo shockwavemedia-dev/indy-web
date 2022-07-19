@@ -33,7 +33,6 @@ const MarketingPlannerPage: NextPageWithLayout = () => {
 
   const submitForm = async (values: CreateMarketingPlannerForm) => {
     try {
-      console.log(values)
       const { status } = await axios.post<MarketingPlanner>(
         `/v1/clients/${session?.user.userType.clientId}/marketing-planners`,
         objectWithFileToFormData(values)
@@ -84,7 +83,7 @@ const MarketingPlannerPage: NextPageWithLayout = () => {
               <div className="flex justify-center space-x-6">
                 <div className="w-130 space-y-5 rounded-xl bg-white">
                   <div className="p-6">
-                    <div className="mb-3 text-center text-sm font-semibold text-onyx">
+                    <div className="mb-5 text-center text-sm font-semibold text-onyx">
                       Step 1: Event Details
                     </div>
                     <TextInput
@@ -118,7 +117,7 @@ const MarketingPlannerPage: NextPageWithLayout = () => {
                   </div>
                 </div>
                 <div className="h-fit w-60 rounded-xl bg-white p-5">
-                  <div className="mb-3 text-center text-sm font-semibold text-onyx">
+                  <div className="mb-5 text-center text-sm font-semibold text-onyx">
                     Step 2: To do List
                   </div>
                   {MarketingTodoListOptions?.map((todo) => {
@@ -135,7 +134,7 @@ const MarketingPlannerPage: NextPageWithLayout = () => {
                 </div>
                 <div className="h-fit w-75">
                   <div className="rounded-xl bg-white p-5">
-                    <div className="mb-3 text-center text-sm font-semibold text-onyx">
+                    <div className="mb-5 text-center text-sm font-semibold text-onyx">
                       Step 3: My Task Management
                     </div>
                     {MarketingMyTaskManagementOptions?.map((mytask) => {
