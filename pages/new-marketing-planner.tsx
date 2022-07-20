@@ -7,6 +7,7 @@ import { useRouter } from 'next/router'
 import { ReactElement, useEffect } from 'react'
 import { useQueryClient } from 'react-query'
 import { Button } from '../components/Button'
+import { Card } from '../components/Card'
 import { Checkbox } from '../components/Checkbox'
 import { DateInput } from '../components/DateInput'
 import { FileDropZone } from '../components/FileDropZone'
@@ -81,75 +82,59 @@ const NewMarketingPlannerPage: NextPageWithLayout = () => {
           {({ isSubmitting }) => (
             <Form>
               <div className="flex justify-center space-x-6">
-                <div className="w-130 space-y-5 rounded-xl bg-white">
-                  <div className="p-6">
-                    <div className="mb-5 text-center text-sm font-semibold text-onyx">
-                      Step 1: Event Details
-                    </div>
-                    <TextInput
-                      type="text"
-                      Icon={EditIcon}
-                      placeholder="Enter Event Name"
-                      name="eventName"
-                      className="mb-5"
-                    />
-                    <div className="mb-5 flex space-x-5">
-                      <DateInput name="startDate" placeholder="Select Start Date" />
-                      <DateInput name="endDate" placeholder="Select End Date" />
-                    </div>
-                    <Checkbox name="isRecurring" label="Recurring Event" className="mb-5" />
-                    <RichTextInput
-                      Icon={EditIcon}
-                      size="h-86"
-                      placeholder="Enter description"
-                      name="description"
-                      className="mb-5"
-                    />
-                    <FileDropZone
-                      label="Upload Assets"
-                      name="attachments"
-                      className="mb-8"
-                      maxSize={250}
-                      mimeType="image/gif"
-                      accept={['.gif', '.jpeg', '.mp4', '.png']}
-                      multiple
-                    />
+                <Card className="w-130" title="Step 1: Event Details" titlePosition="center">
+                  <TextInput
+                    type="text"
+                    Icon={EditIcon}
+                    placeholder="Enter Event Name"
+                    name="eventName"
+                    className="mb-5"
+                  />
+                  <div className="mb-5 flex space-x-5">
+                    <DateInput name="startDate" placeholder="Select Start Date" />
+                    <DateInput name="endDate" placeholder="Select End Date" />
                   </div>
-                </div>
-                <div className="h-fit w-75 rounded-xl bg-white p-5">
-                  <div className="mb-5 text-center text-sm font-semibold text-onyx">
-                    Step 2: To do List
-                  </div>
-                  {MarketingTodoListOptions?.map((todo) => {
-                    return (
-                      <Checkbox
-                        key={`${todo.value}-todo`}
-                        name="todoList"
-                        label={todo.label}
-                        value={todo.value}
-                        className="mb-5"
-                      />
-                    )
-                  })}
-                </div>
+                  <Checkbox name="isRecurring" label="Recurring Event" className="mb-5" />
+                  <RichTextInput
+                    Icon={EditIcon}
+                    placeholder="Enter description"
+                    name="description"
+                    className="mb-5 h-86"
+                  />
+                  <FileDropZone
+                    label="Upload Assets"
+                    name="attachments"
+                    maxSize={250}
+                    mimeType="image/gif"
+                    accept={['.gif', '.jpeg', '.mp4', '.png']}
+                    multiple
+                  />
+                </Card>
+                <Card
+                  className="h-fit w-75 space-y-5 rounded-xl"
+                  title="Step 2: To-do List"
+                  titlePosition="center"
+                >
+                  {MarketingTodoListOptions?.map(({ value, label }) => (
+                    <Checkbox key={`${value}-todo`} name="todoList" label={label} value={value} />
+                  ))}
+                </Card>
                 <div className="h-fit w-75">
-                  <div className="rounded-xl bg-white p-5">
-                    <div className="mb-5 text-center text-sm font-semibold text-onyx">
-                      Step 3: My Task Management
-                    </div>
-                    {MarketingMyTaskManagementOptions?.map((mytask) => {
-                      return (
-                        <Checkbox
-                          key={`${mytask.value}-my-task`}
-                          name="taskManagement"
-                          label={mytask.label}
-                          value={mytask.value}
-                          className="mb-5"
-                        />
-                      )
-                    })}
-                  </div>
-                  <div className="mt-8 rounded-xl bg-white p-5">
+                  <Card
+                    className="mb-6 space-y-5"
+                    title="Step 3: My Task Management"
+                    titlePosition="center"
+                  >
+                    {MarketingMyTaskManagementOptions?.map(({ value, label }) => (
+                      <Checkbox
+                        key={`${value}-my-task`}
+                        name="taskManagement"
+                        label={label}
+                        value={value}
+                      />
+                    ))}
+                  </Card>
+                  <Card>
                     <div className="flex space-x-5">
                       <Link href="/marketing-planner">
                         <Button ariaLabel="Cancel" type="button" light>
@@ -161,7 +146,7 @@ const NewMarketingPlannerPage: NextPageWithLayout = () => {
                         <div>Save</div>
                       </Button>
                     </div>
-                  </div>
+                  </Card>
                 </div>
               </div>
             </Form>

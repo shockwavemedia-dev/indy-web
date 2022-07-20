@@ -111,7 +111,7 @@
 }
 
 #rich-text-input .DraftEditor-root {
-  height: 150px !important;
+  height: 100% !important;
   overflow-y: auto;
 }
 

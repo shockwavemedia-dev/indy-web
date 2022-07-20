@@ -7,6 +7,7 @@ import { useRouter } from 'next/router'
 import { ChangeEvent, ReactElement, useEffect, useState } from 'react'
 import { useQuery, useQueryClient } from 'react-query'
 import { Button } from '../components/Button'
+import { CheckboxNoFormik } from '../components/CheckboxNoFormik'
 import { DateInput } from '../components/DateInput'
 import { FileDropZone } from '../components/FileDropZone'
 import { CheckIcon } from '../components/icons/CheckIcon'
@@ -56,8 +57,7 @@ const ProjectBriefPage: NextPageWithLayout = () => {
     }
   }
 
-  const toggleMarketingDate = ({ currentTarget: { checked } }: ChangeEvent<HTMLInputElement>) =>
-    setMarketingDateVisible(checked)
+  const toggleMarketingDate = () => setMarketingDateVisible(!marketingDateVisible)
 
   useEffect(() => {
     setHeader('Project Brief')
@@ -83,65 +83,49 @@ const ProjectBriefPage: NextPageWithLayout = () => {
           onSubmit={submitForm}
         >
           {({ isSubmitting }) => (
-            <Form>
-              <div className="flex justify-center space-x-6">
-                <div className="w-130 space-y-5 rounded-xl bg-white">
-                  <div className="p-6">
-                    <TextInput
-                      type="text"
-                      Icon={EditIcon}
-                      placeholder="Enter subject"
-                      name="subject"
-                      className="mb-5"
-                    />
-                    <DateInput name="duedate" placeholder="Enter due date" className="mb-5" />
-                    <RichTextInput
-                      Icon={EditIcon}
-                      size="h-86"
-                      placeholder="Enter description"
-                      name="description"
-                      className="mb-5"
-                    />
-                    <div className="relative mb-5 flex items-center">
-                      <input
-                        type="checkbox"
-                        name="marketingPlan"
-                        id="marketingPlan"
-                        className="mr-3 h-4 w-4 appearance-none rounded bg-white ring-1 ring-inset ring-bright-gray checked:bg-halloween-orange checked:ring-0"
-                        onChange={toggleMarketingDate}
-                      />
-                      <CheckIcon className="pointer-events-none absolute left-0.75 stroke-white" />
-                      <label
-                        htmlFor="marketingPlan"
-                        className=" text-sm font-medium text-halloween-orange"
-                      >
-                        Add to Marketing Plan
-                      </label>
-                    </div>
-                    {marketingDateVisible && (
-                      <div className="mb-5 flex space-x-5">
-                        <DateInput name="marketingPlanStartDate" placeholder="Enter Start Date" />
-                        <DateInput name="marketingPlanEndDate" placeholder="Enter End Date" />
-                      </div>
-                    )}
-                    <FileDropZone
-                      label="Upload Assets"
-                      name="attachments"
-                      className="mb-8"
-                      maxSize={250}
-                      mimeType="image/gif"
-                      accept={['.gif', '.jpeg', '.mp4', '.png']}
-                      multiple
-                    />
-                    <div className="flex space-x-5">
-                      <Button ariaLabel="Submit" disabled={isSubmitting} type="submit">
-                        Submit
-                      </Button>
-                    </div>
+            <Form className="mx-auto flex w-fit space-x-6">
+              <div className="flex w-130 flex-col rounded-xl bg-white p-6">
+                <TextInput
+                  type="text"
+                  Icon={EditIcon}
+                  placeholder="Enter subject"
+                  name="subject"
+                  className="mb-5"
+                />
+                <DateInput name="duedate" placeholder="Enter due date" className="mb-5" />
+                <RichTextInput
+                  Icon={EditIcon}
+                  placeholder="Enter description"
+                  name="description"
+                  className="mb-5 h-86"
+                />
+                <CheckboxNoFormik
+                  onChange={toggleMarketingDate}
+                  label="Add to Marketing Plan"
+                  checked={marketingDateVisible}
+                />
+                {marketingDateVisible && (
+                  <div className="mt-2 flex space-x-5">
+                    <DateInput name="marketingPlanStartDate" placeholder="Enter Start Date" />
+                    <DateInput name="marketingPlanEndDate" placeholder="Enter End Date" />
                   </div>
+                )}
+                <FileDropZone
+                  label="Upload Assets"
+                  name="attachments"
+                  className="mb-8 mt-5"
+                  maxSize={250}
+                  mimeType="image/gif"
+                  accept={['.gif', '.jpeg', '.mp4', '.png']}
+                  multiple
+                />
+                <div className="flex space-x-5">
+                  <Button ariaLabel="Submit" disabled={isSubmitting} type="submit">
+                    Submit
+                  </Button>
                 </div>
-                <SelectService />
               </div>
+              <SelectService />
             </Form>
           )}
         </Formik>

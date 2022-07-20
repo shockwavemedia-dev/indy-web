@@ -225,11 +225,10 @@ export const ClientTicketFile = ({ ticketFileId }: { ticketFileId: number }) => 
                 <Form>
                   <RichTextInput
                     label="Enter Feedback"
-                    labelClassName="text-2xl"
-                    size="h-86"
                     Icon={EditIcon}
                     placeholder="Enter feedback"
                     name="feedback"
+                    className="h-86"
                     inputActions={
                       <div className="absolute right-6 bottom-6 z-10 flex items-center space-x-5">
                         <input type="file" name="attachment" id="attachment" hidden />

@@ -25,11 +25,7 @@ const MarketingPlannerPage: NextPageWithLayout = () => {
           <div className="flex w-9/12 flex-col">
             <div className="mb-5 flex w-30">
               <Link href="/new-marketing-planner">
-                <Button
-                  ariaLabel="Cancel"
-                  type="button"
-                  buttonClassName="bg-forest-green text-white"
-                >
+                <Button ariaLabel="Cancel" type="button" className="!bg-forest-green">
                   New Event
                 </Button>
               </Link>
