@@ -40,7 +40,7 @@ const NewMarketingPlannerPage: NextPageWithLayout = () => {
 
       if (status === 201) {
         queryClient.invalidateQueries('marketingPlanner')
-        replace('/dashboard')
+        replace('/marketing-planner')
         showToast({
           type: 'success',
           message: `New Marketing Planner successfully created!`,
@@ -55,13 +55,13 @@ const NewMarketingPlannerPage: NextPageWithLayout = () => {
   }
 
   useEffect(() => {
-    setHeader('Marketing Planner')
+    setHeader('New Marketing Planner')
   }, [])
 
   return (
     <>
       <Head>
-        <title>Indy - Marketing Planner</title>
+        <title>Indy - New Marketing Planner</title>
       </Head>
       <div className="mx-auto w-full max-w-8xl">
         <Formik
