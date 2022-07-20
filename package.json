@@ -22,6 +22,7 @@
     "nprogress": "^0.2.0",
     "object-to-formdata": "^4.4.2",
     "react": "^18.1.0",
+    "react-charts": "^2.0.0-beta.7",
     "react-dom": "^18.1.0",
     "react-dropzone": "^14.2.1",
     "react-query": "^3.39.0",

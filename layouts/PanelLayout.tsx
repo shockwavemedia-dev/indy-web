@@ -148,7 +148,7 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
 
   return (
     <>
-      <div className="fixed z-20 flex w-full items-center bg-white py-1 px-6 shadow-md">
+      <div className="fixed z-30 flex w-full items-center bg-white py-1 px-6 shadow-md">
         <div className="mr-102 whitespace-nowrap font-semibold text-onyx">Broncos Club</div>
         <MagnifyingGlassIcon className="mr-6 stroke-waterloo" />
         <Link href="#">
@@ -172,7 +172,7 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
           <LogoutIcon className="rotate-180 stroke-waterloo" />
         </button>
       </div>
-      <div className="group fixed z-10 flex h-screen w-75 flex-none flex-col justify-between overflow-y-auto bg-charleston-green pt-20.5 transition-all 2xl:w-20 2xl:pt-16.5 2xl:hover:w-75">
+      <div className="group fixed z-20 flex h-screen w-75 flex-none flex-col justify-between overflow-y-auto bg-charleston-green pt-20.5 transition-all 2xl:w-20 2xl:pt-16.5 2xl:hover:w-75">
         <div>
           {!session.isAdmin && (
             <div className="mb-5 grid grid-cols-3 grid-rows-1 gap-2 px-6 transition-all 2xl:grid-cols-1 2xl:grid-rows-3 2xl:px-2 2xl:pt-6 2xl:group-hover:grid-cols-3 2xl:group-hover:grid-rows-1 2xl:group-hover:px-6 2xl:group-hover:pt-4">
