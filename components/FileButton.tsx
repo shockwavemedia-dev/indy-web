@@ -1,8 +1,12 @@
 import Image from 'next/image'
 import { ReactNode } from 'react'
 import { BadgeCheckIcon } from './icons/BadgeCheckIcon'
+import { EditIcon } from './icons/EditIcon'
 import { FileIcon } from './icons/FileIcon'
 import { FolderIcon } from './icons/FolderIcon'
+import { TrashIcon } from './icons/TrashIcon'
+import { useDeleteFolderModalStore } from './modals/DeleteFolderModal'
+import { useRenameFolderModalStore } from './modals/RenameFolderModal'
 
 export const FileButton = ({
   onClick,
@@ -13,6 +17,9 @@ export const FileButton = ({
   fileStatus = '',
   openNewTab = false,
   Icon,
+  allowRename = false,
+  folderId,
+  folderName,
 }: {
   onClick?: () => void
   href?: string
@@ -22,8 +29,14 @@ export const FileButton = ({
   fileStatus?: string
   openNewTab?: boolean
   Icon?: ReactNode
-}) =>
-  href ? (
+  allowRename?: boolean
+  folderId?: number
+  folderName?: string
+}) => {
+  const { toggleModal: toggleRenameFolderModal } = useRenameFolderModalStore()
+  const { toggleModal: toggleDeleteFolderModal } = useDeleteFolderModalStore()
+
+  return href ? (
     <a
       href={href}
       target={openNewTab ? '_blank' : '_self'}
@@ -51,11 +64,36 @@ export const FileButton = ({
     <button
       type="button"
       onClick={onClick}
-      className={`flex h-35 w-35 flex-none flex-col items-center justify-center space-y-3 rounded-xl border-2 border-bright-gray p-3 hover:border-halloween-orange ${className}`}
+      className={`group relative flex h-35 w-35 flex-none flex-col items-center justify-center rounded-xl border-2 border-bright-gray p-3 hover:border-halloween-orange ${className}`}
     >
       <>
-        {Icon || <FolderIcon className="stroke-halloween-orange" />}
+        {allowRename && (
+          <div className="absolute top-2 right-2 hidden space-x-2 group-hover:flex">
+            <button
+              aria-label="Rename Folder"
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation()
+                toggleRenameFolderModal(folderId, folderName)
+              }}
+            >
+              <EditIcon className="stroke-waterloo hover:stroke-halloween-orange" />
+            </button>
+            <button
+              aria-label="Delete Folder"
+              type="button"
+              onClick={(e) => {
+                e.stopPropagation()
+                toggleDeleteFolderModal(folderId, folderName)
+              }}
+            >
+              <TrashIcon className="stroke-waterloo hover:stroke-halloween-orange" />
+            </button>
+          </div>
+        )}
+        {Icon || <FolderIcon className="mb-3 stroke-halloween-orange" />}
         <div className="break-words text-xs text-onyx">{name}</div>
       </>
     </button>
   )
+}

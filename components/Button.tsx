@@ -1,4 +1,4 @@
-import { MouseEventHandler, ReactNode } from 'react'
+import { ReactNode } from 'react'
 
 export const Button = ({
   onClick,
@@ -10,7 +10,7 @@ export const Button = ({
   className,
 }: {
   type: 'button' | 'submit'
-  onClick?: MouseEventHandler<HTMLButtonElement>
+  onClick?: () => void
   ariaLabel: string
   children: ReactNode
   disabled?: boolean

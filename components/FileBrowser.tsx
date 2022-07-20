@@ -8,6 +8,8 @@ import { FileButton } from './FileButton'
 import { CaretIcon } from './icons/CaretIcon'
 import { PlusIcon } from './icons/PlusIcon'
 import { CreateFolderModal, useCreateFolderModalStore } from './modals/CreateFolderModal'
+import { DeleteFolderModal } from './modals/DeleteFolderModal'
+import { RenameFolderModal } from './modals/RenameFolderModal'
 
 export const FileBrowser = ({ clientId }: { clientId: number }) => {
   const { toggleModal: toggleCreateFolderModal } = useCreateFolderModalStore()
@@ -88,7 +90,16 @@ export const FileBrowser = ({ clientId }: { clientId: number }) => {
                         },
                       ])
 
-                    return <FileButton key={name} name={name} onClick={enterFolder} />
+                    return (
+                      <FileButton
+                        key={name}
+                        name={name}
+                        onClick={enterFolder}
+                        folderId={id}
+                        folderName={name}
+                        allowRename
+                      />
+                    )
                   })}
                 {!yearFolder &&
                   foldersStack.length > 0 &&
@@ -141,6 +152,8 @@ export const FileBrowser = ({ clientId }: { clientId: number }) => {
           foldersStack.length > 0 ? foldersStack[foldersStack.length - 1].id : undefined
         }
       />
+      <RenameFolderModal />
+      <DeleteFolderModal />
     </>
   )
 }

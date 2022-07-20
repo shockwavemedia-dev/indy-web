@@ -14,24 +14,20 @@ import { TextInput } from '../TextInput'
 export const useRenameFolderModalStore = createStore(
   combine(
     {
-      isModalVisible: false,
+      folderId: -1,
+      folderName: '',
     },
-    (set, get) => ({
-      toggleModal: () => set(() => ({ isModalVisible: !get().isModalVisible })),
+    (set) => ({
+      toggleModal: (folderId?: number, folderName?: string) =>
+        set(() => ({ folderId: folderId ?? -1, folderName: folderName ?? '' })),
     })
   )
 )
 
-export const RenameFolderModal = ({
-  folderId,
-  folderName,
-}: {
-  folderId: number
-  folderName: string
-}) => {
+export const RenameFolderModal = () => {
   const queryClient = useQueryClient()
   const { showToast } = useToastStore()
-  const { isModalVisible, toggleModal } = useRenameFolderModalStore()
+  const { folderId, folderName, toggleModal } = useRenameFolderModalStore()
 
   const submitRenameFolderForm = async (values: RenameFolderForm) => {
     try {
@@ -59,7 +55,7 @@ export const RenameFolderModal = ({
 
   return (
     <>
-      {isModalVisible && (
+      {folderId !== -1 && folderName && (
         <Modal title="Rename Folder" onClose={toggleModal}>
           <Formik
             validationSchema={RenameFolderFormSchema}

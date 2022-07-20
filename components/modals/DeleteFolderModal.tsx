@@ -11,24 +11,20 @@ import { Modal } from '../Modal'
 export const useDeleteFolderModalStore = createStore(
   combine(
     {
-      isModalVisible: false,
+      folderId: -1,
+      folderName: '',
     },
-    (set, get) => ({
-      toggleModal: () => set(() => ({ isModalVisible: !get().isModalVisible })),
+    (set) => ({
+      toggleModal: (folderId?: number, folderName?: string) =>
+        set(() => ({ folderId: folderId ?? -1, folderName: folderName ?? '' })),
     })
   )
 )
 
-export const DeleteFolderModal = ({
-  folderId,
-  folderName,
-}: {
-  folderId: number
-  folderName: string
-}) => {
+export const DeleteFolderModal = () => {
   const queryClient = useQueryClient()
   const { showToast } = useToastStore()
-  const { isModalVisible, toggleModal } = useDeleteFolderModalStore()
+  const { folderId, folderName, toggleModal } = useDeleteFolderModalStore()
 
   const deleteFolder = async () => {
     try {
@@ -56,24 +52,22 @@ export const DeleteFolderModal = ({
 
   return (
     <>
-      {isModalVisible && (
-        <Modal title="Are you sure you want to delete this folder?" onClose={toggleModal}>
-          <div className="w-full">
-            <div className="mb-8 flex flex-col items-center justify-center space-y-1">
-              <FolderIcon className="h-8 w-8 stroke-halloween-orange" />
-              <div className="font-urbanist text-lg font-medium text-metallic-silver">
-                {folderName}
-              </div>
-            </div>
-            <div className="flex space-x-5">
-              <Button ariaLabel="Cancel" onClick={toggleModal} type="button" light>
-                Cancel
-              </Button>
-              <Button ariaLabel="Submit" onClick={deleteFolder} type="submit">
-                <TrashIcon className="stroke-white" />
-                <div>Delete</div>
-              </Button>
-            </div>
+      {folderId !== -1 && folderName && (
+        <Modal
+          title="Are you sure you want to delete this folder?"
+          className="w-130"
+          onClose={toggleModal}
+        >
+          <FolderIcon className="h-8 w-8 stroke-halloween-orange" />
+          <div className="mb-8 text-sm font-semibold text-halloween-orange">{folderName}</div>
+          <div className="flex w-full space-x-5">
+            <Button ariaLabel="Cancel" onClick={toggleModal} type="button" light>
+              Cancel
+            </Button>
+            <Button ariaLabel="Submit" onClick={deleteFolder} type="submit">
+              <TrashIcon className="stroke-white" />
+              <div>Delete</div>
+            </Button>
           </div>
         </Modal>
       )}
