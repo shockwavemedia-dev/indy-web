@@ -1,3 +1,4 @@
+import { BriefcaseIcon } from '../../components/icons/BriefcaseIcon'
 import { ChartIcon } from '../../components/icons/ChartIcon'
 import { ClipboardIcon } from '../../components/icons/ClipboardIcon'
 import { EmailIcon } from '../../components/icons/EmailIcon'
@@ -16,6 +17,11 @@ export const ClientRoutes: Array<Route> = [
     Icon: EmailIcon,
     pathname: 'https://c7s.transmitsms.com/',
     target: '_blank',
+  },
+  {
+    title: 'Marketing Planner',
+    Icon: BriefcaseIcon,
+    pathname: '/marketing-planner',
   },
   {
     title: 'Screen Manager',
