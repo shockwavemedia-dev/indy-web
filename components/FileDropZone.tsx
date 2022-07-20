@@ -53,7 +53,7 @@ export const FileDropZone = ({
             : 'border-lavender-gray bg-ghost-white'
         }`}
       >
-        <div className="cursor absolute flex flex-col items-center">
+        <div className="cursor flex flex-col items-center">
           <div className="mb-1.5 text-sm font-medium text-onyx">
             Drag {'&'} drop you assets, or{' '}
             <button

@@ -113,7 +113,7 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
             <FancyLink
               href="/marketing-planner"
               Icon={<BriefcaseIcon className="stroke-halloween-orange" />}
-              title="New Marketing Planner"
+              title="Marketing Planner"
               subtitle="Laborerivit rem cones mil"
               className="w-fit"
             />
