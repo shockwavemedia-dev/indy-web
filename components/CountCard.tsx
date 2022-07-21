@@ -16,8 +16,8 @@ export const CountCard = ({
       {Icon}
     </div>
     <div>
-      <div className=" text-sm font-semibold text-white">{value}</div>
-      <div className=" text-xxs font-medium text-white line-clamp-2">{description}</div>
+      <div className=" text-lg font-semibold text-onyx">{value}</div>
+      <div className=" text-sm font-medium text-onyx line-clamp-2">{description}</div>
     </div>
   </div>
 )
