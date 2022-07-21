@@ -11,8 +11,7 @@ import { UserIcon } from '../components/icons/UserIcon'
 import { Notifications } from '../components/Notifications'
 import { RetainerInclusions } from '../components/RetainerInclusions'
 import PanelLayout, { usePanelLayoutStore } from '../layouts/PanelLayout'
-import { Edm } from '../types/EDM.type'
-
+import { Edm } from '../types/Edm.type'
 import { Page } from '../types/Page.type'
 import { NextPageWithLayout } from '../types/pages/NextPageWithLayout.type'
 
