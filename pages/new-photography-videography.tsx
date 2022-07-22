@@ -120,88 +120,98 @@ const NewPhotographyVideographyPage: NextPageWithLayout = () => {
           {({ isSubmitting }) => (
             <Form>
               <div className="flex w-full justify-center space-x-6">
-                <Card className="h-fit w-140" title="Step 1: Select Service" titlePosition="center">
-                  <Select
-                    name="serviceType"
-                    Icon={ClipboardIcon}
-                    placeholder="Select Service"
-                    options={ServiceTypeOptions}
-                    className="mb-5"
-                  />
-                  <div className="mb-5 flex space-x-5">
-                    <TextInput
-                      type="text"
-                      Icon={EditIcon}
-                      placeholder="Enter Shoot Title"
-                      name="shootTitle"
-                      className="mb-5"
-                    />
-                    <DateInput name="shootDate" placeholder="Select Shoot Date" />
-                  </div>
-                  <hr className="mb-6 border-t-bright-gray" />
-                  <div className="mx-auto mb-5 w-fit text-base font-semibold text-halloween-orange">
-                    Step 2: Basic Details
-                  </div>
-                  <TextInput
-                    type="text"
-                    Icon={EditIcon}
-                    placeholder="Enter Event Name"
-                    name="eventName"
-                    className="mb-5"
-                  />
-                  <Select
-                    name="bookingType"
-                    Icon={ClipboardIcon}
-                    placeholder="Booking Type"
-                    options={BookingTypeOptions}
-                    className="mb-5"
-                  />
-                  <TextInput
-                    type="text"
-                    Icon={EditIcon}
-                    placeholder="Enter Location"
-                    name="location"
-                    className="mb-5"
-                  />
-                  <div className="mb-5 flex space-x-5">
-                    <TextInput
-                      type="text"
-                      Icon={EditIcon}
-                      placeholder="Enter Contact Name"
-                      name="contactName"
-                    />
-                    <TextInput
-                      type="text"
-                      Icon={EditIcon}
-                      placeholder="Enter Contact Number"
-                      name="shootTitle"
-                    />
-                  </div>
-                  <Select
-                    name="departmentManager"
-                    Icon={UserIcon}
-                    placeholder="Select Account Manager"
-                    options={
-                      departments
-                        ?.find(({ id }) => id === 1)
-                        ?.users?.map(({ adminUserId, firstName, lastName }) => ({
-                          label: `${firstName} ${lastName}`,
-                          value: adminUserId,
-                        })) || []
-                    }
-                    className="mb-5"
-                  />
-                  <div className="mb-5 flex space-x-5">
-                    <DateInput name="startTime" placeholder="Start Date" />
-                    <DateInput name="preferredDueDate" placeholder="Preferred Due Date" />
-                  </div>
-                </Card>
-
                 <div className="h-fit w-140">
                   <Card
-                    className="mb-6 space-y-5"
+                    className="mb-8 h-fit w-140"
+                    title="Step 1: Select Service"
+                    titlePosition="center"
+                    titleClassName="text-halloween-orange"
+                  >
+                    <Select
+                      name="serviceType"
+                      Icon={ClipboardIcon}
+                      placeholder="Select Service"
+                      options={ServiceTypeOptions}
+                      className="mb-5"
+                    />
+                    <div className="mb-5 flex space-x-5">
+                      <TextInput
+                        type="text"
+                        Icon={EditIcon}
+                        placeholder="Enter Shoot Title"
+                        name="shootTitle"
+                        className="mb-5"
+                      />
+                      <DateInput name="shootDate" placeholder="Select Shoot Date" />
+                    </div>
+                  </Card>
+                  <Card
+                    className="h-fit w-140"
+                    title="Step 2: Basic Details"
+                    titlePosition="center"
+                    titleClassName="text-halloween-orange"
+                  >
+                    <TextInput
+                      type="text"
+                      Icon={EditIcon}
+                      placeholder="Enter Event Name"
+                      name="eventName"
+                      className="mb-5"
+                    />
+                    <Select
+                      name="bookingType"
+                      Icon={ClipboardIcon}
+                      placeholder="Booking Type"
+                      options={BookingTypeOptions}
+                      className="mb-5"
+                    />
+                    <TextInput
+                      type="text"
+                      Icon={EditIcon}
+                      placeholder="Enter Location"
+                      name="location"
+                      className="mb-5"
+                    />
+                    <div className="mb-5 flex space-x-5">
+                      <TextInput
+                        type="text"
+                        Icon={EditIcon}
+                        placeholder="Enter Contact Name"
+                        name="contactName"
+                      />
+                      <TextInput
+                        type="text"
+                        Icon={EditIcon}
+                        placeholder="Enter Contact Number"
+                        name="shootTitle"
+                      />
+                    </div>
+                    <Select
+                      name="departmentManager"
+                      Icon={UserIcon}
+                      placeholder="Select Account Manager"
+                      options={
+                        departments
+                          ?.find(({ id }) => id === 1)
+                          ?.users?.map(({ adminUserId, firstName, lastName }) => ({
+                            label: `${firstName} ${lastName}`,
+                            value: adminUserId,
+                          })) || []
+                      }
+                      className="mb-5"
+                    />
+                    <div className="mb-5 flex space-x-5">
+                      <DateInput name="startTime" placeholder="Start Date" />
+                      <DateInput name="preferredDueDate" placeholder="Preferred Due Date" />
+                    </div>
+                  </Card>
+                </div>
+                <div className="h-fit w-140">
+                  <Card
+                    className="mb-8 space-y-5"
                     title="Step 3: Job Description"
                     titlePosition="center"
+                    titleClassName="text-halloween-orange"
                   >
                     <div className="mb-5">
                       <RichTextInput
@@ -211,10 +221,13 @@ const NewPhotographyVideographyPage: NextPageWithLayout = () => {
                         className="h-40"
                       />
                     </div>
-                    <hr className="mb-6 border-t-bright-gray" />
-                    <div className="mx-auto mb-5 w-fit text-base font-semibold text-halloween-orange">
-                      Step 4: Type of Shoot
-                    </div>
+                  </Card>
+                  <Card
+                    className="mb-6 space-y-5"
+                    title=" Step 4: Type of Shoot"
+                    titlePosition="center"
+                    titleClassName="text-halloween-orange"
+                  >
                     {ShootTypeOptions?.map(({ value, label }) => (
                       <Checkbox
                         key={`${value}-shoot-type`}
@@ -249,10 +262,13 @@ const NewPhotographyVideographyPage: NextPageWithLayout = () => {
                         />
                       </div>
                     )}
-                    <hr className="mb-6 border-t-bright-gray" />
-                    <div className="mx-auto mb-5 w-fit text-base font-semibold text-halloween-orange">
-                      Step 5: Outputs
-                    </div>
+                  </Card>
+                  <Card
+                    className="mb-8 space-y-5"
+                    title="Step 5: Outputs"
+                    titlePosition="center"
+                    titleClassName="text-halloween-orange"
+                  >
                     {OutputTypeOptions?.map(({ value, label }) => (
                       <Checkbox
                         key={`${value}-output`}
