@@ -1,6 +1,9 @@
 export type Edm = {
-  name: string
-  membersCount: number
+  id: number
+  title: string
+  subjectLine: string
+  sendTime: string
   opens: number
   clicks: number
+  totalRecipients: number
 }

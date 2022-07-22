@@ -10,6 +10,7 @@ import { MonitorIcon } from '../components/icons/MonitorIcon'
 import { UserIcon } from '../components/icons/UserIcon'
 import { Notifications } from '../components/Notifications'
 import { RetainerInclusions } from '../components/RetainerInclusions'
+import { TitleValue } from '../components/TitleValue'
 import PanelLayout, { usePanelLayoutStore } from '../layouts/PanelLayout'
 import { Edm } from '../types/Edm.type'
 import { Page } from '../types/Page.type'
@@ -43,13 +44,23 @@ const EDMPage: NextPageWithLayout = () => {
         <div className="flex gap-6 transition-all lg:flex-col">
           <Card className="grid h-full flex-1 place-items-center transition-all lg:flex-none">
             <div className="flex flex-col">
-              {edm?.map(({ name, membersCount, opens, clicks }, index) => (
+              {edm?.map(({ id, title, subjectLine, totalRecipients, opens, clicks, sendTime }) => (
                 <Card
-                  key={`edm-${index}`}
+                  key={`edm-${id}`}
                   className="mb-8 w-full rounded-xl border border-halloween-orange"
-                  title={name}
+                  title={title}
                   titlePosition="center"
                 >
+                  <div className="mb-8">
+                    <TitleValue
+                      title="Subject"
+                      className="mb-5 w-fit"
+                      childrenClassName="flex-wrap"
+                    >
+                      {subjectLine}
+                    </TitleValue>
+                    <TitleValue title="Time">{sendTime}</TitleValue>
+                  </div>
                   <div className="mb-3 flex space-x-3">
                     <CountCard
                       Icon={
@@ -57,8 +68,8 @@ const EDMPage: NextPageWithLayout = () => {
                           <UserIcon className="stroke-deep-saffron" />
                         </div>
                       }
-                      value={membersCount}
-                      description="Members Count"
+                      value={totalRecipients}
+                      description="Recipients"
                       className="w-40"
                     />
                     <CountCard
