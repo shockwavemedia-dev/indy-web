@@ -6,6 +6,7 @@ export const CreatePhotographyVideographyFormSchema: SchemaOf<CreatePhotographyV
     backdrops: string().optional().nullable(),
     bookingType: string().optional().nullable(),
     contactName: string().optional().nullable(),
+    contactNumber: string().optional().nullable(),
     departmentManager: number().optional().nullable(),
     eventName: string().optional().nullable(),
     jobDescription: string().optional().nullable(),

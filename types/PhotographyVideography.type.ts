@@ -1,4 +1,4 @@
-export type CreatePhotographyVideographyForm = {
+export type PhotographyVideography = {
   backdrops?: string | null
   bookingType?: string | null
   contactName?: string | null
