@@ -246,20 +246,14 @@ const NewPhotographyVideographyPage: NextPageWithLayout = () => {
                           options={DishesOptions}
                           className="mb-5"
                         />
-                        <Select
-                          name="stylingRequired"
-                          Icon={ClipboardIcon}
-                          placeholder="Styling Required"
-                          options={DishesOptions}
-                          className="mb-5"
-                        />
-                        <Select
-                          name="backdrops"
-                          Icon={ClipboardIcon}
-                          placeholder="Backdrops"
-                          options={DishesOptions}
-                          className="mb-5"
-                        />
+                        <div className="mb-5 flex space-x-5">
+                          <Checkbox
+                            name="stylingRequired"
+                            label="Styling Required"
+                            className="mb-5"
+                          />
+                          <Checkbox name="backdrops" label="Backdrops" className="mb-5" />
+                        </div>
                       </div>
                     )}
                   </Card>
