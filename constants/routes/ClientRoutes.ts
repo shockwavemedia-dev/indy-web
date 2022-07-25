@@ -62,12 +62,8 @@ export const ClientRoutes: Array<Route> = [
         pathname: '/data-analytics',
       },
       {
-        title: 'Photography',
-        pathname: '/photography',
-      },
-      {
-        title: 'Videography',
-        pathname: '/videography',
+        title: 'Photography/Videography',
+        pathname: '/photography-videography',
       },
       {
         title: 'Print',
