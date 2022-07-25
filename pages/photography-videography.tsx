@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import Image from 'next/image'
-import router from 'next/router'
+import Link from 'next/link'
 import { ReactElement, useEffect } from 'react'
 import { Button } from '../components/Button'
 import { Card } from '../components/Card'
@@ -18,10 +18,6 @@ const PhotographyVideographyPage: NextPageWithLayout = () => {
     setHeader('Photography/Videography')
   }, [])
 
-  const createPage = () => {
-    router.push('/new-photography-videography')
-  }
-
   return (
     <>
       <Head>
@@ -31,9 +27,12 @@ const PhotographyVideographyPage: NextPageWithLayout = () => {
         <div className="flex gap-6 transition-all lg:flex-col">
           <Card className="grid h-155 flex-1 transition-all lg:flex-none">
             <div className="ml-20 grid grid-cols-4 space-x-0">
-              <Button ariaLabel="Book" type="button" className="mb-4 w-44" onClick={createPage}>
-                Book
-              </Button>
+              <Link href="/new-photography-videography">
+                <Button ariaLabel="Book" type="button" className="mb-4 w-44">
+                  Book
+                </Button>
+              </Link>
+
               <Button ariaLabel="Book" type="button" className="mb-4 w-44" light>
                 Quote/Inquire
               </Button>

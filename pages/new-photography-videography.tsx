@@ -274,7 +274,7 @@ const NewPhotographyVideographyPage: NextPageWithLayout = () => {
                   </Card>
                   <Card>
                     <div className="flex space-x-5">
-                      <Link href="/dashboard">
+                      <Link href="/photography-videography">
                         <Button ariaLabel="Cancel" type="button" light>
                           Cancel
                         </Button>
