@@ -30,17 +30,18 @@ const PhotographyVideographyPage: NextPageWithLayout = () => {
       <div className="mx-auto w-full max-w-8xl space-y-6">
         <div className="flex gap-6 transition-all lg:flex-col">
           <div className="flex w-9/12 flex-col">
-            <div className="mb-5 flex w-full">
-              <Link href="/new-photography-videography">
-                <Button ariaLabel="Book" type="button" className="mb-5 mr-5 w-44">
-                  Book
+            <Card className="grid max-h-155 flex-1 transition-all lg:flex-none">
+              <div className="ml-20 grid grid-cols-4 space-x-0">
+                <Link href="/new-photography-videography">
+                  <Button ariaLabel="Book" type="button" className="mb-4 w-44">
+                    Book
+                  </Button>
+                </Link>
+
+                <Button ariaLabel="Book" type="button" className="mb-4 w-44" light>
+                  Quote/Inquire
                 </Button>
-              </Link>
-              <Button ariaLabel="Book" type="button" className="mb-5 w-44" light>
-                Quote/Inquire
-              </Button>
-            </div>
-            <Card className="grid flex-1 transition-all lg:flex-none">
+              </div>
               <div className="mr-6 ml-20 grid grid-cols-2 grid-rows-2">
                 <a
                   href="https://drive.google.com/file/d/1nFRafx4FBru8IkUIwHSOfNuYaYFp5sP5/view"
@@ -72,10 +73,7 @@ const PhotographyVideographyPage: NextPageWithLayout = () => {
                 </a>
               </div>
             </Card>
-            <Card
-              title="Photography/Videography Table"
-              className="mt-8 flex max-h-155 flex-1 flex-col"
-            >
+            <Card title="Event Bookings Table" className="mt-8 flex max-h-155 flex-1 flex-col">
               <DataTable
                 columns={PhotographyVideographyColumns}
                 dataEndpoint={`/v1/clients/${session?.user.userType.clientId}/event-bookings`}
