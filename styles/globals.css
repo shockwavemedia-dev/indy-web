@@ -136,3 +136,25 @@
 .public-DraftStyleDefault-ul {
   margin: 0 !important;
 }
+
+.apexcharts-reset-icon,
+.apexcharts-zoom-icon,
+.apexcharts-pan-icon {
+  stroke: #32343d;
+}
+
+.apexcharts-pan-icon {
+  transform: scale(0.9);
+}
+
+.apexcharts-selected {
+  stroke: #f25d23 !important;
+}
+
+.apexcharts-zoom-icon {
+  margin-right: 0.5rem;
+}
+
+.apexcharts-pan-icon {
+  margin-right: 0.5rem;
+}

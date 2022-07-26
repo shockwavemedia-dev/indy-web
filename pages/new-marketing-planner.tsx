@@ -20,8 +20,7 @@ import { MarketingTodoListOptions } from '../constants/options/MarketingTodoList
 import PanelLayout, { usePanelLayoutStore } from '../layouts/PanelLayout'
 import { CreateMarketingPlannerFormSchema } from '../schemas/CreateMarketingPlannerFormSchema'
 import { useToastStore } from '../store/ToastStore'
-import { CreateMarketingPlannerForm } from '../types/forms/CreateMarketingPlannerForm'
-import { MarketingPlanner } from '../types/MarketingPlanner.type'
+import { CreateMarketingPlannerForm } from '../types/forms/CreateMarketingPlannerForm.type'
 import { NextPageWithLayout } from '../types/pages/NextPageWithLayout.type'
 import { objectWithFileToFormData } from '../utils/FormHelpers'
 
@@ -34,7 +33,7 @@ const NewMarketingPlannerPage: NextPageWithLayout = () => {
 
   const submitForm = async (values: CreateMarketingPlannerForm) => {
     try {
-      const { status } = await axios.post<MarketingPlanner>(
+      const { status } = await axios.post<CreateMarketingPlannerForm>(
         `/v1/clients/${session?.user.userType.clientId}/marketing-planners`,
         objectWithFileToFormData(values)
       )
