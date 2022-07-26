@@ -1,3 +1,4 @@
+import { createTheme, ThemeProvider } from '@mui/material'
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import axios from 'axios'
@@ -68,6 +69,14 @@ axios.interceptors.response.use(
 
 const queryClient = new QueryClient()
 
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#F25D23',
+    },
+  },
+})
+
 const App = ({ Component, pageProps }: AppPropsWithLayout) => {
   const getLayout = Component.getLayout ?? ((page) => page)
 
@@ -75,8 +84,10 @@ const App = ({ Component, pageProps }: AppPropsWithLayout) => {
     <SessionProvider session={pageProps.session}>
       <QueryClientProvider client={queryClient}>
         <LocalizationProvider dateAdapter={AdapterDateFns}>
-          <ToastContainer />
-          {getLayout(<Component {...pageProps} />)}
+          <ThemeProvider theme={theme}>
+            <ToastContainer />
+            {getLayout(<Component {...pageProps} />)}
+          </ThemeProvider>
         </LocalizationProvider>
       </QueryClientProvider>
     </SessionProvider>

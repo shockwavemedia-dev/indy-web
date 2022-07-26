@@ -110,6 +110,12 @@
   box-shadow: 0 0 0 1px #0000001a, 0 4px 11px #0000001a !important;
 }
 
+.MuiClockPicker-root > div:nth-child(2) > div:nth-child(1) span {
+  font-family: 'Urbanist';
+  color: #32343d;
+  font-weight: 600;
+}
+
 #rich-text-input .DraftEditor-root {
   height: 100% !important;
   overflow-y: auto;
