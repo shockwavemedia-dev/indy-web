@@ -1,4 +1,5 @@
 export type PhotographyVideography = {
+  id: number
   backdrops?: string | null
   bookingType?: string | null
   contactName?: string | null

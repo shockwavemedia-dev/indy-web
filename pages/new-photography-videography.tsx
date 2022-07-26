@@ -72,7 +72,7 @@ const NewPhotographyVideographyPage: NextPageWithLayout = () => {
 
       if (status === 201) {
         queryClient.invalidateQueries('eventBookings')
-        replace('/dashboard')
+        replace('/photography-videography')
         showToast({
           type: 'success',
           message: `New Event Booking successfully created!`,
@@ -101,6 +101,7 @@ const NewPhotographyVideographyPage: NextPageWithLayout = () => {
             backdrops: '',
             bookingType: '',
             contactName: '',
+            contactNumber: '',
             departmentManager: -1,
             eventName: '',
             jobDescription: '',
@@ -183,7 +184,7 @@ const NewPhotographyVideographyPage: NextPageWithLayout = () => {
                         type="text"
                         Icon={EditIcon}
                         placeholder="Enter Contact Number"
-                        name="shootTitle"
+                        name="contactNumber"
                       />
                     </div>
                     <Select
