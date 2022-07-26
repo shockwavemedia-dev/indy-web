@@ -1,6 +1,7 @@
 export type PhotographyVideography = {
+  id: number
   backdrops?: string | null
-  bookingType?: string | null
+  bookingType: string
   contactName?: string | null
   contactNumber?: string | null
   departmentManager?: number | null
@@ -9,11 +10,11 @@ export type PhotographyVideography = {
   location?: string | null
   numberOfDishes?: string | null
   outputs?: Array<string>
-  preferredDueDate?: Date | null
-  serviceType?: string | null
-  shootDate?: Date | null
+  preferredDueDate: Date
+  serviceType: string
+  shootDate: Date
   shootTitle?: string | null
-  startTime?: Date | null
+  startTime?: string | null
   stylingRequired?: string | null
   shootType?: Array<string>
 }

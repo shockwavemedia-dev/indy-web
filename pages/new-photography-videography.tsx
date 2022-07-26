@@ -17,6 +17,7 @@ import { UserIcon } from '../components/icons/UserIcon'
 import { RichTextInput } from '../components/RichTextInput'
 import { Select } from '../components/Select'
 import { TextInput } from '../components/TextInput'
+import { TimeInput } from '../components/TimeInput'
 import { BookingTypeOptions } from '../constants/options/photography-videography/BookingTypeOptions'
 import { DishesOptions } from '../constants/options/photography-videography/DishesOptions'
 import { OutputTypeOptions } from '../constants/options/photography-videography/OutputTypeOptions'
@@ -72,7 +73,7 @@ const NewPhotographyVideographyPage: NextPageWithLayout = () => {
 
       if (status === 201) {
         queryClient.invalidateQueries('eventBookings')
-        replace('/dashboard')
+        replace('/photography-videography')
         showToast({
           type: 'success',
           message: `New Event Booking successfully created!`,
@@ -101,6 +102,7 @@ const NewPhotographyVideographyPage: NextPageWithLayout = () => {
             backdrops: '',
             bookingType: '',
             contactName: '',
+            contactNumber: '',
             departmentManager: -1,
             eventName: '',
             jobDescription: '',
@@ -183,7 +185,7 @@ const NewPhotographyVideographyPage: NextPageWithLayout = () => {
                         type="text"
                         Icon={EditIcon}
                         placeholder="Enter Contact Number"
-                        name="shootTitle"
+                        name="contactNumber"
                       />
                     </div>
                     <Select
@@ -201,7 +203,7 @@ const NewPhotographyVideographyPage: NextPageWithLayout = () => {
                       className="mb-5"
                     />
                     <div className="mb-5 flex space-x-5">
-                      <DateInput name="startTime" placeholder="Start Date" />
+                      <TimeInput name="startTime" placeholder="Start Time" />
                       <DateInput name="preferredDueDate" placeholder="Preferred Due Date" />
                     </div>
                   </Card>
