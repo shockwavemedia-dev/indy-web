@@ -1,5 +1,5 @@
 import { array, boolean, date, mixed, object, SchemaOf, string } from 'yup'
-import { CreateMarketingPlannerForm } from '../types/forms/CreateMarketingPlannerForm'
+import { CreateMarketingPlannerForm } from '../types/forms/CreateMarketingPlannerForm.type'
 
 export const CreateMarketingPlannerFormSchema: SchemaOf<CreateMarketingPlannerForm> =
   object().shape({
