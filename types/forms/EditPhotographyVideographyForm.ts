@@ -1,8 +1,7 @@
-export type PhotographyVideography = {
-  id: number
+export type EditPhotographyVideographyForm = {
   serviceType: string
   shootTitle: string
-  shootDate: Date
+  shootDate: Date | null
   eventName: string
   bookingType: string
   outputs: Array<string>
@@ -13,7 +12,7 @@ export type PhotographyVideography = {
   jobDescription?: string | null
   location?: string | null
   numberOfDishes?: string | null
-  preferredDueDate: Date
+  preferredDueDate?: Date | null
   startTime?: string | null
   stylingRequired?: string | null
   shootType?: Array<string>
