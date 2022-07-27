@@ -5,7 +5,7 @@ import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { ChangeEvent, ReactElement, useEffect, useState } from 'react'
-import { useQuery, useQueryClient } from 'react-query'
+import { useQueryClient } from 'react-query'
 import { Button } from '../components/Button'
 import { Card } from '../components/Card'
 import { Checkbox } from '../components/Checkbox'
@@ -18,16 +18,16 @@ import { RichTextInput } from '../components/RichTextInput'
 import { Select } from '../components/Select'
 import { TextInput } from '../components/TextInput'
 import { TimeInput } from '../components/TimeInput'
+import { AccountManagerOptions } from '../constants/options/photography-videography/AccountManagerOptions'
 import { BookingTypeOptions } from '../constants/options/photography-videography/BookingTypeOptions'
 import { DishesOptions } from '../constants/options/photography-videography/DishesOptions'
 import { OutputTypeOptions } from '../constants/options/photography-videography/OutputTypeOptions'
 import { ServiceTypeOptions } from '../constants/options/photography-videography/ServiceTypeOptions'
 import { ShootTypeOptions } from '../constants/options/photography-videography/ShootTypeOptions'
 import PanelLayout, { usePanelLayoutStore } from '../layouts/PanelLayout'
+import { CreatePhotographyVideographyFormSchema } from '../schemas/CreatePhotographyVideographyFormSchema'
 import { useToastStore } from '../store/ToastStore'
-import { Department } from '../types/Department.type'
 import { CreatePhotographyVideographyForm } from '../types/forms/CreatePhotographyVideographyForm'
-import { Page } from '../types/Page.type'
 import { NextPageWithLayout } from '../types/pages/NextPageWithLayout.type'
 import { PhotographyVideography } from '../types/PhotographyVideography.type'
 import { objectWithFileToFormData } from '../utils/FormHelpers'
@@ -48,21 +48,6 @@ const NewPhotographyVideographyPage: NextPageWithLayout = () => {
   }
 
   const toggleFoodPhotography = () => setFoodPhotography(!showFoodPhotography)
-
-  const { data: departments } = useQuery('departmentsWithUsers', async () => {
-    const {
-      data: { data },
-    } = await axios.get<{
-      data: Array<Department>
-      page: Page
-    }>('/v1/departments/staff-list', {
-      params: {
-        size: 100,
-      },
-    })
-
-    return data
-  })
 
   const submitForm = async (values: CreatePhotographyVideographyForm) => {
     try {
@@ -103,7 +88,7 @@ const NewPhotographyVideographyPage: NextPageWithLayout = () => {
             bookingType: '',
             contactName: '',
             contactNumber: '',
-            departmentManager: -1,
+            departmentManager: '',
             eventName: '',
             jobDescription: '',
             location: '',
@@ -117,6 +102,7 @@ const NewPhotographyVideographyPage: NextPageWithLayout = () => {
             stylingRequired: '',
             shootType: [],
           }}
+          validationSchema={CreatePhotographyVideographyFormSchema}
           onSubmit={submitForm}
         >
           {({ isSubmitting }) => (
@@ -192,14 +178,7 @@ const NewPhotographyVideographyPage: NextPageWithLayout = () => {
                       name="departmentManager"
                       Icon={UserIcon}
                       placeholder="Select Account Manager"
-                      options={
-                        departments
-                          ?.find(({ id }) => id === 1)
-                          ?.users?.map(({ adminUserId, firstName, lastName }) => ({
-                            label: `${firstName} ${lastName}`,
-                            value: adminUserId,
-                          })) || []
-                      }
+                      options={AccountManagerOptions}
                       className="mb-5"
                     />
                     <div className="mb-5 flex space-x-5">

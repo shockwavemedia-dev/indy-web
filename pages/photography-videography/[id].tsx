@@ -16,16 +16,16 @@ import { RichTextInput } from '../../components/RichTextInput'
 import { Select } from '../../components/Select'
 import { TextInput } from '../../components/TextInput'
 import { TimeInput } from '../../components/TimeInput'
+import { AccountManagerOptions } from '../../constants/options/photography-videography/AccountManagerOptions'
 import { BookingTypeOptions } from '../../constants/options/photography-videography/BookingTypeOptions'
 import { DishesOptions } from '../../constants/options/photography-videography/DishesOptions'
 import { OutputTypeOptions } from '../../constants/options/photography-videography/OutputTypeOptions'
 import { ServiceTypeOptions } from '../../constants/options/photography-videography/ServiceTypeOptions'
 import { ShootTypeOptions } from '../../constants/options/photography-videography/ShootTypeOptions'
 import PanelLayout, { usePanelLayoutStore } from '../../layouts/PanelLayout'
+import { EditPhotographyVideographyFormSchema } from '../../schemas/EditPhotographyVideographyFormSchema'
 import { useToastStore } from '../../store/ToastStore'
-import { Department } from '../../types/Department.type'
 import { EditPhotographyVideographyForm } from '../../types/forms/EditPhotographyVideographyForm'
-import { Page } from '../../types/Page.type'
 import { NextPageWithLayout } from '../../types/pages/NextPageWithLayout.type'
 import { PhotographyVideography } from '../../types/PhotographyVideography.type'
 
@@ -49,28 +49,6 @@ const PhotographyVideographyPage: NextPageWithLayout = () => {
       setHeader(booking.eventName)
     }
   }, [booking])
-
-  const { data: departments } = useQuery('departmentsWithUsers', async () => {
-    const {
-      data: { data },
-    } = await axios.get<{
-      data: Array<Department>
-      page: Page
-    }>('/v1/departments/staff-list', {
-      params: {
-        size: 100,
-      },
-    })
-
-    return data
-  })
-
-  const departmentUsersOptions = departments
-    ?.find(({ id }) => id === 1)
-    ?.users?.map(({ adminUserId, firstName, lastName }) => ({
-      label: `${firstName} ${lastName}`,
-      value: adminUserId,
-    }))
 
   const [showFoodPhotography, setFoodPhotography] = useState(false)
 
@@ -112,7 +90,7 @@ const PhotographyVideographyPage: NextPageWithLayout = () => {
               bookingType: booking?.bookingType,
               contactName: booking?.contactName,
               contactNumber: booking?.contactNumber,
-              departmentManager: booking?.departmentManager || -1,
+              departmentManager: booking?.departmentManager,
               eventName: booking?.eventName,
               jobDescription: booking?.jobDescription,
               location: booking?.location,
@@ -126,6 +104,7 @@ const PhotographyVideographyPage: NextPageWithLayout = () => {
               stylingRequired: booking?.stylingRequired,
               shootType: booking?.shootType,
             }}
+            validationSchema={EditPhotographyVideographyFormSchema}
             onSubmit={submitForm}
           >
             {({ isSubmitting }) => (
@@ -203,18 +182,16 @@ const PhotographyVideographyPage: NextPageWithLayout = () => {
                           name="contactNumber"
                         />
                       </div>
-                      {departmentUsersOptions && departmentUsersOptions.length > 0 && (
-                        <Select
-                          name="departmentManager"
-                          Icon={UserIcon}
-                          placeholder="Select Account Manager"
-                          options={departmentUsersOptions}
-                          defaultValue={departmentUsersOptions.find(
-                            ({ value }) => value === booking.departmentManager
-                          )}
-                          className="mb-5"
-                        />
-                      )}
+                      <Select
+                        name="departmentManager"
+                        Icon={UserIcon}
+                        placeholder="Select Account Manager"
+                        options={AccountManagerOptions}
+                        defaultValue={AccountManagerOptions.find(
+                          ({ value }) => value === booking.departmentManager
+                        )}
+                        className="mb-5"
+                      />
                       <div className="mb-5 flex space-x-5">
                         <TimeInput name="startTime" placeholder="Start Time" />
                         <DateInput name="preferredDueDate" placeholder="Preferred Due Date" />
@@ -252,6 +229,7 @@ const PhotographyVideographyPage: NextPageWithLayout = () => {
                           onChange={toggleTypeOfShoot}
                         />
                       ))}
+
                       {showFoodPhotography && (
                         <div className="mb-8">
                           <Select
@@ -259,6 +237,9 @@ const PhotographyVideographyPage: NextPageWithLayout = () => {
                             Icon={ClipboardIcon}
                             placeholder="Number Of Dishes"
                             options={DishesOptions}
+                            defaultValue={DishesOptions.find(
+                              ({ value }) => value === booking.numberOfDishes
+                            )}
                             className="mb-5"
                           />
                           <div className="mb-5 flex space-x-5">

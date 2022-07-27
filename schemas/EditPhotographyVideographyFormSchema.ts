@@ -1,7 +1,7 @@
 import { array, date, object, SchemaOf, string } from 'yup'
-import { CreatePhotographyVideographyForm } from '../types/forms/CreatePhotographyVideographyForm'
+import { EditPhotographyVideographyForm } from '../types/forms/EditPhotographyVideographyForm'
 
-export const CreatePhotographyVideographyFormSchema: SchemaOf<CreatePhotographyVideographyForm> =
+export const EditPhotographyVideographyFormSchema: SchemaOf<EditPhotographyVideographyForm> =
   object().shape({
     serviceType: string().required(),
     shootTitle: string().required(),

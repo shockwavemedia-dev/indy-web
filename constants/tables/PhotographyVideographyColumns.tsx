@@ -83,13 +83,6 @@ export const PhotographyVideographyColumns: Array<Column<PhotographyVideography>
     ),
   },
   {
-    Header: 'Preferred Due Date',
-    accessor: 'preferredDueDate',
-    Cell: ({ value }) => (
-      <div className=" text-sm font-medium text-onyx">{format(value, "yy MMM''dd")}</div>
-    ),
-  },
-  {
     Header: '',
     accessor: 'id',
     id: 'actions',
@@ -98,7 +91,7 @@ export const PhotographyVideographyColumns: Array<Column<PhotographyVideography>
       return (
         <div className="flex space-x-2">
           <Link href={`/photography-videography/${booking.id}`}>
-            <Tooltip title="View Booking" placement="top" className="cursor-pointer">
+            <Tooltip title="Edit Booking" placement="top" className="cursor-pointer">
               <a className="group">
                 <EditIcon className="stroke-waterloo transition-all group-hover:stroke-halloween-orange" />
               </a>
