@@ -1,4 +1,4 @@
-export type CreatePhotographyVideographyForm = {
+export type EditPhotographyVideographyForm = {
   serviceType: string
   shootTitle: string
   shootDate: Date | null
