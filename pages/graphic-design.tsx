@@ -34,20 +34,17 @@ const GraphicPage: NextPageWithLayout = () => {
           href="/project-brief"
           Icon={<CalendarAddIcon className="stroke-halloween-orange" />}
           title="New Project Brief"
-          subtitle="Laborerivit rem cones mil"
           className="w-fit"
         />
         <FancyButton
           Icon={<LifeBuoyIcon className="fill-halloween-orange" />}
           title="Support Request"
-          subtitle="Laborerivit rem cones mil"
           onClick={toggleSupportRequestModal}
           className="w-fit"
         />
         <FancyButton
           Icon={<GalleryIcon className="stroke-halloween-orange" />}
           title="Request Graphic"
-          subtitle="Laborerivit rem cones mil"
           onClick={toggleCreateGraphicModal}
           className="w-fit"
         />
@@ -61,13 +58,11 @@ const GraphicPage: NextPageWithLayout = () => {
             href="/project-brief"
             Icon={<CalendarAddIcon className="stroke-halloween-orange" />}
             title="New Project Brief"
-            subtitle="Laborerivit rem cones mil"
             className="w-fit"
           />
           <FancyButton
             Icon={<LifeBuoyIcon className="fill-halloween-orange" />}
             title="Support Request"
-            subtitle="Laborerivit rem cones mil"
             onClick={toggleSupportRequestModal}
             className="w-fit"
           />
