@@ -111,7 +111,7 @@ const NewMarketingPlannerPage: NextPageWithLayout = () => {
                 </Card>
                 <Card
                   className="h-fit w-75 space-y-5 rounded-xl"
-                  title="Step 2: To-do List"
+                  title="Step 2: Indy To-do List"
                   titlePosition="center"
                 >
                   {MarketingTodoListOptions?.map(({ value, label }) => (
@@ -121,7 +121,7 @@ const NewMarketingPlannerPage: NextPageWithLayout = () => {
                 <div className="h-fit w-75">
                   <Card
                     className="mb-6 space-y-5"
-                    title="Step 3: My Task Management"
+                    title="Step 3: My To-do List"
                     titlePosition="center"
                   >
                     {MarketingMyTaskManagementOptions?.map(({ value, label }) => (

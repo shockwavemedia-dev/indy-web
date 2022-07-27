@@ -11,7 +11,7 @@ export const FancyLink = ({
 }: {
   Icon: ReactNode
   title: string
-  subtitle: string
+  subtitle?: string
   className?: string
   href: string
   target?: string

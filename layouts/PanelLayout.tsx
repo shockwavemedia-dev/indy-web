@@ -107,20 +107,17 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
               href="/project-brief"
               Icon={<CalendarAddIcon className="stroke-halloween-orange" />}
               title="New Project Brief"
-              subtitle="Laborerivit rem cones mil"
               className="w-fit"
             />
             <FancyLink
               href="/marketing-planner"
               Icon={<BriefcaseIcon className="stroke-halloween-orange" />}
               title="Marketing Planner"
-              subtitle="Laborerivit rem cones mil"
               className="w-fit"
             />
             <FancyButton
               Icon={<LifeBuoyIcon className="fill-halloween-orange" />}
               title="Support Request"
-              subtitle="Laborerivit rem cones mil"
               onClick={toggleSupportRequestModal}
               className="w-fit"
             />
