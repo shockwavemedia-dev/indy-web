@@ -34,7 +34,6 @@ const PhotographyVideographyPage: NextPageWithLayout = () => {
     query: { id },
   } = useRouter()
   const { setHeader } = usePanelLayoutStore()
-  const { replace } = useRouter()
   const queryClient = useQueryClient()
   const { showToast } = useToastStore()
 
@@ -65,8 +64,8 @@ const PhotographyVideographyPage: NextPageWithLayout = () => {
       const { status } = await axios.put(`/v1/event-bookings/${id}`, values)
 
       if (status === 200) {
+        queryClient.invalidateQueries(['booking', id])
         queryClient.invalidateQueries('eventBookings')
-        replace('/photography-videography')
         showToast({
           type: 'success',
           message: `All changes was successfully saved!`,
