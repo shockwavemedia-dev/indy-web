@@ -37,7 +37,7 @@ const PhotographyVideographyPage: NextPageWithLayout = () => {
   const queryClient = useQueryClient()
   const { showToast } = useToastStore()
 
-  const { data: booking } = useQuery(['booking', Number(id)], async () => {
+  const { data: booking } = useQuery(['eventBookings', Number(id)], async () => {
     const { data } = await axios.get<PhotographyVideography>(`/v1/event-bookings/${id}`)
 
     return data
@@ -64,7 +64,6 @@ const PhotographyVideographyPage: NextPageWithLayout = () => {
       const { status } = await axios.put(`/v1/event-bookings/${id}`, values)
 
       if (status === 200) {
-        queryClient.invalidateQueries(['booking', id])
         queryClient.invalidateQueries('eventBookings')
         showToast({
           type: 'success',
