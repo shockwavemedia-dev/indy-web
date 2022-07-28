@@ -69,6 +69,10 @@ export const ClientRoutes: Array<Route> = [
         title: 'Print',
         pathname: '/print',
       },
+      {
+        title: 'Visual Displays',
+        pathname: '/visual-displays',
+      },
     ],
   },
   {
