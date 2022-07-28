@@ -8,10 +8,16 @@ import { Button } from '../../components/Button'
 import { Card } from '../../components/Card'
 import { Checkbox } from '../../components/Checkbox'
 import { DateInput } from '../../components/DateInput'
+import { FileButton } from '../../components/FileButton'
 import { ClipboardIcon } from '../../components/icons/ClipboardIcon'
 import { EditIcon } from '../../components/icons/EditIcon'
 import { FloppyDiskIcon } from '../../components/icons/FloppyDiskIcon'
+import { PlusIcon } from '../../components/icons/PlusIcon'
 import { UserIcon } from '../../components/icons/UserIcon'
+import {
+  UploadPhotoVideoFileModal,
+  useUploadPhotoVideoFileModalStore,
+} from '../../components/modals/UploadPhotoVideoFileModal'
 import { RadioButton } from '../../components/RadioButton'
 import { RichTextInput } from '../../components/RichTextInput'
 import { Select } from '../../components/Select'
@@ -38,6 +44,8 @@ const PhotographyVideographyPage: NextPageWithLayout = () => {
   const { setHeader } = usePanelLayoutStore()
   const queryClient = useQueryClient()
   const { showToast } = useToastStore()
+
+  const { toggleUploadPhotoVideoFileModal } = useUploadPhotoVideoFileModalStore()
 
   const { data: booking } = useQuery(['eventBookings', Number(id)], async () => {
     const { data } = await axios.get<PhotographyVideography>(`/v1/event-bookings/${id}`)
@@ -145,7 +153,7 @@ const PhotographyVideographyPage: NextPageWithLayout = () => {
                       </div>
                     </Card>
                     <Card
-                      className="h-fit w-140"
+                      className="mb-8 h-fit w-140"
                       title="Step 2: Basic Details"
                       titlePosition="center"
                       titleClassName="text-halloween-orange"
@@ -201,6 +209,42 @@ const PhotographyVideographyPage: NextPageWithLayout = () => {
                       <div className="mb-5 flex space-x-5">
                         <TimeInput name="startTime" placeholder="Start Time" />
                         <DateInput name="preferredDueDate" placeholder="Preferred Due Date" />
+                      </div>
+                    </Card>
+                    <Card
+                      title="Files"
+                      titlePosition="center"
+                      titleClassName="text-halloween-orange"
+                    >
+                      <button
+                        className="absolute top-6 right-6 flex space-x-2"
+                        type="button"
+                        onClick={toggleUploadPhotoVideoFileModal}
+                      >
+                        <PlusIcon className="stroke-halloween-orange" />
+                        <div className=" text-sm font-semibold text-halloween-orange">
+                          Upload File
+                        </div>
+                      </button>
+                      <div className="flex flex-wrap gap-4">
+                        {!!booking.files ? (
+                          booking.files.map(({ id, name, thumbnailUrl, status }) => {
+                            return (
+                              <FileButton
+                                key={`ticketFile-${id}`}
+                                className="h-35 w-35"
+                                href={`/ticket/file/${id}`}
+                                name={name}
+                                thumbnailUrl={thumbnailUrl}
+                                fileStatus={status}
+                              />
+                            )
+                          })
+                        ) : (
+                          <div className="m-auto text-base text-metallic-silver">
+                            No files found.
+                          </div>
+                        )}
                       </div>
                     </Card>
                   </div>
@@ -292,6 +336,7 @@ const PhotographyVideographyPage: NextPageWithLayout = () => {
                         />
                       ))}
                     </Card>
+                    <UploadPhotoVideoFileModal bookingId={booking.id} />
                     <Card>
                       <div className="flex space-x-5">
                         <Link href="/photography-videography">
