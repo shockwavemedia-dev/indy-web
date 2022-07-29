@@ -8,16 +8,20 @@ import { Button } from '../../components/Button'
 import { Card } from '../../components/Card'
 import { Checkbox } from '../../components/Checkbox'
 import { DateInput } from '../../components/DateInput'
-import { FileButton } from '../../components/FileButton'
 import { ClipboardIcon } from '../../components/icons/ClipboardIcon'
 import { EditIcon } from '../../components/icons/EditIcon'
 import { FloppyDiskIcon } from '../../components/icons/FloppyDiskIcon'
 import { PlusIcon } from '../../components/icons/PlusIcon'
 import { UserIcon } from '../../components/icons/UserIcon'
 import {
+  ShowPhotoVideoFileModal,
+  useShowPhotoVideoFileModalStore,
+} from '../../components/modals/ShowPhotoVideoFileModal'
+import {
   UploadPhotoVideoFileModal,
   useUploadPhotoVideoFileModalStore,
 } from '../../components/modals/UploadPhotoVideoFileModal'
+import { PhotographyVideographyFileButton } from '../../components/PhotographyVideographyFileButton'
 import { RadioButton } from '../../components/RadioButton'
 import { RichTextInput } from '../../components/RichTextInput'
 import { Select } from '../../components/Select'
@@ -46,6 +50,7 @@ const PhotographyVideographyPage: NextPageWithLayout = () => {
   const { showToast } = useToastStore()
 
   const { toggleUploadPhotoVideoFileModal } = useUploadPhotoVideoFileModalStore()
+  const { toggleShowPhotoVideoFileModal } = useShowPhotoVideoFileModalStore()
 
   const { data: booking } = useQuery(['eventBookings', Number(id)], async () => {
     const { data } = await axios.get<PhotographyVideography>(`/v1/event-bookings/${id}`)
@@ -228,18 +233,26 @@ const PhotographyVideographyPage: NextPageWithLayout = () => {
                       </button>
                       <div className="flex flex-wrap gap-4">
                         {!!booking.files ? (
-                          booking.files.map(({ id, name, thumbnailUrl, status }) => {
-                            return (
-                              <FileButton
-                                key={`ticketFile-${id}`}
-                                className="h-35 w-35"
-                                href={`/ticket/file/${id}`}
-                                name={name}
-                                thumbnailUrl={thumbnailUrl}
-                                fileStatus={status}
-                              />
-                            )
-                          })
+                          booking.files.map(
+                            ({ id, originalFilename, url, thumbnailUrl, fileType }) => {
+                              const toggleFile = () =>
+                                toggleShowPhotoVideoFileModal(url, fileType, originalFilename)
+
+                              return (
+                                <>
+                                  <PhotographyVideographyFileButton
+                                    key={`ticketFile-${id}`}
+                                    className="h-35 w-35"
+                                    url={url}
+                                    fileType={fileType}
+                                    name={originalFilename}
+                                    thumbnailUrl={thumbnailUrl}
+                                    onClick={toggleFile}
+                                  />
+                                </>
+                              )
+                            }
+                          )
                         ) : (
                           <div className="m-auto text-base text-metallic-silver">
                             No files found.
@@ -336,7 +349,6 @@ const PhotographyVideographyPage: NextPageWithLayout = () => {
                         />
                       ))}
                     </Card>
-                    <UploadPhotoVideoFileModal bookingId={booking.id} />
                     <Card>
                       <div className="flex space-x-5">
                         <Link href="/photography-videography">
@@ -357,6 +369,8 @@ const PhotographyVideographyPage: NextPageWithLayout = () => {
           </Formik>
         </div>
       )}
+      <UploadPhotoVideoFileModal bookingId={Number(id)} />
+      <ShowPhotoVideoFileModal />
     </>
   )
 }

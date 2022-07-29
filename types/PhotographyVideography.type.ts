@@ -1,4 +1,4 @@
-import { TicketFile } from './TicketFile.type'
+import { PhotographyVideographyFile } from './PhotographyVideographyFile.type'
 
 export type PhotographyVideography = {
   id: number
@@ -19,5 +19,5 @@ export type PhotographyVideography = {
   startTime?: string | null
   stylingRequired?: string | null
   shootType?: Array<string>
-  files?: Array<TicketFile>
+  files?: Array<PhotographyVideographyFile>
 }

@@ -17,18 +17,13 @@ export const UploadPhotoVideoFileModal = ({ bookingId }: { bookingId: number }) 
   const queryClient = useQueryClient()
 
   const submitPhotoVideoFile = async (values: UploadPhotoVideoFile) => {
-    alert('pasok')
     try {
-      alert(bookingId)
-      console.log('pasok')
-      console.log(values)
       const { status } = await axios.post(
         `/v1/event-bookings/${bookingId}/upload-files`,
         objectWithFileToFormData(values)
       )
 
       if (status === 200) {
-        console.log('pasok')
         queryClient.invalidateQueries('eventBookings')
         toggleUploadPhotoVideoFileModal()
       }
@@ -43,13 +38,16 @@ export const UploadPhotoVideoFileModal = ({ bookingId }: { bookingId: number }) 
   return (
     <>
       {isUploadPhotoVideoFileModalVisible && (
-        <Modal title="Photography/Videography" onClose={toggleUploadPhotoVideoFileModal}>
+        <Modal
+          title="Upload Photography/Videography File"
+          onClose={toggleUploadPhotoVideoFileModal}
+        >
           <Formik initialValues={{ files: [] }} onSubmit={submitPhotoVideoFile}>
             {({ isSubmitting }) => (
               <Form className="w-130 space-y-8">
                 <div className="space-y-5">
                   <FileDropZone
-                    name="file"
+                    name="files"
                     maxSize={250}
                     mimeType="image/gif"
                     accept={['.gif', '.Graphics', '.mp4', '.png', '.jpeg', '.jpg']}
