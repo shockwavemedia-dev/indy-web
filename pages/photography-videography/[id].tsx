@@ -2,7 +2,7 @@ import axios from 'axios'
 import { Form, Formik } from 'formik'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { ChangeEvent, ReactElement, useEffect, useState } from 'react'
+import { ChangeEvent, ReactElement, useEffect } from 'react'
 import { useQuery, useQueryClient } from 'react-query'
 import { Button } from '../../components/Button'
 import { Card } from '../../components/Card'
@@ -48,37 +48,26 @@ const PhotographyVideographyPage: NextPageWithLayout = () => {
   const { setHeader } = usePanelLayoutStore()
   const queryClient = useQueryClient()
   const { showToast } = useToastStore()
-
   const { toggleUploadPhotoVideoFileModal } = useUploadPhotoVideoFileModalStore()
   const { toggleShowPhotoVideoFileModal } = useShowPhotoVideoFileModalStore()
 
-  const { data: booking } = useQuery(['eventBookings', Number(id)], async () => {
-    const { data } = await axios.get<PhotographyVideography>(`/v1/event-bookings/${id}`)
+  const { data: booking } = useQuery(
+    ['eventBookings', Number(id)],
+    async () => {
+      const { data } = await axios.get<PhotographyVideography>(`/v1/event-bookings/${id}`)
 
-    return data
-  })
-
-  const [showFoodPhotography, setFoodPhotography] = useState(false)
+      return data
+    },
+    {
+      enabled: !!id,
+    }
+  )
 
   useEffect(() => {
     if (booking) {
       setHeader(booking.eventName)
-
-      if (booking?.shootType) {
-        if (booking.shootType.some((booking) => booking === 'Food Photography')) {
-          setFoodPhotography(true)
-        }
-      }
     }
   }, [booking])
-
-  const toggleTypeOfShoot = ({ currentTarget: { value } }: ChangeEvent<HTMLInputElement>) => {
-    if (value === 'Food Photography') {
-      toggleFoodPhotography()
-    }
-  }
-
-  const toggleFoodPhotography = () => setFoodPhotography(!showFoodPhotography)
 
   const submitForm = async (values: EditPhotographyVideographyForm) => {
     try {
@@ -98,6 +87,8 @@ const PhotographyVideographyPage: NextPageWithLayout = () => {
       })
     }
   }
+
+  if (!booking) return null
 
   return (
     <>
@@ -121,12 +112,12 @@ const PhotographyVideographyPage: NextPageWithLayout = () => {
               startTime: booking?.startTime,
               shootTitle: booking?.shootTitle,
               stylingRequired: booking?.stylingRequired,
-              shootType: booking?.shootType,
+              shootType: booking?.shootType as string[],
             }}
             validationSchema={EditPhotographyVideographyFormSchema}
             onSubmit={submitForm}
           >
-            {({ isSubmitting }) => (
+            {({ isSubmitting, values, setFieldValue }) => (
               <Form>
                 <div className="flex w-full justify-center space-x-6">
                   <div className="h-fit w-140">
@@ -289,20 +280,34 @@ const PhotographyVideographyPage: NextPageWithLayout = () => {
                           name="shootType"
                           label={label}
                           value={value}
-                          onChange={toggleTypeOfShoot}
+                          onChange={
+                            value === 'Food Photography'
+                              ? ({ currentTarget: { checked } }: ChangeEvent<HTMLInputElement>) => {
+                                  if (!checked) {
+                                    setFieldValue('backdrops', null)
+                                    setFieldValue('stylingRequired', null)
+                                    setFieldValue('numberOfDishes', null)
+                                  }
+                                }
+                              : undefined
+                          }
                         />
                       ))}
-
-                      {showFoodPhotography && (
+                      {values.shootType.includes('Food Photography') && (
                         <div className="mb-8">
                           <Select
                             name="numberOfDishes"
                             Icon={ClipboardIcon}
                             placeholder="Number Of Dishes"
                             options={DishesOptions}
-                            defaultValue={DishesOptions.find(
-                              ({ value }) => value === booking.numberOfDishes
-                            )}
+                            defaultValue={
+                              values.numberOfDishes
+                                ? {
+                                    label: values.numberOfDishes,
+                                    value: values.numberOfDishes,
+                                  }
+                                : undefined
+                            }
                             className="mb-5"
                           />
                           <div className="mb-5 flex space-x-5">
