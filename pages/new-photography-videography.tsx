@@ -52,15 +52,26 @@ const NewPhotographyVideographyPage: NextPageWithLayout = () => {
   const toggleFoodPhotography = () => setFoodPhotography(!showFoodPhotography)
 
   const submitForm = async (values: CreatePhotographyVideographyForm) => {
+    if (values?.shootType) {
+      if (values.shootType.some((booking) => booking !== 'Food Photography')) {
+        values.backdrops = null
+        values.stylingRequired = null
+        values.numberOfDishes = null
+      }
+    }
+
     try {
-      const { status } = await axios.post<PhotographyVideography>(
+      const {
+        status,
+        data: { id },
+      } = await axios.post<PhotographyVideography>(
         `/v1/clients/${session?.user.userType.clientId}/event-bookings`,
         objectWithFileToFormData(values)
       )
 
-      if (status === 201) {
+      if (status === 200) {
+        replace(`/photography-videography/${id}`)
         queryClient.invalidateQueries('eventBookings')
-        replace('/photography-videography')
         showToast({
           type: 'success',
           message: `New Event Booking successfully created!`,
