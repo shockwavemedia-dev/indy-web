@@ -53,14 +53,17 @@ const NewPhotographyVideographyPage: NextPageWithLayout = () => {
 
   const submitForm = async (values: CreatePhotographyVideographyForm) => {
     try {
-      const { status } = await axios.post<PhotographyVideography>(
+      const {
+        status,
+        data: { id },
+      } = await axios.post<PhotographyVideography>(
         `/v1/clients/${session?.user.userType.clientId}/event-bookings`,
         objectWithFileToFormData(values)
       )
 
-      if (status === 201) {
+      if (status === 200) {
+        replace(`/photography-videography/${id}`)
         queryClient.invalidateQueries('eventBookings')
-        replace('/photography-videography')
         showToast({
           type: 'success',
           message: `New Event Booking successfully created!`,
