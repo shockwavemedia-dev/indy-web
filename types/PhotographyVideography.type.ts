@@ -1,3 +1,5 @@
+import { PhotographyVideographyFile } from './PhotographyVideographyFile.type'
+
 export type PhotographyVideography = {
   id: number
   serviceType: string
@@ -17,4 +19,5 @@ export type PhotographyVideography = {
   startTime?: string | null
   stylingRequired?: string | null
   shootType?: Array<string>
+  files?: Array<PhotographyVideographyFile>
 }

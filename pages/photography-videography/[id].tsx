@@ -11,7 +11,17 @@ import { DateInput } from '../../components/DateInput'
 import { ClipboardIcon } from '../../components/icons/ClipboardIcon'
 import { EditIcon } from '../../components/icons/EditIcon'
 import { FloppyDiskIcon } from '../../components/icons/FloppyDiskIcon'
+import { PlusIcon } from '../../components/icons/PlusIcon'
 import { UserIcon } from '../../components/icons/UserIcon'
+import {
+  ShowPhotoVideoFileModal,
+  useShowPhotoVideoFileModalStore,
+} from '../../components/modals/ShowPhotoVideoFileModal'
+import {
+  UploadPhotoVideoFileModal,
+  useUploadPhotoVideoFileModalStore,
+} from '../../components/modals/UploadPhotoVideoFileModal'
+import { PhotographyVideographyFileButton } from '../../components/PhotographyVideographyFileButton'
 import { RadioButton } from '../../components/RadioButton'
 import { RichTextInput } from '../../components/RichTextInput'
 import { Select } from '../../components/Select'
@@ -38,6 +48,8 @@ const PhotographyVideographyPage: NextPageWithLayout = () => {
   const { setHeader } = usePanelLayoutStore()
   const queryClient = useQueryClient()
   const { showToast } = useToastStore()
+  const { toggleUploadPhotoVideoFileModal } = useUploadPhotoVideoFileModalStore()
+  const { toggleShowPhotoVideoFileModal } = useShowPhotoVideoFileModalStore()
 
   const { data: booking } = useQuery(
     ['eventBookings', Number(id)],
@@ -137,7 +149,7 @@ const PhotographyVideographyPage: NextPageWithLayout = () => {
                       </div>
                     </Card>
                     <Card
-                      className="h-fit w-140"
+                      className="mb-8 h-fit w-140"
                       title="Step 2: Basic Details"
                       titlePosition="center"
                       titleClassName="text-halloween-orange"
@@ -193,6 +205,50 @@ const PhotographyVideographyPage: NextPageWithLayout = () => {
                       <div className="mb-5 flex space-x-5">
                         <TimeInput name="startTime" placeholder="Start Time" />
                         <DateInput name="preferredDueDate" placeholder="Preferred Due Date" />
+                      </div>
+                    </Card>
+                    <Card
+                      title="Files"
+                      titlePosition="center"
+                      titleClassName="text-halloween-orange"
+                    >
+                      <button
+                        className="absolute top-6 right-6 flex space-x-2"
+                        type="button"
+                        onClick={toggleUploadPhotoVideoFileModal}
+                      >
+                        <PlusIcon className="stroke-halloween-orange" />
+                        <div className=" text-sm font-semibold text-halloween-orange">
+                          Upload File
+                        </div>
+                      </button>
+                      <div className="flex flex-wrap gap-4">
+                        {!!booking.files ? (
+                          booking.files.map(
+                            ({ id, originalFilename, url, thumbnailUrl, fileType }) => {
+                              const toggleFile = () =>
+                                toggleShowPhotoVideoFileModal(url, fileType, originalFilename)
+
+                              return (
+                                <>
+                                  <PhotographyVideographyFileButton
+                                    key={`ticketFile-${id}`}
+                                    className="h-35 w-35"
+                                    url={url}
+                                    fileType={fileType}
+                                    name={originalFilename}
+                                    thumbnailUrl={thumbnailUrl}
+                                    onClick={toggleFile}
+                                  />
+                                </>
+                              )
+                            }
+                          )
+                        ) : (
+                          <div className="m-auto text-base text-metallic-silver">
+                            No files found.
+                          </div>
+                        )}
                       </div>
                     </Card>
                   </div>
@@ -318,6 +374,8 @@ const PhotographyVideographyPage: NextPageWithLayout = () => {
           </Formik>
         </div>
       )}
+      <UploadPhotoVideoFileModal bookingId={Number(id)} />
+      <ShowPhotoVideoFileModal />
     </>
   )
 }
