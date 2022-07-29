@@ -4,7 +4,7 @@ import { useSession } from 'next-auth/react'
 import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { ChangeEvent, ReactElement, useEffect, useState } from 'react'
+import { ChangeEvent, ReactElement, useEffect } from 'react'
 import { useQueryClient } from 'react-query'
 import { Button } from '../components/Button'
 import { Card } from '../components/Card'
@@ -41,25 +41,7 @@ const NewPhotographyVideographyPage: NextPageWithLayout = () => {
   const { replace } = useRouter()
   const queryClient = useQueryClient()
 
-  const [showFoodPhotography, setFoodPhotography] = useState(false)
-
-  const toggleTypeOfShoot = ({ currentTarget: { value } }: ChangeEvent<HTMLInputElement>) => {
-    if (value === 'Food Photography') {
-      toggleFoodPhotography()
-    }
-  }
-
-  const toggleFoodPhotography = () => setFoodPhotography(!showFoodPhotography)
-
   const submitForm = async (values: CreatePhotographyVideographyForm) => {
-    if (values?.shootType) {
-      if (values.shootType.some((booking) => booking !== 'Food Photography')) {
-        values.backdrops = null
-        values.stylingRequired = null
-        values.numberOfDishes = null
-      }
-    }
-
     try {
       const {
         status,
@@ -113,12 +95,12 @@ const NewPhotographyVideographyPage: NextPageWithLayout = () => {
             shootTitle: '',
             startTime: null,
             stylingRequired: '',
-            shootType: [],
+            shootType: [] as string[],
           }}
           validationSchema={CreatePhotographyVideographyFormSchema}
           onSubmit={submitForm}
         >
-          {({ isSubmitting }) => (
+          {({ isSubmitting, values, setFieldValue }) => (
             <Form>
               <div className="flex w-full justify-center space-x-6">
                 <div className="h-fit w-140">
@@ -228,10 +210,20 @@ const NewPhotographyVideographyPage: NextPageWithLayout = () => {
                         name="shootType"
                         label={label}
                         value={value}
-                        onChange={toggleTypeOfShoot}
+                        onChange={
+                          value === 'Food Photography'
+                            ? ({ currentTarget: { checked } }: ChangeEvent<HTMLInputElement>) => {
+                                if (!checked) {
+                                  setFieldValue('backdrops', null)
+                                  setFieldValue('stylingRequired', null)
+                                  setFieldValue('numberOfDishes', null)
+                                }
+                              }
+                            : undefined
+                        }
                       />
                     ))}
-                    {showFoodPhotography && (
+                    {values.shootType.includes('Food Photography') && (
                       <div className="mb-8">
                         <Select
                           name="numberOfDishes"
