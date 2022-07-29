@@ -1,6 +1,7 @@
 import { ApexOptions } from 'apexcharts'
 import axios from 'axios'
 import dynamic from 'next/dynamic'
+import { useRouter } from 'next/router'
 import { useMemo } from 'react'
 import { useQuery } from 'react-query'
 import { MarketingPlanner } from '../../types/MarketingPlanner.type'
@@ -9,6 +10,8 @@ import { Card } from '../Card'
 const ReactApexChart = dynamic(() => import('react-apexcharts'), { ssr: false })
 
 export const MarketingPlannerChart = () => {
+  const { replace } = useRouter()
+
   const { data: marketingPlanners } = useQuery('marketingPlanner', async () => {
     const { data } = await axios.get<Array<MarketingPlanner>>(`/v1/clients/1/marketing-planners`)
 
@@ -76,10 +79,11 @@ export const MarketingPlannerChart = () => {
           download: false,
           zoomin: false,
           zoomout: false,
-          reset: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          reset: `<Tooltip title="Mark all as read" placement="top">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M22 12C22 17.52 17.52 22 12 22C6.48 22 3.11 16.44 3.11 16.44M3.11 16.44H7.63M3.11 16.44V21.44M2 12C2 6.48 6.44 2 12 2C18.67 2 22 7.56 22 7.56M22 7.56V2.56M22 7.56H17.56" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
-          `,
+        </Tooltip>`,
           zoom: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M9.19995 11.7H14.2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
           <path d="M11.7 14.2V9.19995" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -98,6 +102,16 @@ export const MarketingPlannerChart = () => {
         autoSelected: 'pan',
       },
       fontFamily: 'Urbanist',
+      events: {
+        dataPointSelection: (_e, _chart, options) =>
+          replace(
+            `/marketing-planner/${JSON.parse(options.w.globals.labels[options.dataPointIndex]).id}`
+          ),
+
+        dataPointMouseEnter: (e) => {
+          e.path[0].style.cursor = 'pointer'
+        },
+      },
     },
     grid: {
       borderColor: '#E8E8EF',

@@ -37,11 +37,17 @@ const PhotographyVideographyPage: NextPageWithLayout = () => {
   const queryClient = useQueryClient()
   const { showToast } = useToastStore()
 
-  const { data: booking } = useQuery(['booking', Number(id)], async () => {
-    const { data } = await axios.get<PhotographyVideography>(`/v1/event-bookings/${id}`)
+  const { data: booking } = useQuery(
+    ['booking', Number(id)],
+    async () => {
+      const { data } = await axios.get<PhotographyVideography>(`/v1/event-bookings/${id}`)
 
-    return data
-  })
+      return data
+    },
+    {
+      enabled: !!id,
+    }
+  )
 
   useEffect(() => {
     if (booking) {
@@ -78,6 +84,8 @@ const PhotographyVideographyPage: NextPageWithLayout = () => {
       })
     }
   }
+
+  if (!booking) return null
 
   return (
     <>

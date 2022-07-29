@@ -143,17 +143,17 @@
   margin: 0 !important;
 }
 
-.apexcharts-reset-icon,
-.apexcharts-zoom-icon,
-.apexcharts-pan-icon {
-  stroke: #32343d;
+.apexcharts-reset-icon svg,
+.apexcharts-zoom-icon svg,
+.apexcharts-pan-icon svg {
+  stroke: #32343d !important;
 }
 
 .apexcharts-pan-icon {
-  transform: scale(0.9);
+  transform: scale(0.9) !important;
 }
 
-.apexcharts-selected {
+.apexcharts-selected svg {
   stroke: #f25d23 !important;
 }
 
@@ -162,5 +162,5 @@
 }
 
 .apexcharts-pan-icon {
-  margin-right: 0.5rem;
+  margin-right: 0.3rem;
 }

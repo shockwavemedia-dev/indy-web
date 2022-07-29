@@ -80,8 +80,8 @@ const NewMarketingPlannerPage: NextPageWithLayout = () => {
         >
           {({ isSubmitting }) => (
             <Form>
-              <div className="flex justify-center space-x-6">
-                <Card className="w-130" title="Step 1: Event Details" titlePosition="center">
+              <div className="mb-6 flex justify-center gap-6 lg:flex-col">
+                <Card className="h-fit flex-1" title="Step 1: Event Details" titlePosition="center">
                   <TextInput
                     type="text"
                     Icon={EditIcon}
@@ -109,43 +109,45 @@ const NewMarketingPlannerPage: NextPageWithLayout = () => {
                     multiple
                   />
                 </Card>
-                <Card
-                  className="h-fit w-75 space-y-5 rounded-xl"
-                  title="Step 2: Indy To-do List"
-                  titlePosition="center"
-                >
-                  {MarketingTodoListOptions?.map(({ value, label }) => (
-                    <Checkbox key={`${value}-todo`} name="todoList" label={label} value={value} />
-                  ))}
-                </Card>
-                <div className="h-fit w-75">
+                <div className="flex gap-6 xl:flex-col lg:flex-row">
                   <Card
-                    className="mb-6 space-y-5"
-                    title="Step 3: My To-do List"
+                    className="h-fit w-75 space-y-5 rounded-xl lg:w-full"
+                    title="Step 2: Indy To-do List"
                     titlePosition="center"
                   >
-                    {MarketingMyTaskManagementOptions?.map(({ value, label }) => (
-                      <Checkbox
-                        key={`${value}-my-task`}
-                        name="taskManagement"
-                        label={label}
-                        value={value}
-                      />
+                    {MarketingTodoListOptions?.map(({ value, label }) => (
+                      <Checkbox key={`${value}-todo`} name="todoList" label={label} value={value} />
                     ))}
                   </Card>
-                  <Card>
-                    <div className="flex space-x-5">
-                      <Link href="/marketing-planner">
-                        <Button ariaLabel="Cancel" type="button" light>
-                          Cancel
+                  <div className="h-fit w-75 lg:w-full">
+                    <Card
+                      className="mb-6 space-y-5"
+                      title="Step 3: My To-do List"
+                      titlePosition="center"
+                    >
+                      {MarketingMyTaskManagementOptions?.map(({ value, label }) => (
+                        <Checkbox
+                          key={`${value}-my-task`}
+                          name="taskManagement"
+                          label={label}
+                          value={value}
+                        />
+                      ))}
+                    </Card>
+                    <Card>
+                      <div className="flex space-x-5">
+                        <Link href="/marketing-planner">
+                          <Button ariaLabel="Cancel" type="button" light>
+                            Cancel
+                          </Button>
+                        </Link>
+                        <Button ariaLabel="Submit" disabled={isSubmitting} type="submit">
+                          <FloppyDiskIcon className="stroke-white" />
+                          <div>Save</div>
                         </Button>
-                      </Link>
-                      <Button ariaLabel="Submit" disabled={isSubmitting} type="submit">
-                        <FloppyDiskIcon className="stroke-white" />
-                        <div>Save</div>
-                      </Button>
-                    </div>
-                  </Card>
+                      </div>
+                    </Card>
+                  </div>
                 </div>
               </div>
             </Form>

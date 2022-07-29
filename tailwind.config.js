@@ -1,3 +1,7 @@
+/** @type {import('tailwindcss').Config} */
+
+const plugin = require('tailwindcss/plugin')
+
 module.exports = {
   content: [
     './pages/**/*.{js,ts,jsx,tsx}',
@@ -142,5 +146,18 @@ module.exports = {
       'maximum-yellow-red': '#ECB54E',
     },
   },
-  plugins: [require('@tailwindcss/line-clamp')],
+  plugins: [
+    require('@tailwindcss/line-clamp'),
+    plugin(({ addUtilities }) => {
+      addUtilities({
+        '.no-scrollbar': {
+          '-ms-overflow-style': 'none',
+          'scrollbar-width': 'none',
+        },
+        '.no-scrollbar::-webkit-scrollbar': {
+          display: 'none',
+        },
+      })
+    }),
+  ],
 }

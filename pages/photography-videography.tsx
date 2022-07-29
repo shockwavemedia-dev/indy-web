@@ -84,7 +84,7 @@ const PhotographyVideographyPage: NextPageWithLayout = () => {
           </div>
           <div className="flex w-86 flex-col gap-6 transition-all lg:w-full lg:flex-row">
             <RetainerInclusions />
-            <Notifications className="flex-1" />
+            <Notifications />
           </div>
         </div>
       </div>

@@ -1,13 +1,13 @@
 import Head from 'next/head'
 import Link from 'next/link'
 import { ReactElement, useEffect } from 'react'
-import { MarketingPlannerChart } from '../components/charts/MarketingPlannerChart'
-import { Notifications } from '../components/Notifications'
-import { RetainerInclusions } from '../components/RetainerInclusions'
-import PanelLayout, { usePanelLayoutStore } from '../layouts/PanelLayout'
-import { NextPageWithLayout } from '../types/pages/NextPageWithLayout.type'
+import { MarketingPlannerChart } from '../../components/charts/MarketingPlannerChart'
+import { Notifications } from '../../components/Notifications'
+import { RetainerInclusions } from '../../components/RetainerInclusions'
+import PanelLayout, { usePanelLayoutStore } from '../../layouts/PanelLayout'
+import { NextPageWithLayout } from '../../types/pages/NextPageWithLayout.type'
 
-const MarketingPlannerPage: NextPageWithLayout = () => {
+const MarketingPlannersPage: NextPageWithLayout = () => {
   const { setHeader } = usePanelLayoutStore()
 
   useEffect(() => {
@@ -39,6 +39,6 @@ const MarketingPlannerPage: NextPageWithLayout = () => {
   )
 }
 
-MarketingPlannerPage.getLayout = (page: ReactElement) => <PanelLayout>{page}</PanelLayout>
+MarketingPlannersPage.getLayout = (page: ReactElement) => <PanelLayout>{page}</PanelLayout>
 
-export default MarketingPlannerPage
+export default MarketingPlannersPage
