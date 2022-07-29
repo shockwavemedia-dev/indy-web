@@ -12,6 +12,7 @@ import { ClipboardIcon } from '../../components/icons/ClipboardIcon'
 import { EditIcon } from '../../components/icons/EditIcon'
 import { FloppyDiskIcon } from '../../components/icons/FloppyDiskIcon'
 import { UserIcon } from '../../components/icons/UserIcon'
+import { RadioButton } from '../../components/RadioButton'
 import { RichTextInput } from '../../components/RichTextInput'
 import { Select } from '../../components/Select'
 import { TextInput } from '../../components/TextInput'
@@ -22,6 +23,7 @@ import { DishesOptions } from '../../constants/options/photography-videography/D
 import { OutputTypeOptions } from '../../constants/options/photography-videography/OutputTypeOptions'
 import { ServiceTypeOptions } from '../../constants/options/photography-videography/ServiceTypeOptions'
 import { ShootTypeOptions } from '../../constants/options/photography-videography/ShootTypeOptions'
+import { YesOrNoOptions } from '../../constants/options/photography-videography/YesOrNoOptions'
 import PanelLayout, { usePanelLayoutStore } from '../../layouts/PanelLayout'
 import { EditPhotographyVideographyFormSchema } from '../../schemas/EditPhotographyVideographyFormSchema'
 import { useToastStore } from '../../store/ToastStore'
@@ -38,7 +40,7 @@ const PhotographyVideographyPage: NextPageWithLayout = () => {
   const { showToast } = useToastStore()
 
   const { data: booking } = useQuery(
-    ['booking', Number(id)],
+    ['eventBookings', Number(id)],
     async () => {
       const { data } = await axios.get<PhotographyVideography>(`/v1/event-bookings/${id}`)
 
@@ -49,13 +51,19 @@ const PhotographyVideographyPage: NextPageWithLayout = () => {
     }
   )
 
+  const [showFoodPhotography, setFoodPhotography] = useState(false)
+
   useEffect(() => {
     if (booking) {
       setHeader(booking.eventName)
+
+      if (booking?.shootType) {
+        if (booking.shootType.some((booking) => booking === 'Food Photography')) {
+          setFoodPhotography(true)
+        }
+      }
     }
   }, [booking])
-
-  const [showFoodPhotography, setFoodPhotography] = useState(false)
 
   const toggleTypeOfShoot = ({ currentTarget: { value } }: ChangeEvent<HTMLInputElement>) => {
     if (value === 'Food Photography') {
@@ -70,7 +78,6 @@ const PhotographyVideographyPage: NextPageWithLayout = () => {
       const { status } = await axios.put(`/v1/event-bookings/${id}`, values)
 
       if (status === 200) {
-        queryClient.invalidateQueries(['booking', id])
         queryClient.invalidateQueries('eventBookings')
         showToast({
           type: 'success',
@@ -250,12 +257,30 @@ const PhotographyVideographyPage: NextPageWithLayout = () => {
                             className="mb-5"
                           />
                           <div className="mb-5 flex space-x-5">
-                            <Checkbox
-                              name="stylingRequired"
-                              label="Styling Required"
-                              className="mb-5"
-                            />
-                            <Checkbox name="backdrops" label="Backdrops" className="mb-5" />
+                            <div className=" text-sm font-medium text-metallic-silver">
+                              Styling Required
+                            </div>
+                            {YesOrNoOptions?.map(({ value, label }) => (
+                              <RadioButton
+                                key={`${value}-styling-required`}
+                                name="stylingRequired"
+                                label={label}
+                                value={value}
+                              />
+                            ))}
+                          </div>
+                          <div className="mb-5 flex space-x-5">
+                            <div className=" text-sm font-medium text-metallic-silver">
+                              Backdrops
+                            </div>
+                            {YesOrNoOptions?.map(({ value, label }) => (
+                              <RadioButton
+                                key={`${value}-backdrops`}
+                                name="backdrops"
+                                label={label}
+                                value={value}
+                              />
+                            ))}
                           </div>
                         </div>
                       )}

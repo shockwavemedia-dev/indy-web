@@ -14,6 +14,7 @@ import { ClipboardIcon } from '../components/icons/ClipboardIcon'
 import { EditIcon } from '../components/icons/EditIcon'
 import { FloppyDiskIcon } from '../components/icons/FloppyDiskIcon'
 import { UserIcon } from '../components/icons/UserIcon'
+import { RadioButton } from '../components/RadioButton'
 import { RichTextInput } from '../components/RichTextInput'
 import { Select } from '../components/Select'
 import { TextInput } from '../components/TextInput'
@@ -24,6 +25,7 @@ import { DishesOptions } from '../constants/options/photography-videography/Dish
 import { OutputTypeOptions } from '../constants/options/photography-videography/OutputTypeOptions'
 import { ServiceTypeOptions } from '../constants/options/photography-videography/ServiceTypeOptions'
 import { ShootTypeOptions } from '../constants/options/photography-videography/ShootTypeOptions'
+import { YesOrNoOptions } from '../constants/options/photography-videography/YesOrNoOptions'
 import PanelLayout, { usePanelLayoutStore } from '../layouts/PanelLayout'
 import { CreatePhotographyVideographyFormSchema } from '../schemas/CreatePhotographyVideographyFormSchema'
 import { useToastStore } from '../store/ToastStore'
@@ -228,12 +230,28 @@ const NewPhotographyVideographyPage: NextPageWithLayout = () => {
                           className="mb-5"
                         />
                         <div className="mb-5 flex space-x-5">
-                          <Checkbox
-                            name="stylingRequired"
-                            label="Styling Required"
-                            className="mb-5"
-                          />
-                          <Checkbox name="backdrops" label="Backdrops" className="mb-5" />
+                          <div className=" text-sm font-medium text-metallic-silver">
+                            Styling Required
+                          </div>
+                          {YesOrNoOptions?.map(({ value, label }) => (
+                            <RadioButton
+                              key={`${value}-styling-required`}
+                              name="stylingRequired"
+                              label={label}
+                              value={value}
+                            />
+                          ))}
+                        </div>
+                        <div className="mb-5 flex space-x-5">
+                          <div className=" text-sm font-medium text-metallic-silver">Backdrops</div>
+                          {YesOrNoOptions?.map(({ value, label }) => (
+                            <RadioButton
+                              key={`${value}-backdrops`}
+                              name="backdrops"
+                              label={label}
+                              value={value}
+                            />
+                          ))}
                         </div>
                       </div>
                     )}
