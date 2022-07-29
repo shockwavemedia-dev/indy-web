@@ -17,6 +17,7 @@ export const PhotographyVideographyFileButton = ({
   return (
     <>
       <button
+        type="button"
         className={`relative flex h-35 w-35 flex-none flex-col items-center justify-center rounded-xl border-2 border-bright-gray p-3 hover:border-halloween-orange ${className}`}
         onClick={onClick}
       >
