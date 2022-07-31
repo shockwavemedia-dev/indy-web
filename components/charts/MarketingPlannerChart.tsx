@@ -1,47 +1,77 @@
 import { ApexOptions } from 'apexcharts'
 import axios from 'axios'
+import { getMonth } from 'date-fns'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import { useQuery } from 'react-query'
+import { SingleValue } from 'react-select'
 import { MarketingPlanner } from '../../types/MarketingPlanner.type'
+import { SelectOption } from '../../types/SelectOption.type'
 import { Card } from '../Card'
+import { CalendarIcon } from '../icons/CalendarIcon'
+import { SelectNoFormik } from '../SelectNoFormik'
 
 const ReactApexChart = dynamic(() => import('react-apexcharts'), { ssr: false })
+const monthsOption: Array<SelectOption<number>> = [
+  { label: 'January', value: 0 },
+  { label: 'February', value: 1 },
+  { label: 'March', value: 2 },
+  { label: 'April', value: 3 },
+  { label: 'May', value: 4 },
+  { label: 'June', value: 5 },
+  { label: 'July', value: 6 },
+  { label: 'August', value: 7 },
+  { label: 'September', value: 8 },
+  { label: 'October', value: 9 },
+  { label: 'November', value: 10 },
+  { label: 'December', value: 11 },
+]
 
 export const MarketingPlannerChart = () => {
   const { replace } = useRouter()
 
-  const { data: marketingPlanners } = useQuery('marketingPlanner', async () => {
-    const { data } = await axios.get<Array<MarketingPlanner>>(`/v1/clients/1/marketing-planners`)
+  const { data: marketingPlanners, isLoading: marketingPlannersIsLoading } = useQuery(
+    'marketingPlanner',
+    async () => {
+      const { data } = await axios.get<Array<MarketingPlanner>>(`/v1/clients/1/marketing-planners`)
 
-    return data
-  })
+      return data
+    }
+  )
+
+  const [month, setMonth] = useState(
+    monthsOption.find(({ value }) => value === getMonth(new Date()))
+  )
 
   const series = useMemo((): ApexAxisChartSeries => {
     if (marketingPlanners) {
       return [
         {
-          data: marketingPlanners.map(({ id, eventName, startDate, endDate }) => ({
-            x: JSON.stringify({
-              id,
-              eventName,
-            }),
-            y: [startDate.getTime(), endDate.getTime()],
-          })),
+          data: marketingPlanners
+            .filter(
+              ({ startDate, endDate }) =>
+                getMonth(startDate) === month?.value || getMonth(endDate) === month?.value
+            )
+            .map(({ id, eventName, startDate, endDate }) => ({
+              x: JSON.stringify({
+                id,
+                eventName,
+              }),
+              y: [startDate.getTime(), endDate.getTime()],
+            })),
         },
       ]
     }
 
     return []
-  }, [marketingPlanners])
+  }, [marketingPlanners, month])
 
   const options: ApexOptions = {
     plotOptions: {
       bar: {
         horizontal: true,
         distributed: true,
-        borderRadius: 4,
         barHeight: '90%',
       },
     },
@@ -72,18 +102,15 @@ export const MarketingPlannerChart = () => {
       enabled: false,
     },
     chart: {
-      offsetY: -35,
       toolbar: {
-        offsetY: -47,
+        offsetY: -33,
         tools: {
           download: false,
           zoomin: false,
           zoomout: false,
-          reset: `<Tooltip title="Mark all as read" placement="top">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          reset: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M22 12C22 17.52 17.52 22 12 22C6.48 22 3.11 16.44 3.11 16.44M3.11 16.44H7.63M3.11 16.44V21.44M2 12C2 6.48 6.44 2 12 2C18.67 2 22 7.56 22 7.56M22 7.56V2.56M22 7.56H17.56" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </Tooltip>`,
+          </svg>`,
           zoom: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M9.19995 11.7H14.2" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
           <path d="M11.7 14.2V9.19995" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -138,17 +165,28 @@ export const MarketingPlannerChart = () => {
   }
 
   return (
-    <Card
-      title="Marketing Plan Calendars"
-      className="text- flex h-155 flex-1 flex-col pl-8 transition-all"
-    >
-      <ReactApexChart
-        type="rangeBar"
-        options={options}
-        series={series}
-        height="100%"
-        width="100%"
-      />
+    <Card title="Marketing Plan Calendars" className="flex-1">
+      <div className="absolute top-6 right-32 z-10">
+        <SelectNoFormik
+          Icon={CalendarIcon}
+          options={monthsOption}
+          value={month}
+          onChange={(newValue: SingleValue<SelectOption<number>>) => {
+            if (newValue) setMonth(newValue)
+          }}
+        />
+      </div>
+      <div className="relative h-175">
+        {series && series[0] && series[0].data.length > 0 ? (
+          <ReactApexChart type="rangeBar" options={options} series={series} height="100%" />
+        ) : (
+          !marketingPlannersIsLoading && (
+            <div className="grid h-full w-full place-items-center bg-white text-lavender-gray">
+              No marketing plans found.
+            </div>
+          )
+        )}
+      </div>
     </Card>
   )
 }
