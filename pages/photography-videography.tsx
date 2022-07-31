@@ -27,50 +27,41 @@ const PhotographyVideographyPage: NextPageWithLayout = () => {
       <Head>
         <title>Indy - Photography/Videography</title>
       </Head>
-      <div className="mx-auto w-full max-w-8xl space-y-6">
+      <div className="mx-auto w-full max-w-8xl">
         <div className="flex gap-6 transition-all lg:flex-col">
-          <div className="flex w-9/12 flex-col">
-            <Card className="grid max-h-155 flex-1 transition-all lg:flex-none">
-              <div className="ml-20 grid grid-cols-4 space-x-0">
+          <div className="flex flex-1 flex-col">
+            <Card className="flex-1 flex-col transition-all">
+              <div className="mb-5 flex space-x-5">
                 <Link href="/new-photography-videography">
                   <Button ariaLabel="Book" type="button" className="mb-4 w-44">
                     Book
                   </Button>
                 </Link>
-
                 <Button ariaLabel="Book" type="button" className="mb-4 w-44" light>
                   Quote/Inquire
                 </Button>
               </div>
-              <div className="mr-6 ml-20 grid grid-cols-2 grid-rows-2">
-                <a
-                  href="https://drive.google.com/file/d/1nFRafx4FBru8IkUIwHSOfNuYaYFp5sP5/view"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <Image
-                    src={VideographyAvatar}
-                    alt="videography"
-                    height={400}
-                    width={400}
-                    className="rounded-xl"
-                  />
-                  Videography Portfolio
-                </a>
-                <a
-                  href="https://dailypress.myportfolio.com/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <Image
-                    src={PhotographyAvatar}
-                    alt="Photography"
-                    height={400}
-                    width={400}
-                    className="rounded-xl"
-                  />
-                  Photography Portfolio
-                </a>
+              <div className="mx-auto flex w-fit space-x-6">
+                <div>
+                  <Link href="https://drive.google.com/file/d/1nFRafx4FBru8IkUIwHSOfNuYaYFp5sP5/view">
+                    <a target="_blank" rel="noopener noreferrer">
+                      <div className="mb-5 aspect-square max-h-102 overflow-hidden rounded-xl">
+                        <Image src={VideographyAvatar} alt="videography" className="h-full" />
+                      </div>
+                    </a>
+                  </Link>
+                  <div className="font-semibold">Videography Portfolio</div>
+                </div>
+                <div>
+                  <Link href="https://dailypress.myportfolio.com/">
+                    <a target="_blank" rel="noopener noreferrer">
+                      <div className="mb-5 aspect-square max-h-102 overflow-hidden rounded-xl">
+                        <Image src={PhotographyAvatar} alt="photography" className="h-full" />
+                      </div>
+                    </a>
+                  </Link>
+                  <div className="font-semibold">Photography Portfolio</div>
+                </div>
               </div>
             </Card>
             <Card title="Event Bookings Table" className="mt-8 flex max-h-155 flex-1 flex-col">
