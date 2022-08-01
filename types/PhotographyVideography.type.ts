@@ -20,4 +20,5 @@ export type PhotographyVideography = {
   stylingRequired?: string | null
   shootType?: Array<string>
   files?: Array<PhotographyVideographyFile>
+  photographerId?: number | null
 }

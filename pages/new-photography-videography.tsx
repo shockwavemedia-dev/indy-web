@@ -5,7 +5,7 @@ import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { ChangeEvent, ReactElement, useEffect } from 'react'
-import { useQueryClient } from 'react-query'
+import { useQuery, useQueryClient } from 'react-query'
 import { Button } from '../components/Button'
 import { Card } from '../components/Card'
 import { Checkbox } from '../components/Checkbox'
@@ -30,7 +30,9 @@ import PanelLayout, { usePanelLayoutStore } from '../layouts/PanelLayout'
 import { CreatePhotographyVideographyFormSchema } from '../schemas/CreatePhotographyVideographyFormSchema'
 import { useToastStore } from '../store/ToastStore'
 import { CreatePhotographyVideographyForm } from '../types/forms/CreatePhotographyVideographyForm'
+import { Page } from '../types/Page.type'
 import { NextPageWithLayout } from '../types/pages/NextPageWithLayout.type'
+import { Photographer } from '../types/Photographer.type'
 import { PhotographyVideography } from '../types/PhotographyVideography.type'
 import { objectWithFileToFormData } from '../utils/FormHelpers'
 
@@ -40,6 +42,17 @@ const NewPhotographyVideographyPage: NextPageWithLayout = () => {
   const { showToast } = useToastStore()
   const { replace } = useRouter()
   const queryClient = useQueryClient()
+
+  const { data: photographers } = useQuery('photographers', async () => {
+    const {
+      data: { data },
+    } = await axios.get<{
+      data: Array<Photographer>
+      page: Page
+    }>('/v1/photographers')
+
+    return data
+  })
 
   const submitForm = async (values: CreatePhotographyVideographyForm) => {
     try {
@@ -96,6 +109,7 @@ const NewPhotographyVideographyPage: NextPageWithLayout = () => {
             startTime: null,
             stylingRequired: '',
             shootType: [] as string[],
+            photographer: -1,
           }}
           validationSchema={CreatePhotographyVideographyFormSchema}
           onSubmit={submitForm}
@@ -115,6 +129,18 @@ const NewPhotographyVideographyPage: NextPageWithLayout = () => {
                       Icon={ClipboardIcon}
                       placeholder="Select Service"
                       options={ServiceTypeOptions}
+                      className="mb-5"
+                    />
+                    <Select
+                      name="photographerId"
+                      Icon={UserIcon}
+                      placeholder="Select Photographer"
+                      options={
+                        photographers?.map((photographer) => ({
+                          value: photographer.adminUserId,
+                          label: photographer.fullName,
+                        })) ?? []
+                      }
                       className="mb-5"
                     />
                     <div className="mb-5 flex space-x-5">
@@ -223,7 +249,7 @@ const NewPhotographyVideographyPage: NextPageWithLayout = () => {
                         }
                       />
                     ))}
-                    {values.shootType.includes('Food Photography') && (
+                    {values.shootType && values.shootType.includes('Food Photography') && (
                       <div className="mb-8">
                         <Select
                           name="numberOfDishes"

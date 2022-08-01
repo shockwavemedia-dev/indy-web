@@ -1,4 +1,4 @@
-import { array, date, object, SchemaOf, string } from 'yup'
+import { array, date, number, object, SchemaOf, string } from 'yup'
 import { CreatePhotographyVideographyForm } from '../types/forms/CreatePhotographyVideographyForm'
 
 export const CreatePhotographyVideographyFormSchema: SchemaOf<CreatePhotographyVideographyForm> =
@@ -20,4 +20,5 @@ export const CreatePhotographyVideographyFormSchema: SchemaOf<CreatePhotographyV
     startTime: string().optional().nullable(),
     stylingRequired: string().optional().nullable(),
     shootType: array().of(string().required()).optional(),
+    photographerId: number().optional().nullable(),
   })
