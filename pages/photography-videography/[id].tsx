@@ -38,7 +38,9 @@ import PanelLayout, { usePanelLayoutStore } from '../../layouts/PanelLayout'
 import { EditPhotographyVideographyFormSchema } from '../../schemas/EditPhotographyVideographyFormSchema'
 import { useToastStore } from '../../store/ToastStore'
 import { EditPhotographyVideographyForm } from '../../types/forms/EditPhotographyVideographyForm'
+import { Page } from '../../types/Page.type'
 import { NextPageWithLayout } from '../../types/pages/NextPageWithLayout.type'
+import { Photographer } from '../../types/Photographer.type'
 import { PhotographyVideography } from '../../types/PhotographyVideography.type'
 
 const PhotographyVideographyPage: NextPageWithLayout = () => {
@@ -62,6 +64,22 @@ const PhotographyVideographyPage: NextPageWithLayout = () => {
       enabled: !!id,
     }
   )
+
+  const { data: photographers } = useQuery('photographers', async () => {
+    const {
+      data: { data },
+    } = await axios.get<{
+      data: Array<Photographer>
+      page: Page
+    }>('/v1/photographers')
+
+    return data
+  })
+
+  const photographersOptions = photographers?.map((photographer) => ({
+    value: photographer.adminUserId,
+    label: photographer.fullName,
+  }))
 
   useEffect(() => {
     if (booking) {
@@ -113,6 +131,7 @@ const PhotographyVideographyPage: NextPageWithLayout = () => {
               shootTitle: booking?.shootTitle,
               stylingRequired: booking?.stylingRequired,
               shootType: booking?.shootType as string[],
+              photographerId: booking?.photographerId,
             }}
             validationSchema={EditPhotographyVideographyFormSchema}
             onSubmit={submitForm}
@@ -137,6 +156,18 @@ const PhotographyVideographyPage: NextPageWithLayout = () => {
                         )}
                         className="mb-5"
                       />
+                      {photographersOptions && photographersOptions.length > 0 && (
+                        <Select
+                          name="photographerId"
+                          Icon={UserIcon}
+                          placeholder="Select Photographer"
+                          options={photographersOptions}
+                          defaultValue={photographersOptions.find(
+                            ({ value }) => value === booking.photographerId
+                          )}
+                          className="mb-5"
+                        />
+                      )}
                       <div className="mb-5 flex space-x-5">
                         <TextInput
                           type="text"
@@ -293,7 +324,7 @@ const PhotographyVideographyPage: NextPageWithLayout = () => {
                           }
                         />
                       ))}
-                      {values.shootType.includes('Food Photography') && (
+                      {values.shootType && values.shootType.includes('Food Photography') && (
                         <div className="mb-8">
                           <Select
                             name="numberOfDishes"

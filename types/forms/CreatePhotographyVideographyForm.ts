@@ -16,4 +16,5 @@ export type CreatePhotographyVideographyForm = {
   startTime?: string | null
   stylingRequired?: string | null
   shootType?: Array<string>
+  photographerId?: number | null
 }
