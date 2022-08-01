@@ -23,14 +23,20 @@ const WebsitePage: NextPageWithLayout = () => {
       <div className="mx-auto w-full max-w-8xl space-y-6">
         <div className="flex gap-6 transition-all lg:flex-col">
           <Card className="grid h-fit w-full flex-1 place-items-center transition-all lg:flex-none">
-            <div className="flex w-212.5 flex-wrap place-content-center gap-2">
+            <div className="flex w-147 flex-col">
               {WebsiteServicesList?.map(({ image, link }) => (
-                <a key={`${link}-website`} href={link} target="_blank" rel="noopener noreferrer">
+                <a
+                  key={`${link}-website`}
+                  href={link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mb-5 place-content-center"
+                >
                   <Image
                     src={image}
                     alt="website-atmosphere"
-                    height={400}
-                    width={400}
+                    height={600}
+                    width={850}
                     className="rounded-xl"
                   />
                 </a>
