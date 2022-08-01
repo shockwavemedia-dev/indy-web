@@ -14,9 +14,9 @@ import { FloppyDiskIcon } from '../../components/icons/FloppyDiskIcon'
 import { PlusIcon } from '../../components/icons/PlusIcon'
 import { UserIcon } from '../../components/icons/UserIcon'
 import {
-  ShowPhotoVideoFileModal,
-  useShowPhotoVideoFileModalStore,
-} from '../../components/modals/ShowPhotoVideoFileModal'
+  FileDisplayModal,
+  useFileDisplayModalStore,
+} from '../../components/modals/FileDisplayModal'
 import {
   UploadPhotoVideoFileModal,
   useUploadPhotoVideoFileModalStore,
@@ -49,7 +49,7 @@ const PhotographyVideographyPage: NextPageWithLayout = () => {
   const queryClient = useQueryClient()
   const { showToast } = useToastStore()
   const { toggleUploadPhotoVideoFileModal } = useUploadPhotoVideoFileModalStore()
-  const { toggleShowPhotoVideoFileModal } = useShowPhotoVideoFileModalStore()
+  const { toggleShowPhotoVideoFileModal } = useFileDisplayModalStore()
 
   const { data: booking } = useQuery(
     ['eventBookings', Number(id)],
@@ -375,7 +375,7 @@ const PhotographyVideographyPage: NextPageWithLayout = () => {
         </div>
       )}
       <UploadPhotoVideoFileModal bookingId={Number(id)} />
-      <ShowPhotoVideoFileModal />
+      <FileDisplayModal />
     </>
   )
 }

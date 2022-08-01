@@ -9,15 +9,12 @@ import { CaretIcon } from './icons/CaretIcon'
 import { PlusIcon } from './icons/PlusIcon'
 import { CreateFolderModal, useCreateFolderModalStore } from './modals/CreateFolderModal'
 import { DeleteFolderModal } from './modals/DeleteFolderModal'
+import { FileDisplayModal, useFileDisplayModalStore } from './modals/FileDisplayModal'
 import { RenameFolderModal } from './modals/RenameFolderModal'
-import {
-  ShowPhotoVideoFileModal,
-  useShowPhotoVideoFileModalStore,
-} from './modals/ShowPhotoVideoFileModal'
 
 export const FileBrowser = ({ clientId }: { clientId: number }) => {
   const { toggleModal: toggleCreateFolderModal } = useCreateFolderModalStore()
-  const { toggleShowPhotoVideoFileModal } = useShowPhotoVideoFileModalStore()
+  const { toggleShowPhotoVideoFileModal } = useFileDisplayModalStore()
   const [foldersStack, setFoldersStack] = useState<
     Array<{
       key: string
@@ -173,7 +170,7 @@ export const FileBrowser = ({ clientId }: { clientId: number }) => {
       />
       <RenameFolderModal />
       <DeleteFolderModal />
-      <ShowPhotoVideoFileModal />
+      <FileDisplayModal />
     </>
   )
 }

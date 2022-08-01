@@ -3,7 +3,7 @@ import { combine } from 'zustand/middleware'
 import { FileDisplay } from '../FileDisplay'
 import { Modal } from '../Modal'
 
-export const useShowPhotoVideoFileModalStore = createStore(
+export const useFileDisplayModalStore = createStore(
   combine(
     {
       signedUrl: '',
@@ -17,9 +17,8 @@ export const useShowPhotoVideoFileModalStore = createStore(
   )
 )
 
-export const ShowPhotoVideoFileModal = () => {
-  const { signedUrl, fileType, name, toggleShowPhotoVideoFileModal } =
-    useShowPhotoVideoFileModalStore()
+export const FileDisplayModal = () => {
+  const { signedUrl, fileType, name, toggleShowPhotoVideoFileModal } = useFileDisplayModalStore()
 
   return (
     <>
