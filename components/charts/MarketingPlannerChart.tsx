@@ -1,6 +1,6 @@
 import { ApexOptions } from 'apexcharts'
 import axios from 'axios'
-import { getMonth } from 'date-fns'
+import { getMonth, getYear } from 'date-fns'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import { useMemo, useState } from 'react'
@@ -27,6 +27,10 @@ const monthsOption: Array<SelectOption<number>> = [
   { label: 'November', value: 10 },
   { label: 'December', value: 11 },
 ]
+const yearsOption: Array<SelectOption<number>> = [...Array(10)].map((_, i) => ({
+  label: (2022 + i).toString(),
+  value: 2022 + i,
+}))
 
 export const MarketingPlannerChart = () => {
   const { replace } = useRouter()
@@ -43,6 +47,7 @@ export const MarketingPlannerChart = () => {
   const [month, setMonth] = useState(
     monthsOption.find(({ value }) => value === getMonth(new Date()))
   )
+  const [year, setYear] = useState(yearsOption.find(({ value }) => value === getYear(new Date())))
 
   const series = useMemo((): ApexAxisChartSeries => {
     if (marketingPlanners) {
@@ -52,6 +57,10 @@ export const MarketingPlannerChart = () => {
             .filter(
               ({ startDate, endDate }) =>
                 getMonth(startDate) === month?.value || getMonth(endDate) === month?.value
+            )
+            .filter(
+              ({ startDate, endDate }) =>
+                getYear(startDate) === year?.value || getYear(endDate) === year?.value
             )
             .map(({ id, eventName, startDate, endDate }) => ({
               x: JSON.stringify({
@@ -65,7 +74,7 @@ export const MarketingPlannerChart = () => {
     }
 
     return []
-  }, [marketingPlanners, month])
+  }, [marketingPlanners, month, year])
 
   const options: ApexOptions = {
     plotOptions: {
@@ -86,9 +95,7 @@ export const MarketingPlannerChart = () => {
     },
     xaxis: {
       type: 'datetime',
-      axisBorder: {
-        offsetX: -28,
-      },
+
       axisTicks: {
         show: false,
       },
@@ -166,13 +173,21 @@ export const MarketingPlannerChart = () => {
 
   return (
     <Card title="Marketing Plan Calendars" className="flex-1">
-      <div className="absolute top-6 right-32 z-10">
+      <div className="absolute top-6 right-32 z-10 flex space-x-3">
         <SelectNoFormik
           Icon={CalendarIcon}
           options={monthsOption}
           value={month}
           onChange={(newValue: SingleValue<SelectOption<number>>) => {
             if (newValue) setMonth(newValue)
+          }}
+        />
+        <SelectNoFormik
+          Icon={CalendarIcon}
+          options={yearsOption}
+          value={year}
+          onChange={(newValue: SingleValue<SelectOption<number>>) => {
+            if (newValue) setYear(newValue)
           }}
         />
       </div>
