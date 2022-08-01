@@ -20,6 +20,7 @@ export const FileButton = ({
   allowRename = false,
   folderId,
   folderName,
+  file = false,
 }: {
   onClick?: () => void
   href?: string
@@ -32,16 +33,18 @@ export const FileButton = ({
   allowRename?: boolean
   folderId?: number
   folderName?: string
+  file?: boolean
 }) => {
   const { toggleModal: toggleRenameFolderModal } = useRenameFolderModalStore()
   const { toggleModal: toggleDeleteFolderModal } = useDeleteFolderModalStore()
 
-  return href ? (
+  return file ? (
     <a
       href={href}
+      onClick={!href && file && onClick ? onClick : undefined}
       target={openNewTab ? '_blank' : '_self'}
       rel="noopener noreferrer"
-      className={`relative flex h-35 w-35 flex-none flex-col items-center justify-center rounded-xl border-2 border-bright-gray p-3 hover:border-halloween-orange ${className}`}
+      className={`relative flex h-35 w-35 flex-none cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-bright-gray p-3 hover:border-halloween-orange ${className}`}
     >
       <div className={`relative mb-1 ${thumbnailUrl ? 'h-16 w-16' : ''}`}>
         {thumbnailUrl ? (

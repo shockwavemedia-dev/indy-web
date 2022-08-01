@@ -10,9 +10,14 @@ import { PlusIcon } from './icons/PlusIcon'
 import { CreateFolderModal, useCreateFolderModalStore } from './modals/CreateFolderModal'
 import { DeleteFolderModal } from './modals/DeleteFolderModal'
 import { RenameFolderModal } from './modals/RenameFolderModal'
+import {
+  ShowPhotoVideoFileModal,
+  useShowPhotoVideoFileModalStore,
+} from './modals/ShowPhotoVideoFileModal'
 
 export const FileBrowser = ({ clientId }: { clientId: number }) => {
   const { toggleModal: toggleCreateFolderModal } = useCreateFolderModalStore()
+  const { toggleShowPhotoVideoFileModal } = useShowPhotoVideoFileModalStore()
   const [foldersStack, setFoldersStack] = useState<
     Array<{
       key: string
@@ -129,16 +134,30 @@ export const FileBrowser = ({ clientId }: { clientId: number }) => {
                       fileName,
                       originalFilename,
                       thumbnailUrl,
-                      clientTicketFile: { status, id },
-                    }) => (
-                      <FileButton
-                        key={fileName}
-                        name={originalFilename}
-                        thumbnailUrl={thumbnailUrl}
-                        href={`/ticket/file/${id}`}
-                        fileStatus={status}
-                      />
-                    )
+                      clientTicketFile,
+                      url,
+                      fileType,
+                    }) =>
+                      clientTicketFile ? (
+                        <FileButton
+                          key={fileName}
+                          name={originalFilename}
+                          thumbnailUrl={thumbnailUrl}
+                          href={`/ticket/file/${clientTicketFile.id}`}
+                          fileStatus={clientTicketFile.status}
+                          file
+                        />
+                      ) : (
+                        <FileButton
+                          key={fileName}
+                          name={originalFilename}
+                          thumbnailUrl={thumbnailUrl}
+                          onClick={() =>
+                            toggleShowPhotoVideoFileModal(url, fileType, originalFilename)
+                          }
+                          file
+                        />
+                      )
                   )}
               </>
             )
@@ -154,6 +173,7 @@ export const FileBrowser = ({ clientId }: { clientId: number }) => {
       />
       <RenameFolderModal />
       <DeleteFolderModal />
+      <ShowPhotoVideoFileModal />
     </>
   )
 }
