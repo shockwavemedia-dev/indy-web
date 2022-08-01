@@ -22,7 +22,7 @@ const WebsitePage: NextPageWithLayout = () => {
       </Head>
       <div className="mx-auto w-full max-w-8xl space-y-6">
         <div className="flex gap-6 transition-all lg:flex-col">
-          <Card className="grid h-fit w-full flex-1 place-items-center transition-all lg:flex-none">
+          <Card className="relative grid h-fit w-full flex-1 place-items-center transition-all lg:flex-none">
             <div className="flex w-147 flex-col">
               {WebsiteServicesList?.map(({ image, link }) => (
                 <a
@@ -45,7 +45,7 @@ const WebsitePage: NextPageWithLayout = () => {
           </Card>
           <div className="flex w-86 flex-col gap-6 transition-all lg:w-full lg:flex-row">
             <RetainerInclusions />
-            <Notifications className="flex-1" />
+            <Notifications />
           </div>
         </div>
       </div>
