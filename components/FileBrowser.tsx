@@ -5,15 +5,18 @@ import { Files } from '../types/Files.type'
 import { Folder } from '../types/Folder.type'
 import { Card } from './Card'
 import { FileButton } from './FileButton'
+import { AddFileIcon } from './icons/AddFileIcon'
+import { AddFolderIcon } from './icons/AddFolderIcon'
 import { CaretIcon } from './icons/CaretIcon'
-import { PlusIcon } from './icons/PlusIcon'
 import { CreateFolderModal, useCreateFolderModalStore } from './modals/CreateFolderModal'
 import { DeleteFolderModal } from './modals/DeleteFolderModal'
 import { FileDisplayModal, useFileDisplayModalStore } from './modals/FileDisplayModal'
 import { RenameFolderModal } from './modals/RenameFolderModal'
+import { UploadFileModal, useUploadFileModal } from './modals/UploadFileModal'
 
 export const FileBrowser = ({ clientId }: { clientId: number }) => {
   const { toggleModal: toggleCreateFolderModal } = useCreateFolderModalStore()
+  const { toggleUploadFileModal } = useUploadFileModal()
   const { toggleShowPhotoVideoFileModal } = useFileDisplayModalStore()
   const [foldersStack, setFoldersStack] = useState<
     Array<{
@@ -54,12 +57,23 @@ export const FileBrowser = ({ clientId }: { clientId: number }) => {
     <>
       <Card className="h-fit flex-1">
         {!yearFolder && (
-          <button className="absolute right-6 flex space-x-2" onClick={toggleCreateFolderModal}>
-            <PlusIcon className="stroke-halloween-orange" />
-            <div className=" text-sm font-semibold text-halloween-orange">Create Folder</div>
-          </button>
+          <div className="absolute top-6 right-6 flex space-x-5">
+            <button className="flex space-x-2" onClick={toggleCreateFolderModal}>
+              <AddFolderIcon className="stroke-halloween-orange" />
+              <div className=" text-sm font-semibold text-halloween-orange">Create Folder</div>
+            </button>
+            {foldersStack.length > 0 && (
+              <button
+                className="flex space-x-2"
+                onClick={() => toggleUploadFileModal(foldersStack[foldersStack.length - 1].id)}
+              >
+                <AddFileIcon className="stroke-halloween-orange" />
+                <div className=" text-sm font-semibold text-halloween-orange">Upload File</div>
+              </button>
+            )}
+          </div>
         )}
-        <div className="flex max-h-155 flex-wrap gap-4 overflow-y-auto pt-5">
+        <div className="flex max-h-155 flex-wrap gap-4 overflow-y-auto pt-10">
           {clientId !== -1 ? (
             filesSuccess && (
               <>
@@ -171,6 +185,7 @@ export const FileBrowser = ({ clientId }: { clientId: number }) => {
       <RenameFolderModal />
       <DeleteFolderModal />
       <FileDisplayModal />
+      <UploadFileModal />
     </>
   )
 }

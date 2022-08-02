@@ -24,17 +24,15 @@ export const FileDisplayModal = () => {
     <>
       {signedUrl && fileType && name && (
         <Modal title={name} onClose={toggleShowPhotoVideoFileModal}>
-          <div className="space-y-5">
-            <FileDisplay
-              src={signedUrl}
-              type={fileType}
-              imageHeight={560}
-              imageWidth={560}
-              imageAlt={name}
-              className="rounded-xl"
-              videoClassName="w-140 rounded-xl"
-            />
-          </div>
+          <FileDisplay
+            src={signedUrl}
+            type={fileType}
+            imageHeight={560}
+            imageWidth={560}
+            imageAlt={name}
+            className="rounded-xl"
+            videoClassName="w-140 rounded-xl"
+          />
         </Modal>
       )}
     </>

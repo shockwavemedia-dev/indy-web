@@ -41,12 +41,12 @@ export const FileDisplay = ({
         rel="noopener noreferrer"
         className="flex flex-none flex-col items-center justify-center space-y-1 p-3"
       >
-        <video className={`${videoClassName}`} onError={failed} loop muted autoPlay>
+        <video className={videoClassName} onError={failed} loop muted autoPlay>
           <source src={src} />
         </video>
       </a>
     ) : (
-      <video className={`${videoClassName}`} onError={failed} loop muted autoPlay>
+      <video className={videoClassName} onError={failed} loop muted autoPlay>
         <source src={src} />
       </video>
     )
@@ -58,20 +58,14 @@ export const FileDisplay = ({
       className="flex flex-none flex-col items-center justify-center space-y-1 p-3"
     >
       <Image
-        className={`${className}`}
+        className={className}
         src={src}
-        height={`${imageHeight}`}
-        width={`${imageWidth}`}
+        height={imageHeight}
+        width={imageWidth}
         alt={imageAlt}
       />
     </a>
   ) : (
-    <Image
-      className={`${className}`}
-      src={src}
-      height={`${imageHeight}`}
-      width={`${imageWidth}`}
-      alt={imageAlt}
-    />
+    <Image className={className} src={src} height={imageHeight} width={imageWidth} alt={imageAlt} />
   )
 }
