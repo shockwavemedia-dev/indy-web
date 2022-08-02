@@ -6,7 +6,7 @@ import { ReactElement, useEffect } from 'react'
 import { Button } from '../components/Button'
 import { Card } from '../components/Card'
 import { DataTable } from '../components/DataTable'
-import { DeletPhotographyVideographyModal } from '../components/modals/DeletePhotographyVideographyModal'
+import { DeletePhotographyVideographyModal } from '../components/modals/DeletePhotographyVideographyModal'
 import { Notifications } from '../components/Notifications'
 import { RetainerInclusions } from '../components/RetainerInclusions'
 import { PhotographyVideographyColumns } from '../constants/tables/PhotographyVideographyColumns'
@@ -87,7 +87,7 @@ const PhotographyVideographyPage: NextPageWithLayout = () => {
           </div>
         </div>
       </div>
-      <DeletPhotographyVideographyModal
+      <DeletePhotographyVideographyModal
         isVisible={isDeletePhotographyVideographyModalVisible}
         onClose={toggleDeletePhotographyVideographyModal}
         photographyVideography={activePhotographyVideography}

@@ -8,7 +8,7 @@ import { TrashIcon } from '../icons/TrashIcon'
 import { Modal } from '../Modal'
 import { TitleValue } from '../TitleValue'
 
-export const DeletPhotographyVideographyModal = ({
+export const DeletePhotographyVideographyModal = ({
   isVisible,
   onClose,
   photographyVideography,
