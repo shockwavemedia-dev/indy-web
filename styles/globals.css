@@ -38,6 +38,10 @@
     background-color: #f25d23;
     border-radius: 5px;
   }
+
+  .apexcharts-series path {
+    clip-path: inset(0% 0% 0% -5% round 8px);
+  }
 }
 
 #nprogress .bar {
