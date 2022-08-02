@@ -98,9 +98,7 @@ export const MarketingPlannerChart = () => {
             `/marketing-planner/${JSON.parse(options.w.globals.labels[options.dataPointIndex]).id}`
           ),
 
-        dataPointMouseEnter: (e) => {
-          e.path[0].style.cursor = 'pointer'
-        },
+        dataPointMouseEnter: (e) => (e.path[0].style.cursor = 'pointer'),
       },
     },
     grid: {

@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { Form, Formik } from 'formik'
+import { useSession } from 'next-auth/react'
 import { useQueryClient } from 'react-query'
 import create from 'zustand'
 import { combine } from 'zustand/middleware'
@@ -22,6 +23,7 @@ export const useUploadFileModal = create(
 )
 
 export const UploadFileModal = () => {
+  const { data: session } = useSession()
   const queryClient = useQueryClient()
   const { folderId, toggleUploadFileModal } = useUploadFileModal()
 
@@ -33,7 +35,7 @@ export const UploadFileModal = () => {
 
     if (status === 200) {
       toggleUploadFileModal()
-      queryClient.invalidateQueries(['clientFiles', folderId])
+      queryClient.invalidateQueries(['clientFiles', session?.user.userType.clientId])
     }
   }
 

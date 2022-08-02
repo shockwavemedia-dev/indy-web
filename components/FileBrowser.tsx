@@ -53,6 +53,44 @@ export const FileBrowser = ({ clientId }: { clientId: number }) => {
     setMonthFolder('')
   }, [clientId])
 
+  useEffect(() => {
+    if (folder && foldersStack.length > 0) {
+      const newFolderStack: Array<{
+        key: string
+        id: number
+        files: Files
+      }> = []
+
+      let currentFolder: Folder = {}
+
+      foldersStack.forEach(({ key }, i) => {
+        if (i === 0) {
+          currentFolder = folder[key].folders.reduce(
+            (folders, folder) => ({ ...folders, ...folder }),
+            {}
+          )
+          newFolderStack.push({
+            key,
+            id: folder[key].id,
+            files: folder[key].files,
+          })
+        } else {
+          currentFolder = currentFolder[key].folders.reduce(
+            (folders, folder) => ({ ...folders, ...folder }),
+            {}
+          )
+          newFolderStack.push({
+            key,
+            id: currentFolder[key].id,
+            files: currentFolder[key].files,
+          })
+        }
+      })
+
+      setFoldersStack(newFolderStack)
+    }
+  }, [folder])
+
   return (
     <>
       <Card className="h-fit flex-1">
