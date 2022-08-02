@@ -17,6 +17,7 @@ import { DownloadIcon } from '../../icons/DownloadIcon'
 import { EditIcon } from '../../icons/EditIcon'
 import { PaperClipIcon } from '../../icons/PaperClipIcon'
 import { PaperPlaneIcon } from '../../icons/PaperPlaneIcon'
+import { PrintIcon } from '../../icons/PrintIcon'
 import { Pill } from '../../Pill'
 import { RichTextInput } from '../../RichTextInput'
 import { TicketFileFeedbackCard } from '../../tickets/TicketFileFeedbackCard'
@@ -184,25 +185,7 @@ export const ClientTicketFile = ({ ticketFileId }: { ticketFileId: number }) => 
                 />
               </TitleValue>
             </div>
-            {!ticketFile.isApproved && (
-              <div className="flex space-x-5">
-                <Button
-                  ariaLabel="Download"
-                  className="text-bleu-de-france"
-                  type="button"
-                  onClick={downloadFile}
-                  light
-                >
-                  <DownloadIcon className="stroke-bleu-de-france" />
-                  <div>Download</div>
-                </Button>
-                <Button ariaLabel="Approve Ticket File" type="button" onClick={approveTicketFile}>
-                  <CheckIcon className="stroke-white" />
-                  <div>Approve</div>
-                </Button>
-              </div>
-            )}
-            {ticketFile.isApproved && (
+            <div className="flex space-x-5">
               <Button
                 ariaLabel="Download"
                 className="text-bleu-de-france"
@@ -213,7 +196,17 @@ export const ClientTicketFile = ({ ticketFileId }: { ticketFileId: number }) => 
                 <DownloadIcon className="stroke-bleu-de-france" />
                 <div>Download</div>
               </Button>
-            )}
+              <Button ariaLabel="Print" className="text-orchid" type="button" light>
+                <PrintIcon className="stroke-orchid" />
+                <div>Print</div>
+              </Button>
+              {!ticketFile.isApproved && (
+                <Button ariaLabel="Approve Ticket File" type="button" onClick={approveTicketFile}>
+                  <CheckIcon className="stroke-white" />
+                  <div>Approve</div>
+                </Button>
+              )}
+            </div>
           </div>
           <div className="flex-1 space-y-5">
             <Formik

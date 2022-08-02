@@ -100,6 +100,7 @@ module.exports = {
     },
     colors: {
       transparent: 'transparent',
+      black: '#000000',
       onyx: '#32343D',
       white: '#FFFFFF',
       waterloo: '#7C7C8D',

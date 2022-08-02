@@ -3,7 +3,9 @@ import { format } from 'date-fns'
 import Link from 'next/link'
 import { Column } from 'react-table'
 import { EditIcon } from '../../components/icons/EditIcon'
+import { TrashIcon } from '../../components/icons/TrashIcon'
 import { Pill } from '../../components/Pill'
+import { usePhotographyVideographyStore } from '../../store/PhotographyVideographyStore'
 import { PhotographyVideography } from '../../types/PhotographyVideography.type'
 
 export const PhotographyVideographyColumns: Array<Column<PhotographyVideography>> = [
@@ -88,6 +90,14 @@ export const PhotographyVideographyColumns: Array<Column<PhotographyVideography>
     id: 'actions',
     disableSortBy: true,
     Cell: ({ row: { original: booking } }) => {
+      const { setActivePhotographyVideography, toggleDeletePhotographyVideographyModal } =
+        usePhotographyVideographyStore()
+
+      const deleteBooking = () => {
+        setActivePhotographyVideography(booking)
+        toggleDeletePhotographyVideographyModal()
+      }
+
       return (
         <div className="flex space-x-2">
           <Link href={`/photography-videography/${booking.id}`}>
@@ -97,6 +107,11 @@ export const PhotographyVideographyColumns: Array<Column<PhotographyVideography>
               </a>
             </Tooltip>
           </Link>
+          <Tooltip title="Delete Booking" placement="top">
+            <button onClick={deleteBooking} className="group">
+              <TrashIcon className="stroke-waterloo group-hover:stroke-halloween-orange" />
+            </button>
+          </Tooltip>
         </div>
       )
     },
