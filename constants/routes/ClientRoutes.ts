@@ -26,8 +26,7 @@ export const ClientRoutes: Array<Route> = [
   {
     title: 'Screen Manager',
     Icon: MonitorIcon,
-    pathname: 'https://app.bpmtech.com.au/login',
-    target: '_blank',
+    pathname: '/screen-manager',
   },
   {
     title: 'My Files',
