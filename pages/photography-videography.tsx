@@ -6,17 +6,25 @@ import { ReactElement, useEffect } from 'react'
 import { Button } from '../components/Button'
 import { Card } from '../components/Card'
 import { DataTable } from '../components/DataTable'
+import { DeletePhotographyVideographyModal } from '../components/modals/DeletePhotographyVideographyModal'
 import { Notifications } from '../components/Notifications'
 import { RetainerInclusions } from '../components/RetainerInclusions'
 import { PhotographyVideographyColumns } from '../constants/tables/PhotographyVideographyColumns'
 import PanelLayout, { usePanelLayoutStore } from '../layouts/PanelLayout'
 import PhotographyAvatar from '../public/images/photography-avatar.jpg'
 import VideographyAvatar from '../public/images/videography-avatar.jpg'
+import { usePhotographyVideographyStore } from '../store/PhotographyVideographyStore'
 import { NextPageWithLayout } from '../types/pages/NextPageWithLayout.type'
 
 const PhotographyVideographyPage: NextPageWithLayout = () => {
   const { setHeader } = usePanelLayoutStore()
   const { data: session } = useSession()
+
+  const {
+    activePhotographyVideography,
+    isDeletePhotographyVideographyModalVisible,
+    toggleDeletePhotographyVideographyModal,
+  } = usePhotographyVideographyStore()
 
   useEffect(() => {
     setHeader('Photography/Videography')
@@ -79,6 +87,11 @@ const PhotographyVideographyPage: NextPageWithLayout = () => {
           </div>
         </div>
       </div>
+      <DeletePhotographyVideographyModal
+        isVisible={isDeletePhotographyVideographyModalVisible}
+        onClose={toggleDeletePhotographyVideographyModal}
+        photographyVideography={activePhotographyVideography}
+      />
     </>
   )
 }
