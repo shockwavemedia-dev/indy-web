@@ -286,7 +286,8 @@ const Extras = ({
 
   const [advertisingCustomFieldVisible, setAdvertisingCustomFieldVisible] = useState(false)
 
-  const toggleAdvertisingCustomField = () => setAdvertisingCustomFieldVisible(!customFieldVisible)
+  const toggleAdvertisingCustomField = () =>
+    setAdvertisingCustomFieldVisible(!advertisingCustomFieldVisible)
 
   const toggleExtras = ({ currentTarget: { checked } }: ChangeEvent<HTMLInputElement>) => {
     if (activeService) {
