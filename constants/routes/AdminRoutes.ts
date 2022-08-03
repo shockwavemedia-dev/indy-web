@@ -1,3 +1,4 @@
+import { ChartIcon } from '../../components/icons/ChartIcon'
 import { ClipboardIcon } from '../../components/icons/ClipboardIcon'
 import { UserIcon } from '../../components/icons/UserIcon'
 import { VideoIcon } from '../../components/icons/VideoIcon'
@@ -23,5 +24,10 @@ export const AdminRoutes: Array<Route> = [
     title: 'Departments',
     Icon: ClipboardIcon,
     pathname: '/departments',
+  },
+  {
+    title: 'Client Tickets',
+    Icon: ChartIcon,
+    pathname: '/client-tickets',
   },
 ]

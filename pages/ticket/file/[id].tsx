@@ -1,6 +1,7 @@
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import { ReactElement } from 'react'
+import { AdminTicketFile } from '../../../components/pages/admin/AdminTicketFile'
 import { ClientTicketFile } from '../../../components/pages/client/ClientTicketFile'
 import { ManagerTicketFile } from '../../../components/pages/manager/ManagerTicketFile'
 import { StaffTicketFile } from '../../../components/pages/staff/StaffTicketFile'
@@ -20,6 +21,8 @@ const TicketPage: NextPageWithLayout = () => {
       return <ManagerTicketFile ticketFileId={Number(id)} />
     } else if (session.isStaff) {
       return <StaffTicketFile ticketFileId={Number(id)} />
+    } else if (session.isAdmin) {
+      return <AdminTicketFile ticketFileId={Number(id)} />
     }
   }
 
