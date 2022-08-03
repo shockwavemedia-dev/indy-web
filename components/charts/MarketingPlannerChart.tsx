@@ -58,6 +58,7 @@ export const MarketingPlannerChart = () => {
         horizontal: true,
         distributed: true,
         barHeight: '90%',
+        borderRadius: 10,
       },
     },
     dataLabels: {
