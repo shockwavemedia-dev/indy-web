@@ -7,7 +7,6 @@ import { useRouter } from 'next/router'
 import { ChangeEvent, ReactElement, useEffect, useState } from 'react'
 import { useQuery, useQueryClient } from 'react-query'
 import { Button } from '../components/Button'
-import { CheckboxNoFormik } from '../components/CheckboxNoFormik'
 import { DateInput } from '../components/DateInput'
 import { FileDropZone } from '../components/FileDropZone'
 import { CheckIcon } from '../components/icons/CheckIcon'
@@ -32,7 +31,6 @@ const ProjectBriefPage: NextPageWithLayout = () => {
   const { showToast } = useToastStore()
   const { replace } = useRouter()
   const queryClient = useQueryClient()
-  const [marketingDateVisible, setMarketingDateVisible] = useState(false)
 
   const submitForm = async (values: CreateProjectBriefForm) => {
     try {
@@ -57,8 +55,6 @@ const ProjectBriefPage: NextPageWithLayout = () => {
     }
   }
 
-  const toggleMarketingDate = () => setMarketingDateVisible(!marketingDateVisible)
-
   useEffect(() => {
     setHeader('Project Brief')
   }, [])
@@ -82,7 +78,7 @@ const ProjectBriefPage: NextPageWithLayout = () => {
           }}
           onSubmit={submitForm}
         >
-          {({ isSubmitting }) => (
+          {({ isSubmitting, values }) => (
             <Form className="mx-auto flex w-fit space-x-6">
               <div className="flex w-130 flex-col rounded-xl bg-white p-6">
                 <TextInput
@@ -99,12 +95,7 @@ const ProjectBriefPage: NextPageWithLayout = () => {
                   name="description"
                   className="mb-5 h-86"
                 />
-                <CheckboxNoFormik
-                  onChange={toggleMarketingDate}
-                  label="Add to Marketing Plan"
-                  checked={marketingDateVisible}
-                />
-                {marketingDateVisible && (
+                {values.services.some(({ serviceId }) => serviceId === 10) && (
                   <div className="mt-2 flex space-x-5">
                     <DateInput name="marketingPlanStartDate" placeholder="Enter Start Date" />
                     <DateInput name="marketingPlanEndDate" placeholder="Enter End Date" />
