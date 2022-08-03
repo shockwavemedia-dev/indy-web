@@ -1,7 +1,7 @@
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import { ReactElement } from 'react'
-import { AdminTicketFile } from '../../../components/pages/admin/ClientTicketFile'
+import { AdminTicketFile } from '../../../components/pages/admin/AdminTicketFile'
 import { ClientTicketFile } from '../../../components/pages/client/ClientTicketFile'
 import { ManagerTicketFile } from '../../../components/pages/manager/ManagerTicketFile'
 import { StaffTicketFile } from '../../../components/pages/staff/StaffTicketFile'
