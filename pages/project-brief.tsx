@@ -11,6 +11,7 @@ import { CheckboxNoFormik } from '../components/CheckboxNoFormik'
 import { DateInput } from '../components/DateInput'
 import { FileDropZone } from '../components/FileDropZone'
 import { CheckIcon } from '../components/icons/CheckIcon'
+import { DollarIcon } from '../components/icons/DollarIcon'
 import { EditIcon } from '../components/icons/EditIcon'
 import { FloppyDiskIcon } from '../components/icons/FloppyDiskIcon'
 import { ServiceCheckIcon } from '../components/icons/ServiceCheckIcon'
@@ -40,7 +41,6 @@ const ProjectBriefPage: NextPageWithLayout = () => {
         status,
         data: { ticketCode },
       } = await axios.post<Ticket>('/v1/tickets/event', objectWithFileToFormData(values))
-
       if (status === 200) {
         queryClient.invalidateQueries('tickets')
         replace('/dashboard')
@@ -284,6 +284,10 @@ const Extras = ({
 
   const toggleCustomField = () => setCustomFieldVisible(!customFieldVisible)
 
+  const [advertisingCustomFieldVisible, setAdvertisingCustomFieldVisible] = useState(false)
+
+  const toggleAdvertisingCustomField = () => setAdvertisingCustomFieldVisible(!customFieldVisible)
+
   const toggleExtras = ({ currentTarget: { checked } }: ChangeEvent<HTMLInputElement>) => {
     if (activeService) {
       if (checked) {
@@ -294,6 +298,9 @@ const Extras = ({
 
       if (serviceId === 2 && extrasName === 'Custom') {
         toggleCustomField()
+      }
+      if (serviceId === 6 && extrasName === 'Custom') {
+        toggleAdvertisingCustomField()
       }
     }
 
@@ -322,6 +329,17 @@ const Extras = ({
       {customFieldVisible && (
         <div className="relative mt-5 flex items-center">
           <EditIcon className="pointer-events-none absolute left-6 stroke-lavender-gray" />
+          <input
+            type="text"
+            className="h-12.5 w-full rounded-xl px-13 text-sm font-medium text-onyx placeholder-metallic-silver ring-1 ring-bright-gray read-only:cursor-auto focus:ring-2 focus:ring-halloween-orange read-only:focus:ring-1 read-only:focus:ring-bright-gray"
+            placeholder="Enter Custom"
+            onChange={setCustomFieldValue}
+          />
+        </div>
+      )}
+      {advertisingCustomFieldVisible && (
+        <div className="relative mt-5 flex items-center">
+          <DollarIcon className="pointer-events-none absolute left-6 stroke-lavender-gray" />
           <input
             type="text"
             className="h-12.5 w-full rounded-xl px-13 text-sm font-medium text-onyx placeholder-metallic-silver ring-1 ring-bright-gray read-only:cursor-auto focus:ring-2 focus:ring-halloween-orange read-only:focus:ring-1 read-only:focus:ring-bright-gray"
