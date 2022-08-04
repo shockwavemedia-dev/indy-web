@@ -1,6 +1,5 @@
 import axios, { AxiosError } from 'axios'
 import { Form, Formik } from 'formik'
-import { useSession } from 'next-auth/react'
 import { useQueryClient } from 'react-query'
 import createStore from 'zustand'
 import { combine } from 'zustand/middleware'
@@ -15,26 +14,22 @@ import { TextInput } from '../TextInput'
 export const useCreateFolderModalStore = createStore(
   combine(
     {
-      isModalVisible: false,
+      clientId: -1,
     },
-    (set, get) => ({
-      toggleModal: () => set(() => ({ isModalVisible: !get().isModalVisible })),
+    (set) => ({
+      toggleModal: (clientId?: number) => set(() => ({ clientId: clientId ?? -1 })),
     })
   )
 )
 
 export const CreateFolderModal = ({ parentFolderId }: { parentFolderId?: number }) => {
-  const { data: session } = useSession()
   const queryClient = useQueryClient()
   const { showToast } = useToastStore()
-  const { isModalVisible, toggleModal } = useCreateFolderModalStore()
+  const { clientId, toggleModal } = useCreateFolderModalStore()
 
   const submitForm = async (values: CreateFolderForm) => {
     try {
-      const { status } = await axios.post(
-        `/v1/clients/${session?.user.userType.clientId}/folders`,
-        values
-      )
+      const { status } = await axios.post(`/v1/clients/${clientId}/folders`, values)
 
       if (status === 200) {
         toggleModal()
@@ -58,7 +53,7 @@ export const CreateFolderModal = ({ parentFolderId }: { parentFolderId?: number 
 
   return (
     <>
-      {isModalVisible && (
+      {clientId !== -1 && (
         <Modal title="Create Folder" onClose={toggleModal}>
           <Formik
             validationSchema={CreateFolderFormSchema}
