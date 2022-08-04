@@ -94,9 +94,15 @@ export const FileBrowser = ({ clientId }: { clientId: number }) => {
   return (
     <>
       <Card className="h-fit flex-1">
-        {!yearFolder && (
+        {clientId !== -1 && !yearFolder && (
           <div className="absolute top-6 right-6 flex space-x-5">
-            <button className="flex space-x-2" onClick={toggleCreateFolderModal}>
+            <button
+              className="flex space-x-2"
+              onClick={(e) => {
+                e.stopPropagation()
+                toggleCreateFolderModal(clientId)
+              }}
+            >
               <AddFolderIcon className="stroke-halloween-orange" />
               <div className=" text-sm font-semibold text-halloween-orange">Create Folder</div>
             </button>
