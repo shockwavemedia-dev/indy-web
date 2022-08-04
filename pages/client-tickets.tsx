@@ -67,7 +67,7 @@ const ClientTicketsPage: NextPageWithLayout = () => {
               <DataTable
                 columns={AdminTicketsTableColumns}
                 dataEndpoint={`/v1/clients/${clientId}/tickets`}
-                tableQueryKey={['tickets']}
+                tableQueryKey={['tickets', clientId]}
                 ofString="Projects"
               />
             </Card>
