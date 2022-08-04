@@ -282,6 +282,7 @@ export const ClientTicket = ({ ticketId }: { ticketId: number }) => {
                       name={name}
                       thumbnailUrl={thumbnailUrl}
                       fileStatus={status}
+                      file
                     />
                   )
                 })
