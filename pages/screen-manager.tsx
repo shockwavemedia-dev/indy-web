@@ -23,17 +23,15 @@ const ScreenManagerPage: NextPageWithLayout = () => {
       </Head>
       <div className="mx-auto w-full max-w-8xl space-y-6">
         <div className="flex gap-6 transition-all lg:flex-col">
-          <Card className="grid h-155 flex-1 place-items-center transition-all lg:flex-none">
-            <div className="grid aspect-square grid-cols-3 grid-rows-3 gap-3">
-              <div>
-                <Link href="https://app.bpmtech.com.au/login">
-                  <a target="_blank" rel="noopener noreferrer">
-                    <div className="bg-black mb-5 aspect-square max-h-40 overflow-hidden rounded-xl">
-                      <Image src={PhotographyAvatar} alt="bpm-technology" className="h-full" />
-                    </div>
-                  </a>
-                </Link>
-              </div>
+          <Card className="h-155 flex-1">
+            <div className="flex flex-wrap">
+              <Link href="https://app.bpmtech.com.au/login">
+                <a target="_blank" rel="noopener noreferrer">
+                  <div className="mb-5 aspect-square max-h-40 overflow-hidden rounded-xl bg-black">
+                    <Image src={PhotographyAvatar} alt="bpm-technology" className="h-full" />
+                  </div>
+                </a>
+              </Link>
             </div>
           </Card>
           <div className="flex w-86 flex-col gap-6 transition-all lg:w-full lg:flex-row">
