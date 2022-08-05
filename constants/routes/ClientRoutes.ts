@@ -13,15 +13,14 @@ export const ClientRoutes: Array<Route> = [
     Icon: ChartIcon,
   },
   {
-    title: 'SMS Marketing',
-    Icon: EmailIcon,
-    pathname: 'https://c7s.transmitsms.com/',
-    target: '_blank',
-  },
-  {
     title: 'Marketing Planner',
     Icon: BriefcaseIcon,
     pathname: '/marketing-planner',
+  },
+  {
+    title: 'My Files',
+    pathname: '/my-files',
+    Icon: FolderIcon,
   },
   {
     title: 'Screen Manager',
@@ -29,10 +28,12 @@ export const ClientRoutes: Array<Route> = [
     pathname: '/screen-manager',
   },
   {
-    title: 'My Files',
-    pathname: '/my-files',
-    Icon: FolderIcon,
+    title: 'SMS Marketing',
+    Icon: EmailIcon,
+    pathname: 'https://c7s.transmitsms.com/',
+    target: '_blank',
   },
+
   {
     title: 'Service Request',
     Icon: ClipboardIcon,
