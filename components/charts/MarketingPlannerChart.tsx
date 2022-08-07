@@ -1,5 +1,6 @@
 import { ApexOptions } from 'apexcharts'
 import axios from 'axios'
+import { useSession } from 'next-auth/react'
 import dynamic from 'next/dynamic'
 import { useRouter } from 'next/router'
 import { useMemo, useState } from 'react'
@@ -12,11 +13,14 @@ const ReactApexChart = dynamic(() => import('react-apexcharts'), { ssr: false })
 
 export const MarketingPlannerChart = () => {
   const { replace } = useRouter()
+  const { data: session } = useSession()
 
   const { data: marketingPlanners, isLoading: marketingPlannersIsLoading } = useQuery(
     'marketingPlanner',
     async () => {
-      const { data } = await axios.get<Array<MarketingPlanner>>(`/v1/clients/1/marketing-planners`)
+      const { data } = await axios.get<Array<MarketingPlanner>>(
+        `/v1/clients/${session?.user.userType.clientId}/marketing-planners`
+      )
 
       return data
     }

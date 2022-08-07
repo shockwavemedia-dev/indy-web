@@ -1,6 +1,5 @@
 import Head from 'next/head'
 import Image from 'next/image'
-import Link from 'next/link'
 import { ReactElement, useEffect } from 'react'
 import { Card } from '../components/Card'
 import { Notifications } from '../components/Notifications'
@@ -22,25 +21,19 @@ const WebsitePage: NextPageWithLayout = () => {
         <title>Indy - Website Services</title>
       </Head>
       <div className="mx-auto w-full max-w-8xl space-y-6">
-        <div className="flex gap-6 transition-all lg:flex-col">
-          <Card className="flex-1 flex-col transition-all">
-            <div className="grid h-fit grid-cols-2 gap-4">
+        <div className="flex space-x-6">
+          <Card className="h-fit w-full min-w-0 flex-1">
+            <div className="flex h-fit w-fit grid-cols-2 flex-wrap place-content-center gap-5">
               {WebsiteServicesList?.map(({ image, link }) => (
-                <div key={`${link}-website`} className="h-fit">
-                  <Link href={link}>
-                    <a target="_blank" rel="noopener noreferrer">
-                      <div className="mb-5 aspect-square overflow-hidden rounded-xl">
-                        <Image
-                          src={image}
-                          alt="videography"
-                          height={400}
-                          width={400}
-                          className="h-full"
-                        />
-                      </div>
-                    </a>
-                  </Link>
-                </div>
+                <a
+                  key={`${link}-website`}
+                  href={link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex flex-none flex-col items-center justify-center space-y-1 p-3"
+                >
+                  <Image className="rounded-xl" src={image} height={176} width={314} alt={link} />
+                </a>
               ))}
             </div>
           </Card>

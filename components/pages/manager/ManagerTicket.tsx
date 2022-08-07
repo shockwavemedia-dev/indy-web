@@ -286,6 +286,7 @@ export const ManagerTicket = ({ ticketId }: { ticketId: number }) => {
                       name={name}
                       thumbnailUrl={thumbnailUrl}
                       fileStatus={status}
+                      file
                     />
                   )
                 })
