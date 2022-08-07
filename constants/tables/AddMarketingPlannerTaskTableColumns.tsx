@@ -74,6 +74,14 @@ export const todoListStore = create(
         set({
           todoList: get().todoList.map((t) => (t.name !== todo.name ? t : todo)),
         }),
+      resetTodoList: () =>
+        set({
+          todoList: initialTodoList.map<Todo>((name) => ({
+            name,
+            custom: false,
+            selected: false,
+          })),
+        }),
     })
   )
 )

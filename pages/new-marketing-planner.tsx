@@ -34,6 +34,7 @@ const NewMarketingPlannerPage: NextPageWithLayout = () => {
   const { replace } = useRouter()
   const queryClient = useQueryClient()
   const todoList = todoListStore((state) => state.todoList)
+  const resetTodoList = todoListStore((state) => state.resetTodoList)
 
   const submitForm = async (values: CreateMarketingPlannerForm) => {
     try {
@@ -65,6 +66,7 @@ const NewMarketingPlannerPage: NextPageWithLayout = () => {
 
   useEffect(() => {
     setHeader('New Marketing Planner')
+    resetTodoList()
   }, [])
 
   return (
