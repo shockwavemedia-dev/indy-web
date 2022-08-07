@@ -1,23 +1,30 @@
 import { useMemo } from 'react'
-import { Column, useSortBy, useTable } from 'react-table'
+import { Column, TableState, useSortBy, useTable } from 'react-table'
 import { SortIcon } from './icons/SortIcon'
 
 export const Table = <T extends Record<string, unknown>>({
   data,
   columns,
   ofString,
+  autoResetSortBy = false,
+  initialState,
 }: {
   data: Array<T>
   columns: Array<Column<T>>
   ofString: string
+  autoResetSortBy?: boolean
+  initialState?: Partial<TableState<T>>
 }) => {
   const memoizedColumns = useMemo(() => columns, [])
+
+  console.log(data)
 
   const { rows, getTableProps, getTableBodyProps, headerGroups, prepareRow } = useTable<T>(
     {
       columns: memoizedColumns,
       data: data,
-      autoResetSortBy: false,
+      autoResetSortBy,
+      initialState,
     },
     useSortBy
   )

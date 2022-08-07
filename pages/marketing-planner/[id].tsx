@@ -13,9 +13,12 @@ import { FileButton } from '../../components/FileButton'
 import { EditIcon } from '../../components/icons/EditIcon'
 import { FloppyDiskIcon } from '../../components/icons/FloppyDiskIcon'
 import { RichTextInput } from '../../components/RichTextInput'
+import { Table } from '../../components/Table'
 import { TextInput } from '../../components/TextInput'
-import { MarketingMyTaskManagementOptions } from '../../constants/options/MarketingMyTaskManagementOptions'
-import { MarketingTodoListOptions } from '../../constants/options/MarketingTodoListOptions'
+import {
+  AddMarketingPlannerTaskTableColumns,
+  todoListStore,
+} from '../../constants/tables/AddMarketingPlannerTaskTableColumns'
 import PanelLayout, { usePanelLayoutStore } from '../../layouts/PanelLayout'
 import { UpdateMarketingPlannerFormSchema } from '../../schemas/UpdateMarketingPlannerFormSchema'
 import { useToastStore } from '../../store/ToastStore'
@@ -30,6 +33,8 @@ const MarketingPlannerPage: NextPageWithLayout = () => {
   const {
     query: { id },
   } = useRouter()
+  const todoList = todoListStore((state) => state.todoList)
+  const updateTodo = todoListStore((state) => state.updateTodo)
 
   const { data: marketingPlan } = useQuery(
     ['marketingPlanner', Number(id)],
@@ -47,7 +52,12 @@ const MarketingPlannerPage: NextPageWithLayout = () => {
     try {
       const { status } = await axios.put<UpdateMarketingPlannerForm>(
         `/v1/marketing-planners/${id}`,
-        values
+        {
+          ...values,
+          todoList: todoList
+            .filter(({ selected }) => selected)
+            .map(({ name, status, assignee, deadline }) => ({ name, status, assignee, deadline })),
+        }
       )
 
       if (status === 200) {
@@ -68,6 +78,14 @@ const MarketingPlannerPage: NextPageWithLayout = () => {
   useEffect(() => {
     if (marketingPlan) {
       setHeader(marketingPlan.eventName)
+      marketingPlan.todoList.forEach((todo) => {
+        if (todoList.find(({ name }) => name === todo.name))
+          updateTodo({
+            ...todo,
+            custom: false,
+            selected: true,
+          })
+      })
     }
   }, [marketingPlan])
 
@@ -82,13 +100,12 @@ const MarketingPlannerPage: NextPageWithLayout = () => {
         <Formik
           validationSchema={UpdateMarketingPlannerFormSchema}
           initialValues={{
-            eventName: marketingPlan?.eventName || '',
-            description: marketingPlan?.description || '',
-            startDate: marketingPlan?.startDate || null,
-            endDate: marketingPlan?.endDate || null,
-            isRecurring: marketingPlan?.isRecurring || false,
-            taskManagement: marketingPlan?.taskManagement || [],
-            todoList: marketingPlan?.todoList || [],
+            eventName: marketingPlan.eventName,
+            description: marketingPlan.description,
+            startDate: marketingPlan.startDate,
+            endDate: marketingPlan.endDate,
+            isRecurring: marketingPlan.isRecurring,
+            todoList: [],
             attachments: marketingPlan.attachments,
           }}
           onSubmit={submitForm}
@@ -96,7 +113,11 @@ const MarketingPlannerPage: NextPageWithLayout = () => {
           {({ isSubmitting }) => (
             <Form>
               <div className="mb-6 flex justify-center gap-6 lg:flex-col">
-                <Card className="h-fit flex-1" title="Event Details" titlePosition="center">
+                <Card
+                  className="h-fit w-130 lg:w-full"
+                  title="Event Details"
+                  titlePosition="center"
+                >
                   <TextInput
                     type="text"
                     Icon={EditIcon}
@@ -116,41 +137,38 @@ const MarketingPlannerPage: NextPageWithLayout = () => {
                     className="mb-5 h-86"
                   />
                 </Card>
-                <div className="flex gap-6 xl:flex-col lg:flex-row">
+                <div className="flex-1 space-y-6 lg:w-full">
                   <Card
-                    className="h-fit w-75 space-y-5 rounded-xl lg:w-full"
-                    title="Indy To-do List"
+                    title="Todo List"
                     titlePosition="center"
+                    className="flex max-h-155 flex-col"
                   >
-                    {MarketingTodoListOptions?.map(({ value, label }) => (
-                      <Checkbox key={`${value}-todo`} name="todoList" label={label} value={value} />
-                    ))}
+                    <Table
+                      columns={AddMarketingPlannerTaskTableColumns}
+                      data={todoList}
+                      ofString="Todo List"
+                      initialState={{
+                        sortBy: [
+                          {
+                            id: 'selected',
+                          },
+                        ],
+                      }}
+                    />
                   </Card>
-                  <div className="h-fit w-75 lg:w-full">
-                    <Card className="mb-6 space-y-5" title="My To-do List" titlePosition="center">
-                      {MarketingMyTaskManagementOptions?.map(({ value, label }) => (
-                        <Checkbox
-                          key={`${value}-my-task`}
-                          name="taskManagement"
-                          label={label}
-                          value={value}
-                        />
-                      ))}
-                    </Card>
-                    <Card>
-                      <div className="flex space-x-5">
-                        <Link href="/marketing-planner">
-                          <Button ariaLabel="Cancel" type="button" light>
-                            Cancel
-                          </Button>
-                        </Link>
-                        <Button ariaLabel="Submit" disabled={isSubmitting} type="submit">
-                          <FloppyDiskIcon className="stroke-white" />
-                          <div>Update</div>
+                  <Card>
+                    <div className="flex space-x-5">
+                      <Link href="/marketing-planner">
+                        <Button ariaLabel="Cancel" type="button" light>
+                          Cancel
                         </Button>
-                      </div>
-                    </Card>
-                  </div>
+                      </Link>
+                      <Button ariaLabel="Submit" disabled={isSubmitting} type="submit">
+                        <FloppyDiskIcon className="stroke-white" />
+                        <div>Update</div>
+                      </Button>
+                    </div>
+                  </Card>
                 </div>
               </div>
               <Card title="Attachments">

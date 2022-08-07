@@ -1,5 +1,5 @@
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker'
-import { Dispatch, SetStateAction, useState } from 'react'
+import { useState } from 'react'
 import { CalendarIcon } from './icons/CalendarIcon'
 
 export const DateInputNoFormik = ({
@@ -20,7 +20,7 @@ export const DateInputNoFormik = ({
   views?: Array<'year' | 'month' | 'day'>
   format?: string
   value?: Date
-  onChange: Dispatch<SetStateAction<Date>>
+  onChange: (date: Date) => void
   twHeight?: string
 }) => {
   const [isPickerVisible, setPickerVisible] = useState(false)
@@ -37,7 +37,7 @@ export const DateInputNoFormik = ({
         if (date) onChange(date)
       }}
       disabled={readOnly}
-      value={value}
+      value={value || null}
       onClose={hidePicker}
       open={isPickerVisible}
       showDaysOutsideCurrentMonth

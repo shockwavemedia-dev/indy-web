@@ -6,8 +6,18 @@ export const CreateMarketingPlannerFormSchema: SchemaOf<CreateMarketingPlannerFo
     eventName: string().required(),
     description: string().required(),
     startDate: date().required(),
-    taskManagement: array().of(string().required()).optional(),
-    todoList: array().of(string().required()).optional(),
+    todoList: array()
+      .of(
+        object().shape({
+          name: string().required(),
+          status: mixed().oneOf(['to-do', 'in-progress', 'completed']),
+          assignee: string(),
+          deadline: date(),
+          custom: boolean().required(),
+          selected: boolean().required(),
+        })
+      )
+      .required(),
     endDate: date().required(),
     isRecurring: boolean().required(),
     attachments: array().of(mixed().optional()),

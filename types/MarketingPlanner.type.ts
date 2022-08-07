@@ -1,11 +1,11 @@
 import { TicketFile } from './TicketFile.type'
+import { Todo } from './Todo.type'
 
 export type MarketingPlanner = {
   id: number
   eventName: string
   description: string
-  todoList: Array<string>
-  taskManagement: Array<string>
+  todoList: Array<Todo>
   startDate: Date
   endDate: Date
   isRecurring: true
