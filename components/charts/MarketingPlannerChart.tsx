@@ -91,6 +91,7 @@ export const MarketingPlannerChart = () => {
       },
       toolbar: {
         show: false,
+        autoSelected: 'pan',
       },
       fontFamily: 'Urbanist',
       events: {

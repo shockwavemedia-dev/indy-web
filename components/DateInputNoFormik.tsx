@@ -11,15 +11,17 @@ export const DateInputNoFormik = ({
   format,
   value,
   onChange,
+  twHeight = 'h-12.5',
 }: {
-  placeholder: string
+  placeholder?: string
   className?: string
   label?: string
   readOnly?: boolean
   views?: Array<'year' | 'month' | 'day'>
   format?: string
-  value: Date
+  value?: Date
   onChange: Dispatch<SetStateAction<Date>>
+  twHeight?: string
 }) => {
   const [isPickerVisible, setPickerVisible] = useState(false)
 
@@ -29,7 +31,7 @@ export const DateInputNoFormik = ({
   return (
     <DesktopDatePicker
       views={views}
-      inputFormat={format}
+      inputFormat={format || 'P'}
       disableOpenPicker
       onChange={(date: Date | null) => {
         if (date) onChange(date)
@@ -60,7 +62,7 @@ export const DateInputNoFormik = ({
             <input
               ref={inputRef}
               {...inputProps}
-              className={`h-12.5 w-full rounded-xl bg-transparent px-13  text-sm font-medium text-onyx placeholder-metallic-silver focus:ring-2 focus:ring-halloween-orange read-only:focus:ring-1 read-only:focus:ring-bright-gray ${
+              className={`${twHeight} w-full rounded-xl bg-transparent px-13  text-sm font-medium text-onyx placeholder-metallic-silver focus:ring-2 focus:ring-halloween-orange read-only:focus:ring-1 read-only:focus:ring-bright-gray ${
                 isPickerVisible ? 'ring-2 ring-halloween-orange' : 'ring-1 ring-bright-gray'
               } ${readOnly ? 'read-only:cursor-auto' : 'read-only:cursor-pointer'}`}
               spellCheck={false}

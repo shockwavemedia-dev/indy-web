@@ -46,7 +46,7 @@ const Control = <Option, IsMulti extends boolean>({
   ...props
 }: ControlProps<Option, IsMulti>) => (
   <Components.Control {...props}>
-    <props.selectProps.Icon className="mr-2.5 stroke-lavender-gray" />
+    {props.selectProps.Icon && <props.selectProps.Icon className="mr-2.5 stroke-lavender-gray" />}
     {children}
   </Components.Control>
 )

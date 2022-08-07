@@ -16,7 +16,7 @@ export const Table = <T extends Record<string, unknown>>({
   const { rows, getTableProps, getTableBodyProps, headerGroups, prepareRow } = useTable<T>(
     {
       columns: memoizedColumns,
-      data: data || [],
+      data: data,
       autoResetSortBy: false,
     },
     useSortBy
@@ -28,7 +28,7 @@ export const Table = <T extends Record<string, unknown>>({
         <>
           <div className="mb-auto h-full overflow-y-auto">
             <table className="w-full" {...getTableProps()}>
-              <thead className="sticky top-0 bg-white">
+              <thead className="sticky top-0 z-20 bg-white">
                 {headerGroups.map(({ getHeaderGroupProps, headers }) => (
                   // key is already provided by getHeaderGroupProps()
                   // eslint-disable-next-line react/jsx-key
@@ -75,7 +75,7 @@ export const Table = <T extends Record<string, unknown>>({
                   </tr>
                 ))}
               </thead>
-              <tbody {...getTableBodyProps()}>
+              <tbody {...getTableBodyProps()} className="z-10">
                 {rows.map((row) => {
                   prepareRow(row)
                   return (

@@ -73,7 +73,7 @@ const EDMPage: NextPageWithLayout = () => {
                           }
                           value={totalRecipients}
                           description="Recipients"
-                          className="w-40"
+                          className="w-54"
                         />
                         <CountCard
                           Icon={
@@ -83,7 +83,7 @@ const EDMPage: NextPageWithLayout = () => {
                           }
                           value={opens}
                           description="Opens"
-                          className="w-40"
+                          className="w-54"
                         />
                         <CountCard
                           Icon={
@@ -93,7 +93,7 @@ const EDMPage: NextPageWithLayout = () => {
                           }
                           value={clicks}
                           description="Click"
-                          className="w-40"
+                          className="w-54"
                         />
                       </div>
                     </Card>
@@ -103,7 +103,7 @@ const EDMPage: NextPageWithLayout = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   href="https://c7s.transmitsms.com/"
-                  className="flex h-12.5 w-40 items-center justify-center space-x-2 rounded-xl !border !border-halloween-orange text-base font-semibold"
+                  className="w-54 flex h-12.5 items-center justify-center space-x-2 rounded-xl !border !border-halloween-orange text-base font-semibold"
                 >
                   <EmailIcon className="stroke-halloween-orange" />
                   <div>MailChimp</div>

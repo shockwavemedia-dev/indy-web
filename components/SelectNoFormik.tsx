@@ -42,7 +42,7 @@ const Control = <Option, IsMulti extends boolean>({
   ...props
 }: ControlProps<Option, IsMulti>) => (
   <Components.Control {...props}>
-    <props.selectProps.Icon className="mr-2.5 stroke-lavender-gray" />
+    {props.selectProps.Icon && <props.selectProps.Icon className="mr-2.5 stroke-lavender-gray" />}
     {children}
   </Components.Control>
 )
@@ -70,7 +70,7 @@ export const SelectNoFormik = <
 >({
   onChange,
   ...props
-}: Props<SelectOption<T>, IsMulti, Group>) => (
+}: Props<SelectOption<T>, IsMulti, Group> & { twHeight?: string }) => (
   <ReactSelect
     {...props}
     styles={{
@@ -85,7 +85,7 @@ export const SelectNoFormik = <
       }),
       control: (base, { isFocused }) => ({
         ...base,
-        minHeight: '3.125rem',
+        minHeight: props.twHeight || '3.125rem',
         boxShadow: isFocused ? '0 0 0 2px #F25D23' : '0 0 0 1px #E8E8EF',
         border: 'none',
         borderRadius: '.75rem',

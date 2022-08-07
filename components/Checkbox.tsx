@@ -46,7 +46,7 @@ export const Checkbox = ({
           }
         }}
       />
-      <CheckIcon className="pointer-events-none absolute left-0.75 stroke-white" />
+      <CheckIcon className="pointer-events-none absolute left-0.75 top-1/2 -translate-y-1/2  stroke-white" />
       <label
         htmlFor={`${name}-${value}`}
         className="block h-fit select-none pt-0.5 text-sm font-medium text-halloween-orange"
