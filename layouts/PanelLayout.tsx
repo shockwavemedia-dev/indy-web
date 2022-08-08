@@ -146,7 +146,7 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
   return (
     <>
       <div className="fixed z-30 flex w-full items-center bg-white py-1 px-6 shadow-md">
-        <div className="mr-102 whitespace-nowrap font-semibold text-onyx">Broncos Club</div>
+        <div className="mr-102 whitespace-nowrap font-semibold text-onyx">Daily Press</div>
         <MagnifyingGlassIcon className="mr-6 stroke-waterloo" />
         <Link href="#">
           <a className="mr-6 whitespace-nowrap font-semibold text-onyx underline-offset-1 hover:underline">
