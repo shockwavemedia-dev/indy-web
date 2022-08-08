@@ -6,7 +6,6 @@ import { Folder } from '../types/Folder.type'
 import { Card } from './Card'
 import { FileButton } from './FileButton'
 import { AddFileIcon } from './icons/AddFileIcon'
-import { AddFolderIcon } from './icons/AddFolderIcon'
 import { CaretIcon } from './icons/CaretIcon'
 import { useCreateFolderModalStore } from './modals/CreateFolderModal'
 import { FileDisplayModal, useFileDisplayModalStore } from './modals/FileDisplayModal'
@@ -97,23 +96,11 @@ export const AnalyticsFileBrowser = ({ clientId }: { clientId: number }) => {
           <div className="absolute top-6 right-6 flex space-x-5">
             <button
               className="flex space-x-2"
-              onClick={(e) => {
-                e.stopPropagation()
-                toggleCreateFolderModal(clientId)
-              }}
+              onClick={() => toggleUploadFileModal(foldersStack[foldersStack.length - 1].id)}
             >
-              <AddFolderIcon className="stroke-halloween-orange" />
-              <div className=" text-sm font-semibold text-halloween-orange">Create Folder</div>
+              <AddFileIcon className="stroke-halloween-orange" />
+              <div className=" text-sm font-semibold text-halloween-orange">Upload File</div>
             </button>
-            <div className="space-x-5">
-              <button
-                className="flex space-x-2"
-                onClick={() => toggleUploadFileModal(foldersStack[foldersStack.length - 1].id)}
-              >
-                <AddFileIcon className="stroke-halloween-orange" />
-                <div className=" text-sm font-semibold text-halloween-orange">Upload File</div>
-              </button>
-            </div>
           </div>
         )}
         <div className="flex max-h-155 flex-wrap gap-4 overflow-y-auto pt-10">
