@@ -24,15 +24,19 @@ export const FileDisplayModal = () => {
     <>
       {signedUrl && fileType && name && (
         <Modal title={name} onClose={toggleShowPhotoVideoFileModal}>
-          <FileDisplay
-            src={signedUrl}
-            type={fileType}
-            imageHeight={560}
-            imageWidth={560}
-            imageAlt={name}
-            className="rounded-xl"
-            videoClassName="w-140 rounded-xl"
-          />
+          {fileType === 'application/pdf' ? (
+            <iframe src={signedUrl} className="h-163 w-280"></iframe>
+          ) : (
+            <FileDisplay
+              src={signedUrl}
+              type={fileType}
+              imageHeight={560}
+              imageWidth={560}
+              imageAlt={name}
+              className="rounded-xl"
+              videoClassName="w-140 rounded-xl"
+            />
+          )}
         </Modal>
       )}
     </>
