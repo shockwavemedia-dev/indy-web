@@ -1,9 +1,10 @@
+import { Tooltip } from '@mui/material'
 import axios from 'axios'
 import { Form, Formik } from 'formik'
 import Head from 'next/head'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { ReactElement, useEffect } from 'react'
+import { ReactElement, useEffect, useState } from 'react'
 import { useQuery, useQueryClient } from 'react-query'
 import { Button } from '../../components/Button'
 import { Card } from '../../components/Card'
@@ -12,6 +13,8 @@ import { DateInput } from '../../components/DateInput'
 import { FileButton } from '../../components/FileButton'
 import { EditIcon } from '../../components/icons/EditIcon'
 import { FloppyDiskIcon } from '../../components/icons/FloppyDiskIcon'
+import { TrashIcon } from '../../components/icons/TrashIcon'
+import { DeleteMarketingPlannerModal } from '../../components/modals/DeleteMarketingPlannerModal'
 import { RichTextInput } from '../../components/RichTextInput'
 import { Table } from '../../components/Table'
 import { TextInput } from '../../components/TextInput'
@@ -35,6 +38,12 @@ const MarketingPlannerPage: NextPageWithLayout = () => {
   } = useRouter()
   const todoList = todoListStore((state) => state.todoList)
   const updateTodo = todoListStore((state) => state.updateTodo)
+
+  const [isDeleteMarketingPlannerModalVisible, setDeleteMarketingPlannerModalVisible] =
+    useState(false)
+
+  const toggleDeleteMarketingPlannerModal = () =>
+    setDeleteMarketingPlannerModalVisible(!isDeleteMarketingPlannerModalVisible)
 
   const { data: marketingPlan } = useQuery(
     ['marketingPlanner', Number(id)],
@@ -118,6 +127,17 @@ const MarketingPlannerPage: NextPageWithLayout = () => {
                   title="Event Details"
                   titlePosition="center"
                 >
+                  <div className="absolute top-6 right-6 space-x-4">
+                    <Tooltip title="Delete" placement="top">
+                      <button
+                        className="group"
+                        type="button"
+                        onClick={toggleDeleteMarketingPlannerModal}
+                      >
+                        <TrashIcon className="stroke-waterloo group-hover:stroke-halloween-orange" />
+                      </button>
+                    </Tooltip>
+                  </div>
                   <TextInput
                     type="text"
                     Icon={EditIcon}
@@ -193,6 +213,12 @@ const MarketingPlannerPage: NextPageWithLayout = () => {
           )}
         </Formik>
       </div>
+      <DeleteMarketingPlannerModal
+        isVisible={isDeleteMarketingPlannerModalVisible}
+        onClose={toggleDeleteMarketingPlannerModal}
+        id={marketingPlan.id}
+        eventName={marketingPlan.eventName}
+      />
     </>
   )
 }
