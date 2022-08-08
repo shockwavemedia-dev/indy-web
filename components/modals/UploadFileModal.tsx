@@ -56,7 +56,7 @@ export const UploadFileModal = () => {
                   name="files"
                   maxSize={250}
                   mimeType="image/gif"
-                  accept={['.gif', '.jpeg', '.mp4', '.png']}
+                  accept={['.gif', '.jpeg', '.mp4', '.png', '.pdf']}
                   multiple
                   className="mb-5"
                 />
