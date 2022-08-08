@@ -48,6 +48,7 @@ const MarketingPlannerPage: NextPageWithLayout = () => {
   const toggleCustomTodoModal = useAddCustomTodoModal((state) => state.toggle)
 
   const [todoLoaded, setTodoLoaded] = useState(false)
+  const resetTodo = todoListStore((state) => state.resetTodoList)
 
   const [isDeleteMarketingPlannerModalVisible, setDeleteMarketingPlannerModalVisible] =
     useState(false)
@@ -59,7 +60,7 @@ const MarketingPlannerPage: NextPageWithLayout = () => {
     ['marketingPlanner', Number(id)],
     async () => {
       const { data } = await axios.get<MarketingPlanner>(`/v1/marketing-planners/${id}`)
-
+      resetTodo()
       return data
     },
     {
@@ -75,13 +76,14 @@ const MarketingPlannerPage: NextPageWithLayout = () => {
         {
           ...values,
           todoList: todoList
-            .filter(
-              ({ selected, status, assignee, deadline }) =>
-                selected && !!status && !!assignee && !!deadline
-            )
-            .map(({ id, name, status, assignee, deadline }) =>
-              id ? { id, name, status, assignee, deadline } : { name, status, assignee, deadline }
-            ),
+            .filter(({ selected }) => selected)
+            .map(({ id, name, status, assignee, deadline }) => ({
+              id,
+              name,
+              status,
+              assignee,
+              deadline,
+            })),
         }
       )
 
