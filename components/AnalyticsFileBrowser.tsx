@@ -7,14 +7,12 @@ import { Card } from './Card'
 import { FileButton } from './FileButton'
 import { AddFileIcon } from './icons/AddFileIcon'
 import { CaretIcon } from './icons/CaretIcon'
-import { useCreateFolderModalStore } from './modals/CreateFolderModal'
 import { FileDisplayModal, useFileDisplayModalStore } from './modals/FileDisplayModal'
 import { UploadFileModal, useUploadFileModal } from './modals/UploadFileModal'
 
 export const AnalyticsFileBrowser = ({ clientId }: { clientId: number }) => {
   const { toggleUploadFileModal } = useUploadFileModal()
   const { toggleShowPhotoVideoFileModal } = useFileDisplayModalStore()
-  const { toggleModal: toggleCreateFolderModal } = useCreateFolderModalStore()
 
   const [foldersStack, setFoldersStack] = useState<
     Array<{
