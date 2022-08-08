@@ -62,7 +62,6 @@ export const MarketingPlannerChart = () => {
         horizontal: true,
         distributed: true,
         barHeight: '90%',
-        borderRadius: 10,
       },
     },
     dataLabels: {
@@ -103,8 +102,6 @@ export const MarketingPlannerChart = () => {
           replace(
             `/marketing-planner/${JSON.parse(options.w.globals.labels[options.dataPointIndex]).id}`
           ),
-
-        dataPointMouseEnter: (e) => (e.path[0].style.cursor = 'pointer'),
       },
     },
     grid: {
