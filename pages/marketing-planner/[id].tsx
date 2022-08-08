@@ -1,3 +1,4 @@
+import { Tooltip } from '@mui/material'
 import axios from 'axios'
 import { Form, Formik } from 'formik'
 import Head from 'next/head'
@@ -127,13 +128,15 @@ const MarketingPlannerPage: NextPageWithLayout = () => {
                   titlePosition="center"
                 >
                   <div className="absolute top-6 right-6 space-x-4">
-                    <button
-                      className="group"
-                      type="button"
-                      onClick={toggleDeleteMarketingPlannerModal}
-                    >
-                      <TrashIcon className="stroke-waterloo group-hover:stroke-halloween-orange" />
-                    </button>
+                    <Tooltip title="Delete" placement="top">
+                      <button
+                        className="group"
+                        type="button"
+                        onClick={toggleDeleteMarketingPlannerModal}
+                      >
+                        <TrashIcon className="stroke-waterloo group-hover:stroke-halloween-orange" />
+                      </button>
+                    </Tooltip>
                   </div>
                   <TextInput
                     type="text"
