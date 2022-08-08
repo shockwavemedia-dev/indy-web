@@ -16,9 +16,9 @@ import { RichTextInput } from '../../components/RichTextInput'
 import { Table } from '../../components/Table'
 import { TextInput } from '../../components/TextInput'
 import {
-  AddMarketingPlannerTaskTableColumns,
+  MarketingPlannerTaskTableColumns,
   todoListStore,
-} from '../../constants/tables/AddMarketingPlannerTaskTableColumns'
+} from '../../constants/tables/MarketingPlannerTaskTableColumns'
 import PanelLayout, { usePanelLayoutStore } from '../../layouts/PanelLayout'
 import { UpdateMarketingPlannerFormSchema } from '../../schemas/UpdateMarketingPlannerFormSchema'
 import { useToastStore } from '../../store/ToastStore'
@@ -144,7 +144,7 @@ const MarketingPlannerPage: NextPageWithLayout = () => {
                     className="flex max-h-155 flex-col"
                   >
                     <Table
-                      columns={AddMarketingPlannerTaskTableColumns}
+                      columns={MarketingPlannerTaskTableColumns}
                       data={todoList}
                       ofString="Todo List"
                       initialState={{

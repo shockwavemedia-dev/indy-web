@@ -70,7 +70,10 @@ export const SelectNoFormik = <
 >({
   onChange,
   ...props
-}: Props<SelectOption<T>, IsMulti, Group> & { twHeight?: string }) => (
+}: Props<SelectOption<T>, IsMulti, Group> & {
+  twHeight?: string
+  controlColors?: Record<string, { bg: string; border: string }>
+}) => (
   <ReactSelect
     {...props}
     styles={{
@@ -83,14 +86,24 @@ export const SelectNoFormik = <
         color: '#ABABB9',
         margin: 0,
       }),
-      control: (base, { isFocused }) => ({
+      control: (base, { isFocused, getValue }) => ({
         ...base,
         minHeight: props.twHeight || '3.125rem',
-        boxShadow: isFocused ? '0 0 0 2px #F25D23' : '0 0 0 1px #E8E8EF',
+        boxShadow: isFocused
+          ? '0 0 0 2px #F25D23'
+          : `0 0 0 1px ${
+              props.controlColors && getValue()[0] && props.controlColors[`${getValue()[0].value}`]
+                ? props.controlColors[`${getValue()[0].value}`].border
+                : '#E8E8EF'
+            }`,
         border: 'none',
         borderRadius: '.75rem',
         padding: '0 1.5rem 0',
-        backgroundColor: '#ffffff',
+        backgroundColor: isFocused
+          ? '#ffffff'
+          : props.controlColors && getValue()[0] && props.controlColors[`${getValue()[0].value}`]
+          ? props.controlColors[`${getValue()[0].value}`].bg
+          : '#ffffff',
         transition: 'none',
       }),
       container: (base) => ({

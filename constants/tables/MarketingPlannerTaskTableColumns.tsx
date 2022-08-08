@@ -37,11 +37,7 @@ const initialAssigneeList = ['Mark', 'Arjean', 'Kyle']
 export const todoListStore = create(
   combine(
     {
-      todoList: initialTodoList.map<Todo>((name) => ({
-        name,
-        custom: false,
-        selected: false,
-      })),
+      todoList: [] as Array<Todo>,
     },
     (set, get) => ({
       getTodo: (todoName: string) => get().todoList.find(({ name }) => name === todoName),
@@ -76,17 +72,17 @@ export const todoListStore = create(
         }),
       resetTodoList: () =>
         set({
-          todoList: initialTodoList.map<Todo>((name) => ({
+          todoList: initialTodoList.map<Todo>((name, i) => ({
             name,
             custom: false,
-            selected: false,
+            selected: i === 0,
           })),
         }),
     })
   )
 )
 
-export const AddMarketingPlannerTaskTableColumns: Array<Column<Todo>> = [
+export const MarketingPlannerTaskTableColumns: Array<Column<Todo>> = [
   {
     Header: '',
     accessor: 'selected',
@@ -154,6 +150,20 @@ export const AddMarketingPlannerTaskTableColumns: Array<Column<Todo>> = [
           twHeight="h-7"
           className="pr-5"
           placeholder="Select Status"
+          controlColors={{
+            todo: {
+              bg: '#FFCECC',
+              border: '#FF4842',
+            },
+            'in-progress': {
+              bg: '#E9F5FF',
+              border: '#2F96EB',
+            },
+            completed: {
+              bg: '#E9FAF3',
+              border: '#2BB67D',
+            },
+          }}
         />
       ) : (
         <div>-</div>
