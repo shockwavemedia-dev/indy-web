@@ -38,6 +38,7 @@ const MarketingPlannerPage: NextPageWithLayout = () => {
   } = useRouter()
   const todoList = todoListStore((state) => state.todoList)
   const updateTodo = todoListStore((state) => state.updateTodo)
+  const resetTodo = todoListStore((state) => state.resetTodoList)
 
   const [isDeleteMarketingPlannerModalVisible, setDeleteMarketingPlannerModalVisible] =
     useState(false)
@@ -49,7 +50,7 @@ const MarketingPlannerPage: NextPageWithLayout = () => {
     ['marketingPlanner', Number(id)],
     async () => {
       const { data } = await axios.get<MarketingPlanner>(`/v1/marketing-planners/${id}`)
-
+      resetTodo()
       return data
     },
     {
