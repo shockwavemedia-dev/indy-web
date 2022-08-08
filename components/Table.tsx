@@ -17,8 +17,6 @@ export const Table = <T extends Record<string, unknown>>({
 }) => {
   const memoizedColumns = useMemo(() => columns, [])
 
-  console.log(data)
-
   const { rows, getTableProps, getTableBodyProps, headerGroups, prepareRow } = useTable<T>(
     {
       columns: memoizedColumns,

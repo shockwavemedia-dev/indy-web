@@ -1,7 +1,10 @@
+import axios from 'axios'
+import { useQueryClient } from 'react-query'
 import { Column } from 'react-table'
 import create from 'zustand'
 import { combine } from 'zustand/middleware'
 import { CheckboxNoFormik } from '../../components/CheckboxNoFormik'
+import { CreateSelectNoFormik } from '../../components/CreateSelectNoFormik'
 import { DateInputNoFormik } from '../../components/DateInputNoFormik'
 import { SelectNoFormik } from '../../components/SelectNoFormik'
 import { Todo } from '../../types/Todo.type'
@@ -34,6 +37,41 @@ const initialTodoList = [
 
 const initialAssigneeList = ['Mark', 'Arjean', 'Kyle']
 
+export const assigneeListStore = create(
+  combine(
+    {
+      assigneeList: [] as Array<{
+        label: string
+        value: string
+      }>,
+    },
+    (set) => ({
+      update: (names: Array<string | undefined>) =>
+        set({
+          assigneeList: [
+            ...initialAssigneeList.map((name) => ({
+              label: name,
+              value: name,
+            })),
+            ...names
+              .filter((name) => name && !initialAssigneeList.includes(name))
+              .map((name) => ({
+                label: name!,
+                value: name!,
+              })),
+          ],
+        }),
+      clear: () =>
+        set({
+          assigneeList: initialAssigneeList.map((name) => ({
+            label: name,
+            value: name,
+          })),
+        }),
+    })
+  )
+)
+
 export const todoListStore = create(
   combine(
     {
@@ -59,6 +97,7 @@ export const todoListStore = create(
               ? todo
               : {
                   ...todo,
+                  id: undefined,
                   status: undefined,
                   assignee: undefined,
                   deadline: undefined,
@@ -78,6 +117,30 @@ export const todoListStore = create(
             selected: i === 0,
           })),
         }),
+      cleanTodoList: (todoList: Array<Todo>) =>
+        set({
+          todoList: [
+            ...initialTodoList
+              .filter((taskName) => !todoList.map(({ name }) => name).includes(taskName))
+              .map<Todo>((name) => ({
+                name,
+                custom: false,
+                selected: false,
+              })),
+            ...todoList.map((todo) => ({ ...todo, custom: false, selected: true })),
+          ],
+        }),
+      createCustomTodo: (todoName: string) =>
+        set({
+          todoList: [
+            ...get().todoList,
+            {
+              name: todoName,
+              custom: true,
+              selected: true,
+            },
+          ],
+        }),
     })
   )
 )
@@ -93,15 +156,21 @@ export const MarketingPlannerTaskTableColumns: Array<Column<Todo>> = [
       const getTodo = todoListStore((state) => state.getTodo)
       const addTodo = todoListStore((state) => state.addTodo)
       const removeTodo = todoListStore((state) => state.removeTodo)
+      const queryClient = useQueryClient()
 
       const todo = getTodo(original.name)
 
       return (
         <CheckboxNoFormik
           checked={!!todo && todo.selected}
-          onChange={() => {
-            if (todo && todo.selected) removeTodo(original.name)
-            else addTodo(original.name)
+          onChange={async () => {
+            if (todo && todo.selected) {
+              removeTodo(original.name)
+              if (todo.id) {
+                await axios.delete(`/v1/marketing-planner-tasks/${todo.id}`)
+                queryClient.invalidateQueries('marketingPlanner')
+              }
+            } else addTodo(original.name)
           }}
           label=""
         />
@@ -174,25 +243,18 @@ export const MarketingPlannerTaskTableColumns: Array<Column<Todo>> = [
     Header: 'Assignee',
     accessor: 'assignee',
     Cell: ({ row: { original } }) => {
+      const assigneeList = assigneeListStore((state) => state.assigneeList)
       const getTodo = todoListStore((state) => state.getTodo)
       const updateTodo = todoListStore((state) => state.updateTodo)
 
       const todo = getTodo(original.name)
 
       return todo && todo.selected ? (
-        <SelectNoFormik
-          options={initialAssigneeList.map((assignee) => ({
-            label: assignee,
-            value: assignee,
-          }))}
+        <CreateSelectNoFormik
+          options={assigneeList}
           value={
             todo && todo.selected
-              ? initialAssigneeList
-                  .map((assignee) => ({
-                    label: assignee,
-                    value: assignee,
-                  }))
-                  .find(({ value }) => value === original.assignee)
+              ? assigneeList.find(({ value }) => value === original.assignee)
               : null
           }
           onChange={(option) => {

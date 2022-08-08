@@ -13,10 +13,13 @@ import { DateInput } from '../components/DateInput'
 import { FileDropZone } from '../components/FileDropZone'
 import { EditIcon } from '../components/icons/EditIcon'
 import { FloppyDiskIcon } from '../components/icons/FloppyDiskIcon'
+import { PlusIcon } from '../components/icons/PlusIcon'
+import { AddCustomTodoModal, useAddCustomTodoModal } from '../components/modals/AddCustomTodoModal'
 import { RichTextInput } from '../components/RichTextInput'
 import { Table } from '../components/Table'
 import { TextInput } from '../components/TextInput'
 import {
+  assigneeListStore,
   MarketingPlannerTaskTableColumns,
   todoListStore,
 } from '../constants/tables/MarketingPlannerTaskTableColumns'
@@ -35,6 +38,8 @@ const NewMarketingPlannerPage: NextPageWithLayout = () => {
   const queryClient = useQueryClient()
   const todoList = todoListStore((state) => state.todoList)
   const resetTodoList = todoListStore((state) => state.resetTodoList)
+  const clear = assigneeListStore((state) => state.clear)
+  const toggleCustomTodoModal = useAddCustomTodoModal((state) => state.toggle)
 
   const submitForm = async (values: CreateMarketingPlannerForm) => {
     try {
@@ -67,6 +72,7 @@ const NewMarketingPlannerPage: NextPageWithLayout = () => {
   useEffect(() => {
     setHeader('New Marketing Planner')
     resetTodoList()
+    clear()
   }, [])
 
   return (
@@ -129,6 +135,16 @@ const NewMarketingPlannerPage: NextPageWithLayout = () => {
                     titlePosition="center"
                     className="flex max-h-155 flex-col"
                   >
+                    <button
+                      type="button"
+                      className="absolute right-6 flex space-x-2"
+                      onClick={toggleCustomTodoModal}
+                    >
+                      <PlusIcon className="stroke-halloween-orange" />
+                      <div className=" text-sm font-semibold text-halloween-orange">
+                        Add Assignee
+                      </div>
+                    </button>
                     <Table
                       columns={MarketingPlannerTaskTableColumns}
                       data={todoList}
@@ -161,6 +177,7 @@ const NewMarketingPlannerPage: NextPageWithLayout = () => {
           )}
         </Formik>
       </div>
+      <AddCustomTodoModal />
     </>
   )
 }

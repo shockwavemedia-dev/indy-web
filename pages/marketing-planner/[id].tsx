@@ -13,12 +13,18 @@ import { DateInput } from '../../components/DateInput'
 import { FileButton } from '../../components/FileButton'
 import { EditIcon } from '../../components/icons/EditIcon'
 import { FloppyDiskIcon } from '../../components/icons/FloppyDiskIcon'
+import { PlusIcon } from '../../components/icons/PlusIcon'
 import { TrashIcon } from '../../components/icons/TrashIcon'
+import {
+  AddCustomTodoModal,
+  useAddCustomTodoModal,
+} from '../../components/modals/AddCustomTodoModal'
 import { DeleteMarketingPlannerModal } from '../../components/modals/DeleteMarketingPlannerModal'
 import { RichTextInput } from '../../components/RichTextInput'
 import { Table } from '../../components/Table'
 import { TextInput } from '../../components/TextInput'
 import {
+  assigneeListStore,
   MarketingPlannerTaskTableColumns,
   todoListStore,
 } from '../../constants/tables/MarketingPlannerTaskTableColumns'
@@ -37,7 +43,11 @@ const MarketingPlannerPage: NextPageWithLayout = () => {
     query: { id },
   } = useRouter()
   const todoList = todoListStore((state) => state.todoList)
-  const updateTodo = todoListStore((state) => state.updateTodo)
+  const cleanTodoList = todoListStore((state) => state.cleanTodoList)
+  const update = assigneeListStore((state) => state.update)
+  const toggleCustomTodoModal = useAddCustomTodoModal((state) => state.toggle)
+
+  const [todoLoaded, setTodoLoaded] = useState(false)
 
   const [isDeleteMarketingPlannerModalVisible, setDeleteMarketingPlannerModalVisible] =
     useState(false)
@@ -59,13 +69,19 @@ const MarketingPlannerPage: NextPageWithLayout = () => {
 
   const submitForm = async (values: UpdateMarketingPlannerForm) => {
     try {
+      setTodoLoaded(false)
       const { status } = await axios.put<UpdateMarketingPlannerForm>(
         `/v1/marketing-planners/${id}`,
         {
           ...values,
           todoList: todoList
-            .filter(({ selected }) => selected)
-            .map(({ name, status, assignee, deadline }) => ({ name, status, assignee, deadline })),
+            .filter(
+              ({ selected, status, assignee, deadline }) =>
+                selected && !!status && !!assignee && !!deadline
+            )
+            .map(({ id, name, status, assignee, deadline }) =>
+              id ? { id, name, status, assignee, deadline } : { name, status, assignee, deadline }
+            ),
         }
       )
 
@@ -87,16 +103,24 @@ const MarketingPlannerPage: NextPageWithLayout = () => {
   useEffect(() => {
     if (marketingPlan) {
       setHeader(marketingPlan.eventName)
-      marketingPlan.todoList.forEach((todo) => {
-        if (todoList.find(({ name }) => name === todo.name))
-          updateTodo({
-            ...todo,
-            custom: false,
-            selected: true,
-          })
-      })
+
+      if (!todoLoaded) {
+        cleanTodoList(marketingPlan.todoList)
+        update(
+          Array.from(
+            new Set(
+              marketingPlan.todoList
+                .map(({ assignee }) => assignee)
+                .filter((assignee) => !!assignee)
+            )
+          )
+        )
+        setTodoLoaded(true)
+      }
     }
   }, [marketingPlan])
+
+  console.log(todoList)
 
   if (!marketingPlan) return null
 
@@ -163,6 +187,16 @@ const MarketingPlannerPage: NextPageWithLayout = () => {
                     titlePosition="center"
                     className="flex max-h-155 flex-col"
                   >
+                    <button
+                      type="button"
+                      className="absolute right-6 flex space-x-2"
+                      onClick={toggleCustomTodoModal}
+                    >
+                      <PlusIcon className="stroke-halloween-orange" />
+                      <div className=" text-sm font-semibold text-halloween-orange">
+                        Add Assignee
+                      </div>
+                    </button>
                     <Table
                       columns={MarketingPlannerTaskTableColumns}
                       data={todoList}
@@ -176,7 +210,7 @@ const MarketingPlannerPage: NextPageWithLayout = () => {
                       }}
                     />
                   </Card>
-                  <Card>
+                  <Card className="ml-auto w-1/2 lg:w-full">
                     <div className="flex space-x-5">
                       <Link href="/marketing-planner">
                         <Button ariaLabel="Cancel" type="button" light>
@@ -219,6 +253,7 @@ const MarketingPlannerPage: NextPageWithLayout = () => {
         id={marketingPlan.id}
         eventName={marketingPlan.eventName}
       />
+      <AddCustomTodoModal />
     </>
   )
 }
