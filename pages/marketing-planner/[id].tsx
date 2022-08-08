@@ -66,7 +66,13 @@ const MarketingPlannerPage: NextPageWithLayout = () => {
           ...values,
           todoList: todoList
             .filter(({ selected }) => selected)
-            .map(({ name, status, assignee, deadline }) => ({ name, status, assignee, deadline })),
+            .map(({ id, name, status, assignee, deadline }) => ({
+              id,
+              name,
+              status,
+              assignee,
+              deadline,
+            })),
         }
       )
 
