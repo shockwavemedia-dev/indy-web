@@ -36,7 +36,7 @@ export const ImageFileDisplayModal = () => {
     <>
       {signedUrl && name && (
         <Modal title={name} onClose={toggleShowImageFileModal}>
-          <div className="max-h-155 w-fit overflow-hidden rounded-xl">
+          <div className="h-fit w-fit overflow-hidden rounded-xl">
             <Image src={signedUrl} alt={name} className="h-full w-full" />
             <div className="mt-5 flex space-x-5">
               <Button
