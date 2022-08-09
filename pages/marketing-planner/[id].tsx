@@ -48,7 +48,6 @@ const MarketingPlannerPage: NextPageWithLayout = () => {
   const toggleCustomTodoModal = useAddCustomTodoModal((state) => state.toggle)
 
   const [todoLoaded, setTodoLoaded] = useState(false)
-  const resetTodo = todoListStore((state) => state.resetTodoList)
 
   const [isDeleteMarketingPlannerModalVisible, setDeleteMarketingPlannerModalVisible] =
     useState(false)
@@ -60,7 +59,6 @@ const MarketingPlannerPage: NextPageWithLayout = () => {
     ['marketingPlanner', Number(id)],
     async () => {
       const { data } = await axios.get<MarketingPlanner>(`/v1/marketing-planners/${id}`)
-      resetTodo()
       return data
     },
     {
@@ -121,8 +119,6 @@ const MarketingPlannerPage: NextPageWithLayout = () => {
       }
     }
   }, [marketingPlan])
-
-  console.log(todoList)
 
   if (!marketingPlan) return null
 
