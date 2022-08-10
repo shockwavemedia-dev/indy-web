@@ -1,3 +1,4 @@
+import { Client } from '../Client.type'
 import { Department } from '../Department.type'
 
 export type AuthenticationResponseUser = {
@@ -22,6 +23,7 @@ export type AuthenticationResponseUser = {
       | 'marketing manager'
       | 'group manager'
     clientId: number
-    departments: Array<Department>
+    department: Department
+    client: Client
   }
 }

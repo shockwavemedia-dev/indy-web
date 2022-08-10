@@ -60,7 +60,7 @@ const NewPhotographyVideographyPage: NextPageWithLayout = () => {
         status,
         data: { id },
       } = await axios.post<PhotographyVideography>(
-        `/v1/clients/${session?.user.userType.clientId}/event-bookings`,
+        `/v1/clients/${session?.user.userType.client.id}/event-bookings`,
         objectWithFileToFormData(values)
       )
 

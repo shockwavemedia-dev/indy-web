@@ -35,7 +35,7 @@ export const UploadFileModal = () => {
 
     if (status === 200) {
       toggleUploadFileModal()
-      queryClient.invalidateQueries(['clientFiles', session?.user.userType.clientId])
+      queryClient.invalidateQueries(['clientFiles', session?.user.userType.client.id])
     }
   }
 

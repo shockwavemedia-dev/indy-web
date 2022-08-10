@@ -75,7 +75,7 @@ const PhotographyVideographyPage: NextPageWithLayout = () => {
             <Card title="Event Bookings Table" className="mt-8 flex max-h-155 flex-1 flex-col">
               <DataTable
                 columns={PhotographyVideographyColumns}
-                dataEndpoint={`/v1/clients/${session?.user.userType.clientId}/event-bookings`}
+                dataEndpoint={`/v1/clients/${session?.user.userType.client.id}/event-bookings`}
                 tableQueryKey={['eventBookings']}
                 ofString="Bookings"
               />

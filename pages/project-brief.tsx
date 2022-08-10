@@ -69,7 +69,7 @@ const ProjectBriefPage: NextPageWithLayout = () => {
           validationSchema={CreateProjectBriefFormSchema}
           initialValues={{
             requestedBy: session?.user.id || -1,
-            clientId: session?.user.userType.clientId || -1,
+            clientId: session?.user.userType.client.id || -1,
             subject: '',
             services: [],
             duedate: null,
@@ -136,7 +136,7 @@ const SelectService = () => {
     } = await axios.get<{
       data: Array<Service>
       page: Page
-    }>(`/v1/clients/${session?.user.userType.clientId}/services`)
+    }>(`/v1/clients/${session?.user.userType.client.id}/services`)
 
     return data
   })

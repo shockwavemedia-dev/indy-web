@@ -38,10 +38,10 @@ export const ManagerDashboard = () => {
       <div className="mx-auto w-full max-w-8xl space-y-6">
         <div className="flex flex-row gap-6 lg:flex-col">
           <Card title="Project Status Table" className="flex max-h-155 flex-1 flex-col">
-            {session && session.user.userType.departments.length > 0 ? (
+            {session && session.user.userType.department ? (
               <DataTable
                 columns={ManagerTicketsTableColumns}
-                dataEndpoint={`/v1/departments/${session?.user.userType.departments[0].id}/tickets`}
+                dataEndpoint={`/v1/departments/${session?.user.userType.department.id}/tickets`}
                 tableQueryKey={['tickets']}
                 ofString="Projects"
               />

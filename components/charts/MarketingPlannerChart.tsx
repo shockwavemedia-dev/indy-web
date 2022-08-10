@@ -19,7 +19,7 @@ export const MarketingPlannerChart = () => {
     'marketingPlanner',
     async () => {
       const { data } = await axios.get<Array<MarketingPlanner>>(
-        `/v1/clients/${session?.user.userType.clientId}/marketing-planners`
+        `/v1/clients/${session?.user.userType.client.id}/marketing-planners`
       )
 
       return data
