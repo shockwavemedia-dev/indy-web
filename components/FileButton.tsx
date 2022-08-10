@@ -21,6 +21,7 @@ export const FileButton = ({
   folderId,
   folderName,
   file = false,
+  disabled = false,
 }: {
   onClick?: () => void
   href?: string
@@ -34,6 +35,7 @@ export const FileButton = ({
   folderId?: number
   folderName?: string
   file?: boolean
+  disabled?: boolean
 }) => {
   const { toggleModal: toggleRenameFolderModal } = useRenameFolderModalStore()
   const { toggleModal: toggleDeleteFolderModal } = useDeleteFolderModalStore()
@@ -64,39 +66,44 @@ export const FileButton = ({
       )}
     </a>
   ) : (
-    <button
-      type="button"
-      onClick={onClick}
-      className={`group relative flex h-35 w-35 flex-none flex-col items-center justify-center rounded-xl border-2 border-bright-gray p-3 hover:border-halloween-orange ${className}`}
-    >
-      <>
-        {allowRename && (
-          <div className="absolute top-2 right-2 hidden space-x-2 group-hover:flex">
-            <button
-              aria-label="Rename Folder"
-              type="button"
-              onClick={(e) => {
-                e.stopPropagation()
-                toggleRenameFolderModal(folderId, folderName)
-              }}
-            >
-              <EditIcon className="stroke-waterloo hover:stroke-halloween-orange" />
-            </button>
-            <button
-              aria-label="Delete Folder"
-              type="button"
-              onClick={(e) => {
-                e.stopPropagation()
-                toggleDeleteFolderModal(folderId, folderName)
-              }}
-            >
-              <TrashIcon className="stroke-waterloo hover:stroke-halloween-orange" />
-            </button>
-          </div>
-        )}
+    <div className="group relative">
+      <button
+        type="button"
+        onClick={onClick}
+        disabled={disabled}
+        className={`peer relative flex h-35 w-35 flex-none flex-col items-center justify-center rounded-xl border-2 border-bright-gray p-3 hover:border-halloween-orange ${className}`}
+      >
         {Icon || <FolderIcon className="mb-3 stroke-halloween-orange" />}
         <div className="break-words text-xs text-onyx">{name}</div>
-      </>
-    </button>
+      </button>
+      {allowRename && (
+        <>
+          <button
+            aria-label="Rename Folder"
+            type="button"
+            disabled={disabled}
+            onClick={(e) => {
+              e.stopPropagation()
+              toggleRenameFolderModal(folderId, folderName)
+            }}
+            className="absolute top-2 right-2 hidden group-hover:block"
+          >
+            <EditIcon className="stroke-waterloo hover:stroke-halloween-orange" />
+          </button>
+          <button
+            aria-label="Delete Folder"
+            type="button"
+            disabled={disabled}
+            onClick={(e) => {
+              e.stopPropagation()
+              toggleDeleteFolderModal(folderId, folderName)
+            }}
+            className="absolute top-2 right-8 hidden group-hover:block"
+          >
+            <TrashIcon className="stroke-waterloo hover:stroke-halloween-orange" />
+          </button>
+        </>
+      )}
+    </div>
   )
 }

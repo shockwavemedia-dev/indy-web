@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
-import { useQuery } from 'react-query'
+import { focusManager, useQuery } from 'react-query'
 import { Files } from '../types/Files.type'
 import { Folder } from '../types/Folder.type'
 import { Card } from './Card'
@@ -18,17 +18,19 @@ export const FileBrowser = ({ clientId }: { clientId: number }) => {
   const { toggleModal: toggleCreateFolderModal } = useCreateFolderModalStore()
   const { toggleUploadFileModal } = useUploadFileModal()
   const { toggleShowPhotoVideoFileModal } = useFileDisplayModalStore()
-  const [foldersStack, setFoldersStack] = useState<
-    Array<{
-      key: string
-      id: number
-      files: Files
-    }>
-  >([])
-  const [yearFolder, setYearFolder] = useState('')
-  const [monthFolder, setMonthFolder] = useState('')
+  const [currentFolderFilesAndId, setCurrentFolderFilesAndId] = useState<{
+    folder: Folder
+    files: Files
+    id: number
+  }>({
+    folder: {},
+    files: {},
+    id: -1,
+  })
+  const [foldersStack, setFoldersStack] = useState<Array<string>>([])
+  const [filesStack, setFilesStack] = useState<Array<string>>([])
 
-  const { data: folder, isSuccess: filesSuccess } = useQuery(
+  const { data, isSuccess, isRefetching } = useQuery(
     ['clientFiles', clientId],
     async () => {
       const { data } = await axios.get<Folder>(`/v2/clients/${clientId}/files`)
@@ -40,61 +42,55 @@ export const FileBrowser = ({ clientId }: { clientId: number }) => {
     }
   )
 
-  const goUpOneFolder = () =>
-    monthFolder
-      ? setMonthFolder('')
-      : yearFolder
-      ? setYearFolder('')
-      : setFoldersStack([...foldersStack].slice(0, -1))
-
   useEffect(() => {
+    setFilesStack([])
     setFoldersStack([])
-    setYearFolder('')
-    setMonthFolder('')
   }, [clientId])
 
   useEffect(() => {
-    if (folder && foldersStack.length > 0) {
-      const newFolderStack: Array<{
-        key: string
-        id: number
-        files: Files
-      }> = []
+    if (data) {
+      setCurrentFolderFilesAndId(
+        foldersStack.reduce(
+          (folderAndFiles, currentFolder) => {
+            if (!Array.isArray(folderAndFiles.folder[currentFolder].files))
+              folderAndFiles.files = folderAndFiles.folder[currentFolder].files
+            else folderAndFiles.files = {}
 
-      let currentFolder: Folder = {}
+            folderAndFiles.id = folderAndFiles.folder[currentFolder]
+              ? folderAndFiles.folder[currentFolder].id
+              : -1
 
-      foldersStack.forEach(({ key }, i) => {
-        if (i === 0) {
-          currentFolder = folder[key].folders.reduce(
-            (folders, folder) => ({ ...folders, ...folder }),
-            {}
-          )
-          newFolderStack.push({
-            key,
-            id: folder[key].id,
-            files: folder[key].files,
-          })
-        } else {
-          currentFolder = currentFolder[key].folders.reduce(
-            (folders, folder) => ({ ...folders, ...folder }),
-            {}
-          )
-          newFolderStack.push({
-            key,
-            id: currentFolder[key].id,
-            files: currentFolder[key].files,
-          })
-        }
-      })
+            if (
+              folderAndFiles.folder[currentFolder].folders &&
+              folderAndFiles.folder[currentFolder].folders.length > 0
+            )
+              folderAndFiles.folder = folderAndFiles.folder[currentFolder].folders.reduce(
+                (folders, folder) => ({ ...folders, ...folder }),
+                {}
+              )
+            else folderAndFiles.folder = {}
 
-      setFoldersStack(newFolderStack)
+            return folderAndFiles
+          },
+          {
+            folder: data,
+            files: {} as Files,
+            id: -1,
+          }
+        )
+      )
     }
-  }, [folder])
+  }, [foldersStack, data])
+
+  useEffect(() => {
+    focusManager.setFocused(false)
+    return () => focusManager.setFocused(undefined)
+  }, [])
 
   return (
     <>
-      <Card className="h-fit flex-1">
-        {clientId !== -1 && !yearFolder && (
+      <Card className={`h-fit flex-1 transition-opacity${isRefetching ? ' opacity-50' : ''}`}>
+        {clientId !== -1 && filesStack.length === 0 && (
           <div className="absolute top-6 right-6 flex space-x-5">
             <button
               className="flex space-x-2"
@@ -109,7 +105,7 @@ export const FileBrowser = ({ clientId }: { clientId: number }) => {
             {foldersStack.length > 0 && (
               <button
                 className="flex space-x-2"
-                onClick={() => toggleUploadFileModal(foldersStack[foldersStack.length - 1].id)}
+                onClick={() => toggleUploadFileModal(currentFolderFilesAndId.id)}
               >
                 <AddFileIcon className="stroke-halloween-orange" />
                 <div className=" text-sm font-semibold text-halloween-orange">Upload File</div>
@@ -117,103 +113,85 @@ export const FileBrowser = ({ clientId }: { clientId: number }) => {
             )}
           </div>
         )}
-        <div className="flex max-h-155 flex-wrap gap-4 overflow-y-auto pt-10">
+        <div className="mt-10 flex max-h-155 flex-wrap gap-4 overflow-y-auto">
           {clientId !== -1 ? (
-            filesSuccess && (
+            isSuccess && (
               <>
                 {foldersStack.length > 0 && (
                   <FileButton
+                    disabled={isRefetching}
                     name="Go back"
                     Icon={<CaretIcon className="-rotate-90 stroke-halloween-orange" />}
-                    onClick={goUpOneFolder}
+                    onClick={() => {
+                      if (filesStack.length === 0) setFoldersStack([...foldersStack].slice(0, -1))
+                      else setFilesStack([...filesStack].slice(0, -1))
+                    }}
                   />
                 )}
-                {!yearFolder &&
-                  Object.entries(
-                    foldersStack.reduce((currentFolder, { key }) => {
-                      const folders = currentFolder[key].folders
-
-                      if (folders && !Array.isArray(folders[0])) {
-                        return folders.reduce((folders, folder) => ({ ...folders, ...folder }), {})
-                      }
-
-                      return {}
-                    }, folder)
-                  ).map(([k, { id, name, files }]) => {
-                    const enterFolder = () =>
-                      setFoldersStack([
-                        ...foldersStack,
-                        {
-                          key: k,
-                          id: id,
-                          files,
-                        },
-                      ])
-
-                    return (
+                {currentFolderFilesAndId &&
+                  filesStack.length === 0 &&
+                  Object.entries(currentFolderFilesAndId.folder).map(([k, { id, name }]) => (
+                    <FileButton
+                      disabled={isRefetching}
+                      key={name}
+                      name={name}
+                      onClick={() => setFoldersStack([...foldersStack, k])}
+                      folderId={id}
+                      folderName={name}
+                      allowRename
+                    />
+                  ))}
+                {currentFolderFilesAndId && filesStack.length === 0
+                  ? Object.keys(currentFolderFilesAndId.files).map((year) => (
                       <FileButton
-                        key={name}
-                        name={name}
-                        onClick={enterFolder}
-                        folderId={id}
-                        folderName={name}
-                        allowRename
+                        disabled={isRefetching}
+                        key={year}
+                        name={year}
+                        onClick={() => setFilesStack([...filesStack, year])}
                       />
-                    )
-                  })}
-                {!yearFolder &&
-                  foldersStack.length > 0 &&
-                  Object.keys(foldersStack[foldersStack.length - 1].files).map((year) => {
-                    const enterYearFolder = () => setYearFolder(year)
-
-                    return <FileButton key={year} name={year} onClick={enterYearFolder} />
-                  })}
-                {yearFolder &&
-                  !monthFolder &&
-                  Object.keys(foldersStack[foldersStack.length - 1].files[yearFolder]).map(
-                    (month) => {
-                      const enterMonthFolder = () => setMonthFolder(month)
-
-                      return (
-                        <FileButton
-                          key={month}
-                          name={`${month.charAt(0).toUpperCase()}${month.slice(1)}`}
-                          onClick={enterMonthFolder}
-                        />
-                      )
-                    }
-                  )}
-                {monthFolder &&
-                  foldersStack[foldersStack.length - 1].files[yearFolder][monthFolder].map(
-                    ({
-                      fileName,
-                      originalFilename,
-                      thumbnailUrl,
-                      clientTicketFile,
-                      url,
-                      fileType,
-                    }) =>
-                      clientTicketFile ? (
-                        <FileButton
-                          key={fileName}
-                          name={originalFilename}
-                          thumbnailUrl={thumbnailUrl}
-                          href={`/ticket/file/${clientTicketFile.id}`}
-                          fileStatus={clientTicketFile.status}
-                          file
-                        />
-                      ) : (
-                        <FileButton
-                          key={fileName}
-                          name={originalFilename}
-                          thumbnailUrl={thumbnailUrl}
-                          onClick={() =>
-                            toggleShowPhotoVideoFileModal(url, fileType, originalFilename)
-                          }
-                          file
-                        />
-                      )
-                  )}
+                    ))
+                  : filesStack.length === 1
+                  ? Object.keys(currentFolderFilesAndId.files[filesStack[0]]).map((month) => (
+                      <FileButton
+                        disabled={isRefetching}
+                        key={month}
+                        name={month}
+                        onClick={() => setFilesStack([...filesStack, month])}
+                      />
+                    ))
+                  : filesStack.length === 2 &&
+                    Object.values(currentFolderFilesAndId.files[filesStack[0]][filesStack[1]]).map(
+                      ({
+                        fileName,
+                        originalFilename,
+                        thumbnailUrl,
+                        clientTicketFile,
+                        url,
+                        fileType,
+                      }) =>
+                        clientTicketFile ? (
+                          <FileButton
+                            disabled={isRefetching}
+                            key={fileName}
+                            name={originalFilename}
+                            thumbnailUrl={thumbnailUrl}
+                            href={`/ticket/file/${clientTicketFile.id}`}
+                            fileStatus={clientTicketFile.status}
+                            file
+                          />
+                        ) : (
+                          <FileButton
+                            disabled={isRefetching}
+                            key={fileName}
+                            name={originalFilename}
+                            thumbnailUrl={thumbnailUrl}
+                            onClick={() =>
+                              toggleShowPhotoVideoFileModal(url, fileType, originalFilename)
+                            }
+                            file
+                          />
+                        )
+                    )}
               </>
             )
           ) : (
@@ -222,9 +200,7 @@ export const FileBrowser = ({ clientId }: { clientId: number }) => {
         </div>
       </Card>
       <CreateFolderModal
-        parentFolderId={
-          foldersStack.length > 0 ? foldersStack[foldersStack.length - 1].id : undefined
-        }
+        parentFolderId={currentFolderFilesAndId.id !== -1 ? currentFolderFilesAndId.id : undefined}
       />
       <RenameFolderModal />
       <DeleteFolderModal />

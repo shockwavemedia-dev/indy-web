@@ -54,7 +54,7 @@ export const CreateFolderModal = ({ parentFolderId }: { parentFolderId?: number 
   return (
     <>
       {clientId !== -1 && (
-        <Modal title="Create Folder" onClose={toggleModal}>
+        <Modal title="Create Folder" onClose={() => toggleModal()}>
           <Formik
             validationSchema={CreateFolderFormSchema}
             initialValues={{
@@ -74,7 +74,7 @@ export const CreateFolderModal = ({ parentFolderId }: { parentFolderId?: number 
                   className="mb-8"
                 />
                 <div className="flex space-x-5">
-                  <Button ariaLabel="Cancel" onClick={toggleModal} type="button" light>
+                  <Button ariaLabel="Cancel" onClick={() => toggleModal()} type="button" light>
                     Cancel
                   </Button>
                   <Button ariaLabel="Submit" disabled={isSubmitting} type="submit">
