@@ -125,7 +125,7 @@ const NewMarketingPlannerPage: NextPageWithLayout = () => {
                     name="attachments"
                     maxSize={250}
                     mimeType="image/gif"
-                    accept={['.gif', '.jpeg', '.mp4', '.png']}
+                    accept={['.gif', '.jpeg', '.mp4', '.png', '.jpg']}
                     multiple
                   />
                 </Card>
