@@ -44,7 +44,7 @@ const NewMarketingPlannerPage: NextPageWithLayout = () => {
   const submitForm = async (values: CreateMarketingPlannerForm) => {
     try {
       const { status } = await axios.post<CreateMarketingPlannerForm>(
-        `/v1/clients/${session?.user.userType.clientId}/marketing-planners`,
+        `/v1/clients/${session?.user.userType.client.id}/marketing-planners`,
         objectWithFileToFormData({
           ...values,
           todoList: todoList

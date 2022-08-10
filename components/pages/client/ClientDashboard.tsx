@@ -41,7 +41,7 @@ export const ClientDashboard = () => {
           <Card title="Project Status Table" className="flex max-h-155 flex-1 flex-col">
             <DataTable
               columns={ClientTicketsTableColumns}
-              dataEndpoint={`/v1/clients/${session?.user.userType.clientId}/tickets`}
+              dataEndpoint={`/v1/clients/${session?.user.userType.client.id}/tickets`}
               tableQueryKey={['tickets']}
               ofString="Projects"
             />

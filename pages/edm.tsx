@@ -27,7 +27,7 @@ const EDMPage: NextPageWithLayout = () => {
     } = await axios.get<{
       data: Array<Edm>
       page: Page
-    }>(`/v1/clients/${session?.user.userType.clientId}/edm`)
+    }>(`/v1/clients/${session?.user.userType.client.id}/edm`)
 
     return data
   })
@@ -103,7 +103,7 @@ const EDMPage: NextPageWithLayout = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   href="https://c7s.transmitsms.com/"
-                  className="w-54 flex h-12.5 items-center justify-center space-x-2 rounded-xl !border !border-halloween-orange text-base font-semibold"
+                  className="flex h-12.5 w-54 items-center justify-center space-x-2 rounded-xl !border !border-halloween-orange text-base font-semibold"
                 >
                   <EmailIcon className="stroke-halloween-orange" />
                   <div>MailChimp</div>

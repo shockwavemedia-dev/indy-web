@@ -27,9 +27,6 @@ import {
 import { RouteButton } from '../components/RouteButton'
 import { TicketsAndNotifacationsCountCard } from '../components/TicketsAndNotifacationsCountCard'
 import { AdminRoutes } from '../constants/routes/AdminRoutes'
-import { ClientRoutes } from '../constants/routes/ClientRoutes'
-import { ManagerRoutes } from '../constants/routes/ManagerRoutes'
-import { StaffRoutes } from '../constants/routes/StaffRoutes'
 import DailyPressLogoWhite from '../public/images/daily-press-logo-white.png'
 import DummyAvatar from '../public/images/dummy-avatar.png'
 import { TicketsAndNotifacationsCount } from '../types/TicketsAndNotifacationsCount.type'
@@ -67,7 +64,7 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
       async () => {
         const { data } = await axios.get<TicketsAndNotifacationsCount>(
           `/v1/${
-            session?.isClient ? `clients/${session.user.userType.clientId}` : 'backend-users'
+            session?.isClient ? `clients/${session.user.userType.client.id}` : 'backend-users'
           }/ticket-notification-counts`
         )
 
@@ -83,13 +80,33 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
       const { isAdmin, isClient, isManager, isStaff } = session
 
       if (isAdmin) {
-        return { panelName: 'Admin Panel', routes: AdminRoutes }
+        return {
+          panelName: session.user.userType.department.name
+            ? session.user.userType.department.name
+            : 'Admin Panel',
+          routes: AdminRoutes,
+        }
       } else if (isClient) {
-        return { panelName: 'Client Panel', routes: ClientRoutes }
+        return {
+          panelName: session.user.userType.client.name
+            ? session.user.userType.client.name
+            : 'Client Panel',
+          routes: AdminRoutes,
+        }
       } else if (isManager) {
-        return { panelName: 'Manager Panel', routes: ManagerRoutes }
+        return {
+          panelName: session.user.userType.department.name
+            ? session.user.userType.department.name
+            : 'Manager Panel',
+          routes: AdminRoutes,
+        }
       } else if (isStaff) {
-        return { panelName: 'Staff Panel', routes: StaffRoutes }
+        return {
+          panelName: session.user.userType.department.name
+            ? session.user.userType.department.name
+            : 'Staff Panel',
+          routes: AdminRoutes,
+        }
       }
     }
 

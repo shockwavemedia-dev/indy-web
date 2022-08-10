@@ -81,7 +81,7 @@ const GraphicPage: NextPageWithLayout = () => {
           <Card title="Project Status Table" className="flex flex-1 flex-col">
             <DataTable
               columns={ClientTicketsTableColumns}
-              dataEndpoint={`/v1/clients/${session?.user.userType.clientId}/graphics`}
+              dataEndpoint={`/v1/clients/${session?.user.userType.client.id}/graphics`}
               tableQueryKey={['graphics']}
               ofString="Graphics"
             />
