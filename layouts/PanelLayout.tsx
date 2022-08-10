@@ -27,6 +27,9 @@ import {
 import { RouteButton } from '../components/RouteButton'
 import { TicketsAndNotifacationsCountCard } from '../components/TicketsAndNotifacationsCountCard'
 import { AdminRoutes } from '../constants/routes/AdminRoutes'
+import { ClientRoutes } from '../constants/routes/ClientRoutes'
+import { ManagerRoutes } from '../constants/routes/ManagerRoutes'
+import { StaffRoutes } from '../constants/routes/StaffRoutes'
 import DailyPressLogoWhite from '../public/images/daily-press-logo-white.png'
 import DummyAvatar from '../public/images/dummy-avatar.png'
 import { TicketsAndNotifacationsCount } from '../types/TicketsAndNotifacationsCount.type'
@@ -91,21 +94,21 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
           panelName: session.user.userType.client.name
             ? session.user.userType.client.name
             : 'Client Panel',
-          routes: AdminRoutes,
+          routes: ClientRoutes,
         }
       } else if (isManager) {
         return {
           panelName: session.user.userType.department.name
             ? session.user.userType.department.name
             : 'Manager Panel',
-          routes: AdminRoutes,
+          routes: ManagerRoutes,
         }
       } else if (isStaff) {
         return {
           panelName: session.user.userType.department.name
             ? session.user.userType.department.name
             : 'Staff Panel',
-          routes: AdminRoutes,
+          routes: StaffRoutes,
         }
       }
     }
