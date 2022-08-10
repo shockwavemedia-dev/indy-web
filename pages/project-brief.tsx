@@ -107,7 +107,7 @@ const ProjectBriefPage: NextPageWithLayout = () => {
                   className="mb-8 mt-5"
                   maxSize={250}
                   mimeType="image/gif"
-                  accept={['.gif', '.jpeg', '.mp4', '.png']}
+                  accept={['.gif', '.jpeg', '.mp4', '.png', '.jpg']}
                   multiple
                 />
                 <div className="flex space-x-5">

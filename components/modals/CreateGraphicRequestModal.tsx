@@ -102,7 +102,7 @@ export const CreateGraphicRequestModal = ({
                 className="mb-8"
                 maxSize={250}
                 mimeType="image/gif"
-                accept={['.gif', '.jpeg', '.mp4', '.png']}
+                accept={['.gif', '.jpeg', '.mp4', '.png', '.jpg']}
                 multiple
               />
               <div className="flex space-x-5">
