@@ -155,7 +155,7 @@ export const FileBrowser = ({ clientId }: { clientId: number }) => {
                       <FileButton
                         disabled={isRefetching}
                         key={month}
-                        name={month}
+                        name={`${month.charAt(0).toUpperCase()}${month.slice(1)}`}
                         onClick={() => setFilesStack([...filesStack, month])}
                       />
                     ))
