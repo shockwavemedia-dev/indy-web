@@ -84,9 +84,7 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
 
       if (isAdmin) {
         return {
-          panelName: session.user.userType.department.name
-            ? session.user.userType.department.name
-            : 'Admin Panel',
+          panelName: 'Admin Panel',
           routes: AdminRoutes,
         }
       } else if (isClient) {
