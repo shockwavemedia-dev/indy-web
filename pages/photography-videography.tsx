@@ -3,6 +3,7 @@ import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ReactElement, useEffect } from 'react'
+import { AvailabilityCalendar } from '../components/AvailabilityCalendar'
 import { Button } from '../components/Button'
 import { Card } from '../components/Card'
 import { DataTable } from '../components/DataTable'
@@ -36,14 +37,15 @@ const PhotographyVideographyPage: NextPageWithLayout = () => {
         <title>Indy - Photography/Videography</title>
       </Head>
       <div className="mx-auto w-full max-w-8xl">
-        <div className="flex gap-6 transition-all lg:flex-col">
+        <AvailabilityCalendar />
+        <div className="mt-6 flex gap-6 transition-all lg:flex-col">
           <div className="flex flex-1 flex-col">
             <Card className="flex-1 flex-col transition-all">
               <div className="mb-5 flex space-x-5">
                 <Link href="/new-photography-videography">
-                  <Button ariaLabel="Book" type="button" className="mb-4 w-44">
+                  <a className="flex h-12.5 w-40 items-center justify-center space-x-2 rounded-xl bg-halloween-orange text-base font-semibold text-white">
                     Book
-                  </Button>
+                  </a>
                 </Link>
                 <Button ariaLabel="Book" type="button" className="mb-4 w-44" light>
                   Quote/Inquire

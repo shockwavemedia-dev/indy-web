@@ -173,3 +173,18 @@
   clip-path: inset(0% 0% 0% 0% round 7px);
   cursor: pointer;
 }
+
+.fc-event-title {
+  font-weight: 600 !important;
+}
+
+.fc-daygrid-day-top {
+  flex-direction: row !important;
+  font-weight: 800;
+}
+
+.fc-button {
+  background-color: #f25d23 !important;
+  border-color: transparent !important;
+  box-shadow: transparent !important;
+}
