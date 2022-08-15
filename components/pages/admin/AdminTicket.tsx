@@ -24,7 +24,7 @@ import { EditTicketModal } from '../../../components/modals/EditTicketModal'
 import { RichTextDisplay } from '../../../components/RichTextDisplay'
 import { RichTextInput } from '../../../components/RichTextInput'
 import { TitleValue } from '../../../components/TitleValue'
-import { ManagerTicketAssigneeTableColumns } from '../../../constants/tables/ManagerTicketAssigneeTableColumns'
+import { AdminTicketAssigneeTableColumns } from '../../../constants/tables/AdminTicketAssigneeTableColumns'
 import { usePanelLayoutStore } from '../../../layouts/PanelLayout'
 import DummyCompany from '../../../public/images/dummy-company.png'
 import { CreateNoteFormSchema } from '../../../schemas/CreateNoteFormSchema'
@@ -262,7 +262,7 @@ export const AdminTicket = ({ ticketId }: { ticketId: number }) => {
           </Card>
           <Card title="Assignees">
             <DataTable
-              columns={ManagerTicketAssigneeTableColumns}
+              columns={AdminTicketAssigneeTableColumns}
               dataEndpoint={`/v1/tickets/${ticketId}/assignees`}
               tableQueryKey={['assignees', ticketId]}
               ofString="Assignee"
