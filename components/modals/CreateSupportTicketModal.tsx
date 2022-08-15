@@ -106,7 +106,10 @@ export const CreateSupportTicketModal = () => {
               description: '',
               type: '',
               requestedBy: session?.user.id || -1,
-              clientId: session?.user.userType.client.id || -1,
+              clientId:
+                session?.user.userType.type == 'client_users'
+                  ? session?.user.userType.client.id
+                  : -1,
               departmentId: -1,
               duedate: null,
             }}
