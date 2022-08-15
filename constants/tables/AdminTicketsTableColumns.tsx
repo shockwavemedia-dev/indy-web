@@ -2,11 +2,19 @@ import { Tooltip } from '@mui/material'
 import { format } from 'date-fns'
 import Link from 'next/link'
 import { Column } from 'react-table'
+import { EditIcon } from '../../components/icons/EditIcon'
 import { EyeIcon } from '../../components/icons/EyeIcon'
+import { TrashIcon } from '../../components/icons/TrashIcon'
 import { Pill } from '../../components/Pill'
+import { useTicketStore } from '../../store/TicketStore'
 import { Ticket } from '../../types/Ticket.type'
 
 export const AdminTicketsTableColumns: Array<Column<Ticket>> = [
+  {
+    Header: 'Client',
+    accessor: 'clientName',
+    Cell: ({ value }) => <div className=" text-sm font-medium text-onyx">{value}</div>,
+  },
   {
     Header: 'Type',
     accessor: 'type',
@@ -116,15 +124,37 @@ export const AdminTicketsTableColumns: Array<Column<Ticket>> = [
     id: 'actions',
     disableSortBy: true,
     Cell: ({ row: { original: ticket } }) => {
+      const { setActiveTicket, toggleEditTicketModal, toggleDeleteTicketModal } = useTicketStore()
+
+      const editTicket = () => {
+        setActiveTicket(ticket)
+        toggleEditTicketModal()
+      }
+
+      const deleteTicket = () => {
+        setActiveTicket(ticket)
+        toggleDeleteTicketModal()
+      }
+
       return (
         <div className="flex space-x-2">
           <Link href={`/ticket/${ticket.id}`}>
-            <Tooltip title="View Ticket" placement="top" className="cursor-pointer">
+            <Tooltip title="View Ticket" placement="top">
               <a className="group">
                 <EyeIcon className="stroke-waterloo group-hover:stroke-halloween-orange" />
               </a>
             </Tooltip>
           </Link>
+          <Tooltip title="Edit Ticket" placement="top">
+            <button onClick={editTicket} className="group">
+              <EditIcon className="stroke-waterloo group-hover:stroke-halloween-orange" />
+            </button>
+          </Tooltip>
+          <Tooltip title="Delete Ticket" placement="top">
+            <button onClick={deleteTicket} className="group">
+              <TrashIcon className="stroke-waterloo group-hover:stroke-halloween-orange" />
+            </button>
+          </Tooltip>
         </div>
       )
     },
