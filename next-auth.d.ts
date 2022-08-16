@@ -6,7 +6,8 @@ import { AuthenticationResponseUser } from './types/auth/AuthenticationResponseU
 declare module 'next-auth' {
   interface Session {
     accessToken: string
-    accessTokenTtl: number
+    refreshToken: string
+    expiry: number
     user: AuthenticationResponseUser
     isAdmin: boolean
     isClient: boolean
@@ -16,7 +17,8 @@ declare module 'next-auth' {
 
   interface User {
     accessToken: string
-    accessTokenTtl: number
+    refreshToken: string
+    expiry: number
     user: AuthenticationResponseUser
     isAdmin: boolean
     isClient: boolean
@@ -28,7 +30,8 @@ declare module 'next-auth' {
 declare module 'next-auth/jwt' {
   interface JWT {
     accessToken: string
-    accessTokenTtl: number
+    refreshToken: string
+    expiry: number
     user: AuthenticationResponseUser
     isAdmin: boolean
     isClient: boolean

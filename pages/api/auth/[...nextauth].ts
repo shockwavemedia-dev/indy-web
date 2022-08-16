@@ -1,4 +1,5 @@
 import axios, { AxiosError } from 'axios'
+import { addDays, getTime } from 'date-fns'
 import NextAuth from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import { AuthenticationResponse } from '../../../types/auth/AuthenticationResponse.type'
@@ -14,7 +15,7 @@ const nextAuth = NextAuth({
       authorize: async (credentials) => {
         try {
           const {
-            data: { accessToken, user },
+            data: { accessToken, user, refreshToken, expiresIn },
           } = await axios.post<AuthenticationResponse>('/authenticate', {
             email: credentials?.email,
             password: credentials?.password,
@@ -25,8 +26,10 @@ const nextAuth = NextAuth({
           } = user
 
           return {
-            user: user,
-            accessToken: accessToken,
+            user,
+            accessToken,
+            refreshToken,
+            expiry: getTime(addDays(new Date(), expiresIn / 86400)),
             isAdmin: type === 'admin_users' && role === 'admin',
             isClient: type === 'client_users',
             isManager: type === 'admin_users' && (role === 'account manager' || role === 'manager'),
@@ -46,6 +49,8 @@ const nextAuth = NextAuth({
     jwt: async ({ token, user }) => {
       if (user) {
         token.accessToken = user.accessToken
+        token.refreshToken = user.refreshToken
+        token.expiry = user.expiry
         token.user = user.user
         token.isAdmin = user.isAdmin
         token.isClient = user.isClient
@@ -53,10 +58,24 @@ const nextAuth = NextAuth({
         token.isStaff = user.isStaff
       }
 
+      if (getTime(new Date()) >= token.expiry) {
+        const {
+          data: { accessToken, refreshToken, expiresIn },
+        } = await axios.post<AuthenticationResponse>('/refresh-token', {
+          refresh_token: token.refreshToken,
+        })
+
+        token.accessToken = accessToken
+        token.refreshToken = refreshToken
+        token.expiry = getTime(addDays(new Date(), expiresIn / 86400))
+      }
+
       return token
     },
     session: async ({ session, token }) => {
       session.accessToken = token.accessToken
+      session.refreshToken = token.refreshToken
+      session.expiry = token.expiry
       session.user = token.user
       session.isAdmin = token.isAdmin
       session.isClient = token.isClient
