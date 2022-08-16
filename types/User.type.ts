@@ -18,6 +18,6 @@ export type User = {
     id: number
     type: string
     role: string
-    departments: Array<Department>
+    department: Department
   }
 }
