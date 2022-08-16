@@ -258,7 +258,7 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
         </div>
       </div>
       {session.isClient && <CreateSupportRequestModal />}
-      {session.isManager || (session.isAdmin && <CreateSupportTicketModal />)}
+      {(session.isManager || session.isAdmin) && <CreateSupportTicketModal />}
     </>
   )
 }
