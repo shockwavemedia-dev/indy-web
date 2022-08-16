@@ -1,21 +1,35 @@
 import axios from 'axios'
 import { format } from 'date-fns'
+import { Form, Formik } from 'formik'
 import Head from 'next/head'
 import Image from 'next/image'
 import { Fragment, useEffect, useState } from 'react'
-import { useQuery } from 'react-query'
+import { useQuery, useQueryClient } from 'react-query'
+import { Button } from '../../../components/Button'
 import { Card } from '../../../components/Card'
 import { DataTable } from '../../../components/DataTable'
 import { CalendarIcon } from '../../../components/icons/CalendarIcon'
 import { ColorsIcon } from '../../../components/icons/ColorsIcon'
+import { EditIcon } from '../../../components/icons/EditIcon'
 import { NoteIcon } from '../../../components/icons/NoteIcon'
-import { ViewTicketAssigneeModal } from '../../../components/modals/ViewTicketAssigneeModal'
+import { PaperClipIcon } from '../../../components/icons/PaperClipIcon'
+import { PaperPlaneIcon } from '../../../components/icons/PaperPlaneIcon'
+import { PlusIcon } from '../../../components/icons/PlusIcon'
+import { TrashIcon } from '../../../components/icons/TrashIcon'
+import { AddTicketAssigneeModal } from '../../../components/modals/AddTicketAssigneeModal'
+import { CreateLinkModal } from '../../../components/modals/CreateLinkModal'
+import { DeleteTicketAssigneeModal } from '../../../components/modals/DeleteTicketAssigneeModal'
+import { DeleteTicketModal } from '../../../components/modals/DeleteTicketModal'
+import { EditTicketModal } from '../../../components/modals/EditTicketModal'
 import { RichTextDisplay } from '../../../components/RichTextDisplay'
+import { RichTextInput } from '../../../components/RichTextInput'
 import { TitleValue } from '../../../components/TitleValue'
-import { ClientTicketAssigneeTableColumns } from '../../../constants/tables/ClientTicketAssigneeTableColumns'
+import { AdminTicketAssigneeTableColumns } from '../../../constants/tables/AdminTicketAssigneeTableColumns'
 import { usePanelLayoutStore } from '../../../layouts/PanelLayout'
 import DummyCompany from '../../../public/images/dummy-company.png'
+import { CreateNoteFormSchema } from '../../../schemas/CreateNoteFormSchema'
 import { useTicketAssigneeStore } from '../../../store/TicketAssigneeStore'
+import { CreateNoteForm } from '../../../types/forms/CreateNoteForm.type'
 import { Icon } from '../../../types/Icon.type'
 import { Page } from '../../../types/Page.type'
 import { Ticket } from '../../../types/Ticket.type'
@@ -24,23 +38,28 @@ import { TicketFile } from '../../../types/TicketFile.type'
 import { TicketNote } from '../../../types/TicketNote.type'
 import { TicketPageTabs } from '../../../types/TicketPageTabs.type'
 import { FileButton } from '../../FileButton'
-import { FileDisplay } from '../../FileDisplay'
 import { NotepadIcon } from '../../icons/NotepadIcon'
-import { useFileModalStore } from '../../modals/FileModal'
+import { EditTicketAssigneeModal } from '../../modals/EditTicketAssigneeModal'
 import { Pill } from '../../Pill'
 import { TicketActivityCard } from '../../tickets/TicketActivityCard'
 import { TicketNoteCard } from '../../tickets/TicketNoteCard'
 
 export const AdminTicket = ({ ticketId }: { ticketId: number }) => {
+  const [activeTab, setActiveTab] = useState<TicketPageTabs>('description')
+  const [isEditTicketModalVisible, setEditTicketModalVisible] = useState(false)
+  const [isDeleteTicketModalVisible, setDeleteTicketModalVisible] = useState(false)
+  const [isAddTicketAssigneeModalVisible, setAddTicketAssigneeModalVisible] = useState(false)
+
+  const queryClient = useQueryClient()
+  const {
+    isEditTicketAssigneeModalVisible,
+    isDeleteTicketAssigneeModalVisible,
+    toggleEditTicketAssigneeModal,
+    toggleDeleteTicketAssigneeModal,
+  } = useTicketAssigneeStore()
   const { setHeader } = usePanelLayoutStore()
 
-  const [activeTab, setActiveTab] = useState<TicketPageTabs>('description')
-
-  const { toggleFileModal } = useFileModalStore()
-  const { activeTicketAssignee, isViewTicketAssigneeModalVisible, toggleViewTicketAssigneeModal } =
-    useTicketAssigneeStore()
-
-  const { data: ticket, isSuccess: ticketSuccess } = useQuery(['ticket', ticketId], async () => {
+  const { data: ticket, isSuccess } = useQuery(['ticket', ticketId], async () => {
     const { data } = await axios.get<Ticket>(`/v1/tickets/${ticketId}`)
 
     return data
@@ -91,6 +110,26 @@ export const AdminTicket = ({ ticketId }: { ticketId: number }) => {
     }
   )
 
+  const toggleEditTicketModal = () => setEditTicketModalVisible(!isEditTicketModalVisible)
+  const toggleDeleteTicketModal = () => setDeleteTicketModalVisible(!isDeleteTicketModalVisible)
+  const toggleAddTicketAssigneeModal = () =>
+    setAddTicketAssigneeModalVisible(!isAddTicketAssigneeModalVisible)
+
+  const submitNoteForm = async (
+    values: CreateNoteForm,
+    {
+      resetForm,
+    }: {
+      resetForm: () => void
+    }
+  ) => {
+    const { status } = await axios.post(`/v1/tickets/${ticketId}/notes`, values)
+    if (status === 200) {
+      queryClient.invalidateQueries(['notes', ticketId])
+      resetForm()
+    }
+  }
+
   const Tab = ({
     title,
     Icon,
@@ -118,14 +157,14 @@ export const AdminTicket = ({ ticketId }: { ticketId: number }) => {
             className={`mr-2.5 ${
               isActiveTab
                 ? 'stroke-halloween-orange'
-                : 'stroke-lavender-gray transition-all group-hover:stroke-halloween-orange group-disabled:stroke-lavender-gray'
+                : 'stroke-lavender-gray group-hover:stroke-halloween-orange group-disabled:stroke-lavender-gray'
             }`}
           />
           <div
             className={` text-base ${
               isActiveTab
                 ? 'font-semibold text-onyx'
-                : 'font-medium text-metallic-silver transition-all group-hover:font-semibold group-hover:text-onyx group-disabled:font-medium group-disabled:text-metallic-silver'
+                : 'font-medium text-metallic-silver group-hover:font-semibold group-hover:text-onyx group-disabled:font-medium group-disabled:text-metallic-silver'
             }`}
           >
             {title}
@@ -136,16 +175,12 @@ export const AdminTicket = ({ ticketId }: { ticketId: number }) => {
   }
 
   useEffect(() => {
-    toggleFileModal()
-  }, [])
-
-  useEffect(() => {
     if (ticket) {
       setHeader(`Ticket ${ticket.ticketCode}`)
     }
   }, [ticket])
 
-  if (!ticketSuccess) {
+  if (!isSuccess) {
     // todo create loading skeleton
     return null
   }
@@ -158,6 +193,14 @@ export const AdminTicket = ({ ticketId }: { ticketId: number }) => {
       <div className="mx-auto flex w-full max-w-8xl space-x-6">
         <div className="w-86 flex-none space-y-6">
           <Card title="Details">
+            <div className="absolute top-6 right-6 space-x-4">
+              <button className="group" onClick={toggleEditTicketModal}>
+                <EditIcon className="stroke-waterloo group-hover:stroke-halloween-orange" />
+              </button>
+              <button className="group" onClick={toggleDeleteTicketModal}>
+                <TrashIcon className="stroke-waterloo group-hover:stroke-halloween-orange" />
+              </button>
+            </div>
             <div className="mb-6 flex space-x-5">
               <Image src={DummyCompany} height={100} width={100} alt={ticket!.clientName} />
               <div>
@@ -219,10 +262,16 @@ export const AdminTicket = ({ ticketId }: { ticketId: number }) => {
           </Card>
           <Card title="Assignees">
             <DataTable
-              columns={ClientTicketAssigneeTableColumns}
+              columns={AdminTicketAssigneeTableColumns}
               dataEndpoint={`/v1/tickets/${ticketId}/assignees`}
               tableQueryKey={['assignees', ticketId]}
               ofString="Assignee"
+              tableActions={
+                <button className="flex space-x-2" onClick={toggleAddTicketAssigneeModal}>
+                  <PlusIcon className="stroke-halloween-orange" />
+                  <div className=" text-sm font-semibold text-halloween-orange">Add Assignee</div>
+                </button>
+              }
             />
           </Card>
           <Card title="Files">
@@ -267,37 +316,44 @@ export const AdminTicket = ({ ticketId }: { ticketId: number }) => {
             }`}
           />
           {activeTab === 'description' && (
-            <div>
-              <Card>
-                <RichTextDisplay value={ticket!.description} />
-              </Card>
-
-              <Card title="Attachment" className="mt-5">
-                <div className="flex h-fit w-257.5 flex-wrap gap-5">
-                  {!!ticket!.attachments && ticket!.attachments?.length > 0 ? (
-                    ticket!.attachments?.map((attachment) => (
-                      <FileDisplay
-                        key={`attachment-${attachment.id}`}
-                        src={attachment.url}
-                        type={attachment.fileType}
-                        imageHeight={176}
-                        imageWidth={314}
-                        imageAlt={attachment.url}
-                        className="rounded-xl"
-                        href={attachment.url}
-                        videoClassName="h-44 w-78.5 cursor-pointer rounded-xl"
-                        failedToLoadClassName="h-44 w-78.5"
-                      />
-                    ))
-                  ) : (
-                    <div className=" text-xs text-metallic-silver">No attachment to display.</div>
-                  )}
-                </div>
-              </Card>
-            </div>
+            <Card>
+              <RichTextDisplay value={ticket!.description} />
+            </Card>
           )}
           {activeTab === 'notes' && (
             <>
+              <Formik
+                validationSchema={CreateNoteFormSchema}
+                initialValues={{ note: '' }}
+                onSubmit={submitNoteForm}
+              >
+                {({ isSubmitting }) => (
+                  <Form className="mb-5">
+                    <RichTextInput
+                      Icon={EditIcon}
+                      placeholder="Enter notes"
+                      name="note"
+                      inputActions={
+                        <div className="absolute right-6 bottom-6 z-10 flex items-center space-x-6">
+                          <input type="file" name="attachment" id="note-attachment" hidden />
+                          <label htmlFor="note-attachment" className="cursor-pointer">
+                            <PaperClipIcon className="stroke-waterloo" />
+                          </label>
+                          <Button
+                            ariaLabel="Submit Notes"
+                            type="submit"
+                            className="!w-fit px-10"
+                            disabled={isSubmitting}
+                          >
+                            <PaperPlaneIcon className="stroke-white" />
+                            <div>Send</div>
+                          </Button>
+                        </div>
+                      }
+                    />
+                  </Form>
+                )}
+              </Formik>
               <div className="space-y-5">
                 {notes?.map(({ id, note, createdBy, createdAt }) => (
                   <TicketNoteCard
@@ -323,11 +379,33 @@ export const AdminTicket = ({ ticketId }: { ticketId: number }) => {
           )}
         </div>
       </div>
-      <ViewTicketAssigneeModal
-        isVisible={isViewTicketAssigneeModalVisible}
-        onClose={toggleViewTicketAssigneeModal}
-        ticketAssignee={activeTicketAssignee}
+      <EditTicketModal
+        isVisible={isEditTicketModalVisible}
+        onClose={toggleEditTicketModal}
+        ticket={ticket!}
       />
+      <DeleteTicketModal
+        isVisible={isDeleteTicketModalVisible}
+        onClose={toggleDeleteTicketModal}
+        ticket={ticket!}
+        minimal
+      />
+      <AddTicketAssigneeModal
+        isVisible={isAddTicketAssigneeModalVisible}
+        onClose={toggleAddTicketAssigneeModal}
+        ticketId={ticket!.id}
+      />
+      <EditTicketAssigneeModal
+        isVisible={isEditTicketAssigneeModalVisible}
+        onClose={toggleEditTicketAssigneeModal}
+        ticketId={ticket!.id}
+      />
+      <DeleteTicketAssigneeModal
+        isVisible={isDeleteTicketAssigneeModalVisible}
+        onClose={toggleDeleteTicketAssigneeModal}
+        ticketId={ticket!.id}
+      />
+      <CreateLinkModal />
     </>
   )
 }
