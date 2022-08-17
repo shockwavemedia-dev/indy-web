@@ -1,5 +1,6 @@
 import { useSession } from 'next-auth/react'
 import Head from 'next/head'
+import { useRouter } from 'next/router'
 import { ReactElement, useEffect, useState } from 'react'
 import { Card } from '../components/Card'
 import { DataTable } from '../components/DataTable'
@@ -17,6 +18,7 @@ import PanelLayout, { usePanelLayoutStore } from '../layouts/PanelLayout'
 import { NextPageWithLayout } from '../types/pages/NextPageWithLayout.type'
 
 const GraphicPage: NextPageWithLayout = () => {
+  const { replace } = useRouter()
   const { data: session } = useSession()
   const { setHeader, setButtons } = usePanelLayoutStore()
   const { toggleModal: toggleSupportRequestModal } = useCreateSupportRequestModalStore()
@@ -84,6 +86,7 @@ const GraphicPage: NextPageWithLayout = () => {
               dataEndpoint={`/v1/clients/${session?.user.userType.client.id}/graphics`}
               tableQueryKey={['graphics']}
               ofString="Graphics"
+              rowOnClick={({ original: { id } }) => replace(`/ticket/${id}`)}
             />
           </Card>
           <div className="flex w-86 flex-col gap-6 transition-all lg:w-full lg:flex-row">
