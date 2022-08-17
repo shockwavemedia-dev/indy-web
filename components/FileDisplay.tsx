@@ -12,11 +12,11 @@ export const FileDisplay = ({
   videoClassName,
   failedToLoadClassName,
 }: {
-  src: string
+  src?: string
   type: string
   imageHeight: number
   imageWidth: number
-  imageAlt: string
+  imageAlt?: string
   className?: string
   href?: string
   videoClassName: string
@@ -25,7 +25,7 @@ export const FileDisplay = ({
   const [failedToLoad, setFailedToLoad] = useState(false)
   const failed = () => setFailedToLoad(true)
 
-  return failedToLoad ? (
+  return failedToLoad || !src ? (
     <div
       className={`${
         failedToLoadClassName ? failedToLoadClassName : 'h-70 w-140'

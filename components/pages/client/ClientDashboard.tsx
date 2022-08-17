@@ -1,5 +1,6 @@
 import { useSession } from 'next-auth/react'
 import Head from 'next/head'
+import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import { ClientTicketsTableColumns } from '../../../constants/tables/ClientTicketsTableColumns'
 import { usePanelLayoutStore } from '../../../layouts/PanelLayout'
@@ -12,6 +13,7 @@ import { Notifications } from '../../Notifications'
 import { RetainerInclusions } from '../../RetainerInclusions'
 
 export const ClientDashboard = () => {
+  const { replace } = useRouter()
   const { data: session } = useSession()
   const {
     activeTicket,
@@ -44,6 +46,7 @@ export const ClientDashboard = () => {
               dataEndpoint={`/v1/clients/${session?.user.userType.client.id}/tickets`}
               tableQueryKey={['tickets']}
               ofString="Projects"
+              rowOnClick={({ original: { id } }) => replace(`/ticket/${id}`)}
             />
           </Card>
           <div className="flex w-86 flex-col gap-6 transition-all lg:w-full lg:flex-row">

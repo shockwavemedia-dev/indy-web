@@ -1,5 +1,6 @@
 import { useSession } from 'next-auth/react'
 import Head from 'next/head'
+import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import { ManagerTicketsTableColumns } from '../../../constants/tables/ManagerTicketsTableColumns'
 import { usePanelLayoutStore } from '../../../layouts/PanelLayout'
@@ -11,6 +12,7 @@ import { EditTicketModal } from '../../modals/EditTicketModal'
 import { Notifications } from '../../Notifications'
 
 export const ManagerDashboard = () => {
+  const { replace } = useRouter()
   const { data: session } = useSession()
   const {
     activeTicket,
@@ -44,6 +46,7 @@ export const ManagerDashboard = () => {
                 dataEndpoint={`/v1/departments/${session?.user.userType.department.id}/tickets`}
                 tableQueryKey={['tickets']}
                 ofString="Projects"
+                rowOnClick={({ original: { id } }) => replace(`/ticket/${id}`)}
               />
             ) : (
               <div className="m-auto w-fit text-base text-metallic-silver">

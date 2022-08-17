@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import { useRouter } from 'next/router'
 import { ReactElement, useEffect, useState } from 'react'
 import { Card } from '../../components/Card'
 import { DataTable } from '../../components/DataTable'
@@ -11,6 +12,7 @@ import PanelLayout, { usePanelLayoutStore } from '../../layouts/PanelLayout'
 import { NextPageWithLayout } from '../../types/pages/NextPageWithLayout.type'
 
 const DepartmentsPage: NextPageWithLayout = () => {
+  const { replace } = useRouter()
   const { setHeader, setButtons } = usePanelLayoutStore()
   const [isNewDepartmentModalVisible, setNewDepartmentModalVisible] = useState(false)
 
@@ -42,6 +44,7 @@ const DepartmentsPage: NextPageWithLayout = () => {
             columns={DepartmentTableColumns}
             tableQueryKey={['departments']}
             ofString="Departments"
+            rowOnClick={({ original: { id } }) => replace(`/departments/${id}`)}
           />
         </Card>
       </div>

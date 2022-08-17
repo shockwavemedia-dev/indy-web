@@ -1,5 +1,6 @@
 import { useSession } from 'next-auth/react'
 import Head from 'next/head'
+import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import { StaffTicketsTableColumns } from '../../../constants/tables/StaffTicketsTableColumns'
 import { usePanelLayoutStore } from '../../../layouts/PanelLayout'
@@ -8,6 +9,7 @@ import { DataTable } from '../../DataTable'
 import { Notifications } from '../../Notifications'
 
 export const StaffDashboard = () => {
+  const { replace } = useRouter()
   const { data: session } = useSession()
   const { setHeader, setSubHeader } = usePanelLayoutStore()
 
@@ -32,6 +34,7 @@ export const StaffDashboard = () => {
             dataEndpoint="/v1/my-tickets"
             tableQueryKey={['tickets']}
             ofString="Projects"
+            rowOnClick={({ original: { id } }) => replace(`/ticket/${id}`)}
           />
         </Card>
         <Notifications className="w-86 lg:w-1/2" />

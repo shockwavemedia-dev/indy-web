@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import { useRouter } from 'next/router'
 import { ReactElement, useEffect } from 'react'
 import { Card } from '../components/Card'
 import { DataTable } from '../components/DataTable'
@@ -11,6 +12,7 @@ import { NextPageWithLayout } from '../types/pages/NextPageWithLayout.type'
 
 const ClientTicketsPage: NextPageWithLayout = () => {
   const { setHeader } = usePanelLayoutStore()
+  const { replace } = useRouter()
 
   const {
     activeTicket,
@@ -41,6 +43,7 @@ const ClientTicketsPage: NextPageWithLayout = () => {
               dataEndpoint={`/v1/tickets`}
               tableQueryKey={['tickets']}
               ofString="Projects"
+              rowOnClick={({ original: { id } }) => replace(`/ticket/${id}`)}
             />
           </Card>
         </div>

@@ -14,6 +14,8 @@ const TicketPage: NextPageWithLayout = () => {
     query: { id },
   } = useRouter()
 
+  if (!id) return null
+
   if (session?.isClient) {
     return <ClientTicket ticketId={Number(id)} />
   } else if (session?.isManager) {

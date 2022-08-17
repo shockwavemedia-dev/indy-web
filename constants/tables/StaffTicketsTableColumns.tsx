@@ -1,8 +1,5 @@
-import { Tooltip } from '@mui/material'
 import { format } from 'date-fns'
-import Link from 'next/link'
 import { Column } from 'react-table'
-import { EyeIcon } from '../../components/icons/EyeIcon'
 import { Pill } from '../../components/Pill'
 import { Ticket } from '../../types/Ticket.type'
 
@@ -114,24 +111,5 @@ export const StaffTicketsTableColumns: Array<Column<Ticket>> = [
     Cell: ({ value }) => (
       <div className=" text-sm font-medium text-onyx">{format(value, "yy MMM''dd")}</div>
     ),
-  },
-  {
-    Header: '',
-    accessor: 'id',
-    id: 'actions',
-    disableSortBy: true,
-    Cell: ({ row: { original: ticket } }) => {
-      return (
-        <div className="flex space-x-2">
-          <Link href={`/ticket/${ticket.id}`}>
-            <Tooltip title="View Ticket" placement="top" className="cursor-pointer">
-              <a className="group">
-                <EyeIcon className="stroke-waterloo transition-all group-hover:stroke-halloween-orange" />
-              </a>
-            </Tooltip>
-          </Link>
-        </div>
-      )
-    },
   },
 ]

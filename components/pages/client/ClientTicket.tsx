@@ -53,8 +53,12 @@ export const ClientTicket = ({ ticketId }: { ticketId: number }) => {
   const [isAddTicketAssigneeModalVisible, setAddTicketAssigneeModalVisible] = useState(false)
 
   const { toggleFileModal } = useFileModalStore()
-  const { activeTicketAssignee, isViewTicketAssigneeModalVisible, toggleViewTicketAssigneeModal } =
-    useTicketAssigneeStore()
+  const {
+    activeTicketAssignee,
+    setActiveTicketAssignee,
+    isViewTicketAssigneeModalVisible,
+    toggleViewTicketAssigneeModal,
+  } = useTicketAssigneeStore()
   const queryClient = useQueryClient()
 
   const { data: ticket, isSuccess: ticketSuccess } = useQuery(['ticket', ticketId], async () => {
@@ -268,6 +272,10 @@ export const ClientTicket = ({ ticketId }: { ticketId: number }) => {
               dataEndpoint={`/v1/tickets/${ticketId}/assignees`}
               tableQueryKey={['assignees', ticketId]}
               ofString="Assignee"
+              rowOnClick={({ original }) => {
+                setActiveTicketAssignee(original)
+                toggleViewTicketAssigneeModal()
+              }}
             />
           </Card>
           <Card title="Files">

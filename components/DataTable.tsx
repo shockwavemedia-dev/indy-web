@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { ReactNode, useEffect, useMemo, useState } from 'react'
 import { useQuery } from 'react-query'
-import { Column, usePagination, useSortBy, useTable } from 'react-table'
+import { Column, Row, usePagination, useSortBy, useTable } from 'react-table'
 import { Page } from '../types/Page.type'
 import { CaretIcon } from './icons/CaretIcon'
 import { SortIcon } from './icons/SortIcon'
@@ -13,6 +13,7 @@ export const DataTable = <T extends Record<string, unknown>>({
   columns,
   ofString,
   tableActions,
+  rowOnClick,
 }: {
   tableQueryKey: Array<string | number>
   dataEndpoint: string
@@ -20,6 +21,7 @@ export const DataTable = <T extends Record<string, unknown>>({
   columns: Array<Column<T>>
   ofString: string
   tableActions?: ReactNode
+  rowOnClick?: (row: Row<T>) => void
 }) => {
   const [queryPageIndex, setQueryPageIndex] = useState(0)
 
@@ -138,8 +140,11 @@ export const DataTable = <T extends Record<string, unknown>>({
                     // key is already provided by getRowProps()
                     // eslint-disable-next-line react/jsx-key
                     <tr
-                      className="h-12 border-b border-solid border-b-bright-gray last:border-none"
+                      className={`group h-12 border-b border-solid border-b-bright-gray last:border-none${
+                        rowOnClick ? ' cursor-pointer hover:bg-halloween-orange/5' : ''
+                      }`}
                       {...row.getRowProps()}
+                      onClick={rowOnClick ? () => rowOnClick(row) : undefined}
                     >
                       {row.cells.map(({ getCellProps, render }) => (
                         // key is already provided by getCellProps()
