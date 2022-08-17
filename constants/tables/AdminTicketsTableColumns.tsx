@@ -135,7 +135,7 @@ export const AdminTicketsTableColumns: Array<Column<Ticket>> = [
       }
 
       return (
-        <div className="flex space-x-2">
+        <div className="invisible flex space-x-2 group-hover:visible">
           <Tooltip title="Edit Ticket" placement="top">
             <button onClick={editTicket}>
               <EditIcon className="stroke-waterloo hover:stroke-halloween-orange" />
