@@ -90,7 +90,7 @@ export const EditAdminUserModal = ({
               gender: user.gender,
               role: user.userType.role,
               status: user.status,
-              departmentId: user.userType.departments[0].id,
+              departmentId: user.userType.role !== 'admin' ? user.userType.department.id : null,
             }}
             onSubmit={submitForm}
           >
@@ -100,19 +100,21 @@ export const EditAdminUserModal = ({
                   <div className="mb-5 flex space-x-20">
                     <TitleValue title="Email">{user.email}</TitleValue>
                   </div>
-                  {departmentOptions && departmentOptions.length > 0 && (
-                    <Select
-                      label="Deparment"
-                      name="departmentId"
-                      Icon={PencilIcon}
-                      placeholder="Select Department"
-                      className="mb-5"
-                      options={departmentOptions}
-                      defaultValue={departmentOptions.find(
-                        ({ value }) => value === user.userType.departments[0].id
-                      )}
-                    />
-                  )}
+                  {departmentOptions &&
+                    departmentOptions.length > 0 &&
+                    user.userType.role !== 'admin' && (
+                      <Select
+                        label="Deparment"
+                        name="departmentId"
+                        Icon={PencilIcon}
+                        placeholder="Select Department"
+                        className="mb-5"
+                        options={departmentOptions}
+                        defaultValue={departmentOptions.find(
+                          ({ value }) => value === user.userType.department.id
+                        )}
+                      />
+                    )}
                   <div className="mb-5 flex space-x-5">
                     <Select
                       label="Role"
