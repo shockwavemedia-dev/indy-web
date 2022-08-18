@@ -10,6 +10,11 @@ export const StaffTicketsTableColumns: Array<Column<Ticket>> = [
     Cell: ({ value }) => <div className=" text-sm font-medium text-onyx">{value}</div>,
   },
   {
+    Header: 'Code',
+    accessor: 'ticketCode',
+    Cell: ({ value }) => <div className=" text-sm font-medium text-onyx">{value}</div>,
+  },
+  {
     Header: 'Type',
     accessor: 'type',
     Cell: ({ value }) => (
