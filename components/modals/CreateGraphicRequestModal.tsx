@@ -8,6 +8,7 @@ import { CreateGraphicRequestFormSchema } from '../../schemas/CreateGraphicReque
 import { useToastStore } from '../../store/ToastStore'
 import { CreateGraphicRequestForm } from '../../types/forms/CreateGraphicRequestForm.type'
 import { Ticket } from '../../types/Ticket.type'
+import { objectWithFileToFormData } from '../../utils/FormHelpers'
 import { Button } from '../Button'
 import { DateInput } from '../DateInput'
 import { FileDropZone } from '../FileDropZone'
@@ -35,7 +36,7 @@ export const CreateGraphicRequestModal = ({
       const {
         status,
         data: { ticketCode },
-      } = await axios.post<Ticket>('/v1/graphics', values)
+      } = await axios.post<Ticket>('/v1/graphics', objectWithFileToFormData(values))
 
       if (status === 200) {
         queryClient.invalidateQueries('tickets')
