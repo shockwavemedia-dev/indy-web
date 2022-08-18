@@ -20,6 +20,10 @@ import {
   useAddCustomTodoModal,
 } from '../../components/modals/AddCustomTodoModal'
 import { DeleteMarketingPlannerModal } from '../../components/modals/DeleteMarketingPlannerModal'
+import {
+  FileDisplayModal,
+  useFileDisplayModalStore,
+} from '../../components/modals/FileDisplayModal'
 import { RichTextInput } from '../../components/RichTextInput'
 import { Table } from '../../components/Table'
 import { TextInput } from '../../components/TextInput'
@@ -46,6 +50,9 @@ const MarketingPlannerPage: NextPageWithLayout = () => {
   const cleanTodoList = todoListStore((state) => state.cleanTodoList)
   const update = assigneeListStore((state) => state.update)
   const toggleCustomTodoModal = useAddCustomTodoModal((state) => state.toggle)
+  const toggleShowPhotoVideoFileModal = useFileDisplayModalStore(
+    (state) => state.toggleShowPhotoVideoFileModal
+  )
 
   const [todoLoaded, setTodoLoaded] = useState(false)
 
@@ -226,16 +233,17 @@ const MarketingPlannerPage: NextPageWithLayout = () => {
               <Card title="Attachments">
                 <div className="flex flex-wrap gap-4">
                   {marketingPlan.attachments && marketingPlan.attachments.length > 0 ? (
-                    marketingPlan.attachments.map(({ name, thumbnailUrl, signedUrl }, i) => (
-                      <FileButton
-                        key={`marketingPlanFile-${i}`}
-                        className="h-35 w-35"
-                        href={signedUrl}
-                        name={name}
-                        thumbnailUrl={thumbnailUrl}
-                        openNewTab
-                      />
-                    ))
+                    marketingPlan.attachments.map(
+                      ({ generatedName, name, thumbnailUrl, fileType, signedUrl }) => (
+                        <FileButton
+                          key={generatedName}
+                          name={name}
+                          thumbnailUrl={thumbnailUrl}
+                          onClick={() => toggleShowPhotoVideoFileModal(signedUrl, fileType, name)}
+                          file
+                        />
+                      )
+                    )
                   ) : (
                     <div className="m-auto text-base text-metallic-silver">No files found.</div>
                   )}
@@ -252,6 +260,7 @@ const MarketingPlannerPage: NextPageWithLayout = () => {
         eventName={marketingPlan.eventName}
       />
       <AddCustomTodoModal />
+      <FileDisplayModal />
     </>
   )
 }
