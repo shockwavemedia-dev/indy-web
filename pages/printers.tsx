@@ -1,18 +1,39 @@
 import Head from 'next/head'
-import { ReactElement, useEffect } from 'react'
+import { ReactElement, useEffect, useState } from 'react'
 import { Card } from '../components/Card'
+import { FancyButton } from '../components/FancyButton'
+import { MonitorIcon } from '../components/icons/MonitorIcon'
+import { CreatePrinterModal } from '../components/modals/CreatePrinterModal'
 import PanelLayout, { usePanelLayoutStore } from '../layouts/PanelLayout'
 import { NextPageWithLayout } from '../types/pages/NextPageWithLayout.type'
 
 const PrintersPage: NextPageWithLayout = () => {
-  const { setHeader } = usePanelLayoutStore()
+  const { setHeader, setButtons } = usePanelLayoutStore()
+
+  const [isCreatePrinterModalVisible, setCreatePrinterModalVisible] = useState(false)
+
+  const toggleCreatePrinterModal = () => setCreatePrinterModalVisible(!isCreatePrinterModalVisible)
 
   useEffect(() => {
     setHeader('Printers')
+
+    setButtons(
+      <FancyButton
+        Icon={<MonitorIcon className="stroke-halloween-orange" />}
+        title="Create Printer"
+        subtitle="Laborerivit rem cones mil"
+        onClick={toggleCreatePrinterModal}
+        className="w-fit"
+      />
+    )
   }, [])
 
   return (
     <>
+      <CreatePrinterModal
+        isVisible={isCreatePrinterModalVisible}
+        onClose={toggleCreatePrinterModal}
+      />
       <Head>
         <title>Indy - Printers</title>
       </Head>
