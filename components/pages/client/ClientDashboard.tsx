@@ -4,7 +4,6 @@ import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import { ClientTicketsTableColumns } from '../../../constants/tables/ClientTicketsTableColumns'
 import { usePanelLayoutStore } from '../../../layouts/PanelLayout'
-import { useTicketStore } from '../../../store/TicketStore'
 import { Card } from '../../Card'
 import { DataTable } from '../../DataTable'
 import { DeleteTicketModal } from '../../modals/DeleteTicketModal'
@@ -15,13 +14,6 @@ import { RetainerInclusions } from '../../RetainerInclusions'
 export const ClientDashboard = () => {
   const { replace } = useRouter()
   const { data: session } = useSession()
-  const {
-    activeTicket,
-    isEditTicketModalVisible,
-    isDeleteTicketModalVisible,
-    toggleEditTicketModal,
-    toggleDeleteTicketModal,
-  } = useTicketStore()
   const { setHeader, setSubHeader } = usePanelLayoutStore()
 
   useEffect(() => {
@@ -55,16 +47,8 @@ export const ClientDashboard = () => {
           </div>
         </div>
       </div>
-      <EditTicketModal
-        isVisible={isEditTicketModalVisible}
-        onClose={toggleEditTicketModal}
-        ticket={activeTicket}
-      />
-      <DeleteTicketModal
-        isVisible={isDeleteTicketModalVisible}
-        onClose={toggleDeleteTicketModal}
-        ticket={activeTicket}
-      />
+      <EditTicketModal />
+      <DeleteTicketModal />
     </>
   )
 }

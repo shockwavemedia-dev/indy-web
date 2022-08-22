@@ -1,15 +1,20 @@
 import axios from 'axios'
 import { Form, Formik } from 'formik'
-import { useQueryClient } from 'react-query'
+import { useQuery, useQueryClient } from 'react-query'
+import { TimezoneOptions } from '../../constants/options/TimezoneOptions'
 import { NewClientFormSchema } from '../../schemas/NewClientFormSchema'
 import { useToastStore } from '../../store/ToastStore'
 import { NewClientForm } from '../../types/forms/NewClientForm.type'
+import { Staff } from '../../types/Staff.type'
 import { objectWithFileToFormData } from '../../utils/FormHelpers'
 import { Button } from '../Button'
 import { DateInput } from '../DateInput'
+import { ClockIcon } from '../icons/ClockIcon'
 import { EditIcon } from '../icons/EditIcon'
+import { UserIcon } from '../icons/UserIcon'
 import { Modal } from '../Modal'
 import { RichTextInput } from '../RichTextInput'
+import { Select } from '../Select'
 import { TextInput } from '../TextInput'
 
 export const NewClientModal = ({
@@ -21,6 +26,12 @@ export const NewClientModal = ({
 }) => {
   const queryClient = useQueryClient()
   const { showToast } = useToastStore()
+
+  const { data: graphicDesigners } = useQuery(['staffs', 15], async () => {
+    const { data } = await axios.get<Array<Staff>>('/v1/departments/15/staffs')
+
+    return data
+  })
 
   const submitForm = async (values: NewClientForm) => {
     try {
@@ -78,7 +89,6 @@ export const NewClientModal = ({
                       name="clientCode"
                     />
                   </div>
-                  {/* <FileDropZone label="Upload assets" name="logo" className="mb-5" /> */}
                   <RichTextInput
                     Icon={EditIcon}
                     placeholder="Enter Overview"
@@ -95,21 +105,33 @@ export const NewClientModal = ({
                     <TextInput type="text" Icon={EditIcon} placeholder="Enter Phone" name="phone" />
                   </div>
                   <div className="mb-5 flex space-x-5">
-                    <TextInput
+                    <Select
                       name="timezone"
-                      type="text"
-                      Icon={EditIcon}
+                      Icon={ClockIcon}
                       placeholder="Enter Timezone"
+                      options={TimezoneOptions}
                     />
                     <DateInput name="clientSince" placeholder="Enter Client Since" />
                   </div>
-                  <TextInput
-                    type="text"
-                    Icon={EditIcon}
-                    placeholder="Enter Rating"
-                    name="rating"
-                    className="mb-8"
-                  />
+                  <div className="mb-8 flex space-x-5">
+                    <TextInput
+                      type="text"
+                      Icon={EditIcon}
+                      placeholder="Enter Rating"
+                      name="rating"
+                    />
+                    <Select
+                      name="designatedDesignerId"
+                      Icon={UserIcon}
+                      placeholder="Enter designated designer"
+                      options={
+                        graphicDesigners?.map(({ fullName, adminUserId }) => ({
+                          label: fullName,
+                          value: adminUserId,
+                        })) ?? []
+                      }
+                    />
+                  </div>
                   <div className="flex space-x-5">
                     <Button ariaLabel="Cancel" onClick={onClose} type="button" light>
                       Cancel

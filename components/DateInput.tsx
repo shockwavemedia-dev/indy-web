@@ -12,7 +12,7 @@ export const DateInput = ({
   readOnly = false,
 }: {
   name: string
-  placeholder: string
+  placeholder?: string
   className?: string
   label?: string
   readOnly?: boolean

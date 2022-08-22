@@ -1,6 +1,8 @@
 import axios from 'axios'
 import { Form, Formik } from 'formik'
 import { useQueryClient } from 'react-query'
+import create from 'zustand'
+import { combine } from 'zustand/middleware'
 import { TicketStatusOptions } from '../../constants/options/TicketStatusOptions'
 import { TicketTypeOptions } from '../../constants/options/TicketTypeOptions'
 import { EditTicketFormSchema } from '../../schemas/EditTicketFormSchema'
@@ -16,58 +18,36 @@ import { Modal } from '../Modal'
 import { RichTextInput } from '../RichTextInput'
 import { Select } from '../Select'
 import { TextInput } from '../TextInput'
+
+export const useEditTicketModal = create(
+  combine(
+    {
+      ticket: undefined as Ticket | undefined,
+    },
+    (set) => ({
+      toggleEditTicketModal: (ticket?: Ticket) => set({ ticket }),
+    })
+  )
+)
+
 export const EditTicketModal = ({
-  isVisible,
-  onClose,
-  ticket,
   graphic = false,
   animation = false,
   website = false,
 }: {
-  isVisible: boolean
-  onClose: () => void
-  ticket: Ticket
   graphic?: boolean
   animation?: boolean
   website?: boolean
 }) => {
   const queryClient = useQueryClient()
+  const ticket = useEditTicketModal((state) => state.ticket)
+  const toggleEditTicketModal = useEditTicketModal((state) => state.toggleEditTicketModal)
   const { showToast } = useToastStore()
-
-  const submitForm = async (values: EditTicketForm) => {
-    try {
-      const { status } = await axios.put(`/v1/tickets/${ticket.id}`, values)
-
-      if (status === 200) {
-        if (graphic) {
-          queryClient.invalidateQueries('graphics')
-        } else if (animation) {
-          queryClient.invalidateQueries('animations')
-        } else if (website) {
-          queryClient.invalidateQueries('websites')
-        } else {
-          queryClient.invalidateQueries('tickets')
-        }
-        queryClient.invalidateQueries(['ticket', ticket.id])
-        queryClient.invalidateQueries(['activities', ticket.id])
-        onClose()
-        showToast({
-          type: 'success',
-          message: 'All changes was successfully saved',
-        })
-      }
-    } catch (e) {
-      showToast({
-        type: 'error',
-        message: 'Something went wrong! 😵',
-      })
-    }
-  }
 
   return (
     <>
-      {isVisible && (
-        <Modal title={`Edit Ticket ${ticket.ticketCode}`} onClose={onClose}>
+      {ticket && (
+        <Modal title={`Edit Ticket ${ticket.ticketCode}`} onClose={toggleEditTicketModal}>
           <Formik
             initialValues={{
               subject: ticket.subject,
@@ -77,7 +57,35 @@ export const EditTicketModal = ({
               status: ticket.status,
             }}
             validationSchema={EditTicketFormSchema}
-            onSubmit={submitForm}
+            onSubmit={async (values: EditTicketForm) => {
+              try {
+                const { status } = await axios.put(`/v1/tickets/${ticket.id}`, values)
+
+                if (status === 200) {
+                  if (graphic) {
+                    queryClient.invalidateQueries('graphics')
+                  } else if (animation) {
+                    queryClient.invalidateQueries('animations')
+                  } else if (website) {
+                    queryClient.invalidateQueries('websites')
+                  } else {
+                    queryClient.invalidateQueries('tickets')
+                  }
+                  queryClient.invalidateQueries(['ticket', ticket.id])
+                  queryClient.invalidateQueries(['activities', ticket.id])
+                  toggleEditTicketModal()
+                  showToast({
+                    type: 'success',
+                    message: 'All changes was successfully saved',
+                  })
+                }
+              } catch (e) {
+                showToast({
+                  type: 'error',
+                  message: 'Something went wrong! 😵',
+                })
+              }
+            }}
           >
             {({ isSubmitting }) => (
               <Form className="flex w-130 flex-col">
@@ -115,7 +123,7 @@ export const EditTicketModal = ({
                   className="mb-8"
                 />
                 <div className="flex space-x-5">
-                  <Button ariaLabel="Cancel" onClick={onClose} type="button" light>
+                  <Button ariaLabel="Cancel" onClick={toggleEditTicketModal} type="button" light>
                     Cancel
                   </Button>
                   <Button ariaLabel="Submit" disabled={isSubmitting} type="submit">

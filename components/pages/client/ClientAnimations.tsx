@@ -5,7 +5,6 @@ import { useEffect, useState } from 'react'
 import { useQuery } from 'react-query'
 import { SingleValue } from 'react-select'
 import { usePanelLayoutStore } from '../../../layouts/PanelLayout'
-import { useTicketStore } from '../../../store/TicketStore'
 import { Animation } from '../../../types/Animation.type'
 import { AnimationCategory } from '../../../types/AnimationCategory.type'
 import { Page } from '../../../types/Page.type'
@@ -25,14 +24,6 @@ import { SelectNoFormik } from '../../SelectNoFormik'
 
 export const ClientAnimations = () => {
   const [page, setPage] = useState(1)
-
-  const {
-    activeTicket,
-    isEditTicketModalVisible,
-    isDeleteTicketModalVisible,
-    toggleEditTicketModal,
-    toggleDeleteTicketModal,
-  } = useTicketStore()
   const { setHeader } = usePanelLayoutStore()
   const [category, setCategory] = useState<SingleValue<SelectOption<number>>>({
     label: 'All Categories',
@@ -221,18 +212,8 @@ export const ClientAnimations = () => {
         </div>
       </div>
       <CreateAnimationRequestModal />
-      <EditTicketModal
-        isVisible={isEditTicketModalVisible}
-        onClose={toggleEditTicketModal}
-        ticket={activeTicket}
-        animation
-      />
-      <DeleteTicketModal
-        isVisible={isDeleteTicketModalVisible}
-        onClose={toggleDeleteTicketModal}
-        ticket={activeTicket}
-        animation
-      />
+      <EditTicketModal animation />
+      <DeleteTicketModal animation />
     </>
   )
 }

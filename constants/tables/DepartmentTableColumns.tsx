@@ -64,10 +64,14 @@ export const DepartmentTableColumns: Array<Column<Department>> = [
     Cell: ({ row: { original: department } }) => {
       const { toggleModal } = useEditDepartmentModal()
 
-      const editDepartment = () => toggleModal(department)
-
       return (
-        <button onClick={editDepartment} className="invisible group-hover:visible">
+        <button
+          onClick={(e) => {
+            e.stopPropagation()
+            toggleModal(department)
+          }}
+          className="invisible group-hover:visible"
+        >
           <EditIcon className="stroke-waterloo hover:stroke-halloween-orange" />
         </button>
       )

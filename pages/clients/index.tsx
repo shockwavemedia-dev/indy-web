@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import { useRouter } from 'next/router'
 import { ReactElement, useEffect, useState } from 'react'
 import { Card } from '../../components/Card'
 import { DataTable } from '../../components/DataTable'
@@ -10,6 +11,7 @@ import PanelLayout, { usePanelLayoutStore } from '../../layouts/PanelLayout'
 import { NextPageWithLayout } from '../../types/pages/NextPageWithLayout.type'
 
 const ClientPage: NextPageWithLayout = () => {
+  const { replace } = useRouter()
   const [isNewClientModalVisible, setNewClientModalVisible] = useState(false)
   const { setHeader, setButtons } = usePanelLayoutStore()
 
@@ -35,13 +37,14 @@ const ClientPage: NextPageWithLayout = () => {
       <Head>
         <title>Indy - Clients</title>
       </Head>
-      <div className="mx-auto w-full max-w-8xl space-y-6">
+      <div className="mx-auto w-full max-w-8xl">
         <Card title="Clients" className="max-h-155">
           <DataTable
             dataEndpoint="/v1/clients"
             columns={ClientTableColumns}
             tableQueryKey={['clients']}
             ofString="Clients"
+            rowOnClick={({ original: { id } }) => replace(`/clients/${id}/details`)}
           />
         </Card>
       </div>

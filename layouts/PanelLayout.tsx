@@ -153,7 +153,7 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
         )
       }
     }
-  }, [session])
+  }, [])
 
   if (status === 'loading' || !panelName) {
     return null

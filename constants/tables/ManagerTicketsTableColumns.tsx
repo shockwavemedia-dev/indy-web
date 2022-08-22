@@ -3,8 +3,9 @@ import { format } from 'date-fns'
 import { Column } from 'react-table'
 import { EditIcon } from '../../components/icons/EditIcon'
 import { TrashIcon } from '../../components/icons/TrashIcon'
+import { useDeleteTicketModal } from '../../components/modals/DeleteTicketModal'
+import { useEditTicketModal } from '../../components/modals/EditTicketModal'
 import { Pill } from '../../components/Pill'
-import { useTicketStore } from '../../store/TicketStore'
 import { Ticket } from '../../types/Ticket.type'
 
 export const ManagerTicketsTableColumns: Array<Column<Ticket>> = [
@@ -127,27 +128,28 @@ export const ManagerTicketsTableColumns: Array<Column<Ticket>> = [
     id: 'actions',
     disableSortBy: true,
     Cell: ({ row: { original: ticket } }) => {
-      const { setActiveTicket, toggleEditTicketModal, toggleDeleteTicketModal } = useTicketStore()
-
-      const editTicket = () => {
-        setActiveTicket(ticket)
-        toggleEditTicketModal()
-      }
-
-      const deleteTicket = () => {
-        setActiveTicket(ticket)
-        toggleDeleteTicketModal()
-      }
+      const toggleEditTicketModal = useEditTicketModal((state) => state.toggleEditTicketModal)
+      const toggleDeleteTicketModal = useDeleteTicketModal((state) => state.toggleDeleteTicketModal)
 
       return (
         <div className="invisible flex space-x-2 group-hover:visible">
           <Tooltip title="Edit Ticket" placement="top">
-            <button onClick={editTicket}>
+            <button
+              onClick={(e) => {
+                e.stopPropagation()
+                toggleEditTicketModal(ticket)
+              }}
+            >
               <EditIcon className="stroke-waterloo hover:stroke-halloween-orange" />
             </button>
           </Tooltip>
           <Tooltip title="Delete Ticket" placement="top">
-            <button onClick={deleteTicket}>
+            <button
+              onClick={(e) => {
+                e.stopPropagation()
+                toggleDeleteTicketModal(ticket)
+              }}
+            >
               <TrashIcon className="stroke-waterloo hover:stroke-halloween-orange" />
             </button>
           </Tooltip>

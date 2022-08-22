@@ -7,24 +7,11 @@ import { DeleteTicketModal } from '../components/modals/DeleteTicketModal'
 import { EditTicketModal } from '../components/modals/EditTicketModal'
 import { AdminTicketsTableColumns } from '../constants/tables/AdminTicketsTableColumns'
 import PanelLayout, { usePanelLayoutStore } from '../layouts/PanelLayout'
-import { useTicketStore } from '../store/TicketStore'
 import { NextPageWithLayout } from '../types/pages/NextPageWithLayout.type'
 
 const ClientTicketsPage: NextPageWithLayout = () => {
   const { setHeader } = usePanelLayoutStore()
   const { replace } = useRouter()
-
-  const {
-    activeTicket,
-    isEditTicketModalVisible,
-    isDeleteTicketModalVisible,
-    toggleEditTicketModal,
-    toggleDeleteTicketModal,
-  } = useTicketStore()
-
-  useEffect(() => {
-    setHeader('Client Tickets')
-  }, [])
 
   useEffect(() => {
     setHeader('Client Tickets')
@@ -48,16 +35,8 @@ const ClientTicketsPage: NextPageWithLayout = () => {
           </Card>
         </div>
       </div>
-      <EditTicketModal
-        isVisible={isEditTicketModalVisible}
-        onClose={toggleEditTicketModal}
-        ticket={activeTicket}
-      />
-      <DeleteTicketModal
-        isVisible={isDeleteTicketModalVisible}
-        onClose={toggleDeleteTicketModal}
-        ticket={activeTicket}
-      />
+      <EditTicketModal />
+      <DeleteTicketModal />
     </>
   )
 }

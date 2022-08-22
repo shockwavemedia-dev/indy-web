@@ -17,7 +17,6 @@ import { Notifications } from '../components/Notifications'
 import { RetainerInclusions } from '../components/RetainerInclusions'
 import { ClientTicketsTableColumns } from '../constants/tables/ClientTicketsTableColumns'
 import PanelLayout, { usePanelLayoutStore } from '../layouts/PanelLayout'
-import { useTicketStore } from '../store/TicketStore'
 import { NextPageWithLayout } from '../types/pages/NextPageWithLayout.type'
 
 const GraphicPage: NextPageWithLayout = () => {
@@ -25,14 +24,6 @@ const GraphicPage: NextPageWithLayout = () => {
   const { data: session } = useSession()
   const { setHeader, setButtons } = usePanelLayoutStore()
   const { toggleModal: toggleSupportRequestModal } = useCreateSupportRequestModalStore()
-
-  const {
-    activeTicket,
-    isEditTicketModalVisible,
-    isDeleteTicketModalVisible,
-    toggleEditTicketModal,
-    toggleDeleteTicketModal,
-  } = useTicketStore()
 
   const [isCreateGraphicModalVisible, setCreateeGraphicModalVisible] = useState(false)
 
@@ -110,16 +101,8 @@ const GraphicPage: NextPageWithLayout = () => {
         isVisible={isCreateGraphicModalVisible}
         onClose={toggleCreateGraphicModal}
       />
-      <EditTicketModal
-        isVisible={isEditTicketModalVisible}
-        onClose={toggleEditTicketModal}
-        ticket={activeTicket}
-      />
-      <DeleteTicketModal
-        isVisible={isDeleteTicketModalVisible}
-        onClose={toggleDeleteTicketModal}
-        ticket={activeTicket}
-      />
+      <EditTicketModal />
+      <DeleteTicketModal />
     </>
   )
 }

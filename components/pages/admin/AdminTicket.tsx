@@ -19,8 +19,11 @@ import { TrashIcon } from '../../../components/icons/TrashIcon'
 import { AddTicketAssigneeModal } from '../../../components/modals/AddTicketAssigneeModal'
 import { CreateLinkModal } from '../../../components/modals/CreateLinkModal'
 import { DeleteTicketAssigneeModal } from '../../../components/modals/DeleteTicketAssigneeModal'
-import { DeleteTicketModal } from '../../../components/modals/DeleteTicketModal'
-import { EditTicketModal } from '../../../components/modals/EditTicketModal'
+import {
+  DeleteTicketModal,
+  useDeleteTicketModal,
+} from '../../../components/modals/DeleteTicketModal'
+import { EditTicketModal, useEditTicketModal } from '../../../components/modals/EditTicketModal'
 import { RichTextDisplay } from '../../../components/RichTextDisplay'
 import { RichTextInput } from '../../../components/RichTextInput'
 import { TitleValue } from '../../../components/TitleValue'
@@ -46,9 +49,9 @@ import { TicketNoteCard } from '../../tickets/TicketNoteCard'
 
 export const AdminTicket = ({ ticketId }: { ticketId: number }) => {
   const [activeTab, setActiveTab] = useState<TicketPageTabs>('description')
-  const [isEditTicketModalVisible, setEditTicketModalVisible] = useState(false)
-  const [isDeleteTicketModalVisible, setDeleteTicketModalVisible] = useState(false)
   const [isAddTicketAssigneeModalVisible, setAddTicketAssigneeModalVisible] = useState(false)
+  const toggleEditTicketModal = useEditTicketModal((state) => state.toggleEditTicketModal)
+  const toggleDeleteTicketModal = useDeleteTicketModal((state) => state.toggleDeleteTicketModal)
 
   const queryClient = useQueryClient()
   const {
@@ -110,8 +113,6 @@ export const AdminTicket = ({ ticketId }: { ticketId: number }) => {
     }
   )
 
-  const toggleEditTicketModal = () => setEditTicketModalVisible(!isEditTicketModalVisible)
-  const toggleDeleteTicketModal = () => setDeleteTicketModalVisible(!isDeleteTicketModalVisible)
   const toggleAddTicketAssigneeModal = () =>
     setAddTicketAssigneeModalVisible(!isAddTicketAssigneeModalVisible)
 
@@ -194,10 +195,10 @@ export const AdminTicket = ({ ticketId }: { ticketId: number }) => {
         <div className="w-86 flex-none space-y-6">
           <Card title="Details">
             <div className="absolute top-6 right-6 space-x-4">
-              <button className="group" onClick={toggleEditTicketModal}>
+              <button className="group" onClick={() => toggleEditTicketModal(ticket)}>
                 <EditIcon className="stroke-waterloo group-hover:stroke-halloween-orange" />
               </button>
-              <button className="group" onClick={toggleDeleteTicketModal}>
+              <button className="group" onClick={() => toggleDeleteTicketModal(ticket)}>
                 <TrashIcon className="stroke-waterloo group-hover:stroke-halloween-orange" />
               </button>
             </div>
@@ -379,17 +380,8 @@ export const AdminTicket = ({ ticketId }: { ticketId: number }) => {
           )}
         </div>
       </div>
-      <EditTicketModal
-        isVisible={isEditTicketModalVisible}
-        onClose={toggleEditTicketModal}
-        ticket={ticket!}
-      />
-      <DeleteTicketModal
-        isVisible={isDeleteTicketModalVisible}
-        onClose={toggleDeleteTicketModal}
-        ticket={ticket!}
-        minimal
-      />
+      <EditTicketModal />
+      <DeleteTicketModal minimal />
       <AddTicketAssigneeModal
         isVisible={isAddTicketAssigneeModalVisible}
         onClose={toggleAddTicketAssigneeModal}

@@ -3,6 +3,8 @@ import { format } from 'date-fns'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { useQueryClient } from 'react-query'
+import create from 'zustand'
+import { combine } from 'zustand/middleware'
 import DummyCompany from '../../public/images/dummy-company.png'
 import { useToastStore } from '../../store/ToastStore'
 import { Ticket } from '../../types/Ticket.type'
@@ -11,18 +13,23 @@ import { TrashIcon } from '../icons/TrashIcon'
 import { Modal } from '../Modal'
 import { TitleValue } from '../TitleValue'
 
+export const useDeleteTicketModal = create(
+  combine(
+    {
+      ticket: undefined as Ticket | undefined,
+    },
+    (set) => ({
+      toggleDeleteTicketModal: (ticket?: Ticket) => set({ ticket }),
+    })
+  )
+)
+
 export const DeleteTicketModal = ({
-  isVisible,
-  onClose,
-  ticket,
   minimal = false,
   graphic = false,
   animation = false,
   website = false,
 }: {
-  isVisible: boolean
-  onClose: () => void
-  ticket: Ticket
   minimal?: boolean
   graphic?: boolean
   animation?: boolean
@@ -30,46 +37,16 @@ export const DeleteTicketModal = ({
 }) => {
   const { replace } = useRouter()
   const queryClient = useQueryClient()
+  const ticket = useDeleteTicketModal((state) => state.ticket)
+  const toggleEditTicketModal = useDeleteTicketModal((state) => state.toggleDeleteTicketModal)
   const { showToast } = useToastStore()
-
-  const deleteTicket = async () => {
-    try {
-      const { status } = await axios.delete(`/v1/tickets/${ticket.id}`)
-
-      if (status === 200) {
-        if (graphic) {
-          queryClient.invalidateQueries('graphics')
-          replace('/graphic-design')
-        } else if (animation) {
-          queryClient.invalidateQueries('animations')
-          replace('/animations')
-        } else if (website) {
-          queryClient.invalidateQueries('websites')
-          replace('/website-services')
-        } else {
-          queryClient.invalidateQueries('tickets')
-          replace('/dashboard')
-        }
-        onClose()
-        showToast({
-          type: 'success',
-          message: `Ticket successfully deleted!`,
-        })
-      }
-    } catch (e) {
-      showToast({
-        type: 'error',
-        message: 'Something went wrong! 😵',
-      })
-    }
-  }
 
   return (
     <>
-      {isVisible && (
+      {ticket && (
         <Modal
           title={`Are you sure you want to delete Ticket ${ticket.ticketCode}?`}
-          onClose={onClose}
+          onClose={toggleEditTicketModal}
         >
           <div className="flex w-140 flex-col">
             {!minimal && (
@@ -99,10 +76,44 @@ export const DeleteTicketModal = ({
               </div>
             )}
             <div className="flex space-x-5">
-              <Button ariaLabel="Cancel" onClick={onClose} type="button" light>
+              <Button ariaLabel="Cancel" onClick={toggleEditTicketModal} type="button" light>
                 Cancel
               </Button>
-              <Button ariaLabel="Submit" onClick={deleteTicket} type="submit">
+              <Button
+                ariaLabel="Submit"
+                onClick={async () => {
+                  try {
+                    const { status } = await axios.delete(`/v1/tickets/${ticket.id}`)
+
+                    if (status === 200) {
+                      if (graphic) {
+                        queryClient.invalidateQueries('graphics')
+                        replace('/graphic-design')
+                      } else if (animation) {
+                        queryClient.invalidateQueries('animations')
+                        replace('/animations')
+                      } else if (website) {
+                        queryClient.invalidateQueries('websites')
+                        replace('/website-services')
+                      } else {
+                        queryClient.invalidateQueries('tickets')
+                        replace('/dashboard')
+                      }
+                      toggleEditTicketModal()
+                      showToast({
+                        type: 'success',
+                        message: `Ticket successfully deleted!`,
+                      })
+                    }
+                  } catch (e) {
+                    showToast({
+                      type: 'error',
+                      message: 'Something went wrong! 😵',
+                    })
+                  }
+                }}
+                type="submit"
+              >
                 <TrashIcon className="stroke-white" />
                 <div>Delete</div>
               </Button>

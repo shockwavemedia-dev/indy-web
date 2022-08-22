@@ -4,7 +4,6 @@ import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import { ManagerTicketsTableColumns } from '../../../constants/tables/ManagerTicketsTableColumns'
 import { usePanelLayoutStore } from '../../../layouts/PanelLayout'
-import { useTicketStore } from '../../../store/TicketStore'
 import { Card } from '../../Card'
 import { DataTable } from '../../DataTable'
 import { DeleteTicketModal } from '../../modals/DeleteTicketModal'
@@ -14,13 +13,6 @@ import { Notifications } from '../../Notifications'
 export const ManagerDashboard = () => {
   const { replace } = useRouter()
   const { data: session } = useSession()
-  const {
-    activeTicket,
-    isEditTicketModalVisible,
-    isDeleteTicketModalVisible,
-    toggleEditTicketModal,
-    toggleDeleteTicketModal,
-  } = useTicketStore()
   const { setHeader, setSubHeader } = usePanelLayoutStore()
 
   useEffect(() => {
@@ -57,16 +49,8 @@ export const ManagerDashboard = () => {
           <Notifications className="w-86 lg:w-1/2" />
         </div>
       </div>
-      <EditTicketModal
-        isVisible={isEditTicketModalVisible}
-        onClose={toggleEditTicketModal}
-        ticket={activeTicket}
-      />
-      <DeleteTicketModal
-        isVisible={isDeleteTicketModalVisible}
-        onClose={toggleDeleteTicketModal}
-        ticket={activeTicket}
-      />
+      <EditTicketModal />
+      <DeleteTicketModal />
     </>
   )
 }
