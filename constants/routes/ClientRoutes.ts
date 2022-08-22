@@ -43,10 +43,6 @@ export const ClientRoutes: Array<Route> = [
         pathname: '/animation-library',
       },
       {
-        title: 'Graphic Design',
-        pathname: '/graphic-design',
-      },
-      {
         title: 'Website Services',
         pathname: '/website-services',
       },
