@@ -65,7 +65,7 @@ export const DeletePrinterModal = ({
                 <TitleValue title="Contact Name">{printer!.contactName}</TitleValue>
                 <TitleValue title="Phone">{printer!.phone}</TitleValue>
                 <TitleValue title="Description">
-                  <RichTextDisplay value={printer!.description} />
+                  {printer!.description && <RichTextDisplay value={printer!.description} />}
                 </TitleValue>
               </div>
             </div>
