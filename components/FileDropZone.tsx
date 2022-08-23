@@ -44,7 +44,7 @@ export const FileDropZone = ({
 
   return (
     <div className={className}>
-      <div className="mb-2 text-base font-medium text-onyx empty:hidden">{label}</div>
+      <div className="mb-2 text-base font-medium text-metallic-silver empty:hidden">{label}</div>
       <div
         {...getRootProps()}
         className={`relative flex h-35 cursor-default items-center justify-center overflow-hidden rounded-xl border border-dashed ${

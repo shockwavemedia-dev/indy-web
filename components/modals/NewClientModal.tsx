@@ -9,6 +9,7 @@ import { Staff } from '../../types/Staff.type'
 import { objectWithFileToFormData } from '../../utils/FormHelpers'
 import { Button } from '../Button'
 import { DateInput } from '../DateInput'
+import { FileDropZone } from '../FileDropZone'
 import { ClockIcon } from '../icons/ClockIcon'
 import { EditIcon } from '../icons/EditIcon'
 import { UserIcon } from '../icons/UserIcon'
@@ -113,7 +114,7 @@ export const NewClientModal = ({
                     />
                     <DateInput name="clientSince" placeholder="Enter Client Since" />
                   </div>
-                  <div className="mb-8 flex space-x-5">
+                  <div className="mb-5 flex space-x-5">
                     <TextInput
                       type="text"
                       Icon={EditIcon}
@@ -132,6 +133,14 @@ export const NewClientModal = ({
                       }
                     />
                   </div>
+                  <FileDropZone
+                    label="Logo"
+                    name="logo"
+                    accept={['.jpeg', '.png', '.jpg']}
+                    maxSize={5}
+                    mimeType="image/png"
+                    className="mb-8"
+                  />
                   <div className="flex space-x-5">
                     <Button ariaLabel="Cancel" onClick={onClose} type="button" light>
                       Cancel

@@ -8,8 +8,10 @@ import { EditClientFormSchema } from '../../schemas/EditClientFormSchema'
 import { useToastStore } from '../../store/ToastStore'
 import { Client } from '../../types/Client.type'
 import { Staff } from '../../types/Staff.type'
+import { objectWithFileToFormData } from '../../utils/FormHelpers'
 import { Button } from '../Button'
 import { DateInput } from '../DateInput'
+import { FileDropZone } from '../FileDropZone'
 import { ClockIcon } from '../icons/ClockIcon'
 import { EditIcon } from '../icons/EditIcon'
 import { UserIcon } from '../icons/UserIcon'
@@ -50,7 +52,6 @@ export const EditClientModal = () => {
         initialValues={{
           name: client.name,
           clientCode: client.clientCode,
-          logo: null,
           address: client.address,
           phone: client.phone,
           timezone: client.timezone,
@@ -61,7 +62,10 @@ export const EditClientModal = () => {
         }}
         onSubmit={async (values) => {
           try {
-            const { status } = await axios.put(`/v1/clients/${client.id}`, values)
+            const { status } = await axios.put(
+              `/v1/clients/${client.id}`,
+              objectWithFileToFormData(values)
+            )
 
             if (status === 200) {
               queryClient.invalidateQueries('clients')
@@ -83,8 +87,15 @@ export const EditClientModal = () => {
           <Form className="flex w-140 flex-col">
             <div className="mb-8 space-y-5">
               <div className="flex space-x-5">
-                <TextInput type="text" Icon={EditIcon} name="name" placeholder="Enter name" />
                 <TextInput
+                  label="Name"
+                  type="text"
+                  Icon={EditIcon}
+                  name="name"
+                  placeholder="Enter name"
+                />
+                <TextInput
+                  label="Client Code"
                   type="text"
                   Icon={EditIcon}
                   name="clientCode"
@@ -92,11 +103,24 @@ export const EditClientModal = () => {
                 />
               </div>
               <div className="flex space-x-5">
-                <TextInput type="text" Icon={EditIcon} name="address" placeholder="Enter address" />
-                <TextInput type="text" Icon={EditIcon} name="phone" placeholder="Enter phone" />
+                <TextInput
+                  label="Address"
+                  type="text"
+                  Icon={EditIcon}
+                  name="address"
+                  placeholder="Enter address"
+                />
+                <TextInput
+                  label="Phone"
+                  type="text"
+                  Icon={EditIcon}
+                  name="phone"
+                  placeholder="Enter phone"
+                />
               </div>
               <div className="flex space-x-5">
                 <Select
+                  label="Timezone"
                   Icon={ClockIcon}
                   name="timezone"
                   placeholder="Enter timezone"
@@ -111,13 +135,25 @@ export const EditClientModal = () => {
                     return undefined
                   })()}
                 />
-                <DateInput name="clientSince" />
+                <DateInput label="Client Since" name="clientSince" />
               </div>
-              <RichTextInput name="overview" Icon={EditIcon} placeholder="Enter overview" />
+              <RichTextInput
+                label="Overview"
+                name="overview"
+                Icon={EditIcon}
+                placeholder="Enter overview"
+              />
               <div className="flex space-x-5">
-                <TextInput type="text" Icon={EditIcon} name="rating" placeholder="Enter rating" />
+                <TextInput
+                  label="Rating"
+                  type="text"
+                  Icon={EditIcon}
+                  name="rating"
+                  placeholder="Enter rating"
+                />
                 <Select
-                  name="designatedDesigner"
+                  label="Designated Designer"
+                  name="designatedDesignerId"
                   Icon={UserIcon}
                   placeholder="Enter designated designer"
                   options={
@@ -142,6 +178,14 @@ export const EditClientModal = () => {
                   })()}
                 />
               </div>
+              <FileDropZone
+                label="Logo"
+                name="logo"
+                accept={['.jpeg', '.png', '.jpg']}
+                maxSize={5}
+                mimeType="image/png"
+                className="mb-8"
+              />
             </div>
             <div className="flex space-x-5">
               <Button ariaLabel="Cancel" onClick={toggleEditClientModal} type="button" light>

@@ -158,7 +158,7 @@ export const RichTextInput = ({
     <div className={`flex flex-col ${className}`}>
       <label
         htmlFor={name}
-        className="mb-2 inline-block font-medium text-metallic-silver empty:hidden"
+        className="mb-2 inline-block text-xs font-medium text-metallic-silver empty:hidden"
       >
         {label}
       </label>

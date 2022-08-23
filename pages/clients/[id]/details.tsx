@@ -1,4 +1,5 @@
 import axios from 'axios'
+import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { ReactElement } from 'react'
 import { useQuery } from 'react-query'
@@ -48,11 +49,21 @@ const ClientDetails: NextPageWithLayout = () => {
               <TrashIcon className="stroke-waterloo group-hover:stroke-halloween-orange" />
             </button>
           </div>
-          <div className="space-y-5">
+          <div className="space-y-4">
+            {data.logoUrl && (
+              <Image
+                src={data.logoUrl}
+                height={100}
+                width={100}
+                alt="company logo"
+                className="rounded-lg"
+              />
+            )}
             <TitleValue title="Name">{data.name}</TitleValue>
             <TitleValue title="Address">{data.address}</TitleValue>
             <TitleValue title="Phone">{data.phone}</TitleValue>
             <TitleValue title="Timezone">{data.timezone}</TitleValue>
+            <TitleValue title="Designated Designer">{data.designatedDesigner}</TitleValue>
           </div>
         </Card>
         <Card title="Graph" className="flex-1"></Card>
