@@ -26,7 +26,6 @@ export const EditPrinterModal = ({
   const { showToast } = useToastStore()
 
   const submitForm = async (values: EditPrinterForm) => {
-    alert('pasok')
     try {
       const { status } = await axios.put(`/v1/printers/${printer.id}`, values)
 
