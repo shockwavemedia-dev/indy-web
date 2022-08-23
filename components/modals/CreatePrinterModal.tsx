@@ -111,7 +111,7 @@ export const CreatePrinterModal = ({
                   />
                   <TextInput type="text" Icon={EditIcon} placeholder="Enter Phone" name="phone" />
                 </div>
-                <div className="mb-8 flex space-x-5">
+                <div className="mb-5 flex space-x-5">
                   <PasswordInput name="password" Icon={LockIcon} placeholder="Enter password" />
                   <PasswordInput
                     name="passwordConfirmation"

@@ -17,8 +17,8 @@ export const AdminPrintersTableColumns: Array<Column<Printer>> = [
     Cell: ({ value }) => (
       <>
         {value && (
-          <div className="rounded-md">
-            <Image src={value} alt={value} height={40} width={40} />
+          <div className="m-2 rounded-md">
+            <Image src={value} alt={value} height={100} width={100} />
           </div>
         )}
       </>

@@ -1,20 +1,29 @@
 import Head from 'next/head'
-import { ReactElement, useEffect, useState } from 'react'
+import { ReactElement, useEffect } from 'react'
 import { Card } from '../components/Card'
 import { DataTable } from '../components/DataTable'
 import { FancyButton } from '../components/FancyButton'
 import { MonitorIcon } from '../components/icons/MonitorIcon'
 import { CreatePrinterModal } from '../components/modals/CreatePrinterModal'
+import { DeletePrinterModal } from '../components/modals/DeletePrinterModal'
+import { EditPrinterModal } from '../components/modals/EditPrinterModal'
 import { AdminPrintersTableColumns } from '../constants/tables/AdminPrintersTableColumns'
 import PanelLayout, { usePanelLayoutStore } from '../layouts/PanelLayout'
+import { useAdminPrinterStore } from '../store/AdminPrinterStore'
 import { NextPageWithLayout } from '../types/pages/NextPageWithLayout.type'
 
 const PrintersPage: NextPageWithLayout = () => {
   const { setHeader, setButtons } = usePanelLayoutStore()
 
-  const [isCreatePrinterModalVisible, setCreatePrinterModalVisible] = useState(false)
-
-  const toggleCreatePrinterModal = () => setCreatePrinterModalVisible(!isCreatePrinterModalVisible)
+  const {
+    activeAdminPrinter,
+    isCreateAdminPrinterModalVisible,
+    isEditAdminPrinterModalVisible,
+    isDeleteAdminPrinterModalVisible,
+    toggleCreateAdminPrinterModal,
+    toggleEditAdminPrinterModal,
+    toggleDeleteAdminPrinterModal,
+  } = useAdminPrinterStore()
 
   useEffect(() => {
     setHeader('Printers')
@@ -24,12 +33,11 @@ const PrintersPage: NextPageWithLayout = () => {
         Icon={<MonitorIcon className="stroke-halloween-orange" />}
         title="Create Printer"
         subtitle="Laborerivit rem cones mil"
-        onClick={toggleCreatePrinterModal}
+        onClick={toggleCreateAdminPrinterModal}
         className="w-fit"
       />
     )
   }, [])
-
   return (
     <>
       <Head>
@@ -46,8 +54,18 @@ const PrintersPage: NextPageWithLayout = () => {
         </Card>
       </div>
       <CreatePrinterModal
-        isVisible={isCreatePrinterModalVisible}
-        onClose={toggleCreatePrinterModal}
+        isVisible={isCreateAdminPrinterModalVisible}
+        onClose={toggleCreateAdminPrinterModal}
+      />
+      <EditPrinterModal
+        isVisible={isEditAdminPrinterModalVisible}
+        onClose={toggleEditAdminPrinterModal}
+        printer={activeAdminPrinter}
+      />
+      <DeletePrinterModal
+        isVisible={isDeleteAdminPrinterModalVisible}
+        onClose={toggleDeleteAdminPrinterModal}
+        printer={activeAdminPrinter}
       />
     </>
   )
