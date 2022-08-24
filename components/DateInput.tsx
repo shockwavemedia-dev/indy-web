@@ -1,8 +1,10 @@
+import { Tooltip } from '@mui/material'
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker'
 import { FormikValues, useFormikContext } from 'formik'
 import { useState } from 'react'
 import { FormErrorMessage } from './FormErrorMessage'
 import { CalendarIcon } from './icons/CalendarIcon'
+import { InfoIcon } from './icons/InfoIcon'
 
 export const DateInput = ({
   name,
@@ -10,12 +12,14 @@ export const DateInput = ({
   className,
   label,
   readOnly = false,
+  hint,
 }: {
   name: string
   placeholder?: string
   className?: string
   label?: string
   readOnly?: boolean
+  hint?: string
 }) => {
   const {
     values: { [name]: date },
@@ -58,12 +62,21 @@ export const DateInput = ({
       }}
       renderInput={({ inputRef, inputProps }) => (
         <div className={`w-full ${className}`}>
-          <label
-            htmlFor={name}
-            className="mb-2 inline-block text-xs font-medium text-metallic-silver empty:hidden"
-          >
-            {label}
-          </label>
+          <div className="mb-2 flex">
+            <label
+              htmlFor={name}
+              className="inline-block text-xs font-medium text-metallic-silver empty:hidden"
+            >
+              {label}
+            </label>
+            {hint && (
+              <Tooltip title={hint} placement="top-end" className="ml-auto">
+                <div>
+                  <InfoIcon className="h-4 stroke-metallic-silver transition-colors hover:stroke-halloween-orange" />
+                </div>
+              </Tooltip>
+            )}
+          </div>
           <div className="relative flex items-center">
             <CalendarIcon className="pointer-events-none absolute ml-6 stroke-lavender-gray" />
             <input

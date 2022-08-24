@@ -1,6 +1,8 @@
+import { Tooltip } from '@mui/material'
 import { Field } from 'formik'
 import { Icon } from '../types/Icon.type'
 import { FormErrorMessage } from './FormErrorMessage'
+import { InfoIcon } from './icons/InfoIcon'
 
 export const TextInput = ({
   type,
@@ -10,6 +12,7 @@ export const TextInput = ({
   className,
   readOnly = false,
   label,
+  hint,
 }: {
   type: 'text' | 'email' | 'url'
   name: string
@@ -18,14 +21,24 @@ export const TextInput = ({
   className?: string
   readOnly?: boolean
   label?: string
+  hint?: string
 }) => (
   <div className={`w-full ${className}`}>
-    <label
-      htmlFor={name}
-      className="mb-2 inline-block text-xs font-medium text-metallic-silver empty:hidden"
-    >
-      {label}
-    </label>
+    <div className="mb-2 flex">
+      <label
+        htmlFor={name}
+        className="inline-block text-xs font-medium text-metallic-silver empty:hidden"
+      >
+        {label}
+      </label>
+      {hint && (
+        <Tooltip title={hint} placement="top-end" className="ml-auto">
+          <div>
+            <InfoIcon className="h-4 stroke-metallic-silver transition-colors hover:stroke-halloween-orange" />
+          </div>
+        </Tooltip>
+      )}
+    </div>
     <div className="relative flex items-center">
       <Icon className="pointer-events-none absolute left-6 stroke-lavender-gray" />
       <Field

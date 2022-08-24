@@ -87,8 +87,14 @@ const ProjectBriefPage: NextPageWithLayout = () => {
                   placeholder="Enter subject"
                   name="subject"
                   className="mb-5"
+                  hint="Give your project a name e.g Melbourne Cup"
                 />
-                <DateInput name="duedate" placeholder="Enter due date" className="mb-5" />
+                <DateInput
+                  name="duedate"
+                  placeholder="Enter due date"
+                  className="mb-5"
+                  hint="This the due date for the marketing material."
+                />
                 <RichTextInput
                   Icon={EditIcon}
                   placeholder="Enter description"
