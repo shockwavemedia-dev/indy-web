@@ -11,6 +11,6 @@ export const NewClientUserFormSchema: SchemaOf<NewClientUserForm> = object().sha
   lastName: string().required(),
   middleName: string().optional(),
   gender: mixed().required().oneOf(['female', 'male']),
-  role: mixed().required().oneOf(['group manager', 'marketing manager', 'manager']),
+  role: mixed().required().oneOf(['group manager', 'marketing manager', 'marketing']),
   birthDate: date().required(),
 })

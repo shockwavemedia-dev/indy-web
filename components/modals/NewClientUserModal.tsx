@@ -1,17 +1,17 @@
 import axios from 'axios'
 import { Form, Formik } from 'formik'
 import { useState } from 'react'
-import { useQuery, useQueryClient } from 'react-query'
+import { useQueryClient } from 'react-query'
+import create from 'zustand'
+import { combine } from 'zustand/middleware'
 import { ClientUserRoleOptions } from '../../constants/options/ClientUserRoleOptions'
 import { UserGenderOptions } from '../../constants/options/UserGenderOptions'
 import { NewClientUserFormSchema } from '../../schemas/NewClientUserFormSchema'
 import { useToastStore } from '../../store/ToastStore'
 import { Client } from '../../types/Client.type'
 import { NewClientUserForm } from '../../types/forms/NewClientUserForm.type'
-import { Page } from '../../types/Page.type'
 import { Button } from '../Button'
 import { DateInput } from '../DateInput'
-import { BriefcaseIcon } from '../icons/BriefcaseIcon'
 import { ClipboardIcon } from '../icons/ClipboardIcon'
 import { EmailIcon } from '../icons/EmailIcon'
 import { LockIcon } from '../icons/LockIcon'
@@ -23,13 +23,20 @@ import { computePasswordStrength, PasswordStrengthMeter } from '../PasswordStren
 import { Select } from '../Select'
 import { TextInput } from '../TextInput'
 
-export const NewClientUserModal = ({
-  isVisible,
-  onClose,
-}: {
-  isVisible: boolean
-  onClose: () => void
-}) => {
+export const useNewClientUserModal = create(
+  combine(
+    {
+      client: undefined as Client | undefined,
+    },
+    (set) => ({
+      toggleNewClientUserModal: (client?: Client) => set({ client }),
+    })
+  )
+)
+
+export const NewClientUserModal = () => {
+  const client = useNewClientUserModal((state) => state.client)
+  const toggleNewClientUserModal = useNewClientUserModal((state) => state.toggleNewClientUserModal)
   const queryClient = useQueryClient()
   const { showToast } = useToastStore()
 
@@ -38,41 +45,13 @@ export const NewClientUserModal = ({
   const updatePasswordStrength = (password: string) =>
     setPasswordStrength(computePasswordStrength(password))
 
-  const { data: clients } = useQuery(
-    'clients',
-    async () => {
-      const {
-        data: { data },
-      } = await axios.get<{
-        data: Array<Client>
-        page: Page
-      }>('/v1/clients', {
-        params: {
-          size: 100,
-        },
-      })
-
-      return data
-    },
-    {
-      enabled: isVisible,
-    }
-  )
-
-  const clientOptions = clients
-    ?.filter((client) => client.status === 'active')
-    .map(({ id, name }) => ({
-      value: id,
-      label: name,
-    }))
-
   const submitForm = async (values: NewClientUserForm) => {
     try {
       const { status } = await axios.post('/v1/users/client', values)
 
       if (status === 200) {
-        queryClient.invalidateQueries('clients')
-        onClose()
+        queryClient.invalidateQueries('client-users')
+        toggleNewClientUserModal()
         showToast({
           type: 'success',
           message: 'New User successfully created!',
@@ -90,11 +69,12 @@ export const NewClientUserModal = ({
 
   return (
     <>
-      {isVisible && (
-        <Modal title="New Client User" onClose={onClose}>
+      {client && (
+        <Modal title="New Client User" onClose={toggleNewClientUserModal}>
           <Formik
             validationSchema={NewClientUserFormSchema}
             initialValues={{
+              clientId: client.id,
               email: '',
               password: '',
               birthDate: null,
@@ -105,55 +85,48 @@ export const NewClientUserModal = ({
               middleName: '',
               gender: null,
               role: null,
-              clientId: -1,
             }}
             onSubmit={submitForm}
             validate={validateForm}
           >
             {({ isSubmitting }) => (
               <Form className="flex w-140 flex-col">
-                <Select
-                  name="clientId"
-                  Icon={BriefcaseIcon}
-                  placeholder="Select Client"
-                  options={clientOptions || []}
-                  className="mb-5"
-                />
-                <Select
-                  name="role"
-                  Icon={ClipboardIcon}
-                  placeholder="Select Role"
-                  options={ClientUserRoleOptions}
-                  className="mb-5"
-                />
-                <TextInput
-                  type="text"
-                  Icon={UserIcon}
-                  placeholder="Enter First Name"
-                  name="firstName"
-                  className="mb-5"
-                />
-                <TextInput
-                  type="text"
-                  Icon={UserIcon}
-                  placeholder="Enter Middle Name"
-                  name="middleName"
-                  className="mb-5"
-                />
-                <TextInput
-                  type="text"
-                  Icon={UserIcon}
-                  placeholder="Enter Last Name"
-                  name="lastName"
-                  className="mb-5"
-                />
-                <Select
-                  name="gender"
-                  Icon={UserIcon}
-                  placeholder="Select Gender"
-                  options={UserGenderOptions}
-                  className="mb-5"
-                />
+                <div className="mb-5 flex space-x-5">
+                  <Select
+                    name="role"
+                    Icon={ClipboardIcon}
+                    placeholder="Select Role"
+                    options={ClientUserRoleOptions}
+                  />
+                </div>
+                <div className="mb-5 flex space-x-5">
+                  <TextInput
+                    type="text"
+                    Icon={UserIcon}
+                    placeholder="Enter First Name"
+                    name="firstName"
+                  />
+                  <TextInput
+                    type="text"
+                    Icon={UserIcon}
+                    placeholder="Enter Middle Name"
+                    name="middleName"
+                  />
+                </div>
+                <div className="mb-5 flex space-x-5">
+                  <TextInput
+                    type="text"
+                    Icon={UserIcon}
+                    placeholder="Enter Last Name"
+                    name="lastName"
+                  />
+                  <Select
+                    name="gender"
+                    Icon={UserIcon}
+                    placeholder="Select Gender"
+                    options={UserGenderOptions}
+                  />
+                </div>
                 <div className="mb-5 flex space-x-5">
                   <DateInput name="birthDate" placeholder="Enter Birth Date" />
                   <TextInput
@@ -185,7 +158,7 @@ export const NewClientUserModal = ({
                   and one big character, special character and number
                 </div>
                 <div className="flex space-x-5">
-                  <Button ariaLabel="Cancel" onClick={onClose} type="button" light>
+                  <Button ariaLabel="Cancel" onClick={toggleNewClientUserModal} type="button" light>
                     Cancel
                   </Button>
                   <Button ariaLabel="Submit" disabled={isSubmitting} type="submit">

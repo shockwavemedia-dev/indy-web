@@ -6,15 +6,23 @@ import { useQuery } from 'react-query'
 import { Card } from '../../../components/Card'
 import { DataTable } from '../../../components/DataTable'
 import { EditIcon } from '../../../components/icons/EditIcon'
+import { PlusIcon } from '../../../components/icons/PlusIcon'
 import { TrashIcon } from '../../../components/icons/TrashIcon'
 import {
   DeleteClientModal,
   useDeleteClientModal,
 } from '../../../components/modals/DeleteClientModal'
+import { DeleteClientUserModal } from '../../../components/modals/DeleteClientUserModal'
 import { DeleteTicketModal } from '../../../components/modals/DeleteTicketModal'
 import { EditClientModal, useEditClientModal } from '../../../components/modals/EditClientModal'
+import { EditClientUserModal } from '../../../components/modals/EditClientUserModal'
 import { EditTicketModal } from '../../../components/modals/EditTicketModal'
+import {
+  NewClientUserModal,
+  useNewClientUserModal,
+} from '../../../components/modals/NewClientUserModal'
 import { TitleValue } from '../../../components/TitleValue'
+import { AdminClientUsersTableColumns } from '../../../constants/tables/AdminClientUsersTableColumns'
 import { AdminTicketsTableColumns } from '../../../constants/tables/AdminTicketsTableColumns'
 import ClientLayout from '../../../layouts/ClientLayout'
 import PanelLayout from '../../../layouts/PanelLayout'
@@ -28,6 +36,7 @@ const ClientDetails: NextPageWithLayout = () => {
   } = useRouter()
   const toggleEditClientModal = useEditClientModal((state) => state.toggleEditClientModal)
   const toggleDeleteClientModal = useDeleteClientModal((state) => state.toggleDeleteClientModal)
+  const toggleNewClientUserModal = useNewClientUserModal((state) => state.toggleNewClientUserModal)
 
   const { data } = useQuery(['clients', Number(id)], async () => {
     const { data } = await axios.get<Client>(`/v1/clients/${id}`)
@@ -68,6 +77,27 @@ const ClientDetails: NextPageWithLayout = () => {
         </Card>
         <Card title="Graph" className="flex-1"></Card>
       </div>
+      <Card title="Users" className="mb-6 flex max-h-155 flex-1 flex-col">
+        <DataTable
+          columns={AdminClientUsersTableColumns}
+          dataEndpoint={`/v1/clients/${data.id}/users`}
+          tableQueryKey={['client-users', data.id]}
+          ofString="Tickets"
+          tableActions={
+            <button className="flex space-x-2" onClick={() => toggleNewClientUserModal(data)}>
+              <PlusIcon className="stroke-halloween-orange" />
+              <div className=" text-sm font-semibold text-halloween-orange">Add User</div>
+            </button>
+          }
+          initialState={{
+            sortBy: [
+              {
+                id: 'owner',
+              },
+            ],
+          }}
+        />
+      </Card>
       <Card title="Tickets" className="flex max-h-155 flex-1 flex-col">
         <DataTable
           columns={AdminTicketsTableColumns}
@@ -81,6 +111,9 @@ const ClientDetails: NextPageWithLayout = () => {
       <DeleteTicketModal />
       <EditClientModal />
       <DeleteClientModal />
+      <NewClientUserModal />
+      <EditClientUserModal />
+      <DeleteClientUserModal />
     </div>
   )
 }

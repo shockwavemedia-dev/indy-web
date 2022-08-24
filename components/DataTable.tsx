@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { ReactNode, useEffect, useMemo, useState } from 'react'
 import { useQuery } from 'react-query'
-import { Column, Row, usePagination, useSortBy, useTable } from 'react-table'
+import { Column, Row, TableState, usePagination, useSortBy, useTable } from 'react-table'
 import { Page } from '../types/Page.type'
 import { CaretIcon } from './icons/CaretIcon'
 import { SortIcon } from './icons/SortIcon'
@@ -14,6 +14,7 @@ export const DataTable = <T extends Record<string, unknown>>({
   ofString,
   tableActions,
   rowOnClick,
+  initialState,
 }: {
   tableQueryKey: Array<string | number>
   dataEndpoint: string
@@ -22,6 +23,7 @@ export const DataTable = <T extends Record<string, unknown>>({
   ofString: string
   tableActions?: ReactNode
   rowOnClick?: (row: Row<T>) => void
+  initialState?: Partial<TableState<T>>
 }) => {
   const [queryPageIndex, setQueryPageIndex] = useState(0)
 
@@ -68,7 +70,11 @@ export const DataTable = <T extends Record<string, unknown>>({
     {
       columns: memoizedColumns,
       data: (isSuccess && pagination && pagination.data) || [],
-      initialState: { pageIndex: queryPageIndex, pageSize: 20 },
+      initialState: {
+        ...initialState,
+        pageIndex: queryPageIndex,
+        pageSize: 20,
+      },
       manualPagination: true,
       pageCount: isSuccess && pagination ? pagination.page.lastPage : 0,
       autoResetSortBy: false,
@@ -140,8 +146,8 @@ export const DataTable = <T extends Record<string, unknown>>({
                     // key is already provided by getRowProps()
                     // eslint-disable-next-line react/jsx-key
                     <tr
-                      className={`group h-12 border-b border-solid border-b-bright-gray last:border-none${
-                        rowOnClick ? ' cursor-pointer hover:bg-halloween-orange/5' : ''
+                      className={`group h-12 border-b border-solid border-b-bright-gray hover:bg-halloween-orange/5 last:border-none${
+                        rowOnClick ? ' cursor-pointer' : ''
                       }`}
                       {...row.getRowProps()}
                       onClick={rowOnClick ? () => rowOnClick(row) : undefined}
