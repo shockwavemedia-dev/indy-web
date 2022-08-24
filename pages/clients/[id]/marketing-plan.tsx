@@ -64,122 +64,143 @@ const ClientMarketingPlan: NextPageWithLayout = () => {
   return (
     <>
       <div className="mx-auto w-full max-w-8xl">
-        <Formik
-          initialValues={{
-            serviceId: -1,
-            extras: [],
-            isEnabled: false,
-            marketingQuota: 0,
-            extraQuota: 0,
-          }}
-          onSubmit={submitForm}
-        >
-          {({ isSubmitting }) => (
-            <Form>
-              <div>
-                {services?.map(({ id, serviceId, serviceName, totalUsed }) => (
+        {services?.map(
+          ({
+            id,
+            serviceId,
+            serviceName,
+            totalUsed,
+            extras,
+            extraQuota,
+            marketingQuota,
+            isEnabled,
+          }) => (
+            <Formik
+              key={`service-${id}`}
+              initialValues={{
+                serviceId: serviceId,
+                extras: extras,
+                isEnabled: isEnabled,
+                marketingQuota: marketingQuota,
+                extraQuota: extraQuota,
+              }}
+              onSubmit={submitForm}
+            >
+              <Form>
+                <div>
                   <Card
                     key={`service-${id}`}
                     className="mb-5 flex h-fit flex-1 cursor-default flex-col border border-halloween-orange"
                   >
-                    <SwitchButton name="isRecurring" label={serviceName} className="mb-5" />
-                    <div className="w-3/6">
-                      <CountCard
-                        Icon={
-                          <div className="grid h-11.5 w-11.5 flex-none place-items-center rounded-lg bg-alice-blue">
-                            <MonitorIcon className="stroke-bleu-de-france" />
-                          </div>
-                        }
-                        value={totalUsed}
-                        description="Total (Used/Total)"
-                        className="w-54"
-                      />
-                      <div className="mb-5 flex space-x-5">
-                        <TextInput
-                          type="text"
-                          Icon={SquareDollarIcon}
-                          placeholder="Marketing Quota"
-                          name={`${id}-marketingQuota`}
-                          className="mb-5"
-                          label="Marketing Quota"
+                    <SwitchButton
+                      value={isEnabled}
+                      name="isEnabled"
+                      label={serviceName}
+                      className="mb-5"
+                    />
+                    <div
+                      className={`flex flex-col ${
+                        !isEnabled ? 'cursor-none opacity-40 disabled:opacity-50' : ''
+                      }`}
+                    >
+                      <div className="w-3/6">
+                        <CountCard
+                          Icon={
+                            <div className="grid h-11.5 w-11.5 flex-none place-items-center rounded-lg bg-alice-blue">
+                              <MonitorIcon className="stroke-bleu-de-france" />
+                            </div>
+                          }
+                          value={totalUsed}
+                          description="Total (Used/Total)"
+                          className="w-54"
                         />
-                        <TextInput
-                          type="text"
-                          Icon={SquareDollarIcon}
-                          placeholder="Extra Quota"
-                          name={`${id}-extraQuota`}
-                          className="mb-5"
-                          label="Extra Quota"
-                        />
+                        <div className="mb-5 flex space-x-5">
+                          <TextInput
+                            type="text"
+                            Icon={SquareDollarIcon}
+                            placeholder="Marketing Quota"
+                            name="marketingQuota"
+                            className="mb-5"
+                            label="Marketing Quota"
+                          />
+                          <TextInput
+                            type="text"
+                            Icon={SquareDollarIcon}
+                            placeholder="Extra Quota"
+                            name="extraQuota"
+                            className="mb-5"
+                            label="Extra Quota"
+                          />
+                        </div>
                       </div>
+                      {serviceId &&
+                        serviceId == 1 &&
+                        GraphicExtraOptions?.map(({ value, label }) => (
+                          <Checkbox
+                            className="mb-2"
+                            key={`${value}-${serviceId}`}
+                            name="extras"
+                            label={label}
+                            value={value}
+                          />
+                        ))}
+                      {serviceId &&
+                        serviceId == 2 &&
+                        AnimationExtraOptions?.map(({ value, label }) => (
+                          <Checkbox
+                            className="mb-2"
+                            key={`${value}-${serviceId}`}
+                            name="extras"
+                            label={label}
+                            value={value}
+                          />
+                        ))}
+                      {serviceId &&
+                        serviceId == 4 &&
+                        SocialMediaExtraOptions?.map(({ value, label }) => (
+                          <Checkbox
+                            className="mb-2"
+                            key={`${value}-${serviceId}`}
+                            name="extras"
+                            label={label}
+                            value={value}
+                          />
+                        ))}
+                      {serviceId &&
+                        serviceId == 5 &&
+                        WebsiteExtraOptions?.map(({ value, label }) => (
+                          <Checkbox
+                            className="mb-2"
+                            key={`${value}-${serviceId}`}
+                            name="extras"
+                            label={label}
+                            value={value}
+                          />
+                        ))}
+                      {serviceId &&
+                        serviceId == 6 &&
+                        AdvertisingExtraOptions?.map(({ value, label }) => (
+                          <Checkbox
+                            className="mb-2"
+                            key={`${value}-${serviceId}`}
+                            name="extras"
+                            label={label}
+                            value={value}
+                          />
+                        ))}
                     </div>
-                    {serviceId &&
-                      serviceId == 1 &&
-                      GraphicExtraOptions?.map(({ value, label }) => (
-                        <Checkbox
-                          className="mb-2"
-                          key={`${value}-${serviceId}`}
-                          name="extras"
-                          label={label}
-                          value={value}
-                        />
-                      ))}
-                    {serviceId &&
-                      serviceId == 2 &&
-                      AnimationExtraOptions?.map(({ value, label }) => (
-                        <Checkbox
-                          className="mb-2"
-                          key={`${value}-${serviceId}`}
-                          name="extras"
-                          label={label}
-                          value={value}
-                        />
-                      ))}
-                    {serviceId &&
-                      serviceId == 4 &&
-                      SocialMediaExtraOptions?.map(({ value, label }) => (
-                        <Checkbox
-                          className="mb-2"
-                          key={`${value}-${serviceId}`}
-                          name="extras"
-                          label={label}
-                          value={value}
-                        />
-                      ))}
-                    {serviceId &&
-                      serviceId == 5 &&
-                      WebsiteExtraOptions?.map(({ value, label }) => (
-                        <Checkbox
-                          className="mb-2"
-                          key={`${value}-${serviceId}`}
-                          name="extras"
-                          label={label}
-                          value={value}
-                        />
-                      ))}
-                    {serviceId &&
-                      serviceId == 6 &&
-                      AdvertisingExtraOptions?.map(({ value, label }) => (
-                        <Checkbox
-                          className="mb-2"
-                          key={`${value}-${serviceId}`}
-                          name="extras"
-                          label={label}
-                          value={value}
-                        />
-                      ))}
                   </Card>
-                ))}
-                <Card className="flex w-1/4 flex-1 flex-col">
-                  <Button ariaLabel="Submit" disabled={isSubmitting} type="submit">
-                    <FloppyDiskIcon className="stroke-white" />
-                    <div>Save</div>
-                  </Button>
-                </Card>
-              </div>
-            </Form>
-          )}
-        </Formik>
+                </div>
+              </Form>
+            </Formik>
+          )
+        )}
+        <Card className="flex w-1/4 flex-1 flex-col">
+          <Button ariaLabel="Submit" type="submit">
+            <FloppyDiskIcon className="stroke-white" />
+            <div>Save</div>
+          </Button>
+        </Card>
       </div>
     </>
   )
