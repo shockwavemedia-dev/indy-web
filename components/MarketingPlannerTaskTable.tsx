@@ -1,23 +1,24 @@
 import { useMemo } from 'react'
 import { Column, TableState, useSortBy, useTable } from 'react-table'
+import { Todo } from '../types/Todo.type'
 import { SortIcon } from './icons/SortIcon'
 
-export const Table = <T extends Record<string, unknown>>({
+export const MarketingPlannerTaskTable = ({
   data,
   columns,
   ofString,
   autoResetSortBy = false,
   initialState,
 }: {
-  data: Array<T>
-  columns: Array<Column<T>>
+  data: Array<Todo>
+  columns: Array<Column<Todo>>
   ofString: string
   autoResetSortBy?: boolean
-  initialState?: Partial<TableState<T>>
+  initialState?: Partial<TableState<Todo>>
 }) => {
   const memoizedColumns = useMemo(() => columns, [])
 
-  const { rows, getTableProps, getTableBodyProps, headerGroups, prepareRow } = useTable<T>(
+  const { rows, getTableProps, getTableBodyProps, headerGroups, prepareRow } = useTable<Todo>(
     {
       columns: memoizedColumns,
       data: data,
@@ -87,7 +88,14 @@ export const Table = <T extends Record<string, unknown>>({
                     // key is already provided by getRowProps()
                     // eslint-disable-next-line react/jsx-key
                     <tr
-                      className="h-12 border-b border-solid border-b-bright-gray last:border-none"
+                      className={`h-12 border-b border-solid border-b-bright-gray last:border-none ${
+                        row.original.status &&
+                        row.original.status !== 'completed' &&
+                        row.original.deadline &&
+                        row.original.deadline < new Date()
+                          ? 'bg-red-crimson/50'
+                          : ''
+                      }`}
                       {...row.getRowProps()}
                     >
                       {row.cells.map(({ getCellProps, render }) => (

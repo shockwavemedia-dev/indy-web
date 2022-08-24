@@ -14,6 +14,7 @@ import { EditIcon } from '../../components/icons/EditIcon'
 import { FloppyDiskIcon } from '../../components/icons/FloppyDiskIcon'
 import { PlusIcon } from '../../components/icons/PlusIcon'
 import { TrashIcon } from '../../components/icons/TrashIcon'
+import { MarketingPlannerTaskTable } from '../../components/MarketingPlannerTaskTable'
 import {
   AddCustomTodoModal,
   useAddCustomTodoModal,
@@ -24,7 +25,6 @@ import {
   useFileDisplayModalStore,
 } from '../../components/modals/FileDisplayModal'
 import { RichTextInput } from '../../components/RichTextInput'
-import { Table } from '../../components/Table'
 import { TextInput } from '../../components/TextInput'
 import {
   assigneeListStore,
@@ -81,12 +81,13 @@ const MarketingPlannerPage: NextPageWithLayout = () => {
           ...values,
           todoList: todoList
             .filter(({ selected }) => selected)
-            .map(({ id, name, status, assignee, deadline }) => ({
+            .map(({ id, name, status, assignee, deadline, notify }) => ({
               id,
               name,
               status,
               assignee,
               deadline,
+              notify,
             })),
         }
       )
@@ -190,7 +191,7 @@ const MarketingPlannerPage: NextPageWithLayout = () => {
                         Add Assignee
                       </div>
                     </button>
-                    <Table
+                    <MarketingPlannerTaskTable
                       columns={MarketingPlannerTaskTableColumns}
                       data={todoList}
                       ofString="Todo List"

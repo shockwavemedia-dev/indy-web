@@ -14,6 +14,7 @@ export const CreateMarketingPlannerFormSchema: SchemaOf<CreateMarketingPlannerFo
           status: mixed().oneOf(['to-do', 'in-progress', 'completed']),
           assignee: string(),
           deadline: date(),
+          notify: boolean().required(),
           custom: boolean().required(),
           selected: boolean().required(),
         })

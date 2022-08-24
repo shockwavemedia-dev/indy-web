@@ -6,6 +6,7 @@ export type Todo = {
   status?: TodoStatus
   assignee?: string
   deadline?: Date
+  notify: boolean
   custom: boolean
   selected: boolean
 }

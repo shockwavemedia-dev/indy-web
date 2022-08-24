@@ -115,6 +115,7 @@ export const todoListStore = create(
             name,
             custom: false,
             selected: i === 0,
+            notify: false,
           })),
         }),
       cleanTodoList: (todoList: Array<Todo>) =>
@@ -126,6 +127,7 @@ export const todoListStore = create(
                 name,
                 custom: false,
                 selected: false,
+                notify: false,
               })),
             ...todoList.map((todo) => ({ ...todo, custom: false, selected: true })),
           ],
@@ -138,6 +140,7 @@ export const todoListStore = create(
               name: todoName,
               custom: true,
               selected: true,
+              notify: false,
             },
           ],
         }),
@@ -219,20 +222,6 @@ export const MarketingPlannerTaskTableColumns: Array<Column<Todo>> = [
           twHeight="h-7"
           className="pr-5"
           placeholder="Select Status"
-          controlColors={{
-            todo: {
-              bg: '#FFCECC',
-              border: '#FF4842',
-            },
-            'in-progress': {
-              bg: '#E9F5FF',
-              border: '#2F96EB',
-            },
-            completed: {
-              bg: '#E9FAF3',
-              border: '#2BB67D',
-            },
-          }}
         />
       ) : (
         <div>-</div>
@@ -282,9 +271,30 @@ export const MarketingPlannerTaskTableColumns: Array<Column<Todo>> = [
         <DateInputNoFormik
           value={todo.deadline}
           onChange={(date) => updateTodo({ ...todo, deadline: date })}
-          className="w-48"
+          className="mr-5 w-48"
           twHeight="h-7"
           placeholder="Set Deadline"
+        />
+      ) : (
+        <div>-</div>
+      )
+    },
+  },
+  {
+    Header: 'Notify',
+    accessor: 'notify',
+    disableSortBy: true,
+    Cell: ({ row: { original } }) => {
+      const getTodo = todoListStore((state) => state.getTodo)
+      const updateTodo = todoListStore((state) => state.updateTodo)
+
+      const todo = getTodo(original.name)
+
+      return todo && todo.selected ? (
+        <CheckboxNoFormik
+          checked={todo.notify}
+          label=""
+          onChange={() => updateTodo({ ...todo, notify: !todo.notify })}
         />
       ) : (
         <div>-</div>

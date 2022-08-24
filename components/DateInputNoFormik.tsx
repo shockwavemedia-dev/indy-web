@@ -57,12 +57,12 @@ export const DateInputNoFormik = ({
           <label className="mb-2 inline-block text-xs font-medium text-metallic-silver empty:hidden">
             {label}
           </label>
-          <div className="relative flex items-center">
+          <div className="relative flex items-center overflow-hidden rounded-xl bg-white">
             <CalendarIcon className="pointer-events-none absolute ml-6 stroke-lavender-gray" />
             <input
               ref={inputRef}
               {...inputProps}
-              className={`${twHeight} w-full rounded-xl bg-transparent px-13  text-sm font-medium text-onyx placeholder-metallic-silver focus:ring-2 focus:ring-halloween-orange read-only:focus:ring-1 read-only:focus:ring-bright-gray ${
+              className={`${twHeight} w-full bg-transparent px-13 text-sm font-medium text-onyx placeholder-metallic-silver focus:ring-2 focus:ring-halloween-orange read-only:focus:ring-1 read-only:focus:ring-bright-gray ${
                 isPickerVisible ? 'ring-2 ring-halloween-orange' : 'ring-1 ring-bright-gray'
               } ${readOnly ? 'read-only:cursor-auto' : 'read-only:cursor-pointer'}`}
               spellCheck={false}
