@@ -1,4 +1,3 @@
-import { Tooltip } from '@mui/material'
 import axios from 'axios'
 import { Form, Formik } from 'formik'
 import Head from 'next/head'
@@ -156,17 +155,6 @@ const MarketingPlannerPage: NextPageWithLayout = () => {
                   title="Event Details"
                   titlePosition="center"
                 >
-                  <div className="absolute top-6 right-6 space-x-4">
-                    <Tooltip title="Delete" placement="top">
-                      <button
-                        className="group"
-                        type="button"
-                        onClick={toggleDeleteMarketingPlannerModal}
-                      >
-                        <TrashIcon className="stroke-waterloo group-hover:stroke-halloween-orange" />
-                      </button>
-                    </Tooltip>
-                  </div>
                   <TextInput
                     type="text"
                     Icon={EditIcon}
@@ -215,13 +203,22 @@ const MarketingPlannerPage: NextPageWithLayout = () => {
                       }}
                     />
                   </Card>
-                  <Card className="ml-auto w-1/2 lg:w-full">
+                  <Card className="ml-auto w-3/4 lg:w-full">
                     <div className="flex space-x-5">
                       <Link href="/marketing-planner">
                         <Button ariaLabel="Cancel" type="button" light>
                           Cancel
                         </Button>
                       </Link>
+                      <Button
+                        ariaLabel="Submit"
+                        onClick={toggleDeleteMarketingPlannerModal}
+                        type="button"
+                        light
+                      >
+                        <TrashIcon className="stroke-onyx" />
+                        <div>Delete</div>
+                      </Button>
                       <Button ariaLabel="Submit" disabled={isSubmitting} type="submit">
                         <FloppyDiskIcon className="stroke-white" />
                         <div>Update</div>
