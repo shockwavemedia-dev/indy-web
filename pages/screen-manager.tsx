@@ -6,7 +6,7 @@ import { Card } from '../components/Card'
 import { Notifications } from '../components/Notifications'
 import { RetainerInclusions } from '../components/RetainerInclusions'
 import PanelLayout, { usePanelLayoutStore } from '../layouts/PanelLayout'
-import PhotographyAvatar from '../public/images/bpm-technology-logo.png'
+import IndyTvAvatar from '../public/images/indy-tv.png'
 import { NextPageWithLayout } from '../types/pages/NextPageWithLayout.type'
 
 const ScreenManagerPage: NextPageWithLayout = () => {
@@ -27,8 +27,8 @@ const ScreenManagerPage: NextPageWithLayout = () => {
             <div className="flex flex-wrap">
               <Link href="https://app.bpmtech.com.au/login">
                 <a target="_blank" rel="noopener noreferrer">
-                  <div className="mb-5 aspect-square max-h-40 overflow-hidden rounded-xl bg-black">
-                    <Image src={PhotographyAvatar} alt="bpm-technology" className="h-full" />
+                  <div className="mb-5 aspect-square max-h-40 overflow-hidden">
+                    <Image src={IndyTvAvatar} alt="indy-tv" className="h-full" />
                   </div>
                 </a>
               </Link>
