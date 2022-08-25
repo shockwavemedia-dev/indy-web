@@ -1,8 +1,10 @@
+import { Tooltip } from '@mui/material'
 import axios from 'axios'
 import { format } from 'date-fns'
 import { Form, Formik } from 'formik'
 import Head from 'next/head'
 import Image from 'next/image'
+import { useRouter } from 'next/router'
 import { Fragment, useEffect, useState } from 'react'
 import { useQuery, useQueryClient } from 'react-query'
 import { Button } from '../../../components/Button'
@@ -27,6 +29,7 @@ import { RichTextInput } from '../../../components/RichTextInput'
 import { TitleValue } from '../../../components/TitleValue'
 import { ClientTicketAssigneeTableColumns } from '../../../constants/tables/ClientTicketAssigneeTableColumns'
 import { usePanelLayoutStore } from '../../../layouts/PanelLayout'
+import { useProjectBrief } from '../../../pages/project-brief'
 import DummyCompany from '../../../public/images/dummy-company.png'
 import { CreateNoteFormSchema } from '../../../schemas/CreateNoteFormSchema'
 import { useTicketAssigneeStore } from '../../../store/TicketAssigneeStore'
@@ -40,6 +43,7 @@ import { TicketNote } from '../../../types/TicketNote.type'
 import { TicketPageTabs } from '../../../types/TicketPageTabs.type'
 import { FileButton } from '../../FileButton'
 import { FileDisplay } from '../../FileDisplay'
+import { CopyIcon } from '../../icons/CopyIcon'
 import { NotepadIcon } from '../../icons/NotepadIcon'
 import { AddTicketAssigneeModal } from '../../modals/AddTicketAssigneeModal'
 import { useFileModalStore } from '../../modals/FileModal'
@@ -48,8 +52,10 @@ import { TicketActivityCard } from '../../tickets/TicketActivityCard'
 import { TicketNoteCard } from '../../tickets/TicketNoteCard'
 
 export const ClientTicket = ({ ticketId }: { ticketId: number }) => {
+  const { replace } = useRouter()
   const { setHeader } = usePanelLayoutStore()
 
+  const duplicateTicket = useProjectBrief((state) => state.setTicket)
   const [activeTab, setActiveTab] = useState<TicketPageTabs>('description')
   const [isAddTicketAssigneeModalVisible, setAddTicketAssigneeModalVisible] = useState(false)
 
@@ -200,13 +206,29 @@ export const ClientTicket = ({ ticketId }: { ticketId: number }) => {
       <div className="mx-auto flex w-full max-w-8xl space-x-6">
         <div className="w-86 flex-none space-y-6">
           <Card title="Details">
-            <div className="absolute top-6 right-6 space-x-4">
-              <button className="group" onClick={() => toggleEditTicketModal(ticket)}>
-                <EditIcon className="stroke-waterloo group-hover:stroke-halloween-orange" />
-              </button>
-              <button className="group" onClick={() => toggleDeleteTicketModal(ticket)}>
-                <TrashIcon className="stroke-waterloo group-hover:stroke-halloween-orange" />
-              </button>
+            <div className="absolute top-6 right-6 space-x-2">
+              <Tooltip title="Duplicate" placement="top">
+                <button
+                  className="group"
+                  onClick={() => {
+                    duplicateTicket(ticket)
+                    replace('/project-brief')
+                  }}
+                >
+                  <CopyIcon className="stroke-waterloo group-hover:stroke-halloween-orange" />
+                </button>
+              </Tooltip>
+              <Tooltip title="Edit" placement="top">
+                <button className="group" onClick={() => toggleEditTicketModal(ticket)}>
+                  <EditIcon className="stroke-waterloo group-hover:stroke-halloween-orange" />
+                </button>
+              </Tooltip>
+
+              <Tooltip title="Delete" placement="top">
+                <button className="group" onClick={() => toggleDeleteTicketModal(ticket)}>
+                  <TrashIcon className="stroke-waterloo group-hover:stroke-halloween-orange" />
+                </button>
+              </Tooltip>
             </div>
             <div className="mb-6 flex space-x-5">
               <Image src={DummyCompany} height={100} width={100} alt={ticket!.clientName} />

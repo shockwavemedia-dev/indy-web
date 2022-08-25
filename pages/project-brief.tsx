@@ -6,6 +6,8 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { ChangeEvent, ReactElement, useEffect, useState } from 'react'
 import { useQuery, useQueryClient } from 'react-query'
+import create from 'zustand'
+import { combine } from 'zustand/middleware'
 import { Button } from '../components/Button'
 import { DateInput } from '../components/DateInput'
 import { FileDropZone } from '../components/FileDropZone'
@@ -26,12 +28,25 @@ import { Service } from '../types/Service.type'
 import { Ticket } from '../types/Ticket.type'
 import { objectWithFileToFormData } from '../utils/FormHelpers'
 
+export const useProjectBrief = create(
+  combine(
+    {
+      ticket: undefined as undefined | Ticket,
+    },
+    (set) => ({
+      setTicket: (ticket?: Ticket) => set({ ticket }),
+    })
+  )
+)
+
 const ProjectBriefPage: NextPageWithLayout = () => {
   const { setHeader } = usePanelLayoutStore()
   const { data: session } = useSession()
   const { showToast } = useToastStore()
   const { replace } = useRouter()
   const queryClient = useQueryClient()
+  const ticket = useProjectBrief((state) => state.ticket)
+  const setTicket = useProjectBrief((state) => state.setTicket)
 
   const submitForm = async (values: CreateProjectBriefForm) => {
     try {
@@ -57,6 +72,7 @@ const ProjectBriefPage: NextPageWithLayout = () => {
 
   useEffect(() => {
     setHeader('Project Brief')
+    setTicket()
   }, [])
 
   return (
@@ -71,9 +87,16 @@ const ProjectBriefPage: NextPageWithLayout = () => {
             requestedBy: session?.user.id || -1,
             clientId: session?.user.userType.client.id || -1,
             subject: '',
-            services: [],
+            services:
+              ticket && ticket.services
+                ? ticket.services.map(({ serviceId, extras }) => ({
+                    serviceId,
+                    extras,
+                    customFields: [],
+                  }))
+                : [],
             duedate: null,
-            description: '',
+            description: ticket ? ticket.description : '',
             attachments: [],
           }}
           onSubmit={submitForm}
