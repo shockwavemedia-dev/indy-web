@@ -1,5 +1,6 @@
 import { ChartIcon } from '../../components/icons/ChartIcon'
 import { ClipboardIcon } from '../../components/icons/ClipboardIcon'
+import { GearIcon } from '../../components/icons/GearIcon'
 import { MonitorIcon } from '../../components/icons/MonitorIcon'
 import { UserIcon } from '../../components/icons/UserIcon'
 import { VideoIcon } from '../../components/icons/VideoIcon'
@@ -30,6 +31,11 @@ export const AdminRoutes: Array<Route> = [
     title: 'Client Tickets',
     Icon: ChartIcon,
     pathname: '/client-tickets',
+  },
+  {
+    title: 'Services',
+    Icon: GearIcon,
+    pathname: '/services',
   },
   {
     title: 'Providers Feature',
