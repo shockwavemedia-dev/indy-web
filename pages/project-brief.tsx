@@ -9,6 +9,7 @@ import { useQuery, useQueryClient } from 'react-query'
 import create from 'zustand'
 import { combine } from 'zustand/middleware'
 import { Button } from '../components/Button'
+import { CheckboxNoFormik } from '../components/CheckboxNoFormik'
 import { DateInput } from '../components/DateInput'
 import { FileDropZone } from '../components/FileDropZone'
 import { CheckIcon } from '../components/icons/CheckIcon'
@@ -47,6 +48,9 @@ const ProjectBriefPage: NextPageWithLayout = () => {
   const queryClient = useQueryClient()
   const ticket = useProjectBrief((state) => state.ticket)
   const setTicket = useProjectBrief((state) => state.setTicket)
+  const [marketingDateVisible, setMarketingDateVisible] = useState(false)
+
+  const toggleMarketingDate = () => setMarketingDateVisible(!marketingDateVisible)
 
   const submitForm = async (values: CreateProjectBriefForm) => {
     try {
@@ -101,7 +105,7 @@ const ProjectBriefPage: NextPageWithLayout = () => {
           }}
           onSubmit={submitForm}
         >
-          {({ isSubmitting, values }) => (
+          {({ isSubmitting }) => (
             <Form className="mx-auto flex w-fit space-x-6">
               <div className="flex w-130 flex-col rounded-xl bg-white p-6">
                 <TextInput
@@ -124,7 +128,12 @@ const ProjectBriefPage: NextPageWithLayout = () => {
                   name="description"
                   className="mb-5 h-86"
                 />
-                {values.services.some(({ serviceId }) => serviceId === 10) && (
+                <CheckboxNoFormik
+                  onChange={toggleMarketingDate}
+                  label="Add to Marketing Plan"
+                  checked={marketingDateVisible}
+                />
+                {marketingDateVisible && (
                   <div className="mt-2 flex space-x-5">
                     <DateInput name="marketingPlanStartDate" placeholder="Enter Start Date" />
                     <DateInput name="marketingPlanEndDate" placeholder="Enter End Date" />
