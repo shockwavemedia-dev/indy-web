@@ -20,7 +20,9 @@ export const AdminClientUsersTableColumns: Array<Column<ClientUser>> = [
     Cell: ({ row: { original } }) =>
       original.userType.id === original.userType.client.ownerId ? (
         <Tooltip title="Owner" placement="top">
-          <CrownIcon className="stroke-halloween-orange" />
+          <div>
+            <CrownIcon className="stroke-halloween-orange" />
+          </div>
         </Tooltip>
       ) : (
         <></>

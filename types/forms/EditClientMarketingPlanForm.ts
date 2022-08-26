@@ -1,7 +1,12 @@
 export type EditClientMarketingForm = {
-  serviceId: number
-  extras: Array<string>
-  isEnabled: boolean
-  marketingQuota: number
-  extraQuota: number
+  clientServices: Array<{
+    id: number
+    serviceId: number
+    serviceName: string
+    marketingQuota: number
+    extraQuota: number
+    totalUsed: number
+    isEnabled: boolean
+    extras: Array<string>
+  }>
 }

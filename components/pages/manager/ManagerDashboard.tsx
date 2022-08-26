@@ -42,7 +42,7 @@ export const ManagerDashboard = () => {
               />
             ) : (
               <div className="m-auto w-fit text-base text-metallic-silver">
-                No projects to display. 😶
+                No projects to display.
               </div>
             )}
           </Card>

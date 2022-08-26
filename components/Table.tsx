@@ -106,7 +106,7 @@ export const Table = <T extends Record<string, unknown>>({
         </>
       ) : (
         <div className="m-auto w-fit text-base text-metallic-silver">
-          No entries found in {ofString} table. 😶
+          No entries found in {ofString} table.
         </div>
       )}
     </>

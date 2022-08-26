@@ -116,7 +116,7 @@ export const ClientAnimations = () => {
                 ))
               ) : (
                 <div className="m-auto w-fit text-base text-metallic-silver">
-                  No animations to display. 😶
+                  No animations to display.
                 </div>
               )}
             </div>

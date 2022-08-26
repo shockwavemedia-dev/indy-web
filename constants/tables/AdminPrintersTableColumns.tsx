@@ -14,6 +14,7 @@ export const AdminPrintersTableColumns: Array<Column<Printer>> = [
   {
     Header: 'Logo',
     accessor: 'companyThumbnailLogoUrl',
+    disableSortBy: true,
     Cell: ({ value }) => (
       <>
         {value && (
@@ -58,12 +59,12 @@ export const AdminPrintersTableColumns: Array<Column<Printer>> = [
       }
 
       return (
-        <div className="flex space-x-2">
-          <button onClick={editAdminPrinter} className="group">
-            <EditIcon className="stroke-waterloo group-hover:stroke-halloween-orange" />
+        <div className="invisible flex space-x-2 group-hover:visible">
+          <button onClick={editAdminPrinter}>
+            <EditIcon className="stroke-waterloo hover:stroke-halloween-orange" />
           </button>
-          <button onClick={deleteAdminPrinter} className="group">
-            <TrashIcon className="stroke-waterloo group-hover:stroke-halloween-orange" />
+          <button onClick={deleteAdminPrinter}>
+            <TrashIcon className="stroke-waterloo hover:stroke-halloween-orange" />
           </button>
         </div>
       )

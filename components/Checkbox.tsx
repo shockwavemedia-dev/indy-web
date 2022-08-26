@@ -15,7 +15,7 @@ export const Checkbox = ({
   value?: string
   onChange?: (event: ChangeEvent<HTMLInputElement>) => void
 }) => {
-  const { values, setFieldValue } = useFormikContext<FormikValues>()
+  const { getFieldProps, setFieldValue } = useFormikContext<FormikValues>()
 
   return (
     <div className={`relative flex items-center ${className}`}>
@@ -27,17 +27,17 @@ export const Checkbox = ({
         className="mr-3 h-4 w-4 appearance-none rounded bg-white ring-1 ring-inset ring-bright-gray checked:bg-halloween-orange checked:ring-0"
         onChange={(event: ChangeEvent<HTMLInputElement>) => {
           if (name) {
-            if (Array.isArray(values[name])) {
-              if (values[name].includes(value)) {
+            if (Array.isArray(getFieldProps(name).value)) {
+              if (getFieldProps(name).value.includes(value)) {
                 setFieldValue(
                   name,
-                  values[name].filter((v: string) => v !== value)
+                  getFieldProps(name).value.filter((v: string) => v !== value)
                 )
               } else {
-                setFieldValue(name, [...values[name], value])
+                setFieldValue(name, [...getFieldProps(name).value, value])
               }
             } else {
-              setFieldValue(name, !values[name])
+              setFieldValue(name, !getFieldProps(name).value)
             }
 
             if (onChange) {

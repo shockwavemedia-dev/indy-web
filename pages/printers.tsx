@@ -3,7 +3,7 @@ import { ReactElement, useEffect } from 'react'
 import { Card } from '../components/Card'
 import { DataTable } from '../components/DataTable'
 import { FancyButton } from '../components/FancyButton'
-import { MonitorIcon } from '../components/icons/MonitorIcon'
+import { PrinterIcon } from '../components/icons/PrinterIcon'
 import { CreatePrinterModal } from '../components/modals/CreatePrinterModal'
 import { DeletePrinterModal } from '../components/modals/DeletePrinterModal'
 import { EditPrinterModal } from '../components/modals/EditPrinterModal'
@@ -30,9 +30,8 @@ const PrintersPage: NextPageWithLayout = () => {
 
     setButtons(
       <FancyButton
-        Icon={<MonitorIcon className="stroke-halloween-orange" />}
+        Icon={<PrinterIcon className="stroke-halloween-orange" />}
         title="Create Printer"
-        subtitle="Laborerivit rem cones mil"
         onClick={toggleCreateAdminPrinterModal}
         className="w-fit"
       />

@@ -1,33 +1,28 @@
 import { Switch } from '@mui/material'
-import { Field } from 'formik'
-import { useState } from 'react'
+import { Field, useFormikContext } from 'formik'
 
 export const SwitchButton = ({
   name,
   label,
   className,
-  value,
 }: {
-  name?: string
+  name: string
   label: string
   className?: string
-  value?: boolean
 }) => {
-  const [toggle, setToggle] = useState(value)
+  const { getFieldProps, setFieldValue } = useFormikContext()
 
-  const handleToggle = () => {
-    toggle ? setToggle(false) : setToggle(true)
-  }
+  const status = getFieldProps<boolean>(name).value
 
   return (
-    <div className={`relative flex items-center ${className}`}>
-      <label
-        htmlFor={`${name}-${value}`}
-        className="right block h-fit select-none text-base font-bold text-onyx"
-      >
-        <Field component={Switch} name={name} onChange={handleToggle} checked={toggle} />
-        {label}
-      </label>
+    <div className={className}>
+      <span className="font-bold text-onyx">{label}</span>
+      <Field
+        component={Switch}
+        name={name}
+        checked={status}
+        onChange={() => setFieldValue(name, !status)}
+      />
     </div>
   )
 }

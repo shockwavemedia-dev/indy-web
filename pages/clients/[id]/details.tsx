@@ -82,7 +82,7 @@ const ClientDetails: NextPageWithLayout = () => {
           columns={AdminClientUsersTableColumns}
           dataEndpoint={`/v1/clients/${data.id}/users`}
           tableQueryKey={['client-users', data.id]}
-          ofString="Tickets"
+          ofString="Users"
           tableActions={
             <button className="flex space-x-2" onClick={() => toggleNewClientUserModal(data)}>
               <PlusIcon className="stroke-halloween-orange" />
