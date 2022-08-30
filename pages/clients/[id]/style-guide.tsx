@@ -31,7 +31,7 @@ const ClientStyleGuide: NextPageWithLayout = () => {
 
   if (!data) return null
 
-  const submitNoteForm = async (values: CreateClientStyleGuideForm) => {
+  const submitStyleGuideForm = async (values: CreateClientStyleGuideForm) => {
     try {
       const { status } = await axios.put(`/v1/clients/${data.id}`, values)
 
@@ -56,7 +56,7 @@ const ClientStyleGuide: NextPageWithLayout = () => {
         <Formik
           validationSchema={CreateClientStyleGuideSchema}
           initialValues={{ styleGuide: data.styleGuide }}
-          onSubmit={submitNoteForm}
+          onSubmit={submitStyleGuideForm}
         >
           {({ isSubmitting }) => (
             <Form className="mb-5">
