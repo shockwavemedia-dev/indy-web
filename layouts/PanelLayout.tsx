@@ -86,7 +86,7 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
     } = await axios.get<{
       data: Array<Service>
       page: Page
-    }>(`/v1/clients/1/services`)
+    }>(`/v1/clients/${session?.user.userType.client.id}/services`)
 
     return data
   })
@@ -102,12 +102,23 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
       const NewClientRoutes = ClientRoutes.map((routes) => {
         if (routes.title === 'Service Request') {
           routes.subRoutes?.map((subRoutes, index) => {
-            if (subRoutes.title === 'Animation Library' && !animationService?.isEnabled) {
-              console.log('pasokenable')
+            if (
+              subRoutes.title === 'Animation Library' &&
+              animationService &&
+              !animationService.isEnabled
+            ) {
               routes.subRoutes?.splice(index, 1)
-            } else if (subRoutes.title === 'Website Services' && !websiteService?.isEnabled) {
+            } else if (
+              subRoutes.title === 'Website Services' &&
+              websiteService &&
+              websiteService.isEnabled
+            ) {
               routes.subRoutes?.splice(index, 1)
-            } else if (subRoutes.title === 'Social Media' && !socialMediaService?.isEnabled) {
+            } else if (
+              subRoutes.title === 'Social Media' &&
+              socialMediaService &&
+              !socialMediaService.isEnabled
+            ) {
               routes.subRoutes?.splice(index, 1)
             } else {
               return subRoutes
