@@ -32,6 +32,8 @@ import { ManagerRoutes } from '../constants/routes/ManagerRoutes'
 import { StaffRoutes } from '../constants/routes/StaffRoutes'
 import DailyPressLogoWhite from '../public/images/daily-press-logo-white.png'
 import DummyAvatar from '../public/images/dummy-avatar.png'
+import { Page } from '../types/Page.type'
+import { Service } from '../types/Service.type'
 import { TicketsAndNotifacationsCount } from '../types/TicketsAndNotifacationsCount.type'
 
 export const usePanelLayoutStore = createStore(
@@ -78,9 +80,44 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
       }
     )
 
+  const { data: clientServices } = useQuery('services', async () => {
+    const {
+      data: { data },
+    } = await axios.get<{
+      data: Array<Service>
+      page: Page
+    }>(`/v1/clients/1/services`)
+
+    return data
+  })
+
+  const animationService = clientServices?.find(({ serviceId }) => serviceId === 2)
+  const socialMediaService = clientServices?.find(({ serviceId }) => serviceId === 4)
+  const websiteService = clientServices?.find(({ serviceId }) => serviceId === 5)
+
   const { panelName, routes } = useMemo(() => {
     if (session) {
       const { isAdmin, isClient, isManager, isStaff } = session
+
+      const NewClientRoutes = ClientRoutes.map((routes) => {
+        if (routes.title === 'Service Request') {
+          routes.subRoutes?.map((subRoutes, index) => {
+            if (subRoutes.title === 'Animation Library' && !animationService?.isEnabled) {
+              console.log('pasokenable')
+              routes.subRoutes?.splice(index, 1)
+            } else if (subRoutes.title === 'Website Services' && !websiteService?.isEnabled) {
+              routes.subRoutes?.splice(index, 1)
+            } else if (subRoutes.title === 'Social Media' && !socialMediaService?.isEnabled) {
+              routes.subRoutes?.splice(index, 1)
+            } else {
+              return subRoutes
+            }
+          })
+          return routes
+        } else {
+          return routes
+        }
+      })
 
       if (isAdmin) {
         return {
@@ -92,7 +129,7 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
           panelName: session.user.userType.client.name
             ? session.user.userType.client.name
             : 'Client Panel',
-          routes: ClientRoutes,
+          routes: NewClientRoutes,
         }
       } else if (isManager) {
         return {
