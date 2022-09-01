@@ -32,6 +32,8 @@ import { ManagerRoutes } from '../constants/routes/ManagerRoutes'
 import { StaffRoutes } from '../constants/routes/StaffRoutes'
 import DailyPressLogoWhite from '../public/images/daily-press-logo-white.png'
 import DummyAvatar from '../public/images/dummy-avatar.png'
+import { Page } from '../types/Page.type'
+import { Service } from '../types/Service.type'
 import { TicketsAndNotifacationsCount } from '../types/TicketsAndNotifacationsCount.type'
 
 export const usePanelLayoutStore = createStore(
@@ -78,6 +80,32 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
       }
     )
 
+  const { data: clientServices } = useQuery('services', async () => {
+    const {
+      data: { data },
+    } = await axios.get<{
+      data: Array<Service>
+      page: Page
+    }>(`/v1/clients/${session?.user.userType.client.id}/services`)
+
+    return data
+  })
+
+  const disabledService = clientServices
+    ?.filter((service) => service.isEnabled === false)
+    .map((service) => ({
+      serviceName: service.serviceName,
+    }))
+
+  const NewClientRoutes = ClientRoutes.map((routes) => {
+    disabledService?.map((service) => {
+      if (routes.title.match(service.serviceName)) {
+        routes.disabled = true
+      }
+    })
+    return routes
+  })
+
   const { panelName, routes } = useMemo(() => {
     if (session) {
       const { isAdmin, isClient, isManager, isStaff } = session
@@ -92,7 +120,7 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
           panelName: session.user.userType.client.name
             ? session.user.userType.client.name
             : 'Client Panel',
-          routes: ClientRoutes,
+          routes: NewClientRoutes,
         }
       } else if (isManager) {
         return {
@@ -215,12 +243,13 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
               />
             </div>
           )}
-          {routes.map(({ title, Icon, pathname, subRoutes = [], target }, i) => (
+          {routes.map(({ title, Icon, pathname, subRoutes = [], target, disabled }, i) => (
             <Fragment key={`route-group-${i}`}>
               <RouteButton
                 route={{ title, Icon, pathname, target }}
                 hasSubRoutes={subRoutes.length > 0}
                 isCurrentPath={pathname === asPath}
+                disabled={disabled}
               />
               {subRoutes.map(({ title, Icon, pathname, target }) => (
                 <RouteButton
