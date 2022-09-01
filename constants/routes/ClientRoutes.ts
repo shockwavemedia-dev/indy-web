@@ -1,9 +1,12 @@
 import { BriefcaseIcon } from '../../components/icons/BriefcaseIcon'
 import { ChartIcon } from '../../components/icons/ChartIcon'
-import { ClipboardIcon } from '../../components/icons/ClipboardIcon'
 import { EmailIcon } from '../../components/icons/EmailIcon'
 import { FolderIcon } from '../../components/icons/FolderIcon'
+import { ImageIcon } from '../../components/icons/ImageIcon'
 import { MonitorIcon } from '../../components/icons/MonitorIcon'
+import { PrintIcon } from '../../components/icons/PrintIcon'
+import { ShareIcon } from '../../components/icons/ShareIcon'
+import { VideoIcon } from '../../components/icons/VideoIcon'
 import { Route } from '../../types/Route.type'
 
 export const ClientRoutes: Array<Route> = [
@@ -34,42 +37,44 @@ export const ClientRoutes: Array<Route> = [
     target: '_blank',
   },
   {
-    title: 'Service Request',
-    Icon: ClipboardIcon,
-    subRoutes: [
-      {
-        title: 'Animation Library',
-        pathname: '/animation-library',
-      },
-      {
-        title: 'Website Services',
-        pathname: '/website-services',
-      },
-      {
-        title: 'EDM',
-        pathname: '/edm',
-      },
-      {
-        title: 'Social Media',
-        pathname: '/social-media',
-      },
-      {
-        title: 'Data Analytics',
-        pathname: '/data-analytics',
-      },
-      {
-        title: 'Photography/Videography',
-        pathname: '/photography-videography',
-      },
-      {
-        title: 'Print',
-        pathname: '/print',
-      },
-      {
-        title: 'Visual Displays',
-        pathname: '/visual-displays',
-      },
-    ],
+    title: 'Visual Displays',
+    Icon: ImageIcon,
+    pathname: '/visual-displays',
+  },
+  {
+    title: 'Animation Library',
+    Icon: VideoIcon,
+    pathname: '/animation-library',
+  },
+  {
+    title: 'Data Analytics',
+    Icon: ChartIcon,
+    pathname: '/data-analytics',
+  },
+  {
+    title: 'EDM',
+    Icon: EmailIcon,
+    pathname: '/edm',
+  },
+  {
+    title: 'Social Media',
+    Icon: ShareIcon,
+    pathname: '/social-media',
+  },
+  {
+    title: 'Photography/Videography',
+    Icon: VideoIcon,
+    pathname: '/photography-videography',
+  },
+  {
+    title: 'Print',
+    Icon: PrintIcon,
+    pathname: '/print',
+  },
+  {
+    title: 'Website Services',
+    Icon: MonitorIcon,
+    pathname: '/website-services',
   },
   {
     title: 'Analytics',

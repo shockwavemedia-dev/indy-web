@@ -8,13 +8,19 @@ export const RouteButton = ({
   isCurrentPath,
   hasSubRoutes,
   subRoute = false,
+  disabled,
 }: {
   route: Route
   isCurrentPath: boolean
   hasSubRoutes?: boolean
   subRoute?: boolean
+  disabled?: boolean
 }) => (
-  <div className={`flex items-center ${isCurrentPath ? 'bg-halloween-orange' : ''}`}>
+  <div
+    className={`flex items-center ${isCurrentPath ? 'bg-halloween-orange' : ''} ${
+      disabled ? 'pointer-events-none opacity-40' : ''
+    }`}
+  >
     <Link href={pathname}>
       <a
         className={`flex items-center transition-all ${

@@ -14,4 +14,6 @@ export type Client = {
   logoUrl: string
   logoThumbnailUrl: string
   ownerId: number
+  note: string
+  styleGuide: string
 }
