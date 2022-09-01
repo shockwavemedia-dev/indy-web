@@ -6,4 +6,5 @@ export type Route = {
   Icon?: Icon
   subRoutes?: Array<Route>
   target?: '_blank' | '_self' | '_parent' | '_top'
+  disabled?: boolean
 }

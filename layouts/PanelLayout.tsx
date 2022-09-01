@@ -91,44 +91,24 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
     return data
   })
 
-  const animationService = clientServices?.find(({ serviceId }) => serviceId === 2)
-  const socialMediaService = clientServices?.find(({ serviceId }) => serviceId === 4)
-  const websiteService = clientServices?.find(({ serviceId }) => serviceId === 5)
+  const disabledService = clientServices
+    ?.filter((service) => service.isEnabled === false)
+    .map((service) => ({
+      serviceName: service.serviceName,
+    }))
+
+  const NewClientRoutes = ClientRoutes.map((routes) => {
+    disabledService?.map((service) => {
+      if (routes.title.match(service.serviceName)) {
+        routes.disabled = true
+      }
+    })
+    return routes
+  })
 
   const { panelName, routes } = useMemo(() => {
     if (session) {
       const { isAdmin, isClient, isManager, isStaff } = session
-
-      const NewClientRoutes = ClientRoutes.map((routes) => {
-        if (routes.title === 'Service Request') {
-          routes.subRoutes?.map((subRoutes, index) => {
-            if (
-              subRoutes.title === 'Animation Library' &&
-              animationService &&
-              !animationService.isEnabled
-            ) {
-              routes.subRoutes?.splice(index, 1)
-            } else if (
-              subRoutes.title === 'Website Services' &&
-              websiteService &&
-              websiteService.isEnabled
-            ) {
-              routes.subRoutes?.splice(index, 1)
-            } else if (
-              subRoutes.title === 'Social Media' &&
-              socialMediaService &&
-              !socialMediaService.isEnabled
-            ) {
-              routes.subRoutes?.splice(index, 1)
-            } else {
-              return subRoutes
-            }
-          })
-          return routes
-        } else {
-          return routes
-        }
-      })
 
       if (isAdmin) {
         return {
@@ -263,12 +243,13 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
               />
             </div>
           )}
-          {routes.map(({ title, Icon, pathname, subRoutes = [], target }, i) => (
+          {routes.map(({ title, Icon, pathname, subRoutes = [], target, disabled }, i) => (
             <Fragment key={`route-group-${i}`}>
               <RouteButton
                 route={{ title, Icon, pathname, target }}
                 hasSubRoutes={subRoutes.length > 0}
                 isCurrentPath={pathname === asPath}
+                disabled={disabled}
               />
               {subRoutes.map(({ title, Icon, pathname, target }) => (
                 <RouteButton
