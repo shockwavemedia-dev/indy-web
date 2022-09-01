@@ -33,7 +33,6 @@ export const ClientRoutes: Array<Route> = [
     pathname: 'https://c7s.transmitsms.com/',
     target: '_blank',
   },
-
   {
     title: 'Service Request',
     Icon: ClipboardIcon,

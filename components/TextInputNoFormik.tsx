@@ -1,10 +1,8 @@
 import { Tooltip } from '@mui/material'
-import { Field } from 'formik'
 import { Icon } from '../types/Icon.type'
-import { FormErrorMessage } from './FormErrorMessage'
 import { InfoIcon } from './icons/InfoIcon'
 
-export const TextInput = ({
+export const TextInputNoFormik = ({
   type,
   name,
   Icon,
@@ -13,6 +11,8 @@ export const TextInput = ({
   readOnly = false,
   label,
   hint,
+  slim = false,
+  onEnter,
 }: {
   type: 'text' | 'email' | 'url'
   name: string
@@ -22,6 +22,8 @@ export const TextInput = ({
   readOnly?: boolean
   label?: string
   hint?: string
+  slim?: boolean
+  onEnter?: (text: string) => void
 }) => (
   <div className={`w-full ${className}`}>
     {(label || hint) && (
@@ -42,9 +44,17 @@ export const TextInput = ({
       </div>
     )}
     <div className="relative flex items-center">
-      {Icon && <Icon className="pointer-events-none absolute left-6 stroke-lavender-gray" />}
-      <Field
-        className="h-12.5 w-full rounded-xl px-13 text-sm font-medium text-onyx placeholder-metallic-silver ring-1 ring-bright-gray read-only:cursor-auto focus:ring-2 focus:ring-halloween-orange read-only:focus:ring-1 read-only:focus:ring-bright-gray"
+      {Icon && (
+        <Icon
+          className={`pointer-events-none absolute left-6 stroke-lavender-gray${
+            slim ? ' h-5' : ''
+          }`}
+        />
+      )}
+      <input
+        className={`w-full text-sm font-medium text-onyx placeholder-metallic-silver ring-1 ring-bright-gray read-only:cursor-auto focus:ring-2 focus:ring-halloween-orange read-only:focus:ring-1 read-only:focus:ring-bright-gray ${
+          slim ? 'h-8 rounded-md px-4' : 'h-12.5 rounded-xl px-13'
+        }`}
         type={type}
         name={name}
         id={name}
@@ -52,8 +62,10 @@ export const TextInput = ({
         placeholder={placeholder}
         autoComplete="off"
         readOnly={readOnly}
+        onKeyDown={({ key, currentTarget: { value } }) => {
+          if (key === 'Enter' && onEnter) onEnter(value)
+        }}
       />
     </div>
-    <FormErrorMessage name={name} />
   </div>
 )

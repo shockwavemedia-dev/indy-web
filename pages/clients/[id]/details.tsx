@@ -1,10 +1,17 @@
 import axios from 'axios'
+import { format } from 'date-fns'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
-import { ReactElement } from 'react'
+import { ReactElement, useState } from 'react'
 import { useQuery } from 'react-query'
 import { Card } from '../../../components/Card'
 import { DataTable } from '../../../components/DataTable'
+import { DateInputNoFormik } from '../../../components/DateInputNoFormik'
+import {
+  TicketStatusFilter,
+  useTicketStatusFilter,
+} from '../../../components/filters/TicketStatusFilter'
+import { TicketTypeFilter, useTicketTypeFilter } from '../../../components/filters/TicketTypeFilter'
 import { EditIcon } from '../../../components/icons/EditIcon'
 import { PlusIcon } from '../../../components/icons/PlusIcon'
 import { TrashIcon } from '../../../components/icons/TrashIcon'
@@ -21,6 +28,7 @@ import {
   NewClientUserModal,
   useNewClientUserModal,
 } from '../../../components/modals/NewClientUserModal'
+import { TextInputNoFormik } from '../../../components/TextInputNoFormik'
 import { TitleValue } from '../../../components/TitleValue'
 import { AdminClientUsersTableColumns } from '../../../constants/tables/AdminClientUsersTableColumns'
 import { AdminTicketsTableColumns } from '../../../constants/tables/AdminTicketsTableColumns'
@@ -37,6 +45,13 @@ const ClientDetails: NextPageWithLayout = () => {
   const toggleEditClientModal = useEditClientModal((state) => state.toggleEditClientModal)
   const toggleDeleteClientModal = useDeleteClientModal((state) => state.toggleDeleteClientModal)
   const toggleNewClientUserModal = useNewClientUserModal((state) => state.toggleNewClientUserModal)
+  const [subject, setSubject] = useState('')
+  const [code, setCode] = useState('')
+  const [duedate, setDuedate] = useState<Date>()
+  const statuses = useTicketStatusFilter((state) => state.statuses)
+  const types = useTicketTypeFilter((state) => state.types)
+  const getStatusesAsPayload = useTicketStatusFilter((state) => state.getAsPayload)
+  const getTypesAsPayload = useTicketTypeFilter((state) => state.getAsPayload)
 
   const { data } = useQuery(['clients', Number(id)], async () => {
     const { data } = await axios.get<Client>(`/v1/clients/${id}`)
@@ -98,12 +113,55 @@ const ClientDetails: NextPageWithLayout = () => {
           }}
         />
       </Card>
-      <Card title="Tickets" className="flex max-h-155 flex-1 flex-col">
+      <Card title="Tickets" className="flex max-h-155 flex-1 flex-col space-y-8">
+        <div className="absolute top-6 right-6 flex space-x-3">
+          <DateInputNoFormik
+            value={duedate}
+            onChange={setDuedate}
+            placeholder="Search by Due Date"
+            className="w-[9.75rem]"
+            noIcon
+            slim
+          />
+          <TextInputNoFormik
+            name="code"
+            placeholder="Search by Code"
+            type="text"
+            className="w-[8.25rem]"
+            onEnter={setCode}
+            slim
+          />
+          <TextInputNoFormik
+            name="subject"
+            placeholder="Search by Subject"
+            type="text"
+            className="w-[9rem]"
+            onEnter={setSubject}
+            slim
+          />
+          <TicketTypeFilter />
+          <TicketStatusFilter />
+        </div>
         <DataTable
           columns={AdminTicketsTableColumns}
           dataEndpoint={`/v1/clients/${data.id}/tickets`}
-          tableQueryKey={['tickets', data.id]}
+          tableQueryKey={[
+            'tickets',
+            data.id,
+            ...statuses,
+            ...types,
+            subject,
+            code,
+            duedate ? format(duedate, 'yyyy-MM-dd') : '',
+          ]}
           ofString="Tickets"
+          dataParams={{
+            ...getTypesAsPayload(),
+            ...getStatusesAsPayload(),
+            subject,
+            code,
+            duedate: duedate ? format(duedate, 'yyyy-MM-dd') : '',
+          }}
           rowOnClick={({ original: { id } }) => replace(`/ticket/${id}`)}
         />
       </Card>

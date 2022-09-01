@@ -137,7 +137,9 @@ export const MarketingPlannerChart = () => {
           format="LLL yyyy"
           label="From"
           value={fromDate}
-          onChange={setFromDate}
+          onChange={(date) => {
+            date && setFromDate(date)
+          }}
         />
         <DateInputNoFormik
           placeholder="Month Year"
@@ -145,7 +147,9 @@ export const MarketingPlannerChart = () => {
           format="LLL yyyy"
           label="To"
           value={toDate}
-          onChange={setToDate}
+          onChange={(date) => {
+            date && setToDate(date)
+          }}
         />
       </div>
       <div className="relative h-175 pt-4">
