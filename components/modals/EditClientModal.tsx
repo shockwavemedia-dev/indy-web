@@ -8,7 +8,6 @@ import { EditClientFormSchema } from '../../schemas/EditClientFormSchema'
 import { useToastStore } from '../../store/ToastStore'
 import { Client } from '../../types/Client.type'
 import { Staff } from '../../types/Staff.type'
-import { objectWithFileToFormData } from '../../utils/FormHelpers'
 import { Button } from '../Button'
 import { DateInput } from '../DateInput'
 import { FileDropZone } from '../FileDropZone'
@@ -62,10 +61,7 @@ export const EditClientModal = () => {
         }}
         onSubmit={async (values) => {
           try {
-            const { status } = await axios.put(
-              `/v1/clients/${client.id}`,
-              objectWithFileToFormData(values)
-            )
+            const { status } = await axios.put(`/v1/clients/${client.id}`, values)
 
             if (status === 200) {
               queryClient.invalidateQueries('clients')

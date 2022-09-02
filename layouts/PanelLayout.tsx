@@ -80,29 +80,40 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
       }
     )
 
-  const { data: clientServices } = useQuery('services', async () => {
-    const {
-      data: { data },
-    } = await axios.get<{
-      data: Array<Service>
-      page: Page
-    }>(`/v1/clients/${session?.user.userType.client.id}/services`)
+  const { data: clientServices } = useQuery(
+    'services',
+    async () => {
+      const {
+        data: { data },
+      } = await axios.get<{
+        data: Array<Service>
+        page: Page
+      }>(`/v1/clients/${session?.user.userType.client.id}/services`)
 
-    return data
-  })
+      return data
+    },
+    {
+      enabled: !!session && !session.isAdmin,
+    }
+  )
 
-  const disabledService = clientServices
-    ?.filter((service) => service.isEnabled === false)
-    .map((service) => ({
-      serviceName: service.serviceName,
-    }))
+  const disabledService =
+    clientServices &&
+    clientServices.length > 0 &&
+    clientServices
+      ?.filter((service) => service.isEnabled === false)
+      .map((service) => ({
+        serviceName: service.serviceName,
+      }))
 
   const NewClientRoutes = ClientRoutes.map((routes) => {
-    disabledService?.map((service) => {
-      if (routes.title.match(service.serviceName)) {
-        routes.disabled = true
-      }
-    })
+    disabledService &&
+      disabledService.length > 0 &&
+      disabledService?.map((service) => {
+        if (routes.title.match(service.serviceName)) {
+          routes.disabled = true
+        }
+      })
     return routes
   })
 
