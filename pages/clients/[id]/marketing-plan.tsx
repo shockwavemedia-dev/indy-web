@@ -149,9 +149,9 @@ const ClientMarketingPlanPage: NextPageWithLayout = () => {
                       />
                     </div>
                     <div className="space-y-2">
-                      {services[serviceId].extras.map((extra) => (
+                      {services[serviceId].extras.map((extra, index) => (
                         <Checkbox
-                          key={`${extra}-${serviceId}`}
+                          key={`${extra}-${serviceId}-${index}`}
                           name={`clientServices[${i}].extras`}
                           label={extra}
                           value={extra}
