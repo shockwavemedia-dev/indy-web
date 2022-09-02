@@ -1,7 +1,7 @@
 import { array, mixed, object, SchemaOf, string } from 'yup'
-import { CreateSocialMediaForm } from '../types/forms/CreateSocialMediaForm.type'
+import { SocialMediaForm } from '../types/forms/SocialMediaForm.type'
 
-export const CreateSocialMediaFormSchema: SchemaOf<CreateSocialMediaForm> = object().shape({
+export const CreateSocialMediaFormSchema: SchemaOf<SocialMediaForm> = object().shape({
   post: string().required(),
   postDate: string().required(),
   postTime: string().optional(),
