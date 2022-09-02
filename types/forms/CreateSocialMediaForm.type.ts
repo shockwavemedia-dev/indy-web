@@ -4,7 +4,7 @@ export type CreateSocialMediaForm = {
   postTime?: string | null
   attachments: Array<File>
   copy?: string | null
-  status: string
-  channels: Array<string>
+  status: 'To do' | 'In progress' | 'To approve' | 'Approved' | 'Scheduled'
+  channels: Array<'Story' | 'Facebook' | 'Instagram' | 'Twitter' | 'Linkedin'>
   notes?: string | null
 }
