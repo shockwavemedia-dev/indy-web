@@ -1,7 +1,8 @@
 import { Options } from 'react-select'
 import { SelectOption } from '../../types/SelectOption.type'
+import { SocialMediaChannel } from '../../types/SocialMediaChannel.type'
 
-export const SocialMediaChannelsOptions: Options<SelectOption<string>> = [
+export const SocialMediaChannelOptions: Options<SelectOption<SocialMediaChannel>> = [
   { label: 'Story', value: 'Story' },
   { label: 'Facebook', value: 'Facebook' },
   { label: 'Instagram', value: 'Instagram' },
