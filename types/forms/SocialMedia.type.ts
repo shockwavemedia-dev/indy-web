@@ -1,7 +1,7 @@
 import { SocialMediaChannel } from '../SocialMediaChannel.type'
 import { SocialMediaStatus } from '../SocialMediaStatus.type'
 
-export type SocialMediaForm = {
+export type SocialMedia = {
   post: string
   postDate: string | null
   postTime?: string | null
