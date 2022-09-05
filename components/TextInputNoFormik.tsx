@@ -12,7 +12,9 @@ export const TextInputNoFormik = ({
   label,
   hint,
   slim = false,
+  onChange,
   onEnter,
+  onBlur,
 }: {
   type: 'text' | 'email' | 'url'
   name: string
@@ -23,7 +25,9 @@ export const TextInputNoFormik = ({
   label?: string
   hint?: string
   slim?: boolean
-  onEnter?: (text: string) => void
+  onChange?: (text: string) => void
+  onEnter?: () => void
+  onBlur?: () => void
 }) => (
   <div className={`w-full ${className}`}>
     {(label || hint) && (
@@ -62,9 +66,15 @@ export const TextInputNoFormik = ({
         placeholder={placeholder}
         autoComplete="off"
         readOnly={readOnly}
-        onKeyDown={({ key, currentTarget: { value } }) => {
-          if (key === 'Enter' && onEnter) onEnter(value)
-        }}
+        onChange={onChange ? ({ currentTarget: { value } }) => onChange(value) : undefined}
+        onKeyDown={
+          onEnter
+            ? ({ key }) => {
+                if (key === 'Enter') onEnter()
+              }
+            : undefined
+        }
+        onBlur={onBlur ? () => onBlur() : undefined}
       />
     </div>
   </div>

@@ -46,7 +46,9 @@ const ClientDetails: NextPageWithLayout = () => {
   const toggleDeleteClientModal = useDeleteClientModal((state) => state.toggleDeleteClientModal)
   const toggleNewClientUserModal = useNewClientUserModal((state) => state.toggleNewClientUserModal)
   const [subject, setSubject] = useState('')
+  const [subjectPayload, setSubjectPayload] = useState('')
   const [code, setCode] = useState('')
+  const [codePayload, setCodePayload] = useState('')
   const [duedate, setDuedate] = useState<Date>()
   const statuses = useTicketStatusFilter((state) => state.statuses)
   const types = useTicketTypeFilter((state) => state.types)
@@ -113,8 +115,8 @@ const ClientDetails: NextPageWithLayout = () => {
           }}
         />
       </Card>
-      <Card title="Tickets" className="flex max-h-155 flex-1 flex-col space-y-8">
-        <div className="absolute top-6 right-6 flex space-x-3">
+      <Card title="Tickets" className="flex max-h-155 flex-1 flex-col">
+        <div className="ml-auto mb-5 flex flex-wrap gap-3">
           <DateInputNoFormik
             value={duedate}
             onChange={setDuedate}
@@ -128,7 +130,9 @@ const ClientDetails: NextPageWithLayout = () => {
             placeholder="Search by Code"
             type="text"
             className="w-[8.25rem]"
-            onEnter={setCode}
+            onChange={setCode}
+            onEnter={() => setCodePayload(code)}
+            onBlur={() => setCodePayload(code)}
             slim
           />
           <TextInputNoFormik
@@ -136,7 +140,9 @@ const ClientDetails: NextPageWithLayout = () => {
             placeholder="Search by Subject"
             type="text"
             className="w-[9rem]"
-            onEnter={setSubject}
+            onChange={setSubject}
+            onEnter={() => setSubjectPayload(subject)}
+            onBlur={() => setSubjectPayload(subject)}
             slim
           />
           <TicketTypeFilter />
@@ -150,16 +156,16 @@ const ClientDetails: NextPageWithLayout = () => {
             data.id,
             ...statuses,
             ...types,
-            subject,
-            code,
+            subjectPayload,
+            codePayload,
             duedate ? format(duedate, 'yyyy-MM-dd') : '',
           ]}
           ofString="Tickets"
           dataParams={{
             ...getTypesAsPayload(),
             ...getStatusesAsPayload(),
-            subject,
-            code,
+            subject: subjectPayload,
+            code: codePayload,
             duedate: duedate ? format(duedate, 'yyyy-MM-dd') : '',
           }}
           rowOnClick={({ original: { id } }) => replace(`/ticket/${id}`)}

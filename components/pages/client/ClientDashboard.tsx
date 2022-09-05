@@ -21,7 +21,9 @@ export const ClientDashboard = () => {
   const { data: session } = useSession()
   const { setHeader, setSubHeader } = usePanelLayoutStore()
   const [subject, setSubject] = useState('')
+  const [subjectPayload, setSubjectPayload] = useState('')
   const [code, setCode] = useState('')
+  const [codePayload, setCodePayload] = useState('')
   const [duedate, setDuedate] = useState<Date>()
   const statuses = useTicketStatusFilter((state) => state.statuses)
   const types = useTicketTypeFilter((state) => state.types)
@@ -59,7 +61,9 @@ export const ClientDashboard = () => {
                 placeholder="Search by Code"
                 type="text"
                 className="w-[8.25rem]"
-                onEnter={setCode}
+                onChange={setCode}
+                onEnter={() => setCodePayload(code)}
+                onBlur={() => setCodePayload(code)}
                 slim
               />
               <TextInputNoFormik
@@ -67,7 +71,9 @@ export const ClientDashboard = () => {
                 placeholder="Search by Subject"
                 type="text"
                 className="w-[9rem]"
-                onEnter={setSubject}
+                onChange={setSubject}
+                onEnter={() => setSubjectPayload(subject)}
+                onBlur={() => setSubjectPayload(subject)}
                 slim
               />
               <TicketTypeFilter />
@@ -80,16 +86,16 @@ export const ClientDashboard = () => {
                 'tickets',
                 ...statuses,
                 ...types,
-                subject,
-                code,
+                subjectPayload,
+                codePayload,
                 duedate ? format(duedate, 'yyyy-MM-dd') : '',
               ]}
               ofString="Projects"
               dataParams={{
                 ...getTypesAsPayload(),
                 ...getStatusesAsPayload(),
-                subject,
-                code,
+                subject: subjectPayload,
+                code: codePayload,
                 duedate: duedate ? format(duedate, 'yyyy-MM-dd') : '',
               }}
               rowOnClick={({ original: { id } }) => replace(`/ticket/${id}`)}
