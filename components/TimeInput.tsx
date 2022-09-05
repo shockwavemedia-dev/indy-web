@@ -44,13 +44,15 @@ export const TimeInput = ({
       onClose={hidePicker}
       open={isPickerVisible}
       renderInput={({ inputRef, inputProps }) => (
-        <div className={`w-full ${className}`}>
-          <label
-            htmlFor={name}
-            className="mb-2 inline-block text-xs font-medium text-metallic-silver empty:hidden"
-          >
-            {label}
-          </label>
+        <div className={` w-full ${className}`}>
+          <div className="mb-2 flex">
+            <label
+              htmlFor={name}
+              className="inline-block text-xs font-medium text-metallic-silver empty:hidden"
+            >
+              {label}
+            </label>
+          </div>
           <div className="relative flex items-center">
             <ClockIcon className="pointer-events-none absolute ml-6 stroke-lavender-gray" />
             <input
