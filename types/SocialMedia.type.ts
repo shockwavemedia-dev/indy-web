@@ -3,6 +3,7 @@ import { SocialMediaFile } from './SocialMediaFile.type'
 import { SocialMediaStatus } from './SocialMediaStatus.type'
 
 export type SocialMedia = {
+  id: number
   post: string
   postDate: string | null
   postTime?: string | null
