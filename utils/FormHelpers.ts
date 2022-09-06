@@ -28,7 +28,7 @@ export const objectWithFileToFormData = (object: Object) => {
 
         return newObject
       }, {}),
-      { deep: true }
+      { deep: true, exclude: ['_method'] }
     ),
     {
       indices: true,
