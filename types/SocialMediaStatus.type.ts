@@ -1,1 +1,1 @@
-export type SocialMediaStatus = 'To do' | 'In progress' | 'To approve' | 'Approved' | 'Scheduled'
+export type SocialMediaStatus = 'To Do' | 'In Progress' | 'To Approve' | 'Approved' | 'Scheduled'

@@ -34,18 +34,25 @@ const NewSocialMediaPage: NextPageWithLayout = () => {
   const queryClient = useQueryClient()
 
   const submitForm = async (values: CreateSocialMediaForm) => {
-    if (values.postDate) {
-      values.postDate = values.postDate && new Date(values.postDate).toUTCString()
+    if (values.postDate && values.postTime) {
+      const postDate = new Date(values.postDate)
+      const postTime = new Date(values.postTime)
+      const postDateTime = Date.UTC(
+        postDate.getUTCFullYear(),
+        postDate.getUTCMonth(),
+        postDate.getUTCDate(),
+        postTime.getUTCHours(),
+        postTime.getUTCMinutes(),
+        postTime.getUTCSeconds()
+      )
+
+      values.postDate = values.postTime = new Date(postDateTime)
     }
-    if (values.postTime) {
-      values.postTime = values.postTime && new Date(values.postTime).toUTCString()
-    }
+
     try {
       const { status } = await axios.post<CreateSocialMediaForm>(
         `/v1/clients/${session?.user.userType.client.id}/social-media`,
-        objectWithFileToFormData({
-          values,
-        })
+        objectWithFileToFormData(values)
       )
       if (status === 200) {
         queryClient.invalidateQueries('socialMedia')
@@ -62,7 +69,6 @@ const NewSocialMediaPage: NextPageWithLayout = () => {
       })
     }
   }
-
   useEffect(() => {
     setHeader('New Social Media')
   }, [])
@@ -78,7 +84,7 @@ const NewSocialMediaPage: NextPageWithLayout = () => {
           initialValues={{
             post: '',
             postDate: null,
-            postTime: '',
+            postTime: null,
             attachments: [],
             copy: '',
             status: '',

@@ -28,6 +28,7 @@ import { useToastStore } from '../../store/ToastStore'
 import { EditSocialMediaForm } from '../../types/forms/EditSocialMediaForm.type'
 import { NextPageWithLayout } from '../../types/pages/NextPageWithLayout.type'
 import { SocialMedia } from '../../types/SocialMedia.type'
+import { objectWithFileToFormData } from '../../utils/FormHelpers'
 
 const SocialMediaPage: NextPageWithLayout = () => {
   const {
@@ -57,8 +58,25 @@ const SocialMediaPage: NextPageWithLayout = () => {
   }, [socialMedia])
 
   const submitForm = async (values: EditSocialMediaForm) => {
+    if (values.postDate && values.postTime) {
+      const postDate = new Date(values.postDate)
+      const postTime = new Date(values.postTime)
+      const postDateTime = Date.UTC(
+        postDate.getUTCFullYear(),
+        postDate.getUTCMonth(),
+        postDate.getUTCDate(),
+        postTime.getUTCHours(),
+        postTime.getUTCMinutes(),
+        postTime.getUTCSeconds()
+      )
+
+      values.postDate = values.postTime = new Date(postDateTime)
+    }
     try {
-      const { status } = await axios.put(`/v1/social-media/${id}`, values)
+      const { status } = await axios.post(
+        `/v1/social-media/${id}`,
+        objectWithFileToFormData(values)
+      )
 
       if (status === 200) {
         queryClient.invalidateQueries('socialMedia')
@@ -84,13 +102,14 @@ const SocialMediaPage: NextPageWithLayout = () => {
           <Formik
             initialValues={{
               post: socialMedia.post,
-              postDate: socialMedia.postDate,
-              postTime: socialMedia.postTime,
-              attachments: socialMedia.attachments,
-              copy: socialMedia.copy,
+              attachments: socialMedia?.attachments,
+              copy: socialMedia?.copy,
               status: socialMedia.status,
-              channels: socialMedia.channels,
-              notes: socialMedia.notes,
+              channels: socialMedia?.channels,
+              notes: socialMedia?.notes,
+              postDate: socialMedia?.postDate,
+              postTime: socialMedia?.postDate,
+              _method: 'PUT',
             }}
             validationSchema={CreateSocialMediaFormSchema}
             onSubmit={submitForm}
