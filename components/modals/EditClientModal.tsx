@@ -7,7 +7,9 @@ import { TimezoneOptions } from '../../constants/options/TimezoneOptions'
 import { EditClientFormSchema } from '../../schemas/EditClientFormSchema'
 import { useToastStore } from '../../store/ToastStore'
 import { Client } from '../../types/Client.type'
+import { EditClientForm } from '../../types/forms/EditClientForm.type'
 import { Staff } from '../../types/Staff.type'
+import { objectWithFileToFormData } from '../../utils/FormHelpers'
 import { Button } from '../Button'
 import { DateInput } from '../DateInput'
 import { FileDropZone } from '../FileDropZone'
@@ -44,6 +46,29 @@ export const EditClientModal = () => {
 
   if (!client) return null
 
+  const submitForm = async (values: EditClientForm) => {
+    try {
+      const { status } = await axios.post(
+        `/v1/clients/${client.id}`,
+        objectWithFileToFormData(values)
+      )
+
+      if (status === 200) {
+        queryClient.invalidateQueries('clients')
+        toggleEditClientModal()
+        showToast({
+          type: 'success',
+          message: `${client.name} updated!`,
+        })
+      }
+    } catch (e) {
+      showToast({
+        type: 'error',
+        message: 'Something went wrong! 😵',
+      })
+    }
+  }
+
   return (
     <Modal title={`Edit ${client.name}`} onClose={toggleEditClientModal}>
       <Formik
@@ -58,26 +83,10 @@ export const EditClientModal = () => {
           clientSince: client.clientSince,
           rating: client.rating,
           designatedDesignerId: client.designatedDesignerId,
+          logo: null,
+          _method: 'PUT',
         }}
-        onSubmit={async (values) => {
-          try {
-            const { status } = await axios.put(`/v1/clients/${client.id}`, values)
-
-            if (status === 200) {
-              queryClient.invalidateQueries('clients')
-              toggleEditClientModal()
-              showToast({
-                type: 'success',
-                message: `${client.name} updated!`,
-              })
-            }
-          } catch (e) {
-            showToast({
-              type: 'error',
-              message: 'Something went wrong! 😵',
-            })
-          }
-        }}
+        onSubmit={submitForm}
       >
         {({ isSubmitting }) => (
           <Form className="flex w-140 flex-col">
