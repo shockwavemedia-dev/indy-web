@@ -7,6 +7,7 @@ import { Animation } from '../../types/Animation.type'
 import { AnimationCategory } from '../../types/AnimationCategory.type'
 import { EditAnimationForm } from '../../types/forms/EditAnimationForm.type'
 import { Page } from '../../types/Page.type'
+import { objectWithFileToFormData } from '../../utils/FormHelpers'
 import { Button } from '../Button'
 import { FileDropZone } from '../FileDropZone'
 import { FloppyDiskIcon } from '../icons/FloppyDiskIcon'
@@ -51,7 +52,10 @@ export const EditAnimationModal = ({
 
   const submitForm = async (values: EditAnimationForm) => {
     try {
-      const { status } = await axios.put(`/v1/libraries/${animation.id}`, values)
+      const { status } = await axios.post(
+        `/v1/libraries/${animation.id}`,
+        objectWithFileToFormData(values)
+      )
 
       if (status === 200) {
         queryClient.invalidateQueries('animations')
@@ -80,6 +84,7 @@ export const EditAnimationModal = ({
               description: animation.description,
               libraryCategoryId: animation.libraryCategoryId,
               file: animation.file,
+              _method: 'PUT',
             }}
             validationSchema={EditAnimationFormSchema}
             onSubmit={submitForm}
