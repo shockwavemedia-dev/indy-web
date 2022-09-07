@@ -5,8 +5,8 @@ import { SocialMediaStatus } from './SocialMediaStatus.type'
 export type SocialMedia = {
   id: number
   post: string
-  postDate: string | null
-  postTime?: string | null
+  postDate: Date | null
+  postTime?: Date | null
   attachments: Array<SocialMediaFile>
   copy?: string | null
   status: SocialMediaStatus

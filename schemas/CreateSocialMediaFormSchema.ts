@@ -1,15 +1,15 @@
-import { array, mixed, object, SchemaOf, string } from 'yup'
+import { array, date, mixed, object, SchemaOf, string } from 'yup'
 import { CreateSocialMediaForm } from '../types/forms/CreateSocialMediaForm.type'
 
 export const CreateSocialMediaFormSchema: SchemaOf<CreateSocialMediaForm> = object().shape({
   post: string().required(),
-  postDate: string().required(),
-  postTime: string().optional(),
+  postDate: date().nullable(),
+  postTime: date().nullable(),
   attachments: array().of(mixed().optional()),
-  copy: string().required(),
-  status: mixed().required().oneOf(['To do', 'In progress', 'To approve', 'Approved', 'Scheduled']),
+  copy: string().optional(),
+  status: mixed().optional().oneOf(['To Do', 'In Progress', 'To Approve', 'Approved', 'Scheduled']),
   channels: array().of(
-    mixed().required().oneOf(['Story', 'Facebook', 'Instagram', 'Twitter', 'Linkedin'])
+    mixed().optional().oneOf(['Story', 'Facebook', 'Instagram', 'Twitter', 'Linkedin'])
   ),
   notes: string().optional(),
 })

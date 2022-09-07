@@ -3,9 +3,9 @@ import { SelectOption } from '../../types/SelectOption.type'
 import { SocialMediaStatus } from '../../types/SocialMediaStatus.type'
 
 export const SocialMediaStatusOptions: Options<SelectOption<SocialMediaStatus>> = [
-  { label: 'To do', value: 'To do' },
-  { label: 'In progress', value: 'In progress' },
-  { label: 'To approve', value: 'To approve' },
+  { label: 'To Do', value: 'To Do' },
+  { label: 'In Progress', value: 'In Progress' },
+  { label: 'To Approve', value: 'To Approve' },
   { label: 'Approved', value: 'Approved' },
   { label: 'Scheduled', value: 'Scheduled' },
 ]

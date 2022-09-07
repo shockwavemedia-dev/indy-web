@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { format } from 'date-fns'
 import { useQueryClient } from 'react-query'
 import { useToastStore } from '../../store/ToastStore'
 import { SocialMedia } from '../../types/SocialMedia.type'
@@ -52,10 +53,7 @@ export const DeleteSocialMediaModal = ({
                 {socialMedia.post}
               </TitleValue>
               <TitleValue title="Post Date" className="capitalize">
-                {socialMedia.postDate}
-              </TitleValue>
-              <TitleValue title="Post Time" className="capitalize">
-                {socialMedia.postTime}
+                {socialMedia?.postDate && format(socialMedia?.postDate, "yy MMM''dd")}
               </TitleValue>
               <TitleValue title="Status" className="capitalize">
                 {socialMedia.status}
