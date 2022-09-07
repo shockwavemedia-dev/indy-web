@@ -105,8 +105,8 @@ const NewSocialMediaPage: NextPageWithLayout = () => {
                     className="mb-5"
                   />
                   <div className="mb-5 flex space-x-5">
-                    <TimeInput name="postTime" placeholder="Select Time" />
                     <DateInput name="postDate" placeholder="Select Post Date" />
+                    <TimeInput name="postTime" placeholder="Select Time" />
                   </div>
                   <TextInput
                     type="text"

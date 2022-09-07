@@ -106,8 +106,8 @@ const SocialMediaPage: NextPageWithLayout = () => {
               status: socialMedia.status,
               channels: socialMedia?.channels,
               notes: socialMedia?.notes,
-              postDate: new Date(socialMedia?.postDate + 'Z'),
-              postTime: new Date(socialMedia?.postDate + 'Z'),
+              postDate: socialMedia?.postDate && new Date(socialMedia?.postDate),
+              postTime: socialMedia?.postDate && new Date(socialMedia?.postDate),
               _method: 'PUT',
             }}
             validationSchema={CreateSocialMediaFormSchema}
@@ -126,8 +126,8 @@ const SocialMediaPage: NextPageWithLayout = () => {
                       className="mb-5"
                     />
                     <div className="mb-5 flex space-x-5">
-                      <TimeInput name="postTime" placeholder="Select Time" label="Post Time" />
                       <DateInput name="postDate" placeholder="Select Post Date" label="Post Date" />
+                      <TimeInput name="postTime" placeholder="Select Time" label="Post Time" />
                     </div>
                     <TextInput
                       type="text"
