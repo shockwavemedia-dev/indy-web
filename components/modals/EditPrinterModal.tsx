@@ -6,6 +6,7 @@ import { EditPrinterSchema } from '../../schemas/EditPrinterFormSchema'
 import { useToastStore } from '../../store/ToastStore'
 import { EditPrinterForm } from '../../types/forms/EditPrinterForm.type'
 import { Printer } from '../../types/Printer.type'
+import { objectWithFileToFormData } from '../../utils/FormHelpers'
 import { Button } from '../Button'
 import { FileDropZone } from '../FileDropZone'
 import { EditIcon } from '../icons/EditIcon'
@@ -27,7 +28,10 @@ export const EditPrinterModal = ({
 
   const submitForm = async (values: EditPrinterForm) => {
     try {
-      const { status } = await axios.put(`/v1/printers/${printer.id}`, values)
+      const { status } = await axios.post(
+        `/v1/printers/${printer.id}`,
+        objectWithFileToFormData(values)
+      )
 
       if (status === 200) {
         queryClient.invalidateQueries('printers')
@@ -58,6 +62,7 @@ export const EditPrinterModal = ({
               phone: printer.phone,
               description: printer.description,
               companyLogoUrl: printer.companyLogoUrl,
+              _method: 'PUT',
             }}
             onSubmit={submitForm}
           >
@@ -119,8 +124,8 @@ export const EditPrinterModal = ({
                   name="file"
                   className="mb-8"
                   maxSize={250}
-                  mimeType="image/gif"
-                  accept={['.gif', '.jpeg', '.png', '.jpg']}
+                  mimeType="image/png"
+                  accept={['.jpeg', '.png', '.jpg']}
                 />
                 <div className="flex space-x-5">
                   <Button ariaLabel="Cancel" onClick={onClose} type="button" light>
