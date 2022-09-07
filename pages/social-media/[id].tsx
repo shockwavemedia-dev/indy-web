@@ -50,7 +50,6 @@ const SocialMediaPage: NextPageWithLayout = () => {
       enabled: !!id,
     }
   )
-  console.log(socialMedia)
   useEffect(() => {
     if (socialMedia) {
       setHeader(socialMedia.post)
@@ -70,7 +69,7 @@ const SocialMediaPage: NextPageWithLayout = () => {
         postTime.getUTCSeconds()
       )
 
-      values.postDate = values.postTime = new Date(postDateTime)
+      values.postDate = new Date(postDateTime)
     }
     try {
       const { status } = await axios.post(
@@ -107,8 +106,8 @@ const SocialMediaPage: NextPageWithLayout = () => {
               status: socialMedia.status,
               channels: socialMedia?.channels,
               notes: socialMedia?.notes,
-              postDate: socialMedia?.postDate,
-              postTime: socialMedia?.postDate,
+              postDate: new Date(socialMedia?.postDate + 'Z'),
+              postTime: new Date(socialMedia?.postDate + 'Z'),
               _method: 'PUT',
             }}
             validationSchema={CreateSocialMediaFormSchema}
