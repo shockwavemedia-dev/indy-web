@@ -8,8 +8,6 @@ export const CreateSocialMediaFormSchema: SchemaOf<CreateSocialMediaForm> = obje
   attachments: array().of(mixed().optional()),
   copy: string().optional(),
   status: mixed().optional().oneOf(['To Do', 'In Progress', 'To Approve', 'Approved', 'Scheduled']),
-  channels: array().of(
-    mixed().optional().oneOf(['Story', 'Facebook', 'Instagram', 'Twitter', 'Linkedin'])
-  ),
+  channels: array().of(mixed().optional()),
   notes: string().optional(),
 })
