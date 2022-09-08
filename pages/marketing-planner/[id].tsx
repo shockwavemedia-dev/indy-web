@@ -1,7 +1,6 @@
 import axios from 'axios'
 import { Form, Formik } from 'formik'
 import Head from 'next/head'
-import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { ReactElement, useEffect, useState } from 'react'
 import { useQuery, useQueryClient } from 'react-query'
@@ -14,6 +13,7 @@ import { EditIcon } from '../../components/icons/EditIcon'
 import { FloppyDiskIcon } from '../../components/icons/FloppyDiskIcon'
 import { PlusIcon } from '../../components/icons/PlusIcon'
 import { TrashIcon } from '../../components/icons/TrashIcon'
+import { LinkButton } from '../../components/LinkButton'
 import { MarketingPlannerTaskTable } from '../../components/MarketingPlannerTaskTable'
 import {
   AddCustomTodoModal,
@@ -206,11 +206,7 @@ const MarketingPlannerPage: NextPageWithLayout = () => {
                   </Card>
                   <Card className="ml-auto w-3/4 lg:w-full">
                     <div className="flex space-x-5">
-                      <Link href="/marketing-planner">
-                        <Button ariaLabel="Cancel" type="button" light>
-                          Cancel
-                        </Button>
-                      </Link>
+                      <LinkButton title="Cancel" href="/marketing-planner" light />
                       <Button
                         ariaLabel="Submit"
                         onClick={toggleDeleteMarketingPlannerModal}

@@ -1,17 +1,18 @@
 import axios from 'axios'
 import { Form, Formik } from 'formik'
-import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { ReactElement, useEffect } from 'react'
 import { useQuery, useQueryClient } from 'react-query'
+import { MultiValue } from 'react-select'
 import { Button } from '../../components/Button'
 import { Card } from '../../components/Card'
-import { Checkbox } from '../../components/Checkbox'
+import { CreateSelectNoFormik } from '../../components/CreateSelectNoFormik'
 import { DateInput } from '../../components/DateInput'
 import { FileDropZone } from '../../components/FileDropZone'
 import { ClipboardIcon } from '../../components/icons/ClipboardIcon'
 import { EditIcon } from '../../components/icons/EditIcon'
 import { FloppyDiskIcon } from '../../components/icons/FloppyDiskIcon'
+import { LinkButton } from '../../components/LinkButton'
 import {
   FileDisplayModal,
   useFileDisplayModalStore,
@@ -27,6 +28,7 @@ import { CreateSocialMediaFormSchema } from '../../schemas/CreateSocialMediaForm
 import { useToastStore } from '../../store/ToastStore'
 import { EditSocialMediaForm } from '../../types/forms/EditSocialMediaForm.type'
 import { NextPageWithLayout } from '../../types/pages/NextPageWithLayout.type'
+import { SelectOption } from '../../types/SelectOption.type'
 import { SocialMedia } from '../../types/SocialMedia.type'
 import { objectWithFileToFormData } from '../../utils/FormHelpers'
 
@@ -71,12 +73,12 @@ const SocialMediaPage: NextPageWithLayout = () => {
 
       values.postDate = new Date(postDateTime)
     }
+
     try {
       const { status } = await axios.post(
         `/v1/social-media/${id}`,
         objectWithFileToFormData(values)
       )
-
       if (status === 200) {
         queryClient.invalidateQueries('socialMedia')
         showToast({
@@ -113,7 +115,7 @@ const SocialMediaPage: NextPageWithLayout = () => {
             validationSchema={CreateSocialMediaFormSchema}
             onSubmit={submitForm}
           >
-            {({ isSubmitting }) => (
+            {({ isSubmitting, setFieldValue }) => (
               <Form>
                 <div className="flex w-full">
                   <Card className="h-fit w-9/12">
@@ -148,17 +150,31 @@ const SocialMediaPage: NextPageWithLayout = () => {
                       className="mb-5"
                     />
                     <label className="mb-2 inline-block text-xs font-medium text-metallic-silver">
-                      Select Channels
+                      Channels
                     </label>
-                    {SocialMediaChannelOptions?.map(({ value, label }) => (
-                      <Checkbox
-                        key={`${value}-channels`}
-                        name="channels"
-                        label={label}
-                        value={value}
-                        className="mb-5"
-                      />
-                    ))}
+                    <CreateSelectNoFormik
+                      options={SocialMediaChannelOptions}
+                      className="mb-5"
+                      placeholder="Select Channel"
+                      name="channels"
+                      defaultValue={(() => {
+                        if (socialMedia.channels) {
+                          const seletedChannel = socialMedia.channels?.map((channel) => ({
+                            value: channel,
+                            label: channel,
+                          }))
+
+                          return seletedChannel
+                        }
+                      })()}
+                      isMulti
+                      onChange={(channel: MultiValue<SelectOption<string>>) => {
+                        setFieldValue(
+                          'channels',
+                          channel.map((option) => option.value)
+                        )
+                      }}
+                    />
                     <TextInput
                       type="text"
                       Icon={EditIcon}
@@ -207,11 +223,7 @@ const SocialMediaPage: NextPageWithLayout = () => {
                       className="mb-8"
                     />
                     <div className="flex space-x-5">
-                      <Link href="/social-media">
-                        <Button ariaLabel="Cancel" type="button" light>
-                          Cancel
-                        </Button>
-                      </Link>
+                      <LinkButton title="Cancel" href="/social-media" light />
                       <Button ariaLabel="Submit" disabled={isSubmitting} type="submit">
                         <FloppyDiskIcon className="stroke-white" />
                         <div>Save</div>

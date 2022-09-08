@@ -1,7 +1,7 @@
 import Head from 'next/head'
-import Link from 'next/link'
 import { ReactElement, useEffect } from 'react'
 import { MarketingPlannerChart } from '../../components/charts/MarketingPlannerChart'
+import { LinkButton } from '../../components/LinkButton'
 import { Notifications } from '../../components/Notifications'
 import { RetainerInclusions } from '../../components/RetainerInclusions'
 import PanelLayout, { usePanelLayoutStore } from '../../layouts/PanelLayout'
@@ -22,11 +22,7 @@ const MarketingPlannersPage: NextPageWithLayout = () => {
       <div className="mx-auto w-full max-w-8xl">
         <div className="flex gap-6 transition-all lg:flex-col">
           <div className="flex-1">
-            <Link href="/new-marketing-planner">
-              <a className="mb-5 grid h-12.5 w-30 place-content-center rounded-xl bg-jungle-green font-semibold text-white">
-                New Event
-              </a>
-            </Link>
+            <LinkButton title="New Event" href="/new-marketing-planner" className="mb-5 w-30" />
             <MarketingPlannerChart />
           </div>
           <div className="flex w-86 flex-col gap-6 transition-all lg:w-full lg:flex-row">
