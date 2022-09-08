@@ -2,7 +2,6 @@ import axios from 'axios'
 import { Form, Formik } from 'formik'
 import { useSession } from 'next-auth/react'
 import Head from 'next/head'
-import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { ReactElement, useEffect } from 'react'
 import { useQueryClient } from 'react-query'
@@ -14,6 +13,7 @@ import { FileDropZone } from '../components/FileDropZone'
 import { ClipboardIcon } from '../components/icons/ClipboardIcon'
 import { EditIcon } from '../components/icons/EditIcon'
 import { FloppyDiskIcon } from '../components/icons/FloppyDiskIcon'
+import { LinkButton } from '../components/LinkButton'
 import { Select } from '../components/Select'
 import { TextInput } from '../components/TextInput'
 import { TimeInput } from '../components/TimeInput'
@@ -151,11 +151,7 @@ const NewSocialMediaPage: NextPageWithLayout = () => {
                     className="mb-8"
                   />
                   <div className="flex space-x-5">
-                    <Link href="/social-media">
-                      <Button ariaLabel="Cancel" type="button" light>
-                        Cancel
-                      </Button>
-                    </Link>
+                    <LinkButton title="Cancel" href="/social-media" light />
                     <Button ariaLabel="Submit" disabled={isSubmitting} type="submit">
                       <FloppyDiskIcon className="stroke-white" />
                       <div>Save</div>

@@ -1,11 +1,11 @@
 import axios from 'axios'
-import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { ReactElement, useEffect } from 'react'
 import { useQuery } from 'react-query'
 import { Card } from '../../components/Card'
 import { PlusIcon } from '../../components/icons/PlusIcon'
 import { TrashIcon } from '../../components/icons/TrashIcon'
+import { LinkButton } from '../../components/LinkButton'
 import {
   AddServiceExtraModal,
   useAddServiceExtraModalStore,
@@ -96,14 +96,7 @@ const ServicePage: NextPageWithLayout = () => {
                 </div>
               ))}
             <div className="mt-8 flex space-x-5">
-              <Link href="/services">
-                <button
-                  type="button"
-                  className="flex h-12.5 w-4/12 items-center justify-center space-x-2 rounded-xl border-1.5 border-solid border-bright-gray bg-white text-base font-semibold text-onyx"
-                >
-                  Cancel
-                </button>
-              </Link>
+              <LinkButton title="Cancel" href="/services" light className="w-4/12" />
             </div>
           </Card>
         ))}
