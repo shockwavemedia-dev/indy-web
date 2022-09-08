@@ -42,6 +42,17 @@
   .apexcharts-series path {
     clip-path: inset(0% 0% 0% -5% round 8px);
   }
+
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  /* Firefox */
+  input[type='number'] {
+    -moz-appearance: textfield;
+  }
 }
 
 #nprogress .bar {

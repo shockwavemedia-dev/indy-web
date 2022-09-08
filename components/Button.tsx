@@ -26,9 +26,7 @@ export const Button = ({
         ? 'border-1.5 border-solid border-bright-gray bg-white text-onyx'
         : 'bg-halloween-orange text-white'
     } ${className}`}
-    onClick={() => {
-      if (onClick) onClick()
-    }}
+    onClick={onClick}
   >
     {children}
   </button>

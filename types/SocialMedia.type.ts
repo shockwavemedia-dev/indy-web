@@ -6,10 +6,13 @@ export type SocialMedia = {
   id: number
   post: string
   postDate: Date | null
-  postTime?: Date | null
+  createdAt: Date
+  createdBy: string
+  updatedBy: Date
   attachments: Array<SocialMediaFile>
   copy?: string | null
   status: SocialMediaStatus
+  clientId: number
   channels: Array<SocialMediaChannel>
   notes?: string | null
 }
