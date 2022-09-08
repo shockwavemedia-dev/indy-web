@@ -2,7 +2,6 @@ import axios from 'axios'
 import { Form, Formik } from 'formik'
 import { useSession } from 'next-auth/react'
 import Head from 'next/head'
-import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { ReactElement, useEffect } from 'react'
 import { useQueryClient } from 'react-query'
@@ -14,6 +13,7 @@ import { FileDropZone } from '../components/FileDropZone'
 import { EditIcon } from '../components/icons/EditIcon'
 import { FloppyDiskIcon } from '../components/icons/FloppyDiskIcon'
 import { PlusIcon } from '../components/icons/PlusIcon'
+import { LinkButton } from '../components/LinkButton'
 import { AddCustomTodoModal, useAddCustomTodoModal } from '../components/modals/AddCustomTodoModal'
 import { RichTextInput } from '../components/RichTextInput'
 import { Table } from '../components/Table'
@@ -166,11 +166,7 @@ const NewMarketingPlannerPage: NextPageWithLayout = () => {
                   </Card>
                   <Card className="ml-auto w-1/2">
                     <div className="flex space-x-5">
-                      <Link href="/marketing-planner">
-                        <Button ariaLabel="Cancel" type="button" light>
-                          Cancel
-                        </Button>
-                      </Link>
+                      <LinkButton title="Cancel" href="/marketing-planner" light />
                       <Button ariaLabel="Submit" disabled={isSubmitting} type="submit">
                         <FloppyDiskIcon className="stroke-white" />
                         <div>Save</div>

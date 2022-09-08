@@ -2,7 +2,6 @@ import axios from 'axios'
 import { Form, Formik } from 'formik'
 import { useSession } from 'next-auth/react'
 import Head from 'next/head'
-import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { ChangeEvent, ReactElement, useEffect } from 'react'
 import { useQuery, useQueryClient } from 'react-query'
@@ -14,6 +13,7 @@ import { ClipboardIcon } from '../components/icons/ClipboardIcon'
 import { EditIcon } from '../components/icons/EditIcon'
 import { FloppyDiskIcon } from '../components/icons/FloppyDiskIcon'
 import { UserIcon } from '../components/icons/UserIcon'
+import { LinkButton } from '../components/LinkButton'
 import { RadioButton } from '../components/RadioButton'
 import { RichTextInput } from '../components/RichTextInput'
 import { Select } from '../components/Select'
@@ -302,11 +302,7 @@ const NewPhotographyVideographyPage: NextPageWithLayout = () => {
                   </Card>
                   <Card>
                     <div className="flex space-x-5">
-                      <Link href="/photography-videography">
-                        <Button ariaLabel="Cancel" type="button" light>
-                          Cancel
-                        </Button>
-                      </Link>
+                      <LinkButton title="Cancel" href="/photography-videography" light />
                       <Button ariaLabel="Submit" disabled={isSubmitting} type="submit">
                         <FloppyDiskIcon className="stroke-white" />
                         <div>Save</div>

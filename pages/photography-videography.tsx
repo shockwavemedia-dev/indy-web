@@ -7,6 +7,7 @@ import { AvailabilityCalendar } from '../components/AvailabilityCalendar'
 import { Button } from '../components/Button'
 import { Card } from '../components/Card'
 import { DataTable } from '../components/DataTable'
+import { LinkButton } from '../components/LinkButton'
 import { DeletePhotographyVideographyModal } from '../components/modals/DeletePhotographyVideographyModal'
 import { Notifications } from '../components/Notifications'
 import { RetainerInclusions } from '../components/RetainerInclusions'
@@ -42,11 +43,7 @@ const PhotographyVideographyPage: NextPageWithLayout = () => {
           <div className="flex flex-1 flex-col">
             <Card className="flex-1 flex-col transition-all">
               <div className="mb-5 flex space-x-5">
-                <Link href="/new-photography-videography">
-                  <a className="flex h-12.5 w-40 items-center justify-center space-x-2 rounded-xl bg-halloween-orange text-base font-semibold text-white">
-                    Book
-                  </a>
-                </Link>
+                <LinkButton title="Book" href="/new-photography-videography" className="w-44" />
                 <Button ariaLabel="Book" type="button" className="mb-4 w-44" light>
                   Quote/Inquire
                 </Button>
