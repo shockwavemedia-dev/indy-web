@@ -18,7 +18,11 @@ import { SocialMediaStatusOptions } from '../options/SocialMediaStatusOptions'
 
 const updateSocialMedia = async (socialMedia: SocialMedia) => {
   try {
-    const { status } = await axios.put(`/v1/social-media/${socialMedia.id}`, socialMedia)
+    const { status } = await axios.put(`/v1/social-media/${socialMedia.id}`, {
+      ...socialMedia,
+      copy: socialMedia.copy ?? '',
+      notes: socialMedia.notes ?? '',
+    })
 
     return status === 200
   } catch (e) {
