@@ -14,9 +14,9 @@ import { EditIcon } from '../../components/icons/EditIcon'
 import { FloppyDiskIcon } from '../../components/icons/FloppyDiskIcon'
 import { LinkButton } from '../../components/LinkButton'
 import {
-  FileDisplayModal,
-  useFileDisplayModalStore,
-} from '../../components/modals/FileDisplayModal'
+  SocialMediaFileModal,
+  useSocialMediaFileModalStore,
+} from '../../components/modals/SocialMediaFileModal'
 import { PhotographyVideographyFileButton } from '../../components/PhotographyVideographyFileButton'
 import { Select } from '../../components/Select'
 import { TextInput } from '../../components/TextInput'
@@ -39,7 +39,7 @@ const SocialMediaPage: NextPageWithLayout = () => {
   const { setHeader } = usePanelLayoutStore()
   const queryClient = useQueryClient()
   const { showToast } = useToastStore()
-  const { toggleShowPhotoVideoFileModal } = useFileDisplayModalStore()
+  const { toggleShowSocialMediaFileModal } = useSocialMediaFileModalStore()
 
   const { data: socialMedia } = useQuery(
     ['socialMedia', Number(id)],
@@ -187,9 +187,15 @@ const SocialMediaPage: NextPageWithLayout = () => {
                       <div className="flex flex-wrap gap-4">
                         {!!socialMedia.attachments ? (
                           socialMedia.attachments.map(
-                            ({ socialMediaAttachmentId, url, thumbnailUrl }) => {
+                            ({ socialMediaAttachmentId, url, thumbnailUrl, name, fileType }) => {
                               const toggleFile = () =>
-                                toggleShowPhotoVideoFileModal(url, 'image/jpeg', 'socialMediaFile')
+                                toggleShowSocialMediaFileModal(
+                                  url,
+                                  fileType,
+                                  name,
+                                  socialMediaAttachmentId,
+                                  socialMedia.id
+                                )
 
                               return (
                                 <>
@@ -197,8 +203,8 @@ const SocialMediaPage: NextPageWithLayout = () => {
                                     key={`socialMediaFile-${socialMediaAttachmentId}`}
                                     className="h-35 w-35"
                                     url={url}
-                                    fileType="image/jpeg"
-                                    name={`socialMediaFile-${socialMediaAttachmentId}`}
+                                    fileType={fileType}
+                                    name={name}
                                     thumbnailUrl={thumbnailUrl}
                                     onClick={toggleFile}
                                   />
@@ -214,7 +220,7 @@ const SocialMediaPage: NextPageWithLayout = () => {
                       </div>
                     </Card>
                     <FileDropZone
-                      label="Update Attachment"
+                      label="Add Attachment"
                       name="attachments"
                       maxSize={250}
                       mimeType="image/gif"
@@ -236,8 +242,7 @@ const SocialMediaPage: NextPageWithLayout = () => {
           </Formik>
         </div>
       )}
-      <FileDisplayModal />
-      <FileDisplayModal />
+      <SocialMediaFileModal />
     </>
   )
 }
