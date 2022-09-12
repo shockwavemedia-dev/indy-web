@@ -3,6 +3,8 @@ import { ReactElement, useEffect } from 'react'
 import { Button } from '../components/Button'
 import { Card } from '../components/Card'
 import { CreateSocialMediaModal } from '../components/modals/CreateSocialMediaModal'
+import { DeleteSocialMediaModal } from '../components/modals/DeleteSocialMediaModal'
+import { EditSocialMediaModal } from '../components/modals/EditSocialMediaModal'
 import { SocialMediaTable } from '../components/SocialMediaTable'
 import PanelLayout, { usePanelLayoutStore } from '../layouts/PanelLayout'
 import { useSocialMediaStore } from '../store/SocialMediaStore'
@@ -10,7 +12,15 @@ import { NextPageWithLayout } from '../types/pages/NextPageWithLayout.type'
 const SocialMediaPage: NextPageWithLayout = () => {
   const { setHeader } = usePanelLayoutStore()
 
-  const { isCreateSocialMediaModalVisible, toggleCreateSocialMediaModal } = useSocialMediaStore()
+  const {
+    activeSocialMedia,
+    isCreateSocialMediaModalVisible,
+    isEditSocialMediaModalVisible,
+    isDeleteSocialMediaModalVisible,
+    toggleCreateSocialMediaModal,
+    toggleEditSocialMediaModal,
+    toggleDeleteSocialMediaModal,
+  } = useSocialMediaStore()
 
   useEffect(() => {
     setHeader('Social Media')
@@ -41,6 +51,16 @@ const SocialMediaPage: NextPageWithLayout = () => {
       <CreateSocialMediaModal
         isVisible={isCreateSocialMediaModalVisible}
         onClose={toggleCreateSocialMediaModal}
+      />
+      <EditSocialMediaModal
+        isVisible={isEditSocialMediaModalVisible}
+        onClose={toggleEditSocialMediaModal}
+        socialMedia={activeSocialMedia}
+      />
+      <DeleteSocialMediaModal
+        isVisible={isDeleteSocialMediaModalVisible}
+        onClose={toggleDeleteSocialMediaModal}
+        socialMedia={activeSocialMedia}
       />
     </>
   )

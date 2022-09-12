@@ -6,8 +6,11 @@ import { useEffect, useId, useRef, useState } from 'react'
 import { useQueryClient } from 'react-query'
 import { MultiValue, SingleValue } from 'react-select'
 import { Column } from 'react-table'
+import { EditIcon } from '../../components/icons/EditIcon'
+import { TrashIcon } from '../../components/icons/TrashIcon'
 import { SocialMediaChannelSelect } from '../../components/SocialMediaChannelSelect'
 import { SocialMediaStatusSelect } from '../../components/SocialMediaStatusSelect'
+import { useSocialMediaStore } from '../../store/SocialMediaStore'
 import { useToastStore } from '../../store/ToastStore'
 import { SelectOption } from '../../types/SelectOption.type'
 import { SocialMedia } from '../../types/SocialMedia.type'
@@ -31,12 +34,12 @@ const updateSocialMedia = async (socialMedia: SocialMedia) => {
 }
 
 export const SocialMediaColumns: Array<Column<SocialMedia>> = [
-  {
-    Header: 'ID',
-    accessor: 'id',
-    id: 'id',
-    Cell: ({ value }) => <div className="text-sm font-medium text-onyx">{value}</div>,
-  },
+  // {
+  //   Header: 'ID',
+  //   accessor: 'id',
+  //   id: 'id',
+  //   Cell: ({ value }) => <div className="text-sm font-medium text-onyx">{value}</div>,
+  // },
   {
     Header: 'Post Topic',
     accessor: 'post',
@@ -349,6 +352,36 @@ export const SocialMediaColumns: Array<Column<SocialMedia>> = [
             }
           }}
         />
+      )
+    },
+  },
+  {
+    Header: 'Actions',
+    accessor: 'id',
+    disableSortBy: true,
+    Cell: ({ row: { original: socialMedia } }) => {
+      const { setActiveSocialMedia, toggleEditSocialMediaModal, toggleDeleteSocialMediaModal } =
+        useSocialMediaStore()
+
+      const editSocialMedia = () => {
+        setActiveSocialMedia(socialMedia)
+        toggleEditSocialMediaModal()
+      }
+
+      const deleteSocialMedia = () => {
+        setActiveSocialMedia(socialMedia)
+        toggleDeleteSocialMediaModal()
+      }
+
+      return (
+        <div className="invisible flex space-x-2 group-hover:visible">
+          <button onClick={editSocialMedia}>
+            <EditIcon className="stroke-waterloo hover:stroke-halloween-orange" />
+          </button>
+          <button onClick={deleteSocialMedia}>
+            <TrashIcon className="stroke-waterloo hover:stroke-halloween-orange" />
+          </button>
+        </div>
       )
     },
   },
