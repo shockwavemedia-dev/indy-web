@@ -45,17 +45,18 @@ export const SocialMediaFileModal = () => {
   const { showToast } = useToastStore()
 
   const downloadFile = () => {
-    if (signedUrl && name) {
-      fetch(signedUrl)
-        .then((res) => res.blob())
-        .then((blob) => {
-          const url = window.URL.createObjectURL(blob)
-          const link = document.createElement('a')
-          link.href = url
-          link.setAttribute('download', name)
-          document.body.appendChild(link)
-          link.click()
-        })
+    if (signedUrl) {
+      window.open(signedUrl, '_blank')
+      // fetch(signedUrl)
+      //   .then((res) => res.blob())
+      //   .then((blob) => {
+      //     const url = window.URL.createObjectURL(blob)
+      //     const link = document.createElement('a')
+      //     link.href = url
+      //     link.setAttribute('download', name)
+      //     document.body.appendChild(link)
+      //     link.click()
+      //   })
     }
   }
 
