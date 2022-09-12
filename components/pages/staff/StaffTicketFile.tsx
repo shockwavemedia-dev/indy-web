@@ -57,16 +57,17 @@ export const StaffTicketFile = ({ ticketFileId }: { ticketFileId: number }) => {
 
   const downloadFile = () => {
     if (!!ticketFile && ticketFile?.signedUrl !== null) {
-      fetch(ticketFile.signedUrl)
-        .then((res) => res.blob())
-        .then((blob) => {
-          const url = window.URL.createObjectURL(blob)
-          const link = document.createElement('a')
-          link.href = url
-          link.setAttribute('download', ticketFile.name)
-          document.body.appendChild(link)
-          link.click()
-        })
+      window.open(ticketFile.signedUrl, '_blank')
+      // fetch(ticketFile.signedUrl)
+      //   .then((res) => res.blob())
+      //   .then((blob) => {
+      //     const url = window.URL.createObjectURL(blob)
+      //     const link = document.createElement('a')
+      //     link.href = url
+      //     link.setAttribute('download', ticketFile.name)
+      //     document.body.appendChild(link)
+      //     link.click()
+      //   })
     }
   }
 

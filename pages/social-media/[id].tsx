@@ -8,15 +8,19 @@ import { Button } from '../../components/Button'
 import { Card } from '../../components/Card'
 import { CreateSelectNoFormik } from '../../components/CreateSelectNoFormik'
 import { DateInput } from '../../components/DateInput'
-import { FileDropZone } from '../../components/FileDropZone'
 import { ClipboardIcon } from '../../components/icons/ClipboardIcon'
 import { EditIcon } from '../../components/icons/EditIcon'
 import { FloppyDiskIcon } from '../../components/icons/FloppyDiskIcon'
+import { PlusIcon } from '../../components/icons/PlusIcon'
 import { LinkButton } from '../../components/LinkButton'
 import {
-  FileDisplayModal,
-  useFileDisplayModalStore,
-} from '../../components/modals/FileDisplayModal'
+  SocialMediaFileModal,
+  useSocialMediaFileModalStore,
+} from '../../components/modals/SocialMediaFileModal'
+import {
+  UploadSocialMediaFileModal,
+  useUploadSocialMediaFileModalStore,
+} from '../../components/modals/UploadSocialMediaFileModal'
 import { PhotographyVideographyFileButton } from '../../components/PhotographyVideographyFileButton'
 import { Select } from '../../components/Select'
 import { TextInput } from '../../components/TextInput'
@@ -39,7 +43,9 @@ const SocialMediaPage: NextPageWithLayout = () => {
   const { setHeader } = usePanelLayoutStore()
   const queryClient = useQueryClient()
   const { showToast } = useToastStore()
-  const { toggleShowPhotoVideoFileModal } = useFileDisplayModalStore()
+  const { toggleShowSocialMediaFileModal } = useSocialMediaFileModalStore()
+
+  const { toggleUploadSocialMediaFileModal } = useUploadSocialMediaFileModalStore()
 
   const { data: socialMedia } = useQuery(
     ['socialMedia', Number(id)],
@@ -94,6 +100,8 @@ const SocialMediaPage: NextPageWithLayout = () => {
     }
   }
 
+  const toggleUploadFile = () => toggleUploadSocialMediaFileModal(socialMedia)
+
   if (!socialMedia) return null
 
   return (
@@ -117,8 +125,8 @@ const SocialMediaPage: NextPageWithLayout = () => {
           >
             {({ isSubmitting, setFieldValue }) => (
               <Form>
-                <div className="flex w-full">
-                  <Card className="h-fit w-9/12">
+                <div className="flex w-full flex-col">
+                  <Card className="mb-5 h-fit w-9/12">
                     <TextInput
                       type="text"
                       Icon={EditIcon}
@@ -183,45 +191,52 @@ const SocialMediaPage: NextPageWithLayout = () => {
                       name="notes"
                       className="mb-5"
                     />
-                    <Card title="Attachment" className="mt-5">
-                      <div className="flex flex-wrap gap-4">
-                        {!!socialMedia.attachments ? (
-                          socialMedia.attachments.map(
-                            ({ socialMediaAttachmentId, url, thumbnailUrl }) => {
-                              const toggleFile = () =>
-                                toggleShowPhotoVideoFileModal(url, 'image/jpeg', 'socialMediaFile')
-
-                              return (
-                                <>
-                                  <PhotographyVideographyFileButton
-                                    key={`socialMediaFile-${socialMediaAttachmentId}`}
-                                    className="h-35 w-35"
-                                    url={url}
-                                    fileType="image/jpeg"
-                                    name={`socialMediaFile-${socialMediaAttachmentId}`}
-                                    thumbnailUrl={thumbnailUrl}
-                                    onClick={toggleFile}
-                                  />
-                                </>
-                              )
-                            }
-                          )
-                        ) : (
-                          <div className="m-auto text-base text-metallic-silver">
-                            No files found.
-                          </div>
-                        )}
+                  </Card>
+                  <Card title="Attachment" className="mb-5 h-fit w-9/12">
+                    <button
+                      onClick={toggleUploadFile}
+                      className="absolute top-6 right-6 flex space-x-2"
+                      type="button"
+                    >
+                      <PlusIcon className="stroke-halloween-orange" />
+                      <div className=" text-sm font-semibold text-halloween-orange">
+                        Upload File
                       </div>
-                    </Card>
-                    <FileDropZone
-                      label="Update Attachment"
-                      name="attachments"
-                      maxSize={250}
-                      mimeType="image/gif"
-                      accept={['.gif', '.jpeg', '.png', '.jpg']}
-                      multiple
-                      className="mb-8"
-                    />
+                    </button>
+                    <div className="flex flex-wrap gap-4">
+                      {!!socialMedia.attachments ? (
+                        socialMedia.attachments.map(
+                          ({ socialMediaAttachmentId, url, thumbnailUrl, name, fileType }) => {
+                            const toggleFile = () =>
+                              toggleShowSocialMediaFileModal(
+                                url,
+                                fileType,
+                                name,
+                                socialMediaAttachmentId,
+                                socialMedia.id
+                              )
+
+                            return (
+                              <>
+                                <PhotographyVideographyFileButton
+                                  key={`socialMediaFile-${socialMediaAttachmentId}`}
+                                  className="h-35 w-35"
+                                  url={url}
+                                  fileType={fileType}
+                                  name={name}
+                                  thumbnailUrl={thumbnailUrl}
+                                  onClick={toggleFile}
+                                />
+                              </>
+                            )
+                          }
+                        )
+                      ) : (
+                        <div className="m-auto text-base text-metallic-silver">No files found.</div>
+                      )}
+                    </div>
+                  </Card>
+                  <Card className="h-fit w-9/12">
                     <div className="flex space-x-5">
                       <LinkButton title="Cancel" href="/social-media" light />
                       <Button ariaLabel="Submit" disabled={isSubmitting} type="submit">
@@ -236,8 +251,8 @@ const SocialMediaPage: NextPageWithLayout = () => {
           </Formik>
         </div>
       )}
-      <FileDisplayModal />
-      <FileDisplayModal />
+      <SocialMediaFileModal />
+      <UploadSocialMediaFileModal />
     </>
   )
 }
