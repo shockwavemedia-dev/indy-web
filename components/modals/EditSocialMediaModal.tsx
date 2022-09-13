@@ -30,7 +30,6 @@ import {
   UploadSocialMediaFileModal,
   useUploadSocialMediaFileModalStore,
 } from './UploadSocialMediaFileModal'
-
 export const EditSocialMediaModal = ({
   isVisible,
   onClose,
@@ -109,7 +108,7 @@ export const EditSocialMediaModal = ({
               onSubmit={submitForm}
             >
               {({ isSubmitting, setFieldValue }) => (
-                <Form className="mr-8 max-h-130 overflow-y-auto">
+                <Form className="mr-8 max-h-120 overflow-y-auto">
                   <div className="flex w-full flex-col">
                     <Card className="mb-5 h-fit w-full">
                       <TextInput
@@ -240,20 +239,21 @@ export const EditSocialMediaModal = ({
                 </Form>
               )}
             </Formik>
-            <div className="h-fit max-h-130 w-140 overflow-y-auto">
+            <div className="h-fit max-h-130 w-130 overflow-y-auto">
               <Card
-                className="mb-8 space-y-5"
+                className="bg-cultured"
                 title="Activity"
                 titlePosition="center"
                 titleClassName="text-halloween-orange"
               >
                 {!!socialMedia.activities && socialMedia!.activities?.length > 0 && (
                   <div className="flex flex-col">
-                    {socialMedia.activities?.map(({ action, user }) => (
+                    {socialMedia.activities?.map(({ action, user, fields }) => (
                       <SocialMediaActivityCard
                         key={`activity-${action}`}
                         action={action}
                         createdBy={user}
+                        fields={fields}
                       />
                     ))}
                   </div>
