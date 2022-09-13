@@ -76,7 +76,7 @@ export const CreateSocialMediaModal = ({
   return (
     <>
       {isVisible && (
-        <Modal title="New Social Media" onClose={onClose}>
+        <Modal title="New Social Media" className="max-h-175 overflow-y-auto" onClose={onClose}>
           <div className="mx-auto w-full max-w-8xl">
             <Formik
               validationSchema={CreateSocialMediaFormSchema}
