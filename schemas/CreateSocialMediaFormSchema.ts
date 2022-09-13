@@ -7,7 +7,9 @@ export const CreateSocialMediaFormSchema: SchemaOf<CreateSocialMediaForm> = obje
   postTime: date().nullable(),
   attachments: array().of(mixed().optional()),
   copy: string().optional(),
-  status: mixed().optional().oneOf(['To Do', 'In Progress', 'To Approve', 'Approved', 'Scheduled']),
+  status: mixed()
+    .optional()
+    .oneOf(['To Do', 'In Progress', 'To Approve', 'Approved', 'Scheduled', 'Client Created Draft']),
   channels: array().of(mixed().optional()),
   notes: string().optional(),
 })
