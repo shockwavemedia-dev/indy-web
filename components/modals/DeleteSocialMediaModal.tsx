@@ -28,7 +28,7 @@ export const DeleteSocialMediaModal = ({
       const { status } = await axios.delete(`/v1/social-media/${socialMedia.id}`)
 
       if (status === 200) {
-        queryClient.invalidateQueries('socialMedia')
+        queryClient.invalidateQueries(['socialMedias'])
         onClose()
         showToast({
           type: 'success',

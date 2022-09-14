@@ -14,12 +14,17 @@ import { TextInput } from '../TextInput'
 export const useSocialMediaCommentModalStore = createStore(
   combine(
     {
+      socialMediaId: -1,
       commentId: -1,
       comment: '',
     },
     (set) => ({
-      toggleModal: (commentId?: number, comment?: string) =>
-        set(() => ({ commentId: commentId ?? -1, comment: comment ?? '' })),
+      toggleModal: (socialMediaId?: number, commentId?: number, comment?: string) =>
+        set(() => ({
+          socialMediaId: socialMediaId ?? -1,
+          commentId: commentId ?? -1,
+          comment: comment ?? '',
+        })),
     })
   )
 )
@@ -27,7 +32,7 @@ export const useSocialMediaCommentModalStore = createStore(
 export const EditSocialMediaCommentModal = () => {
   const queryClient = useQueryClient()
   const { showToast } = useToastStore()
-  const { commentId, comment, toggleModal } = useSocialMediaCommentModalStore()
+  const { socialMediaId, commentId, comment, toggleModal } = useSocialMediaCommentModalStore()
 
   const submitEditCommentForm = async (values: CreateSocialMediaCommentForm) => {
     try {
@@ -35,7 +40,7 @@ export const EditSocialMediaCommentModal = () => {
 
       if (status === 200) {
         toggleModal()
-        queryClient.invalidateQueries('socialMedia')
+        queryClient.invalidateQueries(['socialMedia', socialMediaId])
         queryClient.invalidateQueries(['socialMedias'])
         showToast({
           type: 'success',

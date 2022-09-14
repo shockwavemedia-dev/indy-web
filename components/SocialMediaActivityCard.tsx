@@ -21,7 +21,6 @@ export const SocialMediaActivityCard = ({
   const modified =
     fieldObject &&
     fieldObject.map(([field, values]) => {
-      console.log(field)
       if (field === 'post' && typeof values.old === 'string' && typeof values.new === 'string') {
         return (
           <div key={field} className="flex flex-col">

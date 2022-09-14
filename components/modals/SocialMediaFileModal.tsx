@@ -66,11 +66,12 @@ export const SocialMediaFileModal = () => {
       const { status } = await axios.put(`/v1/social-media/${socialMediaId}/attachments`, values)
 
       if (status === 200) {
-        queryClient.invalidateQueries('socialMedia')
+        queryClient.invalidateQueries(['socialMedia', socialMediaId])
+        queryClient.invalidateQueries(['socialMedias'])
         toggleShowSocialMediaFileModal()
         showToast({
           type: 'success',
-          message: 'Social Media successfully deleted!',
+          message: 'Attachment successfully deleted!',
         })
       }
     } catch (e) {

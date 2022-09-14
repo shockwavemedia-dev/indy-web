@@ -10,12 +10,17 @@ import { Modal } from '../Modal'
 export const useDeleteSocialMediaCommentModalStore = createStore(
   combine(
     {
+      socialMediaId: -1,
       commentId: -1,
       comment: '',
     },
     (set) => ({
-      toggleModal: (commentId?: number, comment?: string) =>
-        set(() => ({ commentId: commentId ?? -1, comment: comment ?? '' })),
+      toggleModal: (socialMediaId?: number, commentId?: number, comment?: string) =>
+        set(() => ({
+          socialMediaId: socialMediaId ?? -1,
+          commentId: commentId ?? -1,
+          comment: comment ?? '',
+        })),
     })
   )
 )
@@ -23,14 +28,14 @@ export const useDeleteSocialMediaCommentModalStore = createStore(
 export const DeleteSocialMediaCommentModal = () => {
   const queryClient = useQueryClient()
   const { showToast } = useToastStore()
-  const { commentId, comment, toggleModal } = useDeleteSocialMediaCommentModalStore()
+  const { socialMediaId, commentId, comment, toggleModal } = useDeleteSocialMediaCommentModalStore()
 
   const deleteComment = async () => {
     try {
       const { status } = await axios.delete(`/v1/social-media-comments/${commentId}`)
 
       if (status === 200) {
-        queryClient.invalidateQueries('socialMedia')
+        queryClient.invalidateQueries(['socialMedia', socialMediaId])
         queryClient.invalidateQueries(['socialMedias'])
         toggleModal()
         showToast({

@@ -52,7 +52,7 @@ export const EditSocialMediaModal = ({
   const { data: session } = useSession()
 
   const { data: socialMediaDetails } = useQuery(
-    'socialMedia',
+    ['socialMedia', socialMedia.id],
     async () => {
       const { data } = await axios.get<SocialMedia>(`/v1/social-media/${socialMedia.id}`)
 
@@ -85,7 +85,7 @@ export const EditSocialMediaModal = ({
         objectWithFileToFormData(values)
       )
       if (status === 200) {
-        queryClient.invalidateQueries('socialMedia')
+        queryClient.invalidateQueries(['socialMedia', socialMedia.id])
         queryClient.invalidateQueries(['socialMedias'])
         showToast({
           type: 'success',
@@ -110,7 +110,7 @@ export const EditSocialMediaModal = ({
   ) => {
     const { status } = await axios.post(`/v1/social-media/${socialMedia.id}/comments`, values)
     if (status === 200) {
-      queryClient.invalidateQueries('socialMedia')
+      queryClient.invalidateQueries(['socialMedia', socialMedia.id])
       queryClient.invalidateQueries(['socialMedias'])
       resetForm()
     }
@@ -312,6 +312,7 @@ export const EditSocialMediaModal = ({
                           ({ id, comment, createdBy, createdAt, createdById }) => (
                             <SocialMediaCommentCard
                               key={`comment-${id}`}
+                              socialMediaId={socialMediaDetails.id}
                               id={id}
                               comment={comment}
                               createdBy={createdBy}

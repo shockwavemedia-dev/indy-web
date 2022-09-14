@@ -8,12 +8,14 @@ import { useDeleteSocialMediaCommentModalStore } from './modals/DeleteSocialMedi
 import { useSocialMediaCommentModalStore } from './modals/EditSocialMediaCommentModal'
 
 export const SocialMediaCommentCard = ({
+  socialMediaId,
   id,
   comment,
   createdBy,
   createdAt,
   isEditDelete = false,
 }: {
+  socialMediaId: number
   id: number
   comment: string
   createdBy: string
@@ -33,7 +35,7 @@ export const SocialMediaCommentCard = ({
                 className="group"
                 onClick={(e) => {
                   e.stopPropagation()
-                  toggleEditCommentModal(id, comment)
+                  toggleEditCommentModal(socialMediaId, id, comment)
                 }}
               >
                 <EditIcon className="stroke-waterloo group-hover:stroke-halloween-orange" />
@@ -44,7 +46,7 @@ export const SocialMediaCommentCard = ({
                 className="group"
                 onClick={(e) => {
                   e.stopPropagation()
-                  toggleDeleteCommentModal(id, comment)
+                  toggleDeleteCommentModal(socialMediaId, id, comment)
                 }}
               >
                 <TrashIcon className="stroke-waterloo group-hover:stroke-halloween-orange" />
