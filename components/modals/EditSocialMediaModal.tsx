@@ -110,7 +110,7 @@ export const EditSocialMediaModal = ({
   return (
     <>
       {isVisible && (
-        <Modal title="Edit Social Media" bgColor="bg-cultured" className="w-320" onClose={onClose}>
+        <Modal title="Edit Social Media" bgColor="bg-cultured" className="w-270" onClose={onClose}>
           <div className="flex w-full">
             <Formik
               initialValues={{
@@ -128,7 +128,7 @@ export const EditSocialMediaModal = ({
               onSubmit={submitForm}
             >
               {({ isSubmitting, setFieldValue }) => (
-                <Form className="mr-8 max-h-120 overflow-y-auto">
+                <Form className="mr-8 max-h-130 overflow-y-auto">
                   <div className="flex w-full flex-col">
                     <Card className="mb-5 h-fit w-full">
                       <TextInput
@@ -259,7 +259,7 @@ export const EditSocialMediaModal = ({
                 </Form>
               )}
             </Formik>
-            <div className="h-fit max-h-130 w-130 overflow-y-auto">
+            <div className="h-fit max-h-130 w-2/4 overflow-y-auto">
               <Card
                 className="bg-cultured"
                 title="Activity"
