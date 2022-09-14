@@ -55,7 +55,11 @@ export const UploadSocialMediaFileModal = () => {
   return (
     <>
       {socialMedia && (
-        <Modal title="Upload Social Media Attachment" onClose={toggleUploadSocialMediaFileModal}>
+        <Modal
+          title="Upload Social Media Attachment"
+          className="border-2 border-solid border-bright-gray"
+          onClose={toggleUploadSocialMediaFileModal}
+        >
           <Formik
             initialValues={{
               post: socialMedia.post,

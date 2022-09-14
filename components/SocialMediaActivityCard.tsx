@@ -146,7 +146,7 @@ export const SocialMediaActivityCard = ({
               {format(createdAt, 'yy MMMM dd h:mmaaa')}
             </div>
           </div>
-          {action === 'Uploaded a file.' ? (
+          {action === 'Uploaded an attachment.' ? (
             <div className=" text-sm font-medium text-onyx">{action}</div>
           ) : (
             modified

@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { Form, Formik } from 'formik'
+import { useSession } from 'next-auth/react'
 import { useQueryClient } from 'react-query'
 import { MultiValue } from 'react-select'
 import { SocialMediaChannelOptions } from '../../constants/options/SocialMediaChannelOptions'
@@ -29,11 +30,14 @@ import { SocialMediaActivityCard } from '../SocialMediaActivityCard'
 import { SocialMediaCommentCard } from '../SocialMediaCommentCard'
 import { TextInput } from '../TextInput'
 import { TimeInput } from '../TimeInput'
+import { DeleteSocialMediaCommentModal } from './DeleteSocialMediaCommentModal'
+import { EditSocialMediaCommentModal } from './EditSocialMediaCommentModal'
 import { SocialMediaFileModal, useSocialMediaFileModalStore } from './SocialMediaFileModal'
 import {
   UploadSocialMediaFileModal,
   useUploadSocialMediaFileModalStore,
 } from './UploadSocialMediaFileModal'
+
 export const EditSocialMediaModal = ({
   isVisible,
   onClose,
@@ -45,6 +49,7 @@ export const EditSocialMediaModal = ({
 }) => {
   const queryClient = useQueryClient()
   const { showToast } = useToastStore()
+  const { data: session } = useSession()
 
   const submitForm = async (values: EditSocialMediaForm) => {
     if (values.postDate && values.postTime) {
@@ -290,14 +295,18 @@ export const EditSocialMediaModal = ({
                   <>
                     {!!socialMedia.comments && socialMedia!.comments?.length > 0 && (
                       <div className="flex flex-col">
-                        {socialMedia.comments?.map(({ id, comment, createdBy, createdAt }) => (
-                          <SocialMediaCommentCard
-                            key={`comment-${id}`}
-                            comment={comment}
-                            createdBy={createdBy}
-                            createdAt={createdAt}
-                          />
-                        ))}
+                        {socialMedia.comments?.map(
+                          ({ id, comment, createdBy, createdAt, createdById }) => (
+                            <SocialMediaCommentCard
+                              key={`comment-${id}`}
+                              id={id}
+                              comment={comment}
+                              createdBy={createdBy}
+                              createdAt={createdAt}
+                              isEditDelete={createdById === session?.user.id ? true : false}
+                            />
+                          )
+                        )}
                       </div>
                     )}
                     <Formik
@@ -330,6 +339,8 @@ export const EditSocialMediaModal = ({
       )}
       <SocialMediaFileModal />
       <UploadSocialMediaFileModal />
+      <EditSocialMediaCommentModal />
+      <DeleteSocialMediaCommentModal />
     </>
   )
 }
