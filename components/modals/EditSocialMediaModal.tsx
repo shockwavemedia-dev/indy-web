@@ -290,18 +290,14 @@ export const EditSocialMediaModal = ({
                   <>
                     {!!socialMedia.comments && socialMedia!.comments?.length > 0 && (
                       <div className="flex flex-col">
-                        {socialMedia.comments?.map(
-                          ({ id, comment, createdBy, createdAt, createdById }) => (
-                            <SocialMediaCommentCard
-                              key={`comment-${id}`}
-                              id={id}
-                              comment={comment}
-                              createdBy={createdBy}
-                              createdAt={createdAt}
-                              createdById={createdById}
-                            />
-                          )
-                        )}
+                        {socialMedia.comments?.map(({ id, comment, createdBy, createdAt }) => (
+                          <SocialMediaCommentCard
+                            key={`comment-${id}`}
+                            comment={comment}
+                            createdBy={createdBy}
+                            createdAt={createdAt}
+                          />
+                        ))}
                       </div>
                     )}
                     <Formik
