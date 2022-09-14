@@ -40,9 +40,11 @@ export const SocialMediaActivityCard = ({
           <div key={field} className="flex flex-col">
             <div className="mb-2 mt-2 text-sm font-semibold text-onyx">Status</div>
             <TitleValue title="New" className="mb-1">
-              {values.new}
+              <SocialMediaStatus value={values.new} />
             </TitleValue>
-            <TitleValue title="Old">{values.old}</TitleValue>
+            <TitleValue title="Old">
+              <SocialMediaStatus value={values.old} />
+            </TitleValue>
           </div>
         )
       } else if (field === 'channels') {
@@ -54,11 +56,7 @@ export const SocialMediaActivityCard = ({
                 {Array.isArray(values.new) &&
                   values.new.map((channel) => (
                     <div key={`${channel}-channel`} className="flex flex-wrap gap-1">
-                      <Pill
-                        twBackgroundColor="bg-honeydew"
-                        twTextColor="text-jungle-green"
-                        value={channel}
-                      />
+                      <SocialMediaChannels value={channel} />
                     </div>
                   ))}
               </div>
@@ -68,11 +66,7 @@ export const SocialMediaActivityCard = ({
                 {Array.isArray(values.old) &&
                   values.old.map((channel) => (
                     <div key={`${channel}-channel`} className="flex flex-wrap gap-1">
-                      <Pill
-                        twBackgroundColor="bg-honeydew"
-                        twTextColor="text-jungle-green"
-                        value={channel}
-                      />
+                      <SocialMediaChannels value={channel} />
                     </div>
                   ))}
               </div>
@@ -152,6 +146,94 @@ export const SocialMediaActivityCard = ({
           )}
         </div>
       </div>
+    </>
+  )
+}
+
+export const SocialMediaStatus = ({ value }: { value: string }) => {
+  return (
+    <>
+      <Pill
+        twBackgroundColor={(() => {
+          switch (value) {
+            case 'To Do':
+              return 'bg-light-red-crimson'
+            case 'In Progress':
+              return 'bg-light-golden-rod'
+            case 'To Approve':
+              return 'bg-light-navy'
+            case 'Approved':
+              return 'bg-light-forest-green'
+            case 'Scheduled':
+              return 'bg-light-orchid'
+            case 'Client Created Draft':
+              return 'bg-light-red-crimson'
+            default:
+              return 'bg-light-orange'
+          }
+        })()}
+        twTextColor={(() => {
+          switch (value) {
+            case 'To Do':
+              return 'text-red-crimson'
+            case 'In Progress':
+              return 'text-golden-rod'
+            case 'To Approve':
+              return 'text-navy'
+            case 'Approved':
+              return 'text-forest-green'
+            case 'Scheduled':
+              return 'text-orchid'
+            case 'Client Created Draft':
+              return 'text-red-crimson'
+            default:
+              return 'text-halloween-orange'
+          }
+        })()}
+        value={value}
+      />
+    </>
+  )
+}
+
+export const SocialMediaChannels = ({ value }: { value: string }) => {
+  return (
+    <>
+      <Pill
+        twBackgroundColor={(() => {
+          switch (value) {
+            case 'Story':
+              return 'bg-light-red-crimson'
+            case 'Facebook':
+              return 'bg-light-golden-rod'
+            case 'Instagram':
+              return 'bg-light-navy'
+            case 'Twitter':
+              return 'bg-light-forest-green'
+            case 'Linkedin':
+              return 'bg-light-orchid'
+            default:
+              return 'bg-bright-gray'
+          }
+        })()}
+        twTextColor={(() => {
+          switch (value) {
+            case 'Story':
+              return 'text-red-crimson'
+            case 'Facebook':
+              return 'text-golden-rod'
+            case 'Instagram':
+              return 'text-navy'
+            case 'Twitter':
+              return 'text-forest-green'
+            case 'Linkedin':
+              return 'text-orchid'
+            default:
+              return 'text-onyx'
+          }
+        })()}
+        value={value}
+      />
     </>
   )
 }
