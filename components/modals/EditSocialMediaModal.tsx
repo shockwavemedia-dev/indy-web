@@ -217,7 +217,7 @@ export const EditSocialMediaModal = ({
                         </div>
                       </button>
                       <div className="flex flex-wrap gap-4">
-                        {!!socialMedia.attachments ? (
+                        {!!socialMedia.attachments && socialMedia.attachments.length > 0 ? (
                           socialMedia.attachments.map(
                             ({ socialMediaAttachmentId, url, thumbnailUrl, name, fileType }) => {
                               const toggleFile = () =>
@@ -245,9 +245,7 @@ export const EditSocialMediaModal = ({
                             }
                           )
                         ) : (
-                          <div className="m-auto text-base text-metallic-silver">
-                            No files found.
-                          </div>
+                          <div className="m-auto text-sm text-metallic-silver">No files found.</div>
                         )}
                       </div>
                     </Card>
@@ -271,7 +269,7 @@ export const EditSocialMediaModal = ({
                 titlePosition="center"
                 titleClassName="text-halloween-orange"
               >
-                {!!socialMedia.activities && socialMedia!.activities?.length > 0 && (
+                {!!socialMedia.activities && socialMedia!.activities?.length > 0 ? (
                   <div className="flex flex-col">
                     {socialMedia.activities?.map(({ action, user, fields, createdAt }) => (
                       <SocialMediaActivityCard
@@ -283,6 +281,8 @@ export const EditSocialMediaModal = ({
                       />
                     ))}
                   </div>
+                ) : (
+                  <div className="m-auto text-sm text-metallic-silver">No Activity found.</div>
                 )}
               </Card>
               <Card
@@ -293,7 +293,7 @@ export const EditSocialMediaModal = ({
               >
                 <div className="flex flex-col">
                   <>
-                    {!!socialMedia.comments && socialMedia!.comments?.length > 0 && (
+                    {!!socialMedia.comments && socialMedia!.comments?.length > 0 ? (
                       <div className="flex flex-col">
                         {socialMedia.comments?.map(
                           ({ id, comment, createdBy, createdAt, createdById }) => (
@@ -308,6 +308,8 @@ export const EditSocialMediaModal = ({
                           )
                         )}
                       </div>
+                    ) : (
+                      <div className="m-auto text-sm text-metallic-silver">No Comment found.</div>
                     )}
                     <Formik
                       validationSchema={CreateSocialMediaCommentFormSchema}
