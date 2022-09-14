@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { Form, Formik } from 'formik'
 import { useSession } from 'next-auth/react'
-import { useQueryClient } from 'react-query'
+import { useQuery, useQueryClient } from 'react-query'
 import { MultiValue } from 'react-select'
 import { SocialMediaChannelOptions } from '../../constants/options/SocialMediaChannelOptions'
 import { SocialMediaStatusOptions } from '../../constants/options/SocialMediaStatusOptions'
@@ -51,6 +51,18 @@ export const EditSocialMediaModal = ({
   const { showToast } = useToastStore()
   const { data: session } = useSession()
 
+  const { data: socialMediaDetails } = useQuery(
+    'socialMedia',
+    async () => {
+      const { data } = await axios.get<SocialMedia>(`/v1/social-media/${socialMedia.id}`)
+
+      return data
+    },
+    {
+      enabled: !!socialMedia.id,
+    }
+  )
+
   const submitForm = async (values: EditSocialMediaForm) => {
     if (values.postDate && values.postTime) {
       const postDate = new Date(values.postDate)
@@ -73,7 +85,7 @@ export const EditSocialMediaModal = ({
         objectWithFileToFormData(values)
       )
       if (status === 200) {
-        queryClient.invalidateQueries('selectedSocialMedia')
+        queryClient.invalidateQueries('socialMedia')
         queryClient.invalidateQueries(['socialMedias'])
         showToast({
           type: 'success',
@@ -98,7 +110,7 @@ export const EditSocialMediaModal = ({
   ) => {
     const { status } = await axios.post(`/v1/social-media/${socialMedia.id}/comments`, values)
     if (status === 200) {
-      queryClient.invalidateQueries('selectedSocialMedia')
+      queryClient.invalidateQueries('socialMedia')
       queryClient.invalidateQueries(['socialMedias'])
       resetForm()
     }
@@ -108,9 +120,9 @@ export const EditSocialMediaModal = ({
 
   const { toggleUploadSocialMediaFileModal } = useUploadSocialMediaFileModalStore()
 
-  const toggleUploadFile = () => toggleUploadSocialMediaFileModal(socialMedia)
+  const toggleUploadFile = () => toggleUploadSocialMediaFileModal(socialMediaDetails)
 
-  if (!socialMedia) return null
+  if (!socialMediaDetails) return null
 
   return (
     <>
@@ -119,14 +131,14 @@ export const EditSocialMediaModal = ({
           <div className="flex w-full">
             <Formik
               initialValues={{
-                post: socialMedia?.post || socialMedia.post,
-                attachments: socialMedia?.attachments,
-                copy: socialMedia?.copy,
-                status: socialMedia?.status,
-                channels: socialMedia?.channels,
-                notes: socialMedia?.notes,
-                postDate: socialMedia?.postDate && new Date(socialMedia?.postDate),
-                postTime: socialMedia?.postDate && new Date(socialMedia?.postDate),
+                post: socialMediaDetails?.post,
+                attachments: socialMediaDetails?.attachments,
+                copy: socialMediaDetails?.copy,
+                status: socialMediaDetails?.status,
+                channels: socialMediaDetails?.channels,
+                notes: socialMediaDetails?.notes,
+                postDate: socialMediaDetails?.postDate && new Date(socialMediaDetails?.postDate),
+                postTime: socialMediaDetails?.postDate && new Date(socialMediaDetails?.postDate),
                 _method: 'PUT',
               }}
               validationSchema={CreateSocialMediaFormSchema}
@@ -166,7 +178,7 @@ export const EditSocialMediaModal = ({
                         Icon={ClipboardIcon}
                         options={SocialMediaStatusOptions}
                         defaultValue={SocialMediaStatusOptions.find(
-                          ({ value }) => value === socialMedia.status
+                          ({ value }) => value === socialMediaDetails.status
                         )}
                         className="mb-5"
                       />
@@ -179,8 +191,8 @@ export const EditSocialMediaModal = ({
                         placeholder="Select Channel"
                         name="channels"
                         defaultValue={(() => {
-                          if (socialMedia.channels) {
-                            const seletedChannel = socialMedia.channels?.map((channel) => ({
+                          if (socialMediaDetails.channels) {
+                            const seletedChannel = socialMediaDetails.channels?.map((channel) => ({
                               value: channel,
                               label: channel,
                             }))
@@ -217,8 +229,9 @@ export const EditSocialMediaModal = ({
                         </div>
                       </button>
                       <div className="flex flex-wrap gap-4">
-                        {!!socialMedia.attachments && socialMedia.attachments.length > 0 ? (
-                          socialMedia.attachments.map(
+                        {!!socialMediaDetails.attachments &&
+                        socialMediaDetails.attachments.length > 0 ? (
+                          socialMediaDetails.attachments.map(
                             ({ socialMediaAttachmentId, url, thumbnailUrl, name, fileType }) => {
                               const toggleFile = () =>
                                 toggleShowSocialMediaFileModal(
@@ -226,7 +239,7 @@ export const EditSocialMediaModal = ({
                                   fileType,
                                   name,
                                   socialMediaAttachmentId,
-                                  socialMedia.id
+                                  socialMediaDetails.id
                                 )
 
                               return (
@@ -269,9 +282,9 @@ export const EditSocialMediaModal = ({
                 titlePosition="center"
                 titleClassName="text-halloween-orange"
               >
-                {!!socialMedia.activities && socialMedia!.activities?.length > 0 ? (
+                {!!socialMediaDetails.activities && socialMediaDetails!.activities?.length > 0 ? (
                   <div className="flex flex-col">
-                    {socialMedia.activities?.map(({ action, user, fields, createdAt }) => (
+                    {socialMediaDetails.activities?.map(({ action, user, fields, createdAt }) => (
                       <SocialMediaActivityCard
                         key={`activity-${action}`}
                         action={action}
@@ -293,9 +306,9 @@ export const EditSocialMediaModal = ({
               >
                 <div className="flex flex-col">
                   <>
-                    {!!socialMedia.comments && socialMedia!.comments?.length > 0 ? (
+                    {!!socialMediaDetails.comments && socialMediaDetails!.comments?.length > 0 ? (
                       <div className="flex flex-col">
-                        {socialMedia.comments?.map(
+                        {socialMediaDetails.comments?.map(
                           ({ id, comment, createdBy, createdAt, createdById }) => (
                             <SocialMediaCommentCard
                               key={`comment-${id}`}

@@ -35,7 +35,7 @@ export const UploadSocialMediaFileModal = () => {
       )
 
       if (status === 200) {
-        queryClient.invalidateQueries(['socialMedia'])
+        queryClient.invalidateQueries('socialMedia')
         queryClient.invalidateQueries(['socialMedias'])
         toggleUploadSocialMediaFileModal()
         showToast({

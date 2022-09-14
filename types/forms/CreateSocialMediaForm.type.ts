@@ -1,7 +1,7 @@
 import { SocialMediaFile } from '../SocialMediaFile.type'
 
 export type CreateSocialMediaForm = {
-  post: string
+  post?: string | null
   postDate?: Date | null
   postTime?: Date | null
   attachments?: Array<SocialMediaFile> | null

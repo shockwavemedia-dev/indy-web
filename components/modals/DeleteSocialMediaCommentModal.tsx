@@ -30,7 +30,7 @@ export const DeleteSocialMediaCommentModal = () => {
       const { status } = await axios.delete(`/v1/social-media-comments/${commentId}`)
 
       if (status === 200) {
-        queryClient.invalidateQueries('selectedSocialMedia')
+        queryClient.invalidateQueries('socialMedia')
         queryClient.invalidateQueries(['socialMedias'])
         toggleModal()
         showToast({

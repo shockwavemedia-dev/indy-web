@@ -35,7 +35,7 @@ export const EditSocialMediaCommentModal = () => {
 
       if (status === 200) {
         toggleModal()
-        queryClient.invalidateQueries('selectedSocialMedia')
+        queryClient.invalidateQueries('socialMedia')
         queryClient.invalidateQueries(['socialMedias'])
         showToast({
           type: 'success',
