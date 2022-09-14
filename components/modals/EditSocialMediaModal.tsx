@@ -4,8 +4,10 @@ import { useQueryClient } from 'react-query'
 import { MultiValue } from 'react-select'
 import { SocialMediaChannelOptions } from '../../constants/options/SocialMediaChannelOptions'
 import { SocialMediaStatusOptions } from '../../constants/options/SocialMediaStatusOptions'
+import { CreateSocialMediaCommentFormSchema } from '../../schemas/CreateSocialMediaCommentFormSchema'
 import { CreateSocialMediaFormSchema } from '../../schemas/CreateSocialMediaFormSchema'
 import { useToastStore } from '../../store/ToastStore'
+import { CreateSocialMediaCommentForm } from '../../types/forms/CreateSocialMediaCommentForm.type'
 import { EditSocialMediaForm } from '../../types/forms/EditSocialMediaForm.type'
 import { SelectOption } from '../../types/SelectOption.type'
 import { SocialMedia } from '../../types/SocialMedia.type'
@@ -17,12 +19,14 @@ import { DateInput } from '../DateInput'
 import { ClipboardIcon } from '../icons/ClipboardIcon'
 import { EditIcon } from '../icons/EditIcon'
 import { FloppyDiskIcon } from '../icons/FloppyDiskIcon'
+import { PaperPlaneIcon } from '../icons/PaperPlaneIcon'
 import { PlusIcon } from '../icons/PlusIcon'
 import { LinkButton } from '../LinkButton'
 import { Modal } from '../Modal'
 import { PhotographyVideographyFileButton } from '../PhotographyVideographyFileButton'
 import { Select } from '../Select'
 import { SocialMediaActivityCard } from '../SocialMediaActivityCard'
+import { SocialMediaCommentCard } from '../SocialMediaCommentCard'
 import { TextInput } from '../TextInput'
 import { TimeInput } from '../TimeInput'
 import { SocialMediaFileModal, useSocialMediaFileModalStore } from './SocialMediaFileModal'
@@ -76,6 +80,22 @@ export const EditSocialMediaModal = ({
         type: 'error',
         message: 'Something went wrong! 😵',
       })
+    }
+  }
+
+  const submitCommentForm = async (
+    values: CreateSocialMediaCommentForm,
+    {
+      resetForm,
+    }: {
+      resetForm: () => void
+    }
+  ) => {
+    const { status } = await axios.post(`/v1/social-media/${socialMedia.id}/comments`, values)
+    if (status === 200) {
+      queryClient.invalidateQueries('selectedSocialMedia')
+      queryClient.invalidateQueries(['socialMedias'])
+      resetForm()
     }
   }
 
@@ -248,16 +268,65 @@ export const EditSocialMediaModal = ({
               >
                 {!!socialMedia.activities && socialMedia!.activities?.length > 0 && (
                   <div className="flex flex-col">
-                    {socialMedia.activities?.map(({ action, user, fields }) => (
+                    {socialMedia.activities?.map(({ action, user, fields, createdAt }) => (
                       <SocialMediaActivityCard
                         key={`activity-${action}`}
                         action={action}
                         createdBy={user}
                         fields={fields}
+                        createdAt={createdAt}
                       />
                     ))}
                   </div>
                 )}
+              </Card>
+              <Card
+                className="bg-cultured"
+                title="Comment"
+                titlePosition="center"
+                titleClassName="text-halloween-orange"
+              >
+                <div className="flex flex-col">
+                  <>
+                    {!!socialMedia.comments && socialMedia!.comments?.length > 0 && (
+                      <div className="flex flex-col">
+                        {socialMedia.comments?.map(
+                          ({ id, comment, createdBy, createdAt, createdById }) => (
+                            <SocialMediaCommentCard
+                              key={`comment-${id}`}
+                              id={id}
+                              comment={comment}
+                              createdBy={createdBy}
+                              createdAt={createdAt}
+                              createdById={createdById}
+                            />
+                          )
+                        )}
+                      </div>
+                    )}
+                    <Formik
+                      validationSchema={CreateSocialMediaCommentFormSchema}
+                      initialValues={{ comment: '' }}
+                      onSubmit={submitCommentForm}
+                    >
+                      {({ isSubmitting }) => (
+                        <Form className="mt-5">
+                          <TextInput
+                            type="text"
+                            Icon={EditIcon}
+                            placeholder="Enter Comment"
+                            name="comment"
+                            className="mb-5"
+                          />
+                          <Button ariaLabel="Submit Comment" type="submit" disabled={isSubmitting}>
+                            <PaperPlaneIcon className="stroke-white" />
+                            <div>Send</div>
+                          </Button>
+                        </Form>
+                      )}
+                    </Formik>
+                  </>
+                </div>
               </Card>
             </div>
           </div>

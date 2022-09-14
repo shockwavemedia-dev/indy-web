@@ -9,35 +9,41 @@ export const SocialMediaActivityCard = ({
   action,
   createdBy,
   fields,
+  createdAt,
 }: {
   action: string
   createdBy: string
   fields?: SocialMediaActivityFields
+  createdAt: Date
 }) => {
   const fieldObject = fields && Object.entries(fields)
 
   const modified =
     fieldObject &&
-    fieldObject.map(([field, { old }]) => {
+    fieldObject.map(([field, values]) => {
       console.log(field)
-      if (field === 'post' && typeof old === 'string') {
+      if (field === 'post' && typeof values.old === 'string' && typeof values.new === 'string') {
         return (
           <div key={field} className="flex flex-col">
             <div className="mb-2 mt-2 text-sm font-semibold text-onyx">Post Topic</div>
             <TitleValue title="New" className="mb-1">
-              {old}
+              {values.new}
             </TitleValue>
-            <TitleValue title="Old">{old}</TitleValue>
+            <TitleValue title="Old">{values.old}</TitleValue>
           </div>
         )
-      } else if (field === 'status' && typeof old === 'string') {
+      } else if (
+        field === 'status' &&
+        typeof values.old === 'string' &&
+        typeof values.new === 'string'
+      ) {
         return (
           <div key={field} className="flex flex-col">
             <div className="mb-2 mt-2 text-sm font-semibold text-onyx">Status</div>
             <TitleValue title="New" className="mb-1">
-              {old}
+              {values.new}
             </TitleValue>
-            <TitleValue title="Old">{old}</TitleValue>
+            <TitleValue title="Old">{values.old}</TitleValue>
           </div>
         )
       } else if (field === 'channels') {
@@ -46,8 +52,8 @@ export const SocialMediaActivityCard = ({
             <div className="mb-2 mt-2 text-sm font-semibold text-onyx">Channels</div>
             <TitleValue title="New" className="mb-1">
               <div className="flex flex-wrap gap-1">
-                {Array.isArray(old) &&
-                  old.map((channel) => (
+                {Array.isArray(values.new) &&
+                  values.new.map((channel) => (
                     <div key={`${channel}-channel`} className="flex flex-wrap gap-1">
                       <Pill
                         twBackgroundColor="bg-honeydew"
@@ -60,8 +66,8 @@ export const SocialMediaActivityCard = ({
             </TitleValue>
             <TitleValue title="Old" className="mb-1">
               <div className="flex flex-wrap gap-1">
-                {Array.isArray(old) &&
-                  old.map((channel) => (
+                {Array.isArray(values.old) &&
+                  values.old.map((channel) => (
                     <div key={`${channel}-channel`} className="flex flex-wrap gap-1">
                       <Pill
                         twBackgroundColor="bg-honeydew"
@@ -79,42 +85,50 @@ export const SocialMediaActivityCard = ({
           <div key={field} className="flex flex-col">
             <div className="mb-2 mt-2 text-sm font-semibold text-onyx">Post Date</div>
             <TitleValue title="New" className="mb-1">
-              {old instanceof Date && format(old, 'MM/dd/yyyy h:mmaaa')}
+              {values.new instanceof Date && format(values.new, 'MM/dd/yyyy h:mmaaa')}
             </TitleValue>
             <TitleValue title="Old">
-              {old instanceof Date && format(old, 'MM/dd/yyyy h:mmaaa')}
+              {values.old instanceof Date && format(values.old, 'MM/dd/yyyy h:mmaaa')}
             </TitleValue>
           </div>
         )
       } else if (
         field === 'attachment' &&
-        typeof old === 'string' &&
+        typeof values.old === 'string' &&
         action === 'Removed an attachment'
       ) {
         return (
           <div key={field} className="flex flex-col">
             <div className="mb-2 mt-2 text-sm font-semibold text-onyx">Removed an attachment</div>
-            <div className=" text-xs font-medium text-metallic-silver">{old}</div>
+            <div className=" text-xs font-medium text-metallic-silver">{values.old}</div>
           </div>
         )
-      } else if (field === 'copy' && typeof old === 'string') {
+      } else if (
+        field === 'copy' &&
+        typeof values.old === 'string' &&
+        typeof values.new === 'string'
+      ) {
         return (
           <div key={field} className="flex flex-col">
             <div className="mb-2 mt-2 text-sm font-semibold text-onyx">Copy</div>
             <TitleValue title="New" className="mb-1">
-              {old}
+              {values.new}
             </TitleValue>
-            <TitleValue title="Old">{old}</TitleValue>
+            <TitleValue title="Old">{values.old}</TitleValue>
           </div>
         )
-      } else if (field === 'notes' && typeof old === 'string') {
+      } else if (
+        field === 'notes' &&
+        typeof values.old === 'string' &&
+        typeof values.new === 'string'
+      ) {
         return (
           <div key={field} className="flex flex-col">
             <div className="mb-2 mt-2 text-sm font-semibold text-onyx">Notes</div>
             <TitleValue title="New" className="mb-1">
-              {old}
+              {values.new}
             </TitleValue>
-            <TitleValue title="Old">{old}</TitleValue>
+            <TitleValue title="Old">{values.old}</TitleValue>
           </div>
         )
       }
@@ -128,7 +142,9 @@ export const SocialMediaActivityCard = ({
             <Image src={DummyAvatar} alt="Dummy" height={32} width={32} className="rounded-full" />
             <div className="ml-3 text-sm font-semibold text-onyx">{createdBy}</div>
             <div className="mx-2 h-1 w-1 rounded bg-bright-gray" />
-            <div className=" text-xs font-medium text-lavender-gray">{'22 Sep13'}</div>
+            <div className=" text-xs font-medium text-lavender-gray">
+              {format(createdAt, 'yy MMMM dd h:mmaaa')}
+            </div>
           </div>
           {action === 'Uploaded a file.' ? (
             <div className=" text-sm font-medium text-onyx">{action}</div>

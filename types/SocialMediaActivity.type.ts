@@ -4,4 +4,5 @@ export type SocialMediaActivity = {
   action: string
   user: string
   fields: SocialMediaActivityFields
+  createdAt: Date
 }
