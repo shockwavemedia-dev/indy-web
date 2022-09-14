@@ -84,6 +84,8 @@ export const SocialMediaStatusSelect = <
                   return '#228B22'
                 case 'Scheduled':
                   return '#DA70D6'
+                case 'Client Created Draft':
+                  return '#DC143C'
                 default:
                   return '#F25D23'
               }
@@ -103,6 +105,8 @@ export const SocialMediaStatusSelect = <
               return '#d6f5d6'
             case 'Scheduled':
               return '#f5d6f4'
+            case 'Client Created Draft':
+              return '#fbd0d9'
           }
         })(),
         transition: 'none',
@@ -137,6 +141,8 @@ export const SocialMediaStatusSelect = <
               return '#228B22'
             case 'Scheduled':
               return '#DA70D6'
+            case 'Client Created Draft':
+              return '#DC143C'
           }
         })(),
       }),

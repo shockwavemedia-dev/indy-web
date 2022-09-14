@@ -3,7 +3,7 @@ import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import axios from 'axios'
 import camelcaseKeys from 'camelcase-keys'
-import { getSession, SessionProvider } from 'next-auth/react'
+import { getSession, SessionProvider, signOut as nextAuthSignOut } from 'next-auth/react'
 import { done, start } from 'nprogress'
 import 'nprogress/nprogress.css'
 import { QueryClient, QueryClientProvider } from 'react-query'
@@ -45,6 +45,18 @@ axios.interceptors.request.use(
     return Promise.reject(error)
   }
 )
+
+axios.interceptors.response.use(
+  (response) => {
+    return response
+  },
+  (error) => {
+    if (error.response.status === 401) {
+      nextAuthSignOut()
+    }
+  }
+)
+
 axios.interceptors.response.use(
   (response) => {
     if (isClientSide) {
