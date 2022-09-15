@@ -1,5 +1,7 @@
-import { FieldsValue } from './FieldsValue.type'
-
-export type SocialMediaActivityFields = {
-  post: Array<FieldsValue>
-}
+export type SocialMediaActivityFields = Record<
+  string,
+  {
+    old: string | Array<string> | Date | null
+    new: string | Array<string> | Date | null
+  }
+>

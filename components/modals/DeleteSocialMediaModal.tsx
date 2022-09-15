@@ -28,7 +28,7 @@ export const DeleteSocialMediaModal = ({
       const { status } = await axios.delete(`/v1/social-media/${socialMedia.id}`)
 
       if (status === 200) {
-        queryClient.invalidateQueries('socialMedia')
+        queryClient.invalidateQueries(['socialMedias'])
         onClose()
         showToast({
           type: 'success',
@@ -53,7 +53,7 @@ export const DeleteSocialMediaModal = ({
                 {socialMedia.post}
               </TitleValue>
               <TitleValue title="Post Date" className="capitalize">
-                {socialMedia?.postDate && format(socialMedia?.postDate, "yy MMM''dd")}
+                {socialMedia?.postDate && format(socialMedia?.postDate, 'MM/dd/yyyy h:mmaaa')}
               </TitleValue>
               <TitleValue title="Status" className="capitalize">
                 {socialMedia.status}
@@ -79,7 +79,7 @@ export const DeleteSocialMediaModal = ({
                 {socialMedia?.notes}
               </TitleValue>
             </div>
-            <Card title="Attachment" className="mt-5">
+            <Card title="Attachment">
               <div className="flex flex-wrap gap-4">
                 {!!socialMedia.attachments ? (
                   socialMedia.attachments.map(({ socialMediaAttachmentId, url, thumbnailUrl }) => {

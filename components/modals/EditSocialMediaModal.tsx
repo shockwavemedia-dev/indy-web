@@ -1,11 +1,14 @@
 import axios from 'axios'
 import { Form, Formik } from 'formik'
-import { useQueryClient } from 'react-query'
+import { useSession } from 'next-auth/react'
+import { useQuery, useQueryClient } from 'react-query'
 import { MultiValue } from 'react-select'
 import { SocialMediaChannelOptions } from '../../constants/options/SocialMediaChannelOptions'
 import { SocialMediaStatusOptions } from '../../constants/options/SocialMediaStatusOptions'
+import { CreateSocialMediaCommentFormSchema } from '../../schemas/CreateSocialMediaCommentFormSchema'
 import { CreateSocialMediaFormSchema } from '../../schemas/CreateSocialMediaFormSchema'
 import { useToastStore } from '../../store/ToastStore'
+import { CreateSocialMediaCommentForm } from '../../types/forms/CreateSocialMediaCommentForm.type'
 import { EditSocialMediaForm } from '../../types/forms/EditSocialMediaForm.type'
 import { SelectOption } from '../../types/SelectOption.type'
 import { SocialMedia } from '../../types/SocialMedia.type'
@@ -17,14 +20,18 @@ import { DateInput } from '../DateInput'
 import { ClipboardIcon } from '../icons/ClipboardIcon'
 import { EditIcon } from '../icons/EditIcon'
 import { FloppyDiskIcon } from '../icons/FloppyDiskIcon'
+import { PaperPlaneIcon } from '../icons/PaperPlaneIcon'
 import { PlusIcon } from '../icons/PlusIcon'
 import { LinkButton } from '../LinkButton'
 import { Modal } from '../Modal'
 import { PhotographyVideographyFileButton } from '../PhotographyVideographyFileButton'
 import { Select } from '../Select'
 import { SocialMediaActivityCard } from '../SocialMediaActivityCard'
+import { SocialMediaCommentCard } from '../SocialMediaCommentCard'
 import { TextInput } from '../TextInput'
 import { TimeInput } from '../TimeInput'
+import { DeleteSocialMediaCommentModal } from './DeleteSocialMediaCommentModal'
+import { EditSocialMediaCommentModal } from './EditSocialMediaCommentModal'
 import { SocialMediaFileModal, useSocialMediaFileModalStore } from './SocialMediaFileModal'
 import {
   UploadSocialMediaFileModal,
@@ -42,6 +49,19 @@ export const EditSocialMediaModal = ({
 }) => {
   const queryClient = useQueryClient()
   const { showToast } = useToastStore()
+  const { data: session } = useSession()
+
+  const { data: socialMediaDetails } = useQuery(
+    ['socialMedia', socialMedia.id],
+    async () => {
+      const { data } = await axios.get<SocialMedia>(`/v1/social-media/${socialMedia.id}`)
+
+      return data
+    },
+    {
+      enabled: !!socialMedia.id,
+    }
+  )
 
   const submitForm = async (values: EditSocialMediaForm) => {
     if (values.postDate && values.postTime) {
@@ -65,7 +85,7 @@ export const EditSocialMediaModal = ({
         objectWithFileToFormData(values)
       )
       if (status === 200) {
-        queryClient.invalidateQueries('selectedSocialMedia')
+        queryClient.invalidateQueries(['socialMedia', socialMedia.id])
         queryClient.invalidateQueries(['socialMedias'])
         showToast({
           type: 'success',
@@ -80,29 +100,45 @@ export const EditSocialMediaModal = ({
     }
   }
 
+  const submitCommentForm = async (
+    values: CreateSocialMediaCommentForm,
+    {
+      resetForm,
+    }: {
+      resetForm: () => void
+    }
+  ) => {
+    const { status } = await axios.post(`/v1/social-media/${socialMedia.id}/comments`, values)
+    if (status === 200) {
+      queryClient.invalidateQueries(['socialMedia', socialMedia.id])
+      queryClient.invalidateQueries(['socialMedias'])
+      resetForm()
+    }
+  }
+
   const { toggleShowSocialMediaFileModal } = useSocialMediaFileModalStore()
 
   const { toggleUploadSocialMediaFileModal } = useUploadSocialMediaFileModalStore()
 
-  const toggleUploadFile = () => toggleUploadSocialMediaFileModal(socialMedia)
+  const toggleUploadFile = () => toggleUploadSocialMediaFileModal(socialMediaDetails)
 
-  if (!socialMedia) return null
+  if (!socialMediaDetails) return null
 
   return (
     <>
       {isVisible && (
-        <Modal title="Edit Social Media" bgColor="bg-cultured" className="w-320" onClose={onClose}>
+        <Modal title="Edit Social Media" bgColor="bg-cultured" className="w-270" onClose={onClose}>
           <div className="flex w-full">
             <Formik
               initialValues={{
-                post: socialMedia?.post || socialMedia.post,
-                attachments: socialMedia?.attachments,
-                copy: socialMedia?.copy,
-                status: socialMedia?.status,
-                channels: socialMedia?.channels,
-                notes: socialMedia?.notes,
-                postDate: socialMedia?.postDate && new Date(socialMedia?.postDate),
-                postTime: socialMedia?.postDate && new Date(socialMedia?.postDate),
+                post: socialMediaDetails?.post,
+                attachments: socialMediaDetails?.attachments,
+                copy: socialMediaDetails?.copy,
+                status: socialMediaDetails?.status,
+                channels: socialMediaDetails?.channels,
+                notes: socialMediaDetails?.notes,
+                postDate: socialMediaDetails?.postDate && new Date(socialMediaDetails?.postDate),
+                postTime: socialMediaDetails?.postDate && new Date(socialMediaDetails?.postDate),
                 _method: 'PUT',
               }}
               validationSchema={CreateSocialMediaFormSchema}
@@ -142,7 +178,7 @@ export const EditSocialMediaModal = ({
                         Icon={ClipboardIcon}
                         options={SocialMediaStatusOptions}
                         defaultValue={SocialMediaStatusOptions.find(
-                          ({ value }) => value === socialMedia.status
+                          ({ value }) => value === socialMediaDetails.status
                         )}
                         className="mb-5"
                       />
@@ -155,8 +191,8 @@ export const EditSocialMediaModal = ({
                         placeholder="Select Channel"
                         name="channels"
                         defaultValue={(() => {
-                          if (socialMedia.channels) {
-                            const seletedChannel = socialMedia.channels?.map((channel) => ({
+                          if (socialMediaDetails.channels) {
+                            const seletedChannel = socialMediaDetails.channels?.map((channel) => ({
                               value: channel,
                               label: channel,
                             }))
@@ -193,8 +229,9 @@ export const EditSocialMediaModal = ({
                         </div>
                       </button>
                       <div className="flex flex-wrap gap-4">
-                        {!!socialMedia.attachments ? (
-                          socialMedia.attachments.map(
+                        {!!socialMediaDetails.attachments &&
+                        socialMediaDetails.attachments.length > 0 ? (
+                          socialMediaDetails.attachments.map(
                             ({ socialMediaAttachmentId, url, thumbnailUrl, name, fileType }) => {
                               const toggleFile = () =>
                                 toggleShowSocialMediaFileModal(
@@ -202,7 +239,7 @@ export const EditSocialMediaModal = ({
                                   fileType,
                                   name,
                                   socialMediaAttachmentId,
-                                  socialMedia.id
+                                  socialMediaDetails.id
                                 )
 
                               return (
@@ -221,9 +258,7 @@ export const EditSocialMediaModal = ({
                             }
                           )
                         ) : (
-                          <div className="m-auto text-base text-metallic-silver">
-                            No files found.
-                          </div>
+                          <div className="m-auto text-sm text-metallic-silver">No files found.</div>
                         )}
                       </div>
                     </Card>
@@ -240,24 +275,79 @@ export const EditSocialMediaModal = ({
                 </Form>
               )}
             </Formik>
-            <div className="h-fit max-h-130 w-140 overflow-y-auto">
+            <div className="h-fit max-h-130 w-2/4 overflow-y-auto">
               <Card
-                className="mb-8 space-y-5"
+                className="!bg-cultured"
                 title="Activity"
                 titlePosition="center"
                 titleClassName="text-halloween-orange"
               >
-                {!!socialMedia.activities && socialMedia!.activities?.length > 0 && (
+                {!!socialMediaDetails.activities && socialMediaDetails!.activities?.length > 0 ? (
                   <div className="flex flex-col">
-                    {socialMedia.activities?.map(({ action, user }) => (
+                    {socialMediaDetails.activities?.map(({ action, user, fields, createdAt }) => (
                       <SocialMediaActivityCard
                         key={`activity-${action}`}
                         action={action}
                         createdBy={user}
+                        fields={fields}
+                        createdAt={createdAt}
                       />
                     ))}
                   </div>
+                ) : (
+                  <div className="m-auto text-sm text-metallic-silver">No Activity found.</div>
                 )}
+              </Card>
+              <Card
+                className="!bg-cultured"
+                title="Comment"
+                titlePosition="center"
+                titleClassName="text-halloween-orange"
+              >
+                <div className="flex flex-col">
+                  <>
+                    {!!socialMediaDetails.comments && socialMediaDetails!.comments?.length > 0 ? (
+                      <div className="flex flex-col">
+                        {socialMediaDetails.comments?.map(
+                          ({ id, comment, createdBy, createdAt, createdById }) => (
+                            <SocialMediaCommentCard
+                              key={`comment-${id}`}
+                              socialMediaId={socialMediaDetails.id}
+                              id={id}
+                              comment={comment}
+                              createdBy={createdBy}
+                              createdAt={createdAt}
+                              isEditDelete={createdById === session?.user.id ? true : false}
+                            />
+                          )
+                        )}
+                      </div>
+                    ) : (
+                      <div className="m-auto text-sm text-metallic-silver">No Comment found.</div>
+                    )}
+                    <Formik
+                      validationSchema={CreateSocialMediaCommentFormSchema}
+                      initialValues={{ comment: '' }}
+                      onSubmit={submitCommentForm}
+                    >
+                      {({ isSubmitting }) => (
+                        <Form className="mt-5">
+                          <TextInput
+                            type="text"
+                            Icon={EditIcon}
+                            placeholder="Enter Comment"
+                            name="comment"
+                            className="mb-5"
+                          />
+                          <Button ariaLabel="Submit Comment" type="submit" disabled={isSubmitting}>
+                            <PaperPlaneIcon className="stroke-white" />
+                            <div>Send</div>
+                          </Button>
+                        </Form>
+                      )}
+                    </Formik>
+                  </>
+                </div>
               </Card>
             </div>
           </div>
@@ -265,6 +355,8 @@ export const EditSocialMediaModal = ({
       )}
       <SocialMediaFileModal />
       <UploadSocialMediaFileModal />
+      <EditSocialMediaCommentModal />
+      <DeleteSocialMediaCommentModal />
     </>
   )
 }

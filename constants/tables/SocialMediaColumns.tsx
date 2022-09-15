@@ -155,14 +155,16 @@ export const SocialMediaColumns: Array<Column<SocialMedia>> = [
                   type="button"
                   className="relative h-9 min-w-[2.25rem] hover:rounded hover:border-2 hover:border-halloween-orange"
                 >
-                  <Image
-                    src={thumbnailUrl}
-                    alt={name}
-                    layout="fill"
-                    objectFit="contain"
-                    objectPosition="left"
-                    className="rounded-sm"
-                  />
+                  {thumbnailUrl && (
+                    <Image
+                      src={thumbnailUrl}
+                      alt={name}
+                      layout="fill"
+                      objectFit="contain"
+                      objectPosition="left"
+                      className="rounded-sm"
+                    />
+                  )}
                 </button>
               </Tooltip>
             ))}
