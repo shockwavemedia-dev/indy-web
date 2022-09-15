@@ -32,7 +32,6 @@ export const StaffSocialMediaList = () => {
     toggleDeleteSocialMediaModal,
   } = useSocialMediaStore()
 
-  const [selectedClientId, setClientId] = useState(-1)
   const queryClient = useQueryClient()
 
   const selectClient = (newValue: SingleValue<SelectOption<number>>) => {
@@ -51,10 +50,21 @@ export const StaffSocialMediaList = () => {
     return data
   })
 
+  const defaultValue = clients && clients.length > 0 && clients[0].id
+
+  const [selectedClientId, setClientId] = useState(-1)
+
+  const clientOptions = clients
+    ? clients.map(({ name, id }) => ({
+        label: name,
+        value: id,
+      }))
+    : []
+
   useEffect(() => {
     setHeader('Dashboard')
     setSubHeader(`Welcome back, ${session?.user.firstName}`)
-
+    setClientId(defaultValue ? Number(defaultValue) : -1)
     return () => {
       setSubHeader('Social Media')
     }
@@ -71,14 +81,8 @@ export const StaffSocialMediaList = () => {
           onChange={selectClient}
           className="max-w-xs"
           placeholder="Select Client"
-          options={
-            clients
-              ? clients.map(({ name, id }) => ({
-                  label: name,
-                  value: id,
-                }))
-              : []
-          }
+          options={clientOptions}
+          value={clientOptions.find(({ value }) => value === selectedClientId)}
         />
       </div>
       {selectedClientId !== -1 ? (
