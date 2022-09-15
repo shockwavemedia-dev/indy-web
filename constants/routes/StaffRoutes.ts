@@ -1,7 +1,6 @@
+import { BriefcaseIcon } from '../../components/icons/BriefcaseIcon'
 import { ChartIcon } from '../../components/icons/ChartIcon'
 import { FolderIcon } from '../../components/icons/FolderIcon'
-import { UserIcon } from '../../components/icons/UserIcon'
-import { VideoIcon } from '../../components/icons/VideoIcon'
 import { Route } from '../../types/Route.type'
 
 export const StaffRoutes: Array<Route> = [
@@ -11,15 +10,13 @@ export const StaffRoutes: Array<Route> = [
     Icon: ChartIcon,
   },
   {
-    title: 'Clients',
-    Icon: UserIcon,
-  },
-  {
-    title: 'Animations',
-    Icon: VideoIcon,
+    title: 'Tickets',
+    Icon: BriefcaseIcon,
+    pathname: '/my-ticket',
   },
   {
     title: 'My Files',
+    pathname: '/my-files',
     Icon: FolderIcon,
   },
 ]

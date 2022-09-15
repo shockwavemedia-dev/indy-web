@@ -1,6 +1,5 @@
 import axios from 'axios'
 import { Form, Formik } from 'formik'
-import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import { useQueryClient } from 'react-query'
 import { MultiValue } from 'react-select'
@@ -27,14 +26,15 @@ import { TimeInput } from '../TimeInput'
 export const CreateSocialMediaModal = ({
   isVisible,
   onClose,
+  clientId,
 }: {
   isVisible: boolean
   onClose: () => void
+  clientId: number
 }) => {
   const queryClient = useQueryClient()
   const { showToast } = useToastStore()
   const { replace } = useRouter()
-  const { data: session } = useSession()
 
   const submitForm = async (values: CreateSocialMediaForm) => {
     if (values.postDate && values.postTime) {
@@ -54,7 +54,7 @@ export const CreateSocialMediaModal = ({
 
     try {
       const { status } = await axios.post<CreateSocialMediaForm>(
-        `/v1/clients/${session?.user.userType.client.id}/social-media`,
+        `/v1/clients/${clientId}/social-media`,
         objectWithFileToFormData(values)
       )
       if (status === 200) {

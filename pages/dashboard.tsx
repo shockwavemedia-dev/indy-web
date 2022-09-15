@@ -2,7 +2,9 @@ import { useSession } from 'next-auth/react'
 import { ReactElement, useMemo } from 'react'
 import { ClientDashboard } from '../components/pages/client/ClientDashboard'
 import { ManagerDashboard } from '../components/pages/manager/ManagerDashboard'
+import { ManagerSocialMediaList } from '../components/pages/manager/ManagerSocialMediaList'
 import { StaffDashboard } from '../components/pages/staff/StaffDashboard'
+import { StaffSocialMediaList } from '../components/pages/staff/StaffSocialMediaList'
 import PanelLayout from '../layouts/PanelLayout'
 import { NextPageWithLayout } from '../types/pages/NextPageWithLayout.type'
 
@@ -14,8 +16,20 @@ const DashboardPage: NextPageWithLayout = () => {
       if (session.isClient) {
         return <ClientDashboard />
       } else if (session.isManager) {
+        if (
+          session?.user.userType.department &&
+          session?.user.userType.department.name === 'Social Media'
+        ) {
+          return <ManagerSocialMediaList />
+        }
         return <ManagerDashboard />
       } else if (session.isStaff) {
+        if (
+          session?.user.userType.department &&
+          session?.user.userType.department.name === 'Social Media'
+        ) {
+          return <StaffSocialMediaList />
+        }
         return <StaffDashboard />
       }
     }
