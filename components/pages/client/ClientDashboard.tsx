@@ -12,6 +12,7 @@ import { TicketStatusFilter, useTicketStatusFilter } from '../../filters/TicketS
 import { TicketTypeFilter, useTicketTypeFilter } from '../../filters/TicketTypeFilter'
 import { DeleteTicketModal } from '../../modals/DeleteTicketModal'
 import { EditTicketModal } from '../../modals/EditTicketModal'
+import { FileUploadModal } from '../../modals/FileUploadModal'
 import { Notifications } from '../../Notifications'
 import { RetainerInclusions } from '../../RetainerInclusions'
 import { TextInputNoFormik } from '../../TextInputNoFormik'
@@ -109,6 +110,7 @@ export const ClientDashboard = () => {
       </div>
       <EditTicketModal />
       <DeleteTicketModal />
+      <FileUploadModal />
     </>
   )
 }

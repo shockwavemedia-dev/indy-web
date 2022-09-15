@@ -20,7 +20,7 @@ export const Modal = ({
       className="fixed top-0 left-0 z-40 h-full w-full cursor-default bg-onyx bg-opacity-20"
     />
     <div
-      className={`fixed top-1/2 left-1/2 z-50 flex  -translate-x-1/2 -translate-y-1/2 flex-col items-center p-10 ${bgColor} ${className}`}
+      className={`fixed top-1/2 left-1/2 z-50 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center rounded-xl p-10 ${bgColor} ${className}`}
     >
       <button className="absolute top-6 right-6" onClick={() => onClose()}>
         <CloseModalIcon className="stroke-lavender-gray" />

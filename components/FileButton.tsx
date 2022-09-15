@@ -22,6 +22,7 @@ export const FileButton = ({
   folderName,
   file = false,
   disabled = false,
+  browseAndSelectOnly = false,
 }: {
   onClick?: () => void
   href?: string
@@ -36,6 +37,7 @@ export const FileButton = ({
   folderName?: string
   file?: boolean
   disabled?: boolean
+  browseAndSelectOnly?: boolean
 }) => {
   const { toggleModal: toggleRenameFolderModal } = useRenameFolderModalStore()
   const { toggleModal: toggleDeleteFolderModal } = useDeleteFolderModalStore()
@@ -76,7 +78,7 @@ export const FileButton = ({
         {Icon || <FolderIcon className="mb-3 stroke-halloween-orange" />}
         <div className="break-words text-xs text-onyx">{name}</div>
       </button>
-      {allowRename && (
+      {allowRename && !browseAndSelectOnly && (
         <>
           <button
             aria-label="Rename Folder"
