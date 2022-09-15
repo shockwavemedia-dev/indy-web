@@ -1,69 +1,35 @@
-import Head from 'next/head'
-import { ReactElement, useEffect } from 'react'
-import { Button } from '../components/Button'
-import { Card } from '../components/Card'
-import { CreateSocialMediaModal } from '../components/modals/CreateSocialMediaModal'
-import { DeleteSocialMediaModal } from '../components/modals/DeleteSocialMediaModal'
-import { EditSocialMediaModal } from '../components/modals/EditSocialMediaModal'
-import { SocialMediaTable } from '../components/SocialMediaTable'
+import { useSession } from 'next-auth/react'
+import { ReactElement, useEffect, useMemo } from 'react'
+import { ClientSocialMediaList } from '../components/pages/client/ClientSocialMediaList'
+import { ManagerSocialMediaList } from '../components/pages/manager/ManagerSocialMediaList'
+import { StaffSocialMediaList } from '../components/pages/staff/StaffSocialMediaList'
 import PanelLayout, { usePanelLayoutStore } from '../layouts/PanelLayout'
-import { useSocialMediaStore } from '../store/SocialMediaStore'
 import { NextPageWithLayout } from '../types/pages/NextPageWithLayout.type'
+
 const SocialMediaPage: NextPageWithLayout = () => {
   const { setHeader } = usePanelLayoutStore()
-
-  const {
-    activeSocialMedia,
-    isCreateSocialMediaModalVisible,
-    isEditSocialMediaModalVisible,
-    isDeleteSocialMediaModalVisible,
-    toggleCreateSocialMediaModal,
-    toggleEditSocialMediaModal,
-    toggleDeleteSocialMediaModal,
-  } = useSocialMediaStore()
 
   useEffect(() => {
     setHeader('Social Media')
   }, [])
 
-  return (
-    <>
-      <Head>
-        <title>Indy - Social Media</title>
-      </Head>
-      <div className="mx-auto w-full max-w-8xl space-y-6">
-        <div className="flex flex-col gap-6 transition-all">
-          <div className="flex-1">
-            <Button
-              onClick={toggleCreateSocialMediaModal}
-              ariaLabel="Add Social Media"
-              className="mb-2 w-35"
-              type="button"
-            >
-              <div>Add Social Media</div>
-            </Button>
-          </div>
-          <Card className="flex max-h-155 flex-1 flex-col">
-            <SocialMediaTable />
-          </Card>
-        </div>
-      </div>
-      <CreateSocialMediaModal
-        isVisible={isCreateSocialMediaModalVisible}
-        onClose={toggleCreateSocialMediaModal}
-      />
-      <EditSocialMediaModal
-        isVisible={isEditSocialMediaModalVisible}
-        onClose={toggleEditSocialMediaModal}
-        socialMedia={activeSocialMedia}
-      />
-      <DeleteSocialMediaModal
-        isVisible={isDeleteSocialMediaModalVisible}
-        onClose={toggleDeleteSocialMediaModal}
-        socialMedia={activeSocialMedia}
-      />
-    </>
-  )
+  const { data: session } = useSession()
+
+  const page = useMemo(() => {
+    if (!!session) {
+      if (session.isClient) {
+        return <ClientSocialMediaList clientId={session!.user.userType.client.id} />
+      } else if (session.isManager) {
+        return <ManagerSocialMediaList />
+      } else if (session.isStaff) {
+        return <StaffSocialMediaList />
+      }
+    }
+
+    return null
+  }, [!!session])
+
+  return page
 }
 
 SocialMediaPage.getLayout = (page: ReactElement) => <PanelLayout>{page}</PanelLayout>

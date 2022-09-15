@@ -9,7 +9,7 @@ import { SocialMedia } from '../types/SocialMedia.type'
 import { CaretIcon } from './icons/CaretIcon'
 import { SortIcon } from './icons/SortIcon'
 
-export const SocialMediaTable = () => {
+export const SocialMediaTable = ({ clientId }: { clientId: number }) => {
   const { data: session } = useSession()
 
   const [queryPageIndex, setQueryPageIndex] = useState(0)
@@ -25,7 +25,7 @@ export const SocialMediaTable = () => {
       const { data } = await axios.get<{
         data: Array<SocialMedia>
         page: Page
-      }>(`/v1/clients/${session!.user.userType.client.id}/social-media`, {
+      }>(`/v1/clients/${clientId}/social-media`, {
         params: {
           page_number: queryPageIndex + 1,
           size: 20,
