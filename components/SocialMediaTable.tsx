@@ -20,7 +20,7 @@ export const SocialMediaTable = ({ clientId }: { clientId: number }) => {
     isFetching,
     isLoading,
   } = useQuery(
-    ['socialMedias', queryPageIndex],
+    ['socialMedias', clientId, queryPageIndex],
     async () => {
       const { data } = await axios.get<{
         data: Array<SocialMedia>

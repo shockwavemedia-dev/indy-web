@@ -1,8 +1,10 @@
 import axios from 'axios'
+import { useSession } from 'next-auth/react'
 import Head from 'next/head'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useQuery, useQueryClient } from 'react-query'
 import { SingleValue } from 'react-select'
+import { usePanelLayoutStore } from '../../../layouts/PanelLayout'
 import { useSocialMediaStore } from '../../../store/SocialMediaStore'
 import { Client } from '../../../types/Client.type'
 import { Page } from '../../../types/Page.type'
@@ -17,6 +19,9 @@ import { SelectNoFormik } from '../../SelectNoFormik'
 import { SocialMediaTable } from '../../SocialMediaTable'
 
 export const ManagerSocialMediaList = () => {
+  const { data: session } = useSession()
+  const { setHeader, setSubHeader } = usePanelLayoutStore()
+
   const {
     activeSocialMedia,
     isCreateSocialMediaModalVisible,
@@ -46,12 +51,20 @@ export const ManagerSocialMediaList = () => {
     return data
   })
 
+  useEffect(() => {
+    setHeader('Dashboard')
+    setSubHeader(`Welcome back, ${session?.user.firstName}`)
+
+    return () => {
+      setSubHeader('Social Media')
+    }
+  }, [])
+
   return (
     <>
       <Head>
         <title>Indy - Social Media</title>
       </Head>
-      {selectedClientId}
       <div className="mb-8 flex-1 space-y-6">
         <SelectNoFormik
           Icon={UserIcon}
@@ -68,7 +81,7 @@ export const ManagerSocialMediaList = () => {
           }
         />
       </div>
-      {selectedClientId !== -1 && (
+      {selectedClientId !== -1 ? (
         <>
           <div className="mx-auto w-full max-w-8xl space-y-6">
             <div className="flex flex-col gap-6 transition-all">
@@ -103,6 +116,10 @@ export const ManagerSocialMediaList = () => {
             socialMedia={activeSocialMedia}
           />
         </>
+      ) : (
+        <Card>
+          <div className="flex-1 text-center text-xs text-metallic-silver">Select a Client</div>
+        </Card>
       )}
     </>
   )

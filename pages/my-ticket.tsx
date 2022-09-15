@@ -1,22 +1,25 @@
 import { useSession } from 'next-auth/react'
 import { ReactElement, useEffect, useMemo } from 'react'
-import { ClientSocialMediaList } from '../components/pages/client/ClientSocialMediaList'
+import { ManagerTicketList } from '../components/pages/manager/ManagerTicketList'
+import { StaffTicketList } from '../components/pages/staff/StaffTicketList'
 import PanelLayout, { usePanelLayoutStore } from '../layouts/PanelLayout'
 import { NextPageWithLayout } from '../types/pages/NextPageWithLayout.type'
 
-const SocialMediaPage: NextPageWithLayout = () => {
+const MyTicketPage: NextPageWithLayout = () => {
   const { setHeader } = usePanelLayoutStore()
 
   useEffect(() => {
-    setHeader('Social Media')
+    setHeader('Ticket')
   }, [])
 
   const { data: session } = useSession()
 
   const page = useMemo(() => {
     if (!!session) {
-      if (session.isClient) {
-        return <ClientSocialMediaList clientId={session!.user.userType.client.id} />
+      if (session.isManager) {
+        return <ManagerTicketList />
+      } else if (session.isStaff) {
+        return <StaffTicketList />
       }
     }
 
@@ -26,6 +29,6 @@ const SocialMediaPage: NextPageWithLayout = () => {
   return page
 }
 
-SocialMediaPage.getLayout = (page: ReactElement) => <PanelLayout>{page}</PanelLayout>
+MyTicketPage.getLayout = (page: ReactElement) => <PanelLayout>{page}</PanelLayout>
 
-export default SocialMediaPage
+export default MyTicketPage
