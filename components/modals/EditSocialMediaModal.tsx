@@ -277,7 +277,7 @@ export const EditSocialMediaModal = ({
             </Formik>
             <div className="h-fit max-h-130 w-2/4 overflow-y-auto">
               <Card
-                className="bg-cultured"
+                className="!bg-cultured"
                 title="Activity"
                 titlePosition="center"
                 titleClassName="text-halloween-orange"
@@ -299,7 +299,7 @@ export const EditSocialMediaModal = ({
                 )}
               </Card>
               <Card
-                className="bg-cultured"
+                className="!bg-cultured"
                 title="Comment"
                 titlePosition="center"
                 titleClassName="text-halloween-orange"
