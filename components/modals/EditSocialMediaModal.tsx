@@ -32,11 +32,9 @@ import { TextInput } from '../TextInput'
 import { TimeInput } from '../TimeInput'
 import { DeleteSocialMediaCommentModal } from './DeleteSocialMediaCommentModal'
 import { EditSocialMediaCommentModal } from './EditSocialMediaCommentModal'
+import { FileUploadModal, useFileUploadModal } from './FileUploadModal'
 import { SocialMediaFileModal, useSocialMediaFileModalStore } from './SocialMediaFileModal'
-import {
-  UploadSocialMediaFileModal,
-  useUploadSocialMediaFileModalStore,
-} from './UploadSocialMediaFileModal'
+import { UploadSocialMediaFileModal } from './UploadSocialMediaFileModal'
 
 export const EditSocialMediaModal = ({
   isVisible,
@@ -118,9 +116,9 @@ export const EditSocialMediaModal = ({
 
   const { toggleShowSocialMediaFileModal } = useSocialMediaFileModalStore()
 
-  const { toggleUploadSocialMediaFileModal } = useUploadSocialMediaFileModalStore()
+  const { setVisible } = useFileUploadModal()
 
-  const toggleUploadFile = () => toggleUploadSocialMediaFileModal(socialMediaDetails)
+  const toggleUploadFile = () => setVisible(true, socialMediaDetails)
 
   if (!socialMediaDetails) return null
 
@@ -286,7 +284,7 @@ export const EditSocialMediaModal = ({
                   <div className="flex flex-col">
                     {socialMediaDetails.activities?.map(({ action, user, fields, createdAt }) => (
                       <SocialMediaActivityCard
-                        key={`activity-${action}`}
+                        key={`activity-${action}-${createdAt}`}
                         action={action}
                         createdBy={user}
                         fields={fields}
@@ -357,6 +355,7 @@ export const EditSocialMediaModal = ({
       <UploadSocialMediaFileModal />
       <EditSocialMediaCommentModal />
       <DeleteSocialMediaCommentModal />
+      <FileUploadModal />
     </>
   )
 }
