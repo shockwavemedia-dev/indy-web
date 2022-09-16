@@ -82,7 +82,7 @@ export const FileUploadModal = () => {
 
     try {
       const { status } = await axios.post(
-        `/v1/social-media/26`,
+        `/v1/social-media/${socialMedia?.id}`,
         objectWithFileToFormData({ ...socialMedia, attachments, fileIds, _method: 'PUT' })
       )
       if (status === 200) {
@@ -107,7 +107,7 @@ export const FileUploadModal = () => {
     <>
       {socialMedia && (
         <Modal
-          title="Add Files"
+          title="Add Attachments(s)"
           onClose={() => setVisible(false)}
           className="max-h-[45rem] w-175 border-2 border-solid border-bright-gray"
         >

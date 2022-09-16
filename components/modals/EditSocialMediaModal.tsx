@@ -34,7 +34,6 @@ import { DeleteSocialMediaCommentModal } from './DeleteSocialMediaCommentModal'
 import { EditSocialMediaCommentModal } from './EditSocialMediaCommentModal'
 import { FileUploadModal, useFileUploadModal } from './FileUploadModal'
 import { SocialMediaFileModal, useSocialMediaFileModalStore } from './SocialMediaFileModal'
-import { UploadSocialMediaFileModal } from './UploadSocialMediaFileModal'
 
 export const EditSocialMediaModal = ({
   isVisible,
@@ -352,7 +351,6 @@ export const EditSocialMediaModal = ({
         </Modal>
       )}
       <SocialMediaFileModal />
-      <UploadSocialMediaFileModal />
       <EditSocialMediaCommentModal />
       <DeleteSocialMediaCommentModal />
       <FileUploadModal />

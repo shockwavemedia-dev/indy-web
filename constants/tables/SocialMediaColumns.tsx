@@ -7,7 +7,10 @@ import { useQueryClient } from 'react-query'
 import { MultiValue, SingleValue } from 'react-select'
 import { Column } from 'react-table'
 import { EditIcon } from '../../components/icons/EditIcon'
+import { FileIcon } from '../../components/icons/FileIcon'
+import { PlusIcon } from '../../components/icons/PlusIcon'
 import { TrashIcon } from '../../components/icons/TrashIcon'
+import { FileUploadModal, useFileUploadModal } from '../../components/modals/FileUploadModal'
 import { SocialMediaChannelSelect } from '../../components/SocialMediaChannelSelect'
 import { SocialMediaStatusSelect } from '../../components/SocialMediaStatusSelect'
 import { useSocialMediaStore } from '../../store/SocialMediaStore'
@@ -18,7 +21,6 @@ import { SocialMediaChannel } from '../../types/SocialMediaChannel.type'
 import { SocialMediaStatus } from '../../types/SocialMediaStatus.type'
 import { SocialMediaChannelOptions } from '../options/SocialMediaChannelOptions'
 import { SocialMediaStatusOptions } from '../options/SocialMediaStatusOptions'
-
 const updateSocialMedia = async (socialMedia: SocialMedia) => {
   try {
     const { status } = await axios.put(`/v1/social-media/${socialMedia.id}`, {
@@ -143,32 +145,46 @@ export const SocialMediaColumns: Array<Column<SocialMedia>> = [
   {
     Header: 'Attachments',
     accessor: 'attachments',
-    Cell: ({ value }) => {
+    Cell: ({ value, row: { original: socialMedia } }) => {
       const attachmentId = useId()
 
+      const { setVisible } = useFileUploadModal()
+
+      const toggleUploadFile = () => setVisible(true, socialMedia)
+
       return (
-        <div className="flex space-x-1">
-          {value &&
-            value.map(({ thumbnailUrl, name, socialMediaAttachmentId }) => (
-              <Tooltip key={`${attachmentId}-${socialMediaAttachmentId}`} title={name}>
-                <button
-                  type="button"
-                  className="relative h-9 min-w-[2.25rem] hover:rounded hover:border-2 hover:border-halloween-orange"
-                >
-                  {thumbnailUrl && (
-                    <Image
-                      src={thumbnailUrl}
-                      alt={name}
-                      layout="fill"
-                      objectFit="contain"
-                      objectPosition="left"
-                      className="rounded-sm"
-                    />
-                  )}
-                </button>
-              </Tooltip>
-            ))}
-        </div>
+        <>
+          <div className="flex space-x-1">
+            {value &&
+              value.map(({ thumbnailUrl, name, socialMediaAttachmentId }) => (
+                <Tooltip key={`${attachmentId}-${socialMediaAttachmentId}`} title={name}>
+                  <button
+                    type="button"
+                    className="relative h-9 min-w-[2.25rem] hover:rounded hover:border-2 hover:border-halloween-orange"
+                  >
+                    {thumbnailUrl ? (
+                      <Image
+                        src={thumbnailUrl}
+                        alt={name}
+                        layout="fill"
+                        objectFit="contain"
+                        objectPosition="left"
+                        className="rounded-sm"
+                      />
+                    ) : (
+                      <FileIcon />
+                    )}
+                  </button>
+                </Tooltip>
+              ))}
+            <Tooltip title="Add Attachment(s)" placement="top">
+              <button onClick={toggleUploadFile} className="flex py-2" type="button">
+                <PlusIcon className="stroke-halloween-orange" />
+              </button>
+            </Tooltip>
+          </div>
+          <FileUploadModal />
+        </>
       )
     },
   },
