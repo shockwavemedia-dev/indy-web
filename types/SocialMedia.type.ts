@@ -19,4 +19,5 @@ export type SocialMedia = {
   notes?: string | null
   activities?: Array<SocialMediaActivity>
   comments?: Array<SocialMediaComment>
+  fileIds?: Array<number>
 }
