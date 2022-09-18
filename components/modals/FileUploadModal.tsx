@@ -80,10 +80,20 @@ export const FileUploadModal = () => {
     const attachments = files
     const fileIds = myFiles && myFiles.length > 0 && myFiles.map((s) => s.id)
 
+    const initialValues = {
+      post: socialMedia?.post,
+      attachments: socialMedia?.attachments,
+      copy: socialMedia?.copy,
+      status: socialMedia?.status,
+      channels: socialMedia?.channels,
+      notes: socialMedia?.notes,
+      postDate: socialMedia?.postDate,
+    }
+
     try {
       const { status } = await axios.post(
         `/v1/social-media/${socialMedia?.id}`,
-        objectWithFileToFormData({ ...socialMedia, attachments, fileIds, _method: 'PUT' })
+        objectWithFileToFormData({ ...initialValues, attachments, fileIds, _method: 'PUT' })
       )
       if (status === 200) {
         queryClient.invalidateQueries(['socialMedia', socialMedia?.id])
