@@ -164,7 +164,7 @@ export const FileUploadModal = () => {
               <input {...getInputProps()} />
             </div>
           ) : (
-            <FileBrowserSelect clientId={session.user.userType.client.id || -1} />
+            <FileBrowserSelect clientId={socialMedia.clientId || -1} />
           )}
           {[...files, ...myFiles].length > 0 && (
             <div className="mt-4 max-h-44 w-full space-y-3 overflow-y-auto">
