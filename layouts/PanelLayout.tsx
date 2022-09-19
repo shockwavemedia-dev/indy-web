@@ -25,6 +25,10 @@ import {
   useCreateSupportTicketModalStore,
 } from '../components/modals/CreateSupportTicketModal'
 import { RouteButton } from '../components/RouteButton'
+import {
+  SocialMediaNotificationModal,
+  useSocialMediaNotificationModalStore,
+} from '../components/SocialMediaNotificationModal'
 import { TicketsAndNotifacationsCountCard } from '../components/TicketsAndNotifacationsCountCard'
 import { AdminRoutes } from '../constants/routes/AdminRoutes'
 import { ClientRoutes } from '../constants/routes/ClientRoutes'
@@ -62,6 +66,7 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
   const { header, subHeader, buttons, setButtons } = usePanelLayoutStore()
   const { toggleModal: toggleSupportRequestModal } = useCreateSupportRequestModalStore()
   const { toggleModal: toggleSupportTicketModal } = useCreateSupportTicketModalStore()
+  const { toggleModal: toggleNotificationModal } = useSocialMediaNotificationModalStore()
 
   const { data: ticketsAndNotifacationsCount, isLoading: ticketsAndNotifacationsCountIsLoading } =
     useQuery(
@@ -216,7 +221,16 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
           </a>
         </Link>
         <IndyIcon className="m-0 ml-auto -mr-20 scale-50 p-0" />
-        <Image src={DummyAvatar} alt="Dummy" height={32} width={32} className="rounded-full" />
+        <button
+          className="group"
+          onClick={(e) => {
+            e.stopPropagation()
+            toggleNotificationModal(true)
+          }}
+        >
+          <Image src={DummyAvatar} alt="Dummy" height={32} width={32} className="rounded-full" />
+        </button>
+
         <div className="ml-3 mr-5 flex flex-col">
           <div className=" text-sm font-medium text-onyx">
             {session?.user.firstName} {session?.user.lastName}
@@ -299,6 +313,10 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
       </div>
       {session.isClient && <CreateSupportRequestModal />}
       {(session.isManager || session.isAdmin) && <CreateSupportTicketModal />}
+      {(session.isManager || session.isStaff) &&
+        session?.user.userType.department.name === 'Social Media' && (
+          <SocialMediaNotificationModal />
+        )}
     </>
   )
 }
