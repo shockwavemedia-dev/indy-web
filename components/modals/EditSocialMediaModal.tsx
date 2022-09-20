@@ -1,8 +1,7 @@
 import axios from 'axios'
 import { Form, Formik } from 'formik'
 import { useSession } from 'next-auth/react'
-import { useState } from 'react'
-import { Mention, MentionsInput } from 'react-mentions'
+import { SetStateAction, useState } from 'react'
 import { useQuery, useQueryClient } from 'react-query'
 import { MultiValue } from 'react-select'
 import { SocialMediaChannelOptions } from '../../constants/options/SocialMediaChannelOptions'
@@ -23,6 +22,7 @@ import { FloppyDiskIcon } from '../icons/FloppyDiskIcon'
 import { PaperPlaneIcon } from '../icons/PaperPlaneIcon'
 import { PlusIcon } from '../icons/PlusIcon'
 import { LinkButton } from '../LinkButton'
+import { MentionInput } from '../MentionInput'
 import { Modal } from '../Modal'
 import { PhotographyVideographyFileButton } from '../PhotographyVideographyFileButton'
 import { Select } from '../Select'
@@ -110,70 +110,6 @@ export const EditSocialMediaModal = ({
         message: `Comment successfully added!`,
       })
     }
-  }
-
-  const defaultStyle = {
-    control: {
-      color: '#32343D',
-      font: '500 0.875rem/1.25rem Urbanist',
-      margin: 0,
-      padding: 0,
-      minHeight: '3.125rem',
-      boxShadow: '0 0 0 1px #E8E8EF',
-      border: 'none',
-      borderRadius: '.75rem',
-      backgroundColor: '#ffffff',
-      transition: 'none',
-    },
-
-    '&multiLine': {
-      control: {
-        font: '500 0.875rem/1.25rem Urbanist',
-        minHeight: 63,
-      },
-      highlighter: {
-        padding: 9,
-        border: 'none',
-        borderRadius: '.75rem',
-        '&focused': {
-          backgroundColor: '0 0 0 2px #F25D23',
-        },
-      },
-      input: {
-        padding: 9,
-        border: 'none',
-        borderRadius: '.75rem',
-      },
-    },
-
-    '&singleLine': {
-      display: 'inline-block',
-      width: 180,
-
-      highlighter: {
-        padding: 1,
-        border: '2px inset transparent',
-      },
-      input: {
-        padding: 1,
-        border: '2px inset',
-      },
-    },
-
-    suggestions: {
-      list: {
-        backgroundColor: 'white',
-        border: '1px solid rgba(0,0,0,0.15)',
-        font: '500 0.875rem/1.25rem Urbanist',
-      },
-      item: {
-        padding: '5px 15px',
-        borderBottom: '1px solid rgba(0,0,0,0.15)',
-        '&focused': {
-          backgroundColor: '#F25D2333',
-        },
-      },
-    },
   }
 
   const [comment, setComment] = useState('')
@@ -395,22 +331,15 @@ export const EditSocialMediaModal = ({
                     ) : (
                       <div className="m-auto text-sm text-metallic-silver">No Comment found.</div>
                     )}
-                    <MentionsInput
+                    <MentionInput
                       className="mt-5"
                       value={comment}
-                      onChange={(event) => setComment(event.target.value)}
-                      style={defaultStyle}
+                      data={users}
+                      onChange={(event: { target: { value: SetStateAction<string> } }) =>
+                        setComment(event.target.value)
+                      }
                       placeholder="Enter Comment, use the @ symbol to tag other users."
-                      allowSuggestionsAboveCursor={true}
-                    >
-                      <Mention
-                        trigger="@"
-                        data={users}
-                        style={{
-                          backgroundColor: '#ccccff',
-                        }}
-                      />
-                    </MentionsInput>
+                    />
                     <Button
                       className="mt-5"
                       ariaLabel="Submit Comment"
