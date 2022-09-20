@@ -1,24 +1,20 @@
-import { Icon } from '@mui/material'
 import axios from 'axios'
 import { Form, Formik } from 'formik'
 import { useSession } from 'next-auth/react'
 import { useState } from 'react'
-import { Mention, MentionsInput} from 'react-mentions'
+import { Mention, MentionsInput } from 'react-mentions'
 import { useQuery, useQueryClient } from 'react-query'
 import { MultiValue } from 'react-select'
 import { SocialMediaChannelOptions } from '../../constants/options/SocialMediaChannelOptions'
 import { SocialMediaStatusOptions } from '../../constants/options/SocialMediaStatusOptions'
-import { CreateSocialMediaCommentFormSchema } from '../../schemas/CreateSocialMediaCommentFormSchema'
 import { CreateSocialMediaFormSchema } from '../../schemas/CreateSocialMediaFormSchema'
 import { useToastStore } from '../../store/ToastStore'
-import { CreateSocialMediaCommentForm } from '../../types/forms/CreateSocialMediaCommentForm.type'
 import { EditSocialMediaForm } from '../../types/forms/EditSocialMediaForm.type'
 import { SelectOption } from '../../types/SelectOption.type'
 import { SocialMedia } from '../../types/SocialMedia.type'
 import { objectWithFileToFormData } from '../../utils/FormHelpers'
 import { Button } from '../Button'
 import { Card } from '../Card'
-import CommentParagraph from '../CommentParagraph'
 import { CreateSelectNoFormik } from '../CreateSelectNoFormik'
 import { DateInput } from '../DateInput'
 import { ClipboardIcon } from '../icons/ClipboardIcon'
@@ -109,6 +105,10 @@ export const EditSocialMediaModal = ({
       queryClient.invalidateQueries(['socialMedia', socialMedia.id])
       queryClient.invalidateQueries(['socialMedias'])
       setComment('')
+      showToast({
+        type: 'success',
+        message: `Comment successfully added!`,
+      })
     }
   }
 
@@ -124,58 +124,57 @@ export const EditSocialMediaModal = ({
       borderRadius: '.75rem',
       backgroundColor: '#ffffff',
       transition: 'none',
-
     },
 
-    "&multiLine": {
+    '&multiLine': {
       control: {
         font: '500 0.875rem/1.25rem Urbanist',
-        minHeight: 63
+        minHeight: 63,
       },
       highlighter: {
         padding: 9,
         border: 'none',
         borderRadius: '.75rem',
-        "&focused": {
-          backgroundColor: "0 0 0 2px #F25D23"
-        }
+        '&focused': {
+          backgroundColor: '0 0 0 2px #F25D23',
+        },
       },
       input: {
         padding: 9,
         border: 'none',
         borderRadius: '.75rem',
-      }
+      },
     },
 
-    "&singleLine": {
-      display: "inline-block",
+    '&singleLine': {
+      display: 'inline-block',
       width: 180,
 
       highlighter: {
         padding: 1,
-        border: "2px inset transparent"
+        border: '2px inset transparent',
       },
       input: {
         padding: 1,
-        border: "2px inset"
-      }
+        border: '2px inset',
+      },
     },
 
     suggestions: {
       list: {
-        backgroundColor: "white",
-        border: "1px solid rgba(0,0,0,0.15)",
+        backgroundColor: 'white',
+        border: '1px solid rgba(0,0,0,0.15)',
         font: '500 0.875rem/1.25rem Urbanist',
       },
       item: {
-        padding: "5px 15px",
-        borderBottom: "1px solid rgba(0,0,0,0.15)",
-        "&focused": {
-          backgroundColor: "#F25D2333"
-        }
-      }
-    }
-  };
+        padding: '5px 15px',
+        borderBottom: '1px solid rgba(0,0,0,0.15)',
+        '&focused': {
+          backgroundColor: '#F25D2333',
+        },
+      },
+    },
+  }
 
   const [comment, setComment] = useState('')
 
@@ -396,26 +395,31 @@ export const EditSocialMediaModal = ({
                     ) : (
                       <div className="m-auto text-sm text-metallic-silver">No Comment found.</div>
                     )}
-                      <MentionsInput
+                    <MentionsInput
                       className="mt-5"
-                        value={comment}
-                        onChange={(event) => setComment(event.target.value)}
-                        style={defaultStyle}                        
-                        placeholder="Enter Comment, use the @ symbol to tag other users."
-                        allowSuggestionsAboveCursor={true}
-                      >
-                        <Mention
-                          trigger="@"
-                          data={users}
-                          style={{
+                      value={comment}
+                      onChange={(event) => setComment(event.target.value)}
+                      style={defaultStyle}
+                      placeholder="Enter Comment, use the @ symbol to tag other users."
+                      allowSuggestionsAboveCursor={true}
+                    >
+                      <Mention
+                        trigger="@"
+                        data={users}
+                        style={{
                           backgroundColor: '#ccccff',
-                         }}
-                        />
-                      </MentionsInput>
-                      <Button className="mt-5" ariaLabel="Submit Comment" type="button" onClick={submitCommentForm}>
-                            <PaperPlaneIcon className="stroke-white" />
-                            <div>Send</div>
-                      </Button>
+                        }}
+                      />
+                    </MentionsInput>
+                    <Button
+                      className="mt-5"
+                      ariaLabel="Submit Comment"
+                      type="button"
+                      onClick={submitCommentForm}
+                    >
+                      <PaperPlaneIcon className="stroke-white" />
+                      <div>Send</div>
+                    </Button>
                   </>
                 </div>
               </Card>
