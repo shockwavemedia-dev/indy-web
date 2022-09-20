@@ -63,15 +63,7 @@ export const EditSocialMediaCommentModal = () => {
           className="border-2 border-solid border-bright-gray"
           onClose={toggleModal}
         >
-          <Formik
-            validationSchema={CreateSocialMediaCommentFormSchema}
-            initialValues={{
-              comment: comment,
-            }}
-            onSubmit={submitEditCommentForm}
-          >
-            {({ isSubmitting }) => (
-              <Form className="flex w-140 flex-col">
+              <div className="flex w-140 flex-col">
                 <TextInput
                   label="Social Media Comment"
                   type="text"
@@ -84,13 +76,12 @@ export const EditSocialMediaCommentModal = () => {
                   <Button ariaLabel="Cancel" onClick={toggleModal} type="button" light>
                     Cancel
                   </Button>
-                  <Button ariaLabel="Submit" disabled={isSubmitting} type="submit">
-                    Submit
-                  </Button>
+                  <Button className="mt-5" ariaLabel="Submit Comment" type="button" onClick={submitCommentForm}>
+                            <PaperPlaneIcon className="stroke-white" />
+                            <div>Send</div>
+                      </Button>
                 </div>
-              </Form>
-            )}
-          </Formik>
+              </div>
         </Modal>
       )}
     </>
