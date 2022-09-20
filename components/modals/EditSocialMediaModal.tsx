@@ -3,7 +3,7 @@ import axios from 'axios'
 import { Form, Formik } from 'formik'
 import { useSession } from 'next-auth/react'
 import { useState } from 'react'
-import { Mention, MentionsInput, OnChangeHandlerFunc } from 'react-mentions'
+import { Mention, MentionsInput} from 'react-mentions'
 import { useQuery, useQueryClient } from 'react-query'
 import { MultiValue } from 'react-select'
 import { SocialMediaChannelOptions } from '../../constants/options/SocialMediaChannelOptions'
@@ -108,6 +108,7 @@ export const EditSocialMediaModal = ({
     if (status === 200) {
       queryClient.invalidateQueries(['socialMedia', socialMedia.id])
       queryClient.invalidateQueries(['socialMedias'])
+      setComment('')
     }
   }
 
@@ -191,16 +192,6 @@ export const EditSocialMediaModal = ({
   const { setVisible } = useFileUploadModal()
 
   const toggleUploadFile = () => setVisible(true, socialMediaDetails)
-
-  const handleChange: OnChangeHandlerFunc = (
-    e: any,
-    newValue: any,
-    newPlainTextValue: any,
-    mentions: any
-  ) => {
-    console.log('Input has changed', e, newValue, newPlainTextValue, mentions)
-    setComment(e.target.value)
-  }
 
   if (!socialMediaDetails) return null
 
