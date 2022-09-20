@@ -21,7 +21,6 @@ const CommentParagraph = ({ comment }: { comment: string }) => {
           let display = m.match(displayRegex)[0].replace('@[', '').replace(']', '')
 
           arr.push({ id: id, display: display })
-          console.log(display)
         })
       let newComment = comment.split(regex)
       let output = ''
@@ -30,9 +29,8 @@ const CommentParagraph = ({ comment }: { comment: string }) => {
         if (i === newComment.length - 1) output += c
         else
           output +=
-            c +
-            `<a style="border: 1px solid #000080; border-radius: 0.5rem; font-weight: 500; padding-left: 0.625rem; padding-right: 0.625rem; background-color: #ccccff; font-size: 0.875rem;
-            line-height: 1.25rem;">${arr[i].display}</a>`
+          `<a style="font-color: #32343D; font: 500 0.875rem/1.25rem Urbanist;">${c}</a>` +
+            `<a style="background-color: #ccccff; font-color: #32343D; font: 500 0.875rem/1.25rem Urbanist;">${arr[i].display}</a>`
       }
       setdisplayComment(output)
     }

@@ -3,7 +3,7 @@ import axios from 'axios'
 import { Form, Formik } from 'formik'
 import { useSession } from 'next-auth/react'
 import { useState } from 'react'
-import { Mention, MentionsInput } from 'react-mentions'
+import { Mention, MentionsInput, OnChangeHandlerFunc } from 'react-mentions'
 import { useQuery, useQueryClient } from 'react-query'
 import { MultiValue } from 'react-select'
 import { SocialMediaChannelOptions } from '../../constants/options/SocialMediaChannelOptions'
@@ -101,29 +101,89 @@ export const EditSocialMediaModal = ({
     }
   }
 
-  const submitCommentForm = async (
-    values: CreateSocialMediaCommentForm,
-    {
-      resetForm,
-    }: {
-      resetForm: () => void
-    }
-  ) => {
-    const { status } = await axios.post(`/v1/social-media/${socialMedia.id}/comments`, values)
+  const submitCommentForm = async () => {
+    const { status } = await axios.post(`/v1/social-media/${socialMedia.id}/comments`, {
+      comment: comment,
+    })
     if (status === 200) {
       queryClient.invalidateQueries(['socialMedia', socialMedia.id])
       queryClient.invalidateQueries(['socialMedias'])
-      resetForm()
     }
   }
 
+  const defaultStyle = {
+    control: {
+      color: '#32343D',
+      font: '500 0.875rem/1.25rem Urbanist',
+      margin: 0,
+      padding: 0,
+      minHeight: '3.125rem',
+      boxShadow: '0 0 0 1px #E8E8EF',
+      border: 'none',
+      borderRadius: '.75rem',
+      backgroundColor: '#ffffff',
+      transition: 'none',
+
+    },
+
+    "&multiLine": {
+      control: {
+        font: '500 0.875rem/1.25rem Urbanist',
+        minHeight: 63
+      },
+      highlighter: {
+        padding: 9,
+        border: 'none',
+        borderRadius: '.75rem',
+        "&focused": {
+          backgroundColor: "0 0 0 2px #F25D23"
+        }
+      },
+      input: {
+        padding: 9,
+        border: 'none',
+        borderRadius: '.75rem',
+      }
+    },
+
+    "&singleLine": {
+      display: "inline-block",
+      width: 180,
+
+      highlighter: {
+        padding: 1,
+        border: "2px inset transparent"
+      },
+      input: {
+        padding: 1,
+        border: "2px inset"
+      }
+    },
+
+    suggestions: {
+      list: {
+        backgroundColor: "white",
+        border: "1px solid rgba(0,0,0,0.15)",
+        font: '500 0.875rem/1.25rem Urbanist',
+      },
+      item: {
+        padding: "5px 15px",
+        borderBottom: "1px solid rgba(0,0,0,0.15)",
+        "&focused": {
+          backgroundColor: "#F25D2333"
+        }
+      }
+    }
+  };
+
   const [comment, setComment] = useState('')
-  const [comments, setComments] = useState([])
 
   const users = [
-    { id: '1', display: 'Arjean' },
+    { id: '1', display: 'Daniel' },
+    { id: '3', display: 'Ross' },
     { id: '2', display: 'Mark' },
     { id: '3', display: 'Kyle' },
+    { id: '3', display: 'Arjean' },
   ]
 
   const { toggleShowSocialMediaFileModal } = useSocialMediaFileModalStore()
@@ -131,6 +191,16 @@ export const EditSocialMediaModal = ({
   const { setVisible } = useFileUploadModal()
 
   const toggleUploadFile = () => setVisible(true, socialMediaDetails)
+
+  const handleChange: OnChangeHandlerFunc = (
+    e: any,
+    newValue: any,
+    newPlainTextValue: any,
+    mentions: any
+  ) => {
+    console.log('Input has changed', e, newValue, newPlainTextValue, mentions)
+    setComment(e.target.value)
+  }
 
   if (!socialMediaDetails) return null
 
@@ -335,55 +405,26 @@ export const EditSocialMediaModal = ({
                     ) : (
                       <div className="m-auto text-sm text-metallic-silver">No Comment found.</div>
                     )}
-                    <Formik
-                      validationSchema={CreateSocialMediaCommentFormSchema}
-                      initialValues={{ comment: '' }}
-                      onSubmit={submitCommentForm}
-                    >
-                      {({ isSubmitting }) => (
-                        <Form className="mt-5">
-                          <TextInput
-                            type="text"
-                            Icon={EditIcon}
-                            placeholder="Enter Comment"
-                            name="comment"
-                            className="mb-5"
-                          />
-                          <Button ariaLabel="Submit Comment" type="submit" disabled={isSubmitting}>
-                            <PaperPlaneIcon className="stroke-white" />
-                            <div>Send</div>
-                          </Button>
-                        </Form>
-                      )}
-                    </Formik>
-                    <div className="relative mt-5 flex items-center">
-                      {Icon && (
-                        <Icon className="pointer-events-none absolute left-6 stroke-lavender-gray" />
-                      )}
                       <MentionsInput
+                      className="mt-5"
                         value={comment}
                         onChange={(event) => setComment(event.target.value)}
-                        className="placeholder-items-center h-12.5 w-full rounded-xl bg-white p-2 px-13 text-sm font-medium text-onyx placeholder-metallic-silver ring-1 ring-bright-gray read-only:cursor-auto focus:ring-2 focus:ring-halloween-orange read-only:focus:ring-1 read-only:focus:ring-bright-gray"
-                        placeholder="Type anything, use the @ symbol to tag other users."
+                        style={defaultStyle}                        
+                        placeholder="Enter Comment, use the @ symbol to tag other users."
                         allowSuggestionsAboveCursor={true}
                       >
-                        <Mention trigger="@" data={users} />
+                        <Mention
+                          trigger="@"
+                          data={users}
+                          style={{
+                          backgroundColor: '#ccccff',
+                         }}
+                        />
                       </MentionsInput>
-                    </div>
-                    <button
-                      className="send-text"
-                      style={comment ? { color: '#3B5E66' } : {}}
-                      onClick={() => {
-                        setComments([...comments, comment])
-                        setComment('')
-                      }}
-                    >
-                      Send
-                    </button>
-                    <div className="col-12">
-                      {comments.length > 0 &&
-                        comments.map((c) => <CommentParagraph key={c} comment={c} />)}
-                    </div>
+                      <Button className="mt-5" ariaLabel="Submit Comment" type="button" onClick={submitCommentForm}>
+                            <PaperPlaneIcon className="stroke-white" />
+                            <div>Send</div>
+                      </Button>
                   </>
                 </div>
               </Card>
