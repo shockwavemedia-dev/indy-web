@@ -4,6 +4,7 @@ import createStore from 'zustand'
 import { combine } from 'zustand/middleware'
 import { useToastStore } from '../../store/ToastStore'
 import { Button } from '../Button'
+import CommentParagraph from '../CommentParagraph'
 import { TrashIcon } from '../icons/TrashIcon'
 import { Modal } from '../Modal'
 
@@ -59,7 +60,9 @@ export const DeleteSocialMediaCommentModal = () => {
           className="w-130 border-2 border-solid border-bright-gray"
           onClose={toggleModal}
         >
-          <div className="mb-8 text-sm font-semibold text-halloween-orange">{comment}</div>
+          <div className="mb-8 text-sm font-semibold">
+            <CommentParagraph comment={comment} />
+          </div>
           <div className="flex w-full space-x-5">
             <Button ariaLabel="Cancel" onClick={toggleModal} type="button" light>
               Cancel

@@ -1,14 +1,13 @@
 import axios from 'axios'
 import { Form, Formik } from 'formik'
 import { useSession } from 'next-auth/react'
+import { SetStateAction, useState } from 'react'
 import { useQuery, useQueryClient } from 'react-query'
 import { MultiValue } from 'react-select'
 import { SocialMediaChannelOptions } from '../../constants/options/SocialMediaChannelOptions'
 import { SocialMediaStatusOptions } from '../../constants/options/SocialMediaStatusOptions'
-import { CreateSocialMediaCommentFormSchema } from '../../schemas/CreateSocialMediaCommentFormSchema'
 import { CreateSocialMediaFormSchema } from '../../schemas/CreateSocialMediaFormSchema'
 import { useToastStore } from '../../store/ToastStore'
-import { CreateSocialMediaCommentForm } from '../../types/forms/CreateSocialMediaCommentForm.type'
 import { EditSocialMediaForm } from '../../types/forms/EditSocialMediaForm.type'
 import { SelectOption } from '../../types/SelectOption.type'
 import { SocialMedia } from '../../types/SocialMedia.type'
@@ -23,6 +22,7 @@ import { FloppyDiskIcon } from '../icons/FloppyDiskIcon'
 import { PaperPlaneIcon } from '../icons/PaperPlaneIcon'
 import { PlusIcon } from '../icons/PlusIcon'
 import { LinkButton } from '../LinkButton'
+import { MentionInput } from '../MentionInput'
 import { Modal } from '../Modal'
 import { PhotographyVideographyFileButton } from '../PhotographyVideographyFileButton'
 import { Select } from '../Select'
@@ -97,21 +97,30 @@ export const EditSocialMediaModal = ({
     }
   }
 
-  const submitCommentForm = async (
-    values: CreateSocialMediaCommentForm,
-    {
-      resetForm,
-    }: {
-      resetForm: () => void
-    }
-  ) => {
-    const { status } = await axios.post(`/v1/social-media/${socialMedia.id}/comments`, values)
+  const submitCommentForm = async () => {
+    const { status } = await axios.post(`/v1/social-media/${socialMedia.id}/comments`, {
+      comment: comment,
+    })
     if (status === 200) {
       queryClient.invalidateQueries(['socialMedia', socialMedia.id])
       queryClient.invalidateQueries(['socialMedias'])
-      resetForm()
+      setComment('')
+      showToast({
+        type: 'success',
+        message: `Comment successfully added!`,
+      })
     }
   }
+
+  const [comment, setComment] = useState('')
+
+  const users = [
+    { id: '1', display: 'Daniel' },
+    { id: '3', display: 'Ross' },
+    { id: '2', display: 'Mark' },
+    { id: '3', display: 'Kyle' },
+    { id: '3', display: 'Arjean' },
+  ]
 
   const { toggleShowSocialMediaFileModal } = useSocialMediaFileModalStore()
 
@@ -322,27 +331,24 @@ export const EditSocialMediaModal = ({
                     ) : (
                       <div className="m-auto text-sm text-metallic-silver">No Comment found.</div>
                     )}
-                    <Formik
-                      validationSchema={CreateSocialMediaCommentFormSchema}
-                      initialValues={{ comment: '' }}
-                      onSubmit={submitCommentForm}
+                    <MentionInput
+                      className="mt-5"
+                      value={comment}
+                      data={users}
+                      onChange={(event: { target: { value: SetStateAction<string> } }) =>
+                        setComment(event.target.value)
+                      }
+                      placeholder="Enter Comment, use the @ symbol to tag other users."
+                    />
+                    <Button
+                      className="mt-5"
+                      ariaLabel="Submit Comment"
+                      type="button"
+                      onClick={submitCommentForm}
                     >
-                      {({ isSubmitting }) => (
-                        <Form className="mt-5">
-                          <TextInput
-                            type="text"
-                            Icon={EditIcon}
-                            placeholder="Enter Comment"
-                            name="comment"
-                            className="mb-5"
-                          />
-                          <Button ariaLabel="Submit Comment" type="submit" disabled={isSubmitting}>
-                            <PaperPlaneIcon className="stroke-white" />
-                            <div>Send</div>
-                          </Button>
-                        </Form>
-                      )}
-                    </Formik>
+                      <PaperPlaneIcon className="stroke-white" />
+                      <div>Send</div>
+                    </Button>
                   </>
                 </div>
               </Card>
