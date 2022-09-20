@@ -1,6 +1,9 @@
+import { Icon } from '@mui/material'
 import axios from 'axios'
 import { Form, Formik } from 'formik'
 import { useSession } from 'next-auth/react'
+import { useState } from 'react'
+import { Mention, MentionsInput } from 'react-mentions'
 import { useQuery, useQueryClient } from 'react-query'
 import { MultiValue } from 'react-select'
 import { SocialMediaChannelOptions } from '../../constants/options/SocialMediaChannelOptions'
@@ -15,6 +18,7 @@ import { SocialMedia } from '../../types/SocialMedia.type'
 import { objectWithFileToFormData } from '../../utils/FormHelpers'
 import { Button } from '../Button'
 import { Card } from '../Card'
+import CommentParagraph from '../CommentParagraph'
 import { CreateSelectNoFormik } from '../CreateSelectNoFormik'
 import { DateInput } from '../DateInput'
 import { ClipboardIcon } from '../icons/ClipboardIcon'
@@ -112,6 +116,15 @@ export const EditSocialMediaModal = ({
       resetForm()
     }
   }
+
+  const [comment, setComment] = useState('')
+  const [comments, setComments] = useState([])
+
+  const users = [
+    { id: '1', display: 'Arjean' },
+    { id: '2', display: 'Mark' },
+    { id: '3', display: 'Kyle' },
+  ]
 
   const { toggleShowSocialMediaFileModal } = useSocialMediaFileModalStore()
 
@@ -343,6 +356,34 @@ export const EditSocialMediaModal = ({
                         </Form>
                       )}
                     </Formik>
+                    <div className="relative mt-5 flex items-center">
+                      {Icon && (
+                        <Icon className="pointer-events-none absolute left-6 stroke-lavender-gray" />
+                      )}
+                      <MentionsInput
+                        value={comment}
+                        onChange={(event) => setComment(event.target.value)}
+                        className="placeholder-items-center h-12.5 w-full rounded-xl bg-white p-2 px-13 text-sm font-medium text-onyx placeholder-metallic-silver ring-1 ring-bright-gray read-only:cursor-auto focus:ring-2 focus:ring-halloween-orange read-only:focus:ring-1 read-only:focus:ring-bright-gray"
+                        placeholder="Type anything, use the @ symbol to tag other users."
+                        allowSuggestionsAboveCursor={true}
+                      >
+                        <Mention trigger="@" data={users} />
+                      </MentionsInput>
+                    </div>
+                    <button
+                      className="send-text"
+                      style={comment ? { color: '#3B5E66' } : {}}
+                      onClick={() => {
+                        setComments([...comments, comment])
+                        setComment('')
+                      }}
+                    >
+                      Send
+                    </button>
+                    <div className="col-12">
+                      {comments.length > 0 &&
+                        comments.map((c) => <CommentParagraph key={c} comment={c} />)}
+                    </div>
                   </>
                 </div>
               </Card>
