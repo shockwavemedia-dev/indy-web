@@ -160,9 +160,8 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     if (session) {
-      const { isClient, isManager, isAdmin } = session
-
-      if (isClient) {
+      //const { isClient, isManager, isAdmin } = session
+      if (session.isClient) {
         setButtons(
           <>
             <FancyLink
@@ -185,7 +184,7 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
             />
           </>
         )
-      } else if (isManager || isAdmin) {
+      } else if (session.isManager || session.isAdmin) {
         setButtons(
           <FancyButton
             Icon={<LifeBuoyIcon className="fill-halloween-orange" />}
@@ -197,7 +196,7 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
         )
       }
     }
-  }, [])
+  }, [session])
 
   if (status === 'loading' || !panelName) {
     return null
