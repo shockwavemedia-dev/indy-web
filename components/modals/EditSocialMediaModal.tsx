@@ -9,8 +9,10 @@ import { SocialMediaStatusOptions } from '../../constants/options/SocialMediaSta
 import { CreateSocialMediaFormSchema } from '../../schemas/CreateSocialMediaFormSchema'
 import { useToastStore } from '../../store/ToastStore'
 import { EditSocialMediaForm } from '../../types/forms/EditSocialMediaForm.type'
+import { Page } from '../../types/Page.type'
 import { SelectOption } from '../../types/SelectOption.type'
 import { SocialMedia } from '../../types/SocialMedia.type'
+import { User } from '../../types/User.type'
 import { objectWithFileToFormData } from '../../utils/FormHelpers'
 import { Button } from '../Button'
 import { Card } from '../Card'
@@ -34,7 +36,6 @@ import { DeleteSocialMediaCommentModal } from './DeleteSocialMediaCommentModal'
 import { EditSocialMediaCommentModal } from './EditSocialMediaCommentModal'
 import { FileUploadModal, useFileUploadModal } from './FileUploadModal'
 import { SocialMediaFileModal, useSocialMediaFileModalStore } from './SocialMediaFileModal'
-
 export const EditSocialMediaModal = ({
   isVisible,
   onClose,
@@ -47,6 +48,8 @@ export const EditSocialMediaModal = ({
   const queryClient = useQueryClient()
   const { showToast } = useToastStore()
   const { data: session } = useSession()
+  const [comment, setComment] = useState('')
+  const [taggedUsers, setTaggedUsers] = useState({})
 
   const { data: socialMediaDetails } = useQuery(
     ['socialMedia', socialMedia.id],
@@ -59,6 +62,31 @@ export const EditSocialMediaModal = ({
       enabled: !!socialMedia.id,
     }
   )
+
+  const { data: users } = useQuery(
+    'departments',
+    async () => {
+      const {
+        data: { data },
+      } = await axios.get<{
+        data: Array<User>
+        page: Page
+      }>(`/v1/clients/${socialMedia.clientId}/social-media-users`)
+
+      return data
+    },
+    {
+      enabled: !!socialMedia.clientId && socialMedia.clientId !== -1,
+    }
+  )
+
+  const userOptions =
+    (users &&
+      users?.map((user) => ({
+        id: user.id.toString(),
+        display: user.firstName,
+      }))) ??
+    []
 
   const submitForm = async (values: EditSocialMediaForm) => {
     if (values.postDate && values.postTime) {
@@ -98,9 +126,28 @@ export const EditSocialMediaModal = ({
   }
 
   const submitCommentForm = async () => {
+    if (comment !== '') {
+      const regex = /@\[.+?\]\(.+?\)/gm
+      const idRegex = /\(.+?\)/g
+      const matches = comment.match(regex)
+      const mentionUsers: {}[] = []
+      matches &&
+        matches.forEach((m) => {
+          // @ts-ignore: Object is possibly 'null'.
+          const id = m.match(idRegex)[0].replace('(', '').replace(')', '')
+          mentionUsers.push(Number(id))
+        })
+      const mentionUsersInt = mentionUsers.map((id) => {
+        return Number(id)
+      })
+      setTaggedUsers(mentionUsersInt)
+    }
+
     const { status } = await axios.post(`/v1/social-media/${socialMedia.id}/comments`, {
       comment: comment,
+      usersTagged: taggedUsers,
     })
+
     if (status === 200) {
       queryClient.invalidateQueries(['socialMedia', socialMedia.id])
       queryClient.invalidateQueries(['socialMedias'])
@@ -111,16 +158,6 @@ export const EditSocialMediaModal = ({
       })
     }
   }
-
-  const [comment, setComment] = useState('')
-
-  const users = [
-    { id: '1', display: 'Daniel' },
-    { id: '3', display: 'Ross' },
-    { id: '2', display: 'Mark' },
-    { id: '3', display: 'Kyle' },
-    { id: '3', display: 'Arjean' },
-  ]
 
   const { toggleShowSocialMediaFileModal } = useSocialMediaFileModalStore()
 
@@ -319,6 +356,7 @@ export const EditSocialMediaModal = ({
                             <SocialMediaCommentCard
                               key={`comment-${id}`}
                               socialMediaId={socialMediaDetails.id}
+                              clientId={socialMediaDetails.clientId}
                               id={id}
                               comment={comment}
                               createdBy={createdBy}
@@ -334,7 +372,7 @@ export const EditSocialMediaModal = ({
                     <MentionInput
                       className="mt-5"
                       value={comment}
-                      data={users}
+                      data={userOptions}
                       onChange={(event: { target: { value: SetStateAction<string> } }) =>
                         setComment(event.target.value)
                       }

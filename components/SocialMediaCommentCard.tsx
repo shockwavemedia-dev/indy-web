@@ -2,14 +2,14 @@ import { Tooltip } from '@mui/material'
 import { format } from 'date-fns'
 import Image from 'next/image'
 import DummyAvatar from '../public/images/dummy-avatar.png'
+import CommentParagraph from './CommentParagraph'
 import { EditIcon } from './icons/EditIcon'
 import { TrashIcon } from './icons/TrashIcon'
 import { useDeleteSocialMediaCommentModalStore } from './modals/DeleteSocialMediaCommentModal'
 import { useSocialMediaCommentModalStore } from './modals/EditSocialMediaCommentModal'
-import CommentParagraph from './CommentParagraph'
-
 
 export const SocialMediaCommentCard = ({
+  clientId,
   socialMediaId,
   id,
   comment,
@@ -17,6 +17,7 @@ export const SocialMediaCommentCard = ({
   createdAt,
   isEditDelete = false,
 }: {
+  clientId: number
   socialMediaId: number
   id: number
   comment: string
@@ -37,7 +38,7 @@ export const SocialMediaCommentCard = ({
                 className="group"
                 onClick={(e) => {
                   e.stopPropagation()
-                  toggleEditCommentModal(socialMediaId, id, comment)
+                  toggleEditCommentModal(clientId, socialMediaId, id, comment)
                 }}
               >
                 <EditIcon className="stroke-waterloo group-hover:stroke-halloween-orange" />
