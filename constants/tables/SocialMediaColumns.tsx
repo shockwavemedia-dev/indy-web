@@ -383,6 +383,7 @@ export const SocialMediaColumns: Array<Column<SocialMedia>> = [
   {
     Header: 'Actions',
     accessor: 'id',
+    disableSortBy: true,
     Cell: ({ row: { original: socialMedia } }) => {
       const { setActiveSocialMedia, toggleEditSocialMediaModal, toggleDeleteSocialMediaModal } =
         useSocialMediaStore()
