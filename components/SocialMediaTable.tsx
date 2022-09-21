@@ -141,7 +141,9 @@ export const SocialMediaTable = ({ clientId }: { clientId: number }) => {
                       {row.cells.map(({ getCellProps, render }) => (
                         // key is already provided by getCellProps()
                         // eslint-disable-next-line react/jsx-key
-                        <td {...getCellProps()}>{render('Cell')}</td>
+                        <td className="h-30" {...getCellProps()}>
+                          {render('Cell')}
+                        </td>
                       ))}
                     </tr>
                   )
