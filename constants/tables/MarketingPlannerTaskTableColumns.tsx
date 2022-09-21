@@ -111,7 +111,7 @@ export const todoListStore = create(
         }),
       resetTodoList: () =>
         set({
-          todoList: initialTodoList.map<Todo>((name, i) => ({
+          todoList: initialTodoList.map<Todo>((name) => ({
             name,
             custom: false,
             selected: false,
