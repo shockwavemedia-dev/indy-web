@@ -114,7 +114,7 @@ export const todoListStore = create(
           todoList: initialTodoList.map<Todo>((name, i) => ({
             name,
             custom: false,
-            selected: i === 0,
+            selected: false,
             notify: false,
           })),
         }),
