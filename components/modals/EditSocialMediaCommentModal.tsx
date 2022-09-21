@@ -1,9 +1,11 @@
 import axios from 'axios'
 import { SetStateAction, useEffect, useState } from 'react'
-import { useQueryClient } from 'react-query'
+import { useQuery, useQueryClient } from 'react-query'
 import createStore from 'zustand'
 import { combine } from 'zustand/middleware'
 import { useToastStore } from '../../store/ToastStore'
+import { Page } from '../../types/Page.type'
+import { User } from '../../types/User.type'
 import { Button } from '../Button'
 import { PaperPlaneIcon } from '../icons/PaperPlaneIcon'
 import { MentionInput } from '../MentionInput'
@@ -12,13 +14,20 @@ import { Modal } from '../Modal'
 export const useSocialMediaCommentModalStore = createStore(
   combine(
     {
+      clientId: -1,
       socialMediaId: -1,
       commentId: -1,
       comment: '',
     },
     (set) => ({
-      toggleModal: (socialMediaId?: number, commentId?: number, comment?: string) =>
+      toggleModal: (
+        clientId?: number,
+        socialMediaId?: number,
+        commentId?: number,
+        comment?: string
+      ) =>
         set(() => ({
+          clientId: clientId ?? -1,
           socialMediaId: socialMediaId ?? -1,
           commentId: commentId ?? -1,
           comment: comment ?? '',
@@ -30,17 +39,35 @@ export const useSocialMediaCommentModalStore = createStore(
 export const EditSocialMediaCommentModal = () => {
   const queryClient = useQueryClient()
   const { showToast } = useToastStore()
-  const { socialMediaId, commentId, comment, toggleModal } = useSocialMediaCommentModalStore()
+  const { clientId, socialMediaId, commentId, comment, toggleModal } =
+    useSocialMediaCommentModalStore()
 
   const [newComment, setComment] = useState(comment)
 
-  const users = [
-    { id: '1', display: 'Daniel' },
-    { id: '3', display: 'Ross' },
-    { id: '2', display: 'Mark' },
-    { id: '3', display: 'Kyle' },
-    { id: '3', display: 'Arjean' },
-  ]
+  const { data: users } = useQuery(
+    'departments',
+    async () => {
+      const {
+        data: { data },
+      } = await axios.get<{
+        data: Array<User>
+        page: Page
+      }>(`/v1/clients/${clientId}/social-media-users`)
+
+      return data
+    },
+    {
+      enabled: !!clientId,
+    }
+  )
+
+  const userOptions =
+    (users &&
+      users?.map((user) => ({
+        id: user.id.toString(),
+        display: user.firstName,
+      }))) ??
+    []
 
   const submitCommentForm = async () => {
     const { status } = await axios.put(`/v1/social-media-comments/${commentId}`, {
@@ -74,7 +101,7 @@ export const EditSocialMediaCommentModal = () => {
               className="mt-5"
               value={newComment}
               defaultValue={comment}
-              data={users}
+              data={userOptions}
               onChange={(event: { target: { value: SetStateAction<string> } }) =>
                 setComment(event.target.value)
               }

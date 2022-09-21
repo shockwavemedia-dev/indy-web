@@ -9,8 +9,10 @@ import { SocialMediaStatusOptions } from '../../constants/options/SocialMediaSta
 import { CreateSocialMediaFormSchema } from '../../schemas/CreateSocialMediaFormSchema'
 import { useToastStore } from '../../store/ToastStore'
 import { EditSocialMediaForm } from '../../types/forms/EditSocialMediaForm.type'
+import { Page } from '../../types/Page.type'
 import { SelectOption } from '../../types/SelectOption.type'
 import { SocialMedia } from '../../types/SocialMedia.type'
+import { User } from '../../types/User.type'
 import { objectWithFileToFormData } from '../../utils/FormHelpers'
 import { Button } from '../Button'
 import { Card } from '../Card'
@@ -114,13 +116,30 @@ export const EditSocialMediaModal = ({
 
   const [comment, setComment] = useState('')
 
-  const users = [
-    { id: '1', display: 'Daniel' },
-    { id: '3', display: 'Ross' },
-    { id: '2', display: 'Mark' },
-    { id: '3', display: 'Kyle' },
-    { id: '3', display: 'Arjean' },
-  ]
+  const { data: users } = useQuery(
+    'departments',
+    async () => {
+      const {
+        data: { data },
+      } = await axios.get<{
+        data: Array<User>
+        page: Page
+      }>(`/v1/clients/${socialMedia.clientId}/social-media-users`)
+
+      return data
+    },
+    {
+      enabled: !!socialMedia.clientId,
+    }
+  )
+
+  const userOptions =
+    (users &&
+      users?.map((user) => ({
+        id: user.id.toString(),
+        display: user.firstName,
+      }))) ??
+    []
 
   const { toggleShowSocialMediaFileModal } = useSocialMediaFileModalStore()
 
@@ -319,6 +338,7 @@ export const EditSocialMediaModal = ({
                             <SocialMediaCommentCard
                               key={`comment-${id}`}
                               socialMediaId={socialMediaDetails.id}
+                              clientId={socialMediaDetails.clientId}
                               id={id}
                               comment={comment}
                               createdBy={createdBy}
@@ -334,7 +354,7 @@ export const EditSocialMediaModal = ({
                     <MentionInput
                       className="mt-5"
                       value={comment}
-                      data={users}
+                      data={userOptions}
                       onChange={(event: { target: { value: SetStateAction<string> } }) =>
                         setComment(event.target.value)
                       }
