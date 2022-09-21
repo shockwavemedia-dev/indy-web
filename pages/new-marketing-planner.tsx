@@ -148,7 +148,7 @@ const NewMarketingPlannerPage: NextPageWithLayout = () => {
                     >
                       <PlusIcon className="stroke-halloween-orange" />
                       <div className=" text-sm font-semibold text-halloween-orange">
-                        Add Assignee
+                        Add Custom Task
                       </div>
                     </button>
                     <Table
