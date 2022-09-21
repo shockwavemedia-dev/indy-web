@@ -59,7 +59,7 @@ const NewMarketingPlannerPage: NextPageWithLayout = () => {
         })
       )
 
-      if (status === 200) {
+      if (status >= 200) {
         queryClient.invalidateQueries('marketingPlanner')
         replace('/marketing-planner')
         showToast({
