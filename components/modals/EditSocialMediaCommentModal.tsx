@@ -43,6 +43,7 @@ export const EditSocialMediaCommentModal = () => {
     useSocialMediaCommentModalStore()
 
   const [newComment, setComment] = useState(comment)
+  const [taggedUsers, setTaggedUsers] = useState({})
 
   const { data: users } = useQuery(
     'departments',
@@ -57,7 +58,7 @@ export const EditSocialMediaCommentModal = () => {
       return data
     },
     {
-      enabled: !!clientId,
+      enabled: !!clientId && clientId !== -1,
     }
   )
 
@@ -70,8 +71,26 @@ export const EditSocialMediaCommentModal = () => {
     []
 
   const submitCommentForm = async () => {
+    if (newComment !== '') {
+      const regex = /@\[.+?\]\(.+?\)/gm
+      const idRegex = /\(.+?\)/g
+      const matches = newComment.match(regex)
+      const mentionUsers: {}[] = []
+      matches &&
+        matches.forEach((m) => {
+          // @ts-ignore: Object is possibly 'null'.
+          const id = m.match(idRegex)[0].replace('(', '').replace(')', '')
+          mentionUsers.push(id)
+        })
+      const mentionUsersInt = mentionUsers.map((id) => {
+        return Number(id)
+      })
+      setTaggedUsers(mentionUsersInt)
+    }
+
     const { status } = await axios.put(`/v1/social-media-comments/${commentId}`, {
       comment: newComment,
+      usersTagged: taggedUsers,
     })
     if (status === 200) {
       queryClient.invalidateQueries(['socialMedia', socialMediaId])
@@ -86,7 +105,7 @@ export const EditSocialMediaCommentModal = () => {
 
   useEffect(() => {
     setComment(comment)
-  }, [comment])
+  }, [comment, clientId])
 
   return (
     <>
