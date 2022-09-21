@@ -78,7 +78,7 @@ export const FileUploadModal = () => {
 
   const addAttachment = async () => {
     const attachments = files
-    const fileIds = myFiles && myFiles.length > 0 && myFiles.map((s) => s.id)
+    const fileIds = myFiles && myFiles.length > 0 ? myFiles.map((s) => s.id) : []
 
     const initialValues = {
       post: socialMedia?.post,
