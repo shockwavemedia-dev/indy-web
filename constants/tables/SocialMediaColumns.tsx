@@ -154,34 +154,36 @@ export const SocialMediaColumns: Array<Column<SocialMedia>> = [
 
       return (
         <>
-          <div className="flex space-x-1">
-            {value &&
-              value.map(({ thumbnailUrl, name, socialMediaAttachmentId }) => (
-                <Tooltip key={`${attachmentId}-${socialMediaAttachmentId}`} title={name}>
-                  <button
-                    type="button"
-                    className="relative h-9 min-w-[2.25rem] hover:rounded hover:border-2 hover:border-halloween-orange"
-                  >
-                    {thumbnailUrl ? (
-                      <Image
-                        src={thumbnailUrl}
-                        alt={name}
-                        layout="fill"
-                        objectFit="contain"
-                        objectPosition="left"
-                        className="rounded-sm"
-                      />
-                    ) : (
-                      <FileIcon />
-                    )}
-                  </button>
-                </Tooltip>
-              ))}
-            <Tooltip title="Add Attachment(s)" placement="top">
-              <button onClick={toggleUploadFile} className="flex py-2" type="button">
-                <PlusIcon className="stroke-halloween-orange" />
-              </button>
-            </Tooltip>
+          <div className="mr-5 w-40">
+            <div className="grid grid-cols-4 gap-2">
+              {value &&
+                value.map(({ thumbnailUrl, name, socialMediaAttachmentId }) => (
+                  <Tooltip key={`${attachmentId}-${socialMediaAttachmentId}`} title={name}>
+                    <button
+                      type="button"
+                      className="relative h-9 w-full min-w-[2.25rem] hover:rounded hover:border-2 hover:border-halloween-orange"
+                    >
+                      {thumbnailUrl ? (
+                        <Image
+                          src={thumbnailUrl}
+                          alt={name}
+                          layout="fill"
+                          objectFit="contain"
+                          objectPosition="left"
+                          className="rounded-sm"
+                        />
+                      ) : (
+                        <FileIcon />
+                      )}
+                    </button>
+                  </Tooltip>
+                ))}
+              <Tooltip title="Add Attachment(s)" placement="top">
+                <button onClick={toggleUploadFile} className="flex py-2" type="button">
+                  <PlusIcon className="stroke-halloween-orange" />
+                </button>
+              </Tooltip>
+            </div>
           </div>
           <FileUploadModal />
         </>
@@ -267,15 +269,18 @@ export const SocialMediaColumns: Array<Column<SocialMedia>> = [
       }, [value])
 
       return (
-        <SocialMediaStatusSelect
-          value={status}
-          onChange={(status) => {
-            setStatus(status)
-            updateStatus(status!.value)
-          }}
-          options={SocialMediaStatusOptions}
-          placeholder=""
-        />
+        <div className="w-35">
+          <SocialMediaStatusSelect
+            value={status}
+            onChange={(status) => {
+              setStatus(status)
+              updateStatus(status!.value)
+            }}
+            options={SocialMediaStatusOptions}
+            placeholder=""
+          />
+          {/* Nice logo test test */}
+        </div>
       )
     },
   },
@@ -314,16 +319,18 @@ export const SocialMediaColumns: Array<Column<SocialMedia>> = [
       }, [value])
 
       return (
-        <SocialMediaChannelSelect
-          value={channels}
-          onChange={(channels) => {
-            setChannels(channels)
-            updateChannels(channels.map(({ value }) => value))
-          }}
-          options={SocialMediaChannelOptions}
-          placeholder=""
-          isMulti
-        />
+        <div className="w-75">
+          <SocialMediaChannelSelect
+            value={channels}
+            onChange={(channels) => {
+              setChannels(channels)
+              updateChannels(channels.map(({ value }) => value))
+            }}
+            options={SocialMediaChannelOptions}
+            placeholder=""
+            isMulti
+          />
+        </div>
       )
     },
   },
