@@ -8,6 +8,6 @@ export const NewClientUserFormSchema: SchemaOf<NewClientUserForm> = object().sha
   passwordConfirmation: string().required(),
   contactNumber: string().required(),
   firstName: string().required(),
-  lastName: string().required(),
+  lastName: string().optional(),
   role: mixed().required().oneOf(['group manager', 'marketing manager', 'marketing']),
 })
