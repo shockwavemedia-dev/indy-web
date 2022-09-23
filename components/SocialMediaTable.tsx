@@ -77,7 +77,7 @@ export const SocialMediaTable = ({ clientId }: { clientId: number }) => {
 
   return (
     <>
-      {rows.length > 0 ? (
+      {!isFetching && rows.length > 0 ? (
         <>
           <div className="mb-auto h-full overflow-y-auto">
             <table className="w-full" {...getTableProps()}>
@@ -226,6 +226,8 @@ export const SocialMediaTable = ({ clientId }: { clientId: number }) => {
             </button>
           </div>
         </>
+      ) : isFetching ? (
+        <div className="m-auto w-fit text-base text-metallic-silver">Loading...</div>
       ) : (
         !isLoading && (
           <div className="m-auto w-fit text-base text-metallic-silver">
