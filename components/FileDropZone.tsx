@@ -26,7 +26,7 @@ export const FileDropZone = ({
 
   const [files, setFiles] = useState<Array<File>>([])
 
-  const { isDragAccept, isDragReject, getRootProps, getInputProps, open } = useDropzone({
+  const { isDragAccept, fileRejections, getRootProps, getInputProps, open } = useDropzone({
     accept: {
       [mimeType]: accept,
     },
@@ -100,7 +100,7 @@ export const FileDropZone = ({
         </div>
       )}
       <FormErrorMessage name={name} />
-      {isDragReject && (
+      {fileRejections && fileRejections.length > 0 && (
         <div className="mt-1 text-xs font-medium text-tart-orange first-letter:uppercase">
           File type not accepted
         </div>
