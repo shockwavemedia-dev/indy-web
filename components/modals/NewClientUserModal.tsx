@@ -10,6 +10,7 @@ import { useToastStore } from '../../store/ToastStore'
 import { Client } from '../../types/Client.type'
 import { NewClientUserForm } from '../../types/forms/NewClientUserForm.type'
 import { Button } from '../Button'
+import { Checkbox } from '../Checkbox'
 import { ClipboardIcon } from '../icons/ClipboardIcon'
 import { EmailIcon } from '../icons/EmailIcon'
 import { LockIcon } from '../icons/LockIcon'
@@ -37,6 +38,9 @@ export const NewClientUserModal = () => {
   const toggleNewClientUserModal = useNewClientUserModal((state) => state.toggleNewClientUserModal)
   const queryClient = useQueryClient()
   const { showToast } = useToastStore()
+  const [sendInvite, setPasswordVisibility] = useState(false)
+
+  const togglePasswordVisibility = () => setPasswordVisibility(!sendInvite)
 
   const [passwordStrength, setPasswordStrength] = useState(0)
 
@@ -80,6 +84,7 @@ export const NewClientUserModal = () => {
               firstName: '',
               lastName: '',
               role: null,
+              sendInvite: false,
             }}
             onSubmit={submitForm}
             validate={validateForm}
@@ -123,20 +128,32 @@ export const NewClientUserModal = () => {
                   name="email"
                   className="mb-5"
                 />
-                <div className="mb-3 flex w-full space-x-5">
-                  <PasswordInput name="password" Icon={LockIcon} placeholder="Enter password" />
-                  <PasswordInput
-                    name="passwordConfirmation"
-                    Icon={LockIcon}
-                    placeholder="Confirm password"
+                <div className="mb-5 flex space-x-5">
+                  <Checkbox
+                    onChange={togglePasswordVisibility}
+                    label="Send Invite"
+                    name="sendInvite"
                   />
                 </div>
-                <PasswordStrengthMeter strength={passwordStrength} className="mr-auto mb-2" />
-                <div className="mr-auto mb-8 text-xxs font-medium text-metallic-silver">
-                  Should be at least 8 symbols and contain one small
-                  <br />
-                  and one big character, special character and number
-                </div>
+                {!sendInvite && (
+                  <div>
+                    <div className="mb-3 flex w-full space-x-5">
+                      <PasswordInput name="password" Icon={LockIcon} placeholder="Enter password" />
+                      <PasswordInput
+                        name="passwordConfirmation"
+                        Icon={LockIcon}
+                        placeholder="Confirm password"
+                      />
+                    </div>
+                    <PasswordStrengthMeter strength={passwordStrength} className="mr-auto mb-2" />
+                    <div className="mr-auto mb-8 text-xxs font-medium text-metallic-silver">
+                      Should be at least 8 symbols and contain one small
+                      <br />
+                      and one big character, special character and number
+                    </div>
+                  </div>
+                )}
+
                 <div className="flex space-x-5">
                   <Button ariaLabel="Cancel" onClick={toggleNewClientUserModal} type="button" light>
                     Cancel
