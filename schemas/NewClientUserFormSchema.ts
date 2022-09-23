@@ -1,4 +1,4 @@
-import { date, mixed, number, object, SchemaOf, string } from 'yup'
+import { mixed, number, object, SchemaOf, string } from 'yup'
 import { NewClientUserForm } from '../types/forms/NewClientUserForm.type'
 
 export const NewClientUserFormSchema: SchemaOf<NewClientUserForm> = object().shape({
@@ -9,8 +9,5 @@ export const NewClientUserFormSchema: SchemaOf<NewClientUserForm> = object().sha
   contactNumber: string().required(),
   firstName: string().required(),
   lastName: string().required(),
-  middleName: string().optional(),
-  gender: mixed().required().oneOf(['female', 'male']),
   role: mixed().required().oneOf(['group manager', 'marketing manager', 'marketing']),
-  birthDate: date().required(),
 })

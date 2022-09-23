@@ -5,13 +5,11 @@ import { useQueryClient } from 'react-query'
 import create from 'zustand'
 import { combine } from 'zustand/middleware'
 import { ClientUserRoleOptions } from '../../constants/options/ClientUserRoleOptions'
-import { UserGenderOptions } from '../../constants/options/UserGenderOptions'
 import { NewClientUserFormSchema } from '../../schemas/NewClientUserFormSchema'
 import { useToastStore } from '../../store/ToastStore'
 import { Client } from '../../types/Client.type'
 import { NewClientUserForm } from '../../types/forms/NewClientUserForm.type'
 import { Button } from '../Button'
-import { DateInput } from '../DateInput'
 import { ClipboardIcon } from '../icons/ClipboardIcon'
 import { EmailIcon } from '../icons/EmailIcon'
 import { LockIcon } from '../icons/LockIcon'
@@ -77,13 +75,10 @@ export const NewClientUserModal = () => {
               clientId: client.id,
               email: '',
               password: '',
-              birthDate: null,
               passwordConfirmation: '',
               contactNumber: '',
               firstName: '',
               lastName: '',
-              middleName: '',
-              gender: null,
               role: null,
             }}
             onSubmit={submitForm}
@@ -109,26 +104,11 @@ export const NewClientUserModal = () => {
                   <TextInput
                     type="text"
                     Icon={UserIcon}
-                    placeholder="Enter Middle Name"
-                    name="middleName"
-                  />
-                </div>
-                <div className="mb-5 flex space-x-5">
-                  <TextInput
-                    type="text"
-                    Icon={UserIcon}
                     placeholder="Enter Last Name"
                     name="lastName"
                   />
-                  <Select
-                    name="gender"
-                    Icon={UserIcon}
-                    placeholder="Select Gender"
-                    options={UserGenderOptions}
-                  />
                 </div>
                 <div className="mb-5 flex space-x-5">
-                  <DateInput name="birthDate" placeholder="Enter Birth Date" />
                   <TextInput
                     type="text"
                     Icon={PencilIcon}
