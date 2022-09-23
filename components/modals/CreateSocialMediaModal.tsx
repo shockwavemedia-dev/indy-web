@@ -58,7 +58,7 @@ export const CreateSocialMediaModal = ({
         objectWithFileToFormData(values)
       )
       if (status === 200) {
-        queryClient.invalidateQueries('socialMedia')
+        queryClient.invalidateQueries(['socialMedias'])
         replace('/social-media')
         onClose()
         showToast({
