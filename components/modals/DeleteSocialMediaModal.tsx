@@ -54,6 +54,7 @@ export const DeleteSocialMediaModal = () => {
         replace('/social-media')
         queryClient.invalidateQueries(['socialMedias'])
         toggleModal()
+        window.location.reload()
         showToast({
           type: 'success',
           message: 'Social Media successfully deleted!',
