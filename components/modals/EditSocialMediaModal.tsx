@@ -35,6 +35,7 @@ import { SocialMediaCommentCard } from '../SocialMediaCommentCard'
 import { TextInput } from '../TextInput'
 import { TimeInput } from '../TimeInput'
 import { DeleteSocialMediaCommentModal } from './DeleteSocialMediaCommentModal'
+import { DeleteSocialMediaModal, useDeleteSocialMediaModalStore } from './DeleteSocialMediaModal'
 import { EditSocialMediaCommentModal } from './EditSocialMediaCommentModal'
 import { FileUploadModal, useFileUploadModal } from './FileUploadModal'
 import { SocialMediaFileModal, useSocialMediaFileModalStore } from './SocialMediaFileModal'
@@ -167,6 +168,8 @@ export const EditSocialMediaModal = ({
 
   const toggleUploadFile = () => setVisible(true, socialMediaDetails)
 
+  const { toggleModal: toggleDeleteModal } = useDeleteSocialMediaModalStore()
+
   if (!socialMediaDetails) return null
 
   return (
@@ -195,7 +198,14 @@ export const EditSocialMediaModal = ({
                     <Card className="mb-5 h-fit w-full">
                       <div className="absolute top-6 right-6 space-x-2">
                         <Tooltip title="Delete Record" placement="top">
-                          <button className="group">
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation()
+                              toggleDeleteModal(socialMediaDetails.id)
+                            }}
+                            className="group"
+                          >
                             <TrashIcon className="stroke-waterloo group-hover:stroke-halloween-orange" />
                           </button>
                         </Tooltip>
@@ -407,6 +417,7 @@ export const EditSocialMediaModal = ({
       <EditSocialMediaCommentModal />
       <DeleteSocialMediaCommentModal />
       <FileUploadModal />
+      <DeleteSocialMediaModal />
     </>
   )
 }
