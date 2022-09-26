@@ -6,11 +6,13 @@ import { useEffect, useId, useRef, useState } from 'react'
 import { useQueryClient } from 'react-query'
 import { MultiValue, SingleValue } from 'react-select'
 import { Column } from 'react-table'
-import { EditIcon } from '../../components/icons/EditIcon'
 import { FileIcon } from '../../components/icons/FileIcon'
 import { PlusIcon } from '../../components/icons/PlusIcon'
-import { TrashIcon } from '../../components/icons/TrashIcon'
 import { FileUploadModal, useFileUploadModal } from '../../components/modals/FileUploadModal'
+import {
+  SocialMediaFileModal,
+  useSocialMediaFileModalStore,
+} from '../../components/modals/SocialMediaFileModal'
 import { SocialMediaChannelSelect } from '../../components/SocialMediaChannelSelect'
 import { SocialMediaStatusSelect } from '../../components/SocialMediaStatusSelect'
 import { useSocialMediaStore } from '../../store/SocialMediaStore'
@@ -36,12 +38,27 @@ const updateSocialMedia = async (socialMedia: SocialMedia) => {
 }
 
 export const SocialMediaColumns: Array<Column<SocialMedia>> = [
-  // {
-  //   Header: 'ID',
-  //   accessor: 'id',
-  //   id: 'id',
-  //   Cell: ({ value }) => <div className="text-sm font-medium text-onyx">{value}</div>,
-  // },
+  {
+    Header: 'ID',
+    accessor: 'id',
+    id: 'id',
+    Cell: ({ value, row: { original: socialMedia } }) => {
+      const { setActiveSocialMedia, toggleEditSocialMediaModal } = useSocialMediaStore()
+
+      const editSocialMedia = () => {
+        setActiveSocialMedia(socialMedia)
+        toggleEditSocialMediaModal()
+      }
+
+      return (
+        <div className="text-sm font-medium text-onyx">
+          <Tooltip title="Edit Social Media" placement="top-end">
+            <button onClick={editSocialMedia}>{value}</button>
+          </Tooltip>
+        </div>
+      )
+    },
+  },
   {
     Header: 'Post Topic',
     accessor: 'post',
@@ -152,32 +169,40 @@ export const SocialMediaColumns: Array<Column<SocialMedia>> = [
 
       const toggleUploadFile = () => setVisible(true, socialMedia)
 
+      const { toggleShowSocialMediaFileModal } = useSocialMediaFileModalStore()
+
       return (
         <>
           <div className="mr-5 w-40">
             <div className="grid grid-cols-4 gap-2">
               {value &&
-                value.map(({ thumbnailUrl, name, socialMediaAttachmentId }) => (
-                  <Tooltip key={`${attachmentId}-${socialMediaAttachmentId}`} title={name}>
-                    <button
-                      type="button"
-                      className="relative h-9 w-full min-w-[2.25rem] hover:rounded hover:border-2 hover:border-halloween-orange"
-                    >
-                      {thumbnailUrl ? (
-                        <Image
-                          src={thumbnailUrl}
-                          alt={name}
-                          layout="fill"
-                          objectFit="contain"
-                          objectPosition="left"
-                          className="rounded-sm"
-                        />
-                      ) : (
-                        <FileIcon />
-                      )}
-                    </button>
-                  </Tooltip>
-                ))}
+                value.map(({ url, fileType, thumbnailUrl, name, socialMediaAttachmentId }) => {
+                  const toggleFile = () =>
+                    toggleShowSocialMediaFileModal(url, fileType, name, socialMediaAttachmentId)
+
+                  return (
+                    <Tooltip key={`${attachmentId}-${socialMediaAttachmentId}`} title={name}>
+                      <button
+                        type="button"
+                        className="relative h-9 w-full min-w-[2.25rem] hover:rounded hover:border-2 hover:border-halloween-orange"
+                      >
+                        {thumbnailUrl ? (
+                          <Image
+                            src={thumbnailUrl}
+                            alt={name}
+                            layout="fill"
+                            objectFit="contain"
+                            objectPosition="left"
+                            className="rounded-sm"
+                            onClick={toggleFile}
+                          />
+                        ) : (
+                          <FileIcon />
+                        )}
+                      </button>
+                    </Tooltip>
+                  )
+                })}
               <Tooltip title="Add Attachment(s)" placement="top">
                 <button onClick={toggleUploadFile} className="flex py-2" type="button">
                   <PlusIcon className="stroke-halloween-orange" />
@@ -186,6 +211,7 @@ export const SocialMediaColumns: Array<Column<SocialMedia>> = [
             </div>
           </div>
           <FileUploadModal />
+          <SocialMediaFileModal />
         </>
       )
     },
@@ -380,34 +406,34 @@ export const SocialMediaColumns: Array<Column<SocialMedia>> = [
       )
     },
   },
-  {
-    Header: 'Actions',
-    accessor: 'id',
-    disableSortBy: true,
-    Cell: ({ row: { original: socialMedia } }) => {
-      const { setActiveSocialMedia, toggleEditSocialMediaModal, toggleDeleteSocialMediaModal } =
-        useSocialMediaStore()
+  // {
+  //   Header: 'Actions',
+  //   accessor: 'id',
+  //   disableSortBy: true,
+  //   Cell: ({ row: { original: socialMedia } }) => {
+  //     const { setActiveSocialMedia, toggleEditSocialMediaModal, toggleDeleteSocialMediaModal } =
+  //       useSocialMediaStore()
 
-      const editSocialMedia = () => {
-        setActiveSocialMedia(socialMedia)
-        toggleEditSocialMediaModal()
-      }
+  //     const editSocialMedia = () => {
+  //       setActiveSocialMedia(socialMedia)
+  //       toggleEditSocialMediaModal()
+  //     }
 
-      const deleteSocialMedia = () => {
-        setActiveSocialMedia(socialMedia)
-        toggleDeleteSocialMediaModal()
-      }
+  //     const deleteSocialMedia = () => {
+  //       setActiveSocialMedia(socialMedia)
+  //       toggleDeleteSocialMediaModal()
+  //     }
 
-      return (
-        <div className="invisible flex space-x-2 group-hover:visible">
-          <button onClick={editSocialMedia}>
-            <EditIcon className="stroke-waterloo hover:stroke-halloween-orange" />
-          </button>
-          <button onClick={deleteSocialMedia}>
-            <TrashIcon className="stroke-waterloo hover:stroke-halloween-orange" />
-          </button>
-        </div>
-      )
-    },
-  },
+  //     return (
+  //       <div className="invisible flex space-x-2 group-hover:visible">
+  //         <button onClick={editSocialMedia}>
+  //           <EditIcon className="stroke-waterloo hover:stroke-halloween-orange" />
+  //         </button>
+  //         <button onClick={deleteSocialMedia}>
+  //           <TrashIcon className="stroke-waterloo hover:stroke-halloween-orange" />
+  //         </button>
+  //       </div>
+  //     )
+  //   },
+  // },
 ]

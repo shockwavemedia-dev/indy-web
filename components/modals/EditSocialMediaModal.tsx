@@ -1,3 +1,4 @@
+import { Tooltip } from '@mui/material'
 import axios from 'axios'
 import { Form, Formik } from 'formik'
 import { useSession } from 'next-auth/react'
@@ -23,6 +24,7 @@ import { EditIcon } from '../icons/EditIcon'
 import { FloppyDiskIcon } from '../icons/FloppyDiskIcon'
 import { PaperPlaneIcon } from '../icons/PaperPlaneIcon'
 import { PlusIcon } from '../icons/PlusIcon'
+import { TrashIcon } from '../icons/TrashIcon'
 import { LinkButton } from '../LinkButton'
 import { MentionInput } from '../MentionInput'
 import { Modal } from '../Modal'
@@ -191,13 +193,20 @@ export const EditSocialMediaModal = ({
                 <Form className="mr-8 max-h-130 overflow-y-auto">
                   <div className="flex w-full flex-col">
                     <Card className="mb-5 h-fit w-full">
+                      <div className="absolute top-6 right-6 space-x-2">
+                        <Tooltip title="Delete Record" placement="top">
+                          <button className="group">
+                            <TrashIcon className="stroke-waterloo group-hover:stroke-halloween-orange" />
+                          </button>
+                        </Tooltip>
+                      </div>
                       <TextInput
                         type="text"
                         Icon={EditIcon}
                         placeholder="Enter Post Topic"
                         label="Post Topic"
                         name="post"
-                        className="mb-5"
+                        className="mb-5 mt-8"
                       />
                       <div className="mb-5 flex space-x-5">
                         <DateInput
@@ -367,7 +376,7 @@ export const EditSocialMediaModal = ({
                         )}
                       </div>
                     ) : (
-                      <div className="m-auto text-sm text-metallic-silver">No Comment found.</div>
+                      <div className="text-sm text-metallic-silver">No Comment found.</div>
                     )}
                     <MentionInput
                       className="mt-5"
