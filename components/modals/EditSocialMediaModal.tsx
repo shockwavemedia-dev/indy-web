@@ -25,7 +25,6 @@ import { FloppyDiskIcon } from '../icons/FloppyDiskIcon'
 import { PaperPlaneIcon } from '../icons/PaperPlaneIcon'
 import { PlusIcon } from '../icons/PlusIcon'
 import { TrashIcon } from '../icons/TrashIcon'
-import { LinkButton } from '../LinkButton'
 import { MentionInput } from '../MentionInput'
 import { Modal } from '../Modal'
 import { PhotographyVideographyFileButton } from '../PhotographyVideographyFileButton'
@@ -327,7 +326,9 @@ export const EditSocialMediaModal = ({
                     </Card>
                     <Card className="h-fit w-full">
                       <div className="flex space-x-5">
-                        <LinkButton title="Cancel" href="/social-media" light />
+                        <Button ariaLabel="Cancel" onClick={onClose} type="button" light>
+                          Cancel
+                        </Button>
                         <Button ariaLabel="Submit" disabled={isSubmitting} type="submit">
                           <FloppyDiskIcon className="stroke-white" />
                           <div>Save</div>

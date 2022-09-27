@@ -89,7 +89,7 @@ export const SocialMediaFileModal = () => {
           {fileType === 'application/pdf' ? (
             <iframe src={signedUrl} className="h-163 w-280"></iframe>
           ) : (
-            <div className="h-fit w-fit overflow-hidden rounded-xl">
+            <div className="max-h-130 overflow-hidden overflow-y-auto rounded-xl">
               <FileDisplay
                 src={signedUrl}
                 type={fileType}
