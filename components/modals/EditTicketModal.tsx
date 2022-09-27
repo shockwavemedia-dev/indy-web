@@ -123,7 +123,12 @@ export const EditTicketModal = ({
                   className="mb-8"
                 />
                 <div className="flex space-x-5">
-                  <Button ariaLabel="Cancel" onClick={toggleEditTicketModal} type="button" light>
+                  <Button
+                    ariaLabel="Cancel"
+                    onClick={() => toggleEditTicketModal()}
+                    type="button"
+                    light
+                  >
                     Cancel
                   </Button>
                   <Button ariaLabel="Submit" disabled={isSubmitting} type="submit">
