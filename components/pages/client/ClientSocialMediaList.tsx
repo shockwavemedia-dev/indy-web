@@ -34,7 +34,7 @@ export const ClientSocialMediaList = ({ clientId }: { clientId: number }) => {
               <div>Add Social Media</div>
             </Button>
           </div>
-          <Card className="flex max-h-155 w-fit flex-1 flex-col">
+          <Card className="flex max-h-155 flex-1 flex-col">
             <SocialMediaTable clientId={clientId} />
           </Card>
         </div>
