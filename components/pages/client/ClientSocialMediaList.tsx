@@ -22,7 +22,7 @@ export const ClientSocialMediaList = ({ clientId }: { clientId: number }) => {
       <Head>
         <title>Indy - Social Media</title>
       </Head>
-      <div className="mx-auto w-full max-w-8xl space-y-6">
+      <div className="mx-auto max-w-full space-y-6">
         <div className="flex flex-col gap-6 transition-all">
           <div className="flex-1">
             <Button
@@ -34,7 +34,7 @@ export const ClientSocialMediaList = ({ clientId }: { clientId: number }) => {
               <div>Add Social Media</div>
             </Button>
           </div>
-          <Card className="flex max-h-155 flex-1 flex-col">
+          <Card className="flex max-h-155 w-fit flex-1 flex-col">
             <SocialMediaTable clientId={clientId} />
           </Card>
         </div>
