@@ -38,7 +38,7 @@ export const DeleteTicketModal = ({
   const { replace } = useRouter()
   const queryClient = useQueryClient()
   const ticket = useDeleteTicketModal((state) => state.ticket)
-  const toggleEditTicketModal = useDeleteTicketModal((state) => state.toggleDeleteTicketModal)
+  const toggleDeleteTicketModal = useDeleteTicketModal((state) => state.toggleDeleteTicketModal)
   const { showToast } = useToastStore()
 
   return (
@@ -46,7 +46,7 @@ export const DeleteTicketModal = ({
       {ticket && (
         <Modal
           title={`Are you sure you want to delete Ticket ${ticket.ticketCode}?`}
-          onClose={toggleEditTicketModal}
+          onClose={toggleDeleteTicketModal}
         >
           <div className="flex w-140 flex-col">
             {!minimal && (
@@ -76,7 +76,12 @@ export const DeleteTicketModal = ({
               </div>
             )}
             <div className="flex space-x-5">
-              <Button ariaLabel="Cancel" onClick={toggleEditTicketModal} type="button" light>
+              <Button
+                ariaLabel="Cancel"
+                onClick={() => toggleDeleteTicketModal()}
+                type="button"
+                light
+              >
                 Cancel
               </Button>
               <Button
@@ -99,7 +104,7 @@ export const DeleteTicketModal = ({
                         queryClient.invalidateQueries('tickets')
                         replace('/dashboard')
                       }
-                      toggleEditTicketModal()
+                      toggleDeleteTicketModal()
                       showToast({
                         type: 'success',
                         message: `Ticket successfully deleted!`,

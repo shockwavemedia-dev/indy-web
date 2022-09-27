@@ -118,7 +118,7 @@ export const CreateSupportTicketModal = () => {
               clientId:
                 session?.user.userType.type == 'client_users'
                   ? session?.user.userType.client.id
-                  : session?.user.userType.role === 'admin'
+                  : clientId !== -1
                   ? clientId
                   : -1,
               departmentId: -1,
@@ -128,7 +128,7 @@ export const CreateSupportTicketModal = () => {
           >
             {({ isSubmitting }) => (
               <Form className="flex w-140 flex-col">
-                {session?.user.userType.role !== 'admin' && (
+                {clientId == -1 && (
                   <Select
                     name="clientId"
                     Icon={ClipboardIcon}
