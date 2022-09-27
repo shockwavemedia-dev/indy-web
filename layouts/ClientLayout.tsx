@@ -5,6 +5,8 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { ReactNode, useEffect } from 'react'
 import { useQuery } from 'react-query'
+import { FancyButton } from '../components/FancyButton'
+import { LifeBuoyIcon } from '../components/icons/LifeBuoyIcon'
 import { MonitorIcon } from '../components/icons/MonitorIcon'
 import { NotepadIcon } from '../components/icons/NotepadIcon'
 import { PenAndRulerIcon } from '../components/icons/PenAndRulerIcon'
@@ -12,6 +14,10 @@ import { PrinterIcon } from '../components/icons/PrinterIcon'
 import { ReceiptIcon } from '../components/icons/ReceiptIcon'
 import { SquareDollarIcon } from '../components/icons/SquareDollarIcon'
 import { UserIcon } from '../components/icons/UserIcon'
+import {
+  CreateSupportTicketModal,
+  useCreateSupportTicketModalStore,
+} from '../components/modals/CreateSupportTicketModal'
 import { Client } from '../types/Client.type'
 import { usePanelLayoutStore } from './PanelLayout'
 
@@ -22,6 +28,7 @@ const ClientLayout = ({ children }: { children: ReactNode }) => {
   } = useRouter()
 
   const { setHeader, setButtons } = usePanelLayoutStore()
+  const { toggleModal: toggleSupportTicketModal } = useCreateSupportTicketModalStore()
 
   const { data } = useQuery(
     ['clients', Number(id)],
@@ -36,7 +43,20 @@ const ClientLayout = ({ children }: { children: ReactNode }) => {
   )
 
   useEffect(() => {
-    setButtons(<></>)
+    setButtons(
+      <>
+        <FancyButton
+          Icon={<LifeBuoyIcon className="fill-halloween-orange" />}
+          title="New Ticket"
+          subtitle="Laborerivit rem cones mil"
+          onClick={(e) => {
+            e.stopPropagation()
+            toggleSupportTicketModal(Number(id))
+          }}
+          className="w-fit"
+        />
+      </>
+    )
   }, [])
 
   useEffect(() => {
@@ -134,6 +154,7 @@ const ClientLayout = ({ children }: { children: ReactNode }) => {
         </div>
         {children}
       </div>
+      <CreateSupportTicketModal />
     </>
   )
 }
