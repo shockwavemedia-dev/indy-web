@@ -184,13 +184,16 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
             />
           </>
         )
-      } else if (session.isManager || session.isAdmin) {
+      } else if (session.isManager) {
         setButtons(
           <FancyButton
             Icon={<LifeBuoyIcon className="fill-halloween-orange" />}
             title="New Ticket"
             subtitle="Laborerivit rem cones mil"
-            onClick={toggleSupportTicketModal}
+            onClick={(e) => {
+              e.stopPropagation()
+              toggleSupportTicketModal(-1)
+            }}
             className="w-fit"
           />
         )
@@ -311,7 +314,7 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
         </div>
       </div>
       {session.isClient && <CreateSupportRequestModal />}
-      {(session.isManager || session.isAdmin) && <CreateSupportTicketModal />}
+      {session.isManager && <CreateSupportTicketModal />}
       {(session.isManager || session.isStaff) &&
         session?.user.userType.department.name === 'Social Media' && (
           <SocialMediaNotificationModal />
