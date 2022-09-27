@@ -217,52 +217,6 @@ export const SocialMediaColumns: Array<Column<SocialMedia>> = [
     },
   },
   {
-    Header: 'Copy',
-    accessor: 'copy',
-    Cell: ({ value, row: { original: socialMedia } }) => {
-      const [copy, setCopy] = useState(value)
-      const inputRef = useRef<HTMLInputElement>(null)
-      const showToast = useToastStore((state) => state.showToast)
-      const queryClient = useQueryClient()
-
-      const updateCopy = async () => {
-        if (await updateSocialMedia({ ...socialMedia, copy })) {
-          showToast({
-            type: 'success',
-            message: `Social Media ${socialMedia.id} updated!`,
-          })
-          queryClient.invalidateQueries(['socialMedias'])
-        } else
-          showToast({
-            type: 'error',
-            message: 'Something went wrong! 😵',
-          })
-      }
-
-      useEffect(() => {
-        setCopy(value)
-      }, [value])
-
-      return (
-        <input
-          ref={inputRef}
-          type="text"
-          value={copy ?? ''}
-          onChange={({ currentTarget: { value } }) => setCopy(value)}
-          className="ml-px text-ellipsis rounded-md bg-transparent px-2 text-sm font-medium text-onyx focus:bg-white focus:ring-2 focus:ring-halloween-orange"
-          onBlur={() => {
-            if (copy !== socialMedia.copy) updateCopy()
-          }}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter') {
-              inputRef.current?.blur()
-            }
-          }}
-        />
-      )
-    },
-  },
-  {
     Header: 'Status',
     accessor: 'status',
     Cell: ({ value, row: { original: socialMedia } }) => {
@@ -307,6 +261,52 @@ export const SocialMediaColumns: Array<Column<SocialMedia>> = [
           />
           {/* Nice logo test test */}
         </div>
+      )
+    },
+  },
+  {
+    Header: 'Copy',
+    accessor: 'copy',
+    Cell: ({ value, row: { original: socialMedia } }) => {
+      const [copy, setCopy] = useState(value)
+      const inputRef = useRef<HTMLInputElement>(null)
+      const showToast = useToastStore((state) => state.showToast)
+      const queryClient = useQueryClient()
+
+      const updateCopy = async () => {
+        if (await updateSocialMedia({ ...socialMedia, copy })) {
+          showToast({
+            type: 'success',
+            message: `Social Media ${socialMedia.id} updated!`,
+          })
+          queryClient.invalidateQueries(['socialMedias'])
+        } else
+          showToast({
+            type: 'error',
+            message: 'Something went wrong! 😵',
+          })
+      }
+
+      useEffect(() => {
+        setCopy(value)
+      }, [value])
+
+      return (
+        <input
+          ref={inputRef}
+          type="text"
+          value={copy ?? ''}
+          onChange={({ currentTarget: { value } }) => setCopy(value)}
+          className="ml-px text-ellipsis rounded-md bg-transparent px-2 text-sm font-medium text-onyx focus:bg-white focus:ring-2 focus:ring-halloween-orange"
+          onBlur={() => {
+            if (copy !== socialMedia.copy) updateCopy()
+          }}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              inputRef.current?.blur()
+            }
+          }}
+        />
       )
     },
   },
