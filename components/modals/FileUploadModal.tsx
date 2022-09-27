@@ -41,9 +41,10 @@ export const useFileUploadModal = create(
           ? set({ files: [...get().files, ...files] })
           : set({ myFiles: [...get().myFiles, files] }),
       removeFile: (fileName: string | number) =>
-        typeof fileName === 'string'
-          ? set({ files: get().files.filter(({ name }) => name !== fileName) })
-          : set({ myFiles: get().myFiles.filter(({ id }) => id !== fileName) }),
+        set({
+          files: get().files.filter(({ name }) => name !== fileName),
+          myFiles: get().myFiles.filter(({ name }) => name !== fileName),
+        }),
       resetFiles: () => set({ files: [], myFiles: [] }),
     })
   )
@@ -117,11 +118,11 @@ export const FileUploadModal = () => {
     <>
       {socialMedia && (
         <Modal
-          title="Add Attachments(s)"
+          title="Add Attachment(s)"
           onClose={() => setVisible(false)}
-          className="max-h-[45rem] w-175 border-2 border-solid border-bright-gray"
+          className="max-h-[45rem] w-175"
         >
-          <div className="flex w-full border-b border-b-bright-gray pb-3.5 [&>button]:flex [&>button]:w-32 [&>button]:items-center [&>button]:justify-center [&>button]:space-x-2 [&>button>div]:font-semibold">
+          <div className="flex w-full  pb-3.5 [&>button]:flex [&>button]:w-32 [&>button]:items-center [&>button]:justify-center [&>button]:space-x-2 [&>button>div]:font-semibold">
             <button onClick={() => setTab('upload')}>
               <UploadFileIcon
                 className={tab === 'upload' ? 'stroke-halloween-orange' : 'stroke-lavender-gray'}

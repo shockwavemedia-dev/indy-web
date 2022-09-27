@@ -175,7 +175,7 @@ export const EditSocialMediaModal = ({
   return (
     <>
       {isVisible && (
-        <Modal title="Edit Social Media" bgColor="bg-cultured" className="w-270" onClose={onClose}>
+        <Modal title="Edit Social Media" bgColor="bg-cultured" className="w-320" onClose={onClose}>
           <div className="flex w-full">
             <Formik
               initialValues={{
