@@ -13,7 +13,6 @@ import { Button } from '../../Button'
 import { Card } from '../../Card'
 import { UserIcon } from '../../icons/UserIcon'
 import { CreateSocialMediaModal } from '../../modals/CreateSocialMediaModal'
-import { DeleteSocialMediaModal } from '../../modals/DeleteSocialMediaModal'
 import { EditSocialMediaModal } from '../../modals/EditSocialMediaModal'
 import { SelectNoFormik } from '../../SelectNoFormik'
 import { SocialMediaTable } from '../../SocialMediaTable'
@@ -26,10 +25,8 @@ export const StaffSocialMediaList = () => {
     activeSocialMedia,
     isCreateSocialMediaModalVisible,
     isEditSocialMediaModalVisible,
-    isDeleteSocialMediaModalVisible,
     toggleCreateSocialMediaModal,
     toggleEditSocialMediaModal,
-    toggleDeleteSocialMediaModal,
   } = useSocialMediaStore()
 
   const queryClient = useQueryClient()
@@ -112,11 +109,6 @@ export const StaffSocialMediaList = () => {
           <EditSocialMediaModal
             isVisible={isEditSocialMediaModalVisible}
             onClose={toggleEditSocialMediaModal}
-            socialMedia={activeSocialMedia}
-          />
-          <DeleteSocialMediaModal
-            isVisible={isDeleteSocialMediaModalVisible}
-            onClose={toggleDeleteSocialMediaModal}
             socialMedia={activeSocialMedia}
           />
         </>

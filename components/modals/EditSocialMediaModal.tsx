@@ -1,3 +1,4 @@
+import { Tooltip } from '@mui/material'
 import axios from 'axios'
 import { Form, Formik } from 'formik'
 import { useSession } from 'next-auth/react'
@@ -23,7 +24,7 @@ import { EditIcon } from '../icons/EditIcon'
 import { FloppyDiskIcon } from '../icons/FloppyDiskIcon'
 import { PaperPlaneIcon } from '../icons/PaperPlaneIcon'
 import { PlusIcon } from '../icons/PlusIcon'
-import { LinkButton } from '../LinkButton'
+import { TrashIcon } from '../icons/TrashIcon'
 import { MentionInput } from '../MentionInput'
 import { Modal } from '../Modal'
 import { PhotographyVideographyFileButton } from '../PhotographyVideographyFileButton'
@@ -33,9 +34,11 @@ import { SocialMediaCommentCard } from '../SocialMediaCommentCard'
 import { TextInput } from '../TextInput'
 import { TimeInput } from '../TimeInput'
 import { DeleteSocialMediaCommentModal } from './DeleteSocialMediaCommentModal'
+import { DeleteSocialMediaModal, useDeleteSocialMediaModalStore } from './DeleteSocialMediaModal'
 import { EditSocialMediaCommentModal } from './EditSocialMediaCommentModal'
 import { FileUploadModal, useFileUploadModal } from './FileUploadModal'
 import { SocialMediaFileModal, useSocialMediaFileModalStore } from './SocialMediaFileModal'
+
 export const EditSocialMediaModal = ({
   isVisible,
   onClose,
@@ -165,12 +168,14 @@ export const EditSocialMediaModal = ({
 
   const toggleUploadFile = () => setVisible(true, socialMediaDetails)
 
+  const { toggleModal: toggleDeleteModal } = useDeleteSocialMediaModalStore()
+
   if (!socialMediaDetails) return null
 
   return (
     <>
       {isVisible && (
-        <Modal title="Edit Social Media" bgColor="bg-cultured" className="w-270" onClose={onClose}>
+        <Modal title="Edit Social Media" bgColor="bg-cultured" className="w-320" onClose={onClose}>
           <div className="flex w-full">
             <Formik
               initialValues={{
@@ -191,13 +196,27 @@ export const EditSocialMediaModal = ({
                 <Form className="mr-8 max-h-130 overflow-y-auto">
                   <div className="flex w-full flex-col">
                     <Card className="mb-5 h-fit w-full">
+                      <div className="absolute top-6 right-6 space-x-2">
+                        <Tooltip title="Delete Record" placement="top">
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation()
+                              toggleDeleteModal(socialMediaDetails.id)
+                            }}
+                            className="group"
+                          >
+                            <TrashIcon className="stroke-waterloo group-hover:stroke-halloween-orange" />
+                          </button>
+                        </Tooltip>
+                      </div>
                       <TextInput
                         type="text"
                         Icon={EditIcon}
                         placeholder="Enter Post Topic"
                         label="Post Topic"
                         name="post"
-                        className="mb-5"
+                        className="mb-5 mt-8"
                       />
                       <div className="mb-5 flex space-x-5">
                         <DateInput
@@ -307,7 +326,9 @@ export const EditSocialMediaModal = ({
                     </Card>
                     <Card className="h-fit w-full">
                       <div className="flex space-x-5">
-                        <LinkButton title="Cancel" href="/social-media" light />
+                        <Button ariaLabel="Cancel" onClick={onClose} type="button" light>
+                          Cancel
+                        </Button>
                         <Button ariaLabel="Submit" disabled={isSubmitting} type="submit">
                           <FloppyDiskIcon className="stroke-white" />
                           <div>Save</div>
@@ -367,7 +388,7 @@ export const EditSocialMediaModal = ({
                         )}
                       </div>
                     ) : (
-                      <div className="m-auto text-sm text-metallic-silver">No Comment found.</div>
+                      <div className="text-sm text-metallic-silver">No Comment found.</div>
                     )}
                     <MentionInput
                       className="mt-5"
@@ -398,6 +419,7 @@ export const EditSocialMediaModal = ({
       <EditSocialMediaCommentModal />
       <DeleteSocialMediaCommentModal />
       <FileUploadModal />
+      <DeleteSocialMediaModal />
     </>
   )
 }
