@@ -76,18 +76,22 @@ export const DeleteSocialMediaModal = () => {
           onClose={toggleModal}
           className="border-2 border-solid border-bright-gray"
         >
-          <div className="mb-8 flex w-140 flex-col">
-            <div className="mb-8 grid w-full grid-cols-2 grid-rows-2 gap-y-5">
-              <TitleValue title="Post Title" className="capitalize">
+          <div className="mb-8 flex max-h-130 w-140 flex-col overflow-y-auto">
+            <div className="flex flex-col">
+              <TitleValue
+                title="Post Title"
+                childrenClassName="break-words"
+                className="mb-5 capitalize"
+              >
                 {socialMedia?.post}
               </TitleValue>
-              <TitleValue title="Post Date" className="capitalize">
+              <TitleValue title="Post Date" className="mb-5 capitalize">
                 {socialMedia?.postDate && format(socialMedia?.postDate, 'MM/dd/yyyy h:mmaaa')}
               </TitleValue>
-              <TitleValue title="Status" className="capitalize">
+              <TitleValue title="Status" className="mb-5 capitalize">
                 {socialMedia?.status}
               </TitleValue>
-              <TitleValue title="Channels" className="capitalize">
+              <TitleValue title="Channels" className="mb-5 capitalize">
                 <div className="flex flex-wrap gap-1">
                   {socialMedia?.channels &&
                     socialMedia.channels.map((channel) => (
@@ -101,10 +105,10 @@ export const DeleteSocialMediaModal = () => {
                     ))}
                 </div>
               </TitleValue>
-              <TitleValue title="Copy" className="capitalize">
+              <TitleValue title="Copy" childrenClassName="break-words" className="mb-5 capitalize">
                 {socialMedia?.copy}
               </TitleValue>
-              <TitleValue title="Notes" className="capitalize">
+              <TitleValue title="Notes" childrenClassName="break-words" className="mb-5 capitalize">
                 {socialMedia?.notes}
               </TitleValue>
             </div>
@@ -131,11 +135,11 @@ export const DeleteSocialMediaModal = () => {
               </div>
             </Card>
             <div className="flex space-x-5">
-              <Button ariaLabel="Cancel" onClick={toggleModal} type="button" light>
+              <Button ariaLabel="Cancel" onClick={() => toggleModal()} type="button" light>
                 Cancel
               </Button>
               <Button ariaLabel="Submit" onClick={deleteSocialMedia} type="submit">
-                <TrashIcon className="stroke-white" />
+                <TrashIcon className=" stroke-white" />
                 <div>Delete</div>
               </Button>
             </div>
