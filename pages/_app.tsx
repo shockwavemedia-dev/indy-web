@@ -48,22 +48,11 @@ axios.interceptors.request.use(
 
 axios.interceptors.response.use(
   (response) => {
-    return response
-  },
-  (error) => {
-    if (error.response.status === 401) {
-      nextAuthSignOut()
-    }
-  }
-)
-
-axios.interceptors.response.use(
-  (response) => {
     if (isClientSide) {
       done()
     }
 
-    if (response.data) {
+    if (response && response.data) {
       response.data = camelcaseKeys(response.data, { deep: true, exclude: EXCLUDE_KEYS })
       parseDates(response.data)
     }
@@ -73,6 +62,10 @@ axios.interceptors.response.use(
   (error) => {
     if (isClientSide) {
       done()
+    }
+
+    if (axios.isAxiosError(error) && error.response && error.response.status === 401) {
+      nextAuthSignOut()
     }
 
     return Promise.reject(error)
