@@ -185,6 +185,7 @@ export const SocialMediaColumns: Array<Column<SocialMedia>> = [
                       <button
                         type="button"
                         className="relative h-9 w-full min-w-[2.25rem] hover:rounded hover:border-2 hover:border-halloween-orange"
+                        onClick={toggleFile}
                       >
                         {thumbnailUrl ? (
                           <Image
@@ -194,10 +195,14 @@ export const SocialMediaColumns: Array<Column<SocialMedia>> = [
                             objectFit="contain"
                             objectPosition="left"
                             className="rounded-sm"
-                            onClick={toggleFile}
                           />
                         ) : (
-                          <FileIcon />
+                          <div className="h-9 min-w-[2.25rem]">
+                            <FileIcon className="h-8 min-w-[2rem]" />
+                            <div className="absolute top-3 left-1/2 -translate-x-1/2 font-varela-round text-tiny uppercase text-white">
+                              {name.split(/\./).pop()}
+                            </div>
+                          </div>
                         )}
                       </button>
                     </Tooltip>

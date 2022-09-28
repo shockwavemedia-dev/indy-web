@@ -1,6 +1,6 @@
-export const FileIcon = () => (
+export const FileIcon = ({ className }: { className?: string }) => (
   <svg
-    className="flex-shrink-0"
+    className={`flex-shrink-0 ${className}`}
     width="22"
     height="24"
     viewBox="0 0 22 24"
