@@ -160,9 +160,8 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     if (session) {
-      const { isClient, isManager, isAdmin } = session
-
-      if (isClient) {
+      //const { isClient, isManager, isAdmin } = session
+      if (session.isClient) {
         setButtons(
           <>
             <FancyLink
@@ -185,19 +184,22 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
             />
           </>
         )
-      } else if (isManager || isAdmin) {
+      } else if (session.isManager) {
         setButtons(
           <FancyButton
             Icon={<LifeBuoyIcon className="fill-halloween-orange" />}
             title="New Ticket"
             subtitle="Laborerivit rem cones mil"
-            onClick={toggleSupportTicketModal}
+            onClick={(e) => {
+              e.stopPropagation()
+              toggleSupportTicketModal(-1)
+            }}
             className="w-fit"
           />
         )
       }
     }
-  }, [])
+  }, [session])
 
   if (status === 'loading' || !panelName) {
     return null
@@ -312,7 +314,7 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
         </div>
       </div>
       {session.isClient && <CreateSupportRequestModal />}
-      {(session.isManager || session.isAdmin) && <CreateSupportTicketModal />}
+      {session.isManager && <CreateSupportTicketModal />}
       {(session.isManager || session.isStaff) &&
         session?.user.userType.department.name === 'Social Media' && (
           <SocialMediaNotificationModal />

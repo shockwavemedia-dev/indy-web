@@ -4,7 +4,6 @@ import { useSocialMediaStore } from '../../../store/SocialMediaStore'
 import { Button } from '../../Button'
 import { Card } from '../../Card'
 import { CreateSocialMediaModal } from '../../modals/CreateSocialMediaModal'
-import { DeleteSocialMediaModal } from '../../modals/DeleteSocialMediaModal'
 import { EditSocialMediaModal } from '../../modals/EditSocialMediaModal'
 import { SocialMediaTable } from '../../SocialMediaTable'
 
@@ -14,10 +13,8 @@ export const ClientSocialMediaList = ({ clientId }: { clientId: number }) => {
     activeSocialMedia,
     isCreateSocialMediaModalVisible,
     isEditSocialMediaModalVisible,
-    isDeleteSocialMediaModalVisible,
     toggleCreateSocialMediaModal,
     toggleEditSocialMediaModal,
-    toggleDeleteSocialMediaModal,
   } = useSocialMediaStore()
 
   return (
@@ -25,7 +22,7 @@ export const ClientSocialMediaList = ({ clientId }: { clientId: number }) => {
       <Head>
         <title>Indy - Social Media</title>
       </Head>
-      <div className="mx-auto w-full max-w-8xl space-y-6">
+      <div className="mx-auto max-w-full space-y-6">
         <div className="flex flex-col gap-6 transition-all">
           <div className="flex-1">
             <Button
@@ -50,11 +47,6 @@ export const ClientSocialMediaList = ({ clientId }: { clientId: number }) => {
       <EditSocialMediaModal
         isVisible={isEditSocialMediaModalVisible}
         onClose={toggleEditSocialMediaModal}
-        socialMedia={activeSocialMedia}
-      />
-      <DeleteSocialMediaModal
-        isVisible={isDeleteSocialMediaModalVisible}
-        onClose={toggleDeleteSocialMediaModal}
         socialMedia={activeSocialMedia}
       />
     </>

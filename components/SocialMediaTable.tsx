@@ -34,7 +34,7 @@ export const SocialMediaTable = ({ clientId }: { clientId: number }) => {
 
       return data
     },
-    { keepPreviousData: true, staleTime: 5000, enabled: !!session }
+    { keepPreviousData: true, staleTime: 5000, enabled: !!session, refetchOnWindowFocus: false }
   )
 
   const memoizedColumns = useMemo(() => SocialMediaColumns, [])
@@ -77,11 +77,11 @@ export const SocialMediaTable = ({ clientId }: { clientId: number }) => {
 
   return (
     <>
-      {rows.length > 0 ? (
+      {!isFetching && rows.length > 0 ? (
         <>
           <div className="mb-auto h-full overflow-y-auto">
             <table className="w-full" {...getTableProps()}>
-              <thead className="sticky top-0 bg-white">
+              <thead className="sticky top-0 z-10 !bg-white py-5">
                 {headerGroups.map(({ getHeaderGroupProps, headers }) => (
                   // key is already provided by getHeaderGroupProps()
                   // eslint-disable-next-line react/jsx-key
@@ -141,7 +141,9 @@ export const SocialMediaTable = ({ clientId }: { clientId: number }) => {
                       {row.cells.map(({ getCellProps, render }) => (
                         // key is already provided by getCellProps()
                         // eslint-disable-next-line react/jsx-key
-                        <td {...getCellProps()}>{render('Cell')}</td>
+                        <td className="h-30" {...getCellProps()}>
+                          {render('Cell')}
+                        </td>
                       ))}
                     </tr>
                   )
@@ -224,6 +226,8 @@ export const SocialMediaTable = ({ clientId }: { clientId: number }) => {
             </button>
           </div>
         </>
+      ) : isFetching ? (
+        <div className="m-auto w-fit text-base text-metallic-silver">Loading...</div>
       ) : (
         !isLoading && (
           <div className="m-auto w-fit text-base text-metallic-silver">

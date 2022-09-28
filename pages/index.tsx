@@ -7,7 +7,7 @@ const HomePage: NextPageWithLayout = () => {
   const { status, data: session } = useSession()
 
   if (status === 'unauthenticated') {
-    replace('/auth/login')
+    replace('/coming-soon')
   } else if (status === 'authenticated') {
     const { isAdmin, isClient, isManager, isStaff } = session
 

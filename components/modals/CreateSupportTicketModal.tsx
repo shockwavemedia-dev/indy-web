@@ -25,9 +25,11 @@ export const useCreateSupportTicketModalStore = createStore(
   combine(
     {
       isModalVisible: false,
+      clientId: -1,
     },
     (set, get) => ({
-      toggleModal: () => set(() => ({ isModalVisible: !get().isModalVisible })),
+      toggleModal: (clientId?: number) =>
+        set(() => ({ isModalVisible: !get().isModalVisible, clientId: clientId ?? -1 })),
     })
   )
 )
@@ -36,7 +38,7 @@ export const CreateSupportTicketModal = () => {
   const { data: session } = useSession()
   const queryClient = useQueryClient()
   const { showToast } = useToastStore()
-  const { isModalVisible, toggleModal } = useCreateSupportTicketModalStore()
+  const { clientId, isModalVisible, toggleModal } = useCreateSupportTicketModalStore()
 
   const { data: departments } = useQuery(
     'departments',
@@ -71,6 +73,13 @@ export const CreateSupportTicketModal = () => {
       enabled: isModalVisible,
     }
   )
+
+  const clientOptions = clients
+    ? clients.map(({ name, id }) => ({
+        label: name,
+        value: id,
+      }))
+    : []
 
   const submitForm = async (values: CreateSupportTicketForm) => {
     try {
@@ -109,6 +118,8 @@ export const CreateSupportTicketModal = () => {
               clientId:
                 session?.user.userType.type == 'client_users'
                   ? session?.user.userType.client.id
+                  : clientId !== -1
+                  ? clientId
                   : -1,
               departmentId: -1,
               duedate: null,
@@ -117,17 +128,12 @@ export const CreateSupportTicketModal = () => {
           >
             {({ isSubmitting }) => (
               <Form className="flex w-140 flex-col">
-                {session?.user.userType.type == 'admin_users' && (
+                {clientId == -1 && (
                   <Select
                     name="clientId"
                     Icon={ClipboardIcon}
                     placeholder="Select Client"
-                    options={
-                      clients?.map((client) => ({
-                        value: client.id,
-                        label: client.name,
-                      })) ?? []
-                    }
+                    options={clientOptions}
                     className="mb-5"
                   />
                 )}
@@ -163,7 +169,7 @@ export const CreateSupportTicketModal = () => {
                   Icon={EditIcon}
                   placeholder="Enter Description"
                   name="description"
-                  className="mb-8"
+                  className="mb-5 h-40"
                 />
                 <div className="flex space-x-5">
                   <Button ariaLabel="Cancel" onClick={toggleModal} type="button" light>

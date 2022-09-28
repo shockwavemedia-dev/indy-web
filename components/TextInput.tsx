@@ -35,7 +35,7 @@ export const TextInput = ({
         {hint && (
           <Tooltip title={hint} placement="top-end" className="ml-auto">
             <div>
-              <InfoIcon className="h-4 stroke-metallic-silver transition-colors hover:stroke-halloween-orange" />
+              <InfoIcon className="h-4 stroke-bleu-de-france transition-colors hover:stroke-halloween-orange" />
             </div>
           </Tooltip>
         )}

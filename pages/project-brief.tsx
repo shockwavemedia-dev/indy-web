@@ -15,7 +15,6 @@ import { FileDropZone } from '../components/FileDropZone'
 import { CheckIcon } from '../components/icons/CheckIcon'
 import { DollarIcon } from '../components/icons/DollarIcon'
 import { EditIcon } from '../components/icons/EditIcon'
-import { FloppyDiskIcon } from '../components/icons/FloppyDiskIcon'
 import { ServiceCheckIcon } from '../components/icons/ServiceCheckIcon'
 import { RichTextInput } from '../components/RichTextInput'
 import { TextInput } from '../components/TextInput'
@@ -148,13 +147,17 @@ const ProjectBriefPage: NextPageWithLayout = () => {
                   accept={['.gif', '.jpeg', '.mp4', '.png', '.jpg']}
                   multiple
                 />
+              </div>
+              <div className="flex-1 space-y-6">
                 <div className="flex space-x-5">
+                  <SelectService />
+                </div>
+                <div className="flex w-60 space-x-5">
                   <Button ariaLabel="Submit" disabled={isSubmitting} type="submit">
                     Submit
                   </Button>
                 </div>
               </div>
-              <SelectService />
             </Form>
           )}
         </Formik>
@@ -245,15 +248,6 @@ const SelectService = () => {
               )
             })}
           </div>
-          <Button
-            ariaLabel="Save Extras"
-            onClick={removeActiveService}
-            type="button"
-            className="mt-6"
-          >
-            <FloppyDiskIcon className="stroke-white" />
-            <div>Save</div>
-          </Button>
         </div>
       )}
     </>

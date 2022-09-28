@@ -1,13 +1,11 @@
 export type NewClientUserForm = {
   email: string
-  password: string
-  birthDate: Date | null
-  passwordConfirmation: string
-  contactNumber: string
+  password?: string
+  passwordConfirmation?: string
+  contactNumber?: string
   firstName: string
-  lastName: string
-  middleName?: string
-  gender: 'female' | 'male' | null
+  lastName?: string
+  sendInvite: boolean
   role: 'group manager' | 'marketing manager' | 'marketing' | null
   clientId: number
 }
