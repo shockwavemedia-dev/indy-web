@@ -81,7 +81,7 @@ export const SocialMediaTable = ({ clientId }: { clientId: number }) => {
         <>
           <div className="mb-auto h-full overflow-y-auto">
             <table className="w-full" {...getTableProps()}>
-              <thead className="sticky top-0 z-30 bg-white">
+              <thead className="sticky top-0 z-10 !bg-white py-5">
                 {headerGroups.map(({ getHeaderGroupProps, headers }) => (
                   // key is already provided by getHeaderGroupProps()
                   // eslint-disable-next-line react/jsx-key
