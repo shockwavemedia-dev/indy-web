@@ -34,7 +34,7 @@ export const SocialMediaTable = ({ clientId }: { clientId: number }) => {
 
       return data
     },
-    { keepPreviousData: true, staleTime: 5000, enabled: !!session }
+    { keepPreviousData: true, staleTime: 5000, enabled: !!session, refetchOnWindowFocus: false }
   )
 
   const memoizedColumns = useMemo(() => SocialMediaColumns, [])
