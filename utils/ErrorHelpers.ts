@@ -18,3 +18,15 @@ export const get422ResponseError = (error: unknown) => {
 
   return 'Something went wrong!'
 }
+
+export const get400ResponseError = (error: unknown) => {
+  if (
+    isAxiosError<Record<string, Array<string>>>(error) &&
+    error.response &&
+    (error.response.status === 400 || error.response.status === 404)
+  ) {
+    return String(error.response.data.message)
+  }
+
+  return 'Something went wrong!'
+}
