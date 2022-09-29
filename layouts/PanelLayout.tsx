@@ -223,16 +223,28 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
           </a>
         </Link>
         <IndyIcon className="m-0 ml-auto -mr-20 scale-50 p-0" />
-        <button
-          className="group"
-          onClick={(e) => {
-            e.stopPropagation()
-            toggleNotificationModal(true)
-          }}
-        >
-          <Image src={DummyAvatar} alt="Dummy" height={32} width={32} className="rounded-full" />
-        </button>
-
+        <div className="relative p-1">
+          <button
+            className="group relative"
+            onClick={(e) => {
+              e.stopPropagation()
+              toggleNotificationModal(true)
+            }}
+          >
+            <Image
+              src={DummyAvatar}
+              alt="Dummy"
+              height={32}
+              width={32}
+              className="relative rounded-full"
+            />
+          </button>
+          {ticketsAndNotifacationsCount?.newNotificationCount && (
+            <div className="min-w-4.5 absolute -top-2 -right-2 rounded-full bg-red-crimson p-2 text-center text-xxs font-semibold text-white">
+              {ticketsAndNotifacationsCount?.newNotificationCount}
+            </div>
+          )}
+        </div>
         <div className="ml-3 mr-5 flex flex-col">
           <div className=" text-sm font-medium text-onyx">
             {session?.user.firstName} {session?.user.lastName}
