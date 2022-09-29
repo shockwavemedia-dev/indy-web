@@ -18,7 +18,7 @@ import { get400ResponseError } from '../../utils/ErrorHelpers'
 
 const AccountVerifiedPage: NextPageWithLayout = () => {
   const {
-    query: { email, token },
+    query: { email },
   } = useRouter()
 
   const router = useRouter()
