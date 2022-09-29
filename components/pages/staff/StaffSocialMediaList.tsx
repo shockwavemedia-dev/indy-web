@@ -84,7 +84,7 @@ export const StaffSocialMediaList = () => {
       </div>
       {selectedClientId !== -1 ? (
         <>
-          <div className="mx-auto w-full max-w-8xl space-y-6">
+          <div className="mx-auto w-full space-y-6">
             <div className="flex flex-col gap-6 transition-all">
               <div className="flex-1">
                 <Button

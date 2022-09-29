@@ -20,7 +20,7 @@ const ServicesPage: NextPageWithLayout = () => {
       <Head>
         <title>Indy - Services</title>
       </Head>
-      <div className="mx-auto w-full max-w-8xl space-y-6">
+      <div className="mx-auto w-full space-y-6">
         <Card title="Services" className="flex max-h-155 flex-col">
           <DataTable
             dataEndpoint="/v1/services"

@@ -86,7 +86,7 @@ const NewMarketingPlannerPage: NextPageWithLayout = () => {
       <Head>
         <title>Indy - New Marketing Planner</title>
       </Head>
-      <div className="mx-auto w-full max-w-8xl">
+      <div className="mx-auto w-full">
         <Formik
           validationSchema={CreateMarketingPlannerFormSchema}
           initialValues={{

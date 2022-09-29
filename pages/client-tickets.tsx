@@ -47,7 +47,7 @@ const ClientTicketsPage: NextPageWithLayout = () => {
       <Head>
         <title>Indy - Visual Displays</title>
       </Head>
-      <div className="mx-auto w-full max-w-8xl space-y-6">
+      <div className="mx-auto w-full space-y-6">
         <div className="flex gap-6 transition-all lg:flex-col">
           <Card title="Project Status Table" className="flex max-h-155 flex-1 flex-col">
             <DataTable

@@ -37,7 +37,7 @@ const DepartmentsPage: NextPageWithLayout = () => {
       <Head>
         <title>Indy - Departments</title>
       </Head>
-      <div className="mx-auto w-full max-w-8xl space-y-6">
+      <div className="mx-auto w-full space-y-6">
         <Card title="Departments" className="flex max-h-155 flex-col">
           <DataTable
             dataEndpoint="/v1/departments"

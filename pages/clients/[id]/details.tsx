@@ -64,7 +64,7 @@ const ClientDetails: NextPageWithLayout = () => {
   if (!data) return null
 
   return (
-    <div>
+    <div className="w-full">
       <div className="mb-6 flex gap-6">
         <Card title="Company Details" className="min-w-[21.5rem]">
           <div className="absolute top-6 right-6 space-x-2">

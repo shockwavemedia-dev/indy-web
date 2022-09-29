@@ -44,7 +44,7 @@ export const ClientDashboard = () => {
       <Head>
         <title>Indy - Dashboard</title>
       </Head>
-      <div className="mx-auto w-full max-w-8xl">
+      <div className="mx-auto w-full">
         <div className="flex gap-6 transition-all lg:flex-col">
           <Card title="Project Status Table" className="flex max-h-155 flex-1 flex-col space-y-8">
             <div className="absolute top-6 right-6 flex space-x-3">

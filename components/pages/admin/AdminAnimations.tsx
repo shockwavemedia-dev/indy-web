@@ -59,7 +59,7 @@ export const AdminAnimations = () => {
       <Head>
         <title>Indy - Animations</title>
       </Head>
-      <div className="mx-auto w-full max-w-8xl space-y-6">
+      <div className="mx-auto w-full space-y-6">
         <Card title="Animations" className="flex max-h-155 flex-col">
           <DataTable
             dataEndpoint="/v1/libraries"

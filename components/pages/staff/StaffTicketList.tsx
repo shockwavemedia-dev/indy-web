@@ -27,7 +27,7 @@ export const StaffTicketList = () => {
       <Head>
         <title>Indy - Tickets</title>
       </Head>
-      <div className="mx-auto flex w-full max-w-8xl gap-6 lg:flex-col">
+      <div className="mx-auto flex w-full gap-6 lg:flex-col">
         <Card title="My Tickets" className="flex flex-1 flex-col">
           <DataTable
             columns={StaffTicketsTableColumns}

@@ -134,7 +134,7 @@ const MarketingPlannerPage: NextPageWithLayout = () => {
       <Head>
         <title>{`Indy - ${marketingPlan?.eventName}`}</title>
       </Head>
-      <div className="mx-auto w-full max-w-8xl">
+      <div className="mx-auto w-full">
         <Formik
           validationSchema={UpdateMarketingPlannerFormSchema}
           initialValues={{
