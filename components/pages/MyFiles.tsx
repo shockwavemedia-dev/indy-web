@@ -38,7 +38,7 @@ export const MyFiles = () => {
       <Head>
         <title>Indy - My Files</title>
       </Head>
-      <div className="mx-auto flex w-full max-w-8xl gap-6 lg:flex-col">
+      <div className="mx-auto flex w-full gap-6 lg:flex-col">
         <div className="flex-1 space-y-6">
           <SelectNoFormik
             Icon={UserIcon}

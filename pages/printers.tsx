@@ -42,7 +42,7 @@ const PrintersPage: NextPageWithLayout = () => {
       <Head>
         <title>Indy - Printers</title>
       </Head>
-      <div className="mx-auto w-full max-w-8xl space-y-6">
+      <div className="mx-auto w-full space-y-6">
         <Card title="Printers List" className="flex max-h-155 flex-col">
           <DataTable
             dataEndpoint="/v1/printers"

@@ -45,7 +45,7 @@ const StaffUserPage: NextPageWithLayout = () => {
       <Head>
         <title>Indy - Staffs</title>
       </Head>
-      <div className="mx-auto w-full max-w-8xl space-y-6">
+      <div className="mx-auto w-full space-y-6">
         <Card title="Admin Users" className="flex max-h-155 flex-col">
           <DataTable
             dataEndpoint="/v1/users"

@@ -41,7 +41,7 @@ const EDMPage: NextPageWithLayout = () => {
       <Head>
         <title>Indy - EDM</title>
       </Head>
-      <div className="mx-auto w-full max-w-8xl space-y-6">
+      <div className="mx-auto w-full space-y-6">
         <div className="flex gap-6 transition-all lg:flex-col">
           <Card className="grid h-full flex-1 place-items-center transition-all lg:flex-none">
             {edm && edm.length > 0 ? (
