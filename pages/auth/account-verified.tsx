@@ -40,7 +40,7 @@ const AccountVerifiedPage: NextPageWithLayout = () => {
       if (status === 200) {
         showToast({
           type: 'success',
-          message: 'Added',
+          message: 'Succesfully set a password!',
         })
 
         router.replace('/auth/login')
