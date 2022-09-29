@@ -19,7 +19,7 @@ const MarketingPlannersPage: NextPageWithLayout = () => {
       <Head>
         <title>Marketing Planner</title>
       </Head>
-      <div className="mx-auto w-full max-w-8xl">
+      <div className="mx-auto w-full">
         <div className="flex gap-6 transition-all lg:flex-col">
           <div className="flex-1">
             <LinkButton title="New Event" href="/new-marketing-planner" className="mb-5 w-30" />

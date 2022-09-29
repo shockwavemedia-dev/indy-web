@@ -19,7 +19,7 @@ export const ClientMyFiles = () => {
       <Head>
         <title>Indy - My Files</title>
       </Head>
-      <div className="mx-auto w-full max-w-8xl">
+      <div className="mx-auto w-full">
         <div className="flex gap-6 transition-all lg:flex-col">
           <FileBrowser clientId={session?.user.userType.client.id || -1} />
           <div className="flex w-86 flex-col gap-6 transition-all lg:w-full lg:flex-row">

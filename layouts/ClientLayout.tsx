@@ -70,7 +70,7 @@ const ClientLayout = ({ children }: { children: ReactNode }) => {
       <Head>
         <title>{`Indy - ${data.name}`}</title>
       </Head>
-      <div className="mx-auto w-full max-w-8xl space-y-6">
+      <div className="mx-auto w-full space-y-6">
         <div>
           <div className="flex border-b border-b-bright-gray pb-3.5 [&>a]:flex [&>a]:w-1/7 [&>a]:items-center [&>a]:justify-center [&>a]:space-x-2 [&>a]:font-semibold [&>a>svg]:stroke-lavender-gray [&>a>svg]:transition-colors">
             <Link href={`/clients/${id}/details`}>

@@ -21,7 +21,7 @@ const ScreenManagerPage: NextPageWithLayout = () => {
       <Head>
         <title>Indy - Screen Manager</title>
       </Head>
-      <div className="mx-auto w-full max-w-8xl space-y-6">
+      <div className="mx-auto w-full space-y-6">
         <div className="flex gap-6 transition-all lg:flex-col">
           <Card className="h-155 flex-1">
             <div className="flex flex-wrap">

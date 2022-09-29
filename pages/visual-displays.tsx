@@ -24,7 +24,7 @@ const VisualDisplaysPage: NextPageWithLayout = () => {
       <Head>
         <title>Indy - Visual Displays</title>
       </Head>
-      <div className="mx-auto w-full max-w-8xl space-y-6">
+      <div className="mx-auto w-full space-y-6">
         <div className="flex space-x-6">
           <Card className="h-fit w-full min-w-0 flex-1">
             <div className="flex h-fit w-fit grid-cols-2 flex-wrap place-content-center gap-5">

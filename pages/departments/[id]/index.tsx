@@ -41,7 +41,7 @@ const DapartmentPage: NextPageWithLayout = () => {
       <Head>
         <title>Indy - Departments</title>
       </Head>
-      <div className="mx-auto flex w-full max-w-8xl space-x-6">
+      <div className="mx-auto flex w-full space-x-6">
         <Card className="h-fit w-86 flex-none">
           <TitleValue title="ID" className="flex items-center justify-between">
             {department?.id}

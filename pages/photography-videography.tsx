@@ -37,7 +37,7 @@ const PhotographyVideographyPage: NextPageWithLayout = () => {
       <Head>
         <title>Indy - Photography/Videography</title>
       </Head>
-      <div className="mx-auto w-full max-w-8xl">
+      <div className="mx-auto w-full">
         <AvailabilityCalendar />
         <div className="mt-6 flex gap-6 transition-all lg:flex-col">
           <div className="flex flex-1 flex-col">

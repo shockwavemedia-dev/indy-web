@@ -203,7 +203,7 @@ export const ClientTicket = ({ ticketId }: { ticketId: number }) => {
       <Head>
         <title>Indy - Ticket {ticket!.ticketCode}</title>
       </Head>
-      <div className="mx-auto flex w-full max-w-8xl space-x-6">
+      <div className="mx-auto flex w-full space-x-6">
         <div className="w-86 flex-none space-y-6">
           <Card title="Details">
             <div className="absolute top-6 right-6 space-x-2">
