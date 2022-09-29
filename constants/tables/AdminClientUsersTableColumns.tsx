@@ -49,6 +49,11 @@ export const AdminClientUsersTableColumns: Array<Column<ClientUser>> = [
     Cell: ({ value }) => <div className=" text-sm font-medium text-onyx">{value}</div>,
   },
   {
+    Header: 'Status',
+    accessor: 'status',
+    Cell: ({ value }) => <div className=" text-sm font-medium capitalize text-onyx">{value}</div>,
+  },
+  {
     Header: '',
     accessor: 'id',
     disableSortBy: true,
