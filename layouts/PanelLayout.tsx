@@ -10,6 +10,7 @@ import { combine } from 'zustand/middleware'
 import { Crumbs } from '../components/Crumbs'
 import { FancyButton } from '../components/FancyButton'
 import { FancyLink } from '../components/FancyLink'
+import { BellIcon } from '../components/icons/BellIcon'
 import { BriefcaseIcon } from '../components/icons/BriefcaseIcon'
 import { CalendarAddIcon } from '../components/icons/CalendarAddIcon'
 import { IndyIcon } from '../components/icons/IndyIcon'
@@ -39,7 +40,6 @@ import IndyLogoWhite from '../public/images/indy-logo-white.png'
 import { Page } from '../types/Page.type'
 import { Service } from '../types/Service.type'
 import { TicketsAndNotifacationsCount } from '../types/TicketsAndNotifacationsCount.type'
-
 export const usePanelLayoutStore = createStore(
   combine(
     {
@@ -84,6 +84,8 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
         enabled: !!session && !session.isAdmin,
       }
     )
+
+  console.log(ticketsAndNotifacationsCount)
 
   const { data: clientServices } = useQuery(
     'services',
@@ -223,28 +225,34 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
           </a>
         </Link>
         <IndyIcon className="m-0 ml-auto -mr-20 scale-50 p-0" />
-        <div className="relative p-1">
-          <button
-            className="group relative"
-            onClick={(e) => {
-              e.stopPropagation()
-              toggleNotificationModal(true)
-            }}
-          >
-            <Image
-              src={DummyAvatar}
-              alt="Dummy"
-              height={32}
-              width={32}
-              className="relative rounded-full"
-            />
-          </button>
-          {ticketsAndNotifacationsCount?.newNotificationCount && (
-            <div className="min-w-4.5 absolute -top-2 -right-2 rounded-full bg-red-crimson p-2 text-center text-xxs font-semibold text-white">
-              {ticketsAndNotifacationsCount?.newNotificationCount}
-            </div>
-          )}
-        </div>
+        {session.isStaff ? (
+          <div className="relative p-1">
+            <button
+              className="group relative"
+              onClick={(e) => {
+                e.stopPropagation()
+                toggleNotificationModal(true)
+              }}
+            >
+              <BellIcon width="30" height="30" className="stroke-lavender-gray" />
+            </button>
+            {ticketsAndNotifacationsCount?.newNotificationCount &&
+              ticketsAndNotifacationsCount?.newNotificationCount !== 0 && (
+                <div className="min-w-4.5 absolute top-0 -right-2 rounded-full bg-red-crimson p-2 text-center text-xxs font-semibold text-white">
+                  {ticketsAndNotifacationsCount?.newNotificationCount}
+                </div>
+              )}
+          </div>
+        ) : (
+          <Image
+            src={DummyAvatar}
+            alt="Dummy"
+            height={32}
+            width={32}
+            className="relative rounded-full"
+          />
+        )}
+
         <div className="ml-3 mr-5 flex flex-col">
           <div className=" text-sm font-medium text-onyx">
             {session?.user.firstName} {session?.user.lastName}
