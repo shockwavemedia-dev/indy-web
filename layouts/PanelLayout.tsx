@@ -98,7 +98,7 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
       return data
     },
     {
-      enabled: !!session && !session.isAdmin,
+      enabled: !!session && !session.isAdmin && !session.isStaff && !session.isManager,
     }
   )
 
@@ -333,10 +333,7 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
       </div>
       {session.isClient && <CreateSupportRequestModal />}
       {session.isManager && <CreateSupportTicketModal />}
-      {(session.isManager || session.isStaff) &&
-        session?.user.userType.department.name === 'Social Media' && (
-          <SocialMediaNotificationModal />
-        )}
+      {session.isStaff && <SocialMediaNotificationModal />}
     </>
   )
 }
