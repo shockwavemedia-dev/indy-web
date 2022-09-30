@@ -85,8 +85,6 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
       }
     )
 
-  console.log(ticketsAndNotifacationsCount)
-
   const { data: clientServices } = useQuery(
     'services',
     async () => {
@@ -234,11 +232,11 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
                 toggleNotificationModal(true)
               }}
             >
-              <BellIcon width="30" height="30" className="stroke-lavender-gray" />
+              <BellIcon width="30" height="30" className=" stroke-lavender-gray" />
             </button>
             {ticketsAndNotifacationsCount?.newNotificationCount &&
               ticketsAndNotifacationsCount?.newNotificationCount !== 0 && (
-                <div className="min-w-4.5 absolute top-0 -right-2 rounded-full bg-red-crimson p-2 text-center text-xxs font-semibold text-white">
+                <div className="absolute top-0 right-0 min-w-[1.25rem] rounded-full bg-red-crimson p-2 text-center text-xxs font-semibold text-white">
                   {ticketsAndNotifacationsCount?.newNotificationCount}
                 </div>
               )}

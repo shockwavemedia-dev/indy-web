@@ -26,7 +26,7 @@ export const SocialMediaNotificationModal = () => {
             className="fixed top-0 left-0 z-40 h-full w-full cursor-default bg-onyx bg-opacity-20"
           />
           <div
-            className={`absolute top-86 -right-35 z-50 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center rounded-xl bg-white p-5`}
+            className={`absolute top-15 -right-35 z-50 flex -translate-x-1/2 flex-col items-center rounded-xl bg-white p-5`}
           >
             <button className="absolute top-2 right-2" onClick={() => toggleModal()}>
               <CloseModalIcon width="20" height="20" className="stroke-lavender-gray" />
