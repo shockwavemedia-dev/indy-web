@@ -16,6 +16,7 @@ import AuthLayout from '../../layouts/AuthLayout'
 import { useToastStore } from '../../store/ToastStore'
 import { PasswordResetForm } from '../../types/forms/PasswordResetForm.type'
 import { NextPageWithLayout } from '../../types/pages/NextPageWithLayout.type'
+import { get422And400ResponseError } from '../../utils/ErrorHelpers'
 
 const PasswordResetPage: NextPageWithLayout = () => {
   const { query, replace } = useRouter()
@@ -41,7 +42,7 @@ const PasswordResetPage: NextPageWithLayout = () => {
     } catch (e) {
       showToast({
         type: 'error',
-        message: 'Something went wrong! 😵',
+        message: get422And400ResponseError(e),
       })
     }
   }

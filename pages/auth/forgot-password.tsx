@@ -13,6 +13,7 @@ import { ForgotPasswordFormSchema } from '../../schemas/ForgotPasswordFormSchema
 import { useToastStore } from '../../store/ToastStore'
 import { ForgotPasswordForm } from '../../types/forms/ForgotPasswordForm.type'
 import { NextPageWithLayout } from '../../types/pages/NextPageWithLayout.type'
+import { get422And400ResponseError } from '../../utils/ErrorHelpers'
 
 const ForgotPasswordPage: NextPageWithLayout = () => {
   const { replace } = useRouter()
@@ -32,7 +33,7 @@ const ForgotPasswordPage: NextPageWithLayout = () => {
     } catch (e) {
       showToast({
         type: 'error',
-        message: 'Something went wrong! 😵',
+        message: get422And400ResponseError(e),
       })
     }
   }

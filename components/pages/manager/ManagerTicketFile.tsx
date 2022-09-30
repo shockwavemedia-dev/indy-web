@@ -9,6 +9,7 @@ import { CreateFileFeedbackForm } from '../../../types/forms/CreateFileFeedbackF
 import { Page } from '../../../types/Page.type'
 import { TicketFile } from '../../../types/TicketFile.type'
 import { TicketFileFeedback } from '../../../types/TicketFileFeedback.type'
+import { get422And400ResponseError } from '../../../utils/ErrorHelpers'
 import { objectWithFileToFormData } from '../../../utils/FormHelpers'
 import { Button } from '../../Button'
 import { FileDisplay } from '../../FileDisplay'
@@ -92,7 +93,7 @@ export const ManagerTicketFile = ({ ticketFileId }: { ticketFileId: number }) =>
     } catch (e) {
       showToast({
         type: 'error',
-        message: 'Something went wrong! 😵',
+        message: get422And400ResponseError(e),
       })
     }
   }

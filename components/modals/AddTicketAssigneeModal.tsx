@@ -9,6 +9,7 @@ import { Department } from '../../types/Department.type'
 import { AddTicketAssigneeForm } from '../../types/forms/AddTicketAssigneeForm.type'
 import { Page } from '../../types/Page.type'
 import { SelectOption } from '../../types/SelectOption.type'
+import { get422And400ResponseError } from '../../utils/ErrorHelpers'
 import { Button } from '../Button'
 import { ClipboardIcon } from '../icons/ClipboardIcon'
 import { UserIcon } from '../icons/UserIcon'
@@ -63,7 +64,7 @@ export const AddTicketAssigneeModal = ({
     } catch (e) {
       showToast({
         type: 'error',
-        message: 'Something went wrong! 😵',
+        message: get422And400ResponseError(e),
       })
     }
   }

@@ -18,6 +18,7 @@ import { EditClientMarketingForm } from '../../../types/forms/EditClientMarketin
 import { Page } from '../../../types/Page.type'
 import { NextPageWithLayout } from '../../../types/pages/NextPageWithLayout.type'
 import { Service } from '../../../types/Service.type'
+import { get422And400ResponseError } from '../../../utils/ErrorHelpers'
 
 const ClientMarketingPlanPage: NextPageWithLayout = () => {
   const queryClient = useQueryClient()
@@ -67,7 +68,7 @@ const ClientMarketingPlanPage: NextPageWithLayout = () => {
     } catch (e) {
       showToast({
         type: 'error',
-        message: 'Something went wrong!',
+        message: get422And400ResponseError(e),
       })
     }
   }

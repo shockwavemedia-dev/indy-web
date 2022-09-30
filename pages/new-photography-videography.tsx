@@ -34,6 +34,7 @@ import { Page } from '../types/Page.type'
 import { NextPageWithLayout } from '../types/pages/NextPageWithLayout.type'
 import { Photographer } from '../types/Photographer.type'
 import { PhotographyVideography } from '../types/PhotographyVideography.type'
+import { get422And400ResponseError } from '../utils/ErrorHelpers'
 import { objectWithFileToFormData } from '../utils/FormHelpers'
 
 const NewPhotographyVideographyPage: NextPageWithLayout = () => {
@@ -75,7 +76,7 @@ const NewPhotographyVideographyPage: NextPageWithLayout = () => {
     } catch (e) {
       showToast({
         type: 'error',
-        message: 'Something went wrong! 😵',
+        message: get422And400ResponseError(e),
       })
     }
   }

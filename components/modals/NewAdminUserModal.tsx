@@ -9,6 +9,7 @@ import { useToastStore } from '../../store/ToastStore'
 import { Department } from '../../types/Department.type'
 import { NewAdminUserForm } from '../../types/forms/NewAdminUserForm.type'
 import { Page } from '../../types/Page.type'
+import { get422And400ResponseError } from '../../utils/ErrorHelpers'
 import { Button } from '../Button'
 import { DateInput } from '../DateInput'
 import { ClipboardIcon } from '../icons/ClipboardIcon'
@@ -69,7 +70,7 @@ export const NewAdminUserModal = ({
     } catch (e) {
       showToast({
         type: 'error',
-        message: 'Something went wrong! 😵',
+        message: get422And400ResponseError(e),
       })
     }
   }

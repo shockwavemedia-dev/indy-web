@@ -6,6 +6,7 @@ import { combine } from 'zustand/middleware'
 import { UploadTicketFileSchema } from '../../schemas/UploadTicketFileSchema'
 import { useToastStore } from '../../store/ToastStore'
 import { UploadTicketFile } from '../../types/forms/UploadTicketFile.type'
+import { get422And400ResponseError } from '../../utils/ErrorHelpers'
 import { objectWithFileToFormData } from '../../utils/FormHelpers'
 import { Button } from '../Button'
 import { FileDropZone } from '../FileDropZone'
@@ -38,7 +39,7 @@ export const UploadTicketFileModal = ({
     } catch (e) {
       showToast({
         type: 'error',
-        message: 'Something went wrong! 😵',
+        message: get422And400ResponseError(e),
       })
     }
   }

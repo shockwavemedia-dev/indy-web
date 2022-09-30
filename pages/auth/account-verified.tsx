@@ -14,7 +14,7 @@ import { NewUserSetPasswordFormSchema } from '../../schemas/NewUserSetPasswordFo
 import { useToastStore } from '../../store/ToastStore'
 import { UserPasswordForm } from '../../types/forms/UserPasswordForm.type'
 import { NextPageWithLayout } from '../../types/pages/NextPageWithLayout.type'
-import { get400ResponseError } from '../../utils/ErrorHelpers'
+import { get422And400ResponseError } from '../../utils/ErrorHelpers'
 
 const AccountVerifiedPage: NextPageWithLayout = () => {
   const {
@@ -48,7 +48,7 @@ const AccountVerifiedPage: NextPageWithLayout = () => {
     } catch (e) {
       showToast({
         type: 'error',
-        message: get400ResponseError(e),
+        message: get422And400ResponseError(e),
       })
     }
 
