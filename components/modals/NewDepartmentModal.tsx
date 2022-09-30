@@ -4,6 +4,7 @@ import { useQueryClient } from 'react-query'
 import { NewDepartmentFormSchema } from '../../schemas/NewDepartmentFormSchema'
 import { useToastStore } from '../../store/ToastStore'
 import { NewDepartmentForm } from '../../types/forms/NewDepartmentForm.type'
+import { get422And400ResponseError } from '../../utils/ErrorHelpers'
 import { Button } from '../Button'
 import { PencilIcon } from '../icons/PencilIcon'
 import { Modal } from '../Modal'
@@ -35,7 +36,7 @@ export const NewDepartmentModal = ({
     } catch (e) {
       showToast({
         type: 'error',
-        message: 'Something went wrong! 😵',
+        message: get422And400ResponseError(e),
       })
     }
   }

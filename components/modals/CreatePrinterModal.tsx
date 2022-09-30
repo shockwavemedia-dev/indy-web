@@ -5,6 +5,7 @@ import { useQueryClient } from 'react-query'
 import { CreatePrinterSchema } from '../../schemas/CreatePrinterFormSchema'
 import { useToastStore } from '../../store/ToastStore'
 import { CreatePrinterForm } from '../../types/forms/CreatePrinterForm.type'
+import { get422And400ResponseError } from '../../utils/ErrorHelpers'
 import { objectWithFileToFormData } from '../../utils/FormHelpers'
 import { Button } from '../Button'
 import { FileDropZone } from '../FileDropZone'
@@ -46,7 +47,7 @@ export const CreatePrinterModal = ({
     } catch (e) {
       showToast({
         type: 'error',
-        message: 'Something went wrong! 😵',
+        message: get422And400ResponseError(e),
       })
     }
   }

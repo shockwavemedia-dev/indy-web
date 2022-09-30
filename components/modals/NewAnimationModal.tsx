@@ -6,6 +6,7 @@ import { useToastStore } from '../../store/ToastStore'
 import { AnimationCategory } from '../../types/AnimationCategory.type'
 import { NewAnimationForm } from '../../types/forms/NewAnimationForm.type'
 import { Page } from '../../types/Page.type'
+import { get422And400ResponseError } from '../../utils/ErrorHelpers'
 import { objectWithFileToFormData } from '../../utils/FormHelpers'
 import { Button } from '../Button'
 import { FileDropZone } from '../FileDropZone'
@@ -65,7 +66,7 @@ export const NewAnimationModal = ({
     } catch (e) {
       showToast({
         type: 'error',
-        message: 'Something went wrong! 😵',
+        message: get422And400ResponseError(e),
       })
     }
   }

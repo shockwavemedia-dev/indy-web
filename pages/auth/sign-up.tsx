@@ -21,7 +21,7 @@ import { SignUpFormSchema } from '../../schemas/SignUpFormSchema'
 import { useToastStore } from '../../store/ToastStore'
 import { SignUpForm } from '../../types/forms/SignUpForm.type'
 import { NextPageWithLayout } from '../../types/pages/NextPageWithLayout.type'
-import { get422ResponseError } from '../../utils/ErrorHelpers'
+import { get422And400ResponseError } from '../../utils/ErrorHelpers'
 
 const SignUpPage: NextPageWithLayout = () => {
   const { replace } = useRouter()
@@ -45,7 +45,7 @@ const SignUpPage: NextPageWithLayout = () => {
     } catch (e) {
       showToast({
         type: 'error',
-        message: get422ResponseError(e),
+        message: get422And400ResponseError(e),
       })
     }
   }

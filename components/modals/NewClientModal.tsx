@@ -6,6 +6,7 @@ import { NewClientFormSchema } from '../../schemas/NewClientFormSchema'
 import { useToastStore } from '../../store/ToastStore'
 import { NewClientForm } from '../../types/forms/NewClientForm.type'
 import { Staff } from '../../types/Staff.type'
+import { get422And400ResponseError } from '../../utils/ErrorHelpers'
 import { objectWithFileToFormData } from '../../utils/FormHelpers'
 import { Button } from '../Button'
 import { DateInput } from '../DateInput'
@@ -49,7 +50,7 @@ export const NewClientModal = ({
     } catch (e) {
       showToast({
         type: 'error',
-        message: 'Something went wrong! 😵',
+        message: get422And400ResponseError(e),
       })
     }
   }

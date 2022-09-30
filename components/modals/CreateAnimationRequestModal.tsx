@@ -7,6 +7,7 @@ import { NewAnimationRequestFormSchema } from '../../schemas/NewAnimationRequest
 import { useToastStore } from '../../store/ToastStore'
 import { Animation } from '../../types/Animation.type'
 import { NewAnimationRequestForm } from '../../types/forms/NewAnimationRequestForm.type'
+import { get422And400ResponseError } from '../../utils/ErrorHelpers'
 import { Button } from '../Button'
 import { EditIcon } from '../icons/EditIcon'
 import { Modal } from '../Modal'
@@ -68,7 +69,7 @@ export const CreateAnimationRequestModal = ({ onClose }: { onClose?: () => void 
     } catch (e) {
       showToast({
         type: 'error',
-        message: 'Something went wrong! 😵',
+        message: get422And400ResponseError(e),
       })
     }
   }

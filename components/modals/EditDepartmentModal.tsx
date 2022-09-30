@@ -7,6 +7,7 @@ import { EditDepartmentFormSchema } from '../../schemas/EditDepartmentFormSchema
 import { useToastStore } from '../../store/ToastStore'
 import { Department } from '../../types/Department.type'
 import { EditDepartmentForm } from '../../types/forms/EditDepartmentForm.type'
+import { get422And400ResponseError } from '../../utils/ErrorHelpers'
 import { Button } from '../Button'
 import { PencilIcon } from '../icons/PencilIcon'
 import { Modal } from '../Modal'
@@ -44,7 +45,7 @@ export const EditDepartmentModal = () => {
     } catch (e) {
       showToast({
         type: 'error',
-        message: 'Something went wrong! 😵',
+        message: get422And400ResponseError(e),
       })
     }
   }

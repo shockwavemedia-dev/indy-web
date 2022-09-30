@@ -5,6 +5,7 @@ import { TicketAssigneeStatusOptions } from '../../constants/options/TicketAssig
 import { useTicketAssigneeStore } from '../../store/TicketAssigneeStore'
 import { useToastStore } from '../../store/ToastStore'
 import { EditTicketAssigneeForm } from '../../types/forms/EditTicketAssigneeForm.type'
+import { get422And400ResponseError } from '../../utils/ErrorHelpers'
 import { Button } from '../Button'
 import { ClipboardIcon } from '../icons/ClipboardIcon'
 import { FloppyDiskIcon } from '../icons/FloppyDiskIcon'
@@ -43,7 +44,7 @@ export const EditTicketAssigneeModal = ({
     } catch (e) {
       showToast({
         type: 'error',
-        message: 'Something went wrong! 😵',
+        message: get422And400ResponseError(e),
       })
     }
   }

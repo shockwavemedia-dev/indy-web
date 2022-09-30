@@ -6,6 +6,7 @@ import { TrashIcon } from '../../components/icons/TrashIcon'
 import { Pill } from '../../components/Pill'
 import { useToastStore } from '../../store/ToastStore'
 import { DepartmentMember } from '../../types/pages/DepartmentMember.type'
+import { get422And400ResponseError } from '../../utils/ErrorHelpers'
 
 export const DepartmentMemberTableColumns: Array<Column<DepartmentMember>> = [
   {
@@ -94,7 +95,7 @@ export const DepartmentMemberTableColumns: Array<Column<DepartmentMember>> = [
         } catch (e) {
           showToast({
             type: 'error',
-            message: 'Something went wrong! 😵',
+            message: get422And400ResponseError(e),
           })
         }
       }

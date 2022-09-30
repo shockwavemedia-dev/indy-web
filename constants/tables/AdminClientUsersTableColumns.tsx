@@ -9,6 +9,7 @@ import { useDeleteClientUserModal } from '../../components/modals/DeleteClientUs
 import { useEditClientUserModal } from '../../components/modals/EditClientUserModal'
 import { useToastStore } from '../../store/ToastStore'
 import { ClientUser } from '../../types/ClientUser.type'
+import { get422And400ResponseError } from '../../utils/ErrorHelpers'
 
 export const AdminClientUsersTableColumns: Array<Column<ClientUser>> = [
   {
@@ -111,7 +112,7 @@ export const AdminClientUsersTableColumns: Array<Column<ClientUser>> = [
                   } catch (e) {
                     showToast({
                       type: 'error',
-                      message: 'Something went wrong! 😵',
+                      message: get422And400ResponseError(e),
                     })
                   }
                 }}
