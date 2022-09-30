@@ -8,6 +8,7 @@ import { useToastStore } from '../../store/ToastStore'
 import { Department } from '../../types/Department.type'
 import { CreateSupportRequestForm } from '../../types/forms/CreateSupportRequestForm.type'
 import { Page } from '../../types/Page.type'
+import { get422And400ResponseError } from '../../utils/ErrorHelpers'
 import { Button } from '../Button'
 import { ClipboardIcon } from '../icons/ClipboardIcon'
 import { EditIcon } from '../icons/EditIcon'
@@ -61,7 +62,7 @@ export const CreateSupportRequestModal = () => {
     } catch (e) {
       showToast({
         type: 'error',
-        message: 'Something went wrong! 😵',
+        message: get422And400ResponseError(e),
       })
     }
   }

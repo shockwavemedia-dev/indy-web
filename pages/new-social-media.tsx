@@ -26,6 +26,7 @@ import { useToastStore } from '../store/ToastStore'
 import { CreateSocialMediaForm } from '../types/forms/CreateSocialMediaForm.type'
 import { NextPageWithLayout } from '../types/pages/NextPageWithLayout.type'
 import { SelectOption } from '../types/SelectOption.type'
+import { get422And400ResponseError } from '../utils/ErrorHelpers'
 import { objectWithFileToFormData } from '../utils/FormHelpers'
 
 const NewSocialMediaPage: NextPageWithLayout = () => {
@@ -67,7 +68,7 @@ const NewSocialMediaPage: NextPageWithLayout = () => {
     } catch (e) {
       showToast({
         type: 'error',
-        message: 'Something went wrong! 😵',
+        message: get422And400ResponseError(e),
       })
     }
   }

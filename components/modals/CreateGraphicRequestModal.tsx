@@ -8,6 +8,7 @@ import { CreateGraphicRequestFormSchema } from '../../schemas/CreateGraphicReque
 import { useToastStore } from '../../store/ToastStore'
 import { CreateGraphicRequestForm } from '../../types/forms/CreateGraphicRequestForm.type'
 import { Ticket } from '../../types/Ticket.type'
+import { get422And400ResponseError } from '../../utils/ErrorHelpers'
 import { objectWithFileToFormData } from '../../utils/FormHelpers'
 import { Button } from '../Button'
 import { DateInput } from '../DateInput'
@@ -50,7 +51,7 @@ export const CreateGraphicRequestModal = ({
     } catch (e) {
       showToast({
         type: 'error',
-        message: 'Something went wrong! 😵',
+        message: get422And400ResponseError(e),
       })
     }
   }

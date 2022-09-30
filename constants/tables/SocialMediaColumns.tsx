@@ -51,8 +51,8 @@ export const SocialMediaColumns: Array<Column<SocialMedia>> = [
       }
 
       return (
-        <div className="text-sm font-medium text-onyx">
-          <Tooltip title="Edit Social Media" placement="top-end">
+        <div className="text-sm font-medium text-bright-navy-blue">
+          <Tooltip title="Edit Social Media" placement="right-start">
             <button onClick={editSocialMedia}>{value}</button>
           </Tooltip>
         </div>

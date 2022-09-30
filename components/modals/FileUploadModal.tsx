@@ -7,6 +7,7 @@ import create from 'zustand'
 import { combine } from 'zustand/middleware'
 import { useToastStore } from '../../store/ToastStore'
 import { SocialMedia } from '../../types/SocialMedia.type'
+import { get422And400ResponseError } from '../../utils/ErrorHelpers'
 import { objectWithFileToFormData } from '../../utils/FormHelpers'
 import { Button } from '../Button'
 import { FileBrowserSelect } from '../FileBrowserSelect'
@@ -109,7 +110,7 @@ export const FileUploadModal = () => {
     } catch (e) {
       showToast({
         type: 'error',
-        message: 'Something went wrong! :dizzy_face:',
+        message: get422And400ResponseError(e),
       })
     }
   }

@@ -7,6 +7,7 @@ import { Animation } from '../../types/Animation.type'
 import { AnimationCategory } from '../../types/AnimationCategory.type'
 import { EditAnimationForm } from '../../types/forms/EditAnimationForm.type'
 import { Page } from '../../types/Page.type'
+import { get422And400ResponseError } from '../../utils/ErrorHelpers'
 import { objectWithFileToFormData } from '../../utils/FormHelpers'
 import { Button } from '../Button'
 import { FileDropZone } from '../FileDropZone'
@@ -69,7 +70,7 @@ export const EditAnimationModal = ({
     } catch (e) {
       showToast({
         type: 'error',
-        message: 'Something went wrong! 😵',
+        message: get422And400ResponseError(e),
       })
     }
   }

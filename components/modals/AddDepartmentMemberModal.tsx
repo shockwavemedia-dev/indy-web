@@ -9,6 +9,7 @@ import { useToastStore } from '../../store/ToastStore'
 import { AddDepartmentMembersForm } from '../../types/forms/AddDepartmentMembersForm.type'
 import { Page } from '../../types/Page.type'
 import { User } from '../../types/User.type'
+import { get422And400ResponseError } from '../../utils/ErrorHelpers'
 import { Button } from '../Button'
 import { UserIcon } from '../icons/UserIcon'
 import { Modal } from '../Modal'
@@ -67,7 +68,7 @@ export const AddDepartmentMemberModal = () => {
     } catch (e) {
       showToast({
         type: 'error',
-        message: 'Something went wrong! 😵',
+        message: get422And400ResponseError(e),
       })
     }
   }

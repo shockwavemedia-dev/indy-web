@@ -9,7 +9,7 @@ import { NewClientUserFormSchema } from '../../schemas/NewClientUserFormSchema'
 import { useToastStore } from '../../store/ToastStore'
 import { Client } from '../../types/Client.type'
 import { NewClientUserForm } from '../../types/forms/NewClientUserForm.type'
-import { get422ResponseError } from '../../utils/ErrorHelpers'
+import { get422And400ResponseError } from '../../utils/ErrorHelpers'
 import { Button } from '../Button'
 import { Checkbox } from '../Checkbox'
 import { ClipboardIcon } from '../icons/ClipboardIcon'
@@ -63,7 +63,7 @@ export const NewClientUserModal = () => {
     } catch (e) {
       showToast({
         type: 'error',
-        message: get422ResponseError(e),
+        message: get422And400ResponseError(e),
       })
     }
   }

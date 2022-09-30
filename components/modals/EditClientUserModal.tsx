@@ -7,7 +7,7 @@ import { EditClientUserFormSchema } from '../../schemas/EditClientUserFormSchema
 import { useToastStore } from '../../store/ToastStore'
 import { ClientUser } from '../../types/ClientUser.type'
 import { EditClientUserForm } from '../../types/forms/EditClientUserForm.type'
-import { get422ResponseError } from '../../utils/ErrorHelpers'
+import { get422And400ResponseError } from '../../utils/ErrorHelpers'
 import { Button } from '../Button'
 import { EmailIcon } from '../icons/EmailIcon'
 import { LockIcon } from '../icons/LockIcon'
@@ -50,7 +50,7 @@ export const EditClientUserModal = () => {
     } catch (e) {
       showToast({
         type: 'error',
-        message: get422ResponseError(e),
+        message: get422And400ResponseError(e),
       })
     }
   }

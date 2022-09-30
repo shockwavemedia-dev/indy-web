@@ -3,6 +3,7 @@ import { Form, Formik } from 'formik'
 import { NewAnimationCategoryFormSchema } from '../../schemas/NewAnimationCategoryFormSchema'
 import { useToastStore } from '../../store/ToastStore'
 import { NewAnimationCategoryForm } from '../../types/forms/NewAnimationCategoryForm.type'
+import { get422And400ResponseError } from '../../utils/ErrorHelpers'
 import { Button } from '../Button'
 import { PencilIcon } from '../icons/PencilIcon'
 import { Modal } from '../Modal'
@@ -31,7 +32,7 @@ export const NewAnimationCategoryModal = ({
     } catch (e) {
       showToast({
         type: 'error',
-        message: 'Something went wrong! 😵',
+        message: get422And400ResponseError(e),
       })
     }
   }

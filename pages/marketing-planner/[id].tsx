@@ -37,6 +37,7 @@ import { useToastStore } from '../../store/ToastStore'
 import { UpdateMarketingPlannerForm } from '../../types/forms/UpdateMarketingPlannerForm.type'
 import { MarketingPlanner } from '../../types/MarketingPlanner.type'
 import { NextPageWithLayout } from '../../types/pages/NextPageWithLayout.type'
+import { get422And400ResponseError } from '../../utils/ErrorHelpers'
 
 const MarketingPlannerPage: NextPageWithLayout = () => {
   const { setHeader } = usePanelLayoutStore()
@@ -102,7 +103,7 @@ const MarketingPlannerPage: NextPageWithLayout = () => {
     } catch (e) {
       showToast({
         type: 'error',
-        message: 'Something went wrong! 😵',
+        message: get422And400ResponseError(e),
       })
     }
   }

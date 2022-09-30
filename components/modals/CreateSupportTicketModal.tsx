@@ -12,6 +12,7 @@ import { Department } from '../../types/Department.type'
 import { CreateSupportTicketForm } from '../../types/forms/CreateSupportTicketForm.type'
 import { Page } from '../../types/Page.type'
 import { Ticket } from '../../types/Ticket.type'
+import { get422And400ResponseError } from '../../utils/ErrorHelpers'
 import { Button } from '../Button'
 import { DateInput } from '../DateInput'
 import { ClipboardIcon } from '../icons/ClipboardIcon'
@@ -99,7 +100,7 @@ export const CreateSupportTicketModal = () => {
     } catch (e) {
       showToast({
         type: 'error',
-        message: 'Something went wrong! 😵',
+        message: get422And400ResponseError(e),
       })
     }
   }
