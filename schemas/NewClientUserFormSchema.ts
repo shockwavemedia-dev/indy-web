@@ -5,16 +5,20 @@ export const NewClientUserFormSchema: SchemaOf<NewClientUserForm> = object().sha
   clientId: number().required(),
   email: string().email().required(),
   sendInvite: boolean().required(),
-  password: string().when('sendInvite', {
-    is: true,
-    then: string().optional(),
-    otherwise: string().required(),
-  }),
-  passwordConfirmation: string().when('sendInvite', {
-    is: true,
-    then: string().optional(),
-    otherwise: string().required(),
-  }),
+  password: string()
+    .when('sendInvite', {
+      is: true,
+      then: string().optional(),
+      otherwise: string().required(),
+    })
+    .min(6),
+  passwordConfirmation: string()
+    .when('sendInvite', {
+      is: true,
+      then: string().optional(),
+      otherwise: string().required(),
+    })
+    .min(6),
   contactNumber: string().optional(),
   firstName: string().required(),
   lastName: string().optional(),

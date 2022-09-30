@@ -34,8 +34,8 @@ import { AdminRoutes } from '../constants/routes/AdminRoutes'
 import { ClientRoutes } from '../constants/routes/ClientRoutes'
 import { ManagerRoutes } from '../constants/routes/ManagerRoutes'
 import { StaffRoutes } from '../constants/routes/StaffRoutes'
-import DailyPressLogoWhite from '../public/images/daily-press-logo-white.png'
 import DummyAvatar from '../public/images/dummy-avatar.png'
+import IndyLogoWhite from '../public/images/indy-logo-white.png'
 import { Page } from '../types/Page.type'
 import { Service } from '../types/Service.type'
 import { TicketsAndNotifacationsCount } from '../types/TicketsAndNotifacationsCount.type'
@@ -210,7 +210,7 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
   return (
     <>
       <div className="fixed z-30 flex w-full items-center bg-white py-1 px-6 shadow-md">
-        <div className="mr-102 whitespace-nowrap font-semibold text-onyx lg:mr-32">Daily Press</div>
+        <div className="mr-102 whitespace-nowrap font-semibold text-onyx lg:mr-32">Indy</div>
         <MagnifyingGlassIcon className="mr-6 stroke-waterloo" />
         <Link href="#">
           <a className="mr-6 whitespace-nowrap font-semibold text-onyx underline-offset-1 hover:underline">
@@ -290,9 +290,9 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
           ))}
         </div>
         <div className="flex w-full items-center justify-center border-t border-t-white border-opacity-20 py-5 2xl:flex-col 2xl:space-y-2">
-          <Image src={DailyPressLogoWhite} alt="DailyPress" height={25} width={25} />
+          <Image src={IndyLogoWhite} alt="DailyPress" height={25} width={35} />
           <div className="ml-3 text-xs text-metallic-silver 2xl:ml-0 2xl:text-center">
-            Copyright Daily Press {new Date().getFullYear()}
+            Copyright Indy {new Date().getFullYear()}
           </div>
         </div>
       </div>

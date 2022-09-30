@@ -16,7 +16,7 @@ export const get422ResponseError = (error: unknown) => {
     if (errors) return errors
   }
 
-  return 'Something went wrong!'
+  return 'Something went wrong! 😵'
 }
 
 export const get400ResponseError = (error: unknown) => {
