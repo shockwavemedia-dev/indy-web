@@ -178,7 +178,13 @@ export const SocialMediaColumns: Array<Column<SocialMedia>> = [
               {value &&
                 value.map(({ url, fileType, thumbnailUrl, name, socialMediaAttachmentId }) => {
                   const toggleFile = () =>
-                    toggleShowSocialMediaFileModal(url, fileType, name, socialMediaAttachmentId)
+                    toggleShowSocialMediaFileModal(
+                      url,
+                      fileType,
+                      name,
+                      socialMediaAttachmentId,
+                      socialMedia.id
+                    )
 
                   return (
                     <Tooltip key={`${attachmentId}-${socialMediaAttachmentId}`} title={name}>
