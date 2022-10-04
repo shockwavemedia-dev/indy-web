@@ -18,7 +18,6 @@ import { FileDropZone } from '../FileDropZone'
 import { ClipboardIcon } from '../icons/ClipboardIcon'
 import { EditIcon } from '../icons/EditIcon'
 import { FloppyDiskIcon } from '../icons/FloppyDiskIcon'
-import { LinkButton } from '../LinkButton'
 import { Modal } from '../Modal'
 import { Select } from '../Select'
 import { TextInput } from '../TextInput'
@@ -150,7 +149,9 @@ export const CreateSocialMediaModal = ({
                     className="mb-8"
                   />
                   <div className="flex space-x-5">
-                    <LinkButton title="Cancel" href="/social-media" light />
+                    <Button ariaLabel="Cancel" onClick={onClose} type="button" light>
+                      Cancel
+                    </Button>
                     <Button ariaLabel="Submit" disabled={isSubmitting} type="submit">
                       <FloppyDiskIcon className="stroke-white" />
                       <div>Save</div>

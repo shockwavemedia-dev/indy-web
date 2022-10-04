@@ -129,24 +129,25 @@ export const EditSocialMediaModal = ({
     }
   }
 
-  const submitCommentForm = async () => {
-    if (comment !== '') {
-      const regex = /@\[.+?\]\(.+?\)/gm
-      const idRegex = /\(.+?\)/g
-      const matches = comment.match(regex)
-      const mentionUsers: {}[] = []
-      matches &&
-        matches.forEach((m) => {
-          // @ts-ignore: Object is possibly 'null'.
-          const id = m.match(idRegex)[0].replace('(', '').replace(')', '')
-          mentionUsers.push(Number(id))
-        })
-      const mentionUsersInt = mentionUsers.map((id) => {
-        return Number(id)
+  const commentTagedUsers = (event: { target: { value: SetStateAction<string> } }) => {
+    const comment = event.target.value
+    const regex = /@\[.+?\]\(.+?\)/gm
+    const idRegex = /\(.+?\)/g
+    const matches = comment.toString().match(regex)
+    const mentionUsers: {}[] = []
+    matches &&
+      matches.forEach((m) => {
+        // @ts-ignore: Object is possibly 'null'.
+        const id = m.match(idRegex)[0].replace('(', '').replace(')', '')
+        mentionUsers.push(id)
       })
-      setTaggedUsers(mentionUsersInt)
-    }
+    const mentionUsersInt = mentionUsers.map((id) => {
+      return Number(id)
+    })
+    setTaggedUsers(mentionUsersInt)
+  }
 
+  const submitCommentForm = async () => {
     const { status } = await axios.post(`/v1/social-media/${socialMedia.id}/comments`, {
       comment: comment,
       usersTagged: taggedUsers,
@@ -395,9 +396,10 @@ export const EditSocialMediaModal = ({
                       className="mt-5"
                       value={comment}
                       data={userOptions}
-                      onChange={(event: { target: { value: SetStateAction<string> } }) =>
+                      onChange={(event: { target: { value: SetStateAction<string> } }) => {
                         setComment(event.target.value)
-                      }
+                        commentTagedUsers(event)
+                      }}
                       placeholder="Enter Comment, use the @ symbol to tag other users."
                     />
                     <Button
