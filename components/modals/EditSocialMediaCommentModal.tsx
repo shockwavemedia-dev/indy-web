@@ -70,24 +70,25 @@ export const EditSocialMediaCommentModal = () => {
       }))) ??
     []
 
-  const submitCommentForm = async () => {
-    if (newComment !== '') {
-      const regex = /@\[.+?\]\(.+?\)/gm
-      const idRegex = /\(.+?\)/g
-      const matches = newComment.match(regex)
-      const mentionUsers: {}[] = []
-      matches &&
-        matches.forEach((m) => {
-          // @ts-ignore: Object is possibly 'null'.
-          const id = m.match(idRegex)[0].replace('(', '').replace(')', '')
-          mentionUsers.push(id)
-        })
-      const mentionUsersInt = mentionUsers.map((id) => {
-        return Number(id)
+  const commentTagedUsers = (event: { target: { value: SetStateAction<string> } }) => {
+    const comment = event.target.value
+    const regex = /@\[.+?\]\(.+?\)/gm
+    const idRegex = /\(.+?\)/g
+    const matches = comment.toString().match(regex)
+    const mentionUsers: {}[] = []
+    matches &&
+      matches.forEach((m) => {
+        // @ts-ignore: Object is possibly 'null'.
+        const id = m.match(idRegex)[0].replace('(', '').replace(')', '')
+        mentionUsers.push(id)
       })
-      setTaggedUsers(mentionUsersInt)
-    }
+    const mentionUsersInt = mentionUsers.map((id) => {
+      return Number(id)
+    })
+    setTaggedUsers(mentionUsersInt)
+  }
 
+  const submitCommentForm = async () => {
     const { status } = await axios.put(`/v1/social-media-comments/${commentId}`, {
       comment: newComment,
       usersTagged: taggedUsers,
@@ -121,9 +122,10 @@ export const EditSocialMediaCommentModal = () => {
               value={newComment}
               defaultValue={comment}
               data={userOptions}
-              onChange={(event: { target: { value: SetStateAction<string> } }) =>
+              onChange={(event: { target: { value: SetStateAction<string> } }) => {
                 setComment(event.target.value)
-              }
+                commentTagedUsers(event)
+              }}
               placeholder="Enter Comment, use the @ symbol to tag other users."
             />
             <div className="mt-5 flex space-x-5">

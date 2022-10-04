@@ -30,7 +30,7 @@ export const SocialMediaCommentCard = ({
 
   return (
     <>
-      <div className="relative mb-2 space-y-3 rounded-xl bg-white px-6 py-5 shadow">
+      <div className="relative mb-3 space-y-3 rounded-xl bg-white px-6 py-5 shadow">
         {isEditDelete && (
           <div className="absolute top-5 right-5 flex space-x-2">
             <Tooltip title="Edit" placement="top">

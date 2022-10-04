@@ -129,7 +129,7 @@ export const SocialMediaActivityCard = ({
 
   return (
     <>
-      <div className="mb-2 space-y-3 rounded-xl bg-white px-6 py-5 shadow">
+      <div className="mb-3 space-y-3 rounded-xl bg-white px-6 py-5 shadow">
         <div>
           <div className="flex items-center">
             <Image src={DummyAvatar} alt="Dummy" height={32} width={32} className="rounded-full" />
