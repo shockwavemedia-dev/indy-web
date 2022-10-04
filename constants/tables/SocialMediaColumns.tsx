@@ -8,6 +8,8 @@ import { MultiValue, SingleValue } from 'react-select'
 import { Column } from 'react-table'
 import { FileIcon } from '../../components/icons/FileIcon'
 import { PlusIcon } from '../../components/icons/PlusIcon'
+import { TrashIcon } from '../../components/icons/TrashIcon'
+import { useDeleteSocialMediaModalStore } from '../../components/modals/DeleteSocialMediaModal'
 import { FileUploadModal, useFileUploadModal } from '../../components/modals/FileUploadModal'
 import {
   SocialMediaFileModal,
@@ -417,34 +419,24 @@ export const SocialMediaColumns: Array<Column<SocialMedia>> = [
       )
     },
   },
-  // {
-  //   Header: 'Actions',
-  //   accessor: 'id',
-  //   disableSortBy: true,
-  //   Cell: ({ row: { original: socialMedia } }) => {
-  //     const { setActiveSocialMedia, toggleEditSocialMediaModal, toggleDeleteSocialMediaModal } =
-  //       useSocialMediaStore()
+  {
+    Header: 'Delete',
+    accessor: 'id',
+    id: 'action',
+    disableSortBy: true,
+    Cell: ({ row: { original: socialMedia } }) => {
+      const { toggleModal: toggleDeleteModal } = useDeleteSocialMediaModalStore()
 
-  //     const editSocialMedia = () => {
-  //       setActiveSocialMedia(socialMedia)
-  //       toggleEditSocialMediaModal()
-  //     }
-
-  //     const deleteSocialMedia = () => {
-  //       setActiveSocialMedia(socialMedia)
-  //       toggleDeleteSocialMediaModal()
-  //     }
-
-  //     return (
-  //       <div className="invisible flex space-x-2 group-hover:visible">
-  //         <button onClick={editSocialMedia}>
-  //           <EditIcon className="stroke-waterloo hover:stroke-halloween-orange" />
-  //         </button>
-  //         <button onClick={deleteSocialMedia}>
-  //           <TrashIcon className="stroke-waterloo hover:stroke-halloween-orange" />
-  //         </button>
-  //       </div>
-  //     )
-  //   },
-  // },
+      return (
+        <button
+          onClick={(e) => {
+            e.stopPropagation()
+            toggleDeleteModal(socialMedia.id)
+          }}
+        >
+          <TrashIcon className="stroke-waterloo hover:stroke-halloween-orange" />
+        </button>
+      )
+    },
+  },
 ]
