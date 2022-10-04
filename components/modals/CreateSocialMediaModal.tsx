@@ -1,6 +1,5 @@
 import axios from 'axios'
 import { Form, Formik } from 'formik'
-import { useRouter } from 'next/router'
 import { useQueryClient } from 'react-query'
 import { MultiValue } from 'react-select'
 import { SocialMediaChannelOptions } from '../../constants/options/SocialMediaChannelOptions'
@@ -35,7 +34,6 @@ export const CreateSocialMediaModal = ({
 }) => {
   const queryClient = useQueryClient()
   const { showToast } = useToastStore()
-  const { replace } = useRouter()
 
   const submitForm = async (values: CreateSocialMediaForm) => {
     if (values.postDate && values.postTime) {
@@ -60,7 +58,6 @@ export const CreateSocialMediaModal = ({
       )
       if (status === 200) {
         queryClient.invalidateQueries(['socialMedias'])
-        replace('/social-media')
         onClose()
         showToast({
           type: 'success',
