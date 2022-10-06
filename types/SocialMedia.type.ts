@@ -1,4 +1,5 @@
 import { SocialMediaActivity } from './SocialMediaActivity.type'
+import { SocialMediaCampaignType } from './SocialMediaCampaignType'
 import { SocialMediaChannel } from './SocialMediaChannel.type'
 import { SocialMediaComment } from './SocialMediaComment.type'
 import { SocialMediaFile } from './SocialMediaFile.type'
@@ -13,6 +14,7 @@ export type SocialMedia = {
   updatedBy: Date
   attachments: Array<SocialMediaFile>
   copy?: string | null
+  campaignType: SocialMediaCampaignType
   status: SocialMediaStatus
   clientId: number
   channels: Array<SocialMediaChannel>

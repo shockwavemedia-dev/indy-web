@@ -7,6 +7,7 @@ export type CreateSocialMediaForm = {
   attachments?: Array<SocialMediaFile> | null
   copy?: string | null
   status?: string | null
+  campaignType?: string | null
   channels?: Array<string> | null
   notes?: string | null
 }

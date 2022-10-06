@@ -5,6 +5,7 @@ export const CreateSocialMediaFormSchema: SchemaOf<CreateSocialMediaForm> = obje
   post: string().required(),
   postDate: date().nullable(),
   postTime: date().nullable(),
+  campaignType: string().nullable(),
   attachments: array().of(mixed().optional()),
   copy: string().optional(),
   status: mixed()

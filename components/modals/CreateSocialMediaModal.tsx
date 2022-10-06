@@ -2,6 +2,7 @@ import axios from 'axios'
 import { Form, Formik } from 'formik'
 import { useQueryClient } from 'react-query'
 import { MultiValue } from 'react-select'
+import { SocialMediaCampaignTypeOptions } from '../../constants/options/SocialMediaCampaignTypeOptions'
 import { SocialMediaChannelOptions } from '../../constants/options/SocialMediaChannelOptions'
 import { SocialMediaStatusOptions } from '../../constants/options/SocialMediaStatusOptions'
 import { CreateSocialMediaFormSchema } from '../../schemas/CreateSocialMediaFormSchema'
@@ -86,6 +87,7 @@ export const CreateSocialMediaModal = ({
                 status: '',
                 channels: [],
                 notes: '',
+                campaignType: '',
               }}
               onSubmit={submitForm}
             >
@@ -114,6 +116,13 @@ export const CreateSocialMediaModal = ({
                     name="status"
                     Icon={ClipboardIcon}
                     options={SocialMediaStatusOptions}
+                    className="mb-5"
+                  />
+                  <Select
+                    label="Campaign Type"
+                    name="campaignType"
+                    Icon={ClipboardIcon}
+                    options={SocialMediaCampaignTypeOptions}
                     className="mb-5"
                   />
                   <CreateSelectNoFormik

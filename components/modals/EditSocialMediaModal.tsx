@@ -4,7 +4,8 @@ import { Form, Formik } from 'formik'
 import { useSession } from 'next-auth/react'
 import { SetStateAction, useState } from 'react'
 import { useQuery, useQueryClient } from 'react-query'
-import { MultiValue } from 'react-select'
+import { MultiValue, SingleValue } from 'react-select'
+import { SocialMediaCampaignTypeOptions } from '../../constants/options/SocialMediaCampaignTypeOptions'
 import { SocialMediaChannelOptions } from '../../constants/options/SocialMediaChannelOptions'
 import { SocialMediaStatusOptions } from '../../constants/options/SocialMediaStatusOptions'
 import { CreateSocialMediaFormSchema } from '../../schemas/CreateSocialMediaFormSchema'
@@ -13,6 +14,7 @@ import { EditSocialMediaForm } from '../../types/forms/EditSocialMediaForm.type'
 import { Page } from '../../types/Page.type'
 import { SelectOption } from '../../types/SelectOption.type'
 import { SocialMedia } from '../../types/SocialMedia.type'
+import { SocialMediaCampaignType } from '../../types/SocialMediaCampaignType'
 import { User } from '../../types/User.type'
 import { get422And400ResponseError } from '../../utils/ErrorHelpers'
 import { objectWithFileToFormData } from '../../utils/FormHelpers'
@@ -245,6 +247,23 @@ export const EditSocialMediaModal = ({
                           ({ value }) => value === socialMediaDetails.status
                         )}
                         className="mb-5"
+                      />
+                      <label className="mb-2 inline-block text-xs font-medium text-metallic-silver">
+                        Campaign Type
+                      </label>
+                      <CreateSelectNoFormik
+                        options={SocialMediaCampaignTypeOptions}
+                        className="mb-5"
+                        placeholder="Select Campaign Type"
+                        name="campaignType"
+                        defaultValue={SocialMediaCampaignTypeOptions.find(
+                          ({ value }) => value === socialMediaDetails.campaignType
+                        )}
+                        onChange={(
+                          campaignType: SingleValue<SelectOption<SocialMediaCampaignType>>
+                        ) => {
+                          setFieldValue('campaignType', campaignType?.value)
+                        }}
                       />
                       <label className="mb-2 inline-block text-xs font-medium text-metallic-silver">
                         Channels
