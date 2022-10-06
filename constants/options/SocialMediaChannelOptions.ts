@@ -5,7 +5,9 @@ import { SocialMediaChannel } from '../../types/SocialMediaChannel.type'
 export const SocialMediaChannelOptions: Options<SelectOption<SocialMediaChannel>> = [
   { label: 'Story', value: 'Story' },
   { label: 'Facebook', value: 'Facebook' },
+  { label: 'Facebook Event', value: 'Facebook Event' },
   { label: 'Instagram', value: 'Instagram' },
-  { label: 'Twitter', value: 'Twitter' },
   { label: 'Linkedin', value: 'Linkedin' },
+  { label: 'Tik Tok', value: 'Tik Tok' },
+  { label: 'Video Reels', value: 'Video Reels' },
 ]
