@@ -17,6 +17,7 @@ import { IndyIcon } from '../components/icons/IndyIcon'
 import { LifeBuoyIcon } from '../components/icons/LifeBuoyIcon'
 import { LogoutIcon } from '../components/icons/LogoutIcon'
 import { MagnifyingGlassIcon } from '../components/icons/MagnifyingGlassIcon'
+import { ShareIcon } from '../components/icons/ShareIcon'
 import {
   CreateSupportRequestModal,
   useCreateSupportRequestModalStore,
@@ -174,6 +175,12 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
               href="/marketing-planner"
               Icon={<BriefcaseIcon className="stroke-halloween-orange" />}
               title="Marketing Planner"
+              className="w-fit"
+            />
+            <FancyLink
+              href="/social-media"
+              Icon={<ShareIcon className="stroke-halloween-orange" />}
+              title="Social Media"
               className="w-fit"
             />
             <FancyButton
