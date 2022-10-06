@@ -2,6 +2,7 @@ import { Tooltip } from '@mui/material'
 import axios from 'axios'
 import { Form, Formik } from 'formik'
 import { useSession } from 'next-auth/react'
+import { useRouter } from 'next/router'
 import { SetStateAction, useState } from 'react'
 import { useQuery, useQueryClient } from 'react-query'
 import { MultiValue } from 'react-select'
@@ -54,6 +55,7 @@ export const EditSocialMediaModal = ({
   const { data: session } = useSession()
   const [comment, setComment] = useState('')
   const [taggedUsers, setTaggedUsers] = useState({})
+  const { replace } = useRouter()
 
   const { data: socialMediaDetails } = useQuery(
     ['socialMedia', socialMedia.id],
@@ -172,12 +174,26 @@ export const EditSocialMediaModal = ({
 
   const { toggleModal: toggleDeleteModal } = useDeleteSocialMediaModalStore()
 
+  const closeModal = () => {
+    onClose()
+    if (!!session && session.isClient) {
+      replace('/social-media')
+    } else {
+      replace('/dashboard')
+    }
+  }
+
   if (!socialMediaDetails) return null
 
   return (
     <>
       {isVisible && (
-        <Modal title="Edit Social Media" bgColor="bg-cultured" className="w-320" onClose={onClose}>
+        <Modal
+          title="Edit Social Media"
+          bgColor="bg-cultured"
+          className="w-320"
+          onClose={closeModal}
+        >
           <div className="flex w-full">
             <Formik
               initialValues={{
@@ -328,7 +344,7 @@ export const EditSocialMediaModal = ({
                     </Card>
                     <Card className="h-fit w-full">
                       <div className="flex space-x-5">
-                        <Button ariaLabel="Cancel" onClick={onClose} type="button" light>
+                        <Button ariaLabel="Cancel" onClick={closeModal} type="button" light>
                           Cancel
                         </Button>
                         <Button ariaLabel="Submit" disabled={isSubmitting} type="submit">
