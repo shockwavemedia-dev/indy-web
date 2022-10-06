@@ -1,13 +1,22 @@
+import axios from 'axios'
 import { useSession } from 'next-auth/react'
 import Head from 'next/head'
+import { useQuery } from 'react-query'
 import { useSocialMediaStore } from '../../../store/SocialMediaStore'
+import { SocialMedia } from '../../../types/SocialMedia.type'
 import { Button } from '../../Button'
 import { Card } from '../../Card'
 import { CreateSocialMediaModal } from '../../modals/CreateSocialMediaModal'
 import { EditSocialMediaModal } from '../../modals/EditSocialMediaModal'
 import { SocialMediaTable } from '../../SocialMediaTable'
 
-export const ClientSocialMediaList = ({ clientId }: { clientId: number }) => {
+export const ClientSocialMediaList = ({
+  clientId,
+  socialMediaId = -1,
+}: {
+  clientId: number
+  socialMediaId?: number
+}) => {
   const { data: session } = useSession()
   const {
     activeSocialMedia,
@@ -16,6 +25,20 @@ export const ClientSocialMediaList = ({ clientId }: { clientId: number }) => {
     toggleCreateSocialMediaModal,
     toggleEditSocialMediaModal,
   } = useSocialMediaStore()
+
+  const { data: socialMediaDetails } = useQuery(
+    ['socialMedia', socialMediaId],
+    async () => {
+      const { data } = await axios.get<SocialMedia>(`/v1/social-media/${socialMediaId}`)
+
+      return data
+    },
+    {
+      enabled: !!socialMediaId && socialMediaId !== -1,
+    }
+  )
+
+  console.log(socialMediaDetails)
 
   return (
     <>
@@ -49,6 +72,13 @@ export const ClientSocialMediaList = ({ clientId }: { clientId: number }) => {
         onClose={toggleEditSocialMediaModal}
         socialMedia={activeSocialMedia}
       />
+      {socialMediaDetails && (
+        <EditSocialMediaModal
+          isVisible={isEditSocialMediaModalVisible}
+          onClose={toggleEditSocialMediaModal}
+          socialMedia={socialMediaDetails}
+        />
+      )}
     </>
   )
 }
