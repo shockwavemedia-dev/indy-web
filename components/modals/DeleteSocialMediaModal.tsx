@@ -120,20 +120,22 @@ export const DeleteSocialMediaModal = () => {
             <Card title="Attachment">
               <div className="flex flex-wrap gap-4">
                 {!!socialMedia?.attachments && socialMedia.attachments.length > 0 ? (
-                  socialMedia.attachments.map(({ socialMediaAttachmentId, url, thumbnailUrl }) => {
-                    return (
-                      <>
-                        <PhotographyVideographyFileButton
-                          key={`socialMediaFile-${socialMediaAttachmentId}`}
-                          className="h-35 w-35"
-                          url={url}
-                          fileType="image/jpeg"
-                          name={`socialMediaFile-${socialMediaAttachmentId}`}
-                          thumbnailUrl={thumbnailUrl}
-                        />
-                      </>
-                    )
-                  })
+                  socialMedia.attachments.map(
+                    ({ socialMediaAttachmentId, url, thumbnailUrl, name }) => {
+                      return (
+                        <>
+                          <PhotographyVideographyFileButton
+                            key={`socialMediaFile-${socialMediaAttachmentId}`}
+                            className="h-35 w-35"
+                            url={url}
+                            fileType="image/jpeg"
+                            name={name}
+                            thumbnailUrl={thumbnailUrl}
+                          />
+                        </>
+                      )
+                    }
+                  )
                 ) : (
                   <div className="text-base text-metallic-silver">No files found.</div>
                 )}
