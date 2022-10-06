@@ -9,7 +9,10 @@ import { Column } from 'react-table'
 import { FileIcon } from '../../components/icons/FileIcon'
 import { PlusIcon } from '../../components/icons/PlusIcon'
 import { TrashIcon } from '../../components/icons/TrashIcon'
-import { useDeleteSocialMediaModalStore } from '../../components/modals/DeleteSocialMediaModal'
+import {
+  DeleteSocialMediaModal,
+  useDeleteSocialMediaModalStore,
+} from '../../components/modals/DeleteSocialMediaModal'
 import { FileUploadModal, useFileUploadModal } from '../../components/modals/FileUploadModal'
 import {
   SocialMediaFileModal,
@@ -424,18 +427,21 @@ export const SocialMediaColumns: Array<Column<SocialMedia>> = [
     accessor: 'id',
     id: 'action',
     disableSortBy: true,
-    Cell: ({ row: { original: socialMedia } }) => {
+    Cell: ({ value }) => {
       const { toggleModal: toggleDeleteModal } = useDeleteSocialMediaModalStore()
 
       return (
-        <button
-          onClick={(e) => {
-            e.stopPropagation()
-            toggleDeleteModal(socialMedia.id)
-          }}
-        >
-          <TrashIcon className="stroke-waterloo hover:stroke-halloween-orange" />
-        </button>
+        <>
+          <button
+            onClick={(e) => {
+              e.stopPropagation()
+              toggleDeleteModal(value)
+            }}
+          >
+            <TrashIcon className="stroke-waterloo hover:stroke-halloween-orange" />
+          </button>
+          <DeleteSocialMediaModal />
+        </>
       )
     },
   },
