@@ -7,7 +7,7 @@ export const useSocialMediaStore = createStore(
     {
       activeSocialMedia: <SocialMedia>{},
       isCreateSocialMediaModalVisible: false,
-      isEditSocialMediaModalVisible: false,
+      isEditSocialMediaModalVisible: true,
       isDeleteSocialMediaModalVisible: false,
     },
     (set, get) => ({
