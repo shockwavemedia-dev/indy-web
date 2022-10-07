@@ -9,6 +9,7 @@ import { useSocialMediaStore } from '../../../store/SocialMediaStore'
 import { Client } from '../../../types/Client.type'
 import { Page } from '../../../types/Page.type'
 import { SelectOption } from '../../../types/SelectOption.type'
+import { SocialMedia } from '../../../types/SocialMedia.type'
 import { Button } from '../../Button'
 import { Card } from '../../Card'
 import { UserIcon } from '../../icons/UserIcon'
@@ -17,7 +18,7 @@ import { EditSocialMediaModal } from '../../modals/EditSocialMediaModal'
 import { SelectNoFormik } from '../../SelectNoFormik'
 import { SocialMediaTable } from '../../SocialMediaTable'
 
-export const ManagerSocialMediaList = () => {
+export const ManagerSocialMediaList = ({ socialMediaId = -1 }: { socialMediaId?: number }) => {
   const { data: session } = useSession()
   const { setHeader, setSubHeader } = usePanelLayoutStore()
 
@@ -30,6 +31,18 @@ export const ManagerSocialMediaList = () => {
   } = useSocialMediaStore()
 
   const queryClient = useQueryClient()
+
+  const { data: socialMediaDetails } = useQuery(
+    ['socialMedia', socialMediaId],
+    async () => {
+      const { data } = await axios.get<SocialMedia>(`/v1/social-media/${socialMediaId}`)
+
+      return data
+    },
+    {
+      enabled: !!socialMediaId && socialMediaId !== -1,
+    }
+  )
 
   const selectClient = (newValue: SingleValue<SelectOption<number>>) => {
     setClientId(newValue?.value || -1)
@@ -49,7 +62,7 @@ export const ManagerSocialMediaList = () => {
 
   const defaultValue = clients && clients.length > 0 && clients[0].id
 
-  const [selectedClientId, setClientId] = useState(-1)
+  const [selectedClientId, setClientId] = useState(defaultValue ? Number(defaultValue) : -1)
 
   const clientOptions = clients
     ? clients.map(({ name, id }) => ({
@@ -61,12 +74,13 @@ export const ManagerSocialMediaList = () => {
   useEffect(() => {
     setHeader('Dashboard')
     setSubHeader(`Welcome back, ${session?.user.firstName}`)
-    setClientId(defaultValue ? Number(defaultValue) : -1)
-
+    if (socialMediaId !== -1) {
+      setClientId(socialMediaDetails?.clientId || -1)
+    }
     return () => {
       setSubHeader('Social Media')
     }
-  }, [])
+  }, [selectedClientId, socialMediaDetails])
 
   return (
     <>
@@ -112,6 +126,13 @@ export const ManagerSocialMediaList = () => {
             onClose={toggleEditSocialMediaModal}
             socialMedia={activeSocialMedia}
           />
+          {socialMediaDetails && (
+            <EditSocialMediaModal
+              isVisible={isEditSocialMediaModalVisible}
+              onClose={toggleEditSocialMediaModal}
+              socialMedia={socialMediaDetails}
+            />
+          )}
         </>
       ) : (
         <Card>

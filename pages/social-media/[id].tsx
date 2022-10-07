@@ -2,6 +2,8 @@ import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import { ReactElement, useEffect, useMemo } from 'react'
 import { ClientSocialMediaList } from '../../components/pages/client/ClientSocialMediaList'
+import { ManagerSocialMediaList } from '../../components/pages/manager/ManagerSocialMediaList'
+import { StaffSocialMediaList } from '../../components/pages/staff/StaffSocialMediaList'
 import PanelLayout, { usePanelLayoutStore } from '../../layouts/PanelLayout'
 import { NextPageWithLayout } from '../../types/pages/NextPageWithLayout.type'
 
@@ -26,6 +28,20 @@ const SocialMediaPage: NextPageWithLayout = () => {
             socialMediaId={Number(id)}
           />
         )
+      } else if (session.isManager) {
+        if (
+          session?.user.userType.department &&
+          session?.user.userType.department.name === 'Social Media'
+        ) {
+          return <ManagerSocialMediaList socialMediaId={Number(id)} />
+        }
+      } else if (session.isStaff) {
+        if (
+          session?.user.userType.department &&
+          session?.user.userType.department.name === 'Social Media'
+        ) {
+          return <StaffSocialMediaList socialMediaId={Number(id)} />
+        }
       }
     }
 
