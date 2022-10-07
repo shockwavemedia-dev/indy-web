@@ -126,7 +126,7 @@ export const StaffSocialMediaList = ({ socialMediaId = -1 }: { socialMediaId?: n
             onClose={toggleEditSocialMediaModal}
             socialMedia={activeSocialMedia}
           />
-          {socialMediaDetails && (
+          {socialMediaId !== -1 && socialMediaDetails && (
             <EditSocialMediaModal
               isVisible={isEditSocialMediaModalVisible}
               onClose={toggleEditSocialMediaModal}
