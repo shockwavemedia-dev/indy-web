@@ -1,8 +1,12 @@
 import { Head, Html, Main, NextScript } from 'next/document'
 
 const Document = () => (
-  <Html lang="en">
+  <Html lang="en" className="scroll-smooth">
     <Head>
+      <link
+        href="http://fonts.cdnfonts.com/css/circular-std?styles=17911,17907,17905&display=optional"
+        rel="stylesheet"
+      />
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link rel="preconnect" href="https://fonts.gstatic.com" />
       <link
@@ -15,7 +19,7 @@ const Document = () => (
       />
       <link rel="icon" href="/favicon.ico" />
     </Head>
-    <body className="overflow-y-hidden bg-cultured font-urbanist">
+    <body className="bg-cultured font-urbanist">
       <Main />
       <NextScript />
     </body>

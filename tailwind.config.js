@@ -99,6 +99,7 @@ module.exports = {
       lg: { max: '1023px' },
       md: { max: '767px' },
       sm: { max: '639px' },
+      xs: { max: '474px' },
     },
     fontFamily: {
       urbanist: ['Urbanist'],
@@ -152,6 +153,9 @@ module.exports = {
       'halloween-orange': '#F25D23',
       'deep-space-sparkle': '#446A73',
       'maximum-yellow-red': '#ECB54E',
+      'white-coffee': '#E4DEDB',
+      'deep-space-sparkle': '#456972',
+      saffron: '#F6B22E',
     },
   },
   plugins: [

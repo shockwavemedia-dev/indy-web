@@ -13,7 +13,7 @@ const AuthLayout = ({
     <div className="bg-auth flex min-h-screen flex-col items-center justify-center bg-charleston-green bg-center bg-no-repeat">
       <div className="flex flex-col items-center rounded-xl px-22 py-15 shadow">
         <div className="mb-4">
-          <div className="font-circular-std text-5xl text-white">
+          <div className="font-circular-std text-5xl font-black text-white">
             Indy<span className="text-halloween-orange">.</span>
           </div>
         </div>
