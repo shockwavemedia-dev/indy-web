@@ -256,8 +256,8 @@ export const ClientTicket = ({ ticketId }: { ticketId: number }) => {
               <TitleValue title="Department" className="flex items-center justify-between">
                 {ticket!.departmentName}
               </TitleValue>
-              <TitleValue title="Due Date" className="flex items-center justify-between">
-                {format(ticket!.duedate, "yy MMM''dd")}
+              <TitleValue title="Priority" className="flex items-center justify-between">
+                {ticket!.priority}
               </TitleValue>
               <TitleValue title="Date Created" className="flex items-center justify-between">
                 {format(ticket!.createdAt, "yy MMM''dd")}

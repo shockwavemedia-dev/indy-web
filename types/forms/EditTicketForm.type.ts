@@ -1,10 +1,11 @@
+import { ProjectBriefPriority } from '../ProjectBriefPriority.type'
 import { TicketStatus } from '../TicketStatus.type'
 import { TicketType } from '../TicketType.type'
 
 export type EditTicketForm = {
   subject: string
   description: string
-  duedate: Date | null
   status: TicketStatus | null
   type: TicketType | null
+  priority: ProjectBriefPriority | null
 }

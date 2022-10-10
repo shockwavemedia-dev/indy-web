@@ -48,7 +48,7 @@ export const DeleteTicketModal = ({
           title={`Are you sure you want to delete Ticket ${ticket.ticketCode}?`}
           onClose={toggleDeleteTicketModal}
         >
-          <div className="flex w-140 flex-col">
+          <div className="flex w-175 flex-col">
             {!minimal && (
               <div className="mb-8 flex space-x-8">
                 <Image src={DummyCompany} height={100} width={100} alt={ticket.clientName} />
@@ -58,9 +58,7 @@ export const DeleteTicketModal = ({
                   <TitleValue title="Date Created">
                     {format(ticket.createdAt, "yy MMM''dd")}
                   </TitleValue>
-                  <TitleValue title="Due Created">
-                    {format(ticket.duedate, "yy MMM''dd")}
-                  </TitleValue>
+                  <TitleValue title="Priority">{ticket?.priority}</TitleValue>
                   <TitleValue title="Code">{ticket.ticketCode}</TitleValue>
                   <TitleValue title="Type" className="capitalize">
                     {ticket.type}

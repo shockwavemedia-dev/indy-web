@@ -1,10 +1,10 @@
-import { date, mixed, object, SchemaOf, string } from 'yup'
+import { mixed, object, SchemaOf, string } from 'yup'
 import { EditTicketForm } from '../types/forms/EditTicketForm.type'
 
 export const EditTicketFormSchema: SchemaOf<EditTicketForm> = object().shape({
   subject: string().required(),
   description: string().required(),
-  duedate: date().required().nullable(),
+  priority: mixed().required().oneOf(['Urgent', 'Standard', 'Relaxed']),
   status: mixed()
     .required()
     .oneOf(['closed', 'new', 'pending', 'on hold', 'open', 'resolved', 'deleted']),
