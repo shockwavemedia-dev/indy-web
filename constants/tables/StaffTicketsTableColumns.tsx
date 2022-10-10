@@ -110,11 +110,32 @@ export const StaffTicketsTableColumns: Array<Column<Ticket>> = [
     ),
   },
   {
-    Header: 'Deadline',
-    accessor: 'duedate',
-    sortType: 'datetime',
+    Header: 'Priority',
+    accessor: 'priority',
     Cell: ({ value }) => (
-      <div className=" text-sm font-medium text-onyx">{format(value, "yy MMM''dd")}</div>
+      <Pill
+        twBackgroundColor={(() => {
+          switch (value) {
+            case 'Urgent':
+              return 'bg-light-red-crimson'
+            case 'Standard':
+              return 'bg-light-golden-rod'
+            case 'Relaxed':
+              return 'bg-light-forest-green'
+          }
+        })()}
+        twTextColor={(() => {
+          switch (value) {
+            case 'Urgent':
+              return 'text-red-crimson'
+            case 'Standard':
+              return 'text-golden-rod'
+            case 'Relaxed':
+              return 'text-forest-green'
+          }
+        })()}
+        value={value}
+      />
     ),
   },
 ]

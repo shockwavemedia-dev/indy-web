@@ -3,7 +3,7 @@ export type CreateProjectBriefForm = {
   clientId: number
   subject: string
   services: Array<{ serviceId: number; extras: Array<string>; customFields: Array<string> }>
-  duedate: Date | null
   description: string
   attachments: Array<File>
+  priority: string
 }

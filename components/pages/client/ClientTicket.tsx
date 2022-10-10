@@ -326,7 +326,7 @@ export const ClientTicket = ({ ticketId }: { ticketId: number }) => {
         <div className="w-full min-w-0">
           <div className="flex justify-between">
             <Tab title="Description" Icon={NotepadIcon} tabName="description" />
-            <Tab title="Notes" Icon={NoteIcon} tabName="notes" />
+            <Tab title="Messaging" Icon={NoteIcon} tabName="notes" />
             <Tab title="Activities" Icon={CalendarIcon} tabName="activities" />
             <Tab title="Style Guide" Icon={ColorsIcon} tabName="style_guide" disabled />
           </div>
@@ -383,7 +383,7 @@ export const ClientTicket = ({ ticketId }: { ticketId: number }) => {
                   <Form className="mb-5">
                     <RichTextInput
                       Icon={EditIcon}
-                      placeholder="Enter notes"
+                      placeholder="Enter message"
                       name="note"
                       inputActions={
                         <div className="absolute right-6 bottom-6 z-10 flex items-center space-x-6">

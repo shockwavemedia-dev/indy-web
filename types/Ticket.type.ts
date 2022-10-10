@@ -17,4 +17,5 @@ export type Ticket = {
   createdAt: Date
   attachments: Array<Attachment>
   services?: Array<Service>
+  priority: string
 }

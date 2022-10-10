@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { Form, Formik } from 'formik'
+import { useSession } from 'next-auth/react'
 import { useQueryClient } from 'react-query'
 import create from 'zustand'
 import { combine } from 'zustand/middleware'
@@ -44,6 +45,7 @@ export const EditTicketModal = ({
   const ticket = useEditTicketModal((state) => state.ticket)
   const toggleEditTicketModal = useEditTicketModal((state) => state.toggleEditTicketModal)
   const { showToast } = useToastStore()
+  const { data: session } = useSession()
 
   return (
     <>
@@ -108,14 +110,16 @@ export const EditTicketModal = ({
                   />
                   <DateInput label="Duedate" name="duedate" placeholder="Enter due date" />
                 </div>
-                <Select
-                  label="Status"
-                  name="status"
-                  Icon={ClipboardIcon}
-                  options={TicketStatusOptions}
-                  defaultValue={TicketStatusOptions.find(({ value }) => value === ticket.status)}
-                  className="mb-5"
-                />
+                {!!session && !session.isClient && (
+                  <Select
+                    label="Status"
+                    name="status"
+                    Icon={ClipboardIcon}
+                    options={TicketStatusOptions}
+                    defaultValue={TicketStatusOptions.find(({ value }) => value === ticket.status)}
+                    className="mb-5"
+                  />
+                )}
                 <RichTextInput
                   label="Description"
                   Icon={EditIcon}
