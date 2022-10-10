@@ -4,7 +4,7 @@ const Document = () => (
   <Html lang="en" className="scroll-smooth">
     <Head>
       <link
-        href="http://fonts.cdnfonts.com/css/circular-std?styles=17911,17907,17905&display=optional"
+        href="https://fonts.cdnfonts.com/css/circular-std?styles=17911,17907,17905&display=optional"
         rel="stylesheet"
       />
       <link rel="preconnect" href="https://fonts.googleapis.com" />
