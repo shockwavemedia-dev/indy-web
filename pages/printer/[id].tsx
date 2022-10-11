@@ -1,35 +1,47 @@
 import axios from 'axios'
 import { Form, Formik } from 'formik'
-import { useSession } from 'next-auth/react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { ReactElement, useEffect } from 'react'
-import { useQueryClient } from 'react-query'
-import { Button } from '../components/Button'
-import { Card } from '../components/Card'
-import { Checkbox } from '../components/Checkbox'
-import { ClipboardIcon } from '../components/icons/ClipboardIcon'
-import { EditIcon } from '../components/icons/EditIcon'
-import { FloppyDiskIcon } from '../components/icons/FloppyDiskIcon'
-import { LinkButton } from '../components/LinkButton'
-import { Select } from '../components/Select'
-import { TextAreaInput } from '../components/TextAreaInput'
-import { TextInput } from '../components/TextInput'
-import { PrinterProductOptions } from '../constants/options/printer/PrinterProductOptions'
-import PanelLayout, { usePanelLayoutStore } from '../layouts/PanelLayout'
-import { useToastStore } from '../store/ToastStore'
-import { NewPrinterForm } from '../types/forms/NewPrinterForm.type'
-import { NextPageWithLayout } from '../types/pages/NextPageWithLayout.type'
-import { get422And400ResponseError } from '../utils/ErrorHelpers'
+import { useQuery, useQueryClient } from 'react-query'
+import { Button } from '../../components/Button'
+import { Card } from '../../components/Card'
+import { Checkbox } from '../../components/Checkbox'
+import { ClipboardIcon } from '../../components/icons/ClipboardIcon'
+import { EditIcon } from '../../components/icons/EditIcon'
+import { FloppyDiskIcon } from '../../components/icons/FloppyDiskIcon'
+import { LinkButton } from '../../components/LinkButton'
+import { Select } from '../../components/Select'
+import { TextAreaInput } from '../../components/TextAreaInput'
+import { TextInput } from '../../components/TextInput'
+import { PrinterProductOptions } from '../../constants/options/PrinterProductOptions'
+import PanelLayout, { usePanelLayoutStore } from '../../layouts/PanelLayout'
+import { useToastStore } from '../../store/ToastStore'
+import { EditPrinterJobForm } from '../../types/forms/EditPrinterJobForm.type'
+import { NextPageWithLayout } from '../../types/pages/NextPageWithLayout.type'
+import { PrinterJob } from '../../types/PrinterJob.type'
+import { get422And400ResponseError } from '../../utils/ErrorHelpers'
 
-const NewPrinterPage: NextPageWithLayout = () => {
+const PrinterPage: NextPageWithLayout = () => {
+  const {
+    query: { id },
+  } = useRouter()
   const { setHeader } = usePanelLayoutStore()
-  const { showToast } = useToastStore()
-  const { replace } = useRouter()
-  const { data: session } = useSession()
   const queryClient = useQueryClient()
+  const { showToast } = useToastStore()
 
-  const submitForm = async (values: NewPrinterForm) => {
+  const { data: printer } = useQuery(
+    ['printer', Number(id)],
+    async () => {
+      const { data } = await axios.get<PrinterJob>(`/v1/printer-jobs/${id}`)
+      return data
+    },
+    {
+      enabled: !!id,
+    }
+  )
+
+  const submitForm = async (values: EditPrinterJobForm) => {
     const additionalOptions = [
       { quantity: values.rubberBunds ? values.rubberBunds : 0, title: 'Bundling - Rubber Bands' },
       {
@@ -49,16 +61,13 @@ const NewPrinterPage: NextPageWithLayout = () => {
     values.additionalOptions = additionalOptions
 
     try {
-      const { status } = await axios.post<NewPrinterForm>(
-        `/v1/clients/${session?.user.userType.client.id}/printer-jobs`,
-        values
-      )
+      const { status } = await axios.post(`/v1/printer-jobs/${printer?.id}`, values)
       if (status === 200) {
-        queryClient.invalidateQueries('printers')
-        replace('/printer')
+        queryClient.invalidateQueries(['printer', printer?.id])
+        queryClient.invalidateQueries(['printerJobs'])
         showToast({
           type: 'success',
-          message: `New Printer Order successfully created!`,
+          message: `All changes was successfully saved!`,
         })
       }
     } catch (e) {
@@ -70,32 +79,37 @@ const NewPrinterPage: NextPageWithLayout = () => {
   }
 
   useEffect(() => {
-    setHeader('New Printer')
-  }, [])
+    if (printer) {
+      setHeader(`Printer Order ${printer.customerName}`)
+    }
+  }, [printer])
+
+  if (!printer) return null
 
   return (
     <>
       <Head>
-        <title>Indy - New Printer Order</title>
+        <title>{`Indy - ${printer?.customerName}`}</title>
       </Head>
       <div className="mx-auto w-full">
         <Formik
           initialValues={{
-            customerName: '',
-            product: '',
-            option: '',
-            kinds: '',
-            quantity: '',
-            runOns: '',
-            format: '',
-            finalTrimSize: '',
-            reference: '',
-            notes: '',
-            additionalOptions: [],
-            delivery: '',
-            price: '',
-            blindShipping: false,
-            resellerSamples: false,
+            customerName: printer?.customerName,
+            product: printer?.product,
+            option: printer?.option,
+            kinds: printer?.kinds,
+            quantity: printer?.quantity,
+            runOns: printer?.runOns,
+            format: printer?.format,
+            finalTrimSize: printer?.finalTrimSize,
+            reference: printer?.reference,
+            notes: printer?.notes,
+            additionalOptions: printer?.additionalOptions,
+            delivery: printer?.delivery,
+            price: printer?.price,
+            blindShipping: printer?.blindShipping,
+            resellerSamples: printer?.resellerSamples,
+            status: printer?.status,
           }}
           onSubmit={submitForm}
         >
@@ -103,6 +117,12 @@ const NewPrinterPage: NextPageWithLayout = () => {
             <Form>
               <div className="flex w-full">
                 <Card className="mr-8 h-fit w-9/12">
+                  <div className="mb-2 w-fit text-base font-semibold text-halloween-orange">
+                    Printer
+                  </div>
+                  <div className="mb-5 w-fit text-sm font-medium">
+                    {printer.printer ? printer.printer[0].companyName : 'No Printer Selected'}
+                  </div>
                   <div className="mb-5 w-fit text-base font-semibold text-halloween-orange">
                     Customer
                   </div>
@@ -121,6 +141,9 @@ const NewPrinterPage: NextPageWithLayout = () => {
                     name="product"
                     Icon={ClipboardIcon}
                     options={PrinterProductOptions}
+                    defaultValue={PrinterProductOptions.find(
+                      ({ value }) => value === printer?.product
+                    )}
                     className="mb-5"
                   />
                   <div className="mb-8 flex space-x-5">
@@ -129,12 +152,18 @@ const NewPrinterPage: NextPageWithLayout = () => {
                       name="option"
                       Icon={ClipboardIcon}
                       options={PrinterProductOptions}
+                      defaultValue={PrinterProductOptions.find(
+                        ({ value }) => value === printer?.option
+                      )}
                     />
                     <Select
                       label="Format"
                       name="format"
                       Icon={ClipboardIcon}
                       options={PrinterProductOptions}
+                      defaultValue={PrinterProductOptions.find(
+                        ({ value }) => value === printer?.format
+                      )}
                     />
                   </div>
 
@@ -161,6 +190,15 @@ const NewPrinterPage: NextPageWithLayout = () => {
                       Icon={EditIcon}
                       placeholder="Enter Run Ons"
                       name="runOns"
+                    />
+                    <Select
+                      label="Status"
+                      name="status"
+                      Icon={ClipboardIcon}
+                      options={PrinterProductOptions}
+                      defaultValue={PrinterProductOptions.find(
+                        ({ value }) => value === printer?.format
+                      )}
                     />
                   </div>
                   <div className="mb-5 w-fit text-base font-semibold text-halloween-orange">
@@ -217,6 +255,9 @@ const NewPrinterPage: NextPageWithLayout = () => {
                       name="delivery"
                       Icon={ClipboardIcon}
                       options={PrinterProductOptions}
+                      defaultValue={PrinterProductOptions.find(
+                        ({ value }) => value === printer?.delivery
+                      )}
                       className="mb-5"
                     />
                     <div className="mb-5 flex space-x-5">
@@ -258,7 +299,7 @@ const NewPrinterPage: NextPageWithLayout = () => {
                       <LinkButton title="Cancel" href="/print" light />
                       <Button ariaLabel="Submit" disabled={isSubmitting} type="submit">
                         <FloppyDiskIcon className="stroke-white" />
-                        <div>Order</div>
+                        <div>Update Order</div>
                       </Button>
                     </div>
                   </Card>
@@ -272,6 +313,6 @@ const NewPrinterPage: NextPageWithLayout = () => {
   )
 }
 
-NewPrinterPage.getLayout = (page: ReactElement) => <PanelLayout>{page}</PanelLayout>
+PrinterPage.getLayout = (page: ReactElement) => <PanelLayout>{page}</PanelLayout>
 
-export default NewPrinterPage
+export default PrinterPage
