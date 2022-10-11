@@ -14,7 +14,8 @@ import { LinkButton } from '../../components/LinkButton'
 import { Select } from '../../components/Select'
 import { TextAreaInput } from '../../components/TextAreaInput'
 import { TextInput } from '../../components/TextInput'
-import { PrinterProductOptions } from '../../constants/options/PrinterProductOptions'
+import { PrinterProductOptions } from '../../constants/options/printer/PrinterProductOptions'
+import { PrinterStatusOptions } from '../../constants/options/printer/PrinterStatusOptions'
 import PanelLayout, { usePanelLayoutStore } from '../../layouts/PanelLayout'
 import { useToastStore } from '../../store/ToastStore'
 import { EditPrinterJobForm } from '../../types/forms/EditPrinterJobForm.type'
@@ -61,7 +62,7 @@ const PrinterPage: NextPageWithLayout = () => {
     values.additionalOptions = additionalOptions
 
     try {
-      const { status } = await axios.post(`/v1/printer-jobs/${printer?.id}`, values)
+      const { status } = await axios.put(`/v1/printer-jobs/${printer?.id}`, values)
       if (status === 200) {
         queryClient.invalidateQueries(['printer', printer?.id])
         queryClient.invalidateQueries(['printerJobs'])
@@ -85,6 +86,20 @@ const PrinterPage: NextPageWithLayout = () => {
   }, [printer])
 
   if (!printer) return null
+
+  const rubberBunds = printer.additionalOptions?.filter(
+    (option) => option.title === 'Bundling - Rubber Bands'
+  )
+  const shrinkwrapping = printer.additionalOptions?.filter(
+    (option) => option.title === 'Bundling - Shrink Wrapping'
+  )
+  const perforate = printer.additionalOptions?.filter((option) => option.title === 'Perforate')
+  const padding = printer.additionalOptions?.filter(
+    (option) => option.title === 'Padding - Inc BoxBoard (Number of Pads)'
+  )
+  const drilling = printer.additionalOptions?.filter(
+    (option) => option.title === 'Drilling - up to 5 X 4-6mm holes (specify in notes)'
+  )
 
   return (
     <>
@@ -110,6 +125,11 @@ const PrinterPage: NextPageWithLayout = () => {
             blindShipping: printer?.blindShipping,
             resellerSamples: printer?.resellerSamples,
             status: printer?.status,
+            rubberBunds: rubberBunds?.[0].quantity,
+            shrinkwrapping: shrinkwrapping?.[0].quantity,
+            perforate: perforate?.[0].quantity,
+            padding: padding?.[0].quantity,
+            drilling: drilling?.[0].quantity,
           }}
           onSubmit={submitForm}
         >
@@ -121,7 +141,9 @@ const PrinterPage: NextPageWithLayout = () => {
                     Printer
                   </div>
                   <div className="mb-5 w-fit text-sm font-medium">
-                    {printer.printer ? printer.printer[0].companyName : 'No Printer Selected'}
+                    {printer?.printer !== null
+                      ? printer?.printer[0].companyName
+                      : 'No Printer Selected'}
                   </div>
                   <div className="mb-5 w-fit text-base font-semibold text-halloween-orange">
                     Customer
@@ -131,6 +153,16 @@ const PrinterPage: NextPageWithLayout = () => {
                     Icon={EditIcon}
                     placeholder="Enter Customer"
                     name="customerName"
+                    className="mb-5"
+                  />
+                  <Select
+                    label="Status"
+                    name="status"
+                    Icon={ClipboardIcon}
+                    options={PrinterStatusOptions}
+                    defaultValue={PrinterStatusOptions.find(
+                      ({ value }) => value === printer?.status
+                    )}
                     className="mb-5"
                   />
                   <div className="mb-5 w-fit text-base font-semibold text-halloween-orange">

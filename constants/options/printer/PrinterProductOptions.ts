@@ -1,5 +1,5 @@
 import { Options } from 'react-select'
-import { SelectOption } from '../../types/SelectOption.type'
+import { SelectOption } from '../../../types/SelectOption.type'
 
 export const PrinterProductOptions: Options<SelectOption<string>> = [
   { label: 'Business Cards', value: 'Business Cards' },
