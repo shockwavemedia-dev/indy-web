@@ -3,12 +3,6 @@
 @tailwind utilities;
 
 @layer base {
-  @font-face {
-    font-family: 'Circular Std';
-    src: url('/fonts/CircularStd-Black.woff') format('woff');
-    font-weight: 900;
-  }
-
   ::selection {
     color: #ffffff;
     background-color: #f25d23;
