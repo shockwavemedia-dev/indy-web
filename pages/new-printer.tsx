@@ -7,19 +7,21 @@ import { ReactElement, useEffect } from 'react'
 import { useQueryClient } from 'react-query'
 import { Button } from '../components/Button'
 import { Card } from '../components/Card'
+import { Checkbox } from '../components/Checkbox'
 import { ClipboardIcon } from '../components/icons/ClipboardIcon'
 import { EditIcon } from '../components/icons/EditIcon'
 import { FloppyDiskIcon } from '../components/icons/FloppyDiskIcon'
 import { LinkButton } from '../components/LinkButton'
 import { Select } from '../components/Select'
+import { TextAreaInput } from '../components/TextAreaInput'
 import { TextInput } from '../components/TextInput'
-import { PrinterProductOptions } from '../constants/options/PrinterProductOptions'
+import { PrinterProductOptions } from '../constants/options/printer/PrinterProductOptions'
 import PanelLayout, { usePanelLayoutStore } from '../layouts/PanelLayout'
 import { useToastStore } from '../store/ToastStore'
 import { NewPrinterForm } from '../types/forms/NewPrinterForm.type'
 import { NextPageWithLayout } from '../types/pages/NextPageWithLayout.type'
 import { get422And400ResponseError } from '../utils/ErrorHelpers'
-import { objectWithFileToFormData } from '../utils/FormHelpers'
+
 const NewPrinterPage: NextPageWithLayout = () => {
   const { setHeader } = usePanelLayoutStore()
   const { showToast } = useToastStore()
@@ -28,17 +30,37 @@ const NewPrinterPage: NextPageWithLayout = () => {
   const queryClient = useQueryClient()
 
   const submitForm = async (values: NewPrinterForm) => {
+    const additionalOptions = [
+      { quantity: values.rubberBunds ? values.rubberBunds : 0, title: 'Bundling - Rubber Bands' },
+      {
+        quantity: values.shrinkwrapping ? values.shrinkwrapping : 0,
+        title: 'Bundling - Shrink Wrapping',
+      },
+      {
+        quantity: values.drilling ? values.drilling : 0,
+        title: 'Drilling - up to 5 X 4-6mm holes (specify in notes)',
+      },
+      {
+        quantity: values.padding ? values.padding : 0,
+        title: 'Padding - Inc BoxBoard (Number of Pads)',
+      },
+      { quantity: values.perforate ? values.perforate : 0, title: 'Perforate' },
+    ]
+    values.additionalOptions = additionalOptions
+
+    console.log(values)
+
     try {
       const { status } = await axios.post<NewPrinterForm>(
         `/v1/clients/${session?.user.userType.client.id}/printer-jobs`,
-        objectWithFileToFormData(values)
+        values
       )
       if (status === 200) {
         queryClient.invalidateQueries('printers')
         replace('/printer')
         showToast({
           type: 'success',
-          message: `New Printer successfully created!`,
+          message: `New Printer Order successfully created!`,
         })
       }
     } catch (e) {
@@ -56,7 +78,7 @@ const NewPrinterPage: NextPageWithLayout = () => {
   return (
     <>
       <Head>
-        <title>Indy - New Printer</title>
+        <title>Indy - New Printer Order</title>
       </Head>
       <div className="mx-auto w-full">
         <Formik
@@ -72,7 +94,7 @@ const NewPrinterPage: NextPageWithLayout = () => {
             finalTrimSize: '',
             reference: '',
             notes: '',
-            additionalOptions: '',
+            additionalOptions: [],
             delivery: '',
             price: '',
             blindShipping: false,
@@ -91,7 +113,7 @@ const NewPrinterPage: NextPageWithLayout = () => {
                     type="text"
                     Icon={EditIcon}
                     placeholder="Enter Customer"
-                    name="customer"
+                    name="customerName"
                     className="mb-5"
                   />
                   <div className="mb-5 w-fit text-base font-semibold text-halloween-orange">
@@ -104,82 +126,106 @@ const NewPrinterPage: NextPageWithLayout = () => {
                     options={PrinterProductOptions}
                     className="mb-5"
                   />
-                  <Select
-                    label="Option"
-                    name="option"
-                    Icon={ClipboardIcon}
-                    options={PrinterProductOptions}
-                    className="mb-5"
-                  />
-                  <TextInput
-                    type="number"
-                    Icon={EditIcon}
-                    placeholder="Enter Kinds"
-                    name="kinds"
-                    className="mb-5"
-                  />
-                  <TextInput
-                    type="number"
-                    Icon={EditIcon}
-                    placeholder="Enter Quantity"
-                    name="quantity"
-                    className="mb-5"
-                  />
-                  <TextInput
-                    type="number"
-                    Icon={EditIcon}
-                    placeholder="Run Ons"
-                    name="runOns"
-                    className="mb-5"
-                  />
-                  <Select
-                    label="Format"
-                    name="format"
-                    Icon={ClipboardIcon}
-                    options={PrinterProductOptions}
-                    className="mb-5"
-                  />
+                  <div className="mb-8 flex space-x-5">
+                    <Select
+                      label="Option"
+                      name="option"
+                      Icon={ClipboardIcon}
+                      options={PrinterProductOptions}
+                    />
+                    <Select
+                      label="Format"
+                      name="format"
+                      Icon={ClipboardIcon}
+                      options={PrinterProductOptions}
+                    />
+                  </div>
+
+                  <div className="mb-8 flex space-x-5">
+                    <TextInput
+                      label="Kinds"
+                      type="number"
+                      Icon={EditIcon}
+                      placeholder="Enter Kinds"
+                      name="kinds"
+                    />
+                    <TextInput
+                      label="Quantity"
+                      type="number"
+                      Icon={EditIcon}
+                      placeholder="Enter Quantity"
+                      name="quantity"
+                    />
+                  </div>
+                  <div className="mb-8 flex space-x-5">
+                    <TextInput
+                      label="Run Ons"
+                      type="number"
+                      Icon={EditIcon}
+                      placeholder="Enter Run Ons"
+                      name="runOns"
+                    />
+                  </div>
                   <div className="mb-5 w-fit text-base font-semibold text-halloween-orange">
                     Additional Options
+                  </div>
+                  <div className="mb-8 flex space-x-5">
+                    <TextInput
+                      type="number"
+                      Icon={EditIcon}
+                      placeholder="Enter Rubber Bands"
+                      name="rubberBunds"
+                      label="Bundling - Rubber Bands"
+                    />
+                    <TextInput
+                      type="number"
+                      Icon={EditIcon}
+                      placeholder="Enter Shrink Wrapping"
+                      name="shrinkwrapping"
+                      label="Bundling - Shrink Wrapping"
+                    />
+                  </div>
+                  <div className="mb-8 flex space-x-5">
+                    <TextInput
+                      type="number"
+                      Icon={EditIcon}
+                      placeholder="Enter Perforate"
+                      name="perforate"
+                      label="Perforate"
+                    />
+                    <TextInput
+                      type="number"
+                      Icon={EditIcon}
+                      placeholder="Enter Padding"
+                      name="padding"
+                      label="Padding - Inc BoxBoard (Number of Pads)"
+                    />
                   </div>
                   <TextInput
                     type="number"
                     Icon={EditIcon}
-                    placeholder="Enter Bundling - Rubber Bands"
-                    name="additionalOptions"
-                    className="mb-5"
-                  />
-                  <TextInput
-                    type="number"
-                    Icon={EditIcon}
-                    placeholder="Enter Bundling - Shrink Wrapping"
-                    name="additionalOptions"
-                    className="mb-5"
-                  />
-                  <TextInput
-                    type="number"
-                    Icon={EditIcon}
-                    placeholder="Enter Drilling - up to 5 X 4-6mm holes (specify in notes)"
-                    name="additionalOptions"
-                    className="mb-5"
-                  />
-                  <TextInput
-                    type="number"
-                    Icon={EditIcon}
-                    placeholder="Enter Padding - Inc BoxBoard (Number of Pads)"
-                    name="additionalOptions"
-                    className="mb-5"
-                  />
-                  <TextInput
-                    type="number"
-                    Icon={EditIcon}
-                    placeholder="Enter Perforate"
-                    name="additionalOptions"
+                    placeholder="Enter Drilling"
+                    name="drilling"
+                    label="Drilling - up to 5 X 4-6mm holes (specify in notes)"
                     className="mb-5"
                   />
                 </Card>
                 <div className="flex w-9/12  flex-col">
                   <Card className="mb-8 h-fit">
+                    <div className="mb-5 w-fit text-base font-semibold text-halloween-orange">
+                      Delivery
+                    </div>
+                    <Select
+                      label="Delivery"
+                      name="delivery"
+                      Icon={ClipboardIcon}
+                      options={PrinterProductOptions}
+                      className="mb-5"
+                    />
+                    <div className="mb-5 flex space-x-5">
+                      <Checkbox name="blindShipping" label="Blind Shipping" />
+                      <Checkbox name="resellerSamples" label="Reseller Samples" />
+                    </div>
                     <div className="mb-5 w-fit text-base font-semibold text-halloween-orange">
                       Reference
                     </div>
@@ -193,8 +239,7 @@ const NewPrinterPage: NextPageWithLayout = () => {
                     <div className="mb-5 w-fit text-base font-semibold text-halloween-orange">
                       Notes
                     </div>
-                    <TextInput
-                      type="text"
+                    <TextAreaInput
                       Icon={EditIcon}
                       placeholder="Enter Notes"
                       name="notes"
@@ -213,7 +258,7 @@ const NewPrinterPage: NextPageWithLayout = () => {
                   </Card>
                   <Card className="h-fit">
                     <div className="flex space-x-5">
-                      <LinkButton title="Save" href="/printer" light />
+                      <LinkButton title="Cancel" href="/print" light />
                       <Button ariaLabel="Submit" disabled={isSubmitting} type="submit">
                         <FloppyDiskIcon className="stroke-white" />
                         <div>Order</div>

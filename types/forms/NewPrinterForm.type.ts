@@ -10,9 +10,14 @@ export type NewPrinterForm = {
   finalTrimSize?: string | null
   reference?: string | null
   notes?: string | null
-  additionalOptions?: string | null
   delivery?: string | null
   price?: string | null
   blindShipping?: boolean
   resellerSamples?: boolean
+  rubberBunds?: number | null
+  shrinkwrapping?: number | null
+  drilling?: number | null
+  padding?: number | null
+  perforate?: number | null
+  additionalOptions?: Array<{ quantity: number | null; title: string | null }>
 }
