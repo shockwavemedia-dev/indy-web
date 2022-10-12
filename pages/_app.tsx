@@ -10,12 +10,13 @@ import { QueryClient, QueryClientProvider } from 'react-query'
 import snakecaseKeys from 'snakecase-keys'
 import { ToastContainer } from '../components/ToastContainer'
 import { EXCLUDE_KEYS } from '../constants/ExcludeKeys'
+import { API_BASE_URL } from '../constants/Http'
 import '../styles/globals.css'
 import { AppPropsWithLayout } from '../types/pages/AppPropsWithLayout.type'
 import { parseDates } from '../utils/DateHelpers'
 import { isClientSide } from '../utils/EnvironmentHelpers'
 
-axios.defaults.baseURL = process.env.NEXT_PUBLIC_BASE_URL || process.env.BASE_URL
+axios.defaults.baseURL = API_BASE_URL
 axios.interceptors.request.use(
   async (config) => {
     const session = await getSession()

@@ -14,8 +14,6 @@
     "@fullcalendar/react": "^6.0.0-beta.1",
     "@mui/material": "^5.10.3",
     "@mui/x-date-pickers": "^5.0.0-beta.7",
-    "@types/aos": "^3.0.4",
-    "aos": "^2.3.4",
     "apexcharts": "^3.35.3",
     "axios": "^0.27.2",
     "camelcase-keys": "^7.0.2",

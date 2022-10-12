@@ -1,4 +1,4 @@
-import { array, date, mixed, number, object, SchemaOf, string } from 'yup'
+import { array, mixed, number, object, SchemaOf, string } from 'yup'
 import { CreateProjectBriefForm } from '../types/forms/CreateProjectBriefForm'
 
 export const CreateProjectBriefFormSchema: SchemaOf<CreateProjectBriefForm> = object().shape({
@@ -16,7 +16,7 @@ export const CreateProjectBriefFormSchema: SchemaOf<CreateProjectBriefForm> = ob
         .required()
     )
     .min(1),
-  duedate: date().required().nullable(),
+  priority: mixed().required().oneOf(['Urgent', 'Standard', 'Relaxed']),
   description: string().required(),
   attachments: array().of(mixed().optional()),
 })
