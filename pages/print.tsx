@@ -4,6 +4,7 @@ import { useRouter } from 'next/router'
 import { ReactElement, useEffect } from 'react'
 import { Card } from '../components/Card'
 import { DataTable } from '../components/DataTable'
+import { LinkButton } from '../components/LinkButton'
 import { DeletePrinterJobModal } from '../components/modals/DeletePrinterJobModal'
 import { Notifications } from '../components/Notifications'
 import { RetainerInclusions } from '../components/RetainerInclusions'
@@ -28,6 +29,7 @@ const PrintPage: NextPageWithLayout = () => {
       <div className="mx-auto w-full">
         <div className="mt-6 flex gap-6 transition-all lg:flex-col">
           <div className="flex flex-1 flex-col">
+            <LinkButton className="mb-8 w-40" title="Add Printer Job" href="/new-printer" />
             <Card title="Printer Job List" className="flex max-h-155 flex-1 flex-col">
               <DataTable
                 columns={PrinterJobColumns}

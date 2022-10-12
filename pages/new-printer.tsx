@@ -54,8 +54,8 @@ const NewPrinterPage: NextPageWithLayout = () => {
         values
       )
       if (status === 200) {
-        queryClient.invalidateQueries('printers')
-        replace('/printer')
+        queryClient.invalidateQueries(['printerJobs'])
+        replace('/print')
         showToast({
           type: 'success',
           message: `New Printer Order successfully created!`,
