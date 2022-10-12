@@ -25,7 +25,7 @@ export type PrinterJob = {
   padding?: number | null
   perforate?: number | null
   additionalOptions?: Array<{ quantity: number | null; title: string | null }>
-  printer: Array<Printer>
-  client: Array<Client>
+  printer: Printer
+  client: Client
   status: PrinterJobStatus
 }

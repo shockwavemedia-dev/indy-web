@@ -142,7 +142,7 @@ const PrinterPage: NextPageWithLayout = () => {
                   </div>
                   <div className="mb-5 w-fit text-sm font-medium">
                     {printer?.printer !== null
-                      ? printer?.printer[0].companyName
+                      ? printer?.printer.companyName
                       : 'No Printer Selected'}
                   </div>
                   <div className="mb-5 w-fit text-base font-semibold text-halloween-orange">
