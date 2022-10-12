@@ -4,6 +4,7 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { ReactElement, useEffect } from 'react'
 import { useQuery, useQueryClient } from 'react-query'
+import { SingleValue } from 'react-select'
 import { Button } from '../../components/Button'
 import { Card } from '../../components/Card'
 import { Checkbox } from '../../components/Checkbox'
@@ -12,6 +13,7 @@ import { EditIcon } from '../../components/icons/EditIcon'
 import { FloppyDiskIcon } from '../../components/icons/FloppyDiskIcon'
 import { LinkButton } from '../../components/LinkButton'
 import { Select } from '../../components/Select'
+import { SelectNoFormik } from '../../components/SelectNoFormik'
 import { TextAreaInput } from '../../components/TextAreaInput'
 import { TextInput } from '../../components/TextInput'
 import { PrinterProductOptions } from '../../constants/options/printer/PrinterProductOptions'
@@ -21,6 +23,7 @@ import { useToastStore } from '../../store/ToastStore'
 import { EditPrinterJobForm } from '../../types/forms/EditPrinterJobForm.type'
 import { NextPageWithLayout } from '../../types/pages/NextPageWithLayout.type'
 import { PrinterJob } from '../../types/PrinterJob.type'
+import { SelectOption } from '../../types/SelectOption.type'
 import { get422And400ResponseError } from '../../utils/ErrorHelpers'
 
 const PrinterPage: NextPageWithLayout = () => {
@@ -79,9 +82,30 @@ const PrinterPage: NextPageWithLayout = () => {
     }
   }
 
+  const updateStatus = async (newValue: SingleValue<SelectOption<string>>) => {
+    try {
+      const { status } = await axios.put(`/v1/printer-jobs/${printer?.id}/change-status`, {
+        status: newValue?.value,
+      })
+      if (status === 200) {
+        queryClient.invalidateQueries(['printer', printer?.id])
+        queryClient.invalidateQueries(['printerJobs'])
+        showToast({
+          type: 'success',
+          message: `Status successfully saved!`,
+        })
+      }
+    } catch (e) {
+      showToast({
+        type: 'error',
+        message: get422And400ResponseError(e),
+      })
+    }
+  }
+
   useEffect(() => {
     if (printer) {
-      setHeader(`Printer Order ${printer.customerName}`)
+      setHeader(`Print Order ${printer.customerName}`)
     }
   }, [printer])
 
@@ -145,6 +169,17 @@ const PrinterPage: NextPageWithLayout = () => {
                       ? printer?.printer.companyName
                       : 'No Printer Selected'}
                   </div>
+                  <SelectNoFormik
+                    label="Status"
+                    name="status"
+                    Icon={ClipboardIcon}
+                    options={PrinterStatusOptions}
+                    defaultValue={PrinterStatusOptions.find(
+                      ({ value }) => value === printer?.status
+                    )}
+                    onChange={updateStatus}
+                    className="mb-5"
+                  />
                   <div className="mb-5 w-fit text-base font-semibold text-halloween-orange">
                     Customer
                   </div>
@@ -153,16 +188,6 @@ const PrinterPage: NextPageWithLayout = () => {
                     Icon={EditIcon}
                     placeholder="Enter Customer"
                     name="customerName"
-                    className="mb-5"
-                  />
-                  <Select
-                    label="Status"
-                    name="status"
-                    Icon={ClipboardIcon}
-                    options={PrinterStatusOptions}
-                    defaultValue={PrinterStatusOptions.find(
-                      ({ value }) => value === printer?.status
-                    )}
                     className="mb-5"
                   />
                   <div className="mb-5 w-fit text-base font-semibold text-halloween-orange">

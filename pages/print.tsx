@@ -27,7 +27,7 @@ const PrintPage: NextPageWithLayout = () => {
       <div className="mx-auto w-full">
         <div className="mt-6 flex gap-6 transition-all lg:flex-col">
           <div className="flex flex-1 flex-col">
-            <Card title="Printer Job" className="flex max-h-155 flex-1 flex-col">
+            <Card title="Printer Job List" className="flex max-h-155 flex-1 flex-col">
               <DataTable
                 columns={PrinterJobColumns}
                 dataEndpoint={`/v1/clients/${session?.user.userType.client.id}/printer-jobs`}

@@ -1,4 +1,7 @@
+import { Tooltip } from '@mui/material'
 import { Column } from 'react-table'
+import { TrashIcon } from '../../components/icons/TrashIcon'
+import { Pill } from '../../components/Pill'
 import { PrinterJob } from '../../types/PrinterJob.type'
 
 export const PrinterJobColumns: Array<Column<PrinterJob>> = [
@@ -19,7 +22,35 @@ export const PrinterJobColumns: Array<Column<PrinterJob>> = [
   {
     Header: 'Status',
     accessor: 'status',
-    Cell: ({ value }) => <div className=" text-sm font-medium text-onyx">{value}</div>,
+    Cell: ({ value }) => (
+      <Pill
+        twBackgroundColor={(() => {
+          switch (value) {
+            case 'Completed':
+              return 'bg-honeydew'
+            case 'Todo':
+              return 'bg-alice-blue'
+            case 'Pending':
+              return 'bg-light-tart-orange'
+            case 'Cancelled':
+              return 'bg-light-deep-saffron'
+          }
+        })()}
+        twTextColor={(() => {
+          switch (value) {
+            case 'Completed':
+              return 'text-jungle-green'
+            case 'Todo':
+              return 'text-bleu-de-france'
+            case 'Pending':
+              return 'text-tart-orange'
+            case 'Cancelled':
+              return 'text-deep-saffron'
+          }
+        })()}
+        value={value}
+      />
+    ),
   },
   {
     Header: 'Product',
@@ -35,5 +66,22 @@ export const PrinterJobColumns: Array<Column<PrinterJob>> = [
     Header: 'Format',
     accessor: 'format',
     Cell: ({ value }) => <div className=" text-sm font-medium text-onyx">{value}</div>,
+  },
+  {
+    Header: 'Action',
+    accessor: 'id',
+    id: 'actions',
+    disableSortBy: true,
+    Cell: ({ row: { original: printer } }) => {
+      return (
+        <div className="flex">
+          <Tooltip title="Delete Printer" placement="top">
+            <button>
+              <TrashIcon className="stroke-waterloo hover:stroke-halloween-orange" />
+            </button>
+          </Tooltip>
+        </div>
+      )
+    },
   },
 ]
