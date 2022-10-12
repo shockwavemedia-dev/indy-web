@@ -38,8 +38,6 @@ export const ClientSocialMediaList = ({
     }
   )
 
-  console.log(socialMediaDetails)
-
   return (
     <>
       <Head>
