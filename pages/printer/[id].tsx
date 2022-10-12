@@ -1,3 +1,4 @@
+import { Tooltip } from '@mui/material'
 import axios from 'axios'
 import { Form, Formik } from 'formik'
 import Head from 'next/head'
@@ -11,7 +12,12 @@ import { Checkbox } from '../../components/Checkbox'
 import { ClipboardIcon } from '../../components/icons/ClipboardIcon'
 import { EditIcon } from '../../components/icons/EditIcon'
 import { FloppyDiskIcon } from '../../components/icons/FloppyDiskIcon'
+import { TrashIcon } from '../../components/icons/TrashIcon'
 import { LinkButton } from '../../components/LinkButton'
+import {
+  DeletePrinterJobModal,
+  useDeleteDeletePrinterJobModalModalStore,
+} from '../../components/modals/DeletePrinterJobModal'
 import { Select } from '../../components/Select'
 import { SelectNoFormik } from '../../components/SelectNoFormik'
 import { TextAreaInput } from '../../components/TextAreaInput'
@@ -33,6 +39,7 @@ const PrinterPage: NextPageWithLayout = () => {
   const { setHeader } = usePanelLayoutStore()
   const queryClient = useQueryClient()
   const { showToast } = useToastStore()
+  const { toggleModal: togglePrinterModal } = useDeleteDeletePrinterJobModalModalStore()
 
   const { data: printer } = useQuery(
     ['printer', Number(id)],
@@ -161,6 +168,20 @@ const PrinterPage: NextPageWithLayout = () => {
             <Form>
               <div className="flex w-full">
                 <Card className="mr-8 h-fit w-9/12">
+                  <div className="absolute top-6 right-6 space-x-2">
+                    <Tooltip title="Delete" placement="top">
+                      <button
+                        type="button"
+                        className="group"
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          togglePrinterModal(printer)
+                        }}
+                      >
+                        <TrashIcon className="stroke-waterloo group-hover:stroke-halloween-orange" />
+                      </button>
+                    </Tooltip>
+                  </div>
                   <div className="mb-2 w-fit text-base font-semibold text-halloween-orange">
                     Printer
                   </div>
@@ -247,15 +268,6 @@ const PrinterPage: NextPageWithLayout = () => {
                       Icon={EditIcon}
                       placeholder="Enter Run Ons"
                       name="runOns"
-                    />
-                    <Select
-                      label="Status"
-                      name="status"
-                      Icon={ClipboardIcon}
-                      options={PrinterProductOptions}
-                      defaultValue={PrinterProductOptions.find(
-                        ({ value }) => value === printer?.format
-                      )}
                     />
                   </div>
                   <div className="mb-5 w-fit text-base font-semibold text-halloween-orange">
@@ -366,6 +378,7 @@ const PrinterPage: NextPageWithLayout = () => {
           )}
         </Formik>
       </div>
+      <DeletePrinterJobModal />
     </>
   )
 }

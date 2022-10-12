@@ -4,6 +4,7 @@ import { useRouter } from 'next/router'
 import { ReactElement, useEffect } from 'react'
 import { Card } from '../components/Card'
 import { DataTable } from '../components/DataTable'
+import { DeletePrinterJobModal } from '../components/modals/DeletePrinterJobModal'
 import { Notifications } from '../components/Notifications'
 import { RetainerInclusions } from '../components/RetainerInclusions'
 import { PrinterJobColumns } from '../constants/tables/PrinterJobColumns'
@@ -43,6 +44,7 @@ const PrintPage: NextPageWithLayout = () => {
           </div>
         </div>
       </div>
+      <DeletePrinterJobModal />
     </>
   )
 }
