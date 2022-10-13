@@ -3,7 +3,7 @@ import axios from 'axios'
 import { Form, Formik } from 'formik'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import { ReactElement, useEffect } from 'react'
+import { ReactElement, useEffect, useState } from 'react'
 import { useQuery, useQueryClient } from 'react-query'
 import { SingleValue } from 'react-select'
 import { Button } from '../../components/Button'
@@ -22,6 +22,8 @@ import { Select } from '../../components/Select'
 import { SelectNoFormik } from '../../components/SelectNoFormik'
 import { TextAreaInput } from '../../components/TextAreaInput'
 import { TextInput } from '../../components/TextInput'
+import { PrinterDeliveryOptions } from '../../constants/options/printer/PrinterDeliveryOptions'
+import { PrinterOptions } from '../../constants/options/printer/PrinterOptions'
 import { PrinterProductOptions } from '../../constants/options/printer/PrinterProductOptions'
 import { PrinterStatusOptions } from '../../constants/options/printer/PrinterStatusOptions'
 import PanelLayout, { usePanelLayoutStore } from '../../layouts/PanelLayout'
@@ -40,6 +42,8 @@ const PrinterPage: NextPageWithLayout = () => {
   const queryClient = useQueryClient()
   const { showToast } = useToastStore()
   const { toggleModal: togglePrinterModal } = useDeleteDeletePrinterJobModalModalStore()
+  const [option, setOption] = useState<Array<{ label: string; value: string }>>([])
+  const [format, setFormat] = useState<Array<{ label: string; value: string }>>([])
 
   const { data: printer } = useQuery(
     ['printer', Number(id)],
@@ -51,6 +55,25 @@ const PrinterPage: NextPageWithLayout = () => {
       enabled: !!id,
     }
   )
+
+  const updateFilter = (newValue: SingleValue<SelectOption<string>>) => {
+    const filterProduct = PrinterOptions?.filter((option) => option.product === newValue?.value)
+
+    const option =
+      filterProduct[0].option.map((name) => ({
+        label: name,
+        value: name,
+      })) ?? []
+
+    const format =
+      filterProduct[0].format.map((name) => ({
+        label: name,
+        value: name,
+      })) ?? []
+
+    setOption(option)
+    setFormat(format)
+  }
 
   const submitForm = async (values: EditPrinterJobForm) => {
     const additionalOptions = [
@@ -219,6 +242,7 @@ const PrinterPage: NextPageWithLayout = () => {
                     name="product"
                     Icon={ClipboardIcon}
                     options={PrinterProductOptions}
+                    onChange={updateFilter}
                     defaultValue={PrinterProductOptions.find(
                       ({ value }) => value === printer?.product
                     )}
@@ -229,7 +253,7 @@ const PrinterPage: NextPageWithLayout = () => {
                       label="Option"
                       name="option"
                       Icon={ClipboardIcon}
-                      options={PrinterProductOptions}
+                      options={option}
                       defaultValue={PrinterProductOptions.find(
                         ({ value }) => value === printer?.option
                       )}
@@ -238,7 +262,7 @@ const PrinterPage: NextPageWithLayout = () => {
                       label="Format"
                       name="format"
                       Icon={ClipboardIcon}
-                      options={PrinterProductOptions}
+                      options={format}
                       defaultValue={PrinterProductOptions.find(
                         ({ value }) => value === printer?.format
                       )}
@@ -323,7 +347,7 @@ const PrinterPage: NextPageWithLayout = () => {
                       label="Delivery"
                       name="delivery"
                       Icon={ClipboardIcon}
-                      options={PrinterProductOptions}
+                      options={PrinterDeliveryOptions}
                       defaultValue={PrinterProductOptions.find(
                         ({ value }) => value === printer?.delivery
                       )}

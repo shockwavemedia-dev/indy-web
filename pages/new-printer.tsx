@@ -3,8 +3,9 @@ import { Form, Formik } from 'formik'
 import { useSession } from 'next-auth/react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import { ReactElement, useEffect } from 'react'
+import { ReactElement, useEffect, useState } from 'react'
 import { useQueryClient } from 'react-query'
+import { SingleValue } from 'react-select'
 import { Button } from '../components/Button'
 import { Card } from '../components/Card'
 import { Checkbox } from '../components/Checkbox'
@@ -15,11 +16,14 @@ import { LinkButton } from '../components/LinkButton'
 import { Select } from '../components/Select'
 import { TextAreaInput } from '../components/TextAreaInput'
 import { TextInput } from '../components/TextInput'
+import { PrinterDeliveryOptions } from '../constants/options/printer/PrinterDeliveryOptions'
+import { PrinterOptions } from '../constants/options/printer/PrinterOptions'
 import { PrinterProductOptions } from '../constants/options/printer/PrinterProductOptions'
 import PanelLayout, { usePanelLayoutStore } from '../layouts/PanelLayout'
 import { useToastStore } from '../store/ToastStore'
 import { NewPrinterForm } from '../types/forms/NewPrinterForm.type'
 import { NextPageWithLayout } from '../types/pages/NextPageWithLayout.type'
+import { SelectOption } from '../types/SelectOption.type'
 import { get422And400ResponseError } from '../utils/ErrorHelpers'
 
 const NewPrinterPage: NextPageWithLayout = () => {
@@ -28,6 +32,8 @@ const NewPrinterPage: NextPageWithLayout = () => {
   const { replace } = useRouter()
   const { data: session } = useSession()
   const queryClient = useQueryClient()
+  const [option, setOption] = useState<Array<{ label: string; value: string }>>([])
+  const [format, setFormat] = useState<Array<{ label: string; value: string }>>([])
 
   const submitForm = async (values: NewPrinterForm) => {
     const additionalOptions = [
@@ -67,6 +73,25 @@ const NewPrinterPage: NextPageWithLayout = () => {
         message: get422And400ResponseError(e),
       })
     }
+  }
+
+  const updateFilter = (newValue: SingleValue<SelectOption<string>>) => {
+    const filterProduct = PrinterOptions?.filter((option) => option.product === newValue?.value)
+
+    const option =
+      filterProduct[0].option.map((name) => ({
+        label: name,
+        value: name,
+      })) ?? []
+
+    const format =
+      filterProduct[0].format.map((name) => ({
+        label: name,
+        value: name,
+      })) ?? []
+
+    setOption(option)
+    setFormat(format)
   }
 
   useEffect(() => {
@@ -121,21 +146,12 @@ const NewPrinterPage: NextPageWithLayout = () => {
                     name="product"
                     Icon={ClipboardIcon}
                     options={PrinterProductOptions}
+                    onChange={updateFilter}
                     className="mb-5"
                   />
                   <div className="mb-8 flex space-x-5">
-                    <Select
-                      label="Option"
-                      name="option"
-                      Icon={ClipboardIcon}
-                      options={PrinterProductOptions}
-                    />
-                    <Select
-                      label="Format"
-                      name="format"
-                      Icon={ClipboardIcon}
-                      options={PrinterProductOptions}
-                    />
+                    <Select label="Option" name="option" Icon={ClipboardIcon} options={option} />
+                    <Select label="Format" name="format" Icon={ClipboardIcon} options={format} />
                   </div>
 
                   <div className="mb-8 flex space-x-5">
@@ -216,7 +232,7 @@ const NewPrinterPage: NextPageWithLayout = () => {
                       label="Delivery"
                       name="delivery"
                       Icon={ClipboardIcon}
-                      options={PrinterProductOptions}
+                      options={PrinterDeliveryOptions}
                       className="mb-5"
                     />
                     <div className="mb-5 flex space-x-5">
