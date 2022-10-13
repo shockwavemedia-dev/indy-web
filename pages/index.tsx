@@ -42,7 +42,7 @@ const HomePage: NextPageWithLayout = () => {
       <Head>
         <title>Indy</title>
       </Head>
-      <main className="h-screen overflow-x-clip [&>section]:px-15 [&>section]:sm:px-5">
+      <main className="h-screen [&>section]:overflow-x-hidden [&>section]:px-15 [&>section]:sm:px-5">
         <header className="fixed z-10 w-full items-center space-x-25 bg-charleston-green py-8 text-center shadow-lg lg:space-x-10 sm:hidden [&>a]:font-circular-std [&>a]:text-lg [&>a]:font-black [&>a]:text-white">
           <Link href="#home">
             <a
@@ -231,7 +231,7 @@ const HomePage: NextPageWithLayout = () => {
         <section className="bg-white py-40 xs:py-15">
           <div className="mx-auto grid max-w-8xl place-items-center">
             <div
-              className="relative col-span-full row-span-full mr-auto h-[422] w-[700] 2xl:h-[21.875rem] 2xl:w-[36.25rem] xl:h-[15.625rem] xl:w-[25.875rem] lg:h-[12.5rem] lg:w-[20.688rem] md:h-[9.375rem] md:w-[15.5rem] sm:h-25 sm:w-[10.313rem] xs:!scale-75"
+              className="relative col-span-full row-span-full mr-auto h-[26.375rem] w-[43.75rem] 2xl:h-[21.875rem] 2xl:w-[36.25rem] xl:h-[15.625rem] xl:w-[25.875rem] lg:h-[12.5rem] lg:w-[20.688rem] md:h-[9.375rem] md:w-[15.5rem] sm:h-25 sm:w-[10.313rem] xs:!scale-75"
               data-aos="fade-left"
               data-aos-delay="400"
             >
@@ -243,7 +243,7 @@ const HomePage: NextPageWithLayout = () => {
               />
             </div>
             <div
-              className="relative col-span-full row-span-full ml-auto h-[422] w-[700] 2xl:h-[21.875rem] 2xl:w-[36.25rem] xl:h-[15.625rem] xl:w-[25.875rem] lg:h-[12.5rem] lg:w-[20.688rem] md:h-[9.375rem] md:w-[15.5rem] sm:h-25 sm:w-[10.313rem] xs:!scale-75"
+              className="relative col-span-full row-span-full ml-auto h-[26.375rem] w-[43.75rem] 2xl:h-[21.875rem] 2xl:w-[36.25rem] xl:h-[15.625rem] xl:w-[25.875rem] lg:h-[12.5rem] lg:w-[20.688rem] md:h-[9.375rem] md:w-[15.5rem] sm:h-25 sm:w-[10.313rem] xs:!scale-75"
               data-aos="fade-right"
               data-aos-delay="400"
             >
@@ -254,7 +254,7 @@ const HomePage: NextPageWithLayout = () => {
                 alt="web application mock"
               />
             </div>
-            <div className="relative col-span-full row-span-full h-[34rem] w-[56.25rem] 2xl:h-[30.875rem] 2xl:w-[51.063rem] xl:h-[400px] xl:w-[41.313rem] lg:h-[21.875rem] lg:w-[36.125rem] md:h-[18.75rem] md:w-[31rem] sm:h-[12.5rem] sm:w-[20.625rem] xs:scale-75">
+            <div className="relative col-span-full row-span-full h-[34rem] w-[56.25rem] 2xl:h-[30.875rem] 2xl:w-[51.063rem] xl:h-[25rem] xl:w-[41.313rem] lg:h-[21.875rem] lg:w-[36.125rem] md:h-[18.75rem] md:w-[31rem] sm:h-[12.5rem] sm:w-[20.625rem] xs:scale-75">
               <Image src="/images/laptop-2.png" layout="fill" alt="web application mock" />
             </div>
             <div className="mt-12 flex w-full items-center justify-between">

@@ -110,6 +110,35 @@ export const ClientTicketsTableColumns: Array<Column<Ticket>> = [
     ),
   },
   {
+    Header: 'Priority',
+    accessor: 'priority',
+    Cell: ({ value }) => (
+      <Pill
+        twBackgroundColor={(() => {
+          switch (value) {
+            case 'Urgent':
+              return 'bg-light-red-crimson'
+            case 'Standard':
+              return 'bg-light-golden-rod'
+            case 'Relaxed':
+              return 'bg-light-forest-green'
+          }
+        })()}
+        twTextColor={(() => {
+          switch (value) {
+            case 'Urgent':
+              return 'text-red-crimson'
+            case 'Standard':
+              return 'text-golden-rod'
+            case 'Relaxed':
+              return 'text-forest-green'
+          }
+        })()}
+        value={value}
+      />
+    ),
+  },
+  {
     Header: '',
     accessor: 'id',
     id: 'actions',
