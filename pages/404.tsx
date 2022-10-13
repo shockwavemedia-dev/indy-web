@@ -1,14 +1,3 @@
-import { useRouter } from 'next/router'
-import { useEffect } from 'react'
+import Home from '.'
 
-const NotFoundPage = () => {
-  const { replace } = useRouter()
-
-  useEffect(() => {
-    replace('/')
-  }, [])
-
-  return null
-}
-
-export default NotFoundPage
+export default Home

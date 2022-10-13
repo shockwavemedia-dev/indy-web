@@ -62,10 +62,10 @@ axios.interceptors.response.use(
   (error) => {
     if (isClientSide) {
       done()
-    }
 
-    if (axios.isAxiosError(error) && error.response && error.response.status === 401) {
-      nextAuthSignOut()
+      if (axios.isAxiosError(error) && error.response && error.response.status === 401) {
+        nextAuthSignOut()
+      }
     }
 
     return Promise.reject(error)

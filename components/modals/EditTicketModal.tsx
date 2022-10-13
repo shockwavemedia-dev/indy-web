@@ -1,21 +1,27 @@
 import axios from 'axios'
 import { Form, Formik } from 'formik'
+import { useSession } from 'next-auth/react'
+import { useState } from 'react'
 import { useQueryClient } from 'react-query'
+import { SingleValue } from 'react-select'
 import create from 'zustand'
 import { combine } from 'zustand/middleware'
+import { ProjectBriefPriorityOptions } from '../../constants/options/ProjectBriefPriorityOptions'
 import { TicketStatusOptions } from '../../constants/options/TicketStatusOptions'
 import { TicketTypeOptions } from '../../constants/options/TicketTypeOptions'
 import { EditTicketFormSchema } from '../../schemas/EditTicketFormSchema'
 import { useToastStore } from '../../store/ToastStore'
 import { EditTicketForm } from '../../types/forms/EditTicketForm.type'
+import { ProjectBriefPriority } from '../../types/ProjectBriefPriority.type'
+import { SelectOption } from '../../types/SelectOption.type'
 import { Ticket } from '../../types/Ticket.type'
 import { get422And400ResponseError } from '../../utils/ErrorHelpers'
 import { Button } from '../Button'
-import { DateInput } from '../DateInput'
 import { ClipboardIcon } from '../icons/ClipboardIcon'
 import { EditIcon } from '../icons/EditIcon'
 import { FloppyDiskIcon } from '../icons/FloppyDiskIcon'
 import { Modal } from '../Modal'
+import { ProjectBriefPrioritySelect } from '../ProjectBriefPrioritySelect'
 import { RichTextInput } from '../RichTextInput'
 import { Select } from '../Select'
 import { TextInput } from '../TextInput'
@@ -44,6 +50,14 @@ export const EditTicketModal = ({
   const ticket = useEditTicketModal((state) => state.ticket)
   const toggleEditTicketModal = useEditTicketModal((state) => state.toggleEditTicketModal)
   const { showToast } = useToastStore()
+  const { data: session } = useSession()
+
+  const value = ticket && ticket?.priority ? ticket.priority : 'Relaxed'
+
+  const [priority, setPriority] = useState<SingleValue<SelectOption<ProjectBriefPriority>>>({
+    label: value,
+    value,
+  })
 
   return (
     <>
@@ -56,6 +70,7 @@ export const EditTicketModal = ({
               type: ticket.type,
               duedate: ticket.duedate,
               status: ticket.status,
+              priority: ticket.priority,
             }}
             validationSchema={EditTicketFormSchema}
             onSubmit={async (values: EditTicketForm) => {
@@ -88,7 +103,7 @@ export const EditTicketModal = ({
               }
             }}
           >
-            {({ isSubmitting }) => (
+            {({ isSubmitting, setFieldValue }) => (
               <Form className="flex w-130 flex-col">
                 <TextInput
                   label="Subject"
@@ -98,24 +113,37 @@ export const EditTicketModal = ({
                   name="subject"
                   className="mb-5"
                 />
-                <div className="mb-5 flex space-x-5">
-                  <Select
-                    label="Type"
-                    name="type"
-                    Icon={ClipboardIcon}
-                    options={TicketTypeOptions}
-                    defaultValue={TicketTypeOptions.find(({ value }) => value === ticket.type)}
-                  />
-                  <DateInput label="Duedate" name="duedate" placeholder="Enter due date" />
-                </div>
                 <Select
-                  label="Status"
-                  name="status"
+                  label="Type"
+                  name="type"
                   Icon={ClipboardIcon}
-                  options={TicketStatusOptions}
-                  defaultValue={TicketStatusOptions.find(({ value }) => value === ticket.status)}
+                  options={TicketTypeOptions}
+                  defaultValue={TicketTypeOptions.find(({ value }) => value === ticket.type)}
                   className="mb-5"
                 />
+                <label className="mb-2 inline-block text-xs font-medium text-metallic-silver">
+                  Priority
+                </label>
+                <ProjectBriefPrioritySelect
+                  options={ProjectBriefPriorityOptions}
+                  placeholder="Select Priority"
+                  value={priority}
+                  onChange={(priority) => {
+                    setPriority(priority)
+                    setFieldValue('priority', priority!.value)
+                  }}
+                  className="mb-5"
+                />
+                {!!session && !session.isClient && (
+                  <Select
+                    label="Status"
+                    name="status"
+                    Icon={ClipboardIcon}
+                    options={TicketStatusOptions}
+                    defaultValue={TicketStatusOptions.find(({ value }) => value === ticket.status)}
+                    className="mb-5"
+                  />
+                )}
                 <RichTextInput
                   label="Description"
                   Icon={EditIcon}

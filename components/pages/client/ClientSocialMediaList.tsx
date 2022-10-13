@@ -70,7 +70,7 @@ export const ClientSocialMediaList = ({
         onClose={toggleEditSocialMediaModal}
         socialMedia={activeSocialMedia}
       />
-      {socialMediaId !== -1 && socialMediaDetails && (
+      {socialMediaDetails && (
         <EditSocialMediaModal
           isVisible={isEditSocialMediaModalVisible}
           onClose={toggleEditSocialMediaModal}

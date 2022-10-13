@@ -6,6 +6,7 @@ import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { ChangeEvent, ReactElement, useEffect, useState } from 'react'
 import { useQuery, useQueryClient } from 'react-query'
+import { SingleValue } from 'react-select'
 import create from 'zustand'
 import { combine } from 'zustand/middleware'
 import { Button } from '../components/Button'
@@ -16,19 +17,22 @@ import { CheckIcon } from '../components/icons/CheckIcon'
 import { DollarIcon } from '../components/icons/DollarIcon'
 import { EditIcon } from '../components/icons/EditIcon'
 import { ServiceCheckIcon } from '../components/icons/ServiceCheckIcon'
+import { ProjectBriefPrioritySelect } from '../components/ProjectBriefPrioritySelect'
 import { RichTextInput } from '../components/RichTextInput'
 import { TextInput } from '../components/TextInput'
+import { ProjectBriefPriorityOptions } from '../constants/options/ProjectBriefPriorityOptions'
 import PanelLayout, { usePanelLayoutStore } from '../layouts/PanelLayout'
 import { CreateProjectBriefFormSchema } from '../schemas/CreateProjectBriefFormSchema'
 import { useToastStore } from '../store/ToastStore'
 import { CreateProjectBriefForm } from '../types/forms/CreateProjectBriefForm'
 import { Page } from '../types/Page.type'
 import { NextPageWithLayout } from '../types/pages/NextPageWithLayout.type'
+import { ProjectBriefPriority } from '../types/ProjectBriefPriority.type'
+import { SelectOption } from '../types/SelectOption.type'
 import { Service } from '../types/Service.type'
 import { Ticket } from '../types/Ticket.type'
 import { get422And400ResponseError } from '../utils/ErrorHelpers'
 import { objectWithFileToFormData } from '../utils/FormHelpers'
-
 export const useProjectBrief = create(
   combine(
     {
@@ -74,6 +78,13 @@ const ProjectBriefPage: NextPageWithLayout = () => {
     }
   }
 
+  const value = 'Relaxed'
+
+  const [priority, setPriority] = useState<SingleValue<SelectOption<ProjectBriefPriority>>>({
+    label: value,
+    value,
+  })
+
   useEffect(() => {
     setHeader('Project Brief')
     setTicket()
@@ -102,10 +113,11 @@ const ProjectBriefPage: NextPageWithLayout = () => {
             duedate: null,
             description: ticket ? ticket.description : '',
             attachments: [],
+            priority: '',
           }}
           onSubmit={submitForm}
         >
-          {({ isSubmitting }) => (
+          {({ isSubmitting, setFieldValue }) => (
             <Form className="mx-auto flex w-fit space-x-6">
               <div className="flex w-130 flex-col rounded-xl bg-white p-6">
                 <TextInput
@@ -116,11 +128,15 @@ const ProjectBriefPage: NextPageWithLayout = () => {
                   className="mb-5"
                   hint="Give your project a name e.g Melbourne Cup"
                 />
-                <DateInput
-                  name="duedate"
-                  placeholder="Enter due date"
+                <ProjectBriefPrioritySelect
+                  options={ProjectBriefPriorityOptions}
+                  placeholder="Select Priority"
+                  value={priority}
+                  onChange={(priority) => {
+                    setPriority(priority)
+                    setFieldValue('priority', priority!.value)
+                  }}
                   className="mb-5"
-                  hint="This the due date for the marketing material."
                 />
                 <RichTextInput
                   Icon={EditIcon}
