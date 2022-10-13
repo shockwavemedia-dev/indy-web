@@ -32,8 +32,10 @@ const HomePage: NextPageWithLayout = () => {
 
     if (isAdmin) {
       replace('/clients')
+      return null
     } else if (isClient || isManager || isStaff) {
       replace('/dashboard')
+      return null
     }
   }
 
