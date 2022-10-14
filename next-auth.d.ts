@@ -13,6 +13,7 @@ declare module 'next-auth' {
     isClient: boolean
     isManager: boolean
     isStaff: boolean
+    isPrinter: boolean
   }
 
   interface User {
@@ -24,6 +25,7 @@ declare module 'next-auth' {
     isClient: boolean
     isManager: boolean
     isStaff: boolean
+    isPrinter: boolean
   }
 }
 
@@ -37,5 +39,6 @@ declare module 'next-auth/jwt' {
     isClient: boolean
     isManager: boolean
     isStaff: boolean
+    isPrinter: boolean
   }
 }

@@ -35,12 +35,14 @@ import { TicketsAndNotifacationsCountCard } from '../components/TicketsAndNotifa
 import { AdminRoutes } from '../constants/routes/AdminRoutes'
 import { ClientRoutes } from '../constants/routes/ClientRoutes'
 import { ManagerRoutes } from '../constants/routes/ManagerRoutes'
+import { PrinterManagerRoutes } from '../constants/routes/PrinterManagerRoutes'
 import { StaffRoutes } from '../constants/routes/StaffRoutes'
 import DummyAvatar from '../public/images/dummy-avatar.png'
 import IndyLogoWhite from '../public/images/indy-logo-white.png'
 import { Page } from '../types/Page.type'
 import { Service } from '../types/Service.type'
 import { TicketsAndNotifacationsCount } from '../types/TicketsAndNotifacationsCount.type'
+
 export const usePanelLayoutStore = createStore(
   combine(
     {
@@ -99,7 +101,12 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
       return data
     },
     {
-      enabled: !!session && !session.isAdmin && !session.isStaff && !session.isManager,
+      enabled:
+        !!session &&
+        !session.isAdmin &&
+        !session.isStaff &&
+        !session.isManager &&
+        !session.isPrinterManager,
     }
   )
 
@@ -125,7 +132,7 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
 
   const { panelName, routes } = useMemo(() => {
     if (session) {
-      const { isAdmin, isClient, isManager, isStaff } = session
+      const { isAdmin, isClient, isManager, isStaff, isPrinterManager } = session
 
       if (isAdmin) {
         return {
@@ -152,6 +159,11 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
             ? session.user.userType.department.name
             : 'Staff Panel',
           routes: StaffRoutes,
+        }
+      } else if (isPrinterManager) {
+        return {
+          panelName: 'Printer Manager',
+          routes: PrinterManagerRoutes,
         }
       }
     }
