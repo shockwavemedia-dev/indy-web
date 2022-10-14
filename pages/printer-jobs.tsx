@@ -28,14 +28,14 @@ const PrintPage: NextPageWithLayout = () => {
       <div className="mx-auto w-full">
         <div className="mt-6 flex gap-6 transition-all lg:flex-col">
           <div className="flex flex-1 flex-col">
-            <LinkButton className="mb-8 w-40" title="Add Printer Job" href="/new-printer" />
+            <LinkButton className="mb-8 w-40" title="Add Printer Job" href="/new-printer-job" />
             <Card title="Printer Job List" className="flex max-h-155 flex-1 flex-col">
               <DataTable
                 columns={ClientPrinterJobColumns}
                 dataEndpoint={`/v1/clients/${session?.user.userType.client.id}/printer-jobs`}
                 tableQueryKey={['printerJobs']}
                 ofString="printerJobs"
-                rowOnClick={({ original: { id } }) => replace(`/printer/${id}`)}
+                rowOnClick={({ original: { id } }) => replace(`/printer-jobs/${id}`)}
               />
             </Card>
           </div>

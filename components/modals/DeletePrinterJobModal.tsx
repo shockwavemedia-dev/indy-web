@@ -33,7 +33,7 @@ export const DeletePrinterJobModal = () => {
 
       if (status === 200) {
         queryClient.invalidateQueries(['printerJobs'])
-        replace('/print')
+        replace('/printer-jobs')
         toggleModal()
         showToast({
           type: 'success',

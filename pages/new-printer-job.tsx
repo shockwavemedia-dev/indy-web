@@ -61,7 +61,7 @@ const NewPrinterPage: NextPageWithLayout = () => {
       )
       if (status === 200) {
         queryClient.invalidateQueries(['printerJobs'])
-        replace('/print')
+        replace('/printer-jobs')
         showToast({
           type: 'success',
           message: `New Printer Order successfully created!`,
@@ -271,7 +271,7 @@ const NewPrinterPage: NextPageWithLayout = () => {
                   </Card>
                   <Card className="h-fit">
                     <div className="flex space-x-5">
-                      <LinkButton title="Cancel" href="/print" light />
+                      <LinkButton title="Cancel" href="/printer-jobs" light />
                       <Button ariaLabel="Submit" disabled={isSubmitting} type="submit">
                         <FloppyDiskIcon className="stroke-white" />
                         <div>Order</div>

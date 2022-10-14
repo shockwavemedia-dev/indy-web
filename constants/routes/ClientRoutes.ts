@@ -67,9 +67,9 @@ export const ClientRoutes: Array<Route> = [
     pathname: '/photography-videography',
   },
   {
-    title: 'Print',
+    title: 'Printer Jobs',
     Icon: PrintIcon,
-    pathname: '/print',
+    pathname: '/printer-jobs',
   },
   {
     title: 'Website Services',

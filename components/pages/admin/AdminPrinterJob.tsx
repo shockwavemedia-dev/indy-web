@@ -71,7 +71,6 @@ const AdminPrinterJobPage = ({ printerId }: { printerId: number }) => {
   }
 
   const submitForm = async (values: EditPrinterJobForm) => {
-    console.log(values)
     const additionalOptions = [
       { quantity: values.rubberBunds ? values.rubberBunds : 0, title: 'Bundling - Rubber Bands' },
       {
@@ -130,8 +129,8 @@ const AdminPrinterJobPage = ({ printerId }: { printerId: number }) => {
   }
 
   useEffect(() => {
-    if (printer?.product) {
-      const filterProduct = PrinterOptions?.filter((option) => option.product === printer?.product)
+    if (printer && printer.product !== null) {
+      const filterProduct = PrinterOptions?.filter((option) => option.product === printer.product)
 
       const option =
         filterProduct[0].option.map((name) => ({
@@ -149,7 +148,7 @@ const AdminPrinterJobPage = ({ printerId }: { printerId: number }) => {
       setFormat(format)
     }
     if (printer) {
-      setHeader(`Print Order ${printer.customerName}`)
+      setHeader(`Printer Job ${printer.customerName}`)
     }
   }, [printer])
 
@@ -251,14 +250,14 @@ const AdminPrinterJobPage = ({ printerId }: { printerId: number }) => {
                   <div className="mb-5 w-fit text-base font-semibold text-halloween-orange">
                     Specifications
                   </div>
-                  <Select
+                  <SelectNoFormik
                     label="Product"
                     name="product"
                     Icon={ClipboardIcon}
                     options={PrinterProductOptions}
                     onChange={(product: SingleValue<SelectOption<string>>) => {
                       setFieldValue('product', product?.value)
-                      updateFilter
+                      updateFilter(product)
                     }}
                     defaultValue={PrinterProductOptions.find(
                       ({ value }) => value === printer?.product
@@ -266,18 +265,24 @@ const AdminPrinterJobPage = ({ printerId }: { printerId: number }) => {
                     className="mb-5"
                   />
                   <div className="mb-8 flex space-x-5">
-                    <Select
+                    <SelectNoFormik
                       label="Option"
                       name="option"
                       Icon={ClipboardIcon}
                       options={optionSelect}
+                      onChange={(option: SingleValue<SelectOption<string>>) => {
+                        setFieldValue('option', option?.value)
+                      }}
                       defaultValue={optionSelect.find(({ value }) => value === printer?.option)}
                     />
-                    <Select
+                    <SelectNoFormik
                       label="Format"
                       name="format"
                       Icon={ClipboardIcon}
                       options={formatSelect}
+                      onChange={(format: SingleValue<SelectOption<string>>) => {
+                        setFieldValue('format', format?.value)
+                      }}
                       defaultValue={formatSelect.find(({ value }) => value === printer?.format)}
                     />
                   </div>
@@ -402,7 +407,7 @@ const AdminPrinterJobPage = ({ printerId }: { printerId: number }) => {
                   </Card>
                   <Card className="h-fit">
                     <div className="flex space-x-5">
-                      <LinkButton title="Cancel" href="/print" light />
+                      <LinkButton title="Cancel" href="/printer-jobs" light />
                       <Button ariaLabel="Submit" disabled={isSubmitting} type="submit">
                         <FloppyDiskIcon className="stroke-white" />
                         <div>Update Order</div>
