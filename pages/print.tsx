@@ -8,10 +8,9 @@ import { LinkButton } from '../components/LinkButton'
 import { DeletePrinterJobModal } from '../components/modals/DeletePrinterJobModal'
 import { Notifications } from '../components/Notifications'
 import { RetainerInclusions } from '../components/RetainerInclusions'
-import { PrinterJobColumns } from '../constants/tables/PrinterJobColumns'
+import { ClientPrinterJobColumns } from '../constants/tables/ClientPrinterJobColumns'
 import PanelLayout, { usePanelLayoutStore } from '../layouts/PanelLayout'
 import { NextPageWithLayout } from '../types/pages/NextPageWithLayout.type'
-
 const PrintPage: NextPageWithLayout = () => {
   const { setHeader } = usePanelLayoutStore()
   const { data: session } = useSession()
@@ -32,7 +31,7 @@ const PrintPage: NextPageWithLayout = () => {
             <LinkButton className="mb-8 w-40" title="Add Printer Job" href="/new-printer" />
             <Card title="Printer Job List" className="flex max-h-155 flex-1 flex-col">
               <DataTable
-                columns={PrinterJobColumns}
+                columns={ClientPrinterJobColumns}
                 dataEndpoint={`/v1/clients/${session?.user.userType.client.id}/printer-jobs`}
                 tableQueryKey={['printerJobs']}
                 ofString="printerJobs"

@@ -1,11 +1,8 @@
-import { Tooltip } from '@mui/material'
 import { Column } from 'react-table'
-import { TrashIcon } from '../../components/icons/TrashIcon'
-import { useDeleteDeletePrinterJobModalModalStore } from '../../components/modals/DeletePrinterJobModal'
 import { Pill } from '../../components/Pill'
 import { PrinterJob } from '../../types/PrinterJob.type'
 
-export const PrinterJobColumns: Array<Column<PrinterJob>> = [
+export const AdminPrinterJobColumns: Array<Column<PrinterJob>> = [
   {
     Header: 'Printer Company',
     accessor: 'printer',
@@ -67,29 +64,5 @@ export const PrinterJobColumns: Array<Column<PrinterJob>> = [
     Header: 'Format',
     accessor: 'format',
     Cell: ({ value }) => <div className=" text-sm font-medium text-onyx">{value}</div>,
-  },
-  {
-    Header: 'Action',
-    accessor: 'id',
-    id: 'actions',
-    disableSortBy: true,
-    Cell: ({ row: { original: printer } }) => {
-      const { toggleModal: togglePrinterModal } = useDeleteDeletePrinterJobModalModalStore()
-
-      return (
-        <div className="flex">
-          <Tooltip title="Delete Printer" placement="top">
-            <button
-              onClick={(e) => {
-                e.stopPropagation()
-                togglePrinterModal(printer)
-              }}
-            >
-              <TrashIcon className="stroke-waterloo hover:stroke-halloween-orange" />
-            </button>
-          </Tooltip>
-        </div>
-      )
-    },
   },
 ]
