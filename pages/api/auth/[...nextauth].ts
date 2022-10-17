@@ -34,6 +34,7 @@ const nextAuth = NextAuth({
             isClient: type === 'client_users',
             isManager: type === 'admin_users' && (role === 'account manager' || role === 'manager'),
             isStaff: type === 'admin_users' && role === 'staff',
+            isPrinterManager: type === 'printer',
           }
         } catch (e) {
           if (((x): x is AxiosError<{ message: string }> => axios.isAxiosError(x))(e)) {
@@ -56,6 +57,7 @@ const nextAuth = NextAuth({
         token.isClient = user.isClient
         token.isManager = user.isManager
         token.isStaff = user.isStaff
+        token.isPrinterManager = user.isPrinterManager
       }
 
       if (getTime(new Date()) >= token.expiry) {
@@ -81,6 +83,7 @@ const nextAuth = NextAuth({
       session.isClient = token.isClient
       session.isManager = token.isManager
       session.isStaff = token.isStaff
+      session.isPrinterManager = token.isPrinterManager
 
       return session
     },

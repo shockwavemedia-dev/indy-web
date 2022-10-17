@@ -13,7 +13,7 @@ export type AuthenticationResponseUser = {
   birthDate: Date
   userType: {
     id: number
-    type: 'admin_users' | 'client_users' | 'lead_client'
+    type: 'admin_users' | 'client_users' | 'lead_client' | 'printer'
     role:
       | 'admin'
       | 'manager'
@@ -22,6 +22,7 @@ export type AuthenticationResponseUser = {
       | 'marketing'
       | 'marketing manager'
       | 'group manager'
+      | 'print manager'
     clientId: number
     department: Department
     client: Client
