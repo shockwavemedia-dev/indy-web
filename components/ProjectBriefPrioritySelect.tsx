@@ -80,7 +80,7 @@ export const ProjectBriefPrioritySelect = <
                   return '#DC143C'
                 case 'Standard':
                   return '#DAA520'
-                case 'Relaxed':
+                case 'Relax':
                   return '#228B22'
                 default:
                   return '#F25D23'
@@ -93,7 +93,7 @@ export const ProjectBriefPrioritySelect = <
               return '#fbd0d9'
             case 'Standard':
               return '#f8eed3'
-            case 'Relaxed':
+            case 'Relax':
               return '#d6f5d6'
           }
         })(),
@@ -122,7 +122,7 @@ export const ProjectBriefPrioritySelect = <
               return '#DC143C'
             case 'Standard':
               return '#DAA520'
-            case 'Relaxed':
+            case 'Relax':
               return '#228B22'
             default:
               return '#F25D23'

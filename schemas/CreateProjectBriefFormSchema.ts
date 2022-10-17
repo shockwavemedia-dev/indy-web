@@ -16,7 +16,7 @@ export const CreateProjectBriefFormSchema: SchemaOf<CreateProjectBriefForm> = ob
         .required()
     )
     .min(1),
-  priority: mixed().required().oneOf(['Urgent', 'Standard', 'Relaxed']),
+  priority: mixed().required().oneOf(['Urgent', 'Standard', 'Relax']),
   description: string().required(),
   attachments: array().of(mixed().optional()),
 })

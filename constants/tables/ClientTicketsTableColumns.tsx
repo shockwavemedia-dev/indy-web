@@ -120,7 +120,7 @@ export const ClientTicketsTableColumns: Array<Column<Ticket>> = [
               return 'bg-light-red-crimson'
             case 'Standard':
               return 'bg-light-golden-rod'
-            case 'Relaxed':
+            case 'Relax':
               return 'bg-light-forest-green'
           }
         })()}
@@ -130,7 +130,7 @@ export const ClientTicketsTableColumns: Array<Column<Ticket>> = [
               return 'text-red-crimson'
             case 'Standard':
               return 'text-golden-rod'
-            case 'Relaxed':
+            case 'Relax':
               return 'text-forest-green'
           }
         })()}
