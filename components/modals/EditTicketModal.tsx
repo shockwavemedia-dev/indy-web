@@ -130,6 +130,7 @@ export const EditTicketModal = ({
                   defaultValue={ProjectBriefPriorityOptions.find(
                     ({ value }) => value === ticket.priority
                   )}
+                  value={priority}
                   onChange={(priority) => {
                     setPriority(priority)
                     setFieldValue('priority', priority!.value)
