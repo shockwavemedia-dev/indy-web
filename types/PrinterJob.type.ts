@@ -28,4 +28,5 @@ export type PrinterJob = {
   printer: Printer
   client: Client
   status: PrinterJobStatus
+  description?: string | null
 }

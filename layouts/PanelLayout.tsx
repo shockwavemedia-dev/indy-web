@@ -242,7 +242,7 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
           </a>
         </Link>
         <IndyIcon className="m-0 ml-auto -mr-20 scale-50 p-0" />
-        {session.isStaff ? (
+        {session.isStaff || session.isPrinterManager ? (
           <div className="relative p-1">
             <button
               className="group relative"
@@ -352,7 +352,7 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
       </div>
       {session.isClient && <CreateSupportRequestModal />}
       {session.isManager && <CreateSupportTicketModal />}
-      {session.isStaff && <SocialMediaNotificationModal />}
+      {(session.isStaff || session.isPrinterManager) && <SocialMediaNotificationModal />}
     </>
   )
 }
