@@ -52,7 +52,7 @@ export const EditTicketModal = ({
   const { showToast } = useToastStore()
   const { data: session } = useSession()
 
-  const value = ticket && ticket?.priority ? ticket.priority : 'Relaxed'
+  const value = ticket && ticket?.priority ? ticket.priority : 'Relax'
 
   const [priority, setPriority] = useState<SingleValue<SelectOption<ProjectBriefPriority>>>({
     label: value,
@@ -127,6 +127,9 @@ export const EditTicketModal = ({
                 <ProjectBriefPrioritySelect
                   options={ProjectBriefPriorityOptions}
                   placeholder="Select Priority"
+                  defaultValue={ProjectBriefPriorityOptions.find(
+                    ({ value }) => value === ticket.priority
+                  )}
                   value={priority}
                   onChange={(priority) => {
                     setPriority(priority)

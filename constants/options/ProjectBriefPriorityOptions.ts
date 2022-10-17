@@ -5,5 +5,5 @@ import { SelectOption } from '../../types/SelectOption.type'
 export const ProjectBriefPriorityOptions: Options<SelectOption<ProjectBriefPriority>> = [
   { label: 'Urgent', value: 'Urgent' },
   { label: 'Standard', value: 'Standard' },
-  { label: 'Relaxed', value: 'Relaxed' },
+  { label: 'Relax', value: 'Relax' },
 ]
