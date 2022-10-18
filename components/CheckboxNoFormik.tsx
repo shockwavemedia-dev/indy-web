@@ -10,7 +10,7 @@ export const CheckboxNoFormik = ({
   label: string
   className?: string
   checked: boolean
-  onChange: () => void
+  onChange?: () => void
 }) => {
   const id = useId()
 

@@ -4,7 +4,7 @@ export const Pill = ({
   twBackgroundColor,
   twTextColor = 'text-onyx',
 }: {
-  value: string
+  value?: string
   pillColor?: string
   twBackgroundColor?: string
   twTextColor?: string
