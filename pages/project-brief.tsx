@@ -33,13 +33,28 @@ import { Service } from '../types/Service.type'
 import { Ticket } from '../types/Ticket.type'
 import { get422And400ResponseError } from '../utils/ErrorHelpers'
 import { objectWithFileToFormData } from '../utils/FormHelpers'
+
 export const useProjectBrief = create(
   combine(
     {
       ticket: undefined as undefined | Ticket,
+      activeService: undefined as Service | undefined,
+      services: [] as Array<{
+        serviceId: number
+        extras: Array<string>
+        customFields: Array<string>
+      }>,
     },
     (set) => ({
       setTicket: (ticket?: Ticket) => set({ ticket }),
+      setServices: (
+        services: Array<{
+          serviceId: number
+          extras: Array<string>
+          customFields: Array<string>
+        }>
+      ) => set({ services }),
+      setActiveService: (activeService?: Service) => set({ activeService }),
     })
   )
 )
@@ -51,6 +66,8 @@ const ProjectBriefPage: NextPageWithLayout = () => {
   const { replace } = useRouter()
   const queryClient = useQueryClient()
   const ticket = useProjectBrief((state) => state.ticket)
+  const services = useProjectBrief((state) => state.services)
+  const setServices = useProjectBrief((state) => state.setServices)
   const setTicket = useProjectBrief((state) => state.setTicket)
   const [marketingDateVisible, setMarketingDateVisible] = useState(false)
 
@@ -61,7 +78,17 @@ const ProjectBriefPage: NextPageWithLayout = () => {
       const {
         status,
         data: { ticketCode },
-      } = await axios.post<Ticket>('/v1/tickets/event', objectWithFileToFormData(values))
+      } = await axios.post<Ticket>(
+        '/v1/tickets/event',
+        objectWithFileToFormData({
+          ...values,
+          services: values.services.map(({ serviceId, extras, customFields }) => ({
+            serviceId,
+            extras,
+            customFields,
+          })),
+        })
+      )
       if (status === 200) {
         queryClient.invalidateQueries('tickets')
         replace('/dashboard')
@@ -78,16 +105,24 @@ const ProjectBriefPage: NextPageWithLayout = () => {
     }
   }
 
-  const value = 'Relax'
-
   const [priority, setPriority] = useState<SingleValue<SelectOption<ProjectBriefPriority>>>({
-    label: value,
-    value,
+    label: 'Relax',
+    value: 'Relax',
   })
 
   useEffect(() => {
     setHeader('Project Brief')
     setTicket()
+
+    if (ticket && ticket.services) {
+      setServices(
+        ticket.services.map(({ serviceId, extras }) => ({
+          serviceId,
+          extras,
+          customFields: [],
+        }))
+      )
+    }
   }, [])
 
   return (
@@ -102,14 +137,7 @@ const ProjectBriefPage: NextPageWithLayout = () => {
             requestedBy: session?.user.id || -1,
             clientId: session?.user.userType.client.id || -1,
             subject: '',
-            services:
-              ticket && ticket.services
-                ? ticket.services.map(({ serviceId, extras }) => ({
-                    serviceId,
-                    extras,
-                    customFields: [],
-                  }))
-                : [],
+            services,
             duedate: null,
             description: ticket ? ticket.description : '',
             attachments: [],
@@ -185,10 +213,13 @@ const ProjectBriefPage: NextPageWithLayout = () => {
 
 const SelectService = () => {
   const { data: session } = useSession()
-  const { values, setFieldValue } = useFormikContext<CreateProjectBriefForm>()
-  const [activeService, setActiveService] = useState<Service | null>(null)
+  const services = useProjectBrief((state) => state.services)
+  const activeService = useProjectBrief((state) => state.activeService)
+  const setServices = useProjectBrief((state) => state.setServices)
+  const setActiveService = useProjectBrief((state) => state.setActiveService)
+  const { setFieldValue } = useFormikContext<CreateProjectBriefForm>()
 
-  const { data: services } = useQuery('services', async () => {
+  const { data: fetchedServices } = useQuery('services', async () => {
     const {
       data: { data },
     } = await axios.get<{
@@ -199,34 +230,36 @@ const SelectService = () => {
     return data
   })
 
-  const removeActiveService = () => setActiveService(null)
-
   return (
     <>
       <div className="flex h-fit w-60 flex-col items-center space-y-2 rounded-xl bg-white p-5">
         <div className="mb-3 text-lg font-semibold text-onyx">Select Services</div>
-        {services?.map((service) => {
+        {fetchedServices?.map((service) => {
           const toggleService = () => {
-            if (values.services.find(({ serviceId }) => serviceId === service.serviceId)) {
-              removeActiveService()
-              setFieldValue(
-                'services',
-                values.services.filter(({ serviceId }) => serviceId !== service.serviceId)
-              )
-              return
-            }
+            if (service.extras.length === 0) {
+              let payload
+              if (services.find(({ serviceId }) => serviceId === service.serviceId)) {
+                payload = services.filter(({ serviceId }) => serviceId !== service.serviceId)
+              } else {
+                payload = [
+                  {
+                    serviceId: service.serviceId,
+                    extras: [],
+                    customFields: [],
+                  },
+                  ...services,
+                ]
+              }
 
-            if (service && service.extras.length > 0) {
-              setActiveService(service)
+              setServices(payload)
+              setFieldValue('services', payload)
+            } else {
+              if (activeService?.serviceId === service.serviceId) {
+                setActiveService()
+              } else {
+                setActiveService(service)
+              }
             }
-
-            setFieldValue('services', [
-              {
-                serviceId: service.serviceId,
-                extras: [],
-              },
-              ...values.services,
-            ])
           }
 
           return (
@@ -235,7 +268,14 @@ const SelectService = () => {
               disabled={!service.isEnabled}
               onClick={toggleService}
               serviceName={service.serviceName}
-              selected={values.services.some(({ serviceId: sid }) => sid === service.serviceId)}
+              selected={
+                service.extras.length > 0
+                  ? !!services.find(
+                      ({ serviceId: sid, extras }) => sid === service.serviceId && extras.length > 0
+                    )
+                  : services.some(({ serviceId: sid }) => sid === service.serviceId)
+              }
+              activeService={activeService?.serviceId === service.serviceId}
             />
           )
         })}
@@ -247,7 +287,7 @@ const SelectService = () => {
           </div>
           <div className="space-y-2">
             {activeService.extras.map((extras, i) => {
-              const foundedExtras = values.services.find(
+              const foundedExtras = services.find(
                 ({ serviceId }) => serviceId === activeService.serviceId
               )?.extras
               return (
@@ -276,21 +316,29 @@ const ServiceButton = ({
   selected,
   disabled,
   onClick,
+  activeService,
 }: {
   serviceName: string
   selected: boolean
   disabled: boolean
   onClick: () => void
+  activeService: boolean
 }) => {
   const serviceButton = (
     <button
       type="button"
       onClick={disabled ? () => {} : onClick}
       className={`flex h-11 w-full items-center justify-between whitespace-nowrap rounded-xl px-6 disabled:opacity-50 ${
-        selected ? 'bg-halloween-orange' : 'border-1.5 border-solid border-bright-gray bg-white'
+        selected || activeService
+          ? 'bg-halloween-orange'
+          : 'border-1.5 border-solid border-bright-gray bg-white'
       } ${disabled ? 'cursor-default opacity-40' : ''}`}
     >
-      <div className={`text-left  text-sm font-medium ${selected ? 'text-white' : 'text-onyx'}`}>
+      <div
+        className={`text-left  text-sm font-medium ${
+          selected || activeService ? 'text-white' : 'text-onyx'
+        }`}
+      >
         {serviceName}
       </div>
       {selected && <ServiceCheckIcon />}
@@ -315,10 +363,10 @@ const Extras = ({
   serviceId: number
   extrasName: string
 }) => {
-  const { values, setFieldValue } = useFormikContext<CreateProjectBriefForm>()
-
-  const services = values.services.filter(({ serviceId: sid }) => sid !== serviceId)
-  const activeService = values.services.find(({ serviceId: sid }) => sid === serviceId)
+  const services = useProjectBrief((state) => state.services)
+  const setServices = useProjectBrief((state) => state.setServices)
+  const activeService = useProjectBrief((state) => state.activeService)
+  const { setFieldValue } = useFormikContext<CreateProjectBriefForm>()
 
   const [customFieldVisible, setCustomFieldVisible] = useState(false)
 
@@ -331,10 +379,37 @@ const Extras = ({
 
   const toggleExtras = ({ currentTarget: { checked } }: ChangeEvent<HTMLInputElement>) => {
     if (activeService) {
+      const service = services.find(({ serviceId }) => serviceId === activeService.serviceId)
+      let payload
+
       if (checked) {
-        activeService.extras.push(extrasName)
+        if (service) {
+          payload = [
+            ...services.filter(({ serviceId }) => serviceId !== service.serviceId),
+            { ...service, extras: [...service.extras, extrasName] },
+          ]
+        } else {
+          payload = [...services, { ...activeService, extras: [extrasName] }]
+        }
+
+        setServices(payload)
+        setFieldValue('services', payload)
       } else {
-        activeService.extras = activeService.extras.filter((extras) => extras !== extrasName)
+        if (service) {
+          const extrasPayload = service.extras.filter((extra) => extra !== extrasName)
+
+          if (extrasPayload.length > 0) {
+            payload = [
+              ...services.filter(({ serviceId }) => serviceId !== service.serviceId),
+              { ...service, extras: extrasPayload },
+            ]
+          } else {
+            payload = services.filter(({ serviceId }) => serviceId !== service.serviceId)
+          }
+
+          setServices(payload)
+          setFieldValue('services', payload)
+        }
       }
 
       if (serviceId === 2 && extrasName === 'Custom') {
@@ -344,12 +419,11 @@ const Extras = ({
         toggleAdvertisingCustomField()
       }
     }
-
-    setFieldValue('services', [...services, activeService])
   }
 
-  const setCustomFieldValue = ({ currentTarget: { value } }: ChangeEvent<HTMLInputElement>) =>
-    setFieldValue('services', [...services, { ...activeService, customFields: [value] }])
+  const setCustomFieldValue = ({ currentTarget: { value } }: ChangeEvent<HTMLInputElement>) => {
+    activeService && setServices([...services, { ...activeService, customFields: [value] }])
+  }
 
   const extras = (
     <>
@@ -359,8 +433,13 @@ const Extras = ({
           name={extrasName}
           id={extrasName}
           className="mr-3 h-4 w-4 appearance-none rounded bg-white ring-1 ring-inset ring-bright-gray checked:bg-halloween-orange checked:ring-0"
-          onChange={disabled ? () => {} : toggleExtras}
+          onChange={disabled ? undefined : toggleExtras}
           disabled={disabled}
+          checked={
+            !!services.find(
+              ({ serviceId: sid, extras }) => sid === serviceId && extras.includes(extrasName)
+            )
+          }
         />
         <CheckIcon className="pointer-events-none absolute left-0.75 stroke-white" />
         <label htmlFor={extrasName} className=" text-sm font-medium text-onyx">
