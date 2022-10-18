@@ -17,8 +17,8 @@ export type PrinterJob = {
   notes?: string | null
   delivery?: string | null
   price?: string | null
-  blindShipping?: boolean
-  resellerSamples?: boolean
+  blindShipping: boolean
+  resellerSamples: boolean
   rubberBunds?: number | null
   shrinkwrapping?: number | null
   drilling?: number | null
@@ -29,4 +29,5 @@ export type PrinterJob = {
   client: Client
   status: PrinterJobStatus
   description?: string | null
+  isApproved?: number | null
 }

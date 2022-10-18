@@ -1,5 +1,5 @@
+import { Tooltip } from '@mui/material'
 import axios from 'axios'
-import { Form, Formik } from 'formik'
 import Head from 'next/head'
 import { ReactElement, useEffect } from 'react'
 import { useQuery, useQueryClient } from 'react-query'
@@ -7,25 +7,26 @@ import { SingleValue } from 'react-select'
 import { PrinterStatusOptions } from '../../../constants/options/printer/PrinterStatusOptions'
 import PanelLayout, { usePanelLayoutStore } from '../../../layouts/PanelLayout'
 import { useToastStore } from '../../../store/ToastStore'
-import { EditPrinterJobForm } from '../../../types/forms/EditPrinterJobForm.type'
 import { PrinterJob } from '../../../types/PrinterJob.type'
 import { SelectOption } from '../../../types/SelectOption.type'
 import { get422And400ResponseError } from '../../../utils/ErrorHelpers'
-import { Button } from '../../Button'
 import { Card } from '../../Card'
-import { Checkbox } from '../../Checkbox'
+import { CheckboxNoFormik } from '../../CheckboxNoFormik'
 import { ClipboardIcon } from '../../icons/ClipboardIcon'
-import { DollarIcon } from '../../icons/DollarIcon'
-import { FloppyDiskIcon } from '../../icons/FloppyDiskIcon'
-import { LinkButton } from '../../LinkButton'
+import { PlusIcon } from '../../icons/PlusIcon'
+import {
+  AddPrinterJobPriceModal,
+  useAddPrinterJoPricebModalModalStore,
+} from '../../modals/AddPrinterJobPriceModal'
+import { Pill } from '../../Pill'
 import { SelectNoFormik } from '../../SelectNoFormik'
-import { TextInput } from '../../TextInput'
 import { TitleValue } from '../../TitleValue'
 
 const PrinterManagerPrinterJobPage = ({ printerId }: { printerId: number }) => {
   const { setHeader } = usePanelLayoutStore()
   const queryClient = useQueryClient()
   const { showToast } = useToastStore()
+  const { toggleModal: togglePrinterJobPriceModal } = useAddPrinterJoPricebModalModalStore()
 
   const { data: printer } = useQuery(
     ['printer', printerId],
@@ -37,25 +38,6 @@ const PrinterManagerPrinterJobPage = ({ printerId }: { printerId: number }) => {
       enabled: !!printerId,
     }
   )
-
-  const submitForm = async (values: EditPrinterJobForm) => {
-    try {
-      const { status } = await axios.put(`/v1/printer-jobs/${printer?.id}`, values)
-      if (status === 200) {
-        queryClient.invalidateQueries(['printer', printer?.id])
-        queryClient.invalidateQueries(['printerJobs'])
-        showToast({
-          type: 'success',
-          message: `All changes was successfully saved!`,
-        })
-      }
-    } catch (e) {
-      showToast({
-        type: 'error',
-        message: get422And400ResponseError(e),
-      })
-    }
-  }
 
   const updateStatus = async (newValue: SingleValue<SelectOption<string>>) => {
     try {
@@ -83,21 +65,6 @@ const PrinterManagerPrinterJobPage = ({ printerId }: { printerId: number }) => {
       setHeader(`Printer Job ${printer.customerName}`)
     }
   }, [printer])
-
-  const rubberBunds = printer?.additionalOptions?.filter(
-    (option) => option.title === 'Bundling - Rubber Bands'
-  )
-  const shrinkwrapping = printer?.additionalOptions?.filter(
-    (option) => option.title === 'Bundling - Shrink Wrapping'
-  )
-  const perforate = printer?.additionalOptions?.filter((option) => option.title === 'Perforate')
-  const padding = printer?.additionalOptions?.filter(
-    (option) => option.title === 'Padding - Inc BoxBoard (Number of Pads)'
-  )
-  const drilling = printer?.additionalOptions?.filter(
-    (option) => option.title === 'Drilling - up to 5 X 4-6mm holes (specify in notes)'
-  )
-
   if (!printer) return null
 
   return (
@@ -105,164 +72,162 @@ const PrinterManagerPrinterJobPage = ({ printerId }: { printerId: number }) => {
       <Head>
         <title>{`Indy - ${printer?.customerName}`}</title>
       </Head>
-      <div className="mx-auto w-full">
-        <Formik
-          initialValues={{
-            customerName: printer?.customerName,
-            product: printer?.product,
-            option: printer?.option,
-            kinds: printer?.kinds,
-            quantity: printer?.quantity,
-            runOns: printer?.runOns,
-            format: printer?.format,
-            finalTrimSize: printer?.finalTrimSize,
-            reference: printer?.reference,
-            notes: printer?.notes,
-            additionalOptions: printer?.additionalOptions,
-            delivery: printer?.delivery,
-            price: printer?.price,
-            blindShipping: printer?.blindShipping,
-            resellerSamples: printer?.resellerSamples,
-            status: printer?.status,
-            rubberBunds: rubberBunds?.[0].quantity,
-            shrinkwrapping: shrinkwrapping?.[0].quantity,
-            perforate: perforate?.[0].quantity,
-            padding: padding?.[0].quantity,
-            drilling: drilling?.[0].quantity,
-          }}
-          onSubmit={submitForm}
-        >
-          {({ isSubmitting }) => (
-            <Form>
-              <div className="flex w-full">
-                <Card className="mr-8 h-fit w-9/12">
-                  <div className="mb-2 w-fit text-base font-semibold text-halloween-orange">
-                    Printer
-                  </div>
-                  <div className="mb-5 w-fit text-sm font-medium">
-                    {printer?.printer !== null
-                      ? printer?.printer.companyName
-                      : 'No Printer Selected'}
-                  </div>
-                  <div className="mb-2 w-fit text-base font-semibold text-halloween-orange">
-                    Status
-                  </div>
+      <div className="mx-auto flex w-full">
+        <Card title="Printer Job Details" className="w-full">
+          <div className="grid grid-cols-2 gap-3">
+            <div className="space-y-4">
+              <div className="space-y-1">
+                <div className="text-sm font-medium text-halloween-orange">Printer</div>
+                <div className="text-sm font-medium capitalize text-onyx">
+                  {printer?.printer !== null ? printer?.printer.companyName : 'No Printer Selected'}
+                </div>
+              </div>
+              <div className="space-y-1">
+                <div className="text-sm font-medium text-halloween-orange">Customer</div>
+                <div className="text-sm font-medium capitalize text-onyx">
+                  {printer?.customerName}
+                </div>
+              </div>
+              <div className="space-y-1">
+                <div className=" text-sm font-medium text-halloween-orange">Status</div>
+                {printer?.isApproved && printer?.isApproved === 1 ? (
                   <SelectNoFormik
-                    name="status"
                     Icon={ClipboardIcon}
                     options={PrinterStatusOptions}
                     defaultValue={PrinterStatusOptions.find(
                       ({ value }) => value === printer?.status
                     )}
                     onChange={updateStatus}
-                    className="mb-5"
+                    className="mb-5 mt-3 !w-2/4"
                   />
-                  <div className="mb-2 w-fit text-base font-semibold text-halloween-orange">
-                    Price
-                  </div>
-                  <TextInput
-                    type="text"
-                    Icon={DollarIcon}
-                    placeholder="Enter Price"
-                    name="price"
-                    className="mb-5"
-                  />
-                  <div className="mb-3 w-fit text-base font-semibold text-halloween-orange">
-                    Customer
-                  </div>
-                  <div className="mb-5 text-sm font-medium capitalize text-onyx">
-                    {printer?.customerName}
-                  </div>
-                  <div className="mb-5 w-fit text-base font-semibold text-halloween-orange">
-                    Specifications
-                  </div>
-                  <div className="space-y-4">
-                    <TitleValue title="Product" className="mb-5 capitalize">
-                      {printer?.product}
-                    </TitleValue>
-                    <TitleValue title="Option" className="capitalize">
-                      {printer?.option}
-                    </TitleValue>
-                    <TitleValue title="Format" className="capitalize">
-                      {printer?.format}
-                    </TitleValue>
-                    <TitleValue title="Kinds" className="capitalize">
-                      {printer?.kinds}
-                    </TitleValue>
-                    <TitleValue title="Quantity" className="capitalize">
-                      {printer?.quantity}
-                    </TitleValue>
-                    <TitleValue title="Run Ons" className="capitalize">
-                      {printer?.runOns}
-                    </TitleValue>
-                  </div>
-                  {printer?.additionalOptions && printer?.additionalOptions?.length > 0 && (
-                    <div className="space-y-4">
-                      <div className="mb-5 w-fit text-base font-semibold text-halloween-orange">
-                        Additional Options
-                      </div>
-                      {printer?.additionalOptions?.map(({ title, quantity }) => (
-                        <TitleValue key={title} title={title ? title : ''}>
-                          {quantity}
-                        </TitleValue>
-                      ))}
-                    </div>
+                ) : (
+                  <div className="text-sm font-medium capitalize text-onyx">{printer?.status}</div>
+                )}
+              </div>
+              <div className="mb-5 space-y-1">
+                <div className="flex space-x-2">
+                  <div className=" text-sm font-medium text-halloween-orange">Price</div>
+                  {(printer?.isApproved === 0 || printer.isApproved === null) && (
+                    <Tooltip title="Add Price" placement="top">
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          togglePrinterJobPriceModal(printer)
+                        }}
+                        className="group"
+                      >
+                        <PlusIcon className="stroke-waterloo group-hover:stroke-halloween-orange" />
+                      </button>
+                    </Tooltip>
                   )}
-                </Card>
-                <div className="flex w-9/12  flex-col">
-                  <Card className="mb-8 h-fit">
-                    <div className="mb-3 w-fit text-base font-semibold text-halloween-orange">
-                      Delivery
-                    </div>
-                    <div className="mb-5 text-sm font-medium capitalize text-onyx">
-                      {printer?.delivery}
-                    </div>
-                    <div className="mb-5 flex space-x-5">
-                      <Checkbox
-                        className="pointer-events-none"
-                        name="blindShipping"
-                        label="Blind Shipping"
-                      />
-                      <Checkbox
-                        className="pointer-events-none"
-                        name="resellerSamples"
-                        label="Reseller Samples"
-                      />
-                    </div>
-                    <div className="mb-3 w-fit text-base font-semibold text-halloween-orange">
-                      Reference
-                    </div>
-                    <div className="mb-5 text-sm font-medium capitalize text-onyx">
-                      {printer?.reference}
-                    </div>
-                    <div className="mb-3 w-fit text-base font-semibold text-halloween-orange">
-                      Notes
-                    </div>
-                    <div className="mb-5 text-sm font-medium capitalize text-onyx">
-                      {printer?.notes}
-                    </div>
-                    <div className="mb-3 w-fit text-base font-semibold text-halloween-orange">
-                      Description
-                    </div>
-                    <div className="mb-5 text-sm font-medium capitalize text-onyx">
-                      {printer?.description}
-                    </div>
-                  </Card>
-                  <Card className="h-fit">
-                    <div className="flex space-x-5">
-                      <LinkButton title="Cancel" href="/dashboard" light />
-                      <Button ariaLabel="Submit" disabled={isSubmitting} type="submit">
-                        <FloppyDiskIcon className="stroke-white" />
-                        <div>Update Order</div>
-                      </Button>
-                    </div>
-                  </Card>
+                </div>
+                {printer?.price && printer?.price !== null && (
+                  <div className="flex space-x-2">
+                    <div className="text-sm font-medium capitalize text-onyx">{printer?.price}</div>
+                    <Pill
+                      twBackgroundColor={(() => {
+                        switch (printer?.isApproved) {
+                          case 1:
+                            return 'bg-honeydew'
+                          case null:
+                            return 'bg-alice-blue'
+                          case 0:
+                            return 'bg-light-tart-orange'
+                        }
+                      })()}
+                      twTextColor={(() => {
+                        switch (printer?.isApproved) {
+                          case 1:
+                            return 'text-jungle-green'
+                          case null:
+                            return 'text-bleu-de-france'
+                          case 0:
+                            return 'text-tart-orange'
+                        }
+                      })()}
+                      value={(() => {
+                        switch (printer?.isApproved) {
+                          case 1:
+                            return 'Approved'
+                          case null:
+                            return 'No price offered yet'
+                          case 0:
+                            return 'Declined'
+                        }
+                      })()}
+                    />
+                  </div>
+                )}
+              </div>
+              <div className=" text-sm font-medium text-halloween-orange">Specifications</div>
+              <TitleValue title="Product" className="capitalize">
+                {printer?.product}
+              </TitleValue>
+              <TitleValue title="Option" className="capitalize">
+                {printer?.option}
+              </TitleValue>
+              <TitleValue title="Format" className="capitalize">
+                {printer?.format}
+              </TitleValue>
+              <TitleValue title="Kinds" className="capitalize">
+                {printer?.kinds}
+              </TitleValue>
+              <TitleValue title="Quantity" className="capitalize">
+                {printer?.quantity}
+              </TitleValue>
+              <TitleValue title="Run Ons" className="capitalize">
+                {printer?.runOns}
+              </TitleValue>
+            </div>
+            <div className="space-y-4">
+              {printer?.additionalOptions && printer?.additionalOptions?.length > 0 && (
+                <div className="space-y-4">
+                  <div className=" text-sm font-medium text-halloween-orange">
+                    Additional Options
+                  </div>
+                  {printer?.additionalOptions?.map(({ title, quantity }) => (
+                    <TitleValue key={title} title={title ? title : ''}>
+                      {quantity}
+                    </TitleValue>
+                  ))}
+                </div>
+              )}
+              <div className="space-y-1">
+                <div className="text-sm font-medium text-halloween-orange">Delivery</div>
+                <div className="text-sm font-medium capitalize text-onyx">{printer?.delivery}</div>
+              </div>
+              <div className="mb-5 flex space-x-5">
+                <CheckboxNoFormik
+                  label="Blind Shipping"
+                  className="pointer-events-none"
+                  checked={printer.blindShipping}
+                />
+                <CheckboxNoFormik
+                  label="Reseller Samples"
+                  className="pointer-events-none"
+                  checked={printer.resellerSamples}
+                />
+              </div>
+              <div className="space-y-1">
+                <div className="text-sm font-medium text-halloween-orange">Reference</div>
+                <div className="text-sm font-medium capitalize text-onyx">{printer?.reference}</div>
+              </div>
+              <div className="space-y-1">
+                <div className="text-sm font-medium text-halloween-orange">Notes</div>
+                <div className="text-sm font-medium capitalize text-onyx">{printer?.notes}</div>
+              </div>
+              <div className="space-y-1">
+                <div className="text-sm font-medium text-halloween-orange">Description</div>
+                <div className="text-sm font-medium capitalize text-onyx">
+                  {printer?.description}
                 </div>
               </div>
-            </Form>
-          )}
-        </Formik>
+            </div>
+          </div>
+        </Card>
       </div>
+      <AddPrinterJobPriceModal />
     </>
   )
 }
