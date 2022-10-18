@@ -83,7 +83,7 @@ export const EditClientModal = () => {
           rating: client.rating,
           designatedDesignerId: client.designatedDesignerId,
           logo: null,
-          printerId: client?.printer.id,
+          printerId: (client?.printer && client?.printer.id) || -1,
           _method: 'PUT',
         }}
         onSubmit={async (values) => {
@@ -98,6 +98,7 @@ export const EditClientModal = () => {
 
             if (status === 200) {
               queryClient.invalidateQueries('clients')
+              queryClient.invalidateQueries('printerCompany')
               toggleEditClientModal()
               showToast({
                 type: 'success',
@@ -216,7 +217,16 @@ export const EditClientModal = () => {
                   name="printerId"
                   Icon={PrinterIcon}
                   options={printerOptions}
-                  defaultValue={printerOptions.find(({ value }) => value === client?.printer.id)}
+                  defaultValue={(() => {
+                    const printerId = client?.printer !== null ? client?.printer.id : -1
+                    const printer = printerOptions.find(({ value }) => value === printerId)
+
+                    if (printer) {
+                      return printer
+                    }
+
+                    return undefined
+                  })()}
                   className="mb-5"
                 />
                 <FileDropZone

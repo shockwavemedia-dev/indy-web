@@ -11,35 +11,44 @@ import ClientLayout from '../../../layouts/ClientLayout'
 import PanelLayout from '../../../layouts/PanelLayout'
 import { Client } from '../../../types/Client.type'
 import { NextPageWithLayout } from '../../../types/pages/NextPageWithLayout.type'
+import { Printer } from '../../../types/Printer.type'
 
 const ClientPrinter: NextPageWithLayout = () => {
   const {
     replace,
     query: { id },
   } = useRouter()
-  const { data } = useQuery(['clients', Number(id)], async () => {
+  const { data: client } = useQuery(['clients', Number(id)], async () => {
     const { data } = await axios.get<Client>(`/v1/clients/${id}`)
 
     return data
   })
 
-  // const { printer } = useQuery('printer', async () => {
-  //   const { data } = await axios.get<Printer>(`/v1/printers/${data?.printer.id}`)
+  const { data: printerCompany } = useQuery(
+    'printerCompany',
+    async () => {
+      const { data } = await axios.get<Printer>(
+        `/v1/printers/${client?.printer && client?.printer.id}`
+      )
 
-  //   return data
-  // })
+      return data
+    },
+    {
+      enabled: !!client?.printer,
+    }
+  )
 
-  if (!data) return null
+  if (!client) return null
 
   return (
     <div className="w-full">
       <div className="mb-6 flex gap-6">
         <Card title="Printer Details" className="min-w-[21.5rem]">
-          {data.printer !== null ? (
+          {client.printer !== null ? (
             <div className="space-y-4">
-              {data?.printer.companyLogoUrl && (
+              {printerCompany?.companyThumbnailLogoUrl && (
                 <Image
-                  src={data?.printer.companyLogoUrl}
+                  src={printerCompany?.companyThumbnailLogoUrl}
                   height={100}
                   width={100}
                   alt="company logo"
@@ -47,9 +56,11 @@ const ClientPrinter: NextPageWithLayout = () => {
                 />
               )}
               <TitleValue title="Company Name" className="capitalize">
-                {data?.printer.companyName}
+                {client?.printer.companyName}
               </TitleValue>
-              <TitleValue title="Email">{data?.printer.email}</TitleValue>
+              <TitleValue title="Email">{printerCompany?.email}</TitleValue>
+              <TitleValue title="Contact Name">{printerCompany?.contactName}</TitleValue>
+              <TitleValue title="Contact Phone">{printerCompany?.phone}</TitleValue>
             </div>
           ) : (
             <div className="mb-5 w-fit text-sm font-semibold text-halloween-orange">
@@ -63,7 +74,7 @@ const ClientPrinter: NextPageWithLayout = () => {
             dataEndpoint={`/v1/clients/${Number(id)}/printer-jobs`}
             tableQueryKey={['printerJobs']}
             ofString="printerJobs"
-            rowOnClick={({ original: { id } }) => replace(`/printer/${id}`)}
+            rowOnClick={({ original: { id } }) => replace(`/printer-jobs/${id}`)}
           />
         </Card>
       </div>
