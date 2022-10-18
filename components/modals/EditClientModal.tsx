@@ -88,7 +88,7 @@ export const EditClientModal = () => {
         }}
         onSubmit={async (values) => {
           try {
-            const { status } = await axios.put(
+            const { status } = await axios.post(
               `/v1/clients/${client.id}`,
               objectWithFileToFormData({
                 ...values,
