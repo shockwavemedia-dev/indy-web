@@ -18,5 +18,5 @@ export type Client = {
   ownerId: number
   note: string
   styleGuide: string
-  printer: Printer
+  printer: Printer | null
 }
