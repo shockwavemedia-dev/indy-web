@@ -18,7 +18,10 @@ import { get422And400ResponseError } from '../../../utils/ErrorHelpers'
 import { Button } from '../../Button'
 import { Card } from '../../Card'
 import { Checkbox } from '../../Checkbox'
+import { CheckIcon } from '../../icons/CheckIcon'
 import { ClipboardIcon } from '../../icons/ClipboardIcon'
+import { CloseModalIcon } from '../../icons/CloseModalIcon'
+import { DollarIcon } from '../../icons/DollarIcon'
 import { EditIcon } from '../../icons/EditIcon'
 import { FloppyDiskIcon } from '../../icons/FloppyDiskIcon'
 import { TrashIcon } from '../../icons/TrashIcon'
@@ -27,6 +30,7 @@ import {
   DeletePrinterJobModal,
   useDeleteDeletePrinterJobModalModalStore,
 } from '../../modals/DeletePrinterJobModal'
+import { Pill } from '../../Pill'
 import { Select } from '../../Select'
 import { SelectNoFormik } from '../../SelectNoFormik'
 import { TextAreaInput } from '../../TextAreaInput'
@@ -124,6 +128,46 @@ const ClientPrinterJobPage = ({ printerId }: { printerId: number }) => {
       showToast({
         type: 'error',
         message: get422And400ResponseError(e),
+      })
+    }
+  }
+
+  const declinePrice = async () => {
+    try {
+      const { status } = await axios.put(`/v1/printers/${printer?.id}/decline-offer`)
+
+      if (status === 200) {
+        queryClient.invalidateQueries(['printer', printer?.id])
+        queryClient.invalidateQueries(['printerJobs'])
+        showToast({
+          type: 'success',
+          message: 'Price successfully declined!',
+        })
+      }
+    } catch (e) {
+      showToast({
+        type: 'error',
+        message: 'Something went wrong! 😵',
+      })
+    }
+  }
+
+  const approvePrice = async () => {
+    try {
+      const { status } = await axios.put(`/v1/printers/${printer?.id}/approve-offer`)
+
+      if (status === 200) {
+        queryClient.invalidateQueries(['printer', printer?.id])
+        queryClient.invalidateQueries(['printerJobs'])
+        showToast({
+          type: 'success',
+          message: 'Price successfully approved!',
+        })
+      }
+    } catch (e) {
+      showToast({
+        type: 'error',
+        message: 'Something went wrong! 😵',
       })
     }
   }
@@ -226,6 +270,64 @@ const ClientPrinterJobPage = ({ printerId }: { printerId: number }) => {
                       ? printer?.printer.companyName
                       : 'No Printer Selected'}
                   </div>
+                  <div className="mb-5 w-fit text-base font-semibold text-halloween-orange">
+                    Customer
+                  </div>
+                  <TextInput
+                    type="text"
+                    Icon={EditIcon}
+                    placeholder="Enter Customer"
+                    name="customerName"
+                    className="mb-5"
+                  />
+                  {printer?.price !== null && (
+                    <>
+                      <div className="mb-5 flex space-x-5">
+                        <div className="mb-2 w-fit text-base font-semibold text-halloween-orange">
+                          Price Offer
+                        </div>
+                        {printer?.isApproved !== null && (
+                          <>
+                            <Pill
+                              twBackgroundColor={
+                                printer?.isApproved === 1 ? 'bg-honeydew' : 'bg-light-tart-orange'
+                              }
+                              twTextColor={
+                                printer?.isApproved === 1 ? 'text-jungle-green' : 'text-tart-orange'
+                              }
+                              value={printer?.isApproved === 1 ? 'Approved' : 'Declined'}
+                            />
+                          </>
+                        )}
+                      </div>
+                      <div className="mb-5 flex space-x-5">
+                        <TextInput
+                          type="text"
+                          Icon={DollarIcon}
+                          placeholder="Printer Job Price"
+                          name="price"
+                          className="pointer-events-none"
+                        />
+                        {printer?.isApproved === null && (
+                          <>
+                            <Button ariaLabel="decline" type="button" onClick={declinePrice}>
+                              <CloseModalIcon className="stroke-white" />
+                              <div>Decline</div>
+                            </Button>
+                            <Button
+                              ariaLabel="approved"
+                              type="button"
+                              className="!bg-jungle-green"
+                              onClick={approvePrice}
+                            >
+                              <CheckIcon className="stroke-white" />
+                              <div>Approve</div>
+                            </Button>
+                          </>
+                        )}
+                      </div>
+                    </>
+                  )}
                   <SelectNoFormik
                     label="Status"
                     name="status"
@@ -235,16 +337,6 @@ const ClientPrinterJobPage = ({ printerId }: { printerId: number }) => {
                       ({ value }) => value === printer?.status
                     )}
                     onChange={updateStatus}
-                    className="mb-5"
-                  />
-                  <div className="mb-5 w-fit text-base font-semibold text-halloween-orange">
-                    Customer
-                  </div>
-                  <TextInput
-                    type="text"
-                    Icon={EditIcon}
-                    placeholder="Enter Customer"
-                    name="customerName"
                     className="mb-5"
                   />
                   <div className="mb-5 w-fit text-base font-semibold text-halloween-orange">
