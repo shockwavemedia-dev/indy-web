@@ -457,16 +457,18 @@ const ClientPrinterJobPage = ({ printerId }: { printerId: number }) => {
                     <div className="mb-5 w-fit text-base font-semibold text-halloween-orange">
                       Delivery
                     </div>
-                    <Select
-                      label="Delivery"
-                      name="delivery"
-                      Icon={ClipboardIcon}
-                      options={PrinterDeliveryOptions}
-                      defaultValue={PrinterProductOptions.find(
-                        ({ value }) => value === printer?.delivery
-                      )}
-                      className="mb-5"
-                    />
+                    {PrinterDeliveryOptions.length > 0 && (
+                      <Select
+                        label="Delivery"
+                        name="delivery"
+                        Icon={ClipboardIcon}
+                        options={PrinterDeliveryOptions}
+                        defaultValue={PrinterDeliveryOptions.find(
+                          ({ value }) => value === printer?.delivery
+                        )}
+                        className="mb-5"
+                      />
+                    )}
                     <div className="mb-5 flex space-x-5">
                       <Checkbox name="blindShipping" label="Blind Shipping" />
                       <Checkbox name="resellerSamples" label="Reseller Samples" />
