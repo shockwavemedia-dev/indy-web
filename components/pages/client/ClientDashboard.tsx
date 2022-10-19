@@ -84,11 +84,12 @@ export const ClientDashboard = () => {
               dataEndpoint={`/v1/clients/${session?.user.userType.client.id}/tickets`}
               tableQueryKey={[
                 'tickets',
-                ...statuses,
+                ...statuses.filter((s) => s !== 'show_overdue'),
                 ...types,
                 subjectPayload,
                 codePayload,
                 duedate ? format(duedate, 'yyyy-MM-dd') : '',
+                { showOverdue: statuses.some((s) => s === 'show_overdue') },
               ]}
               ofString="Projects"
               dataParams={{
@@ -97,6 +98,7 @@ export const ClientDashboard = () => {
                 subject: subjectPayload,
                 code: codePayload,
                 duedate: duedate ? format(duedate, 'yyyy-MM-dd') : '',
+                show_overdue: statuses.some((s) => s === 'show_overdue'),
               }}
               rowOnClick={({ original: { id } }) => replace(`/ticket/${id}`)}
             />

@@ -16,9 +16,9 @@ export const DataTable = <T extends Record<string, unknown>>({
   rowOnClick,
   initialState,
 }: {
-  tableQueryKey: Array<string | number>
+  tableQueryKey: Array<string | number | Record<string, unknown>>
   dataEndpoint: string
-  dataParams?: Record<string, string | number>
+  dataParams?: Record<string, string | number | boolean>
   columns: Array<Column<T>>
   ofString: string
   tableActions?: ReactNode

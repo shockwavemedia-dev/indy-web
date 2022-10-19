@@ -159,6 +159,7 @@ const ClientDetails: NextPageWithLayout = () => {
             subjectPayload,
             codePayload,
             duedate ? format(duedate, 'yyyy-MM-dd') : '',
+            { showOverdue: statuses.some((s) => s === 'show_overdue') },
           ]}
           ofString="Tickets"
           dataParams={{
@@ -167,6 +168,7 @@ const ClientDetails: NextPageWithLayout = () => {
             subject: subjectPayload,
             code: codePayload,
             duedate: duedate ? format(duedate, 'yyyy-MM-dd') : '',
+            show_overdue: statuses.some((s) => s === 'show_overdue'),
           }}
           rowOnClick={({ original: { id } }) => replace(`/ticket/${id}`)}
         />
