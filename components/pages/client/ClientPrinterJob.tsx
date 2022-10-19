@@ -357,26 +357,30 @@ const ClientPrinterJobPage = ({ printerId }: { printerId: number }) => {
                     className="mb-5"
                   />
                   <div className="mb-8 flex space-x-5">
-                    <SelectNoFormik
-                      label="Option"
-                      name="option"
-                      Icon={ClipboardIcon}
-                      options={optionSelect}
-                      onChange={(option: SingleValue<SelectOption<string>>) => {
-                        setFieldValue('option', option?.value)
-                      }}
-                      defaultValue={optionSelect.find(({ value }) => value === printer?.option)}
-                    />
-                    <SelectNoFormik
-                      label="Format"
-                      name="format"
-                      Icon={ClipboardIcon}
-                      options={formatSelect}
-                      onChange={(format: SingleValue<SelectOption<string>>) => {
-                        setFieldValue('format', format?.value)
-                      }}
-                      defaultValue={formatSelect.find(({ value }) => value === printer?.format)}
-                    />
+                    {optionSelect.length > 0 && (
+                      <SelectNoFormik
+                        label="Option"
+                        name="option"
+                        Icon={ClipboardIcon}
+                        options={optionSelect}
+                        onChange={(option: SingleValue<SelectOption<string>>) => {
+                          setFieldValue('option', option?.value)
+                        }}
+                        defaultValue={optionSelect.find(({ value }) => value === printer?.option)}
+                      />
+                    )}
+                    {formatSelect.length > 0 && (
+                      <SelectNoFormik
+                        label="Format"
+                        name="format"
+                        Icon={ClipboardIcon}
+                        options={formatSelect}
+                        onChange={(format: SingleValue<SelectOption<string>>) => {
+                          setFieldValue('format', format?.value)
+                        }}
+                        defaultValue={formatSelect.find(({ value }) => value === printer?.format)}
+                      />
+                    )}
                   </div>
 
                   <div className="mb-8 flex space-x-5">
