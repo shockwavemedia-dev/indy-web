@@ -12,12 +12,20 @@ const PrinterPage: NextPageWithLayout = () => {
     query: { id },
   } = useRouter()
   const { data: session } = useSession()
+  const { replace } = useRouter()
 
-  if (session?.isClient) {
+  if (!session) return null
+
+  if (session.isClient && !session.user.userType.client.printerId) {
+    replace('/printer-jobs')
+    return null
+  }
+
+  if (session.isClient) {
     return <ClientPrinterJobPage printerId={Number(id)} />
-  } else if (session?.isAdmin) {
+  } else if (session.isAdmin) {
     return <AdminPrinterJobPage printerId={Number(id)} />
-  } else if (session?.isPrinterManager) {
+  } else if (session.isPrinterManager) {
     return <PrinterManagerPrinterJobPage printerId={Number(id)} />
   }
 

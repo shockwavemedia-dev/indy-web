@@ -19,4 +19,5 @@ export type Client = {
   note: string
   styleGuide: string
   printer: Printer | null
+  printerId: number | null
 }
