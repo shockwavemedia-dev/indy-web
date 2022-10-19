@@ -14,6 +14,7 @@ import { EditIcon } from '../components/icons/EditIcon'
 import { FloppyDiskIcon } from '../components/icons/FloppyDiskIcon'
 import { LinkButton } from '../components/LinkButton'
 import { Select } from '../components/Select'
+import { SelectNoFormik } from '../components/SelectNoFormik'
 import { TextAreaInput } from '../components/TextAreaInput'
 import { TextInput } from '../components/TextInput'
 import { PrinterDeliveryOptions } from '../constants/options/printer/PrinterDeliveryOptions'
@@ -124,7 +125,7 @@ const NewPrinterPage: NextPageWithLayout = () => {
           }}
           onSubmit={submitForm}
         >
-          {({ isSubmitting }) => (
+          {({ isSubmitting, setFieldValue }) => (
             <Form>
               <div className="flex w-full">
                 <Card className="mr-8 h-fit w-9/12">
@@ -141,17 +142,36 @@ const NewPrinterPage: NextPageWithLayout = () => {
                   <div className="mb-5 w-fit text-base font-semibold text-halloween-orange">
                     Specifications
                   </div>
-                  <Select
+                  <SelectNoFormik
                     label="Product"
                     name="product"
                     Icon={ClipboardIcon}
                     options={PrinterProductOptions}
-                    onChange={updateFilter}
+                    onChange={(product: SingleValue<SelectOption<string>>) => {
+                      setFieldValue('product', product?.value)
+                      updateFilter(product)
+                    }}
                     className="mb-5"
                   />
                   <div className="mb-8 flex space-x-5">
-                    <Select label="Option" name="option" Icon={ClipboardIcon} options={option} />
-                    <Select label="Format" name="format" Icon={ClipboardIcon} options={format} />
+                    <SelectNoFormik
+                      label="Option"
+                      name="option"
+                      Icon={ClipboardIcon}
+                      options={option}
+                      onChange={(option: SingleValue<SelectOption<string>>) => {
+                        setFieldValue('option', option?.value)
+                      }}
+                    />
+                    <SelectNoFormik
+                      label="Format"
+                      name="format"
+                      Icon={ClipboardIcon}
+                      options={format}
+                      onChange={(format: SingleValue<SelectOption<string>>) => {
+                        setFieldValue('format', format?.value)
+                      }}
+                    />
                   </div>
 
                   <div className="mb-8 flex space-x-5">
