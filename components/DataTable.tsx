@@ -1,9 +1,11 @@
 import axios from 'axios'
-import { ReactNode, useEffect, useMemo, useState } from 'react'
+import { ReactNode, useEffect, useId, useMemo, useState } from 'react'
 import { useQuery } from 'react-query'
 import { Column, Row, TableState, usePagination, useSortBy, useTable } from 'react-table'
 import { Page } from '../types/Page.type'
+import { Dropdown } from './Dropdown'
 import { CaretIcon } from './icons/CaretIcon'
+import { FilterIcon } from './icons/FilterIcon'
 import { SortIcon } from './icons/SortIcon'
 
 export const DataTable = <T extends Record<string, unknown>>({
@@ -26,6 +28,7 @@ export const DataTable = <T extends Record<string, unknown>>({
   initialState?: Partial<TableState<T>>
 }) => {
   const [queryPageIndex, setQueryPageIndex] = useState(0)
+  const [pageSize, setPageSize] = useState(20)
 
   const {
     data: pagination,
@@ -33,7 +36,7 @@ export const DataTable = <T extends Record<string, unknown>>({
     isFetching,
     isLoading,
   } = useQuery(
-    [...tableQueryKey, queryPageIndex],
+    [...tableQueryKey, queryPageIndex, pageSize],
     async () => {
       const { data } = await axios.get<{
         data: Array<T>
@@ -41,7 +44,7 @@ export const DataTable = <T extends Record<string, unknown>>({
       }>(dataEndpoint, {
         params: {
           page_number: queryPageIndex + 1,
-          size: 20,
+          size: pageSize,
           ...dataParams,
         },
       })
@@ -65,7 +68,7 @@ export const DataTable = <T extends Record<string, unknown>>({
     gotoPage,
     nextPage,
     previousPage,
-    state: { pageIndex, pageSize },
+    state: { pageIndex },
   } = useTable<T>(
     {
       columns: memoizedColumns,
@@ -73,7 +76,7 @@ export const DataTable = <T extends Record<string, unknown>>({
       initialState: {
         ...initialState,
         pageIndex: queryPageIndex,
-        pageSize: 20,
+        pageSize,
       },
       manualPagination: true,
       pageCount: isSuccess && pagination ? pagination.page.lastPage : 0,
@@ -85,9 +88,34 @@ export const DataTable = <T extends Record<string, unknown>>({
 
   useEffect(() => setQueryPageIndex(pageIndex), [pageIndex])
 
+  const id = useId()
+  const actions = [10, 15, 20, 25].map((s) => (
+    <button
+      key={`${id}-${s}`}
+      type="button"
+      onClick={() => setPageSize(s)}
+      className={`px-2${s === pageSize ? ' rounded bg-halloween-orange text-white' : ''}`}
+    >
+      {s}
+    </button>
+  ))
+
   return (
     <>
-      <div className="absolute right-6 top-6 flex items-center">{tableActions}</div>
+      <div className="absolute right-6 top-6 flex items-center space-x-3">
+        {tableActions}
+        <Dropdown actions={<div className="flex flex-col">{actions}</div>}>
+          {({ visible }) => (
+            <div className="flex items-center space-x-2 rounded-md text-sm font-medium">
+              <FilterIcon className="stroke-lavender-gray" />
+              <div>Page Size</div>
+              <CaretIcon
+                className={`transition-transform stroke-waterloo${visible ? '' : ' rotate-180'}`}
+              />
+            </div>
+          )}
+        </Dropdown>
+      </div>
       {rows.length > 0 ? (
         <>
           <div className="mb-auto h-full overflow-y-auto">
