@@ -59,7 +59,7 @@ export const AdminPrintersTableColumns: Array<Column<Printer>> = [
       }
 
       return (
-        <div className="invisible flex space-x-2 group-hover:visible">
+        <div className="flex space-x-2">
           <button onClick={editAdminPrinter}>
             <EditIcon className="stroke-waterloo hover:stroke-halloween-orange" />
           </button>

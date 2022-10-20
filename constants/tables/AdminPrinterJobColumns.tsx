@@ -26,36 +26,28 @@ export const AdminPrinterJobColumns: Array<Column<PrinterJob>> = [
           switch (value) {
             case 'Completed':
               return 'bg-honeydew'
-            case 'Todo':
-              return 'bg-alice-blue'
-            case 'Pending':
-              return 'bg-light-tart-orange'
             case 'Cancelled':
-              return 'bg-light-deep-saffron'
+              return 'bg-light-tart-orange'
             case 'Awaiting Quote':
               return 'bg-light-navy'
             case 'Awaiting Approval':
               return 'bg-light-golden-rod'
             case 'In Progress':
-              return 'bg-light-orchid'
+              return 'bg-alice-blue'
           }
         })()}
         twTextColor={(() => {
           switch (value) {
             case 'Completed':
               return 'text-jungle-green'
-            case 'Todo':
-              return 'text-bleu-de-france'
-            case 'Pending':
-              return 'text-tart-orange'
             case 'Cancelled':
-              return 'text-deep-saffron'
+              return 'text-tart-orange'
             case 'Awaiting Quote':
               return 'text-navy'
             case 'Awaiting Approval':
               return 'text-golden-rod'
             case 'In Progress':
-              return 'text-dark-orchid'
+              return 'text-bleu-de-france'
           }
         })()}
         value={value}
