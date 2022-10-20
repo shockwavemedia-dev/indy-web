@@ -50,15 +50,16 @@ export const DeletePrinterModal = ({
         >
           <div className="flex w-140 flex-col">
             <div className="mb-8 flex space-x-8">
-              <div className="h-30 w-30">
-                <Image
-                  src={printer.companyLogoUrl}
-                  height={100}
-                  width={100}
-                  alt={printer.companyName}
-                />
-              </div>
-
+              {printer?.companyLogoUrl && (
+                <div className="h-30 w-30">
+                  <Image
+                    src={printer.companyLogoUrl}
+                    height={100}
+                    width={100}
+                    alt={printer.companyName}
+                  />
+                </div>
+              )}
               <div className="grid w-full grid-cols-2 grid-rows-2 gap-y-5">
                 <TitleValue title="Company Name">{printer.companyName}</TitleValue>
                 <TitleValue title="Email">{printer.email}</TitleValue>
