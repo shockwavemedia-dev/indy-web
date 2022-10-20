@@ -35,6 +35,12 @@ export const ClientPrinterJobColumns: Array<Column<PrinterJob>> = [
               return 'bg-light-tart-orange'
             case 'Cancelled':
               return 'bg-light-deep-saffron'
+            case 'Awaiting Quote':
+              return 'bg-light-navy'
+            case 'Awaiting Approval':
+              return 'bg-light-golden-rod'
+            case 'In Progress':
+              return 'bg-light-orchid'
           }
         })()}
         twTextColor={(() => {
@@ -47,6 +53,12 @@ export const ClientPrinterJobColumns: Array<Column<PrinterJob>> = [
               return 'text-tart-orange'
             case 'Cancelled':
               return 'text-deep-saffron'
+            case 'Awaiting Quote':
+              return 'text-navy'
+            case 'Awaiting Approval':
+              return 'text-golden-rod'
+            case 'In Progress':
+              return 'text-dark-orchid'
           }
         })()}
         value={value}

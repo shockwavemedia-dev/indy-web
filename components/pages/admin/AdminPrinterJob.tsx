@@ -131,7 +131,7 @@ const AdminPrinterJobPage = ({ printerId }: { printerId: number }) => {
                 </div>
               )}
               <div className="space-y-1">
-                <div className="text-sm font-medium text-halloween-orange">Delivery</div>
+                <div className="text-sm font-medium text-halloween-orange">To Venue</div>
                 <div className="text-sm font-medium capitalize text-onyx">{printer?.delivery}</div>
               </div>
               <div className="mb-5 flex space-x-5">
