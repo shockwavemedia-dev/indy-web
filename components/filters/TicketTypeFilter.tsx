@@ -12,7 +12,7 @@ const typeList: Array<TicketType> = ['email', 'event', 'graphic', 'print', 'task
 export const useTicketTypeFilter = create(
   combine(
     {
-      types: [] as Array<TicketType | 'show_overdue'>,
+      types: [] as Array<TicketType>,
     },
     (set, get) => ({
       toggleType: (type: TicketType) =>
@@ -22,13 +22,11 @@ export const useTicketTypeFilter = create(
             : [...get().types, type],
         }),
       getAsPayload: () =>
-        get()
-          .types.filter((t) => t !== 'show_overdue')
-          .reduce((types, type, i) => {
-            types[`types[${i}]`] = type
+        get().types.reduce((types, type, i) => {
+          types[`types[${i}]`] = type
 
-            return types
-          }, {} as Record<string, string>),
+          return types
+        }, {} as Record<string, string>),
     })
   )
 )

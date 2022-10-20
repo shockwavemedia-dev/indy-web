@@ -30,11 +30,13 @@ export const useTicketStatusFilter = create(
             : [...get().statuses, status],
         }),
       getAsPayload: () =>
-        get().statuses.reduce((statuses, status, i) => {
-          statuses[`statuses[${i}]`] = status
+        get()
+          .statuses.filter((t) => t !== 'show_overdue')
+          .reduce((statuses, status, i) => {
+            statuses[`statuses[${i}]`] = status
 
-          return statuses
-        }, {} as Record<string, string>),
+            return statuses
+          }, {} as Record<string, string>),
     })
   )
 )
