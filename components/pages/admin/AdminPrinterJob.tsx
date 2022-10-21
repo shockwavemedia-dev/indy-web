@@ -59,16 +59,17 @@ const AdminPrinterJobPage = ({ printerId }: { printerId: number }) => {
                 <div className="flex space-x-2">
                   <div className=" text-sm font-medium text-halloween-orange">Price</div>
                 </div>
-                {printer?.price && printer?.price !== null && (
-                  <div className="flex space-x-2">
-                    <div className="text-sm font-medium capitalize text-onyx">{printer?.price}</div>
+
+                <div className="flex space-x-2">
+                  <div className="text-sm font-medium capitalize text-onyx">{printer?.price}</div>
+                  {printer?.price && printer?.price !== null ? (
                     <Pill
                       twBackgroundColor={(() => {
                         switch (printer?.isApproved) {
                           case 1:
                             return 'bg-honeydew'
                           case null:
-                            return 'bg-alice-blue'
+                            return 'bg-light-golden-rod'
                           case 0:
                             return 'bg-light-tart-orange'
                         }
@@ -78,7 +79,7 @@ const AdminPrinterJobPage = ({ printerId }: { printerId: number }) => {
                           case 1:
                             return 'text-jungle-green'
                           case null:
-                            return 'text-bleu-de-france'
+                            return 'text-golden-rod'
                           case 0:
                             return 'text-tart-orange'
                         }
@@ -88,14 +89,20 @@ const AdminPrinterJobPage = ({ printerId }: { printerId: number }) => {
                           case 1:
                             return 'Approved'
                           case null:
-                            return 'No price offered yet'
+                            return 'Awaiting Acceptance'
                           case 0:
                             return 'Declined'
                         }
                       })()}
                     />
-                  </div>
-                )}
+                  ) : (
+                    <Pill
+                      twBackgroundColor="bg-light-deep-saffron"
+                      twTextColor="text-deep-saffron"
+                      value="No Price Offered Yet"
+                    />
+                  )}
+                </div>
               </div>
               <div className=" text-sm font-medium text-halloween-orange">Specifications</div>
               <TitleValue title="Product" className="capitalize">

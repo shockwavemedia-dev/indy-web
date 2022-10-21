@@ -280,26 +280,34 @@ const ClientPrinterJobPage = ({ printerId }: { printerId: number }) => {
                     name="customerName"
                     className="mb-5"
                   />
-                  {printer?.price !== null && (
-                    <>
-                      <div className="mb-5 flex space-x-5">
-                        <div className="mb-2 w-fit text-base font-semibold text-halloween-orange">
-                          Price Offer
-                        </div>
-                        {printer?.isApproved !== null && (
-                          <>
-                            <Pill
-                              twBackgroundColor={
-                                printer?.isApproved === 1 ? 'bg-honeydew' : 'bg-light-tart-orange'
-                              }
-                              twTextColor={
-                                printer?.isApproved === 1 ? 'text-jungle-green' : 'text-tart-orange'
-                              }
-                              value={printer?.isApproved === 1 ? 'Approved' : 'Declined'}
-                            />
-                          </>
-                        )}
+
+                  <>
+                    <div className="mb-5 flex space-x-5">
+                      <div className="mb-2 w-fit text-base font-semibold text-halloween-orange">
+                        Price Offer
                       </div>
+                      {printer?.price === null && (
+                        <Pill
+                          twBackgroundColor="bg-light-deep-saffron"
+                          twTextColor="text-deep-saffron"
+                          value="No Price Offered Yet"
+                        />
+                      )}
+                      {printer?.isApproved !== null && (
+                        <>
+                          <Pill
+                            twBackgroundColor={
+                              printer?.isApproved === 1 ? 'bg-honeydew' : 'bg-light-tart-orange'
+                            }
+                            twTextColor={
+                              printer?.isApproved === 1 ? 'text-jungle-green' : 'text-tart-orange'
+                            }
+                            value={printer?.isApproved === 1 ? 'Approved' : 'Declined'}
+                          />
+                        </>
+                      )}
+                    </div>
+                    {printer?.price !== null && (
                       <div className="mb-5 flex space-x-5">
                         <TextInput
                           type="text"
@@ -326,8 +334,8 @@ const ClientPrinterJobPage = ({ printerId }: { printerId: number }) => {
                           </>
                         )}
                       </div>
-                    </>
-                  )}
+                    )}
+                  </>
                   <SelectNoFormik
                     label="Status"
                     name="status"
