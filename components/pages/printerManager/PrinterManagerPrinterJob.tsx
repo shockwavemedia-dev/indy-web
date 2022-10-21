@@ -13,7 +13,7 @@ import { get422And400ResponseError } from '../../../utils/ErrorHelpers'
 import { Card } from '../../Card'
 import { CheckboxNoFormik } from '../../CheckboxNoFormik'
 import { ClipboardIcon } from '../../icons/ClipboardIcon'
-import { PlusIcon } from '../../icons/PlusIcon'
+import { EditIcon } from '../../icons/EditIcon'
 import {
   AddPrinterJobPriceModal,
   useAddPrinterJoPricebModalModalStore,
@@ -107,8 +107,8 @@ const PrinterManagerPrinterJobPage = ({ printerId }: { printerId: number }) => {
               <div className="mb-5 space-y-1">
                 <div className="flex space-x-2">
                   <div className=" text-sm font-medium text-halloween-orange">Price</div>
-                  {(printer?.isApproved === 0 || printer.isApproved === null) && (
-                    <Tooltip title="Add Price" placement="top">
+                  {printer?.isApproved === null && (
+                    <Tooltip title="Add/Update Price" placement="top">
                       <button
                         type="button"
                         onClick={(e) => {
@@ -117,21 +117,22 @@ const PrinterManagerPrinterJobPage = ({ printerId }: { printerId: number }) => {
                         }}
                         className="group"
                       >
-                        <PlusIcon className="stroke-waterloo group-hover:stroke-halloween-orange" />
+                        <EditIcon className="stroke-bright-navy-blue group-hover:stroke-halloween-orange" />
                       </button>
                     </Tooltip>
                   )}
                 </div>
-                {printer?.price && printer?.price !== null && (
-                  <div className="flex space-x-2">
-                    <div className="text-sm font-medium capitalize text-onyx">{printer?.price}</div>
+
+                <div className="flex space-x-2">
+                  <div className="text-sm font-medium capitalize text-onyx">{printer?.price}</div>
+                  {printer?.price && printer?.price !== null ? (
                     <Pill
                       twBackgroundColor={(() => {
                         switch (printer?.isApproved) {
                           case 1:
                             return 'bg-honeydew'
                           case null:
-                            return 'bg-alice-blue'
+                            return 'bg-light-golden-rod'
                           case 0:
                             return 'bg-light-tart-orange'
                         }
@@ -141,7 +142,7 @@ const PrinterManagerPrinterJobPage = ({ printerId }: { printerId: number }) => {
                           case 1:
                             return 'text-jungle-green'
                           case null:
-                            return 'text-bleu-de-france'
+                            return 'text-golden-rod'
                           case 0:
                             return 'text-tart-orange'
                         }
@@ -151,14 +152,20 @@ const PrinterManagerPrinterJobPage = ({ printerId }: { printerId: number }) => {
                           case 1:
                             return 'Approved'
                           case null:
-                            return 'No price offered yet'
+                            return 'Awaiting Acceptance'
                           case 0:
                             return 'Declined'
                         }
                       })()}
                     />
-                  </div>
-                )}
+                  ) : (
+                    <Pill
+                      twBackgroundColor="bg-light-deep-saffron"
+                      twTextColor="text-deep-saffron"
+                      value="No Price Offered Yet"
+                    />
+                  )}
+                </div>
               </div>
               <div className=" text-sm font-medium text-halloween-orange">Specifications</div>
               <TitleValue title="Product" className="capitalize">
