@@ -1,5 +1,6 @@
 import createStore from 'zustand'
 import { combine } from 'zustand/middleware'
+import { Screen } from '../types/Screen.type'
 
 export const useAdminScreenStore = createStore(
   combine(

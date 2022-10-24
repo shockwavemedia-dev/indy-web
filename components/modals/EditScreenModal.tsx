@@ -1,9 +1,11 @@
 import axios from 'axios'
 import { Form, Formik } from 'formik'
+import Image from 'next/image'
 import { useQueryClient } from 'react-query'
 import { CreateScreenSchema } from '../../schemas/CreateScreenFormSchema'
 import { useToastStore } from '../../store/ToastStore'
 import { CreateScreenForm } from '../../types/forms/CreateScreenForm.type'
+import { Screen } from '../../types/Screen.type'
 import { get422And400ResponseError } from '../../utils/ErrorHelpers'
 import { objectWithFileToFormData } from '../../utils/FormHelpers'
 import { Button } from '../Button'
@@ -13,26 +15,37 @@ import { EditIcon } from '../icons/EditIcon'
 import { Modal } from '../Modal'
 import { TextInput } from '../TextInput'
 
-export const CreateScreenModal = ({
+export const EditScreenModal = ({
   isVisible,
   onClose,
+  screen,
 }: {
   isVisible: boolean
   onClose: () => void
+  screen: Screen
 }) => {
   const queryClient = useQueryClient()
   const { showToast } = useToastStore()
 
   const submitForm = async (values: CreateScreenForm) => {
     try {
-      const { status } = await axios.post('/v1/screens', objectWithFileToFormData(values))
+      if (values.logo === null) {
+        values = { name: values.name }
+      }
+      const { status } = await axios.post(
+        `/v1/screens/${screen.id}`,
+        objectWithFileToFormData({
+          ...values,
+          _method: 'PUT',
+        })
+      )
 
       if (status === 200) {
         queryClient.invalidateQueries('screens')
         onClose()
         showToast({
           type: 'success',
-          message: 'New Screen successfully created!',
+          message: 'All changes was successfully saved',
         })
       }
     } catch (e) {
@@ -46,31 +59,43 @@ export const CreateScreenModal = ({
   return (
     <>
       {isVisible && (
-        <Modal title="New Screen" onClose={onClose}>
+        <Modal title="Edit Screen" onClose={onClose}>
           <Formik
             validationSchema={CreateScreenSchema}
             initialValues={{
-              name: '',
-              logo: null,
+              name: screen.name,
             }}
             onSubmit={submitForm}
           >
             {({ isSubmitting }) => (
               <Form className="flex max-h-130 w-175 flex-col space-y-5 overflow-y-auto">
                 <Card className="h-fit w-full">
-                  <TextInput
-                    type="text"
-                    Icon={EditIcon}
-                    placeholder="Enter Screen Name"
-                    name="name"
-                    className="mb-5"
-                  />
+                  <div className="mb-5 flex space-x-5">
+                    {screen?.logo && screen.logo.url && (
+                      <div className="rounded-md">
+                        <Image
+                          src={screen.logo.url}
+                          alt={screen.logo.fileName}
+                          height={150}
+                          width={150}
+                        />
+                      </div>
+                    )}
+                    <TextInput
+                      label="Screen Name"
+                      type="text"
+                      Icon={EditIcon}
+                      placeholder="Enter Screen Name"
+                      name="name"
+                      className="mb-5"
+                    />
+                  </div>
                   <FileDropZone
-                    label="Upload Logo"
+                    label="Upload New Logo"
                     name="logo"
-                    className="mb-5"
+                    className="mb-8"
                     maxSize={250}
-                    mimeType="image/gif"
+                    mimeType="image/png"
                     accept={['.jpeg', '.png', '.jpg']}
                   />
                   <div className="flex space-x-5">
