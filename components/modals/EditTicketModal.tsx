@@ -68,7 +68,6 @@ export const EditTicketModal = ({
               subject: ticket.subject,
               description: ticket.description,
               type: ticket.type,
-              duedate: ticket.duedate,
               status: ticket.status,
               priority: ticket.priority,
             }}
