@@ -12,6 +12,7 @@ export const TextInputNoFormik = ({
   label,
   hint,
   slim = false,
+  value,
   onChange,
   onEnter,
   onBlur,
@@ -25,6 +26,7 @@ export const TextInputNoFormik = ({
   label?: string
   hint?: string
   slim?: boolean
+  value?: string
   onChange?: (text: string) => void
   onEnter?: () => void
   onBlur?: () => void
@@ -75,6 +77,7 @@ export const TextInputNoFormik = ({
             : undefined
         }
         onBlur={onBlur ? () => onBlur() : undefined}
+        value={value}
       />
     </div>
   </div>
