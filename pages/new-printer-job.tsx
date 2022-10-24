@@ -13,7 +13,6 @@ import { ClipboardIcon } from '../components/icons/ClipboardIcon'
 import { EditIcon } from '../components/icons/EditIcon'
 import { FloppyDiskIcon } from '../components/icons/FloppyDiskIcon'
 import { LinkButton } from '../components/LinkButton'
-import { Select } from '../components/Select'
 import { SelectNoFormik } from '../components/SelectNoFormik'
 import { TextAreaInput } from '../components/TextAreaInput'
 import { TextInput } from '../components/TextInput'
@@ -35,6 +34,11 @@ const NewPrinterPage: NextPageWithLayout = () => {
   const queryClient = useQueryClient()
   const [option, setOption] = useState<Array<{ label: string; value: string }>>([])
   const [format, setFormat] = useState<Array<{ label: string; value: string }>>([])
+
+  const [delivery, setDelivery] = useState<SingleValue<SelectOption<string>>>({
+    label: 'To Venue',
+    value: 'To Venue',
+  })
 
   const submitForm = async (values: NewPrinterForm) => {
     const additionalOptions = [
@@ -118,7 +122,7 @@ const NewPrinterPage: NextPageWithLayout = () => {
             reference: '',
             notes: '',
             additionalOptions: [],
-            delivery: '',
+            delivery: 'To Venue',
             price: '',
             blindShipping: false,
             resellerSamples: false,
@@ -246,14 +250,19 @@ const NewPrinterPage: NextPageWithLayout = () => {
                 <div className="flex w-9/12  flex-col">
                   <Card className="mb-8 h-fit">
                     <div className="mb-5 w-fit text-base font-semibold text-halloween-orange">
-                      To Venue
+                      Delivery
                     </div>
-                    <Select
-                      label="Venue"
+                    <SelectNoFormik
+                      label="Delivery"
                       name="delivery"
                       Icon={ClipboardIcon}
                       options={PrinterDeliveryOptions}
                       className="mb-5"
+                      value={delivery}
+                      onChange={(delivery) => {
+                        setFieldValue('delivery', delivery!.value)
+                        setDelivery(delivery)
+                      }}
                     />
                     <div className="mb-5 flex space-x-5">
                       <Checkbox name="blindShipping" label="Blind Shipping" />

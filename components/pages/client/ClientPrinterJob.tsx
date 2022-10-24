@@ -463,11 +463,11 @@ const ClientPrinterJobPage = ({ printerId }: { printerId: number }) => {
                 <div className="flex w-9/12  flex-col">
                   <Card className="mb-8 h-fit">
                     <div className="mb-5 w-fit text-base font-semibold text-halloween-orange">
-                      To Venue
+                      Delivery
                     </div>
                     {PrinterDeliveryOptions.length > 0 && (
                       <Select
-                        label="Venue"
+                        label="Delivery"
                         name="delivery"
                         Icon={ClipboardIcon}
                         options={PrinterDeliveryOptions}
