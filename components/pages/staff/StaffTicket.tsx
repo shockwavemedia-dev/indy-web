@@ -41,7 +41,7 @@ import { EditTicketAssigneeModal } from '../../modals/EditTicketAssigneeModal'
 import { ReAssignTicketAssigneeModal } from '../../modals/ReAssignTicketAssigneeModal'
 import {
   UploadTicketFileModal,
-  useUploadTicketFileModalStore,
+  useUploadTicketFileModalStore
 } from '../../modals/UploadTicketFileModal'
 import { Pill } from '../../Pill'
 import { TicketActivityCard } from '../../tickets/TicketActivityCard'
@@ -231,7 +231,7 @@ export const StaffTicket = ({ ticketId }: { ticketId: number }) => {
                 {ticket!.priority}
               </TitleValue>
               <TitleValue title="Date Created" className="flex items-center justify-between">
-                {format(ticket!.createdAt, "yy MMM''dd")}
+                {format(ticket!.createdAt, 'dd/MM/yyyy')}
               </TitleValue>
               {!!ticket!.services && ticket!.services?.length > 0 && (
                 <TitleValue title="Services">

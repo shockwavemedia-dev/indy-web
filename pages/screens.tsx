@@ -15,16 +15,15 @@ const ScreensPage: NextPageWithLayout = () => {
 
   useEffect(() => {
     setHeader('Screens')
+    setButtons(
+      <FancyButton
+        Icon={<MonitorIcon className="stroke-halloween-orange" />}
+        title="Add Screen"
+        onClick={toggleCreateAdminScreenModal}
+        className="w-fit"
+      />
+    )
   }, [])
-
-  setButtons(
-    <FancyButton
-      Icon={<MonitorIcon className="stroke-halloween-orange" />}
-      title="Add Screen"
-      onClick={toggleCreateAdminScreenModal}
-      className="w-fit"
-    />
-  )
 
   return (
     <>
@@ -32,7 +31,7 @@ const ScreensPage: NextPageWithLayout = () => {
         <title>Indy - Screens</title>
       </Head>
       <div className="mx-auto w-full space-y-6">
-        <Card title="Printers List" className="flex max-h-155 flex-col">
+        <Card title="Screens List" className="flex max-h-155 flex-col">
           <div className="">Nothing to see here. 🦗</div>
         </Card>
       </div>

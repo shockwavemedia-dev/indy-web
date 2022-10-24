@@ -5,5 +5,5 @@ import { richTextEmptyCheck } from '../utils/FormHelpers'
 export const CreateNoteFormSchema: SchemaOf<CreateNoteForm> = object().shape({
   note: string()
     .required()
-    .test('draft-js-empty-check', 'Note is a required field', richTextEmptyCheck),
+    .test('draft-js-empty-check', 'Message is a required field', richTextEmptyCheck),
 })

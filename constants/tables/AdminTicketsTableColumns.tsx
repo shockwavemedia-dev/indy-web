@@ -111,7 +111,7 @@ export const AdminTicketsTableColumns: Array<Column<Ticket>> = [
     accessor: 'createdAt',
     sortType: 'datetime',
     Cell: ({ value }) => (
-      <div className=" text-sm font-medium text-onyx">{format(value, "yy MMM''dd")}</div>
+      <div className=" text-sm font-medium text-onyx">{format(value, 'dd/MM/yyyy')}</div>
     ),
   },
   {

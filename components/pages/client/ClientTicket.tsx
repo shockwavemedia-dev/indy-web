@@ -20,7 +20,7 @@ import { TrashIcon } from '../../../components/icons/TrashIcon'
 import { CreateLinkModal } from '../../../components/modals/CreateLinkModal'
 import {
   DeleteTicketModal,
-  useDeleteTicketModal,
+  useDeleteTicketModal
 } from '../../../components/modals/DeleteTicketModal'
 import { EditTicketModal, useEditTicketModal } from '../../../components/modals/EditTicketModal'
 import { ViewTicketAssigneeModal } from '../../../components/modals/ViewTicketAssigneeModal'
@@ -260,7 +260,7 @@ export const ClientTicket = ({ ticketId }: { ticketId: number }) => {
                 {ticket!.priority}
               </TitleValue>
               <TitleValue title="Date Created" className="flex items-center justify-between">
-                {format(ticket!.createdAt, "yy MMM''dd")}
+                {format(ticket!.createdAt, 'dd/MM/yyyy')}
               </TitleValue>
               {!!ticket!.services && ticket!.services?.length > 0 && (
                 <TitleValue title="Services">

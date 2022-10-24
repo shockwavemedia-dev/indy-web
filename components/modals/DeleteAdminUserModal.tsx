@@ -53,7 +53,7 @@ export const DeleteAdminUserModal = ({
                 {user.gender}
               </TitleValue>
               <TitleValue title="Birth Date" className="capitalize">
-                {format(user.birthDate, "yy MMM''dd")}
+                {format(user.birthDate, 'dd/MM/yyyy')}
               </TitleValue>
               <TitleValue title="Phone" className="capitalize">
                 {user.contactNumber}
