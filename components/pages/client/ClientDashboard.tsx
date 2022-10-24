@@ -47,48 +47,18 @@ export const ClientDashboard = () => {
       <div className="mx-auto w-full">
         <div className="flex gap-6 transition-all lg:flex-col">
           <Card title="Project Status Table" className="flex max-h-155 flex-1 flex-col space-y-8">
-            <div className="absolute top-6 right-6 flex space-x-3">
-              <DateInputNoFormik
-                value={duedate}
-                onChange={setDuedate}
-                placeholder="Search by Due Date"
-                className="w-[9.75rem]"
-                noIcon
-                slim
-              />
-              <TextInputNoFormik
-                name="code"
-                placeholder="Search by Code"
-                type="text"
-                className="w-[8.25rem]"
-                onChange={setCode}
-                onEnter={() => setCodePayload(code)}
-                onBlur={() => setCodePayload(code)}
-                slim
-              />
-              <TextInputNoFormik
-                name="subject"
-                placeholder="Search by Subject"
-                type="text"
-                className="w-[9rem]"
-                onChange={setSubject}
-                onEnter={() => setSubjectPayload(subject)}
-                onBlur={() => setSubjectPayload(subject)}
-                slim
-              />
-              <TicketTypeFilter />
-              <TicketStatusFilter />
-            </div>
+            <div className="absolute top-6 right-6 flex space-x-3"></div>
             <DataTable
               columns={ClientTicketsTableColumns}
               dataEndpoint={`/v1/clients/${session?.user.userType.client.id}/tickets`}
               tableQueryKey={[
                 'tickets',
-                ...statuses,
+                ...statuses.filter((s) => s !== 'show_overdue'),
                 ...types,
                 subjectPayload,
                 codePayload,
                 duedate ? format(duedate, 'yyyy-MM-dd') : '',
+                { showOverdue: statuses.some((s) => s === 'show_overdue') },
               ]}
               ofString="Projects"
               dataParams={{
@@ -97,8 +67,43 @@ export const ClientDashboard = () => {
                 subject: subjectPayload,
                 code: codePayload,
                 duedate: duedate ? format(duedate, 'yyyy-MM-dd') : '',
+                show_overdue: statuses.some((s) => s === 'show_overdue'),
               }}
               rowOnClick={({ original: { id } }) => replace(`/ticket/${id}`)}
+              tableActions={
+                <>
+                  <DateInputNoFormik
+                    value={duedate}
+                    onChange={setDuedate}
+                    placeholder="Search by Due Date"
+                    className="w-[9.75rem]"
+                    noIcon
+                    slim
+                  />
+                  <TextInputNoFormik
+                    name="code"
+                    placeholder="Search by Code"
+                    type="text"
+                    className="w-[8.25rem]"
+                    onChange={setCode}
+                    onEnter={() => setCodePayload(code)}
+                    onBlur={() => setCodePayload(code)}
+                    slim
+                  />
+                  <TextInputNoFormik
+                    name="subject"
+                    placeholder="Search by Subject"
+                    type="text"
+                    className="w-[9rem]"
+                    onChange={setSubject}
+                    onEnter={() => setSubjectPayload(subject)}
+                    onBlur={() => setSubjectPayload(subject)}
+                    slim
+                  />
+                  <TicketTypeFilter />
+                  <TicketStatusFilter />
+                </>
+              }
             />
           </Card>
           <div className="flex w-86 flex-col gap-6 transition-all lg:w-full lg:flex-row">

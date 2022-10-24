@@ -41,6 +41,7 @@ import { TicketFile } from '../../../types/TicketFile.type'
 import { TicketNote } from '../../../types/TicketNote.type'
 import { TicketPageTabs } from '../../../types/TicketPageTabs.type'
 import { FileButton } from '../../FileButton'
+import { FileDisplay } from '../../FileDisplay'
 import { NotepadIcon } from '../../icons/NotepadIcon'
 import { EditTicketAssigneeModal } from '../../modals/EditTicketAssigneeModal'
 import { Pill } from '../../Pill'
@@ -317,9 +318,33 @@ export const AdminTicket = ({ ticketId }: { ticketId: number }) => {
             }`}
           />
           {activeTab === 'description' && (
-            <Card>
-              <RichTextDisplay value={ticket!.description} />
-            </Card>
+            <div>
+              <Card>
+                <RichTextDisplay value={ticket!.description} />
+              </Card>
+              <Card title="Attachment" className="mt-5">
+                <div className="flex h-fit w-257.5 flex-wrap gap-5">
+                  {!!ticket!.attachments && ticket!.attachments?.length > 0 ? (
+                    ticket!.attachments?.map((attachment) => (
+                      <FileDisplay
+                        key={`attachment-${attachment.id}`}
+                        src={attachment.url}
+                        type={attachment.fileType}
+                        imageHeight={176}
+                        imageWidth={314}
+                        imageAlt={attachment.url}
+                        className="rounded-xl"
+                        href={attachment.url}
+                        videoClassName="h-44 w-78.5 cursor-pointer rounded-xl"
+                        failedToLoadClassName="h-44 w-78.5"
+                      />
+                    ))
+                  ) : (
+                    <div className=" text-xs text-metallic-silver">No attachment to display.</div>
+                  )}
+                </div>
+              </Card>
+            </div>
           )}
           {activeTab === 'notes' && (
             <>

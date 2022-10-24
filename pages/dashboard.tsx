@@ -3,6 +3,7 @@ import { ReactElement, useMemo } from 'react'
 import { ClientDashboard } from '../components/pages/client/ClientDashboard'
 import { ManagerDashboard } from '../components/pages/manager/ManagerDashboard'
 import { ManagerSocialMediaList } from '../components/pages/manager/ManagerSocialMediaList'
+import PrinterManagerPrinterJobsPage from '../components/pages/printerManager/PrinterManagerPrinterJobs'
 import { StaffDashboard } from '../components/pages/staff/StaffDashboard'
 import { StaffSocialMediaList } from '../components/pages/staff/StaffSocialMediaList'
 import PanelLayout from '../layouts/PanelLayout'
@@ -31,6 +32,8 @@ const DashboardPage: NextPageWithLayout = () => {
           return <StaffSocialMediaList />
         }
         return <StaffDashboard />
+      } else if (session.isPrinterManager) {
+        return <PrinterManagerPrinterJobsPage />
       }
     }
 

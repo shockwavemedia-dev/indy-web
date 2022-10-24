@@ -1,3 +1,5 @@
+import { Printer } from './Printer.type'
+
 export type Client = {
   id: number
   name: string
@@ -16,4 +18,6 @@ export type Client = {
   ownerId: number
   note: string
   styleGuide: string
+  printer: Printer | null
+  printerId: number | null
 }

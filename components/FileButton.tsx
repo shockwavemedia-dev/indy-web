@@ -88,7 +88,7 @@ export const FileButton = ({
               e.stopPropagation()
               toggleRenameFolderModal(folderId, folderName)
             }}
-            className="absolute top-2 right-2 hidden group-hover:block"
+            className="absolute top-3 right-3 hidden group-hover:block"
           >
             <EditIcon className="stroke-waterloo hover:stroke-halloween-orange" />
           </button>
@@ -100,7 +100,7 @@ export const FileButton = ({
               e.stopPropagation()
               toggleDeleteFolderModal(folderId, folderName)
             }}
-            className="absolute top-2 right-8 hidden group-hover:block"
+            className="absolute top-3 right-9 hidden group-hover:block"
           >
             <TrashIcon className="stroke-waterloo hover:stroke-halloween-orange" />
           </button>

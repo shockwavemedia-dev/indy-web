@@ -14,7 +14,7 @@ export const TextInput = ({
   label,
   hint,
 }: {
-  type: 'text' | 'email' | 'url'
+  type: 'text' | 'email' | 'url' | 'number'
   name: string
   Icon?: Icon
   placeholder: string

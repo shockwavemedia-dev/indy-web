@@ -31,7 +31,7 @@ const PrintersPage: NextPageWithLayout = () => {
     setButtons(
       <FancyButton
         Icon={<PrinterIcon className="stroke-halloween-orange" />}
-        title="Create Printer"
+        title="Add Print Company"
         onClick={toggleCreateAdminPrinterModal}
         className="w-fit"
       />

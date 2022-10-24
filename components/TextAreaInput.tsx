@@ -27,7 +27,7 @@ export const TextAreaInput = ({
     <div>
       <Icon className="pointer-events-none absolute ml-6 mt-4 stroke-lavender-gray" />
       <Field
-        className="min-h-35 -mb-1 w-full resize-none overflow-hidden rounded-xl bg-transparent py-4 px-13 text-sm font-medium text-onyx placeholder-metallic-silver ring-1 ring-bright-gray selection:bg-halloween-orange selection:text-white read-only:cursor-auto focus:ring-2 focus:ring-halloween-orange focus:ring-opacity-40 read-only:focus:ring-1 read-only:focus:ring-bright-gray"
+        className="-mb-1 h-40 w-full resize-none overflow-hidden rounded-xl bg-transparent py-4 px-13 text-sm font-medium text-onyx placeholder-metallic-silver ring-1 ring-bright-gray selection:bg-halloween-orange selection:text-white read-only:cursor-auto focus:ring-2 focus:ring-halloween-orange focus:ring-opacity-40 read-only:focus:ring-1 read-only:focus:ring-bright-gray"
         component="textarea"
         name={name}
         spellCheck={false}

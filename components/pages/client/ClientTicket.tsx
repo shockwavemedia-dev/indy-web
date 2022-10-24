@@ -347,7 +347,6 @@ export const ClientTicket = ({ ticketId }: { ticketId: number }) => {
               <Card>
                 <RichTextDisplay value={ticket!.description} />
               </Card>
-
               <Card title="Attachment" className="mt-5">
                 <div className="flex h-fit w-257.5 flex-wrap gap-5">
                   {!!ticket!.attachments && ticket!.attachments?.length > 0 ? (

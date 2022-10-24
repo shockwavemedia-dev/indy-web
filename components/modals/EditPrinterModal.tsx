@@ -8,6 +8,7 @@ import { EditPrinterForm } from '../../types/forms/EditPrinterForm.type'
 import { Printer } from '../../types/Printer.type'
 import { objectWithFileToFormData } from '../../utils/FormHelpers'
 import { Button } from '../Button'
+import { Card } from '../Card'
 import { FileDropZone } from '../FileDropZone'
 import { EditIcon } from '../icons/EditIcon'
 import { Modal } from '../Modal'
@@ -67,74 +68,76 @@ export const EditPrinterModal = ({
             onSubmit={submitForm}
           >
             {({ isSubmitting }) => (
-              <Form className="flex w-140 flex-col">
-                <div className="mb-5 flex space-x-5">
-                  {printer.companyLogoUrl && (
-                    <div className="rounded-md">
-                      <Image
-                        src={printer.companyLogoUrl}
-                        alt={printer.companyLogoUrl}
-                        height={150}
-                        width={150}
-                      />
-                    </div>
-                  )}
+              <Form className="flex max-h-130 w-175 flex-col space-y-5 overflow-y-auto">
+                <Card className="h-fit w-full">
+                  <div className="mb-5 flex space-x-5">
+                    {printer.companyLogoUrl && (
+                      <div className="rounded-md">
+                        <Image
+                          src={printer.companyLogoUrl}
+                          alt={printer.companyLogoUrl}
+                          height={150}
+                          width={150}
+                        />
+                      </div>
+                    )}
+                    <TextInput
+                      label="Company Name"
+                      type="text"
+                      Icon={EditIcon}
+                      placeholder="Enter Company Name"
+                      name="companyName"
+                      className="mb-5"
+                    />
+                  </div>
                   <TextInput
-                    label="Company Name"
+                    label="Email"
                     type="text"
                     Icon={EditIcon}
-                    placeholder="Enter Company Name"
-                    name="companyName"
+                    placeholder="Enter Email"
+                    name="email"
                     className="mb-5"
                   />
-                </div>
-                <TextInput
-                  label="Email"
-                  type="text"
-                  Icon={EditIcon}
-                  placeholder="Enter Email"
-                  name="email"
-                  className="mb-5"
-                />
-                <RichTextInput
-                  label="Description"
-                  Icon={EditIcon}
-                  placeholder="Enter Description"
-                  name="description"
-                  className="mb-5"
-                />
-                <div className="mb-5 flex space-x-5">
-                  <TextInput
-                    label="Contact Name"
-                    name="contactName"
-                    type="text"
+                  <RichTextInput
+                    label="Description"
                     Icon={EditIcon}
-                    placeholder="Enter Contact Name"
+                    placeholder="Enter Description"
+                    name="description"
+                    className="mb-5"
                   />
-                  <TextInput
-                    label="Phone"
-                    type="text"
-                    Icon={EditIcon}
-                    placeholder="Enter Phone"
-                    name="phone"
+                  <div className="mb-5 flex space-x-5">
+                    <TextInput
+                      label="Contact Name"
+                      name="contactName"
+                      type="text"
+                      Icon={EditIcon}
+                      placeholder="Enter Contact Name"
+                    />
+                    <TextInput
+                      label="Phone"
+                      type="text"
+                      Icon={EditIcon}
+                      placeholder="Enter Phone"
+                      name="phone"
+                    />
+                  </div>
+                  <FileDropZone
+                    label="Upload New Logo"
+                    name="logo"
+                    className="mb-8"
+                    maxSize={250}
+                    mimeType="image/png"
+                    accept={['.jpeg', '.png', '.jpg']}
                   />
-                </div>
-                <FileDropZone
-                  label="Upload New Logo"
-                  name="file"
-                  className="mb-8"
-                  maxSize={250}
-                  mimeType="image/png"
-                  accept={['.jpeg', '.png', '.jpg']}
-                />
-                <div className="flex space-x-5">
-                  <Button ariaLabel="Cancel" onClick={onClose} type="button" light>
-                    Cancel
-                  </Button>
-                  <Button ariaLabel="Submit" disabled={isSubmitting} type="submit">
-                    Submit
-                  </Button>
-                </div>
+                  <div className="flex space-x-5">
+                    <Button ariaLabel="Cancel" onClick={onClose} type="button" light>
+                      Cancel
+                    </Button>
+                    <Button ariaLabel="Submit" disabled={isSubmitting} type="submit">
+                      Submit
+                    </Button>
+                  </div>
+                </Card>
               </Form>
             )}
           </Formik>

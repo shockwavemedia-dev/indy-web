@@ -20,21 +20,23 @@ const statusList: Array<TicketStatus> = [
 export const useTicketStatusFilter = create(
   combine(
     {
-      statuses: [] as Array<TicketStatus>,
+      statuses: [] as Array<TicketStatus | 'show_overdue'>,
     },
     (set, get) => ({
-      toggleStatus: (status: TicketStatus) =>
+      toggleStatus: (status: TicketStatus | 'show_overdue') =>
         set({
           statuses: get().statuses.includes(status)
             ? get().statuses.filter((s) => s !== status)
             : [...get().statuses, status],
         }),
       getAsPayload: () =>
-        get().statuses.reduce((statuses, status, i) => {
-          statuses[`statuses[${i}]`] = status
+        get()
+          .statuses.filter((t) => t !== 'show_overdue')
+          .reduce((statuses, status, i) => {
+            statuses[`statuses[${i}]`] = status
 
-          return statuses
-        }, {} as Record<string, string>),
+            return statuses
+          }, {} as Record<string, string>),
     })
   )
 )
@@ -44,15 +46,23 @@ export const TicketStatusFilter = () => {
   const statuses = useTicketStatusFilter((state) => state.statuses)
   const toggleStatus = useTicketStatusFilter((state) => state.toggleStatus)
 
-  const actions = statusList.map((s) => (
+  const actions = [
+    ...statusList.map((s) => (
+      <CheckboxNoFormik
+        key={`${statusId}-${s}`}
+        checked={statuses.includes(s)}
+        label={s}
+        onChange={() => toggleStatus(s)}
+        className="capitalize"
+      />
+    )),
     <CheckboxNoFormik
-      key={`${statusId}-${s}`}
-      checked={statuses.includes(s)}
-      label={s}
-      onChange={() => toggleStatus(s)}
-      className="capitalize"
-    />
-  ))
+      key={`${statusId}-show_overdue`}
+      checked={statuses.includes('show_overdue')}
+      label={'Overdue'}
+      onChange={() => toggleStatus('show_overdue')}
+    />,
+  ]
 
   return (
     <Dropdown actions={actions}>
