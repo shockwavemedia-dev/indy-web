@@ -6,6 +6,7 @@ import { EditPrinterSchema } from '../../schemas/EditPrinterFormSchema'
 import { useToastStore } from '../../store/ToastStore'
 import { EditPrinterForm } from '../../types/forms/EditPrinterForm.type'
 import { Printer } from '../../types/Printer.type'
+import { get422And400ResponseError } from '../../utils/ErrorHelpers'
 import { objectWithFileToFormData } from '../../utils/FormHelpers'
 import { Button } from '../Button'
 import { Card } from '../Card'
@@ -45,7 +46,7 @@ export const EditPrinterModal = ({
     } catch (e) {
       showToast({
         type: 'error',
-        message: 'Something went wrong',
+        message: get422And400ResponseError(e),
       })
     }
   }
