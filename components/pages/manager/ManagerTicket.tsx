@@ -232,7 +232,7 @@ export const ManagerTicket = ({ ticketId }: { ticketId: number }) => {
                 {ticket!.priority}
               </TitleValue>
               <TitleValue title="Date Created" className="flex items-center justify-between">
-                {format(ticket!.createdAt, "yy MMM''dd")}
+                {format(ticket!.createdAt, 'dd/MM/yyyy')}
               </TitleValue>
               {!!ticket!.services && ticket!.services?.length > 0 && (
                 <TitleValue title="Services">

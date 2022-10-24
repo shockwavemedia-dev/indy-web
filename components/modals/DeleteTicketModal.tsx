@@ -56,7 +56,7 @@ export const DeleteTicketModal = ({
                   <TitleValue title="ID">{ticket.id}</TitleValue>
                   <TitleValue title="Company">{ticket.clientName}</TitleValue>
                   <TitleValue title="Date Created">
-                    {format(ticket.createdAt, "yy MMM''dd")}
+                    {format(ticket.createdAt, 'dd/MM/yyyy')}
                   </TitleValue>
                   <TitleValue title="Priority">{ticket?.priority}</TitleValue>
                   <TitleValue title="Code">{ticket.ticketCode}</TitleValue>
