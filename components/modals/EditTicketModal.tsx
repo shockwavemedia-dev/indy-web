@@ -1,9 +1,7 @@
 import axios from 'axios'
 import { Form, Formik } from 'formik'
 import { useSession } from 'next-auth/react'
-import { useState } from 'react'
 import { useQueryClient } from 'react-query'
-import { SingleValue } from 'react-select'
 import create from 'zustand'
 import { combine } from 'zustand/middleware'
 import { ProjectBriefPriorityOptions } from '../../constants/options/ProjectBriefPriorityOptions'
@@ -12,8 +10,6 @@ import { TicketTypeOptions } from '../../constants/options/TicketTypeOptions'
 import { EditTicketFormSchema } from '../../schemas/EditTicketFormSchema'
 import { useToastStore } from '../../store/ToastStore'
 import { EditTicketForm } from '../../types/forms/EditTicketForm.type'
-import { ProjectBriefPriority } from '../../types/ProjectBriefPriority.type'
-import { SelectOption } from '../../types/SelectOption.type'
 import { Ticket } from '../../types/Ticket.type'
 import { get422And400ResponseError } from '../../utils/ErrorHelpers'
 import { Button } from '../Button'
@@ -51,13 +47,6 @@ export const EditTicketModal = ({
   const toggleEditTicketModal = useEditTicketModal((state) => state.toggleEditTicketModal)
   const { showToast } = useToastStore()
   const { data: session } = useSession()
-
-  const value = ticket && ticket?.priority ? ticket.priority : 'Relax'
-
-  const [priority, setPriority] = useState<SingleValue<SelectOption<ProjectBriefPriority>>>({
-    label: value,
-    value,
-  })
 
   return (
     <>
@@ -129,9 +118,7 @@ export const EditTicketModal = ({
                   defaultValue={ProjectBriefPriorityOptions.find(
                     ({ value }) => value === ticket.priority
                   )}
-                  value={priority}
                   onChange={(priority) => {
-                    setPriority(priority)
                     setFieldValue('priority', priority!.value)
                   }}
                   className="mb-5"
