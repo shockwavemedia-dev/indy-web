@@ -7,8 +7,8 @@ import { User } from '../../types/User.type'
 
 export const AdminUserTableColumns: Array<Column<User>> = [
   {
-    Header: 'Email',
-    accessor: 'email',
+    Header: 'Name',
+    accessor: 'fullName',
     Cell: ({ value }) => <div className=" text-sm font-semibold text-onyx">{value}</div>,
   },
   {
@@ -45,8 +45,8 @@ export const AdminUserTableColumns: Array<Column<User>> = [
     ),
   },
   {
-    Header: 'Name',
-    accessor: 'fullName',
+    Header: 'Email',
+    accessor: 'email',
     Cell: ({ value }) => <div className=" text-sm font-semibold text-onyx">{value}</div>,
   },
   {

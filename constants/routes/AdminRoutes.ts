@@ -18,8 +18,8 @@ export const AdminRoutes: Array<Route> = [
     Icon: VideoIcon,
   },
   {
-    title: 'Staffs',
-    pathname: '/staffs',
+    title: 'Users',
+    pathname: '/users',
     Icon: UserIcon,
   },
   {
