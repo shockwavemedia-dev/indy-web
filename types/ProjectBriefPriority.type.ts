@@ -1,1 +1,1 @@
-export type ProjectBriefPriority = 'Urgent' | 'Standard' | 'Relax'
+export type ProjectBriefPriority = 'Urgent' | 'Standard' | 'Relaxed'
