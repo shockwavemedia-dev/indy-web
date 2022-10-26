@@ -12,7 +12,7 @@ export const CreateMarketingPlannerFormSchema: SchemaOf<CreateMarketingPlannerFo
           id: number(),
           name: string().required(),
           status: mixed().oneOf(['to-do', 'in-progress', 'completed']),
-          assignee: string(),
+          assignees: array().of(number()).optional(),
           deadline: date(),
           notify: boolean().required(),
           custom: boolean().required(),

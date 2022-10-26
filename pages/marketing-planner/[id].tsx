@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { Form, Formik } from 'formik'
+import { useSession } from 'next-auth/react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { ReactElement, useEffect, useState } from 'react'
@@ -34,6 +35,7 @@ import {
 import PanelLayout, { usePanelLayoutStore } from '../../layouts/PanelLayout'
 import { UpdateMarketingPlannerFormSchema } from '../../schemas/UpdateMarketingPlannerFormSchema'
 import { useToastStore } from '../../store/ToastStore'
+import { ClientUser } from '../../types/ClientUser.type'
 import { UpdateMarketingPlannerForm } from '../../types/forms/UpdateMarketingPlannerForm.type'
 import { MarketingPlanner } from '../../types/MarketingPlanner.type'
 import { NextPageWithLayout } from '../../types/pages/NextPageWithLayout.type'
@@ -42,13 +44,14 @@ import { get422And400ResponseError } from '../../utils/ErrorHelpers'
 const MarketingPlannerPage: NextPageWithLayout = () => {
   const { setHeader } = usePanelLayoutStore()
   const { showToast } = useToastStore()
+  const { data: session } = useSession()
   const queryClient = useQueryClient()
   const {
     query: { id },
   } = useRouter()
   const todoList = todoListStore((state) => state.todoList)
+  const setAssigneeOptionsList = assigneeListStore((state) => state.setAssigneeOptionsList)
   const cleanTodoList = todoListStore((state) => state.cleanTodoList)
-  const update = assigneeListStore((state) => state.update)
   const toggleCustomTodoModal = useAddCustomTodoModal((state) => state.toggle)
   const toggleShowPhotoVideoFileModal = useFileDisplayModalStore(
     (state) => state.toggleShowPhotoVideoFileModal
@@ -82,11 +85,11 @@ const MarketingPlannerPage: NextPageWithLayout = () => {
           ...values,
           todoList: todoList
             .filter(({ selected }) => selected)
-            .map(({ id, name, status, assignee, deadline, notify }) => ({
+            .map(({ id, name, status, assignees, deadline, notify }) => ({
               id,
               name,
               status,
-              assignee,
+              assignees,
               deadline,
               notify,
             })),
@@ -108,25 +111,36 @@ const MarketingPlannerPage: NextPageWithLayout = () => {
     }
   }
 
+  const { data: assignees } = useQuery(
+    ['clientUsers', session!.user.userType.client.id],
+    async () => {
+      const { data } = await axios.get<{
+        data: Array<ClientUser>
+      }>(`/v1/clients/${session!.user.userType.client.id}/users`)
+
+      return data.data
+    },
+    {
+      enabled: !!session,
+    }
+  )
+
   useEffect(() => {
     if (marketingPlan) {
       setHeader(marketingPlan.eventName)
 
       if (!todoLoaded) {
         cleanTodoList(marketingPlan.todoList)
-        update(
-          Array.from(
-            new Set(
-              marketingPlan.todoList
-                .map(({ assignee }) => assignee)
-                .filter((assignee) => !!assignee)
-            )
-          )
-        )
         setTodoLoaded(true)
       }
     }
   }, [marketingPlan])
+
+  useEffect(() => {
+    if (assignees) {
+      setAssigneeOptionsList(assignees)
+    }
+  }, [assignees])
 
   if (!marketingPlan) return null
 

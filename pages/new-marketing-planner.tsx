@@ -4,7 +4,7 @@ import { useSession } from 'next-auth/react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
 import { ReactElement, useEffect } from 'react'
-import { useQueryClient } from 'react-query'
+import { useQuery, useQueryClient } from 'react-query'
 import { Button } from '../components/Button'
 import { Card } from '../components/Card'
 import { Checkbox } from '../components/Checkbox'
@@ -26,6 +26,7 @@ import {
 import PanelLayout, { usePanelLayoutStore } from '../layouts/PanelLayout'
 import { CreateMarketingPlannerFormSchema } from '../schemas/CreateMarketingPlannerFormSchema'
 import { useToastStore } from '../store/ToastStore'
+import { ClientUser } from '../types/ClientUser.type'
 import { CreateMarketingPlannerForm } from '../types/forms/CreateMarketingPlannerForm.type'
 import { NextPageWithLayout } from '../types/pages/NextPageWithLayout.type'
 import { get422And400ResponseError } from '../utils/ErrorHelpers'
@@ -39,7 +40,7 @@ const NewMarketingPlannerPage: NextPageWithLayout = () => {
   const queryClient = useQueryClient()
   const todoList = todoListStore((state) => state.todoList)
   const resetTodoList = todoListStore((state) => state.resetTodoList)
-  const clear = assigneeListStore((state) => state.clear)
+  const setAssigneeOptionsList = assigneeListStore((state) => state.setAssigneeOptionsList)
   const toggleCustomTodoModal = useAddCustomTodoModal((state) => state.toggle)
 
   const submitForm = async (values: CreateMarketingPlannerForm) => {
@@ -50,10 +51,10 @@ const NewMarketingPlannerPage: NextPageWithLayout = () => {
           ...values,
           todoList: todoList
             .filter(({ selected }) => selected)
-            .map(({ name, status, assignee, deadline, notify }) => ({
+            .map(({ name, status, assignees, deadline, notify }) => ({
               name,
               status,
-              assignee,
+              assignees,
               deadline,
               notify,
             })),
@@ -76,11 +77,30 @@ const NewMarketingPlannerPage: NextPageWithLayout = () => {
     }
   }
 
+  const { data: assignees } = useQuery(
+    ['clientUsers', session!.user.userType.client.id],
+    async () => {
+      const { data } = await axios.get<{
+        data: Array<ClientUser>
+      }>(`/v1/clients/${session!.user.userType.client.id}/users`)
+
+      return data.data
+    },
+    {
+      enabled: !!session,
+    }
+  )
+
   useEffect(() => {
     setHeader('New Marketing Planner')
     resetTodoList()
-    clear()
   }, [])
+
+  useEffect(() => {
+    if (assignees) {
+      setAssigneeOptionsList(assignees)
+    }
+  }, [assignees])
 
   return (
     <>

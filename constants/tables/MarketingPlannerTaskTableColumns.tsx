@@ -7,7 +7,9 @@ import { CheckboxNoFormik } from '../../components/CheckboxNoFormik'
 import { CreateSelectNoFormik } from '../../components/CreateSelectNoFormik'
 import { DateInputNoFormik } from '../../components/DateInputNoFormik'
 import { SelectNoFormik } from '../../components/SelectNoFormik'
+import { ClientUser } from '../../types/ClientUser.type'
 import { Todo } from '../../types/Todo.type'
+import { TodoStatus } from '../../types/TodoStatus.type'
 import { TodoStatusOptions } from '../options/TodoStatusOptions'
 
 const initialTodoList = [
@@ -35,39 +37,14 @@ const initialTodoList = [
   'promote via radio',
 ]
 
-const initialAssigneeList = ['Mark', 'Arjean', 'Kyle']
-
 export const assigneeListStore = create(
   combine(
     {
-      assigneeList: [] as Array<{
-        label: string
-        value: string
-      }>,
+      assigneeOptionsList: [] as Array<ClientUser>,
     },
     (set) => ({
-      update: (names: Array<string | undefined>) =>
-        set({
-          assigneeList: [
-            ...initialAssigneeList.map((name) => ({
-              label: name,
-              value: name,
-            })),
-            ...names
-              .filter((name) => name && !initialAssigneeList.includes(name))
-              .map((name) => ({
-                label: name!,
-                value: name!,
-              })),
-          ],
-        }),
-      clear: () =>
-        set({
-          assigneeList: initialAssigneeList.map((name) => ({
-            label: name,
-            value: name,
-          })),
-        }),
+      setAssigneeOptionsList: (assigneeOptionsList: Array<ClientUser>) =>
+        set({ assigneeOptionsList }),
     })
   )
 )
@@ -230,9 +207,9 @@ export const MarketingPlannerTaskTableColumns: Array<Column<Todo>> = [
   },
   {
     Header: 'Assignee',
-    accessor: 'assignee',
+    accessor: 'assignees',
     Cell: ({ row: { original } }) => {
-      const assigneeList = assigneeListStore((state) => state.assigneeList)
+      const assigneeOptionsList = assigneeListStore((state) => state.assigneeOptionsList)
       const getTodo = todoListStore((state) => state.getTodo)
       const updateTodo = todoListStore((state) => state.updateTodo)
 
@@ -240,18 +217,61 @@ export const MarketingPlannerTaskTableColumns: Array<Column<Todo>> = [
 
       return todo && todo.selected ? (
         <CreateSelectNoFormik
-          options={assigneeList}
+          options={assigneeOptionsList.map(({ firstName, id }) => ({
+            label: firstName,
+            value: id,
+          }))}
           value={
-            todo && todo.selected
-              ? assigneeList.find(({ value }) => value === original.assignee)
-              : null
+            todo.assignees && todo.assignees.length > 0
+              ? assigneeOptionsList
+                  .filter(({ id }) => {
+                    if (
+                      todo.assignees &&
+                      todo.assignees.length > 0 &&
+                      ((
+                        assignees
+                      ): assignees is Array<{
+                        id: number
+                        taskId: number
+                        userId: number
+                        status: TodoStatus
+                        deadline?: Date
+                        createdAt: Date
+                        updatedAt: Date
+                      }> => typeof assignees[0] !== 'number')(todo.assignees)
+                    ) {
+                      return todo.assignees.map(({ userId }) => userId).includes(id)
+                    } else if (
+                      todo.assignees &&
+                      todo.assignees.length > 0 &&
+                      ((assignees): assignees is Array<number> => typeof assignees[0] === 'number')(
+                        todo.assignees
+                      )
+                    ) {
+                      return todo.assignees.map((userId) => userId).includes(id)
+                    }
+
+                    return false
+                  })
+                  .map(({ firstName, id }) => ({
+                    label: firstName,
+                    value: id,
+                  }))
+              : []
           }
           onChange={(option) => {
-            if (todo && option) updateTodo({ ...todo, assignee: option.value })
+            if (todo && option)
+              updateTodo({
+                ...todo,
+                assignees: assigneeOptionsList
+                  .filter(({ id }) => option.map(({ value }) => value).includes(id))
+                  .map(({ id }) => id),
+              })
           }}
           twHeight="h-7"
           className="pr-5"
           placeholder="Select Assignee"
+          isMulti
         />
       ) : (
         <div>-</div>
