@@ -7,6 +7,7 @@ export const NewAdminUserFormSchema: SchemaOf<NewAdminUserForm> = object().shape
   passwordConfirmation: string().required(),
   contactNumber: string().required(),
   firstName: string().required(),
+  position: string().required(),
   lastName: string().required(),
   middleName: string().optional().nullable(),
   gender: mixed().required().oneOf(['female', 'male']),

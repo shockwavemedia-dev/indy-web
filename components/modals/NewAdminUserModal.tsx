@@ -14,6 +14,7 @@ import { Button } from '../Button'
 import { DateInput } from '../DateInput'
 import { ClipboardIcon } from '../icons/ClipboardIcon'
 import { EmailIcon } from '../icons/EmailIcon'
+import { GearIcon } from '../icons/GearIcon'
 import { LockIcon } from '../icons/LockIcon'
 import { PencilIcon } from '../icons/PencilIcon'
 import { UserIcon } from '../icons/UserIcon'
@@ -86,6 +87,7 @@ export const NewAdminUserModal = ({
             initialValues={{
               email: '',
               password: '',
+              position: '',
               birthDate: null,
               passwordConfirmation: '',
               contactNumber: '',
@@ -109,6 +111,8 @@ export const NewAdminUserModal = ({
                     options={AdminUserRoleOptions}
                     className="mb-5"
                   />
+                </div>
+                <div className="mb-5 flex space-x-5">
                   <Select
                     name="departmentId"
                     Icon={ClipboardIcon}
@@ -119,6 +123,13 @@ export const NewAdminUserModal = ({
                         label: department.name,
                       })) ?? []
                     }
+                    className="mb-5"
+                  />
+                  <TextInput
+                    type="text"
+                    Icon={GearIcon}
+                    placeholder="Position/Title"
+                    name="position"
                     className="mb-5"
                   />
                 </div>

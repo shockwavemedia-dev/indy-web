@@ -19,5 +19,6 @@ export type User = {
     type: string
     role: string
     department: Department
+    position: string | null
   }
 }

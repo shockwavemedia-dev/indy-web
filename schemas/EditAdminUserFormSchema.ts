@@ -4,6 +4,7 @@ import { EditAdminUserForm } from '../types/forms/EditAdminUserForm.type'
 export const EditAdminUserFormSchema: SchemaOf<EditAdminUserForm> = object().shape({
   contactNumber: string().required(),
   firstName: string().required(),
+  position: string().required(),
   lastName: string().required(),
   middleName: string().optional().nullable(),
   gender: mixed().required().oneOf(['female', 'male']),

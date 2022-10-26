@@ -14,6 +14,7 @@ import { Button } from '../Button'
 import { DateInput } from '../DateInput'
 import { ClipboardIcon } from '../icons/ClipboardIcon'
 import { FloppyDiskIcon } from '../icons/FloppyDiskIcon'
+import { GearIcon } from '../icons/GearIcon'
 import { PencilIcon } from '../icons/PencilIcon'
 import { UserIcon } from '../icons/UserIcon'
 import { Modal } from '../Modal'
@@ -90,6 +91,7 @@ export const EditAdminUserModal = ({
               gender: user.gender,
               role: user.userType.role,
               status: user.status,
+              position: user.userType.position ?? '',
               departmentId: user.userType.role !== 'admin' ? user.userType.department.id : null,
             }}
             onSubmit={submitForm}
@@ -115,6 +117,13 @@ export const EditAdminUserModal = ({
                         )}
                       />
                     )}
+                  <TextInput
+                    label="Position"
+                    type="text"
+                    Icon={GearIcon}
+                    placeholder="Position / Title"
+                    name="position"
+                  />
                   <div className="mb-5 flex space-x-5">
                     <Select
                       label="Role"
