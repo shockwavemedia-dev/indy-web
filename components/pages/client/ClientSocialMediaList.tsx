@@ -10,6 +10,8 @@ import { CreateSocialMediaModal } from '../../modals/CreateSocialMediaModal'
 import { EditSocialMediaModal } from '../../modals/EditSocialMediaModal'
 import { SocialMediaTable } from '../../SocialMediaTable'
 
+import { SocialMediaCalendarList } from '../../SocialMediaCalendarList'
+
 export const ClientSocialMediaList = ({
   clientId,
   socialMediaId = -1,
@@ -55,6 +57,7 @@ export const ClientSocialMediaList = ({
               <div>Add Social Media</div>
             </Button>
           </div>
+          <SocialMediaCalendarList />
           <Card className="flex max-h-155 flex-1 flex-col">
             <SocialMediaTable clientId={clientId} />
           </Card>
