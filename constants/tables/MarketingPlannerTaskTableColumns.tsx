@@ -272,6 +272,7 @@ export const MarketingPlannerTaskTableColumns: Array<Column<Todo>> = [
           className="pr-5"
           placeholder="Select Assignee"
           isMulti
+          closeMenuOnSelect={false}
         />
       ) : (
         <div>-</div>
