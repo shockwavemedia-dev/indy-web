@@ -1,5 +1,6 @@
 export type NewAdminUserForm = {
   email: string
+  position: string
   password: string
   birthDate: Date | null
   passwordConfirmation: string

@@ -2,6 +2,7 @@ export type EditAdminUserForm = {
   birthDate: Date | null
   contactNumber: string
   firstName: string
+  position: string
   lastName: string
   middleName?: string | null
   gender: 'female' | 'male' | null
