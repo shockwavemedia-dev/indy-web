@@ -106,7 +106,7 @@ export const ClientTicketsTableColumns: Array<Column<Ticket>> = [
     accessor: 'createdAt',
     sortType: 'datetime',
     Cell: ({ value }) => (
-      <div className=" text-sm font-medium text-onyx">{format(value, "yy MMM''dd")}</div>
+      <div className=" text-sm font-medium text-onyx">{format(value, 'dd/MM/yyyy')}</div>
     ),
   },
   {
@@ -120,7 +120,7 @@ export const ClientTicketsTableColumns: Array<Column<Ticket>> = [
               return 'bg-light-red-crimson'
             case 'Standard':
               return 'bg-light-golden-rod'
-            case 'Relax':
+            case 'Relaxed':
               return 'bg-light-forest-green'
           }
         })()}
@@ -130,7 +130,7 @@ export const ClientTicketsTableColumns: Array<Column<Ticket>> = [
               return 'text-red-crimson'
             case 'Standard':
               return 'text-golden-rod'
-            case 'Relax':
+            case 'Relaxed':
               return 'text-forest-green'
           }
         })()}

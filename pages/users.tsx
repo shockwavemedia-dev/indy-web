@@ -26,13 +26,12 @@ const StaffUserPage: NextPageWithLayout = () => {
   } = useAdminUserStore()
 
   useEffect(() => {
-    setHeader('Staffs')
+    setHeader('Users')
 
     setButtons(
       <FancyButton
         Icon={<UserIcon className="stroke-halloween-orange" />}
-        title="Create Staff"
-        subtitle="Laborerivit rem cones mil"
+        title="Create User"
         onClick={toggleNewAdminUserModal}
         className="w-fit"
       />
@@ -43,7 +42,7 @@ const StaffUserPage: NextPageWithLayout = () => {
     <>
       <NewAdminUserModal isVisible={isNewAdminUserModalVisible} onClose={toggleNewAdminUserModal} />
       <Head>
-        <title>Indy - Staffs</title>
+        <title>Indy - Users</title>
       </Head>
       <div className="mx-auto w-full space-y-6">
         <Card title="Admin Users" className="flex max-h-155 flex-col">

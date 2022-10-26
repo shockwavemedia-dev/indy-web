@@ -56,7 +56,7 @@ export const DeletePhotographyVideographyModal = ({
                 {photographyVideography.shootTitle}
               </TitleValue>
               <TitleValue title="Shoot Date" className="capitalize">
-                {format(photographyVideography.shootDate, "yy MMM''dd")}
+                {format(photographyVideography.shootDate, 'dd/MM/yyyy')}
               </TitleValue>
               <TitleValue title="Event Name" className="capitalize">
                 {photographyVideography.eventName}
