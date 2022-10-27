@@ -1,13 +1,17 @@
 import axios from 'axios'
+import { useState } from 'react'
 import { useQueryClient } from 'react-query'
+import { SingleValue } from 'react-select'
 import { Column } from 'react-table'
 import create from 'zustand'
 import { combine } from 'zustand/middleware'
 import { CheckboxNoFormik } from '../../components/CheckboxNoFormik'
 import { CreateSelectNoFormik } from '../../components/CreateSelectNoFormik'
 import { DateInputNoFormik } from '../../components/DateInputNoFormik'
-import { SelectNoFormik } from '../../components/SelectNoFormik'
+import { MarketingStatusSelect } from '../../components/MarketingStatusSelect'
 import { ClientUser } from '../../types/ClientUser.type'
+import { MarketingTaskStatus } from '../../types/MarketingTaskStatus.type'
+import { SelectOption } from '../../types/SelectOption.type'
 import { Todo } from '../../types/Todo.type'
 import { TodoStatus } from '../../types/TodoStatus.type'
 import { TodoStatusOptions } from '../options/TodoStatusOptions'
@@ -179,26 +183,27 @@ export const MarketingPlannerTaskTableColumns: Array<Column<Todo>> = [
   {
     Header: 'Status',
     accessor: 'status',
-    Cell: ({ row: { original } }) => {
+    Cell: ({ value, row: { original } }) => {
       const getTodo = todoListStore((state) => state.getTodo)
       const updateTodo = todoListStore((state) => state.updateTodo)
 
       const todo = getTodo(original.name)
 
+      const [status, setStatus] = useState<SingleValue<SelectOption<MarketingTaskStatus>>>({
+        label: value ? value : 'Todo',
+        value: value ? value : 'Todo',
+      })
+
       return todo && todo.selected ? (
-        <SelectNoFormik
+        <MarketingStatusSelect
           options={TodoStatusOptions}
-          value={
-            todo && todo.selected
-              ? TodoStatusOptions.find(({ value }) => value === original.status)
-              : null
-          }
+          placeholder="Select Status"
+          value={status}
           onChange={(option) => {
             if (todo && option) updateTodo({ ...todo, status: option.value })
+            setStatus(option)
           }}
-          twHeight="h-7"
           className="pr-5"
-          placeholder="Select Status"
         />
       ) : (
         <div>-</div>
