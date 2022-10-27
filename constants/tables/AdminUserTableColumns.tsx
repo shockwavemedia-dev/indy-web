@@ -47,7 +47,22 @@ export const AdminUserTableColumns: Array<Column<User>> = [
   {
     Header: 'Email',
     accessor: 'email',
-    Cell: ({ value }) => <div className=" text-sm font-semibold text-onyx">{value}</div>,
+    Cell: ({ value }) => <div className="text-sm font-semibold text-onyx">{value}</div>,
+  },
+  {
+    Header: 'Open Tickets',
+    accessor: 'openTickets',
+    Cell: ({ value }) => <div className="text-sm font-semibold text-onyx">{value}</div>,
+  },
+  {
+    Header: 'Closed Tickets(Last 30 Days)',
+    accessor: 'closedTickets30',
+    Cell: ({ value }) => <div className="text-sm font-semibold text-onyx">{value}</div>,
+  },
+  {
+    Header: 'Closed Tickets(Last 90 Days)',
+    accessor: 'closedTickets90',
+    Cell: ({ value }) => <div className="text-sm font-semibold text-onyx">{value}</div>,
   },
   {
     Header: 'Status',

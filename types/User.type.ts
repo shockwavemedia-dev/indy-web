@@ -21,4 +21,7 @@ export type User = {
     department: Department
     position: string | null
   }
+  openTickets: number
+  closedTickets30: number
+  closedTickets90: number
 }
