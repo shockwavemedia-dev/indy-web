@@ -11,12 +11,12 @@ import { PlusIcon } from '../../components/icons/PlusIcon'
 import { TrashIcon } from '../../components/icons/TrashIcon'
 import {
   DeleteSocialMediaModal,
-  useDeleteSocialMediaModalStore,
+  useDeleteSocialMediaModalStore
 } from '../../components/modals/DeleteSocialMediaModal'
 import { FileUploadModal, useFileUploadModal } from '../../components/modals/FileUploadModal'
 import {
   SocialMediaFileModal,
-  useSocialMediaFileModalStore,
+  useSocialMediaFileModalStore
 } from '../../components/modals/SocialMediaFileModal'
 import { SocialMediaChannelSelect } from '../../components/SocialMediaChannelSelect'
 import { SocialMediaStatusSelect } from '../../components/SocialMediaStatusSelect'
@@ -274,6 +274,7 @@ export const SocialMediaColumns: Array<Column<SocialMedia>> = [
             }}
             options={SocialMediaStatusOptions}
             placeholder=""
+            menuPlacement="auto"
           />
           {/* Nice logo test test */}
         </div>
@@ -371,6 +372,7 @@ export const SocialMediaColumns: Array<Column<SocialMedia>> = [
             options={SocialMediaChannelOptions}
             placeholder=""
             isMulti
+            menuPlacement="auto"
           />
         </div>
       )
