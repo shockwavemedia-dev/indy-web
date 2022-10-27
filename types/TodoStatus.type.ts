@@ -1,1 +1,1 @@
-export type TodoStatus = 'todo' | 'in-progress' | 'completed'
+export type TodoStatus = 'Todo' | 'In Progress' | 'Completed'
