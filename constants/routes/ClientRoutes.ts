@@ -82,39 +82,39 @@ export const ClientRoutes: Array<Route> = [
     subRoutes: [
       {
         title: 'POS',
-        pathname: '/analytics-pos',
+        pathname: '/analytics/pos',
       },
       {
         title: 'Website',
-        pathname: '/analytics-website',
+        pathname: '/analytics/website',
       },
       {
         title: 'Social Media',
-        pathname: '/analytics-social-media',
+        pathname: '/analytics/social-media',
       },
       {
         title: 'Google',
-        pathname: '/analytics-google',
+        pathname: '/analytics/google',
       },
       {
         title: 'EDM',
-        pathname: '/analytics-edm',
+        pathname: '/analytics/edm',
       },
       {
         title: 'SMS',
-        pathname: '/analytics-sms',
+        pathname: '/analytics/sms',
       },
       {
         title: 'Gaming/Tiered',
-        pathname: '/analytics-gaming-tiered',
+        pathname: '/analytics/gaming-tiered',
       },
       {
         title: 'F & B',
-        pathname: '/analytics-fb',
+        pathname: '/analytics/f&b',
       },
       {
         title: 'Digital Health Check',
-        pathname: '/analytics-digital-health-check',
+        pathname: '/analytics/digital-health-check',
       },
     ],
   },
