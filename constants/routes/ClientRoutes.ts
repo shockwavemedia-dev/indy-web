@@ -81,20 +81,40 @@ export const ClientRoutes: Array<Route> = [
     Icon: ChartIcon,
     subRoutes: [
       {
-        title: 'App',
-        pathname: '/app',
+        title: 'POS',
+        pathname: '/analytics-pos',
       },
       {
         title: 'Website',
-        pathname: '/website',
+        pathname: '/analytics-website',
       },
       {
-        title: 'ClevaQ',
-        pathname: '/clevaq',
+        title: 'Social Media',
+        pathname: '/analytics-social-media',
       },
       {
-        title: 'Social Media Ads',
-        pathname: '/social-media-ads',
+        title: 'Google',
+        pathname: '/analytics-google',
+      },
+      {
+        title: 'EDM',
+        pathname: '/analytics-edm',
+      },
+      {
+        title: 'SMS',
+        pathname: '/analytics-sms',
+      },
+      {
+        title: 'Gaming/Tiered',
+        pathname: '/analytics-gaming-tiered',
+      },
+      {
+        title: 'F & B',
+        pathname: '/analytics-fb',
+      },
+      {
+        title: 'Digital Health Check',
+        pathname: '/analytics-digital-health-check',
       },
     ],
   },
