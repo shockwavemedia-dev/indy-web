@@ -10,7 +10,7 @@ import { CaretIcon } from './icons/CaretIcon'
 import { FileDisplayModal, useFileDisplayModalStore } from './modals/FileDisplayModal'
 import { UploadFileModal, useUploadFileModal } from './modals/UploadFileModal'
 
-export const AnalyticsFileBrowser = ({ clientId }: { clientId: number }) => {
+export const AnalyticsFileBrowser = ({ clientId, menu }: { clientId: number; menu: string }) => {
   const { toggleUploadFileModal } = useUploadFileModal()
   const { toggleShowPhotoVideoFileModal } = useFileDisplayModalStore()
   const [currentFolderFilesAndId, setCurrentFolderFilesAndId] = useState<{
@@ -28,7 +28,9 @@ export const AnalyticsFileBrowser = ({ clientId }: { clientId: number }) => {
   const { data, isSuccess, isRefetching } = useQuery(
     ['clientFiles', clientId],
     async () => {
-      const { data } = await axios.get<Folder>(`/v1/clients/${clientId}/analytics-folder`)
+      const { data } = await axios.get<Folder>(
+        `/v1/clients/${clientId}/analytics-folder?menu=${menu}`
+      )
 
       return data
     },
