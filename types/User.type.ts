@@ -1,4 +1,5 @@
 import { Department } from './Department.type'
+import { File } from './File.type'
 import { UserRole } from './UserRole.type'
 
 export type User = {
@@ -24,4 +25,5 @@ export type User = {
   openTickets: number
   closedTickets30: number
   closedTickets90: number
+  profileFile: File
 }
