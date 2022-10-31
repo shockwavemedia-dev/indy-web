@@ -5,10 +5,7 @@ import { useRouter } from 'next/router'
 import { ReactNode, useEffect } from 'react'
 import { useQuery } from 'react-query'
 import { UserIcon } from '../components/icons/UserIcon'
-import {
-  CreateSupportTicketModal,
-  useCreateSupportTicketModalStore,
-} from '../components/modals/CreateSupportTicketModal'
+import { CreateSupportTicketModal } from '../components/modals/CreateSupportTicketModal'
 import { User } from '../types/User.type'
 import { usePanelLayoutStore } from './PanelLayout'
 
@@ -18,8 +15,7 @@ const UserLayout = ({ children }: { children: ReactNode }) => {
     asPath,
   } = useRouter()
 
-  const { setHeader, setButtons } = usePanelLayoutStore()
-  const { toggleModal: toggleSupportTicketModal } = useCreateSupportTicketModalStore()
+  const { setHeader } = usePanelLayoutStore()
 
   const { data } = useQuery(
     ['clients', Number(id)],
