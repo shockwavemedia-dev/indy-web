@@ -156,7 +156,12 @@ export const NewClientUserModal = () => {
                 )}
 
                 <div className="flex space-x-5">
-                  <Button ariaLabel="Cancel" onClick={toggleNewClientUserModal} type="button" light>
+                  <Button
+                    ariaLabel="Cancel"
+                    onClick={() => toggleNewClientUserModal()}
+                    type="button"
+                    light
+                  >
                     Cancel
                   </Button>
                   <Button ariaLabel="Submit" disabled={isSubmitting} type="submit">
