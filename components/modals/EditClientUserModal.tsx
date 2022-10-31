@@ -62,7 +62,7 @@ export const EditClientUserModal = () => {
           <Formik
             validationSchema={EditClientUserFormSchema}
             initialValues={{
-              clientId: clientUser.userType.client.id,
+              clientId: clientUser.userType?.client.id,
               firstName: clientUser.firstName,
               lastName: clientUser.lastName,
               email: clientUser.email,
@@ -99,7 +99,7 @@ export const EditClientUserModal = () => {
                 <div className="flex space-x-5">
                   <Button
                     ariaLabel="Cancel"
-                    onClick={toggleEditClientUserModal}
+                    onClick={() => toggleEditClientUserModal}
                     type="button"
                     light
                   >

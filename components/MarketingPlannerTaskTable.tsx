@@ -90,7 +90,7 @@ export const MarketingPlannerTaskTable = ({
                     <tr
                       className={`h-12 border-b border-solid border-b-bright-gray last:border-none ${
                         row.original.status &&
-                        row.original.status !== 'completed' &&
+                        row.original.status !== 'Completed' &&
                         row.original.deadline &&
                         row.original.deadline < new Date()
                           ? 'bg-red-crimson/50'
