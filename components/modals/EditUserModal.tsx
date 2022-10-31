@@ -59,7 +59,7 @@ export const EditUserModal = () => {
 
   const submitForm = async (values: EditAdminUserForm) => {
     try {
-      const { status } = await axios.put(`/v1/users/${user.id}`, values)
+      const { status } = await axios.put(`/v1/users/${values.id}`, values)
 
       if (status === 200) {
         queryClient.invalidateQueries('users')
@@ -84,6 +84,7 @@ export const EditUserModal = () => {
       <Formik
         validationSchema={EditAdminUserFormSchema}
         initialValues={{
+          id: user.id,
           firstName: user.firstName,
           middleName: user.middleName,
           lastName: user.lastName,

@@ -1,4 +1,5 @@
 export type EditAdminUserForm = {
+  id?: number | null
   birthDate: Date | null
   contactNumber: string
   firstName: string
