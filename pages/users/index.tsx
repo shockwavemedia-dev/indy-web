@@ -19,13 +19,8 @@ const StaffUserPage: NextPageWithLayout = () => {
 
   const toggleNewAdminUserModal = () => setNewAdminUserModalVisible(!isNewAdminUserModalVisible)
 
-  const {
-    activeAdminUser,
-    isEditAdminUserModalVisible,
-    isDeleteAdminUserModalVisible,
-    toggleEditAdminUserModal,
-    toggleDeleteAdminUserModal,
-  } = useAdminUserStore()
+  const { activeAdminUser, isDeleteAdminUserModalVisible, toggleDeleteAdminUserModal } =
+    useAdminUserStore()
 
   useEffect(() => {
     setHeader('Users')
