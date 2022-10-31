@@ -14,4 +14,5 @@ export const EditAdminUserFormSchema: SchemaOf<EditAdminUserForm> = object().sha
     .required()
     .oneOf(['active', 'inactive', 'guest', 'not_verified', 'revoked', 'deleted']),
   departmentId: number().optional().nullable(),
+  id: number().optional(),
 })
