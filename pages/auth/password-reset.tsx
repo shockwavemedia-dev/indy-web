@@ -19,7 +19,7 @@ import { NextPageWithLayout } from '../../types/pages/NextPageWithLayout.type'
 import { get422And400ResponseError } from '../../utils/ErrorHelpers'
 
 const PasswordResetPage: NextPageWithLayout = () => {
-  const { query, replace } = useRouter()
+  const { replace } = useRouter()
   const router = useRouter()
   const { showToast } = useToastStore()
   const [passwordStrength, setPasswordStrength] = useState(0)
