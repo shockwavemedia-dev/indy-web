@@ -20,6 +20,7 @@ import { get422And400ResponseError } from '../../utils/ErrorHelpers'
 
 const PasswordResetPage: NextPageWithLayout = () => {
   const { query, replace } = useRouter()
+  const router = useRouter()
   const { showToast } = useToastStore()
   const [passwordStrength, setPasswordStrength] = useState(0)
 
@@ -30,6 +31,9 @@ const PasswordResetPage: NextPageWithLayout = () => {
 
   const submitForm = async (values: PasswordResetForm) => {
     try {
+      values.email = router.query.email
+      values.token = router.query.token
+
       const { status } = await axios.put('/reset-password', values)
 
       if (status === 200) {
@@ -56,8 +60,8 @@ const PasswordResetPage: NextPageWithLayout = () => {
         initialValues={{
           password: '',
           passwordConfirmation: '',
-          token: query.token?.toString(),
-          email: query.email?.toString(),
+          token: '',
+          email: '',
         }}
         onSubmit={submitForm}
         validate={validateForm}
