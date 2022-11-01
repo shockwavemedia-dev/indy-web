@@ -31,8 +31,8 @@ const PasswordResetPage: NextPageWithLayout = () => {
 
   const submitForm = async (values: PasswordResetForm) => {
     try {
-      values.email = router.query.email
-      values.token = router.query.token
+      values.email = router.query.email?.toString()
+      values.token = router.query.token?.toString()
 
       const { status } = await axios.put('/reset-password', values)
 
