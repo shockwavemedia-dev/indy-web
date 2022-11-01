@@ -99,7 +99,7 @@ export const EditClientUserModal = () => {
                 <div className="flex space-x-5">
                   <Button
                     ariaLabel="Cancel"
-                    onClick={() => toggleEditClientUserModal}
+                    onClick={() => toggleEditClientUserModal()}
                     type="button"
                     light
                   >
