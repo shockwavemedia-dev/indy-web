@@ -40,7 +40,7 @@ const PasswordResetPage: NextPageWithLayout = () => {
         replace('/auth/login')
         showToast({
           type: 'success',
-          message: 'We have e-mailed your password reset link!',
+          message: 'You changed your password successfully!',
         })
       }
     } catch (e) {
