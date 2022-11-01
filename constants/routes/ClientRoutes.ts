@@ -1,5 +1,6 @@
 import { BriefcaseIcon } from '../../components/icons/BriefcaseIcon'
 import { ChartIcon } from '../../components/icons/ChartIcon'
+import { CheckDocumentIcon } from '../../components/icons/CheckDocumentIcon'
 import { EmailIcon } from '../../components/icons/EmailIcon'
 import { FolderIcon } from '../../components/icons/FolderIcon'
 import { ImageIcon } from '../../components/icons/ImageIcon'
@@ -70,6 +71,11 @@ export const ClientRoutes: Array<Route> = [
     title: 'Printer Jobs',
     Icon: PrintIcon,
     pathname: '/printer-jobs',
+  },
+  {
+    title: 'Compliance Signage Regulations',
+    Icon: CheckDocumentIcon,
+    pathname: '/compliance-signage-regulations',
   },
   {
     title: 'Website Services',
