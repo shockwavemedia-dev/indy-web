@@ -3,5 +3,5 @@ import { ReAssignTicketAssigneeForm } from '../types/forms/ReAssignTicketAssigne
 
 export const ReAssignTicketAssigneeFormSchema: SchemaOf<ReAssignTicketAssigneeForm> =
   object().shape({
-    adminUserId: number().required(),
+    adminUserId: number().optional(),
   })

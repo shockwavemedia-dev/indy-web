@@ -40,9 +40,6 @@ export const NewClientUserModal = () => {
   const queryClient = useQueryClient()
   const { showToast } = useToastStore()
   const [sendInvite, setPasswordVisibility] = useState(false)
-
-  const togglePasswordVisibility = () => setPasswordVisibility(!sendInvite)
-
   const [passwordStrength, setPasswordStrength] = useState(0)
 
   const updatePasswordStrength = (password: string) =>
@@ -53,6 +50,7 @@ export const NewClientUserModal = () => {
       const { status } = await axios.post('/v1/users/client', values)
 
       if (status === 200) {
+        setPasswordVisibility(false)
         queryClient.invalidateQueries('client-users')
         toggleNewClientUserModal()
         showToast({
@@ -131,7 +129,7 @@ export const NewClientUserModal = () => {
                 />
                 <div className="mb-5 flex space-x-5">
                   <Checkbox
-                    onChange={togglePasswordVisibility}
+                    onChange={() => setPasswordVisibility(!sendInvite)}
                     label="Send Invite"
                     name="sendInvite"
                   />
@@ -156,7 +154,12 @@ export const NewClientUserModal = () => {
                 )}
 
                 <div className="flex space-x-5">
-                  <Button ariaLabel="Cancel" onClick={toggleNewClientUserModal} type="button" light>
+                  <Button
+                    ariaLabel="Cancel"
+                    onClick={() => toggleNewClientUserModal()}
+                    type="button"
+                    light
+                  >
                     Cancel
                   </Button>
                   <Button ariaLabel="Submit" disabled={isSubmitting} type="submit">

@@ -38,7 +38,7 @@ const ClientPage: NextPageWithLayout = () => {
         <title>Indy - Clients</title>
       </Head>
       <div className="mx-auto w-full">
-        <Card title="Clients" className="max-h-155">
+        <Card title="Clients">
           <DataTable
             dataEndpoint="/v1/clients"
             columns={ClientTableColumns}

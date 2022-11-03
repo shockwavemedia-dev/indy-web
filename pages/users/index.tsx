@@ -19,13 +19,8 @@ const StaffUserPage: NextPageWithLayout = () => {
 
   const toggleNewAdminUserModal = () => setNewAdminUserModalVisible(!isNewAdminUserModalVisible)
 
-  const {
-    activeAdminUser,
-    isEditAdminUserModalVisible,
-    isDeleteAdminUserModalVisible,
-    toggleEditAdminUserModal,
-    toggleDeleteAdminUserModal,
-  } = useAdminUserStore()
+  const { activeAdminUser, isDeleteAdminUserModalVisible, toggleDeleteAdminUserModal } =
+    useAdminUserStore()
 
   useEffect(() => {
     setHeader('Users')
@@ -47,7 +42,7 @@ const StaffUserPage: NextPageWithLayout = () => {
         <title>Indy - Users</title>
       </Head>
       <div className="mx-auto w-full">
-        <Card title="Admin Users" className="max-h-155">
+        <Card title="Admin Users">
           <DataTable
             dataEndpoint="/v1/users"
             columns={AdminUserTableColumns}

@@ -5,18 +5,24 @@ import { useRouter } from 'next/router'
 import { ReactElement } from 'react'
 import { useQuery } from 'react-query'
 import { Card } from '../../../components/Card'
+import { DataTable } from '../../../components/DataTable'
 import { EditIcon } from '../../../components/icons/EditIcon'
 import { UploadFileIcon } from '../../../components/icons/UploadFileIcon'
+import { DeleteTicketModal } from '../../../components/modals/DeleteTicketModal'
+import { EditTicketModal } from '../../../components/modals/EditTicketModal'
 import { EditUserModal, useEditUserModal } from '../../../components/modals/EditUserModal'
+import { ReAssignTicketModal } from '../../../components/modals/ReAssignTIcketModal'
 import {
   UploadProfileModal,
   useUploadProfileModal,
 } from '../../../components/modals/UploadProfileModal'
 import { Pill } from '../../../components/Pill'
 import { TitleValue } from '../../../components/TitleValue'
+import { UserTicketsTableColumn } from '../../../constants/tables/UserTicketsTableColumn'
 import PanelLayout from '../../../layouts/PanelLayout'
 import UserLayout from '../../../layouts/UserLayout'
 import DummyProfilePic from '../../../public/images/dummy-profile-pic.png'
+import { useAdminUserStore } from '../../../store/AdminUserStore'
 import { NextPageWithLayout } from '../../../types/pages/NextPageWithLayout.type'
 import { User } from '../../../types/User.type'
 
@@ -29,9 +35,13 @@ const UserDetailsPage: NextPageWithLayout = () => {
   const toggleUploadProfileModal = useUploadProfileModal((state) => state.toggleUploadProfileModal)
   const toggleEditUserModal = useEditUserModal((state) => state.toggleEditUserModal)
 
+  const { setActiveAdminUser } = useAdminUserStore()
+
   const { data } = useQuery(['users', Number(id)], async () => {
     try {
       const { data } = await axios.get<User>(`/v1/admin-users/${id}`)
+
+      setActiveAdminUser(data)
 
       return data
     } catch (e) {
@@ -164,8 +174,23 @@ const UserDetailsPage: NextPageWithLayout = () => {
           </div>
         </Card>
       </div>
+      <Card title="Tickets" className="flex max-h-155 flex-1 flex-col">
+        <div className="">
+          <DataTable
+            columns={UserTicketsTableColumn}
+            dataEndpoint={`/v1/admin-users/${data.userType.id}/tickets`}
+            tableQueryKey={[]}
+            ofString="Tickets"
+            dataParams={{}}
+            rowOnClick={({ original: { id } }) => replace(`/ticket/${id}`)}
+          />
+        </div>
+      </Card>
+      <ReAssignTicketModal />
       <UploadProfileModal />
       <EditUserModal />
+      <EditTicketModal />
+      <DeleteTicketModal />
     </div>
   )
 }

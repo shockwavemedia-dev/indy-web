@@ -19,7 +19,8 @@ import { NextPageWithLayout } from '../../types/pages/NextPageWithLayout.type'
 import { get422And400ResponseError } from '../../utils/ErrorHelpers'
 
 const PasswordResetPage: NextPageWithLayout = () => {
-  const { query, replace } = useRouter()
+  const { replace } = useRouter()
+  const router = useRouter()
   const { showToast } = useToastStore()
   const [passwordStrength, setPasswordStrength] = useState(0)
 
@@ -30,13 +31,16 @@ const PasswordResetPage: NextPageWithLayout = () => {
 
   const submitForm = async (values: PasswordResetForm) => {
     try {
+      values.email = router.query.email?.toString()
+      values.token = router.query.token?.toString()
+
       const { status } = await axios.put('/reset-password', values)
 
       if (status === 200) {
         replace('/auth/login')
         showToast({
           type: 'success',
-          message: 'We have e-mailed your password reset link!',
+          message: 'You changed your password successfully!',
         })
       }
     } catch (e) {
@@ -56,8 +60,8 @@ const PasswordResetPage: NextPageWithLayout = () => {
         initialValues={{
           password: '',
           passwordConfirmation: '',
-          token: query.token?.toString(),
-          email: query.email?.toString(),
+          token: '',
+          email: '',
         }}
         onSubmit={submitForm}
         validate={validateForm}
