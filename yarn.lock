@@ -307,6 +307,11 @@
     "@fullcalendar/common" "6.0.0-beta.1"
     tslib "^2.1.0"
 
+"@h6s/calendar@^1.0.5":
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/@h6s/calendar/-/calendar-1.0.5.tgz#d21a1fc061ba759b64d157862ba2adab5164d7f2"
+  integrity sha512-NcGd1U3uLr8dLVqem2yVssSm+Un9BtC3JhIHf6zMIM7Lml3x/bz3WkNWMOFCMCifEVgssLoyqZ1omR5ebNeXTg==
+
 "@humanwhocodes/config-array@^0.9.2":
   version "0.9.5"
   resolved "https://registry.yarnpkg.com/@humanwhocodes/config-array/-/config-array-0.9.5.tgz#2cbaf9a89460da24b5ca6531b8bbfc23e1df50c7"
