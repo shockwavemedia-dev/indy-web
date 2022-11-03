@@ -42,7 +42,7 @@ const StaffUserPage: NextPageWithLayout = () => {
         <title>Indy - Users</title>
       </Head>
       <div className="mx-auto w-full">
-        <Card title="Admin Users" className="max-h-155">
+        <Card title="Admin Users">
           <DataTable
             dataEndpoint="/v1/users"
             columns={AdminUserTableColumns}
