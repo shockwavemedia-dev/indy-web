@@ -71,17 +71,6 @@ const HomePage: NextPageWithLayout = () => {
           <span className="font-circular-std text-6xl font-black text-white after:text-halloween-orange after:content-['.']">
             Indy
           </span>
-          <Link href="#tutorial">
-            <a
-              className={
-                asPath.includes('#tutorial')
-                  ? '!text-halloween-orange underline underline-offset-2'
-                  : undefined
-              }
-            >
-              Tutorial
-            </a>
-          </Link>
           <Link href="#contact">
             <a
               className={
@@ -92,6 +81,9 @@ const HomePage: NextPageWithLayout = () => {
             >
               Contact
             </a>
+          </Link>
+          <Link href="/auth/login">
+            <a>Login</a>
           </Link>
         </header>
         <section id="home" className="bg-charleston-green pt-60 xl:pb-40 sm:pt-10 xs:pb-10">
@@ -105,37 +97,36 @@ const HomePage: NextPageWithLayout = () => {
                 data-aos="fade-right"
               >
                 Where Marketing, <br className="xl:hidden" />
-                Data
-                <br className="hidden xl:flex" />
+                Data <br className="hidden xl:flex" />
                 and Creativity <br className="xl:hidden" />
                 meet.
               </div>
               <div className="flex items-center space-x-10 2xl:space-x-8 xl:scale-100 xl:space-x-10 lg:scale-90 sm:space-x-8 xs:scale-[.6] [&>div>span]:whitespace-nowrap [&>div>span]:font-circular-std [&>div>span]:text-sm [&>div>span]:font-bold [&>div>span]:leading-none [&>div>span]:text-halloween-orange [&>div>span]:2xl:text-xs [&>div>span]:2xl:font-medium [&>div>span]:xl:text-base [&>div>span]:xl:font-bold [&>div>span]:sm:text-xs [&>div>span]:sm:font-medium [&>div]:mb-auto [&>div]:flex [&>div]:h-22 [&>div]:flex-col [&>div]:items-center [&>div>div]:grid [&>div>div]:h-full [&>div>div]:place-items-center [&>div>div>svg]:2xl:scale-90">
-                <div>
+                <div className="cursor-pointer transition-all hover:-translate-y-3">
                   <div>
                     <IndyCircleOutlineIcon />
                   </div>
                   <span>Data Science</span>
                 </div>
-                <div>
+                <div className="cursor-pointer transition-all hover:-translate-y-3">
                   <div>
                     <IndyPlusIcon className="fill-saffron" />
                   </div>
                   <span>Technology</span>
                 </div>
-                <div>
+                <div className="cursor-pointer transition-all hover:-translate-y-3">
                   <div>
                     <IndyGreaterThanIcon className="fill-deep-space-sparkle" />
                   </div>
                   <span>Creative</span>
                 </div>
-                <div>
+                <div className="cursor-pointer transition-all hover:-translate-y-3">
                   <div>
                     <IndyEqualsIcon />
                   </div>
                   <span>Strategy</span>
                 </div>
-                <div>
+                <div className="cursor-pointer transition-all hover:-translate-y-3">
                   <div>
                     <IndyCircleFillIcon />
                   </div>
@@ -149,7 +140,12 @@ const HomePage: NextPageWithLayout = () => {
                 className="relative col-span-full row-span-full mt-10 h-[29.125rem] w-[48.125rem] 2xl:h-[21.875rem] 2xl:w-[36.063rem] xl:h-[29.125rem] xl:w-[48.125rem] lg:h-[21.875rem] lg:w-[36.063rem] md:h-[15.625rem] md:w-[25.75rem]  xs:h-[9.438rem] xs:w-[15.625rem]"
                 data-aos="fade-left"
               >
-                <Image src="/images/laptop-1.png" layout="fill" alt="web application mock" />
+                <Image
+                  src="/images/laptop-1.png"
+                  layout="fill"
+                  alt="web application mock"
+                  priority
+                />
               </div>
               <div
                 className="relative col-span-full row-span-full ml-auto mt-[25%] h-[22.188rem] w-[10.938rem] 2xl:h-[17.5rem] 2xl:w-[8.625rem] xl:h-[22.188rem] xl:w-[10.938rem] lg:h-[17.5rem] lg:w-[8.625rem] md:h-[13.75rem] md:w-[6.75rem] xs:h-30 xs:w-15"
@@ -158,12 +154,18 @@ const HomePage: NextPageWithLayout = () => {
                 <Image src="/images/phone.png" layout="fill" alt="web application mock" />
               </div>
             </div>
-            <div className="box-content h-[12.5rem] w-[25rem] rounded-t-full border-[140px] !border-b-0 border-white-coffee 2xl:h-40 2xl:w-80 2xl:border-[132px] xl:hidden" />
+            <div
+              className="box-content h-[12.5rem] w-[25rem] rounded-t-full border-[140px] !border-b-0 border-white-coffee 2xl:h-40 2xl:w-80 2xl:border-[132px] xl:hidden"
+              data-aos="fade-right"
+            />
           </div>
         </section>
         <section id="features" className="bg-deep-space-sparkle pb-40 xs:pb-10">
           <div className="mx-auto grid max-w-8xl grid-cols-2 xl:grid-cols-1">
-            <div className="box-content h-[12.5rem] w-[25rem] rounded-b-full border-[140px] !border-t-0 border-white-coffee 2xl:h-40 2xl:w-80 2xl:border-[132px] xl:hidden" />
+            <div
+              className="box-content h-[12.5rem] w-[25rem] rounded-b-full border-[140px] !border-t-0 border-white-coffee 2xl:h-40 2xl:w-80 2xl:border-[132px] xl:hidden"
+              data-aos="fade-right"
+            />
             <div
               className="mb-25 mt-16 hidden items-center space-x-3 font-circular-std text-5xl font-black text-saffron xl:mt-32 xl:mb-0 xl:flex md:text-4xl xs:mt-10 xs:text-3xl"
               data-aos="fade-right"
@@ -198,36 +200,12 @@ const HomePage: NextPageWithLayout = () => {
               <br />
               platform
             </div>
-            <div className="space-y-4 pl-25 font-circular-std text-3xl font-black text-white xl:p-0 xl:text-center md:text-2xl sm:text-xl xs:space-y-2 xs:text-lg">
-              <div data-aos="fade-left">Summary</div>
-              <div data-aos="fade-left" data-aos-delay="100">
-                Login / Dashboard
-              </div>
-              <div data-aos="fade-left" data-aos-delay="200">
-                Brief / Review Job
-              </div>
-              <div data-aos="fade-left" data-aos-delay="300">
-                Web Template / Analytics
-              </div>
-              <div data-aos="fade-left" data-aos-delay="400">
-                Social Media / Marketing Planner
-              </div>
-              <div data-aos="fade-left" data-aos-delay="500">
-                Create Task / Screen Manager
-              </div>
-              <div data-aos="fade-left" data-aos-delay="600">
-                SMS Marketing / My Files
-              </div>
-              <div data-aos="fade-left" data-aos-delay="700">
-                Photography / Videography
-              </div>
-              <div data-aos="fade-left" data-aos-delay="800">
-                Booking Form / Support Request
-              </div>
-              <div data-aos="fade-left" data-aos-delay="900">
-                Review using App
-              </div>
-            </div>
+            <iframe
+              src="https://drive.google.com/file/d/1UNvVbTrykMnpK6A3LQw0sTDnYaHf-StY/preview"
+              width="640"
+              height="480"
+              allow="autoplay"
+            ></iframe>
           </div>
         </section>
         <section className="bg-white py-40 xs:py-15">
@@ -267,37 +245,10 @@ const HomePage: NextPageWithLayout = () => {
                 <div className="text-center text-5xl font-black text-deep-space-sparkle lg:text-4xl sm:text-3xl xs:text-2xl">
                   Marketing Planner
                 </div>
-                <div className="max-w-4xl text-justify text-xl text-onyx xl:max-w-2xl lg:max-w-lg lg:text-base md:max-w-sm sm:text-sm xs:max-w-[15rem] xs:text-xs">
-                  Um, conse laccabore volupta estrumquod qui aperror sae plitium que es et endis es
-                  volupta commos molore dolupta denim ressimo luptatas accuptas coreribus repra
-                </div>
               </div>
               <div data-aos="fade-right" data-aos-delay="400">
                 <IndyGreaterThanIcon className="scale-125 fill-halloween-orange lg:scale-90 sm:scale-50" />
               </div>
-            </div>
-          </div>
-        </section>
-        <section id="tutorial" className="bg-saffron py-40 xs:py-15">
-          <div className="mx-auto flex max-w-8xl space-x-15 xl:flex-col xl:space-x-0 xl:space-y-20">
-            <div className="flex flex-1 flex-col justify-between 2xl:w-62 xl:w-full xl:flex-none xl:space-y-10">
-              <div
-                className="flex items-center space-x-3 font-circular-std text-5xl font-black text-deep-space-sparkle md:text-4xl xs:text-3xl"
-                data-aos="fade-right"
-              >
-                <IndyGreaterThanIcon className="scale-75 fill-deep-space-sparkle md:scale-50 xs:scale-50" />
-                <span>Tutorial</span>
-              </div>
-              <div
-                className="text-justify font-circular-std text-xl font-medium text-onyx xs:text-base"
-                data-aos="fade-right"
-              >
-                Um, conse laccabore volupta estrumquod qui aperror sae plitium que es et endis es
-                volupta commos molore dolupta denim ressimo luptatas accuptas coreribus repra
-              </div>
-            </div>
-            <div>
-              <div className="col-span-full row-span-full ml-auto mt-auto aspect-[4/3] h-175 bg-charleston-green 2xl:h-155 xl:mx-auto lg:h-[30rem] md:h-[24rem] sm:h-[18rem] xs:h-[12rem]" />
             </div>
           </div>
         </section>
