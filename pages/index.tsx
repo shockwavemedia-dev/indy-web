@@ -6,6 +6,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
+import ReactPlayer from 'react-player'
 import { IndyCircleFillIcon } from '../components/icons/IndyCircleFillIcon'
 import { IndyCircleOutlineIcon } from '../components/icons/IndyCircleOutlineIcon'
 import { IndyEqualsIcon } from '../components/icons/IndyEqualsIcon'
@@ -200,12 +201,7 @@ const HomePage: NextPageWithLayout = () => {
               <br />
               platform
             </div>
-            <iframe
-              src="https://drive.google.com/file/d/1UNvVbTrykMnpK6A3LQw0sTDnYaHf-StY/preview"
-              width="640"
-              height="480"
-              allow="autoplay"
-            ></iframe>
+            <ReactPlayer url="https://vimeo.com/767157660" />
           </div>
         </section>
         <section className="bg-white py-40 xs:py-15">
