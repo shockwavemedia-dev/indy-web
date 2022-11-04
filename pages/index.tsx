@@ -6,7 +6,6 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
-import ReactPlayer from 'react-player'
 import { IndyCircleFillIcon } from '../components/icons/IndyCircleFillIcon'
 import { IndyCircleOutlineIcon } from '../components/icons/IndyCircleOutlineIcon'
 import { IndyEqualsIcon } from '../components/icons/IndyEqualsIcon'
@@ -201,7 +200,15 @@ const HomePage: NextPageWithLayout = () => {
               <br />
               platform
             </div>
-            <ReactPlayer url="https://vimeo.com/767157660" />
+            <div className="relative pt-1/2">
+              <iframe
+                src="https://player.vimeo.com/video/767157660?h=dcb1563098&badge=0&autopause=0&player_id=0&app_id=58479/embed"
+                allow="autoplay; fullscreen; picture-in-picture"
+                allowFullScreen
+                frameBorder="0"
+                className="absolute top-0 left-0 h-full w-full"
+              ></iframe>
+            </div>
           </div>
         </section>
         <section className="bg-white py-40 xs:py-15">
