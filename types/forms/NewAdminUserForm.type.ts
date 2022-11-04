@@ -1,10 +1,11 @@
 export type NewAdminUserForm = {
   email: string
   position: string
-  password: string
+  password?: string
+  sendInvite: boolean
+  passwordConfirmation?: string
+  contactNumber?: string
   birthDate: Date | null
-  passwordConfirmation: string
-  contactNumber: string
   firstName: string
   lastName: string
   middleName?: string | null

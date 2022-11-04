@@ -11,6 +11,7 @@ import { NewAdminUserForm } from '../../types/forms/NewAdminUserForm.type'
 import { Page } from '../../types/Page.type'
 import { get422And400ResponseError } from '../../utils/ErrorHelpers'
 import { Button } from '../Button'
+import { Checkbox } from '../Checkbox'
 import { DateInput } from '../DateInput'
 import { ClipboardIcon } from '../icons/ClipboardIcon'
 import { EmailIcon } from '../icons/EmailIcon'
@@ -35,6 +36,7 @@ export const NewAdminUserModal = ({
   const { showToast } = useToastStore()
 
   const [passwordStrength, setPasswordStrength] = useState(0)
+  const [sendInvite, setPasswordVisibility] = useState(false)
 
   const updatePasswordStrength = (password: string) =>
     setPasswordStrength(computePasswordStrength(password))
@@ -97,6 +99,7 @@ export const NewAdminUserModal = ({
               gender: null,
               role: null,
               departmentId: -1,
+              sendInvite: false,
             }}
             onSubmit={submitForm}
             validate={validateForm}
@@ -181,14 +184,23 @@ export const NewAdminUserModal = ({
                   name="email"
                   className="mb-5"
                 />
-                <div className="mb-3 flex w-full space-x-5">
-                  <PasswordInput name="password" Icon={LockIcon} placeholder="Enter password" />
-                  <PasswordInput
-                    name="passwordConfirmation"
-                    Icon={LockIcon}
-                    placeholder="Confirm password"
+                <div className="mb-5 flex space-x-5">
+                  <Checkbox
+                    onChange={() => setPasswordVisibility(!sendInvite)}
+                    label="Send Invite"
+                    name="sendInvite"
                   />
                 </div>
+                {!sendInvite && (
+                  <div className="mb-3 flex w-full space-x-5">
+                    <PasswordInput name="password" Icon={LockIcon} placeholder="Enter password" />
+                    <PasswordInput
+                      name="passwordConfirmation"
+                      Icon={LockIcon}
+                      placeholder="Confirm password"
+                    />
+                  </div>
+                )}
                 <PasswordStrengthMeter strength={passwordStrength} className="mr-auto mb-2" />
                 <div className="mr-auto mb-8 text-xxs font-medium text-metallic-silver">
                   Should be at least 8 symbols and contain one small
@@ -196,7 +208,7 @@ export const NewAdminUserModal = ({
                   and one big character, special character and number
                 </div>
                 <div className="flex space-x-5">
-                  <Button ariaLabel="Cancel" onClick={onClose} type="button" light>
+                  <Button ariaLabel="Cancel" onClick={() => onClose()} type="button" light>
                     Cancel
                   </Button>
                   <Button ariaLabel="Submit" disabled={isSubmitting} type="submit">
