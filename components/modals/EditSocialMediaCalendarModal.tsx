@@ -35,26 +35,24 @@ import { FileUploadModal, useFileUploadModal } from './FileUploadModal'
 import { SocialMediaFileModal, useSocialMediaFileModalStore } from './SocialMediaFileModal'
 
 export const EditSocialMediaCalendarModal = ({
-  isVisible,
   onClose,
   socialMedia,
 }: {
-  isVisible: boolean
   onClose: () => void
-  socialMedia: SocialMedia
+  socialMedia?: SocialMedia
 }) => {
   const queryClient = useQueryClient()
   const { showToast } = useToastStore()
 
   const { data: socialMediaDetails } = useQuery(
-    ['socialMedia', socialMedia.id],
+    ['socialMedia', socialMedia?.id],
     async () => {
-      const { data } = await axios.get<SocialMedia>(`/v1/social-media/${socialMedia.id}`)
+      const { data } = await axios.get<SocialMedia>(`/v1/social-media/${socialMedia?.id}`)
 
       return data
     },
     {
-      enabled: !!socialMedia.id,
+      enabled: !!socialMedia,
     }
   )
 
@@ -63,7 +61,7 @@ export const EditSocialMediaCalendarModal = ({
 
   const expandRecord = () => {
     onClose()
-    setActiveSocialMedia(socialMedia)
+    setActiveSocialMedia(socialMedia!)
     toggleEditSocialMediaModal()
   }
 
@@ -85,12 +83,13 @@ export const EditSocialMediaCalendarModal = ({
 
     try {
       const { status } = await axios.post(
-        `/v1/social-media/${socialMedia.id}`,
+        `/v1/social-media/${socialMedia?.id}`,
         objectWithFileToFormData(values)
       )
       if (status === 200) {
-        queryClient.invalidateQueries(['socialMedia', socialMedia.id])
+        queryClient.invalidateQueries(['socialMedia', socialMedia?.id])
         queryClient.invalidateQueries(['socialMedias'])
+        queryClient.invalidateQueries(['social-media-calendar'])
         onClose()
         showToast({
           type: 'success',
@@ -113,9 +112,11 @@ export const EditSocialMediaCalendarModal = ({
 
   if (!socialMediaDetails) return null
 
+  if (!socialMedia) return null
+
   return (
     <>
-      {isVisible && (
+      {!!socialMedia && (
         <Modal
           title="Edit Social Media"
           bgColor="bg-cultured"
@@ -305,7 +306,7 @@ export const EditSocialMediaCalendarModal = ({
       <EditSocialMediaModal
         isVisible={isEditSocialMediaModalVisible}
         onClose={toggleEditSocialMediaModal}
-        socialMedia={socialMedia}
+        socialMedia={socialMedia!}
       />
     </>
   )
