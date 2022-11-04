@@ -1,10 +1,23 @@
-import { date, mixed, number, object, SchemaOf, string } from 'yup'
+import { boolean, date, mixed, number, object, SchemaOf, string } from 'yup'
 import { NewAdminUserForm } from '../types/forms/NewAdminUserForm.type'
 
 export const NewAdminUserFormSchema: SchemaOf<NewAdminUserForm> = object().shape({
   email: string().email().required(),
-  password: string().required(),
-  passwordConfirmation: string().required(),
+  sendInvite: boolean().required(),
+  password: string()
+    .when('sendInvite', {
+      is: true,
+      then: string().optional(),
+      otherwise: string().required(),
+    })
+    .min(6),
+  passwordConfirmation: string()
+    .when('sendInvite', {
+      is: true,
+      then: string().optional(),
+      otherwise: string().required(),
+    })
+    .min(6),
   contactNumber: string().required(),
   firstName: string().required(),
   position: string().required(),
