@@ -62,6 +62,7 @@ export const SocialMediaTable = ({ clientId }: { clientId: number }) => {
         sortBy: [
           {
             id: 'id',
+            desc: true,
           },
         ],
       },
