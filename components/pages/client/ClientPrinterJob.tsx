@@ -192,7 +192,7 @@ const ClientPrinterJobPage = ({ printerId }: { printerId: number }) => {
       setFormat(format)
     }
     if (printer) {
-      setHeader(`Printer Job ${printer.customerName}`)
+      setHeader(`Print ${printer.customerName}`)
     }
   }, [printer])
 
@@ -312,7 +312,7 @@ const ClientPrinterJobPage = ({ printerId }: { printerId: number }) => {
                         <TextInput
                           type="text"
                           Icon={DollarIcon}
-                          placeholder="Printer Job Price"
+                          placeholder="Print Price"
                           name="price"
                           className="pointer-events-none"
                         />

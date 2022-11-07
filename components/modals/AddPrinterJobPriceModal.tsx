@@ -39,7 +39,7 @@ export const AddPrinterJobPriceModal = () => {
         toggleModal()
         showToast({
           type: 'success',
-          message: 'Printer Job Price saved!',
+          message: 'Print Price saved!',
         })
       }
     } catch (e) {
@@ -54,7 +54,7 @@ export const AddPrinterJobPriceModal = () => {
     <>
       {printer && (
         <Modal
-          title="Printer Job Price"
+          title="Print Price"
           onClose={toggleModal}
           className="w-155 border-2 border-solid border-bright-gray"
         >
