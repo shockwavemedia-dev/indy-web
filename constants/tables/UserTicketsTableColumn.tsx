@@ -36,6 +36,8 @@ export const UserTicketsTableColumn: Array<Column<Ticket>> = [
               return 'bg-light-golden-rod'
             case 'event':
               return 'bg-light-navy'
+            case 'project':
+              return 'bg-light-navy'
             case 'graphic':
               return 'bg-light-forest-green'
             case 'print':
@@ -51,6 +53,8 @@ export const UserTicketsTableColumn: Array<Column<Ticket>> = [
             case 'library':
               return 'text-golden-rod'
             case 'event':
+              return 'text-navy'
+            case 'project':
               return 'text-navy'
             case 'graphic':
               return 'text-forest-green'
