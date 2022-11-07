@@ -90,7 +90,7 @@ const ClientPrinter: NextPageWithLayout = () => {
               </div>
             )}
           </Card>
-          <Card title="Printer Job List" className="flex-1">
+          <Card title="Print List" className="flex-1">
             <DataTable
               columns={AdminPrinterJobColumns}
               dataEndpoint={`/v1/clients/${Number(id)}/printer-jobs`}

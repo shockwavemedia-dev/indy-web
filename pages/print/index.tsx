@@ -18,20 +18,20 @@ const PrintPage: NextPageWithLayout = () => {
   const { replace } = useRouter()
 
   useEffect(() => {
-    setHeader('Printer Job')
+    setHeader('Print')
   }, [])
 
   return (
     <>
       <Head>
-        <title>Indy - Printer</title>
+        <title>Indy - Print</title>
       </Head>
       {session && session.user.userType.client.printerId ? (
         <div className="mx-auto w-full">
           <div className="mt-6 flex gap-6 transition-all lg:flex-col">
             <div className="flex flex-1 flex-col">
-              <LinkButton className="mb-8 w-40" title="Add Printer Job" href="/new-printer-job" />
-              <Card title="Printer Job List" className="flex max-h-155 flex-1 flex-col">
+              <LinkButton className="mb-8 w-40" title="Add Print" href="/new-printer-job" />
+              <Card title="Print List" className="flex max-h-155 flex-1 flex-col">
                 <DataTable
                   columns={ClientPrinterJobColumns}
                   dataEndpoint={`/v1/clients/${session?.user.userType.client.id}/printer-jobs`}

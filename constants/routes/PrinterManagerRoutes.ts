@@ -3,7 +3,7 @@ import { Route } from '../../types/Route.type'
 
 export const PrinterManagerRoutes: Array<Route> = [
   {
-    title: 'Printer Jobs',
+    title: 'Print',
     Icon: PrintIcon,
     pathname: '/dashboard',
   },

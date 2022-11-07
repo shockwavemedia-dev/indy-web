@@ -25,7 +25,7 @@ const AdminPrinterJobPage = ({ printerId }: { printerId: number }) => {
 
   useEffect(() => {
     if (printer) {
-      setHeader(`Printer Job ${printer.customerName}`)
+      setHeader(`Print ${printer.customerName}`)
     }
   }, [printer])
   if (!printer) return null
@@ -36,7 +36,7 @@ const AdminPrinterJobPage = ({ printerId }: { printerId: number }) => {
         <title>{`Indy - ${printer?.customerName}`}</title>
       </Head>
       <div className="mx-auto flex w-full">
-        <Card title="Printer Job Details" className="w-full">
+        <Card title="Print Details" className="w-full">
           <div className="grid grid-cols-2 gap-3">
             <div className="space-y-4">
               <div className="space-y-1">
