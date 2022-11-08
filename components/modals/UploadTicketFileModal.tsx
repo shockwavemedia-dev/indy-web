@@ -3,7 +3,6 @@ import { Form, Formik } from 'formik'
 import { useQueryClient } from 'react-query'
 import createStore from 'zustand'
 import { combine } from 'zustand/middleware'
-import { UploadTicketFileSchema } from '../../schemas/UploadTicketFileSchema'
 import { useToastStore } from '../../store/ToastStore'
 import { UploadTicketFile } from '../../types/forms/UploadTicketFile.type'
 import { get422And400ResponseError } from '../../utils/ErrorHelpers'
@@ -48,11 +47,7 @@ export const UploadTicketFileModal = ({
     <>
       {isUploadTicketFileModalVisible && (
         <Modal title="Upload Ticket File" onClose={toggleUploadTicketFileModal}>
-          <Formik
-            validationSchema={UploadTicketFileSchema}
-            initialValues={{ file: null, folderId: '' }}
-            onSubmit={submitTicketFile}
-          >
+          <Formik initialValues={{ file: null, folderId: '' }} onSubmit={submitTicketFile}>
             {({ isSubmitting }) => (
               <Form className="w-130 space-y-8">
                 <div className="space-y-5">
