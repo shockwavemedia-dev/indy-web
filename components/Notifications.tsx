@@ -105,7 +105,13 @@ export const Notifications = ({ className = '' }: { className?: string }) => {
                   <a
                     className={`pl-8 pr-2  text-sm font-medium underline-offset-1 hover:text-halloween-orange hover:underline ${
                       i === notifications.length - 1 ? 'bg-white' : ''
-                    } ${status === 'read' ? 'text-lavender-gray' : 'text-onyx'}`}
+                    } ${
+                      status === 'read'
+                        ? 'text-lavender-gray'
+                        : title.includes('is requesting approval for a design in ticket')
+                        ? 'text-forest-green'
+                        : 'text-onyx'
+                    }`}
                     href={url}
                     onClick={readNotification}
                   >
