@@ -1,0 +1,31 @@
+import { Options } from 'react-select'
+import { SelectOption } from '../../../types/SelectOption.type'
+
+export const StockOptions: Options<SelectOption<string>> = [
+  { label: '80 gsm uncoated(paper)', value: '80 gsm uncoated(paper)' },
+  { label: '90 gsm uncoated', value: '90 gsm uncoated' },
+  { label: '115gsm uncoated ', value: '115gsm uncoated ' },
+  { label: '130gsm uncoated', value: '130gsm uncoated' },
+  { label: '150gsm uncoated ', value: '150gsm uncoated ' },
+  { label: '200gsm uncoated(board)', value: '200gsm uncoated(board)' },
+  { label: '310gsm uncoated', value: '310gsm uncoated' },
+  { label: '350gsm uncoated', value: '350gsm uncoated' },
+  { label: '80gsm gloss', value: '80gsm gloss' },
+  { label: '90gsm gloss', value: '90gsm gloss' },
+  { label: '115gsm gloss', value: '115gsm gloss' },
+  { label: '130gsm gloss', value: '130gsm gloss' },
+  { label: '150gsm gloss', value: '150gsm gloss' },
+  { label: '200gsm gloss', value: '200gsm gloss' },
+  { label: '250gsm gloss', value: '250gsm gloss' },
+  { label: '310gsm gloss', value: '310gsm gloss' },
+  { label: '350gsm gloss', value: '350gsm gloss' },
+  { label: '80 gsm satin', value: '80 gsm satin' },
+  { label: '90gsm satin', value: '90gsm satin' },
+  { label: '115gsm satin', value: '115gsm satin' },
+  { label: '130gsm satin', value: '130gsm satin' },
+  { label: '150 gsm satin', value: '150 gsm satin' },
+  { label: '200gsm satin', value: '200gsm satin' },
+  { label: '250gsm satin', value: '250gsm satin' },
+  { label: '310gsm satin', value: '310gsm satin' },
+  { label: '350gsm satin', value: '350gsm satin' },
+]

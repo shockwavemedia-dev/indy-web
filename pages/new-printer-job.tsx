@@ -8,17 +8,19 @@ import { useQueryClient } from 'react-query'
 import { SingleValue } from 'react-select'
 import { Button } from '../components/Button'
 import { Card } from '../components/Card'
-import { Checkbox } from '../components/Checkbox'
+import { FileDropZone } from '../components/FileDropZone'
 import { ClipboardIcon } from '../components/icons/ClipboardIcon'
 import { EditIcon } from '../components/icons/EditIcon'
 import { FloppyDiskIcon } from '../components/icons/FloppyDiskIcon'
 import { LinkButton } from '../components/LinkButton'
+import { Select } from '../components/Select'
 import { SelectNoFormik } from '../components/SelectNoFormik'
 import { TextAreaInput } from '../components/TextAreaInput'
 import { TextInput } from '../components/TextInput'
-import { PrinterDeliveryOptions } from '../constants/options/printer/PrinterDeliveryOptions'
+import { CodingOptions } from '../constants/options/printer/CodingOptions'
 import { PrinterOptions } from '../constants/options/printer/PrinterOptions'
 import { PrinterProductOptions } from '../constants/options/printer/PrinterProductOptions'
+import { StockOptions } from '../constants/options/printer/StockOptions'
 import PanelLayout, { usePanelLayoutStore } from '../layouts/PanelLayout'
 import { useToastStore } from '../store/ToastStore'
 import { NewPrinterForm } from '../types/forms/NewPrinterForm.type'
@@ -34,11 +36,6 @@ const NewPrinterPage: NextPageWithLayout = () => {
   const queryClient = useQueryClient()
   const [option, setOption] = useState<Array<{ label: string; value: string }>>([])
   const [format, setFormat] = useState<Array<{ label: string; value: string }>>([])
-
-  const [delivery, setDelivery] = useState<SingleValue<SelectOption<string>>>({
-    label: 'To Venue',
-    value: 'To Venue',
-  })
 
   const submitForm = async (values: NewPrinterForm) => {
     const additionalOptions = [
@@ -134,13 +131,12 @@ const NewPrinterPage: NextPageWithLayout = () => {
               <div className="flex w-full">
                 <Card className="mr-8 h-fit w-9/12">
                   <div className="mb-5 w-fit text-base font-semibold text-halloween-orange">
-                    Customer
+                    Description
                   </div>
-                  <TextInput
-                    type="text"
+                  <TextAreaInput
                     Icon={EditIcon}
-                    placeholder="Enter Customer"
-                    name="customerName"
+                    placeholder="Enter Description"
+                    name="description"
                     className="mb-5"
                   />
                   <div className="mb-5 w-fit text-base font-semibold text-halloween-orange">
@@ -177,105 +173,52 @@ const NewPrinterPage: NextPageWithLayout = () => {
                       }}
                     />
                   </div>
-
                   <div className="mb-8 flex space-x-5">
-                    <TextInput
-                      label="Kinds"
-                      type="number"
-                      Icon={EditIcon}
-                      placeholder="Enter Kinds"
-                      name="kinds"
+                    <Select
+                      label="Stocks"
+                      name="stoks"
+                      Icon={ClipboardIcon}
+                      options={StockOptions}
+                      className="mb-5"
                     />
+                    <Select
+                      label="Coding"
+                      name="coding"
+                      Icon={ClipboardIcon}
+                      options={CodingOptions}
+                      className="mb-5"
+                    />
+                  </div>
+                  <div className="mb-8 flex space-x-5">
                     <TextInput
                       label="Quantity"
                       type="number"
                       Icon={EditIcon}
-                      placeholder="Enter Quantity"
+                      placeholder="Enter Number"
                       name="quantity"
                     />
                   </div>
-                  <div className="mb-8 flex space-x-5">
-                    <TextInput
-                      label="Run Ons"
-                      type="number"
-                      Icon={EditIcon}
-                      placeholder="Enter Run Ons"
-                      name="runOns"
-                    />
-                  </div>
-                  <div className="mb-5 w-fit text-base font-semibold text-halloween-orange">
-                    Additional Options
-                  </div>
-                  <div className="mb-8 flex space-x-5">
-                    <TextInput
-                      type="number"
-                      Icon={EditIcon}
-                      placeholder="Enter Rubber Bands"
-                      name="rubberBunds"
-                      label="Bundling - Rubber Bands"
-                    />
-                    <TextInput
-                      type="number"
-                      Icon={EditIcon}
-                      placeholder="Enter Shrink Wrapping"
-                      name="shrinkwrapping"
-                      label="Bundling - Shrink Wrapping"
-                    />
-                  </div>
-                  <div className="mb-8 flex space-x-5">
-                    <TextInput
-                      type="number"
-                      Icon={EditIcon}
-                      placeholder="Enter Perforate"
-                      name="perforate"
-                      label="Perforate"
-                    />
-                    <TextInput
-                      type="number"
-                      Icon={EditIcon}
-                      placeholder="Enter Padding"
-                      name="padding"
-                      label="Padding - Inc BoxBoard (Number of Pads)"
-                    />
-                  </div>
-                  <TextInput
-                    type="number"
-                    Icon={EditIcon}
-                    placeholder="Enter Drilling"
-                    name="drilling"
-                    label="Drilling - up to 5 X 4-6mm holes (specify in notes)"
-                    className="mb-5"
-                  />
                 </Card>
                 <div className="flex w-9/12  flex-col">
                   <Card className="mb-8 h-fit">
-                    <div className="mb-5 w-fit text-base font-semibold text-halloween-orange">
+                    <div className="mb-3 w-fit text-base font-semibold text-halloween-orange">
                       Delivery
                     </div>
-                    <SelectNoFormik
-                      label="Delivery"
-                      name="delivery"
-                      Icon={ClipboardIcon}
-                      options={PrinterDeliveryOptions}
+                    <TextAreaInput
+                      Icon={EditIcon}
+                      label="Address"
+                      placeholder="Enter Address"
+                      name="notes"
                       className="mb-5"
-                      value={delivery}
-                      onChange={(delivery) => {
-                        setFieldValue('delivery', delivery!.value)
-                        setDelivery(delivery)
-                      }}
                     />
-                    <div className="mb-5 flex space-x-5">
-                      <Checkbox name="blindShipping" label="Blind Shipping" />
-                      <Checkbox name="resellerSamples" label="Reseller Samples" />
-                    </div>
                     <div className="mb-5 w-fit text-base font-semibold text-halloween-orange">
-                      Reference
+                      Purchase Order Number or Name
                     </div>
                     <TextInput
                       type="text"
                       Icon={EditIcon}
-                      placeholder="Enter Reference"
-                      name="reference"
+                      placeholder="Enter Purchase Order Number or Name"
+                      name="purchaseOrderNumber"
                       className="mb-5"
                     />
                     <div className="mb-5 w-fit text-base font-semibold text-halloween-orange">
@@ -288,14 +231,16 @@ const NewPrinterPage: NextPageWithLayout = () => {
                       className="mb-5"
                     />
                     <div className="mb-5 w-fit text-base font-semibold text-halloween-orange">
-                      Description
+                      Attachments
                     </div>
-                    <TextInput
-                      type="text"
-                      Icon={EditIcon}
-                      placeholder="Enter Description"
-                      name="description"
-                      className="mb-5"
+                    <FileDropZone
+                      label="Upload"
+                      name="attachments"
+                      maxSize={250}
+                      mimeType="image/gif"
+                      accept={['.gif', '.jpeg', '.mp4', '.png', '.jpg']}
+                      multiple
+                      className="mb-8"
                     />
                   </Card>
                   <Card className="h-fit">
