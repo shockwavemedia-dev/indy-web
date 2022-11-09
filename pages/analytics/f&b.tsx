@@ -22,10 +22,7 @@ const FAndBAnalyticsPage: NextPageWithLayout = () => {
       </Head>
       <div className="mx-auto w-full">
         <div className="flex gap-6 transition-all lg:flex-col">
-          <AnalyticsFileBrowser
-            clientId={session?.user.userType.client.id || -1}
-            menu="F &amp; B"
-          />
+          <AnalyticsFileBrowser clientId={session?.user.userType.client.id || -1} menu="F%26B" />
           <div className="flex w-86 flex-col gap-6 transition-all lg:w-full lg:flex-row">
             <RetainerInclusions />
             <Notifications className="flex-1" />
