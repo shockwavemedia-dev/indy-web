@@ -138,6 +138,7 @@ const ClientMarketingPlanPage: NextPageWithLayout = () => {
                         type="text"
                         Icon={EditIcon}
                         placeholder=""
+                        hint="0 is equivalent to infinite"
                         label="Marketing Quota"
                         name={`clientServices[${i}].marketingQuota`}
                       />
@@ -145,6 +146,7 @@ const ClientMarketingPlanPage: NextPageWithLayout = () => {
                         type="text"
                         Icon={EditIcon}
                         placeholder=""
+                        hint="This is normally 0, every month afer update it will be back to 0"
                         label="Extra Quota"
                         name={`clientServices[${i}].extraQuota`}
                       />
