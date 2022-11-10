@@ -176,7 +176,7 @@ const NewPrinterPage: NextPageWithLayout = () => {
                   <div className="mb-8 flex space-x-5">
                     <Select
                       label="Stocks"
-                      name="stoks"
+                      name="stocks"
                       Icon={ClipboardIcon}
                       options={StockOptions}
                       className="mb-5"
@@ -208,7 +208,7 @@ const NewPrinterPage: NextPageWithLayout = () => {
                       Icon={EditIcon}
                       label="Address"
                       placeholder="Enter Address"
-                      name="notes"
+                      name="address"
                       className="mb-5"
                     />
                     <div className="mb-5 w-fit text-base font-semibold text-halloween-orange">

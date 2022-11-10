@@ -5,10 +5,11 @@ import Head from 'next/head'
 import { ReactElement, useEffect, useState } from 'react'
 import { useQuery, useQueryClient } from 'react-query'
 import { SingleValue } from 'react-select'
-import { PrinterDeliveryOptions } from '../../../constants/options/printer/PrinterDeliveryOptions'
+import { CodingOptions } from '../../../constants/options/printer/CodingOptions'
 import { PrinterOptions } from '../../../constants/options/printer/PrinterOptions'
 import { PrinterProductOptions } from '../../../constants/options/printer/PrinterProductOptions'
 import { PrinterStatusOptions } from '../../../constants/options/printer/PrinterStatusOptions'
+import { StockOptions } from '../../../constants/options/printer/StockOptions'
 import PanelLayout, { usePanelLayoutStore } from '../../../layouts/PanelLayout'
 import { useToastStore } from '../../../store/ToastStore'
 import { EditPrinterJobForm } from '../../../types/forms/EditPrinterJobForm.type'
@@ -17,19 +18,28 @@ import { SelectOption } from '../../../types/SelectOption.type'
 import { get422And400ResponseError } from '../../../utils/ErrorHelpers'
 import { Button } from '../../Button'
 import { Card } from '../../Card'
-import { Checkbox } from '../../Checkbox'
 import { CheckIcon } from '../../icons/CheckIcon'
 import { ClipboardIcon } from '../../icons/ClipboardIcon'
 import { CloseModalIcon } from '../../icons/CloseModalIcon'
 import { DollarIcon } from '../../icons/DollarIcon'
 import { EditIcon } from '../../icons/EditIcon'
 import { FloppyDiskIcon } from '../../icons/FloppyDiskIcon'
+import { PlusIcon } from '../../icons/PlusIcon'
 import { TrashIcon } from '../../icons/TrashIcon'
 import { LinkButton } from '../../LinkButton'
 import {
   DeletePrinterJobModal,
   useDeleteDeletePrinterJobModalModalStore,
 } from '../../modals/DeletePrinterJobModal'
+import {
+  PrinterFileUploadModal,
+  usePrinterFileUploadModal,
+} from '../../modals/PrinterFileUploadModal'
+import {
+  SocialMediaFileModal,
+  useSocialMediaFileModalStore,
+} from '../../modals/SocialMediaFileModal'
+import { PhotographyVideographyFileButton } from '../../PhotographyVideographyFileButton'
 import { Pill } from '../../Pill'
 import { Select } from '../../Select'
 import { SelectNoFormik } from '../../SelectNoFormik'
@@ -75,24 +85,6 @@ const ClientPrinterJobPage = ({ printerId }: { printerId: number }) => {
   }
 
   const submitForm = async (values: EditPrinterJobForm) => {
-    const additionalOptions = [
-      { quantity: values.rubberBunds ? values.rubberBunds : 0, title: 'Bundling - Rubber Bands' },
-      {
-        quantity: values.shrinkwrapping ? values.shrinkwrapping : 0,
-        title: 'Bundling - Shrink Wrapping',
-      },
-      {
-        quantity: values.drilling ? values.drilling : 0,
-        title: 'Drilling - up to 5 X 4-6mm holes (specify in notes)',
-      },
-      {
-        quantity: values.padding ? values.padding : 0,
-        title: 'Padding - Inc BoxBoard (Number of Pads)',
-      },
-      { quantity: values.perforate ? values.perforate : 0, title: 'Perforate' },
-    ]
-    values.additionalOptions = additionalOptions
-
     try {
       const { status } = await axios.put(`/v1/printer-jobs/${printer?.id}`, values)
       if (status === 200) {
@@ -131,6 +123,12 @@ const ClientPrinterJobPage = ({ printerId }: { printerId: number }) => {
       })
     }
   }
+
+  const { toggleShowSocialMediaFileModal } = useSocialMediaFileModalStore()
+
+  const { setVisible } = usePrinterFileUploadModal()
+
+  const togglePrinterUploadFile = () => setVisible(true, printer)
 
   const declinePrice = async () => {
     try {
@@ -173,42 +171,28 @@ const ClientPrinterJobPage = ({ printerId }: { printerId: number }) => {
   }
 
   useEffect(() => {
-    if (printer && printer.product !== null) {
-      const filterProduct = PrinterOptions?.filter((option) => option.product === printer.product)
+    // if (printer && printer.product !== null) {
+    //   const filterProduct = PrinterOptions?.filter((option) => option.product === printer.product)
 
-      const option =
-        filterProduct[0].option.map((name) => ({
-          label: name,
-          value: name,
-        })) ?? []
+    //   const option =
+    //     filterProduct[0].option.map((name) => ({
+    //       label: name,
+    //       value: name,
+    //     })) ?? []
 
-      const format =
-        filterProduct[0].format.map((name) => ({
-          label: name,
-          value: name,
-        })) ?? []
+    //   const format =
+    //     filterProduct[0].format.map((name) => ({
+    //       label: name,
+    //       value: name,
+    //     })) ?? []
 
-      setOption(option)
-      setFormat(format)
-    }
+    //   setOption(option)
+    //   setFormat(format)
+    // }
     if (printer) {
       setHeader(`Print ${printer.customerName}`)
     }
   }, [printer])
-
-  const rubberBunds = printer?.additionalOptions?.filter(
-    (option) => option.title === 'Bundling - Rubber Bands'
-  )
-  const shrinkwrapping = printer?.additionalOptions?.filter(
-    (option) => option.title === 'Bundling - Shrink Wrapping'
-  )
-  const perforate = printer?.additionalOptions?.filter((option) => option.title === 'Perforate')
-  const padding = printer?.additionalOptions?.filter(
-    (option) => option.title === 'Padding - Inc BoxBoard (Number of Pads)'
-  )
-  const drilling = printer?.additionalOptions?.filter(
-    (option) => option.title === 'Drilling - up to 5 X 4-6mm holes (specify in notes)'
-  )
 
   if (!printer) return null
 
@@ -236,11 +220,11 @@ const ClientPrinterJobPage = ({ printerId }: { printerId: number }) => {
             blindShipping: printer?.blindShipping,
             resellerSamples: printer?.resellerSamples,
             status: printer?.status,
-            rubberBunds: rubberBunds?.[0].quantity,
-            shrinkwrapping: shrinkwrapping?.[0].quantity,
-            perforate: perforate?.[0].quantity,
-            padding: padding?.[0].quantity,
-            drilling: drilling?.[0].quantity,
+            stocks: printer?.stocks,
+            coding: printer?.coding,
+            address: printer?.address,
+            purchaseOrderNumber: printer?.purchaseOrderNumber,
+            attachments: printer?.attachments,
           }}
           onSubmit={submitForm}
         >
@@ -271,16 +255,14 @@ const ClientPrinterJobPage = ({ printerId }: { printerId: number }) => {
                       : 'No Printer Selected'}
                   </div>
                   <div className="mb-5 w-fit text-base font-semibold text-halloween-orange">
-                    Customer
+                    Description
                   </div>
-                  <TextInput
-                    type="text"
+                  <TextAreaInput
                     Icon={EditIcon}
-                    placeholder="Enter Customer"
-                    name="customerName"
+                    placeholder="Enter Description"
+                    name="description"
                     className="mb-5"
                   />
-
                   <>
                     <div className="mb-5 flex space-x-5">
                       <div className="mb-2 w-fit text-base font-semibold text-halloween-orange">
@@ -392,103 +374,53 @@ const ClientPrinterJobPage = ({ printerId }: { printerId: number }) => {
                   </div>
 
                   <div className="mb-8 flex space-x-5">
-                    <TextInput
-                      label="Kinds"
-                      type="number"
-                      Icon={EditIcon}
-                      placeholder="Enter Kinds"
-                      name="kinds"
+                    <Select
+                      label="Stocks"
+                      name="stocks"
+                      Icon={ClipboardIcon}
+                      options={StockOptions}
+                      defaultValue={StockOptions.find(({ value }) => value === printer?.stocks)}
+                      className="mb-5"
                     />
+                    <Select
+                      label="Coding"
+                      name="coding"
+                      Icon={ClipboardIcon}
+                      options={CodingOptions}
+                      defaultValue={CodingOptions.find(({ value }) => value === printer?.coding)}
+                      className="mb-5"
+                    />
+                  </div>
+                  <div className="mb-8 flex space-x-5">
                     <TextInput
                       label="Quantity"
                       type="number"
                       Icon={EditIcon}
-                      placeholder="Enter Quantity"
+                      placeholder="Enter Number"
                       name="quantity"
                     />
                   </div>
-                  <div className="mb-8 flex space-x-5">
-                    <TextInput
-                      label="Run Ons"
-                      type="number"
-                      Icon={EditIcon}
-                      placeholder="Enter Run Ons"
-                      name="runOns"
-                    />
-                  </div>
-                  <div className="mb-5 w-fit text-base font-semibold text-halloween-orange">
-                    Additional Options
-                  </div>
-                  <div className="mb-8 flex space-x-5">
-                    <TextInput
-                      type="number"
-                      Icon={EditIcon}
-                      placeholder="Enter Rubber Bands"
-                      name="rubberBunds"
-                      label="Bundling - Rubber Bands"
-                    />
-                    <TextInput
-                      type="number"
-                      Icon={EditIcon}
-                      placeholder="Enter Shrink Wrapping"
-                      name="shrinkwrapping"
-                      label="Bundling - Shrink Wrapping"
-                    />
-                  </div>
-                  <div className="mb-8 flex space-x-5">
-                    <TextInput
-                      type="number"
-                      Icon={EditIcon}
-                      placeholder="Enter Perforate"
-                      name="perforate"
-                      label="Perforate"
-                    />
-                    <TextInput
-                      type="number"
-                      Icon={EditIcon}
-                      placeholder="Enter Padding"
-                      name="padding"
-                      label="Padding - Inc BoxBoard (Number of Pads)"
-                    />
-                  </div>
-                  <TextInput
-                    type="number"
-                    Icon={EditIcon}
-                    placeholder="Enter Drilling"
-                    name="drilling"
-                    label="Drilling - up to 5 X 4-6mm holes (specify in notes)"
-                    className="mb-5"
-                  />
                 </Card>
                 <div className="flex w-9/12  flex-col">
                   <Card className="mb-8 h-fit">
                     <div className="mb-5 w-fit text-base font-semibold text-halloween-orange">
                       Delivery
                     </div>
-                    {PrinterDeliveryOptions.length > 0 && (
-                      <Select
-                        label="Delivery"
-                        name="delivery"
-                        Icon={ClipboardIcon}
-                        options={PrinterDeliveryOptions}
-                        defaultValue={PrinterDeliveryOptions.find(
-                          ({ value }) => value === printer?.delivery
-                        )}
-                        className="mb-5"
-                      />
-                    )}
-                    <div className="mb-5 flex space-x-5">
-                      <Checkbox name="blindShipping" label="Blind Shipping" />
-                      <Checkbox name="resellerSamples" label="Reseller Samples" />
-                    </div>
+                    <TextAreaInput
+                      Icon={EditIcon}
+                      label="Address"
+                      placeholder="Enter Address"
+                      name="adress"
+                      className="mb-5"
+                    />
                     <div className="mb-5 w-fit text-base font-semibold text-halloween-orange">
-                      Reference
+                      Purchase Order Number or Name
                     </div>
                     <TextInput
                       type="text"
                       Icon={EditIcon}
-                      placeholder="Enter Reference"
-                      name="reference"
+                      placeholder="Enter Purchase Order Number or Name"
+                      name="purchaseOrderNumber"
                       className="mb-5"
                     />
                     <div className="mb-5 w-fit text-base font-semibold text-halloween-orange">
@@ -500,16 +432,53 @@ const ClientPrinterJobPage = ({ printerId }: { printerId: number }) => {
                       name="notes"
                       className="mb-5"
                     />
-                    <div className="mb-5 w-fit text-base font-semibold text-halloween-orange">
-                      Description
-                    </div>
-                    <TextInput
-                      type="text"
-                      Icon={EditIcon}
-                      placeholder="Enter Description"
-                      name="description"
-                      className="mb-5"
-                    />
+                    <Card className="mb-5 h-fit w-full">
+                      <div className="mb-5 w-fit text-base font-semibold text-halloween-orange">
+                        Attachments
+                      </div>
+                      <button
+                        onClick={togglePrinterUploadFile}
+                        className="absolute top-6 right-6 flex space-x-2"
+                        type="button"
+                      >
+                        <PlusIcon className="stroke-halloween-orange" />
+                        <div className=" text-sm font-semibold text-halloween-orange">
+                          Upload File
+                        </div>
+                      </button>
+                      <div className="flex flex-wrap gap-4">
+                        {!!printer.attachments && printer.attachments.length > 0 ? (
+                          printer.attachments.map(
+                            ({ printerAttachmentId, url, thumbnailUrl, name, fileType }) => {
+                              const toggleFile = () =>
+                                toggleShowSocialMediaFileModal(
+                                  url,
+                                  fileType,
+                                  name,
+                                  printerAttachmentId,
+                                  printer.id
+                                )
+
+                              return (
+                                <>
+                                  <PhotographyVideographyFileButton
+                                    key={`socialMediaFile-${printerAttachmentId}`}
+                                    className="h-35 w-35"
+                                    url={url}
+                                    fileType={fileType}
+                                    name={name}
+                                    thumbnailUrl={thumbnailUrl}
+                                    onClick={toggleFile}
+                                  />
+                                </>
+                              )
+                            }
+                          )
+                        ) : (
+                          <div className="m-auto text-sm text-metallic-silver">No files found.</div>
+                        )}
+                      </div>
+                    </Card>
                   </Card>
                   <Card className="h-fit">
                     <div className="flex space-x-5">
@@ -527,6 +496,8 @@ const ClientPrinterJobPage = ({ printerId }: { printerId: number }) => {
         </Formik>
       </div>
       <DeletePrinterJobModal />
+      <SocialMediaFileModal />
+      <PrinterFileUploadModal />
     </>
   )
 }
