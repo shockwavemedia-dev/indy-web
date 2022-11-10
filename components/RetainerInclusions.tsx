@@ -46,6 +46,7 @@ export const RetainerInclusions = () => {
             />
           ) : (
             <StatusCountCard
+              totalAvailable={retainer.marketingQuota + retainer.extraQuota}
               key={`${retainer.serviceId}-${retainer.serviceName}`}
               value={retainer.totalUsed - (retainer.marketingQuota + retainer.extraQuota)}
               className={statusCardColor[index]}
