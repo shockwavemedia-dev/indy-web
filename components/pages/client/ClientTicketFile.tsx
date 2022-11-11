@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { Form, Formik } from 'formik'
+import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import { useQuery, useQueryClient } from 'react-query'
 import { usePanelLayoutStore } from '../../../layouts/PanelLayout'
@@ -28,6 +29,7 @@ export const ClientTicketFile = ({ ticketFileId }: { ticketFileId: number }) => 
   const { showToast } = useToastStore()
   const { setHeader } = usePanelLayoutStore()
   const queryClient = useQueryClient()
+  const { replace } = useRouter()
 
   const { data: ticketFile } = useQuery(
     ['ticketFile', ticketFileId],
@@ -106,6 +108,21 @@ export const ClientTicketFile = ({ ticketFileId }: { ticketFileId: number }) => 
 
       if (status === 200) {
         queryClient.invalidateQueries(['ticketFile', ticketFileId])
+      }
+    } catch (e) {
+      showToast({
+        type: 'error',
+        message: get422And400ResponseError(e),
+      })
+    }
+  }
+
+  const removeTicketFile = async () => {
+    try {
+      const { status } = await axios.delete(`/v1/ticket-files/${ticketFileId}`)
+
+      if (status === 200) {
+        replace('/dashboard')
       }
     } catch (e) {
       showToast({
@@ -203,10 +220,16 @@ export const ClientTicketFile = ({ ticketFileId }: { ticketFileId: number }) => 
                 <div>Print</div>
               </Button>
               {!ticketFile.isApproved && (
-                <Button ariaLabel="Approve Ticket File" type="button" onClick={approveTicketFile}>
-                  <CheckIcon className="stroke-white" />
-                  <div>Approve</div>
-                </Button>
+                <div>
+                  <Button ariaLabel="Approve Ticket File" type="button" onClick={removeTicketFile}>
+                    <CheckIcon className="stroke-white" />
+                    <div>Remove and Decline</div>
+                  </Button>
+                  <Button ariaLabel="Approve Ticket File" type="button" onClick={approveTicketFile}>
+                    <CheckIcon className="stroke-white" />
+                    <div>Approve</div>
+                  </Button>
+                </div>
               )}
             </div>
           </div>
