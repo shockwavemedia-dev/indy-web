@@ -20,6 +20,7 @@ import { EditIcon } from '../../icons/EditIcon'
 import { PaperClipIcon } from '../../icons/PaperClipIcon'
 import { PaperPlaneIcon } from '../../icons/PaperPlaneIcon'
 import { PrintIcon } from '../../icons/PrintIcon'
+import { TrashIcon } from '../../icons/TrashIcon'
 import { Pill } from '../../Pill'
 import { RichTextInput } from '../../RichTextInput'
 import { TicketFileFeedbackCard } from '../../tickets/TicketFileFeedbackCard'
@@ -228,11 +229,11 @@ export const ClientTicketFile = ({ ticketFileId }: { ticketFileId: number }) => 
               {!ticketFile.isApproved && (
                 <Button
                   ariaLabel="Remove and Decline"
-                  className="stroke-red-crimson"
+                  className="red-crimson"
                   type="button"
                   onClick={removeTicketFile}
                 >
-                  <CheckIcon className="stroke-white" />
+                  <TrashIcon className="red-crimson" />
                   <div>Remove and Decline</div>
                 </Button>
               )}
