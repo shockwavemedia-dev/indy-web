@@ -126,8 +126,8 @@ export const ReAssignTicketAssigneeModal = ({
                   options={
                     departments
                       ?.find(({ id }) => id === department?.value)
-                      ?.users?.map(({ adminUserId, firstName, lastName }) => ({
-                        label: `${firstName} ${lastName}`,
+                      ?.users?.map(({ adminUserId, firstName, lastName, openTickets }) => ({
+                        label: `${firstName} ${lastName} - ${openTickets}`,
                         value: adminUserId,
                       })) ?? []
                   }
