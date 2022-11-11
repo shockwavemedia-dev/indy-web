@@ -220,16 +220,21 @@ export const ClientTicketFile = ({ ticketFileId }: { ticketFileId: number }) => 
                 <div>Print</div>
               </Button>
               {!ticketFile.isApproved && (
-                <div>
-                  <Button ariaLabel="Approve Ticket File" type="button" onClick={removeTicketFile}>
-                    <CheckIcon className="stroke-white" />
-                    <div>Remove and Decline</div>
-                  </Button>
-                  <Button ariaLabel="Approve Ticket File" type="button" onClick={approveTicketFile}>
-                    <CheckIcon className="stroke-white" />
-                    <div>Approve</div>
-                  </Button>
-                </div>
+                <Button ariaLabel="Approve Ticket File" type="button" onClick={approveTicketFile}>
+                  <CheckIcon className="stroke-white" />
+                  <div>Approve</div>
+                </Button>
+              )}
+              {!ticketFile.isApproved && (
+                <Button
+                  ariaLabel="Remove and Decline"
+                  className="stroke-red-crimson"
+                  type="button"
+                  onClick={removeTicketFile}
+                >
+                  <CheckIcon className="stroke-white" />
+                  <div>Remove and Decline</div>
+                </Button>
               )}
             </div>
           </div>
