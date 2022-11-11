@@ -94,7 +94,7 @@ export const PrinterFileUploadModal = () => {
       finalTrimSize: printer?.finalTrimSize,
       reference: printer?.reference,
       notes: printer?.notes,
-      additionalOptions: printer?.additionalOptions,
+      additionalOptions: [],
       delivery: printer?.delivery,
       price: printer?.price,
       blindShipping: printer?.blindShipping,

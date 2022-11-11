@@ -35,10 +35,7 @@ import {
   PrinterFileUploadModal,
   usePrinterFileUploadModal,
 } from '../../modals/PrinterFileUploadModal'
-import {
-  SocialMediaFileModal,
-  useSocialMediaFileModalStore,
-} from '../../modals/SocialMediaFileModal'
+import { PrinterJobFileModal, usePrinterJobFileModalStore } from '../../modals/PrinterJobFileModal'
 import { PhotographyVideographyFileButton } from '../../PhotographyVideographyFileButton'
 import { Pill } from '../../Pill'
 import { Select } from '../../Select'
@@ -124,7 +121,7 @@ const ClientPrinterJobPage = ({ printerId }: { printerId: number }) => {
     }
   }
 
-  const { toggleShowSocialMediaFileModal } = useSocialMediaFileModalStore()
+  const { toggleShowPrinterJobFileModal } = usePrinterJobFileModalStore()
 
   const { setVisible } = usePrinterFileUploadModal()
 
@@ -170,25 +167,26 @@ const ClientPrinterJobPage = ({ printerId }: { printerId: number }) => {
     }
   }
 
+  // if (printer && printer.product !== null) {
+  //   const filterProduct = PrinterOptions?.filter((option) => option.product === printer.product)
+  //   console.log(filterProduct[0])
+  //   const option =
+  //     filterProduct[0].option.map((name) => ({
+  //       label: name,
+  //       value: name,
+  //     })) ?? []
+
+  //   const format =
+  //     filterProduct[0].format.map((name) => ({
+  //       label: name,
+  //       value: name,
+  //     })) ?? []
+
+  //   setOption(option)
+  //   setFormat(format)
+  // }
+
   useEffect(() => {
-    // if (printer && printer.product !== null) {
-    //   const filterProduct = PrinterOptions?.filter((option) => option.product === printer.product)
-
-    //   const option =
-    //     filterProduct[0].option.map((name) => ({
-    //       label: name,
-    //       value: name,
-    //     })) ?? []
-
-    //   const format =
-    //     filterProduct[0].format.map((name) => ({
-    //       label: name,
-    //       value: name,
-    //     })) ?? []
-
-    //   setOption(option)
-    //   setFormat(format)
-    // }
     if (printer) {
       setHeader(`Print ${printer.customerName}`)
     }
@@ -214,7 +212,7 @@ const ClientPrinterJobPage = ({ printerId }: { printerId: number }) => {
             finalTrimSize: printer?.finalTrimSize,
             reference: printer?.reference,
             notes: printer?.notes,
-            additionalOptions: printer?.additionalOptions,
+            additionalOptions: [],
             delivery: printer?.delivery,
             price: printer?.price,
             blindShipping: printer?.blindShipping,
@@ -224,7 +222,7 @@ const ClientPrinterJobPage = ({ printerId }: { printerId: number }) => {
             coding: printer?.coding,
             address: printer?.address,
             purchaseOrderNumber: printer?.purchaseOrderNumber,
-            attachments: printer?.attachments,
+            description: printer?.description,
           }}
           onSubmit={submitForm}
         >
@@ -410,7 +408,7 @@ const ClientPrinterJobPage = ({ printerId }: { printerId: number }) => {
                       Icon={EditIcon}
                       label="Address"
                       placeholder="Enter Address"
-                      name="adress"
+                      name="address"
                       className="mb-5"
                     />
                     <div className="mb-5 w-fit text-base font-semibold text-halloween-orange">
@@ -449,20 +447,20 @@ const ClientPrinterJobPage = ({ printerId }: { printerId: number }) => {
                       <div className="flex flex-wrap gap-4">
                         {!!printer.attachments && printer.attachments.length > 0 ? (
                           printer.attachments.map(
-                            ({ printerAttachmentId, url, thumbnailUrl, name, fileType }) => {
+                            ({ printerJobAttachmentId, url, thumbnailUrl, name, fileType }) => {
                               const toggleFile = () =>
-                                toggleShowSocialMediaFileModal(
+                                toggleShowPrinterJobFileModal(
                                   url,
                                   fileType,
                                   name,
-                                  printerAttachmentId,
+                                  printerJobAttachmentId,
                                   printer.id
                                 )
 
                               return (
                                 <>
                                   <PhotographyVideographyFileButton
-                                    key={`socialMediaFile-${printerAttachmentId}`}
+                                    key={`socialMediaFile-${printerJobAttachmentId}`}
                                     className="h-35 w-35"
                                     url={url}
                                     fileType={fileType}
@@ -496,7 +494,7 @@ const ClientPrinterJobPage = ({ printerId }: { printerId: number }) => {
         </Formik>
       </div>
       <DeletePrinterJobModal />
-      <SocialMediaFileModal />
+      <PrinterJobFileModal />
       <PrinterFileUploadModal />
     </>
   )

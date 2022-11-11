@@ -1,7 +1,7 @@
 export type PrinterFile = {
   name: string
   fileType: string
-  printerAttachmentId: number
+  printerJobAttachmentId: number
   url: string
   thumbnailUrl: string
 }
