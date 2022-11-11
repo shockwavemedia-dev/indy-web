@@ -41,7 +41,7 @@ import { EditTicketAssigneeModal } from '../../modals/EditTicketAssigneeModal'
 import { ReAssignTicketAssigneeModal } from '../../modals/ReAssignTicketAssigneeModal'
 import {
   UploadTicketFileModal,
-  useUploadTicketFileModalStore
+  useUploadTicketFileModalStore,
 } from '../../modals/UploadTicketFileModal'
 import { Pill } from '../../Pill'
 import { TicketActivityCard } from '../../tickets/TicketActivityCard'
@@ -325,7 +325,15 @@ export const StaffTicket = ({ ticketId }: { ticketId: number }) => {
           />
           {activeTab === 'description' && (
             <Card>
-              <RichTextDisplay value={ticket!.description} />
+              {!ticket.emailHtml && <RichTextDisplay value={ticket!.description} />}
+              {ticket.emailHtml && (
+                <p
+                  className="d-inline comment-paragraph-text"
+                  dangerouslySetInnerHTML={{
+                    __html: ticket.emailHtml,
+                  }}
+                />
+              )}
             </Card>
           )}
           {activeTab === 'notes' && (

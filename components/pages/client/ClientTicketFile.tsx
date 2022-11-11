@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { Form, Formik } from 'formik'
+import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import { useQuery, useQueryClient } from 'react-query'
 import { usePanelLayoutStore } from '../../../layouts/PanelLayout'
@@ -19,6 +20,7 @@ import { EditIcon } from '../../icons/EditIcon'
 import { PaperClipIcon } from '../../icons/PaperClipIcon'
 import { PaperPlaneIcon } from '../../icons/PaperPlaneIcon'
 import { PrintIcon } from '../../icons/PrintIcon'
+import { TrashIcon } from '../../icons/TrashIcon'
 import { Pill } from '../../Pill'
 import { RichTextInput } from '../../RichTextInput'
 import { TicketFileFeedbackCard } from '../../tickets/TicketFileFeedbackCard'
@@ -28,6 +30,7 @@ export const ClientTicketFile = ({ ticketFileId }: { ticketFileId: number }) => 
   const { showToast } = useToastStore()
   const { setHeader } = usePanelLayoutStore()
   const queryClient = useQueryClient()
+  const { replace } = useRouter()
 
   const { data: ticketFile } = useQuery(
     ['ticketFile', ticketFileId],
@@ -106,6 +109,21 @@ export const ClientTicketFile = ({ ticketFileId }: { ticketFileId: number }) => 
 
       if (status === 200) {
         queryClient.invalidateQueries(['ticketFile', ticketFileId])
+      }
+    } catch (e) {
+      showToast({
+        type: 'error',
+        message: get422And400ResponseError(e),
+      })
+    }
+  }
+
+  const removeTicketFile = async () => {
+    try {
+      const { status } = await axios.delete(`/v1/ticket-files/${ticketFileId}`)
+
+      if (status === 200) {
+        replace('/dashboard')
       }
     } catch (e) {
       showToast({
@@ -202,10 +220,30 @@ export const ClientTicketFile = ({ ticketFileId }: { ticketFileId: number }) => 
                 <PrintIcon className="stroke-orchid" />
                 <div>Print</div>
               </Button>
+            </div>
+            <div className="flex space-x-5">
               {!ticketFile.isApproved && (
-                <Button ariaLabel="Approve Ticket File" type="button" onClick={approveTicketFile}>
-                  <CheckIcon className="stroke-white" />
-                  <div>Approve</div>
+                <Button
+                  className="text-bleu-de-france"
+                  ariaLabel="Approve Ticket File"
+                  type="button"
+                  onClick={approveTicketFile}
+                  light
+                >
+                  <CheckIcon className="stroke-forest-green" />
+                  <div className="stroke-forest-green text-forest-green">Approve</div>
+                </Button>
+              )}
+              {!ticketFile.isApproved && (
+                <Button
+                  ariaLabel="Remove and Decline"
+                  className="stroke-light-red-crimson"
+                  type="button"
+                  onClick={removeTicketFile}
+                  light
+                >
+                  <TrashIcon className="stroke-red-crimson" />
+                  <div className="stroke-light-red-crimson text-red-crimson">Remove & Decline</div>
                 </Button>
               )}
             </div>

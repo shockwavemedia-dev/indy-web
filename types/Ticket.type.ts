@@ -8,6 +8,7 @@ import { TicketType } from './TicketType.type'
 export type Ticket = {
   id: number
   ticketCode: string
+  emailHtml?: string
   clientId: number
   clientName: string
   subject: string
