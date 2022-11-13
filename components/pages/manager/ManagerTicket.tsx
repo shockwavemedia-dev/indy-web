@@ -318,7 +318,15 @@ export const ManagerTicket = ({ ticketId }: { ticketId: number }) => {
           />
           {activeTab === 'description' && (
             <Card>
-              <RichTextDisplay value={ticket!.description} />
+              {!ticket.emailHtml && <RichTextDisplay value={ticket!.description} />}
+              {ticket.emailHtml && (
+                <p
+                  className="d-inline comment-paragraph-text"
+                  dangerouslySetInnerHTML={{
+                    __html: ticket.emailHtml,
+                  }}
+                />
+              )}
             </Card>
           )}
           {activeTab === 'notes' && (

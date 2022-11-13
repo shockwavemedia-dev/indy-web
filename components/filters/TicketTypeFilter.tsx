@@ -7,7 +7,7 @@ import { Dropdown } from '../Dropdown'
 import { CaretIcon } from '../icons/CaretIcon'
 import { FilterIcon } from '../icons/FilterIcon'
 
-const typeList: Array<TicketType> = ['email', 'event', 'graphic', 'print', 'task', 'library']
+const typeList: Array<TicketType> = ['email', 'graphic', 'print', 'task', 'library', 'project']
 
 export const useTicketTypeFilter = create(
   combine(

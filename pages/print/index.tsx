@@ -37,7 +37,7 @@ const PrintPage: NextPageWithLayout = () => {
                   dataEndpoint={`/v1/clients/${session?.user.userType.client.id}/printer-jobs`}
                   tableQueryKey={['printerJobs']}
                   ofString="printerJobs"
-                  rowOnClick={({ original: { id } }) => replace(`/printer-jobs/${id}`)}
+                  rowOnClick={({ original: { id } }) => replace(`/print/${id}`)}
                 />
               </Card>
             </div>

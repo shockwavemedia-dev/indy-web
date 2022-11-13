@@ -128,14 +128,26 @@ export const SocialMediaCalendarList = () => {
                                   <div className="flex items-center justify-between border-b border-b-slate-300 bg-slate-100 p-3">
                                     <div className="flex space-x-1">
                                       {socialMedia.channels?.map(
-                                        (c) =>
+                                        (c, i) =>
                                           ({
-                                            Facebook: <FacebookIcon />,
-                                            'Facebook Event': <FacebookIcon />,
-                                            Instagram: <InstagramIcon />,
-                                            Linkedin: <LinkedInIcon />,
-                                            'Tik Tok': <TikTokIcon />,
-                                            Twitter: <TwitterIcon />,
+                                            Facebook: (
+                                              <FacebookIcon key={`icon-${socialMedia.id}-${i}`} />
+                                            ),
+                                            'Facebook Event': (
+                                              <FacebookIcon key={`icon-${socialMedia.id}-${i}`} />
+                                            ),
+                                            Instagram: (
+                                              <InstagramIcon key={`icon-${socialMedia.id}-${i}`} />
+                                            ),
+                                            Linkedin: (
+                                              <LinkedInIcon key={`icon-${socialMedia.id}-${i}`} />
+                                            ),
+                                            'Tik Tok': (
+                                              <TikTokIcon key={`icon-${socialMedia.id}-${i}`} />
+                                            ),
+                                            Twitter: (
+                                              <TwitterIcon key={`icon-${socialMedia.id}-${i}`} />
+                                            ),
                                             Story: null,
                                             'Video Reels': null,
                                           }[c])
@@ -148,16 +160,17 @@ export const SocialMediaCalendarList = () => {
                                   </div>
                                   <div className="mb-3 flex justify-between p-3">
                                     <div className="text-sm line-clamp-2">{socialMedia.post}</div>
-                                    {socialMedia.attachments.length > 0 && (
-                                      <div className="relative aspect-square h-10">
-                                        <Image
-                                          src={socialMedia.attachments[0].thumbnailUrl}
-                                          alt={socialMedia.attachments[0].name}
-                                          layout="fill"
-                                          className="rounded"
-                                        />
-                                      </div>
-                                    )}
+                                    {socialMedia.attachments.length > 0 &&
+                                      socialMedia.attachments[0].thumbnailUrl && (
+                                        <div className="relative aspect-square h-10">
+                                          <Image
+                                            src={socialMedia.attachments[0].thumbnailUrl}
+                                            alt={socialMedia.attachments[0].name}
+                                            layout="fill"
+                                            className="rounded"
+                                          />
+                                        </div>
+                                      )}
                                   </div>
                                   <div className="flex p-3">
                                     <Pill

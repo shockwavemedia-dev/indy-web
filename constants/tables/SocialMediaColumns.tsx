@@ -6,17 +6,18 @@ import { useEffect, useId, useRef, useState } from 'react'
 import { useQueryClient } from 'react-query'
 import { MultiValue, SingleValue } from 'react-select'
 import { Column } from 'react-table'
+import { EditIcon } from '../../components/icons/EditIcon'
 import { FileIcon } from '../../components/icons/FileIcon'
 import { PlusIcon } from '../../components/icons/PlusIcon'
 import { TrashIcon } from '../../components/icons/TrashIcon'
 import {
   DeleteSocialMediaModal,
-  useDeleteSocialMediaModalStore
+  useDeleteSocialMediaModalStore,
 } from '../../components/modals/DeleteSocialMediaModal'
 import { FileUploadModal, useFileUploadModal } from '../../components/modals/FileUploadModal'
 import {
   SocialMediaFileModal,
-  useSocialMediaFileModalStore
+  useSocialMediaFileModalStore,
 } from '../../components/modals/SocialMediaFileModal'
 import { SocialMediaChannelSelect } from '../../components/SocialMediaChannelSelect'
 import { SocialMediaStatusSelect } from '../../components/SocialMediaStatusSelect'
@@ -425,25 +426,37 @@ export const SocialMediaColumns: Array<Column<SocialMedia>> = [
     },
   },
   {
-    Header: 'Delete',
+    Header: 'Action',
     accessor: 'id',
     id: 'action',
     disableSortBy: true,
-    Cell: ({ value }) => {
-      const { toggleModal: toggleDeleteModal } = useDeleteSocialMediaModalStore()
+    Cell: ({ value, row: { original: socialMedia } }) => {
+      const { setActiveSocialMedia, toggleEditSocialMediaModal } = useSocialMediaStore()
 
+      const editSocialMedia = () => {
+        setActiveSocialMedia(socialMedia)
+        toggleEditSocialMediaModal()
+      }
+      const { toggleModal: toggleDeleteModal } = useDeleteSocialMediaModalStore()
       return (
-        <>
-          <button
-            onClick={(e) => {
-              e.stopPropagation()
-              toggleDeleteModal(value)
-            }}
-          >
-            <TrashIcon className="stroke-waterloo hover:stroke-halloween-orange" />
-          </button>
+        <div className="mr-5 flex space-x-4">
+          <Tooltip title="Edit Social Media" placement="top" className="ml-auto">
+            <button onClick={editSocialMedia}>
+              <EditIcon className="stroke-waterloo hover:stroke-halloween-orange" />
+            </button>
+          </Tooltip>
+          <Tooltip title="Edit Social Media" placement="top" className="ml-auto">
+            <button
+              onClick={(e) => {
+                e.stopPropagation()
+                toggleDeleteModal(value)
+              }}
+            >
+              <TrashIcon className="stroke-waterloo hover:stroke-halloween-orange" />
+            </button>
+          </Tooltip>
           <DeleteSocialMediaModal />
-        </>
+        </div>
       )
     },
   },

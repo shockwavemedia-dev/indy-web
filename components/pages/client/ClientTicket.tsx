@@ -20,7 +20,7 @@ import { TrashIcon } from '../../../components/icons/TrashIcon'
 import { CreateLinkModal } from '../../../components/modals/CreateLinkModal'
 import {
   DeleteTicketModal,
-  useDeleteTicketModal
+  useDeleteTicketModal,
 } from '../../../components/modals/DeleteTicketModal'
 import { EditTicketModal, useEditTicketModal } from '../../../components/modals/EditTicketModal'
 import { ViewTicketAssigneeModal } from '../../../components/modals/ViewTicketAssigneeModal'
@@ -345,7 +345,15 @@ export const ClientTicket = ({ ticketId }: { ticketId: number }) => {
           {activeTab === 'description' && (
             <div>
               <Card>
-                <RichTextDisplay value={ticket!.description} />
+                {!ticket.emailHtml && <RichTextDisplay value={ticket!.description} />}
+                {ticket.emailHtml && (
+                  <p
+                    className="d-inline comment-paragraph-text"
+                    dangerouslySetInnerHTML={{
+                      __html: ticket.emailHtml,
+                    }}
+                  />
+                )}
               </Card>
               <Card title="Attachment" className="mt-5">
                 <div className="flex h-fit w-257.5 flex-wrap gap-5">

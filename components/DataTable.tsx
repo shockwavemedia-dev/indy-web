@@ -102,20 +102,7 @@ export const DataTable = <T extends Record<string, unknown>>({
 
   return (
     <>
-      <div className="absolute right-6 top-6 flex items-center space-x-3">
-        {tableActions}
-        <Dropdown actions={<div className="flex flex-col">{actions}</div>}>
-          {({ visible }) => (
-            <div className="flex items-center space-x-2 rounded-md text-sm font-medium">
-              <FilterIcon className="stroke-lavender-gray" />
-              <div>Page Size</div>
-              <CaretIcon
-                className={`transition-transform stroke-waterloo${visible ? '' : ' rotate-180'}`}
-              />
-            </div>
-          )}
-        </Dropdown>
-      </div>
+      <div className="absolute right-6 top-6 flex items-center space-x-3">{tableActions}</div>
       {rows.length > 0 ? (
         <>
           <div className="mb-auto h-full overflow-y-auto">
@@ -264,6 +251,21 @@ export const DataTable = <T extends Record<string, unknown>>({
                 small
               />
             </button>
+            <div className="mx-5 flex space-x-4 text-sm font-medium">
+              <Dropdown actions={<div className="flex flex-col">{actions}</div>}>
+                {({ visible }) => (
+                  <div className="flex items-center space-x-2 rounded-md text-sm font-medium">
+                    <FilterIcon className="stroke-lavender-gray" />
+                    <div>Page Size</div>
+                    <CaretIcon
+                      className={`transition-transform stroke-waterloo${
+                        visible ? '' : ' rotate-180'
+                      }`}
+                    />
+                  </div>
+                )}
+              </Dropdown>
+            </div>
           </div>
         </>
       ) : (

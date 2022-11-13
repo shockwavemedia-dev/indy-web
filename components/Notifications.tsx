@@ -101,11 +101,23 @@ export const Notifications = ({ className = '' }: { className?: string }) => {
 
               return (
                 <div key={`notification-${id}`} className="relative flex">
-                  <div className="absolute top-1 h-2.25 w-2.25 rounded-lg bg-halloween-orange ring-4 ring-halloween-orange ring-opacity-20" />
+                  <div
+                    className={`absolute top-1 h-2.25 w-2.25 rounded-lg  ring-4 ring-opacity-20 ${
+                      title.includes('is requesting approval for a design in ticket')
+                        ? 'bg-forest-green  ring-forest-green'
+                        : 'bg-halloween-orange  ring-halloween-orange'
+                    }`}
+                  />
                   <a
                     className={`pl-8 pr-2  text-sm font-medium underline-offset-1 hover:text-halloween-orange hover:underline ${
                       i === notifications.length - 1 ? 'bg-white' : ''
-                    } ${status === 'read' ? 'text-lavender-gray' : 'text-onyx'}`}
+                    } ${
+                      status === 'read'
+                        ? 'text-lavender-gray'
+                        : title.includes('is requesting approval for a design in ticket')
+                        ? 'text-forest-green'
+                        : 'text-onyx'
+                    }`}
                     href={url}
                     onClick={readNotification}
                   >

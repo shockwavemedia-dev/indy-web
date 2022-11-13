@@ -1,18 +1,60 @@
+import axios from 'axios'
+import { useSession } from 'next-auth/react'
+import { useQuery } from 'react-query'
+import { Service } from '../types/Service.type'
 import { Card } from './Card'
 import { StatusCountCard } from './StatusCountCard'
 
-export const RetainerInclusions = () => (
-  <Card title="Retainer Inclusions" className="h-fit flex-none">
-    <div className="grid aspect-square grid-cols-3 grid-rows-3 gap-3">
-      <StatusCountCard value={8} className="bg-deep-space-sparkle" description="Graphics Design" />
-      <StatusCountCard value={5} className="bg-charleston-green" description="Animations" />
-      <StatusCountCard value={5} className="bg-halloween-orange" description="Web Updates" />
-      <StatusCountCard value={8} className="bg-maximum-yellow-red" description="Photo Shoots" />
-      <StatusCountCard value={3} className="bg-navy" description="Video Shoots" />
-      <StatusCountCard value={11} className="bg-red-crimson" description="Social Posts" />
-      <StatusCountCard value={9} className="bg-orchid" description="Marketing" />
-      <StatusCountCard value={7} className="bg-forest-green" description="Health Check" />
-      <StatusCountCard value={15} className="bg-bright-navy-blue" description="App Updates" />
-    </div>
-  </Card>
-)
+export const RetainerInclusions = () => {
+  const { data: session } = useSession()
+
+  const { data: retainerInclusions } = useQuery('retainerInclusions', async () => {
+    const {
+      data: { data },
+    } = await axios.get<{ data: Array<Service> }>(
+      `/v1/clients/${session!.user.userType.client.id}/services`
+    )
+
+    return data
+  })
+
+  const statusCardColor = [
+    'bg-deep-space-sparkle',
+    'bg-charleston-green',
+    'bg-halloween-orange',
+    'bg-maximum-yellow-red',
+    'bg-navy',
+    'bg-red-crimson',
+    'bg-orchid',
+    'bg-forest-green',
+    'bg-bright-navy-blue',
+  ]
+
+  console.log(statusCardColor[0])
+
+  return (
+    <Card title="Retainer Inclusions" className="h-fit flex-none">
+      <div className="grid aspect-square grid-cols-3 grid-rows-3 gap-3">
+        {retainerInclusions?.map((retainer, index) => {
+          return retainer.marketingQuota === 0 ? (
+            <StatusCountCard
+              key={`${retainer.serviceId}-${retainer.serviceName}`}
+              value="&infin;"
+              className={statusCardColor[index]}
+              description={retainer.serviceName}
+              classNameValue="!text-3xl"
+            />
+          ) : (
+            <StatusCountCard
+              totalAvailable={retainer.marketingQuota + retainer.extraQuota}
+              key={`${retainer.serviceId}-${retainer.serviceName}`}
+              value={retainer.totalUsed - (retainer.marketingQuota + retainer.extraQuota)}
+              className={statusCardColor[index]}
+              description={retainer.serviceName}
+            />
+          )
+        })}
+      </div>
+    </Card>
+  )
+}

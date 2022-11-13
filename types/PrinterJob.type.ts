@@ -1,9 +1,10 @@
 import { Client } from './Client.type'
 import { Printer } from './Printer.type'
+import { PrinterFile } from './PrinterFile.type'
 import { PrinterJobStatus } from './PrinterJobStatus.type'
 
 export type PrinterJob = {
-  id?: number | null
+  id: number
   printerId?: number | null
   customerName?: string | null
   product?: string | null
@@ -30,4 +31,9 @@ export type PrinterJob = {
   status: PrinterJobStatus
   description?: string | null
   isApproved?: number | null
+  stocks?: string | null
+  coding?: string | null
+  address?: string | null
+  purchaseOrderNumber?: string | null
+  attachments: Array<PrinterFile>
 }
