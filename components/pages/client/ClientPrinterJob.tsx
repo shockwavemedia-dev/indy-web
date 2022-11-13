@@ -188,7 +188,7 @@ const ClientPrinterJobPage = ({ printerId }: { printerId: number }) => {
 
   useEffect(() => {
     if (printer) {
-      setHeader(`Print ${printer.customerName}`)
+      setHeader(`Print`)
     }
   }, [printer])
 
@@ -197,7 +197,7 @@ const ClientPrinterJobPage = ({ printerId }: { printerId: number }) => {
   return (
     <>
       <Head>
-        <title>{`Indy - ${printer?.customerName}`}</title>
+        <title>Indy Print</title>
       </Head>
       <div className="mx-auto w-full">
         <Formik

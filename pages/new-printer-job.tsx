@@ -27,6 +27,7 @@ import { NewPrinterForm } from '../types/forms/NewPrinterForm.type'
 import { NextPageWithLayout } from '../types/pages/NextPageWithLayout.type'
 import { SelectOption } from '../types/SelectOption.type'
 import { get422And400ResponseError } from '../utils/ErrorHelpers'
+import { objectWithFileToFormData } from '../utils/FormHelpers'
 
 const NewPrinterPage: NextPageWithLayout = () => {
   const { setHeader } = usePanelLayoutStore()
@@ -59,11 +60,11 @@ const NewPrinterPage: NextPageWithLayout = () => {
     try {
       const { status } = await axios.post<NewPrinterForm>(
         `/v1/clients/${session?.user.userType.client.id}/printer-jobs`,
-        values
+        objectWithFileToFormData(values)
       )
       if (status === 200) {
         queryClient.invalidateQueries(['printerJobs'])
-        replace('/printer-jobs')
+        replace('/print')
         showToast({
           type: 'success',
           message: `New Printer Order successfully created!`,
