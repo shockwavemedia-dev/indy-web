@@ -30,8 +30,6 @@ export const RetainerInclusions = () => {
     'bg-bright-navy-blue',
   ]
 
-  console.log(statusCardColor[0])
-
   return (
     <Card title="Retainer Inclusions" className="h-fit flex-none">
       <div className="grid aspect-square grid-cols-3 grid-rows-3 gap-3">

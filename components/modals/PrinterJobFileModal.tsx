@@ -63,7 +63,7 @@ export const PrinterJobFileModal = () => {
   const deletePrinterJobFile = async () => {
     const values = { attachment_ids: [fileId] }
     try {
-      const { status } = await axios.put(`/v1/printer-job/${printerId}/attachments`, values)
+      const { status } = await axios.put(`/v1/printer-jobs/${printerId}/attachments`, values)
 
       if (status === 200) {
         queryClient.invalidateQueries(['printer', printerId])
