@@ -4,7 +4,6 @@ import { useQuery, useQueryClient } from 'react-query'
 import createStore from 'zustand'
 import { combine } from 'zustand/middleware'
 import { AdminUserRoleOptions } from '../../constants/options/AdminUserRoleOptions'
-import { UserGenderOptions } from '../../constants/options/UserGenderOptions'
 import { UserStatusOptions } from '../../constants/options/UserStatusOptions'
 import { EditAdminUserFormSchema } from '../../schemas/EditAdminUserFormSchema'
 import { useToastStore } from '../../store/ToastStore'
@@ -13,7 +12,6 @@ import { EditAdminUserForm } from '../../types/forms/EditAdminUserForm.type'
 import { Page } from '../../types/Page.type'
 import { User } from '../../types/User.type'
 import { Button } from '../Button'
-import { DateInput } from '../DateInput'
 import { ClipboardIcon } from '../icons/ClipboardIcon'
 import { FloppyDiskIcon } from '../icons/FloppyDiskIcon'
 import { GearIcon } from '../icons/GearIcon'
@@ -80,17 +78,14 @@ export const EditUserModal = () => {
   if (!user) return null
 
   return (
-    <Modal title={`Edit ${user?.fullName}`} onClose={toggleEditUserModal}>
+    <Modal title={`Edit Admin User`} onClose={toggleEditUserModal}>
       <Formik
         validationSchema={EditAdminUserFormSchema}
         initialValues={{
           id: user.id,
           firstName: user.firstName,
-          middleName: user.middleName,
           lastName: user.lastName,
-          birthDate: user.birthDate,
           contactNumber: user.contactNumber,
-          gender: user.gender,
           role: user.userType?.role,
           status: user.status,
           position: user.userType?.position ?? '',
@@ -155,31 +150,14 @@ export const EditUserModal = () => {
                   name="firstName"
                 />
                 <TextInput
-                  label="Middle Name"
-                  type="text"
-                  Icon={UserIcon}
-                  placeholder="Enter Middle Name"
-                  name="middleName"
-                />
-              </div>
-              <div className="mb-5 flex space-x-5">
-                <TextInput
                   label="Last Name"
                   type="text"
                   Icon={UserIcon}
                   placeholder="Enter Last Name"
                   name="lastName"
                 />
-                <Select
-                  label="Gender"
-                  name="gender"
-                  Icon={UserIcon}
-                  options={UserGenderOptions}
-                  defaultValue={UserGenderOptions.find(({ value }) => value === user.gender)}
-                />
               </div>
               <div className="mb-8 flex space-x-5">
-                <DateInput label="Birth Date" name="birthDate" placeholder="Enter Birth Date" />
                 <TextInput
                   label="Phone"
                   type="text"
