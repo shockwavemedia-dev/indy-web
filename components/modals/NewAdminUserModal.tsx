@@ -100,7 +100,7 @@ export const NewAdminUserModal = ({
             validate={validateForm}
           >
             {({ isSubmitting }) => (
-              <Form className="flex w-140 flex-col">
+              <Form className="w-160 flex flex-col">
                 <div className="mb-5 flex space-x-5">
                   <Select
                     name="role"
