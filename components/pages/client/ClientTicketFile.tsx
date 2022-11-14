@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { Form, Formik } from 'formik'
+import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import { useQuery, useQueryClient } from 'react-query'
@@ -21,6 +22,10 @@ import { PaperClipIcon } from '../../icons/PaperClipIcon'
 import { PaperPlaneIcon } from '../../icons/PaperPlaneIcon'
 import { PrintIcon } from '../../icons/PrintIcon'
 import { TrashIcon } from '../../icons/TrashIcon'
+import {
+  CreatePrinterJobModal,
+  useCreatePrinterJobModalStore,
+} from '../../modals/CreatePrinterJobModal'
 import { Pill } from '../../Pill'
 import { RichTextInput } from '../../RichTextInput'
 import { TicketFileFeedbackCard } from '../../tickets/TicketFileFeedbackCard'
@@ -31,6 +36,7 @@ export const ClientTicketFile = ({ ticketFileId }: { ticketFileId: number }) => 
   const { setHeader } = usePanelLayoutStore()
   const queryClient = useQueryClient()
   const { replace } = useRouter()
+  const { data: session } = useSession()
 
   const { data: ticketFile } = useQuery(
     ['ticketFile', ticketFileId],
@@ -60,6 +66,8 @@ export const ClientTicketFile = ({ ticketFileId }: { ticketFileId: number }) => 
       enabled: ticketFileId !== -1,
     }
   )
+
+  const { toggleModal: toggleCreatePrinterJobModal } = useCreatePrinterJobModalStore()
 
   const downloadFile = () => {
     if (!!ticketFile && ticketFile?.signedUrl !== null) {
@@ -216,10 +224,18 @@ export const ClientTicketFile = ({ ticketFileId }: { ticketFileId: number }) => 
                 <DownloadIcon className="stroke-bleu-de-france" />
                 <div>Download</div>
               </Button>
-              <Button ariaLabel="Print" className="text-orchid" type="button" light>
+              <button
+                type="button"
+                className="flex h-12.5 w-full items-center justify-center space-x-2 rounded-xl border-1.5 border-solid border-bright-gray bg-white text-base font-semibold text-onyx"
+                aria-label="Print"
+                onClick={(e) => {
+                  e.stopPropagation()
+                  toggleCreatePrinterJobModal(session!.user.userType.client.id, ticketFile.fileId)
+                }}
+              >
                 <PrintIcon className="stroke-orchid" />
-                <div>Print</div>
-              </Button>
+                <div className="text-orchid">Print</div>
+              </button>
             </div>
             <div className="flex space-x-5">
               {!ticketFile.isApproved && (
@@ -296,6 +312,7 @@ export const ClientTicketFile = ({ ticketFileId }: { ticketFileId: number }) => 
           </div>
         </div>
       )}
+      <CreatePrinterJobModal />
     </>
   )
 }
