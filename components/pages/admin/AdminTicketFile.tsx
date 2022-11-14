@@ -166,7 +166,7 @@ export const AdminTicketFile = ({ ticketFileId }: { ticketFileId: number }) => {
                 <Pill
                   twBackgroundColor={ticketFile.isApproved ? 'bg-honeydew' : 'bg-light-tart-orange'}
                   twTextColor={ticketFile.isApproved ? 'text-jungle-green' : 'text-tart-orange'}
-                  value={ticketFile.isApproved ? 'Approved' : 'Not Approved'}
+                  value={ticketFile.isApproved ? 'Approved' : 'For Approval'}
                 />
               </TitleValue>
               <Button
