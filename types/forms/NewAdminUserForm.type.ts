@@ -4,11 +4,8 @@ export type NewAdminUserForm = {
   password?: string
   sendInvite: boolean
   passwordConfirmation?: string
-  contactNumber?: string
-  birthDate: Date | null
+  contactNumber?: string | null
   firstName: string
-  lastName: string
-  middleName?: string | null
-  gender: 'female' | 'male' | null
+  lastName?: string | null
   role: 'admin' | 'account manager' | 'manager' | 'staff' | null
 }
