@@ -14,4 +14,5 @@ export type TicketFile = {
   fileType: string
   ticketId: number
   thumbnailUrl: string
+  fileId: number
 }

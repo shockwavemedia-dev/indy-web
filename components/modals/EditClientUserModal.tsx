@@ -3,17 +3,21 @@ import { Form, Formik } from 'formik'
 import { useQueryClient } from 'react-query'
 import create from 'zustand'
 import { combine } from 'zustand/middleware'
+import { ClientUserRoleOptions } from '../../constants/options/ClientUserRoleOptions'
+import { UserStatusOptions } from '../../constants/options/UserStatusOptions'
 import { EditClientUserFormSchema } from '../../schemas/EditClientUserFormSchema'
 import { useToastStore } from '../../store/ToastStore'
 import { ClientUser } from '../../types/ClientUser.type'
 import { EditClientUserForm } from '../../types/forms/EditClientUserForm.type'
 import { get422And400ResponseError } from '../../utils/ErrorHelpers'
 import { Button } from '../Button'
+import { ClipboardIcon } from '../icons/ClipboardIcon'
 import { EmailIcon } from '../icons/EmailIcon'
 import { LockIcon } from '../icons/LockIcon'
 import { UserIcon } from '../icons/UserIcon'
 import { Modal } from '../Modal'
 import { PasswordInput } from '../PasswordInput'
+import { Select } from '../Select'
 import { TextInput } from '../TextInput'
 
 export const useEditClientUserModal = create(
@@ -67,11 +71,35 @@ export const EditClientUserModal = () => {
               lastName: clientUser.lastName,
               email: clientUser.email,
               password: '',
+              status: clientUser.status,
+              role: clientUser.userType.role,
             }}
             onSubmit={submitForm}
           >
             {({ isSubmitting }) => (
               <Form className="flex w-140 flex-col">
+                <div className="mb-5 flex space-x-5">
+                  <Select
+                    label="Status"
+                    name="status"
+                    placeholder="Select Status"
+                    Icon={ClipboardIcon}
+                    options={UserStatusOptions}
+                    defaultValue={UserStatusOptions.find(
+                      ({ value }) => value === clientUser.status
+                    )}
+                  />
+                  <Select
+                    label="Role"
+                    name="role"
+                    Icon={ClipboardIcon}
+                    placeholder="Select Role"
+                    options={ClientUserRoleOptions}
+                    defaultValue={ClientUserRoleOptions.find(
+                      ({ value }) => value === clientUser.userType.role
+                    )}
+                  />
+                </div>
                 <div className="mb-5 flex space-x-5">
                   <TextInput
                     type="text"
