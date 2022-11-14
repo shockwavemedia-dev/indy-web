@@ -35,7 +35,12 @@ export const DeleteClientUserModal = () => {
       className="w-140"
     >
       <div className="flex w-full space-x-5">
-        <Button ariaLabel="Cancel" onClick={toggleDeleteClientUserModal} type="button" light>
+        <Button
+          ariaLabel="Cancel"
+          onClick={() => toggleDeleteClientUserModal()}
+          type="button"
+          light
+        >
           Cancel
         </Button>
         <Button

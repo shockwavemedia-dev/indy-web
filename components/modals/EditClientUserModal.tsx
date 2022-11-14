@@ -14,6 +14,7 @@ import { Button } from '../Button'
 import { ClipboardIcon } from '../icons/ClipboardIcon'
 import { EmailIcon } from '../icons/EmailIcon'
 import { LockIcon } from '../icons/LockIcon'
+import { PencilIcon } from '../icons/PencilIcon'
 import { UserIcon } from '../icons/UserIcon'
 import { Modal } from '../Modal'
 import { PasswordInput } from '../PasswordInput'
@@ -73,6 +74,7 @@ export const EditClientUserModal = () => {
               password: '',
               status: clientUser.status,
               role: clientUser.userType.role,
+              contactNumber: clientUser.contactNumber,
             }}
             onSubmit={submitForm}
           >
@@ -80,7 +82,6 @@ export const EditClientUserModal = () => {
               <Form className="flex w-140 flex-col">
                 <div className="mb-5 flex space-x-5">
                   <Select
-                    label="Status"
                     name="status"
                     placeholder="Select Status"
                     Icon={ClipboardIcon}
@@ -90,7 +91,6 @@ export const EditClientUserModal = () => {
                     )}
                   />
                   <Select
-                    label="Role"
                     name="role"
                     Icon={ClipboardIcon}
                     placeholder="Select Role"
@@ -122,7 +122,15 @@ export const EditClientUserModal = () => {
                     name="email"
                     className="mb-5"
                   />
-                  <PasswordInput name="password" Icon={LockIcon} placeholder="Enter password" />
+                  <TextInput
+                    type="text"
+                    Icon={PencilIcon}
+                    placeholder="Enter Phone"
+                    name="contactNumber"
+                  />
+                </div>
+                <div className="mb-3 flex w-full space-x-5">
+                  <PasswordInput name="password" Icon={LockIcon} placeholder="Enter New password" />
                 </div>
                 <div className="flex space-x-5">
                   <Button
