@@ -3,7 +3,6 @@ import { Form, Formik } from 'formik'
 import { useState } from 'react'
 import { useQuery, useQueryClient } from 'react-query'
 import { AdminUserRoleOptions } from '../../constants/options/AdminUserRoleOptions'
-import { UserGenderOptions } from '../../constants/options/UserGenderOptions'
 import { NewAdminUserFormSchema } from '../../schemas/NewAdminUserFormSchema'
 import { useToastStore } from '../../store/ToastStore'
 import { Department } from '../../types/Department.type'
@@ -12,7 +11,6 @@ import { Page } from '../../types/Page.type'
 import { get422And400ResponseError } from '../../utils/ErrorHelpers'
 import { Button } from '../Button'
 import { Checkbox } from '../Checkbox'
-import { DateInput } from '../DateInput'
 import { ClipboardIcon } from '../icons/ClipboardIcon'
 import { EmailIcon } from '../icons/EmailIcon'
 import { GearIcon } from '../icons/GearIcon'
@@ -90,13 +88,10 @@ export const NewAdminUserModal = ({
               email: '',
               password: '',
               position: '',
-              birthDate: null,
               passwordConfirmation: '',
               contactNumber: '',
               firstName: '',
               lastName: '',
-              middleName: '',
-              gender: null,
               role: null,
               departmentId: -1,
               sendInvite: false,
@@ -144,13 +139,6 @@ export const NewAdminUserModal = ({
                     name="firstName"
                     className="mb-5"
                   />
-                  <TextInput
-                    type="text"
-                    Icon={UserIcon}
-                    placeholder="Enter Middle Name"
-                    name="middleName"
-                    className="mb-5"
-                  />
                 </div>
                 <div className="mb-5 flex space-x-5">
                   <TextInput
@@ -160,16 +148,8 @@ export const NewAdminUserModal = ({
                     name="lastName"
                     className="mb-5"
                   />
-                  <Select
-                    name="gender"
-                    Icon={UserIcon}
-                    placeholder="Select Gender"
-                    options={UserGenderOptions}
-                    className="mb-5"
-                  />
                 </div>
                 <div className="mb-5 flex space-x-5">
-                  <DateInput name="birthDate" placeholder="Enter Birth Date" />
                   <TextInput
                     type="text"
                     Icon={PencilIcon}

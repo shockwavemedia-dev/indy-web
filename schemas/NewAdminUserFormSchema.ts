@@ -1,4 +1,4 @@
-import { boolean, date, mixed, number, object, SchemaOf, string } from 'yup'
+import { boolean, mixed, number, object, SchemaOf, string } from 'yup'
 import { NewAdminUserForm } from '../types/forms/NewAdminUserForm.type'
 
 export const NewAdminUserFormSchema: SchemaOf<NewAdminUserForm> = object().shape({
@@ -18,13 +18,10 @@ export const NewAdminUserFormSchema: SchemaOf<NewAdminUserForm> = object().shape
       otherwise: string().required(),
     })
     .min(6),
-  contactNumber: string().required(),
+  contactNumber: string().optional(),
   firstName: string().required(),
   position: string().required(),
-  lastName: string().required(),
-  middleName: string().optional().nullable(),
-  gender: mixed().required().oneOf(['female', 'male']),
+  lastName: string().optional(),
   role: mixed().required().oneOf(['admin', 'account manager', 'manager', 'staff']),
-  birthDate: date().required(),
   departmentId: number().optional().nullable(),
 })

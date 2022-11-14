@@ -16,11 +16,6 @@ export const ClientPrinterJobColumns: Array<Column<PrinterJob>> = [
     ),
   },
   {
-    Header: 'Customer Name',
-    accessor: 'customerName',
-    Cell: ({ value }) => <div className=" text-sm font-medium text-onyx">{value}</div>,
-  },
-  {
     Header: 'Status',
     accessor: 'status',
     Cell: ({ value }) => (
@@ -70,6 +65,11 @@ export const ClientPrinterJobColumns: Array<Column<PrinterJob>> = [
   {
     Header: 'Format',
     accessor: 'format',
+    Cell: ({ value }) => <div className=" text-sm font-medium text-onyx">{value}</div>,
+  },
+  {
+    Header: 'Stocks',
+    accessor: 'stocks',
     Cell: ({ value }) => <div className=" text-sm font-medium text-onyx">{value}</div>,
   },
   {
