@@ -139,8 +139,6 @@ export const NewAdminUserModal = ({
                     name="firstName"
                     className="mb-5"
                   />
-                </div>
-                <div className="mb-5 flex space-x-5">
                   <TextInput
                     type="text"
                     Icon={UserIcon}
