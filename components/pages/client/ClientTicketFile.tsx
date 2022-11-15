@@ -224,18 +224,20 @@ export const ClientTicketFile = ({ ticketFileId }: { ticketFileId: number }) => 
                 <DownloadIcon className="stroke-bleu-de-france" />
                 <div>Download</div>
               </Button>
-              <button
-                type="button"
-                className="flex h-12.5 w-full items-center justify-center space-x-2 rounded-xl border-1.5 border-solid border-bright-gray bg-white text-base font-semibold text-onyx"
-                aria-label="Print"
-                onClick={(e) => {
-                  e.stopPropagation()
-                  toggleCreatePrinterJobModal(session!.user.userType.client.id, ticketFile.fileId)
-                }}
-              >
-                <PrintIcon className="stroke-orchid" />
-                <div className="text-orchid">Print</div>
-              </button>
+              {ticketFile.isApproved && (
+                <button
+                  type="button"
+                  className="flex h-12.5 w-full items-center justify-center space-x-2 rounded-xl border-1.5 border-solid border-bright-gray bg-white text-base font-semibold text-onyx"
+                  aria-label="Print"
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    toggleCreatePrinterJobModal(session!.user.userType.client.id, ticketFile.fileId)
+                  }}
+                >
+                  <PrintIcon className="stroke-orchid" />
+                  <div className="text-orchid">Print</div>
+                </button>
+              )}
             </div>
             <div className="flex space-x-5">
               {!ticketFile.isApproved && (

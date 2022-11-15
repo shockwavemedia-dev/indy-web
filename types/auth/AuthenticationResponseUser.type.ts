@@ -9,6 +9,7 @@ export type AuthenticationResponseUser = {
   middleName: string
   lastName: string
   contactNumber: string
+  fullName: string
   gender: string
   birthDate: Date
   userType: {

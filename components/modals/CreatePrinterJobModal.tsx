@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { Form, Formik } from 'formik'
+import { useSession } from 'next-auth/react'
 import createStore from 'zustand'
 import { combine } from 'zustand/middleware'
 import { PrintExtrasOptions } from '../../constants/options/PrintExtrasOptions'
@@ -18,27 +19,28 @@ export const useCreatePrinterJobModalStore = createStore(
   combine(
     {
       clientId: -1,
-      ticketFileId: -1,
+      fileId: -1,
     },
     (set) => ({
-      toggleModal: (clientId?: number, ticketFileId?: number) =>
-        set(() => ({ clientId: clientId ?? -1, ticketFileId: ticketFileId ?? -1 })),
+      toggleModal: (clientId?: number, fileId?: number) =>
+        set(() => ({ clientId: clientId ?? -1, fileId: fileId ?? -1 })),
     })
   )
 )
 
 export const CreatePrinterJobModal = () => {
   const { showToast } = useToastStore()
-  const { clientId, ticketFileId, toggleModal } = useCreatePrinterJobModalStore()
+  const { clientId, fileId, toggleModal } = useCreatePrinterJobModalStore()
+  const { data: session } = useSession()
 
   const submitForm = async (values: CreatePrinterJobForm) => {
-    const fileIds = [ticketFileId]
     try {
       const { status } = await axios.post(`/v1/clients/${clientId}/printer-jobs`, {
-        ...values,
-        fileIds,
+        description: values.size,
+        quantity: values.quantity,
+        fileIds: [fileId],
+        purchaseOrderNumber: session?.user.fullName,
       })
-
       if (status === 200) {
         toggleModal()
         showToast({
@@ -56,12 +58,16 @@ export const CreatePrinterJobModal = () => {
 
   return (
     <>
-      {clientId !== -1 && ticketFileId !== 1 && (
-        <Modal title="Create Print" onClose={() => toggleModal()}>
+      {clientId !== -1 && fileId !== 1 && (
+        <Modal
+          title="Create Print"
+          className="border-2 border-solid border-halloween-orange"
+          onClose={() => toggleModal()}
+        >
           <Formik
             validationSchema={CreatePrinterJobFormSchema}
             initialValues={{
-              description: '',
+              size: '',
               quantity: '',
             }}
             onSubmit={submitForm}
@@ -69,9 +75,9 @@ export const CreatePrinterJobModal = () => {
             {({ isSubmitting }) => (
               <Form className="flex w-140 flex-col">
                 <Select
-                  name="description"
+                  name="size"
                   Icon={ClipboardIcon}
-                  placeholder="Select Extra"
+                  placeholder="Select Size"
                   options={PrintExtrasOptions}
                   className="mb-5"
                 />

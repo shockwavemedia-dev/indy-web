@@ -19,4 +19,5 @@ export type File = {
   bucket: string
   thumbnailUrl: string
   clientTicketFile: TicketFile
+  folderName: string
 }
