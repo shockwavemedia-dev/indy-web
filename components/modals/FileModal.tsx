@@ -167,7 +167,7 @@ export const FileModal = ({ ticketId }: { ticketId: number }) => {
                       ticketFile.isApproved ? 'bg-honeydew' : 'bg-light-tart-orange'
                     }
                     twTextColor={ticketFile.isApproved ? 'text-jungle-green' : 'text-tart-orange'}
-                    value={ticketFile.isApproved ? 'Approved' : 'Not Approved'}
+                    value={ticketFile.isApproved ? 'Approved' : 'For Approval'}
                   />
                 </TitleValue>
               </div>

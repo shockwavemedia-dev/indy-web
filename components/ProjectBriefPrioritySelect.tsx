@@ -1,3 +1,5 @@
+import { styled, Tooltip, tooltipClasses, TooltipProps } from '@mui/material'
+import React from 'react'
 import ReactSelect, {
   components as Components,
   ContainerProps,
@@ -9,12 +11,44 @@ import ReactSelect, {
 import { SelectOption } from '../types/SelectOption.type'
 import { FormErrorMessage } from './FormErrorMessage'
 import { CaretIcon } from './icons/CaretIcon'
+import { InfoIcon } from './icons/InfoIcon'
+
+const HtmlTooltip = styled(({ className, ...props }: TooltipProps) => (
+  <Tooltip {...props} classes={{ popper: className }} placement="top-end" className="ml-auto" />
+))(({ theme }) => ({
+  [`& .${tooltipClasses.tooltip}`]: {
+    maxWidth: 260,
+    fontSize: theme.typography.pxToRem(11),
+  },
+}))
+
+const numbers = [
+  'Relaxed - Turnaround time 7 days',
+  'Standard - Turnaround time 48 hours',
+  'Urgent - Turnaround time 24 hours',
+]
+
+const listItems = numbers.map((label, index) => <li key={index}>{label}</li>)
 
 const SelectContainer = <Option, IsMulti extends boolean>({
   children,
   ...props
 }: ContainerProps<Option, IsMulti>) => (
   <Components.SelectContainer {...props}>
+    <div className="mb-2 flex">
+      <HtmlTooltip
+        title={
+          <React.Fragment>
+            Let us know how urgent your project is.
+            <ul className="mt-4 text-halloween-orange">{listItems}</ul>
+          </React.Fragment>
+        }
+      >
+        <div>
+          <InfoIcon className="h-4 stroke-bleu-de-france transition-colors hover:stroke-halloween-orange" />
+        </div>
+      </HtmlTooltip>
+    </div>
     <label className="mb-2 inline-block text-xs font-medium text-metallic-silver empty:hidden">
       {props.selectProps.label}
     </label>
