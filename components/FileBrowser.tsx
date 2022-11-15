@@ -239,6 +239,8 @@ export const FileBrowser = ({ clientId }: { clientId: number }) => {
                             clientTicketFile,
                             url,
                             fileType,
+                            folderName,
+                            id,
                           },
                           i
                         ) =>
@@ -259,7 +261,14 @@ export const FileBrowser = ({ clientId }: { clientId: number }) => {
                               name={originalFilename}
                               thumbnailUrl={thumbnailUrl}
                               onClick={() =>
-                                toggleShowPhotoVideoFileModal(url, fileType, originalFilename)
+                                toggleShowPhotoVideoFileModal(
+                                  url,
+                                  fileType,
+                                  originalFilename,
+                                  folderName,
+                                  id,
+                                  clientId
+                                )
                               }
                               file
                             />
