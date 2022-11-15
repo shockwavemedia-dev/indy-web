@@ -1,4 +1,5 @@
 import { BriefcaseIcon } from '../../components/icons/BriefcaseIcon'
+import { CalendarAddIcon } from '../../components/icons/CalendarAddIcon'
 import { ChartIcon } from '../../components/icons/ChartIcon'
 import { CheckDocumentIcon } from '../../components/icons/CheckDocumentIcon'
 import { EmailIcon } from '../../components/icons/EmailIcon'
@@ -17,6 +18,16 @@ export const ClientRoutes: Array<Route> = [
     Icon: ChartIcon,
   },
   {
+    title: 'New Project Brief',
+    Icon: CalendarAddIcon,
+    pathname: '/project-brief',
+  },
+  {
+    title: 'Social Media',
+    Icon: ShareIcon,
+    pathname: '/social-media',
+  },
+  {
     title: 'Marketing Planner',
     Icon: BriefcaseIcon,
     pathname: '/marketing-planner',
@@ -27,30 +38,15 @@ export const ClientRoutes: Array<Route> = [
     Icon: FolderIcon,
   },
   {
-    title: 'Screen Manager',
-    Icon: MonitorIcon,
-    pathname: '/screen-manager',
-  },
-  {
     title: 'SMS Marketing',
     Icon: EmailIcon,
     pathname: 'https://c7s.transmitsms.com/',
     target: '_blank',
   },
   {
-    title: 'Visual Displays',
-    Icon: ImageIcon,
-    pathname: '/visual-displays',
-  },
-  {
-    title: 'Animation Library',
-    Icon: VideoIcon,
-    pathname: '/animation-library',
-  },
-  {
-    title: 'Data Analytics',
-    Icon: ChartIcon,
-    pathname: '/data-analytics',
+    title: 'Screen Manager',
+    Icon: MonitorIcon,
+    pathname: '/screen-manager',
   },
   {
     title: 'EDM',
@@ -58,9 +54,14 @@ export const ClientRoutes: Array<Route> = [
     pathname: '/edm',
   },
   {
-    title: 'Social Media',
-    Icon: ShareIcon,
-    pathname: '/social-media',
+    title: 'Website Services',
+    Icon: MonitorIcon,
+    pathname: '/website-services',
+  },
+  {
+    title: 'Animation Library',
+    Icon: VideoIcon,
+    pathname: '/animation-library',
   },
   {
     title: 'Photography/Videography',
@@ -78,9 +79,14 @@ export const ClientRoutes: Array<Route> = [
     pathname: '/compliance-signage-regulations',
   },
   {
-    title: 'Website Services',
-    Icon: MonitorIcon,
-    pathname: '/website-services',
+    title: 'Visual Displays',
+    Icon: ImageIcon,
+    pathname: '/visual-displays',
+  },
+  {
+    title: 'Data Analytics',
+    Icon: ChartIcon,
+    pathname: '/data-analytics',
   },
   {
     title: 'Analytics',
