@@ -1,3 +1,4 @@
+import { useSession } from 'next-auth/react'
 import createStore from 'zustand'
 import { combine } from 'zustand/middleware'
 import { FileDisplay } from '../FileDisplay'
@@ -11,7 +12,6 @@ export const useFileDisplayModalStore = createStore(
       signedUrl: '',
       fileType: '',
       name: '',
-      folderName: '',
       fileId: -1,
       clientId: -1,
     },
@@ -20,7 +20,6 @@ export const useFileDisplayModalStore = createStore(
         signedUrl?: string,
         fileType?: string,
         name?: string,
-        folderName?: string,
         fileId?: number,
         clientId?: number
       ) =>
@@ -28,7 +27,6 @@ export const useFileDisplayModalStore = createStore(
           signedUrl: signedUrl ?? '',
           fileType: fileType ?? '',
           name: name ?? '',
-          folderName: folderName ?? '',
           fileId: fileId ?? -1,
           clientId: clientId ?? -1,
         })),
@@ -37,8 +35,10 @@ export const useFileDisplayModalStore = createStore(
 )
 
 export const FileDisplayModal = () => {
-  const { signedUrl, fileType, name, folderName, fileId, clientId, toggleShowPhotoVideoFileModal } =
+  const { signedUrl, fileType, name, fileId, clientId, toggleShowPhotoVideoFileModal } =
     useFileDisplayModalStore()
+
+  const { data: session } = useSession()
 
   const { toggleModal: toggleCreatePrinterJobModal } = useCreatePrinterJobModalStore()
 
@@ -59,10 +59,10 @@ export const FileDisplayModal = () => {
                 className="rounded-xl"
                 videoClassName="w-140 rounded-xl"
               />
-              {folderName === 'Graphics' && (
+              {fileType !== 'video/mp4' && session?.isClient && (
                 <button
                   type="button"
-                  className="flex h-12.5 w-full items-center justify-center space-x-2 rounded-xl border-1.5 border-solid border-bright-gray bg-halloween-orange text-base font-semibold text-white "
+                  className="mb-5 flex h-12.5 w-full items-center justify-center space-x-2 rounded-xl border-1.5 border-solid border-bright-gray bg-halloween-orange text-base font-semibold text-white "
                   aria-label="Print"
                   onClick={(e) => {
                     e.stopPropagation()

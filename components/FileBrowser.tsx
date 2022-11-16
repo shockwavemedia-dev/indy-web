@@ -239,7 +239,6 @@ export const FileBrowser = ({ clientId }: { clientId: number }) => {
                             clientTicketFile,
                             url,
                             fileType,
-                            folderName,
                             id,
                           },
                           i
@@ -265,7 +264,6 @@ export const FileBrowser = ({ clientId }: { clientId: number }) => {
                                   url,
                                   fileType,
                                   originalFilename,
-                                  folderName,
                                   id,
                                   clientId
                                 )
