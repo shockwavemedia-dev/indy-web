@@ -1,3 +1,4 @@
+import { useSession } from 'next-auth/react'
 import createStore from 'zustand'
 import { combine } from 'zustand/middleware'
 import { FileDisplay } from '../FileDisplay'
@@ -37,6 +38,8 @@ export const FileDisplayModal = () => {
   const { signedUrl, fileType, name, fileId, clientId, toggleShowPhotoVideoFileModal } =
     useFileDisplayModalStore()
 
+  const { data: session } = useSession()
+
   const { toggleModal: toggleCreatePrinterJobModal } = useCreatePrinterJobModalStore()
 
   return (
@@ -56,7 +59,7 @@ export const FileDisplayModal = () => {
                 className="rounded-xl"
                 videoClassName="w-140 rounded-xl"
               />
-              {fileType !== 'video/mp4' && (
+              {fileType !== 'video/mp4' && session?.isClient && (
                 <button
                   type="button"
                   className="mb-5 flex h-12.5 w-full items-center justify-center space-x-2 rounded-xl border-1.5 border-solid border-bright-gray bg-halloween-orange text-base font-semibold text-white "
