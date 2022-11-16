@@ -1,4 +1,4 @@
 export type CreatePrinterJobForm = {
-  description: string
+  size: string
   quantity: string
 }

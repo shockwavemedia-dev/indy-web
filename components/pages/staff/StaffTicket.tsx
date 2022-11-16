@@ -3,7 +3,7 @@ import { format } from 'date-fns'
 import { Form, Formik } from 'formik'
 import Head from 'next/head'
 import Image from 'next/image'
-import { Fragment, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useQuery, useQueryClient } from 'react-query'
 import { Button } from '../../../components/Button'
 import { Card } from '../../../components/Card'
@@ -43,7 +43,6 @@ import {
   UploadTicketFileModal,
   useUploadTicketFileModalStore,
 } from '../../modals/UploadTicketFileModal'
-import { Pill } from '../../Pill'
 import { TicketActivityCard } from '../../tickets/TicketActivityCard'
 import { TicketNoteCard } from '../../tickets/TicketNoteCard'
 
@@ -234,28 +233,23 @@ export const StaffTicket = ({ ticketId }: { ticketId: number }) => {
                 {format(ticket!.createdAt, 'dd/MM/yyyy')}
               </TitleValue>
               {!!ticket!.services && ticket!.services?.length > 0 && (
-                <TitleValue title="Services">
-                  <div className="flex flex-wrap gap-1">
-                    {ticket!.services?.map(({ serviceName, extras, customFields }, i) => (
-                      <Fragment key={`${serviceName}-${i}`}>
-                        <div className="flex flex-wrap gap-1">
-                          <Pill value={serviceName} />
-                          {extras.map((extra) => (
-                            <Pill key={`${serviceName}-${extra}`} value={extra} />
-                          ))}
-                        </div>
-                        {customFields?.length > 0 && (
-                          <div className="mt-2 flex flex-wrap gap-1">
-                            <TitleValue title="Custom">
-                              {customFields.map((custom) => (
-                                <Pill key={`${custom}`} value={custom} />
-                              ))}
-                            </TitleValue>
+                <TitleValue title="Services" className="mb-5">
+                  {ticket!.services?.map(({ serviceName, extras, customFields }, i) => (
+                    <div key={`${serviceName}-${i}`}>
+                      <div className="mb-2 text-sm font-medium text-halloween-orange">
+                        {serviceName}
+                        {extras.map((extra) => (
+                          <div
+                            className="mb-2 text-sm font-medium text-onyx"
+                            key={`${serviceName}-${extra}`}
+                          >
+                            {extra}
+                            {customFields}
                           </div>
-                        )}
-                      </Fragment>
-                    ))}
-                  </div>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
                 </TitleValue>
               )}
             </div>

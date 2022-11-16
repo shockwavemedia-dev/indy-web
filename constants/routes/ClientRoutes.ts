@@ -4,6 +4,7 @@ import { ChartIcon } from '../../components/icons/ChartIcon'
 import { CheckDocumentIcon } from '../../components/icons/CheckDocumentIcon'
 import { EmailIcon } from '../../components/icons/EmailIcon'
 import { FolderIcon } from '../../components/icons/FolderIcon'
+import { GearIcon } from '../../components/icons/GearIcon'
 import { ImageIcon } from '../../components/icons/ImageIcon'
 import { MonitorIcon } from '../../components/icons/MonitorIcon'
 import { PrintIcon } from '../../components/icons/PrintIcon'
@@ -129,5 +130,10 @@ export const ClientRoutes: Array<Route> = [
         pathname: '/analytics/digital-health-check',
       },
     ],
+  },
+  {
+    title: 'Settings',
+    Icon: GearIcon,
+    pathname: '/settings',
   },
 ]
