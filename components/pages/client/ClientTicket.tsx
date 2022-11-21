@@ -2,6 +2,7 @@ import { Tooltip } from '@mui/material'
 import axios from 'axios'
 import { format } from 'date-fns'
 import { Form, Formik } from 'formik'
+import { useSession } from 'next-auth/react'
 import Head from 'next/head'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
@@ -69,11 +70,20 @@ export const ClientTicket = ({ ticketId }: { ticketId: number }) => {
   } = useTicketAssigneeStore()
   const queryClient = useQueryClient()
 
+  const { data: session } = useSession()
+
   const { data: ticket, isSuccess: ticketSuccess } = useQuery(['ticket', ticketId], async () => {
     const { data } = await axios.get<Ticket>(`/v1/tickets/${ticketId}`)
 
     return data
   })
+
+  let unreadNotes = 0
+
+  console.log(ticket)
+  if (ticket?.userNotes) {
+    unreadNotes = JSON.parse(ticket?.userNotes)[session?.user.id ?? 0]
+  }
 
   const { data: notes } = useQuery(
     ['notes', ticketId],
@@ -143,13 +153,22 @@ export const ClientTicket = ({ ticketId }: { ticketId: number }) => {
     Icon,
     tabName,
     disabled = false,
+    showCount = false,
   }: {
     title: string
     Icon: Icon
     tabName: TicketPageTabs
     disabled?: boolean
+    showCount?: boolean
   }) => {
-    const clickTab = () => setActiveTab(tabName)
+    const clickTab = () => {
+      setActiveTab(tabName)
+
+      if (tabName === 'notes' && unreadNotes > 0) {
+        axios.post(`/v1/tickets/${ticketId}/read-ticket-notes`)
+        queryClient.invalidateQueries(['ticket', ticketId])
+      }
+    }
     const isActiveTab = activeTab === tabName
 
     return (
@@ -168,6 +187,7 @@ export const ClientTicket = ({ ticketId }: { ticketId: number }) => {
                 : 'stroke-lavender-gray transition-all group-hover:stroke-halloween-orange group-disabled:stroke-lavender-gray'
             }`}
           />
+
           <div
             className={` text-base ${
               isActiveTab
@@ -177,6 +197,11 @@ export const ClientTicket = ({ ticketId }: { ticketId: number }) => {
           >
             {title}
           </div>
+          {unreadNotes > 0 && showCount && (
+            <div className="ml-2 min-w-[1.25rem] rounded-full bg-red-crimson p-2 text-center text-xxs font-semibold text-white">
+              {unreadNotes}
+            </div>
+          )}
         </button>
       </div>
     )
@@ -320,7 +345,7 @@ export const ClientTicket = ({ ticketId }: { ticketId: number }) => {
         <div className="w-full min-w-0">
           <div className="flex justify-between">
             <Tab title="Description" Icon={NotepadIcon} tabName="description" />
-            <Tab title="Messaging" Icon={NoteIcon} tabName="notes" />
+            <Tab title="Messaging" Icon={NoteIcon} tabName="notes" showCount={true} />
             <Tab title="Activities" Icon={CalendarIcon} tabName="activities" />
             <Tab title="Style Guide" Icon={ColorsIcon} tabName="style_guide" disabled />
           </div>

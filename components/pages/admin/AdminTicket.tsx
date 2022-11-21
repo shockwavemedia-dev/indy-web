@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { format } from 'date-fns'
 import { Form, Formik } from 'formik'
+import { useSession } from 'next-auth/react'
 import Head from 'next/head'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
@@ -52,7 +53,7 @@ export const AdminTicket = ({ ticketId }: { ticketId: number }) => {
   const [isAddTicketAssigneeModalVisible, setAddTicketAssigneeModalVisible] = useState(false)
   const toggleEditTicketModal = useEditTicketModal((state) => state.toggleEditTicketModal)
   const toggleDeleteTicketModal = useDeleteTicketModal((state) => state.toggleDeleteTicketModal)
-
+  const { data: session } = useSession()
   const queryClient = useQueryClient()
   const {
     isEditTicketAssigneeModalVisible,
@@ -113,6 +114,12 @@ export const AdminTicket = ({ ticketId }: { ticketId: number }) => {
     }
   )
 
+  let unreadNotes = 0
+
+  if (ticket?.userNotes) {
+    unreadNotes = JSON.parse(ticket?.userNotes)[session?.user.id ?? 0]
+  }
+
   const toggleAddTicketAssigneeModal = () =>
     setAddTicketAssigneeModalVisible(!isAddTicketAssigneeModalVisible)
 
@@ -136,13 +143,23 @@ export const AdminTicket = ({ ticketId }: { ticketId: number }) => {
     Icon,
     tabName,
     disabled = false,
+    showCount = false,
   }: {
     title: string
     Icon: Icon
     tabName: TicketPageTabs
     disabled?: boolean
+    showCount?: boolean
   }) => {
-    const clickTab = () => setActiveTab(tabName)
+    const clickTab = () => {
+      setActiveTab(tabName)
+
+      if (tabName === 'notes' && unreadNotes > 0) {
+        axios.post(`/v1/tickets/${ticketId}/read-ticket-notes`)
+        queryClient.invalidateQueries(['ticket', ticketId])
+      }
+    }
+
     const isActiveTab = activeTab === tabName
 
     return (
@@ -170,6 +187,11 @@ export const AdminTicket = ({ ticketId }: { ticketId: number }) => {
           >
             {title}
           </div>
+          {unreadNotes > 0 && showCount && (
+            <div className="ml-2 min-w-[1.25rem] rounded-full bg-red-crimson p-2 text-center text-xxs font-semibold text-white">
+              {unreadNotes}
+            </div>
+          )}
         </button>
       </div>
     )
@@ -295,7 +317,7 @@ export const AdminTicket = ({ ticketId }: { ticketId: number }) => {
         <div className="w-full min-w-0">
           <div className="flex justify-between">
             <Tab title="Description" Icon={NotepadIcon} tabName="description" />
-            <Tab title="Messaging" Icon={NoteIcon} tabName="notes" />
+            <Tab title="Messaging" Icon={NoteIcon} tabName="notes" showCount={true} />
             <Tab title="Activities" Icon={CalendarIcon} tabName="activities" />
             <Tab title="Style Guide" Icon={ColorsIcon} tabName="style_guide" disabled />
           </div>
