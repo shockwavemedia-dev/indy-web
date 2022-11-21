@@ -11,4 +11,5 @@ export type Service = {
   createdBy: number
   updatedBy: number
   customFields: Array<string>
+  updatedExtras: Array<{ name: string; quantity?: number p}>
 }

@@ -14,7 +14,6 @@ import { CheckboxNoFormik } from '../components/CheckboxNoFormik'
 import { DateInput } from '../components/DateInput'
 import { FileDropZone } from '../components/FileDropZone'
 import { CheckIcon } from '../components/icons/CheckIcon'
-import { DollarIcon } from '../components/icons/DollarIcon'
 import { EditIcon } from '../components/icons/EditIcon'
 import { ServiceCheckIcon } from '../components/icons/ServiceCheckIcon'
 import { ProjectBriefPrioritySelect } from '../components/ProjectBriefPrioritySelect'
@@ -32,7 +31,6 @@ import { SelectOption } from '../types/SelectOption.type'
 import { Service } from '../types/Service.type'
 import { Ticket } from '../types/Ticket.type'
 import { get422And400ResponseError } from '../utils/ErrorHelpers'
-import { objectWithFileToFormData } from '../utils/FormHelpers'
 
 export const useProjectBrief = create(
   combine(
@@ -43,6 +41,7 @@ export const useProjectBrief = create(
         serviceId: number
         extras: Array<string>
         customFields: Array<string>
+        updatedExtras: Array<{ name: string; quantity?: number | null }>
       }>,
     },
     (set) => ({
@@ -52,6 +51,7 @@ export const useProjectBrief = create(
           serviceId: number
           extras: Array<string>
           customFields: Array<string>
+          updatedExtras: Array<{ name: string; quantity?: number | null }>
         }>
       ) => set({ services }),
       setActiveService: (activeService?: Service) => set({ activeService }),
@@ -74,29 +74,30 @@ const ProjectBriefPage: NextPageWithLayout = () => {
   const toggleMarketingDate = () => setMarketingDateVisible(!marketingDateVisible)
 
   const submitForm = async (values: CreateProjectBriefForm) => {
+    console.log(values)
     try {
-      const {
-        status,
-        data: { ticketCode },
-      } = await axios.post<Ticket>(
-        '/v1/tickets/event',
-        objectWithFileToFormData({
-          ...values,
-          services: values.services.map(({ serviceId, extras, customFields }) => ({
-            serviceId,
-            extras,
-            customFields,
-          })),
-        })
-      )
-      if (status === 200) {
-        queryClient.invalidateQueries('tickets')
-        replace('/dashboard')
-        showToast({
-          type: 'success',
-          message: `New Ticket ${ticketCode} successfully created!`,
-        })
-      }
+      // const {
+      //   status,
+      //   data: { ticketCode },
+      // } = await axios.post<Ticket>(
+      //   '/v1/tickets/event',
+      //   objectWithFileToFormData({
+      //     ...values,
+      //     services: values.services.map(({ serviceId, extras, customFields }) => ({
+      //       serviceId,
+      //       extras,
+      //       customFields,
+      //     })),
+      //   })
+      // )
+      // if (status === 200) {
+      //   queryClient.invalidateQueries('tickets')
+      //   replace('/dashboard')
+      //   showToast({
+      //     type: 'success',
+      //     message: `New Ticket ${ticketCode} successfully created!`,
+      //   })
+      // }
     } catch (e) {
       showToast({
         type: 'error',
@@ -120,8 +121,9 @@ const ProjectBriefPage: NextPageWithLayout = () => {
           serviceId,
           extras,
           customFields: [],
+          updatedExtras: [],
         }))
-      )
+      ) 
     }
   }, [])
 
@@ -246,6 +248,7 @@ const SelectService = () => {
                     serviceId: service.serviceId,
                     extras: [],
                     customFields: [],
+                    updatedExtras: [],
                   },
                   ...services,
                 ]
@@ -384,19 +387,29 @@ const Extras = ({
 
       if (checked) {
         if (service) {
+          const extras = [...service.extras, extrasName]
+          const updated = extras?.map((extra) => ({
+            name: extra,
+            quantity: 500,
+          }))
           payload = [
             ...services.filter(({ serviceId }) => serviceId !== service.serviceId),
-            { ...service, extras: [...service.extras, extrasName] },
+            {
+              ...service,
+              extras: [...service.extras, extrasName],
+              updatedExtras: updated,
+            },
           ]
+
+          console.log(updated)
         } else {
           payload = [...services, { ...activeService, extras: [extrasName] }]
         }
-
         setServices(payload)
         setFieldValue('services', payload)
       } else {
         if (service) {
-          const extrasPayload = service.extras.filter((extra) => extra !== extrasName)
+          const extrasPayload = service.extras.filter((extra) => etra !== extraasName)
 
           if (extrasPayload.length > 0) {
             payload = [
@@ -421,9 +434,9 @@ const Extras = ({
     }
   }
 
-  const setCustomFieldValue = ({ currentTarget: { value } }: ChangeEvent<HTMLInputElement>) => {
-    activeService && setServices([...services, { ...activeService, customFields: [value] }])
-  }
+  // const setCustomFieldValue = ({ currentTarget: { value } }: ChangeEvent<HTMLInputElement>) => {
+  //   activeService && setServices([...services, { ...activeService, customFields: [value] }])
+  // }
 
   const extras = (
     <>
@@ -446,7 +459,7 @@ const Extras = ({
           {extrasName}
         </label>
       </div>
-      {customFieldVisible && (
+      {/* {customFieldVisible && (
         <div className="relative mt-5 flex items-center">
           <EditIcon className="pointer-events-none absolute left-6 stroke-lavender-gray" />
           <input
@@ -467,7 +480,7 @@ const Extras = ({
             onChange={setCustomFieldValue}
           />
         </div>
-      )}
+      )} */}
     </>
   )
 
