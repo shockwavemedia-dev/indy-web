@@ -30,7 +30,7 @@ const ClientTicketsPage: NextPageWithLayout = () => {
           <FancyButton
             Icon={<LifeBuoyIcon className="fill-halloween-orange" />}
             title="New Ticket"
-            subtitle="Laborerivit rem cones mil"
+            subtitle=""
             onClick={(e) => {
               e.stopPropagation()
               toggleSupportTicketModal(-1)

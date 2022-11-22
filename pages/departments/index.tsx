@@ -25,7 +25,7 @@ const DepartmentsPage: NextPageWithLayout = () => {
       <FancyButton
         Icon={<UserIcon className="stroke-halloween-orange" />}
         title="Create Department"
-        subtitle="Laborerivit rem cones mil"
+        subtitle=""
         onClick={toggleNewDepartmentModal}
         className="w-fit"
       />

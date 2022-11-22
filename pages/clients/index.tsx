@@ -24,7 +24,7 @@ const ClientPage: NextPageWithLayout = () => {
       <FancyButton
         Icon={<UserIcon className="stroke-halloween-orange" />}
         title="Create Client"
-        subtitle="Laborerivit rem cones mil"
+        subtitle=""
         onClick={toggleNewClientModal}
         className="w-fit"
       />
