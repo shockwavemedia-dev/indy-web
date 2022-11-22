@@ -22,4 +22,5 @@ export type Ticket = {
   services?: Array<Service>
   priority: ProjectBriefPriority
   assignees?: Array<TicketAssignee>
+  userNotes?: string
 }

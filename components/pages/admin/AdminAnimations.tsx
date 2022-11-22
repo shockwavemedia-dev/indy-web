@@ -39,14 +39,14 @@ export const AdminAnimations = () => {
         <FancyButton
           Icon={<UserIcon className="stroke-halloween-orange" />}
           title="Create Animation Category"
-          subtitle="Laborerivit rem cones mil"
+          subtitle=""
           onClick={toggleNewAnimationCategoryModal}
           className="w-fit"
         />
         <FancyButton
           Icon={<VideoIcon className="stroke-halloween-orange" />}
           title="Create Animation"
-          subtitle="Laborerivit rem cones mil"
+          subtitle=""
           onClick={toggleNewAnimationModal}
           className="w-fit"
         />
