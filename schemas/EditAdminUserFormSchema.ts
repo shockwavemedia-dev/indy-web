@@ -5,7 +5,7 @@ export const EditAdminUserFormSchema: SchemaOf<EditAdminUserForm> = object().sha
   contactNumber: string().optional().nullable(),
   firstName: string().required(),
   position: string().required(),
-  lastName: string().optional(),
+  lastName: string().optional().nullable(),
   role: mixed().required().oneOf(['admin', 'account manager', 'manager', 'staff']),
   status: mixed()
     .required()
