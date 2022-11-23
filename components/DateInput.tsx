@@ -41,7 +41,7 @@ export const DateInput = ({
 
   return (
     <DesktopDatePicker
-      inputFormat="P"
+      inputFormat="dd/MM/yyyy"
       disableOpenPicker
       onChange={setDate}
       disabled={readOnly}

@@ -62,7 +62,7 @@ export const SocialMediaCommentCard = ({
           <div className="ml-3 text-xs font-semibold text-onyx">{createdBy}</div>
           <div className="mx-2 h-1 w-1 rounded bg-bright-gray" />
           <div className="text-xs font-medium text-lavender-gray">
-            {format(createdAt, 'yy MMMM dd h:mmaaa')}
+            {format(createdAt, 'dd/MM/yyyy h:mmaaa')}
           </div>
         </div>
         <CommentParagraph comment={comment} />

@@ -91,7 +91,7 @@ export const DeleteSocialMediaModal = () => {
                 {socialMedia?.post}
               </TitleValue>
               <TitleValue title="Post Date" className="mb-5 capitalize">
-                {socialMedia?.postDate && format(socialMedia?.postDate, 'MM/dd/yyyy h:mmaaa')}
+                {socialMedia?.postDate && format(socialMedia?.postDate, 'dd/MM/yyyy h:mmaaa')}
               </TitleValue>
               <TitleValue title="Status" className="mb-5 capitalize">
                 {socialMedia?.status}

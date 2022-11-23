@@ -158,7 +158,7 @@ const ClientDetails: NextPageWithLayout = () => {
             ...types,
             subjectPayload,
             codePayload,
-            duedate ? format(duedate, 'yyyy-MM-dd') : '',
+            duedate ? format(duedate, 'dd/MM/yyyy') : '',
             { showOverdue: statuses.some((s) => s === 'show_overdue') },
           ]}
           ofString="Tickets"
@@ -167,7 +167,7 @@ const ClientDetails: NextPageWithLayout = () => {
             ...getStatusesAsPayload(),
             subject: subjectPayload,
             code: codePayload,
-            duedate: duedate ? format(duedate, 'yyyy-MM-dd') : '',
+            duedate: duedate ? format(duedate, 'dd/MM/yyyy') : '',
             show_overdue: statuses.some((s) => s === 'show_overdue'),
           }}
           rowOnClick={({ original: { id } }) => replace(`/ticket/${id}`)}

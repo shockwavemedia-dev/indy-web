@@ -8,6 +8,7 @@ export const FancyLink = ({
   className,
   href,
   target = '_self',
+  disabled = false,
 }: {
   Icon: ReactNode
   title: string
@@ -15,10 +16,13 @@ export const FancyLink = ({
   className?: string
   href: string
   target?: string
+  disabled?: boolean
 }) => (
-  <Link href={href}>
+  <Link href={disabled ? '#' : href}>
     <a
-      className={`flex items-center space-x-4 rounded-xl border border-halloween-orange bg-white px-6 py-4 ${className}`}
+      className={`flex items-center space-x-4 rounded-xl border border-halloween-orange bg-white px-6 py-4 ${className}${
+        disabled ? ' pointer-events-none opacity-50' : ''
+      }`}
       target={target}
     >
       <div className="grid h-11 w-11 flex-none place-items-center rounded-lg border border-halloween-orange">
