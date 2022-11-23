@@ -5,7 +5,6 @@ import { CheckDocumentIcon } from '../../components/icons/CheckDocumentIcon'
 import { EmailIcon } from '../../components/icons/EmailIcon'
 import { FolderIcon } from '../../components/icons/FolderIcon'
 import { GearIcon } from '../../components/icons/GearIcon'
-import { ImageIcon } from '../../components/icons/ImageIcon'
 import { MonitorIcon } from '../../components/icons/MonitorIcon'
 import { PrintIcon } from '../../components/icons/PrintIcon'
 import { ShareIcon } from '../../components/icons/ShareIcon'
@@ -78,11 +77,6 @@ export const ClientRoutes: Array<Route> = [
     title: 'Compliance Signage Regulations',
     Icon: CheckDocumentIcon,
     pathname: '/compliance-signage-regulations',
-  },
-  {
-    title: 'Visual Displays',
-    Icon: ImageIcon,
-    pathname: '/visual-displays',
   },
   {
     title: 'Data Analytics',
