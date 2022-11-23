@@ -1,10 +1,12 @@
 import Head from 'next/head'
-import Image from 'next/image'
 import { ReactElement, useEffect } from 'react'
-import { Card } from '../components/Card'
+import { Fade } from 'react-slideshow-image'
+import 'react-slideshow-image/dist/styles.css'
+import 'swiper/css'
+import 'swiper/css/navigation'
 import { Notifications } from '../components/Notifications'
 import { RetainerInclusions } from '../components/RetainerInclusions'
-import { WebsiteServicesList } from '../constants/options/WebsiteServicesList'
+
 import PanelLayout, { usePanelLayoutStore } from '../layouts/PanelLayout'
 import { NextPageWithLayout } from '../types/pages/NextPageWithLayout.type'
 
@@ -15,6 +17,41 @@ const WebsitePage: NextPageWithLayout = () => {
     setHeader('Website Services')
   }, [])
 
+  const slideImages = [
+    {
+      url: '/images/website-atmosphere-avatar.png',
+      link: 'https://atmospherestg.wpengine.com',
+    },
+    {
+      url: '/images/website-calypso-avatar.png',
+      link: 'https://atmospherestg.wpengine.com',
+    },
+    {
+      url: '/images/website-cherry-avatar.png',
+      link: 'https://atmospherestg.wpengine.com',
+    },
+    {
+      url: '/images/website-destination-avatar.png',
+      link: 'https://cherrylane1stg.wpengine.com',
+    },
+    {
+      url: '/images/website-element-avatar.png',
+      link: 'https://elementstg.wpengine.com',
+    },
+    {
+      url: '/images/website-fynboss-avatar.png',
+      link: 'https://fynbosstg.wpengine.com',
+    },
+    {
+      url: '/images/website-platur-avatar.png',
+      link: 'https://platurdesigstg.wpengine.com',
+    },
+    {
+      url: '/images/website-terrace-avatar.png',
+      link: 'https://terracestg.wpengine.com',
+    },
+  ]
+
   return (
     <>
       <Head>
@@ -22,21 +59,28 @@ const WebsitePage: NextPageWithLayout = () => {
       </Head>
       <div className="mx-auto w-full space-y-6">
         <div className="flex space-x-6">
-          <Card className="h-fit w-full min-w-0 flex-1">
-            <div className="flex h-fit w-fit grid-cols-2 flex-wrap place-content-center gap-5">
-              {WebsiteServicesList?.map(({ image, link }) => (
+          <div className="h-full w-full min-w-0 flex-1">
+            <Fade>
+              {slideImages.map((slideImage, index) => (
                 <a
-                  key={`${link}-website`}
-                  href={link}
+                  key={index}
+                  href={slideImage.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex flex-none flex-col items-center justify-center space-y-1 p-3"
+                  className="!h-fit !w-full rounded-xl"
                 >
-                  <Image className="rounded-xl" src={image} height={176} width={314} alt={link} />
+                  <div
+                    className="!h-130 !w-full transition delay-100 ease-in-out"
+                    style={{
+                      backgroundImage: `url(${slideImage.url})`,
+                      backgroundSize: 'cover',
+                      backgroundRepeat: 'no-repeat',
+                    }}
+                  ></div>
                 </a>
               ))}
-            </div>
-          </Card>
+            </Fade>
+          </div>
           <div className="flex w-86 flex-col gap-6 transition-all lg:w-full lg:flex-row">
             <RetainerInclusions />
             <Notifications />
