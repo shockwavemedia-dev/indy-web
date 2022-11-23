@@ -235,22 +235,41 @@ export const ManagerTicket = ({ ticketId }: { ticketId: number }) => {
               </TitleValue>
               {!!ticket!.services && ticket!.services?.length > 0 && (
                 <TitleValue title="Services" className="mb-5">
-                  {ticket!.services?.map(({ serviceName, extras, customFields }, i) => (
-                    <div key={`${serviceName}-${i}`}>
-                      <div className="mb-2 text-sm font-medium text-halloween-orange">
-                        {serviceName}
-                        {extras.map((extra) => (
-                          <div
-                            className="mb-2 text-sm font-medium text-onyx"
-                            key={`${serviceName}-${extra}`}
-                          >
-                            {extra}
-                            {customFields}
+                  {ticket!.services?.map(
+                    ({ serviceName, extras, customFields, updatedExtras }, i) => (
+                      <div key={`${serviceName}-${i}`}>
+                        {serviceName === 'Print' || serviceName === 'Social Media Spend' ? (
+                          <div className="mb-2 text-sm font-medium text-halloween-orange">
+                            {serviceName}
+                            {updatedExtras.map(({ name, quantity }) => (
+                              <div
+                                className="mb-2 text-sm font-medium text-onyx"
+                                key={`${serviceName}-${name}`}
+                              >
+                                <div className="grid grid-cols-2 gap-2">
+                                  <div>{name}</div>
+                                  <div>{quantity}</div>
+                                </div>
+                              </div>
+                            ))}
                           </div>
-                        ))}
+                        ) : (
+                          <div className="mb-2 text-sm font-medium text-halloween-orange">
+                            {serviceName}
+                            {extras.map((extra) => (
+                              <div
+                                className="mb-2 text-sm font-medium text-onyx"
+                                key={`${serviceName}-${extra}`}
+                              >
+                                {extra}
+                                {customFields}
+                              </div>
+                            ))}
+                          </div>
+                        )}
                       </div>
-                    </div>
-                  ))}
+                    )
+                  )}
                 </TitleValue>
               )}
             </div>

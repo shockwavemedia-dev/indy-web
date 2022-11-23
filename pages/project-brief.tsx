@@ -14,7 +14,6 @@ import { CheckboxNoFormik } from '../components/CheckboxNoFormik'
 import { DateInput } from '../components/DateInput'
 import { FileDropZone } from '../components/FileDropZone'
 import { CheckIcon } from '../components/icons/CheckIcon'
-import { DollarIcon } from '../components/icons/DollarIcon'
 import { EditIcon } from '../components/icons/EditIcon'
 import { ServiceCheckIcon } from '../components/icons/ServiceCheckIcon'
 import { ProjectBriefPrioritySelect } from '../components/ProjectBriefPrioritySelect'
@@ -43,6 +42,7 @@ export const useProjectBrief = create(
         serviceId: number
         extras: Array<string>
         customFields: Array<string>
+        updatedExtras: Array<{ name: string; quantity?: number | null }>
       }>,
     },
     (set) => ({
@@ -52,6 +52,7 @@ export const useProjectBrief = create(
           serviceId: number
           extras: Array<string>
           customFields: Array<string>
+          updatedExtras: Array<{ name: string; quantity?: number | null }>
         }>
       ) => set({ services }),
       setActiveService: (activeService?: Service) => set({ activeService }),
@@ -82,9 +83,9 @@ const ProjectBriefPage: NextPageWithLayout = () => {
         '/v1/tickets/event',
         objectWithFileToFormData({
           ...values,
-          services: values.services.map(({ serviceId, extras, customFields }) => ({
+          services: values.services.map(({ serviceId, extras, customFields, updatedExtras }) => ({
             serviceId,
-            extras,
+            extras: updatedExtras ?? extras,
             customFields,
           })),
         })
@@ -120,6 +121,7 @@ const ProjectBriefPage: NextPageWithLayout = () => {
           serviceId,
           extras,
           customFields: [],
+          updatedExtras: [],
         }))
       )
     }
@@ -246,6 +248,7 @@ const SelectService = () => {
                     serviceId: service.serviceId,
                     extras: [],
                     customFields: [],
+                    updatedExtras: [],
                   },
                   ...services,
                 ]
@@ -281,7 +284,7 @@ const SelectService = () => {
         })}
       </div>
       {activeService && activeService.extras.length > 0 && (
-        <div className="h-fit w-60 rounded-xl bg-white p-5">
+        <div className="h-fit w-130 rounded-xl bg-white p-5">
           <div className="mb-3 text-center text-lg font-semibold text-onyx">
             Select {activeService.extraQuota > 0 && activeService.extraQuota} Extras
           </div>
@@ -372,6 +375,10 @@ const Extras = ({
 
   const toggleCustomField = () => setCustomFieldVisible(!customFieldVisible)
 
+  const [customPrintFieldVisible, setPrintCustomFieldVisible] = useState(false)
+
+  const togglePrintCustomField = () => setPrintCustomFieldVisible(!customPrintFieldVisible)
+
   const [advertisingCustomFieldVisible, setAdvertisingCustomFieldVisible] = useState(false)
 
   const toggleAdvertisingCustomField = () =>
@@ -383,18 +390,52 @@ const Extras = ({
       let payload
 
       if (checked) {
+        if (
+          activeService.serviceName === 'Print' ||
+          activeService.serviceName === 'Social Media Spend'
+        ) {
+          togglePrintCustomField()
+        }
         if (service) {
-          payload = [
-            ...services.filter(({ serviceId }) => serviceId !== service.serviceId),
-            { ...service, extras: [...service.extras, extrasName] },
-          ]
+          const extras = [...service.extras, extrasName]
+          const updated = extras?.map((extra) => ({
+            name: extra,
+            quantity: 500,
+          }))
+
+          if (
+            activeService.serviceName === 'Print' ||
+            activeService.serviceName === 'Social Media Spend'
+          ) {
+            payload = [
+              ...services.filter(({ serviceId }) => serviceId !== service.serviceId),
+              {
+                ...service,
+                extras: [...service.extras, extrasName],
+                updatedExtras: updated,
+              },
+            ]
+          } else {
+            payload = [
+              ...services.filter(({ serviceId }) => serviceId !== service.serviceId),
+              {
+                ...service,
+                extras: [...service.extras, extrasName],
+              },
+            ]
+          }
         } else {
           payload = [...services, { ...activeService, extras: [extrasName] }]
         }
-
         setServices(payload)
         setFieldValue('services', payload)
       } else {
+        if (
+          activeService.serviceName === 'Print' ||
+          activeService.serviceName === 'Social Media Spend'
+        ) {
+          togglePrintCustomField()
+        }
         if (service) {
           const extrasPayload = service.extras.filter((extra) => extra !== extrasName)
 
@@ -421,32 +462,47 @@ const Extras = ({
     }
   }
 
-  const setCustomFieldValue = ({ currentTarget: { value } }: ChangeEvent<HTMLInputElement>) => {
-    activeService && setServices([...services, { ...activeService, customFields: [value] }])
-  }
+  // const setCustomFieldValue = ({ currentTarget: { value } }: ChangeEvent<HTMLInputElement>) => {
+  //   activeService && setServices([...services, { ...activeService, customFields: [value] }])
+  // }
 
   const extras = (
     <>
-      <div className={`relative flex items-center ${disabled ? 'cursor-default opacity-40' : ''}`}>
-        <input
-          type="checkbox"
-          name={extrasName}
-          id={extrasName}
-          className="mr-3 h-4 w-4 appearance-none rounded bg-white ring-1 ring-inset ring-bright-gray checked:bg-halloween-orange checked:ring-0"
-          onChange={disabled ? undefined : toggleExtras}
-          disabled={disabled}
-          checked={
-            !!services.find(
-              ({ serviceId: sid, extras }) => sid === serviceId && extras.includes(extrasName)
-            )
-          }
-        />
-        <CheckIcon className="pointer-events-none absolute left-0.75 stroke-white" />
-        <label htmlFor={extrasName} className=" text-sm font-medium text-onyx">
-          {extrasName}
-        </label>
+      <div className="grid grid-cols-2 gap-4">
+        <div
+          className={`relative flex items-center ${disabled ? 'cursor-default opacity-40' : ''}`}
+        >
+          <input
+            type="checkbox"
+            name={extrasName}
+            id={extrasName}
+            className="mr-3 h-4 w-4 appearance-none rounded bg-white ring-1 ring-inset ring-bright-gray checked:bg-halloween-orange checked:ring-0"
+            onChange={disabled ? undefined : toggleExtras}
+            disabled={disabled}
+            checked={
+              !!services.find(
+                ({ serviceId: sid, extras }) => sid === serviceId && extras.includes(extrasName)
+              )
+            }
+          />
+          <CheckIcon className="pointer-events-none absolute left-0.75 stroke-white" />
+          <div className="mt-2 flex space-x-5">
+            <label htmlFor={extrasName} className=" text-sm font-medium text-onyx">
+              {extrasName}
+            </label>
+          </div>
+        </div>
+        {customPrintFieldVisible && (
+          <div className="mb-2">
+            <input
+              type="number"
+              className="h-8.5 w-full rounded-xl px-13 text-sm font-medium text-onyx placeholder-metallic-silver ring-1 ring-bright-gray read-only:cursor-auto focus:ring-2 focus:ring-halloween-orange read-only:focus:ring-1 read-only:focus:ring-bright-gray"
+              placeholder={serviceId === 14 ? 'Enter Quantity' : 'Enter Amount'}
+            />
+          </div>
+        )}
       </div>
-      {customFieldVisible && (
+      {/* {customFieldVisible && (
         <div className="relative mt-5 flex items-center">
           <EditIcon className="pointer-events-none absolute left-6 stroke-lavender-gray" />
           <input
@@ -467,7 +523,7 @@ const Extras = ({
             onChange={setCustomFieldValue}
           />
         </div>
-      )}
+      )} */}
     </>
   )
 
