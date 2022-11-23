@@ -2,7 +2,7 @@ import { mixed, number, object, SchemaOf, string } from 'yup'
 import { EditAdminUserForm } from '../types/forms/EditAdminUserForm.type'
 
 export const EditAdminUserFormSchema: SchemaOf<EditAdminUserForm> = object().shape({
-  contactNumber: string().optional(),
+  contactNumber: string().optional().nullable(),
   firstName: string().required(),
   position: string().required(),
   lastName: string().optional(),
