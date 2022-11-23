@@ -113,7 +113,7 @@ export const NewClientModal = ({
                   <div className="mb-5 flex space-x-5">
                     <Select
                       name="rating"
-                      Icon={ClockIcon}
+                      Icon={EditIcon}
                       placeholder="Select Rating"
                       options={ClientRatingOptions}
                     />
