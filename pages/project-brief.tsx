@@ -31,6 +31,7 @@ import { SelectOption } from '../types/SelectOption.type'
 import { Service } from '../types/Service.type'
 import { Ticket } from '../types/Ticket.type'
 import { get422And400ResponseError } from '../utils/ErrorHelpers'
+import { objectWithFileToFormData } from '../utils/FormHelpers'
 
 export const useProjectBrief = create(
   combine(
@@ -74,30 +75,29 @@ const ProjectBriefPage: NextPageWithLayout = () => {
   const toggleMarketingDate = () => setMarketingDateVisible(!marketingDateVisible)
 
   const submitForm = async (values: CreateProjectBriefForm) => {
-    console.log(values)
     try {
-      // const {
-      //   status,
-      //   data: { ticketCode },
-      // } = await axios.post<Ticket>(
-      //   '/v1/tickets/event',
-      //   objectWithFileToFormData({
-      //     ...values,
-      //     services: values.services.map(({ serviceId, extras, customFields }) => ({
-      //       serviceId,
-      //       extras,
-      //       customFields,
-      //     })),
-      //   })
-      // )
-      // if (status === 200) {
-      //   queryClient.invalidateQueries('tickets')
-      //   replace('/dashboard')
-      //   showToast({
-      //     type: 'success',
-      //     message: `New Ticket ${ticketCode} successfully created!`,
-      //   })
-      // }
+      const {
+        status,
+        data: { ticketCode },
+      } = await axios.post<Ticket>(
+        '/v1/tickets/event',
+        objectWithFileToFormData({
+          ...values,
+          services: values.services.map(({ serviceId, extras, customFields, updatedExtras }) => ({
+            serviceId,
+            extras: updatedExtras ?? extras,
+            customFields,
+          })),
+        })
+      )
+      if (status === 200) {
+        queryClient.invalidateQueries('tickets')
+        replace('/dashboard')
+        showToast({
+          type: 'success',
+          message: `New Ticket ${ticketCode} successfully created!`,
+        })
+      }
     } catch (e) {
       showToast({
         type: 'error',
@@ -123,7 +123,7 @@ const ProjectBriefPage: NextPageWithLayout = () => {
           customFields: [],
           updatedExtras: [],
         }))
-      ) 
+      )
     }
   }, [])
 
@@ -284,7 +284,7 @@ const SelectService = () => {
         })}
       </div>
       {activeService && activeService.extras.length > 0 && (
-        <div className="h-fit w-60 rounded-xl bg-white p-5">
+        <div className="h-fit w-130 rounded-xl bg-white p-5">
           <div className="mb-3 text-center text-lg font-semibold text-onyx">
             Select {activeService.extraQuota > 0 && activeService.extraQuota} Extras
           </div>
@@ -375,6 +375,10 @@ const Extras = ({
 
   const toggleCustomField = () => setCustomFieldVisible(!customFieldVisible)
 
+  const [customPrintFieldVisible, setPrintCustomFieldVisible] = useState(false)
+
+  const togglePrintCustomField = () => setPrintCustomFieldVisible(!customPrintFieldVisible)
+
   const [advertisingCustomFieldVisible, setAdvertisingCustomFieldVisible] = useState(false)
 
   const toggleAdvertisingCustomField = () =>
@@ -392,16 +396,25 @@ const Extras = ({
             name: extra,
             quantity: 500,
           }))
-          payload = [
-            ...services.filter(({ serviceId }) => serviceId !== service.serviceId),
-            {
-              ...service,
-              extras: [...service.extras, extrasName],
-              updatedExtras: updated,
-            },
-          ]
 
-          console.log(updated)
+          if (activeService.serviceName === 'Print') {
+            payload = [
+              ...services.filter(({ serviceId }) => serviceId !== service.serviceId),
+              {
+                ...service,
+                extras: [...service.extras, extrasName],
+                updatedExtras: updated,
+              },
+            ]
+          } else {
+            payload = [
+              ...services.filter(({ serviceId }) => serviceId !== service.serviceId),
+              {
+                ...service,
+                extras: [...service.extras, extrasName],
+              },
+            ]
+          }
         } else {
           payload = [...services, { ...activeService, extras: [extrasName] }]
         }
@@ -409,7 +422,7 @@ const Extras = ({
         setFieldValue('services', payload)
       } else {
         if (service) {
-          const extrasPayload = service.extras.filter((extra) => etra !== extraasName)
+          const extrasPayload = service.extras.filter((extra) => extra !== extrasName)
 
           if (extrasPayload.length > 0) {
             payload = [
@@ -431,6 +444,9 @@ const Extras = ({
       if (serviceId === 6 && extrasName === 'Custom') {
         toggleAdvertisingCustomField()
       }
+      if (activeService.serviceName === 'Print') {
+        togglePrintCustomField()
+      }
     }
   }
 
@@ -440,24 +456,39 @@ const Extras = ({
 
   const extras = (
     <>
-      <div className={`relative flex items-center ${disabled ? 'cursor-default opacity-40' : ''}`}>
-        <input
-          type="checkbox"
-          name={extrasName}
-          id={extrasName}
-          className="mr-3 h-4 w-4 appearance-none rounded bg-white ring-1 ring-inset ring-bright-gray checked:bg-halloween-orange checked:ring-0"
-          onChange={disabled ? undefined : toggleExtras}
-          disabled={disabled}
-          checked={
-            !!services.find(
-              ({ serviceId: sid, extras }) => sid === serviceId && extras.includes(extrasName)
-            )
-          }
-        />
-        <CheckIcon className="pointer-events-none absolute left-0.75 stroke-white" />
-        <label htmlFor={extrasName} className=" text-sm font-medium text-onyx">
-          {extrasName}
-        </label>
+      <div className="grid grid-cols-2 gap-4">
+        <div
+          className={`relative flex items-center ${disabled ? 'cursor-default opacity-40' : ''}`}
+        >
+          <input
+            type="checkbox"
+            name={extrasName}
+            id={extrasName}
+            className="mr-3 h-4 w-4 appearance-none rounded bg-white ring-1 ring-inset ring-bright-gray checked:bg-halloween-orange checked:ring-0"
+            onChange={disabled ? undefined : toggleExtras}
+            disabled={disabled}
+            checked={
+              !!services.find(
+                ({ serviceId: sid, extras }) => sid === serviceId && extras.includes(extrasName)
+              )
+            }
+          />
+          <CheckIcon className="pointer-events-none absolute left-0.75 stroke-white" />
+          <div className="mt-2 flex space-x-5">
+            <label htmlFor={extrasName} className=" text-sm font-medium text-onyx">
+              {extrasName}
+            </label>
+          </div>
+        </div>
+        {customPrintFieldVisible && (
+          <div className="mb-2">
+            <input
+              type="number"
+              className="h-8.5 w-full rounded-xl px-13 text-sm font-medium text-onyx placeholder-metallic-silver ring-1 ring-bright-gray read-only:cursor-auto focus:ring-2 focus:ring-halloween-orange read-only:focus:ring-1 read-only:focus:ring-bright-gray"
+              placeholder="Enter Quantity"
+            />
+          </div>
+        )}
       </div>
       {/* {customFieldVisible && (
         <div className="relative mt-5 flex items-center">
