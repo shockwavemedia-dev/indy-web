@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { Form, Formik } from 'formik'
 import { useQuery, useQueryClient } from 'react-query'
+import { ClientRatingOptions } from '../../constants/options/ClientRatingOptions'
 import { TimezoneOptions } from '../../constants/options/TimezoneOptions'
 import { NewClientFormSchema } from '../../schemas/NewClientFormSchema'
 import { useToastStore } from '../../store/ToastStore'
@@ -84,12 +85,6 @@ export const NewClientModal = ({
                       placeholder="Enter Company Name"
                       name="name"
                     />
-                    <TextInput
-                      type="text"
-                      Icon={EditIcon}
-                      placeholder="Enter Client Code"
-                      name="clientCode"
-                    />
                   </div>
                   <RichTextInput
                     Icon={EditIcon}
@@ -116,11 +111,11 @@ export const NewClientModal = ({
                     <DateInput name="clientSince" placeholder="Enter Client Since" />
                   </div>
                   <div className="mb-5 flex space-x-5">
-                    <TextInput
-                      type="text"
-                      Icon={EditIcon}
-                      placeholder="Enter Rating"
+                    <Select
                       name="rating"
+                      Icon={EditIcon}
+                      placeholder="Select Rating"
+                      options={ClientRatingOptions}
                     />
                     <Select
                       name="designatedDesignerId"

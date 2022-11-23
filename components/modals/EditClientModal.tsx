@@ -3,6 +3,7 @@ import { Form, Formik } from 'formik'
 import { useQuery, useQueryClient } from 'react-query'
 import createStore from 'zustand'
 import { combine } from 'zustand/middleware'
+import { ClientRatingOptions } from '../../constants/options/ClientRatingOptions'
 import { TimezoneOptions } from '../../constants/options/TimezoneOptions'
 import { EditClientFormSchema } from '../../schemas/EditClientFormSchema'
 import { useToastStore } from '../../store/ToastStore'
@@ -178,12 +179,23 @@ export const EditClientModal = () => {
                   placeholder="Enter overview"
                 />
                 <div className="mb-5 flex space-x-5">
-                  <TextInput
+                  <Select
                     label="Rating"
-                    type="text"
-                    Icon={EditIcon}
                     name="rating"
-                    placeholder="Enter rating"
+                    Icon={EditIcon}
+                    placeholder="Select Rating"
+                    options={ClientRatingOptions}
+                    defaultValue={(() => {
+                      const timezone = ClientRatingOptions.find(
+                        ({ value }) => value === client.rating.toString()
+                      )
+
+                      if (timezone) {
+                        return timezone
+                      }
+
+                      return undefined
+                    })()}
                   />
                   <Select
                     label="Designated Designer"
