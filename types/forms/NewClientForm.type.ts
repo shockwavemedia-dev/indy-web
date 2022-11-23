@@ -1,6 +1,6 @@
 export type NewClientForm = {
   name: string
-  clientCode: string
+  clientCode?: string | null
   logo: File | null
   address: string
   phone: string

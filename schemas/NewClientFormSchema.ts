@@ -3,7 +3,7 @@ import { NewClientForm } from '../types/forms/NewClientForm.type'
 
 export const NewClientFormSchema: SchemaOf<NewClientForm> = object().shape({
   name: string().required(),
-  clientCode: string().required(),
+  clientCode: string().optional().nullable(),
   logo: mixed().optional().nullable(),
   address: string().required(),
   phone: string().required(),
