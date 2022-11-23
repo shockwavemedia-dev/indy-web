@@ -78,10 +78,10 @@ export const SocialMediaActivityCard = ({
           <div key={field} className="flex flex-col">
             <div className="mb-2 mt-2 text-sm font-semibold text-onyx">Post Date</div>
             <TitleValue title="New" className="mb-1">
-              {values.new instanceof Date && format(values.new, 'MM/dd/yyyy h:mmaaa')}
+              {values.new instanceof Date && format(values.new, 'dd/MM/yyyy h:mmaaa')}
             </TitleValue>
             <TitleValue title="Old">
-              {values.old instanceof Date && format(values.old, 'MM/dd/yyyy h:mmaaa')}
+              {values.old instanceof Date && format(values.old, 'dd/MM/yyyy h:mmaaa')}
             </TitleValue>
           </div>
         )

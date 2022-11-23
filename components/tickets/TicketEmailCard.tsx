@@ -25,7 +25,7 @@ export const TicketEmailCard = ({
         <div className=" text-sm font-semibold text-onyx">{title}</div>
         <div className="h-1 w-1 rounded bg-bright-gray" />
         <div className=" text-xs font-medium text-lavender-gray">
-          {format(createdAt, "yy MMM''dd")}
+          {format(createdAt, 'dd/MM/yyyy')}
         </div>
       </div>
       {isMessageVisible && (

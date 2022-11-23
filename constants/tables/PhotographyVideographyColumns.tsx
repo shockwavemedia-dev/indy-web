@@ -47,7 +47,7 @@ export const PhotographyVideographyColumns: Array<Column<PhotographyVideography>
     Header: 'Shoot Date',
     accessor: 'shootDate',
     Cell: ({ value }) => (
-      <div className=" text-sm font-medium text-onyx">{format(value, "yy MMM''dd")}</div>
+      <div className=" text-sm font-medium text-onyx">{format(value, 'dd/MM/yyyy')}</div>
     ),
   },
   {

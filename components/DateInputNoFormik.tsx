@@ -9,7 +9,6 @@ export const DateInputNoFormik = ({
   label,
   readOnly = false,
   views,
-  format,
   value,
   onChange,
   twHeight = 'h-12.5',
@@ -21,7 +20,6 @@ export const DateInputNoFormik = ({
   label?: string
   readOnly?: boolean
   views?: Array<'year' | 'month' | 'day'>
-  format?: string
   value?: Date
   onChange: (date?: Date) => void
   twHeight?: string
@@ -36,7 +34,7 @@ export const DateInputNoFormik = ({
   return (
     <DesktopDatePicker
       views={views}
-      inputFormat={format || 'P'}
+      inputFormat="dd/MM/yyyy"
       disableOpenPicker
       onChange={(date: Date | null) => {
         if (date) onChange(date)

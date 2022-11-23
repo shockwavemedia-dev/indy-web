@@ -134,7 +134,6 @@ export const MarketingPlannerChart = () => {
         <DateInputNoFormik
           placeholder="Month Year"
           views={['month', 'year']}
-          format="LLL yyyy"
           label="From"
           value={fromDate}
           onChange={(date) => {
@@ -144,7 +143,6 @@ export const MarketingPlannerChart = () => {
         <DateInputNoFormik
           placeholder="Month Year"
           views={['month', 'year']}
-          format="LLL yyyy"
           label="To"
           value={toDate}
           onChange={(date) => {
