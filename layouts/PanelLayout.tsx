@@ -174,7 +174,7 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     if (session) {
       //const { isClient, isManager, isAdmin } = session
-      if (session.isClient) {
+      if (session.isClient && clientServices) {
         setButtons(
           <>
             <FancyLink
@@ -194,6 +194,9 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
               Icon={<ShareIcon className="stroke-halloween-orange" />}
               title="Social Media"
               className="w-fit"
+              disabled={clientServices.some(
+                ({ serviceId, isEnabled }) => serviceId === 4 && !isEnabled
+              )}
             />
             <FancyButton
               Icon={<LifeBuoyIcon className="fill-halloween-orange" />}
@@ -218,7 +221,7 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
         )
       }
     }
-  }, [session])
+  }, [session, clientServices])
 
   if (status === 'loading' || !panelName) {
     return null
