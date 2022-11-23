@@ -4,6 +4,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import axios from 'axios'
 import camelcaseKeys from 'camelcase-keys'
 import { getSession, SessionProvider, signOut as nextAuthSignOut } from 'next-auth/react'
+import Script from 'next/script'
 import { done, start } from 'nprogress'
 import 'nprogress/nprogress.css'
 import { QueryClient, QueryClientProvider } from 'react-query'
@@ -90,6 +91,7 @@ const App = ({ Component, pageProps }: AppPropsWithLayout) => {
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <ThemeProvider theme={theme}>
             <ToastContainer />
+            <Script src="https://cdn.pagesense.io/js/mystaff/f1f421f4ad3b44f7b67c3aeb68a30046.js"></Script>
             {getLayout(<Component {...pageProps} />)}
           </ThemeProvider>
         </LocalizationProvider>
