@@ -31,7 +31,7 @@ export const NewClientModal = ({
   const { showToast } = useToastStore()
 
   const { data: graphicDesigners } = useQuery(['staffs', 15], async () => {
-    const { data } = await axios.get<Array<Staff>>('/v1/departments/graphic-deparment')
+    const { data } = await axios.get<Array<Staff>>('/v1/departments/graphic-deparment/staffs')
 
     return data
   })
