@@ -390,6 +390,12 @@ const Extras = ({
       let payload
 
       if (checked) {
+        if (
+          activeService.serviceName === 'Print' ||
+          activeService.serviceName === 'Social Media Spend'
+        ) {
+          togglePrintCustomField()
+        }
         if (service) {
           const extras = [...service.extras, extrasName]
           const updated = extras?.map((extra) => ({
@@ -397,7 +403,10 @@ const Extras = ({
             quantity: 500,
           }))
 
-          if (activeService.serviceName === 'Print') {
+          if (
+            activeService.serviceName === 'Print' ||
+            activeService.serviceName === 'Social Media Spend'
+          ) {
             payload = [
               ...services.filter(({ serviceId }) => serviceId !== service.serviceId),
               {
@@ -421,6 +430,12 @@ const Extras = ({
         setServices(payload)
         setFieldValue('services', payload)
       } else {
+        if (
+          activeService.serviceName === 'Print' ||
+          activeService.serviceName === 'Social Media Spend'
+        ) {
+          togglePrintCustomField()
+        }
         if (service) {
           const extrasPayload = service.extras.filter((extra) => extra !== extrasName)
 
@@ -443,9 +458,6 @@ const Extras = ({
       }
       if (serviceId === 6 && extrasName === 'Custom') {
         toggleAdvertisingCustomField()
-      }
-      if (activeService.serviceName === 'Print') {
-        togglePrintCustomField()
       }
     }
   }
@@ -485,7 +497,7 @@ const Extras = ({
             <input
               type="number"
               className="h-8.5 w-full rounded-xl px-13 text-sm font-medium text-onyx placeholder-metallic-silver ring-1 ring-bright-gray read-only:cursor-auto focus:ring-2 focus:ring-halloween-orange read-only:focus:ring-1 read-only:focus:ring-bright-gray"
-              placeholder="Enter Quantity"
+              placeholder={serviceId === 14 ? 'Enter Quantity' : 'Enter Amount'}
             />
           </div>
         )}
