@@ -66,7 +66,6 @@ export const TextInputNoFormik = ({
         id={name}
         spellCheck={false}
         placeholder={placeholder}
-        autoComplete="off"
         readOnly={readOnly}
         onChange={onChange ? ({ currentTarget: { value } }) => onChange(value) : undefined}
         onKeyDown={

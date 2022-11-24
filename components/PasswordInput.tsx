@@ -31,7 +31,6 @@ export const PasswordInput = ({
           id={name}
           spellCheck={false}
           placeholder={placeholder}
-          autoComplete={isShowPassword ? 'off' : 'new-password'}
         />
         <button
           className="group absolute right-6"
