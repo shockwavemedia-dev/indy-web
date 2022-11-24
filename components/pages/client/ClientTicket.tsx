@@ -45,6 +45,7 @@ import { TicketPageTabs } from '../../../types/TicketPageTabs.type'
 import { FileButton } from '../../FileButton'
 import { FileDisplay } from '../../FileDisplay'
 import { CopyIcon } from '../../icons/CopyIcon'
+import { DollarIcon } from '../../icons/DollarIcon'
 import { NotepadIcon } from '../../icons/NotepadIcon'
 import { AddTicketAssigneeModal } from '../../modals/AddTicketAssigneeModal'
 import { useFileModalStore } from '../../modals/FileModal'
@@ -301,7 +302,14 @@ export const ClientTicket = ({ ticketId }: { ticketId: number }) => {
                               >
                                 <div className="grid grid-cols-2 gap-2">
                                   <div>{name}</div>
-                                  <div>{quantity !== '0' ? quantity : ''}</div>
+                                  <div>
+                                    <div className="mt-2 flex space-x-5">
+                                      {serviceName === 'Social Media Spend' && quantity !== '0' && (
+                                        <DollarIcon className="pointer-events-none mr-2 stroke-lavender-gray" />
+                                      )}
+                                      {quantity !== '0' ? quantity : ''}
+                                    </div>
+                                  </div>
                                 </div>
                               </div>
                             ))}

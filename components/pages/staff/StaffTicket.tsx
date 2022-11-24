@@ -34,6 +34,7 @@ import { TicketFile } from '../../../types/TicketFile.type'
 import { TicketNote } from '../../../types/TicketNote.type'
 import { TicketPageTabs } from '../../../types/TicketPageTabs.type'
 import { FileButton } from '../../FileButton'
+import { DollarIcon } from '../../icons/DollarIcon'
 import { NotepadIcon } from '../../icons/NotepadIcon'
 import { PlusIcon } from '../../icons/PlusIcon'
 import { AddTicketAssigneeModal } from '../../modals/AddTicketAssigneeModal'
@@ -270,7 +271,12 @@ export const StaffTicket = ({ ticketId }: { ticketId: number }) => {
                               >
                                 <div className="grid grid-cols-2 gap-2">
                                   <div>{name}</div>
-                                  <div>{quantity !== '0' ? quantity : ''}</div>
+                                  <div className="mt-2 flex space-x-5">
+                                    {serviceName === 'Social Media Spend' && quantity !== '0' && (
+                                      <DollarIcon className="pointer-events-none mr-2 stroke-lavender-gray" />
+                                    )}
+                                    {quantity !== '0' ? quantity : ''}
+                                  </div>
                                 </div>
                               </div>
                             ))}
