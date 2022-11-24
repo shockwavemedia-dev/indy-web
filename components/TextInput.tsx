@@ -13,6 +13,7 @@ export const TextInput = ({
   readOnly = false,
   label,
   hint,
+  autoComplete = 'off',
 }: {
   type: 'text' | 'email' | 'url' | 'number'
   name: string
@@ -22,6 +23,7 @@ export const TextInput = ({
   readOnly?: boolean
   label?: string
   hint?: string
+  autoComplete?: string
 }) => (
   <div className={`w-full ${className}`}>
     {(label || hint) && (
@@ -50,7 +52,7 @@ export const TextInput = ({
         id={name}
         spellCheck={false}
         placeholder={placeholder}
-        autoComplete="off"
+        autoComplete={autoComplete}
         readOnly={readOnly}
       />
     </div>

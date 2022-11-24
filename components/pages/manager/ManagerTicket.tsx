@@ -29,7 +29,6 @@ import { RichTextInput } from '../../../components/RichTextInput'
 import { TitleValue } from '../../../components/TitleValue'
 import { ManagerTicketAssigneeTableColumns } from '../../../constants/tables/ManagerTicketAssigneeTableColumns'
 import { usePanelLayoutStore } from '../../../layouts/PanelLayout'
-import DummyCompany from '../../../public/images/dummy-company.png'
 import { CreateNoteFormSchema } from '../../../schemas/CreateNoteFormSchema'
 import { useTicketAssigneeStore } from '../../../store/TicketAssigneeStore'
 import { CreateNoteForm } from '../../../types/forms/CreateNoteForm.type'
@@ -44,6 +43,10 @@ import { FileButton } from '../../FileButton'
 import { DollarIcon } from '../../icons/DollarIcon'
 import { NotepadIcon } from '../../icons/NotepadIcon'
 import { EditTicketAssigneeModal } from '../../modals/EditTicketAssigneeModal'
+import {
+  UploadTicketFileModal,
+  useUploadTicketFileModalStore,
+} from '../../modals/UploadTicketFileModal'
 import { TicketActivityCard } from '../../tickets/TicketActivityCard'
 import { TicketNoteCard } from '../../tickets/TicketNoteCard'
 
@@ -67,6 +70,8 @@ export const ManagerTicket = ({ ticketId }: { ticketId: number }) => {
 
     return data
   })
+
+  const { toggleUploadTicketFileModal } = useUploadTicketFileModalStore()
 
   const { data: notes } = useQuery(
     ['notes', ticketId],
@@ -203,7 +208,14 @@ export const ManagerTicket = ({ ticketId }: { ticketId: number }) => {
               </button>
             </div>
             <div className="mb-6 flex space-x-5">
-              <Image src={DummyCompany} height={100} width={100} alt={ticket!.clientName} />
+              {ticket.clientLogo?.url && (
+                <Image
+                  src={ticket.clientLogo.url}
+                  height={100}
+                  width={100}
+                  alt={ticket!.clientName}
+                />
+              )}
               <div>
                 <TitleValue title="Company" className="mb-3">
                   {ticket!.clientName}
@@ -295,6 +307,14 @@ export const ManagerTicket = ({ ticketId }: { ticketId: number }) => {
             />
           </Card>
           <Card title="Files">
+            <button
+              className="absolute top-6 right-6 flex space-x-2"
+              type="button"
+              onClick={toggleUploadTicketFileModal}
+            >
+              <PlusIcon className="stroke-halloween-orange" />
+              <div className=" text-sm font-semibold text-halloween-orange">Upload File</div>
+            </button>
             <div className="flex flex-wrap gap-4">
               {!!ticketFiles ? (
                 ticketFiles.map(({ id, name, thumbnailUrl, status }) => {
@@ -425,6 +445,7 @@ export const ManagerTicket = ({ ticketId }: { ticketId: number }) => {
         ticketId={ticket!.id}
       />
       <CreateLinkModal />
+      <UploadTicketFileModal ticketId={ticketId} clientId={ticket.clientId} />
     </>
   )
 }

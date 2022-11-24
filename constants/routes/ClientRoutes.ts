@@ -81,11 +81,6 @@ export const ClientRoutes: Array<Route> = [
   {
     title: 'Data Analytics',
     Icon: ChartIcon,
-    pathname: '/data-analytics',
-  },
-  {
-    title: 'Analytics',
-    Icon: ChartIcon,
     subRoutes: [
       {
         title: 'POS',

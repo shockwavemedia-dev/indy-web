@@ -44,7 +44,7 @@ export const EditClientModal = () => {
   const toggleEditClientModal = useEditClientModal((state) => state.toggleEditClientModal)
 
   const { data: graphicDesigners } = useQuery(['staffs', 15], async () => {
-    const { data } = await axios.get<Array<Staff>>('/v1/departments/15/staffs')
+    const { data } = await axios.get<Array<Staff>>('/v1/departments/graphic-department/staffs')
 
     return data
   })
