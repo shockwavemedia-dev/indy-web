@@ -154,12 +154,14 @@ const ProjectBriefPage: NextPageWithLayout = () => {
                 <TextInput
                   type="text"
                   Icon={EditIcon}
+                  label="Give your project a name"
                   placeholder="Enter subject"
                   name="subject"
                   className="mb-5"
                   hint="Give your project a name e.g Melbourne Cup"
                 />
                 <ProjectBriefPrioritySelect
+                  label="Let us know urgent your project is"
                   options={ProjectBriefPriorityOptions}
                   placeholder="Select Priority"
                   value={priority}
@@ -170,6 +172,7 @@ const ProjectBriefPage: NextPageWithLayout = () => {
                   className="mb-5"
                 />
                 <RichTextInput
+                  label="Tell us about your project"
                   Icon={EditIcon}
                   placeholder="Enter description"
                   name="description"
