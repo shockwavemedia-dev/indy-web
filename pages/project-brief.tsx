@@ -42,7 +42,7 @@ export const useProjectBrief = create(
         serviceId: number
         extras: Array<string>
         customFields: Array<string>
-        updatedExtras: Array<{ name: string; quantity?: number | null }>
+        updatedExtras: Array<{ name: string; quantity?: number | string | null }>
       }>,
     },
     (set) => ({
@@ -52,7 +52,7 @@ export const useProjectBrief = create(
           serviceId: number
           extras: Array<string>
           customFields: Array<string>
-          updatedExtras: Array<{ name: string; quantity?: number | null }>
+          updatedExtras: Array<{ name: string; quantity?: number | string | null }>
         }>
       ) => set({ services }),
       setActiveService: (activeService?: Service) => set({ activeService }),
@@ -284,7 +284,11 @@ const SelectService = () => {
         })}
       </div>
       {activeService && activeService.extras.length > 0 && (
-        <div className="h-fit w-130 rounded-xl bg-white p-5">
+        <div
+          className={`h-fit rounded-xl bg-white p-5 ${
+            activeService?.serviceId === 14 || activeService?.serviceId === 14 ? 'w-130 ' : 'w-60'
+          }`}
+        >
           <div className="mb-3 text-center text-lg font-semibold text-onyx">
             Select {activeService.extraQuota > 0 && activeService.extraQuota} Extras
           </div>
@@ -388,7 +392,6 @@ const Extras = ({
     if (activeService) {
       const service = services.find(({ serviceId }) => serviceId === activeService.serviceId)
       let payload
-
       if (checked) {
         if (
           activeService.serviceName === 'Print' ||
@@ -400,7 +403,7 @@ const Extras = ({
           const extras = [...service.extras, extrasName]
           const updated = extras?.map((extra) => ({
             name: extra,
-            quantity: 500,
+            quantity: 0,
           }))
 
           if (
@@ -462,9 +465,42 @@ const Extras = ({
     }
   }
 
-  // const setCustomFieldValue = ({ currentTarget: { value } }: ChangeEvent<HTMLInputElement>) => {
-  //   activeService && setServices([...services, { ...activeService, customFields: [value] }])
-  // }
+  const setCustomFieldValue = ({ currentTarget: { value } }: ChangeEvent<HTMLInputElement>) => {
+    if (activeService) {
+      const service = services.find(({ serviceId }) => serviceId === activeService.serviceId)
+      if (service) {
+        const payload = [
+          ...services.filter(({ serviceId }) => serviceId !== service.serviceId),
+          {
+            ...service,
+            customFields: [value],
+          },
+        ]
+        setServices(payload)
+        setFieldValue('services', payload)
+      }
+    }
+  }
+
+  const setAdditonalField = ({ currentTarget: { value } }: ChangeEvent<HTMLInputElement>) => {
+    if (activeService) {
+      const service = services.find(({ serviceId }) => serviceId === activeService.serviceId)
+      if (service) {
+        const payload = [
+          ...services.filter(({ serviceId }) => serviceId !== service.serviceId),
+          {
+            ...service,
+            updatedExtras: service.updatedExtras?.map((extra) => ({
+              name: extra.name,
+              quantity: extra.name === extrasName ? value : extra.quantity,
+            })),
+          },
+        ]
+        setServices(payload)
+        setFieldValue('services', payload)
+      }
+    }
+  }
 
   const extras = (
     <>
@@ -496,13 +532,14 @@ const Extras = ({
           <div className="mb-2">
             <input
               type="number"
+              onBlur={setAdditonalField}
               className="h-8.5 w-full rounded-xl px-13 text-sm font-medium text-onyx placeholder-metallic-silver ring-1 ring-bright-gray read-only:cursor-auto focus:ring-2 focus:ring-halloween-orange read-only:focus:ring-1 read-only:focus:ring-bright-gray"
               placeholder={serviceId === 14 ? 'Enter Quantity' : 'Enter Amount'}
             />
           </div>
         )}
       </div>
-      {/* {customFieldVisible && (
+      {customFieldVisible && (
         <div className="relative mt-5 flex items-center">
           <EditIcon className="pointer-events-none absolute left-6 stroke-lavender-gray" />
           <input
@@ -513,7 +550,7 @@ const Extras = ({
           />
         </div>
       )}
-      {advertisingCustomFieldVisible && (
+      {/* {advertisingCustomFieldVisible && (
         <div className="relative mt-5 flex items-center">
           <DollarIcon className="pointer-events-none absolute left-6 stroke-lavender-gray" />
           <input

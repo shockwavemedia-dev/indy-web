@@ -6,7 +6,7 @@ export type CreateProjectBriefForm = {
     serviceId: number
     extras: Array<string>
     customFields: Array<string>
-    updatedExtras: Array<{ name: string; quantity?: number | null }>
+    updatedExtras: Array<{ name: string; quantity?: number | string | null }>
   }>
   description: string
   attachments: Array<File>
