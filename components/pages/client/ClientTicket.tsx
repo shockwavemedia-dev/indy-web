@@ -301,7 +301,7 @@ export const ClientTicket = ({ ticketId }: { ticketId: number }) => {
                               >
                                 <div className="grid grid-cols-2 gap-2">
                                   <div>{name}</div>
-                                  <div>{quantity}</div>
+                                  <div>{quantity !== '0' ? quantity : ''}</div>
                                 </div>
                               </div>
                             ))}

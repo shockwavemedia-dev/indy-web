@@ -286,7 +286,7 @@ const SelectService = () => {
       {activeService && activeService.extras.length > 0 && (
         <div
           className={`h-fit rounded-xl bg-white p-5 ${
-            activeService?.serviceId === 14 || activeService?.serviceId === 14 ? 'w-130 ' : 'w-60'
+            activeService?.serviceId === 14 || activeService?.serviceId === 6 ? 'w-130 ' : 'w-60'
           }`}
         >
           <div className="mb-3 text-center text-lg font-semibold text-onyx">
@@ -390,6 +390,7 @@ const Extras = ({
 
   const toggleExtras = ({ currentTarget: { checked } }: ChangeEvent<HTMLInputElement>) => {
     if (activeService) {
+      console.log(activeService)
       const service = services.find(({ serviceId }) => serviceId === activeService.serviceId)
       let payload
       if (checked) {
