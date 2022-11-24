@@ -42,6 +42,10 @@ import { TicketPageTabs } from '../../../types/TicketPageTabs.type'
 import { FileButton } from '../../FileButton'
 import { NotepadIcon } from '../../icons/NotepadIcon'
 import { EditTicketAssigneeModal } from '../../modals/EditTicketAssigneeModal'
+import {
+  UploadTicketFileModal,
+  useUploadTicketFileModalStore,
+} from '../../modals/UploadTicketFileModal'
 import { TicketActivityCard } from '../../tickets/TicketActivityCard'
 import { TicketNoteCard } from '../../tickets/TicketNoteCard'
 
@@ -65,6 +69,8 @@ export const ManagerTicket = ({ ticketId }: { ticketId: number }) => {
 
     return data
   })
+
+  const { toggleUploadTicketFileModal } = useUploadTicketFileModalStore()
 
   const { data: notes } = useQuery(
     ['notes', ticketId],
@@ -276,6 +282,14 @@ export const ManagerTicket = ({ ticketId }: { ticketId: number }) => {
             />
           </Card>
           <Card title="Files">
+            <button
+              className="absolute top-6 right-6 flex space-x-2"
+              type="button"
+              onClick={toggleUploadTicketFileModal}
+            >
+              <PlusIcon className="stroke-halloween-orange" />
+              <div className=" text-sm font-semibold text-halloween-orange">Upload File</div>
+            </button>
             <div className="flex flex-wrap gap-4">
               {!!ticketFiles ? (
                 ticketFiles.map(({ id, name, thumbnailUrl, status }) => {
@@ -406,6 +420,7 @@ export const ManagerTicket = ({ ticketId }: { ticketId: number }) => {
         ticketId={ticket!.id}
       />
       <CreateLinkModal />
+      <UploadTicketFileModal ticketId={ticketId} clientId={ticket.clientId} />
     </>
   )
 }
