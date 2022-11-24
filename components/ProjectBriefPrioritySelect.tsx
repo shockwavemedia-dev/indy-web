@@ -104,12 +104,12 @@ export const ProjectBriefPrioritySelect = <
       control: (base, { isFocused, getValue }) => ({
         ...base,
         minHeight: '3.125rem',
-        border: 'none',
+        border: '1px solid #E8E8EF',
         borderRadius: '.75rem',
         padding: '0 1.5rem 0',
         boxShadow: isFocused
           ? `0 0 0 2px #E8E8EF ${(() => {
-              switch (getValue()[0].value as unknown as string) {
+              switch (getValue()[0]?.value as unknown as string) {
                 case 'Urgent':
                   return '#DC143C'
                 case 'Standard':
@@ -122,13 +122,15 @@ export const ProjectBriefPrioritySelect = <
             })()}`
           : `none`,
         backgroundColor: (() => {
-          switch (getValue()[0].value as unknown as string) {
+          switch (getValue()[0]?.value as unknown as string) {
             case 'Urgent':
               return '#fbd0d9'
             case 'Standard':
               return '#f8eed3'
             case 'Relaxed':
               return '#d6f5d6'
+            default:
+              return '#FFF'
           }
         })(),
         transition: 'none',
