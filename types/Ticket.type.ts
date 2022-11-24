@@ -1,4 +1,5 @@
 import { Attachment } from './Attachment.type'
+import { File } from './File.type'
 import { ProjectBriefPriority } from './ProjectBriefPriority.type'
 import { Service } from './Service.type'
 import { TicketAssignee } from './TicketAssignee.type'
@@ -23,4 +24,5 @@ export type Ticket = {
   priority: ProjectBriefPriority
   assignees?: Array<TicketAssignee>
   userNotes?: string
+  clientLogo?: File
 }

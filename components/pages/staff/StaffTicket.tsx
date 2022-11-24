@@ -22,7 +22,6 @@ import { RichTextInput } from '../../../components/RichTextInput'
 import { TitleValue } from '../../../components/TitleValue'
 import { StaffTicketAssigneeTableColumns } from '../../../constants/tables/StaffTicketAssigneeTableColumns'
 import { usePanelLayoutStore } from '../../../layouts/PanelLayout'
-import DummyCompany from '../../../public/images/dummy-company.png'
 import { CreateNoteFormSchema } from '../../../schemas/CreateNoteFormSchema'
 import { useTicketAssigneeStore } from '../../../store/TicketAssigneeStore'
 import { CreateNoteForm } from '../../../types/forms/CreateNoteForm.type'
@@ -224,7 +223,14 @@ export const StaffTicket = ({ ticketId }: { ticketId: number }) => {
         <div className="w-86 flex-none space-y-6">
           <Card title="Details">
             <div className="mb-6 flex space-x-5">
-              <Image src={DummyCompany} height={100} width={100} alt={ticket!.clientName} />
+              {ticket.clientLogo?.url && (
+                <Image
+                  src={ticket.clientLogo.url}
+                  height={100}
+                  width={100}
+                  alt={ticket!.clientName}
+                />
+              )}
               <div>
                 <TitleValue title="Company" className="mb-3">
                   {ticket!.clientName}

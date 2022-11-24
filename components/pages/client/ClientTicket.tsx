@@ -31,7 +31,6 @@ import { TitleValue } from '../../../components/TitleValue'
 import { ClientTicketAssigneeTableColumns } from '../../../constants/tables/ClientTicketAssigneeTableColumns'
 import { usePanelLayoutStore } from '../../../layouts/PanelLayout'
 import { useProjectBrief } from '../../../pages/project-brief'
-import DummyCompany from '../../../public/images/dummy-company.png'
 import { CreateNoteFormSchema } from '../../../schemas/CreateNoteFormSchema'
 import { useTicketAssigneeStore } from '../../../store/TicketAssigneeStore'
 import { CreateNoteForm } from '../../../types/forms/CreateNoteForm.type'
@@ -255,7 +254,14 @@ export const ClientTicket = ({ ticketId }: { ticketId: number }) => {
               </Tooltip>
             </div>
             <div className="mb-6 flex space-x-5">
-              <Image src={DummyCompany} height={100} width={100} alt={ticket!.clientName} />
+              {ticket.clientLogo?.url && (
+                <Image
+                  src={ticket.clientLogo.url}
+                  height={100}
+                  width={100}
+                  alt={ticket!.clientName}
+                />
+              )}
               <div>
                 <TitleValue title="Company" className="mb-3">
                   {ticket!.clientName}
