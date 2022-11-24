@@ -107,10 +107,7 @@ const ProjectBriefPage: NextPageWithLayout = () => {
     }
   }
 
-  const [priority, setPriority] = useState<SingleValue<SelectOption<ProjectBriefPriority>>>({
-    label: 'Relaxed',
-    value: 'Relaxed',
-  })
+  const [priority, setPriority] = useState<SingleValue<SelectOption<ProjectBriefPriority>>>()
 
   useEffect(() => {
     setHeader('Project Brief')
@@ -144,7 +141,7 @@ const ProjectBriefPage: NextPageWithLayout = () => {
             duedate: null,
             description: ticket ? ticket.description : '',
             attachments: [],
-            priority: 'Relaxed',
+            priority: '',
           }}
           onSubmit={submitForm}
         >
