@@ -64,7 +64,6 @@ const LoginPage: NextPageWithLayout = () => {
               type="email"
               name="email"
               Icon={UserIcon}
-              autoComplete="on"
               placeholder="Enter username"
               className="mb-5"
             />

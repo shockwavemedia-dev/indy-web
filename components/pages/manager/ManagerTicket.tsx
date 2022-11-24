@@ -40,6 +40,7 @@ import { TicketFile } from '../../../types/TicketFile.type'
 import { TicketNote } from '../../../types/TicketNote.type'
 import { TicketPageTabs } from '../../../types/TicketPageTabs.type'
 import { FileButton } from '../../FileButton'
+import { DollarIcon } from '../../icons/DollarIcon'
 import { NotepadIcon } from '../../icons/NotepadIcon'
 import { EditTicketAssigneeModal } from '../../modals/EditTicketAssigneeModal'
 import {
@@ -247,22 +248,46 @@ export const ManagerTicket = ({ ticketId }: { ticketId: number }) => {
               </TitleValue>
               {!!ticket!.services && ticket!.services?.length > 0 && (
                 <TitleValue title="Services" className="mb-5">
-                  {ticket!.services?.map(({ serviceName, extras, customFields }, i) => (
-                    <div key={`${serviceName}-${i}`}>
-                      <div className="mb-2 text-sm font-medium text-halloween-orange">
-                        {serviceName}
-                        {extras.map((extra) => (
-                          <div
-                            className="mb-2 text-sm font-medium text-onyx"
-                            key={`${serviceName}-${extra}`}
-                          >
-                            {extra}
-                            {customFields}
+                  {ticket!.services?.map(
+                    ({ serviceName, extras, customFields, updatedExtras }, i) => (
+                      <div key={`${serviceName}-${i}`}>
+                        {serviceName === 'Print' || serviceName === 'Social Media Spend' ? (
+                          <div className="mb-2 text-sm font-medium text-halloween-orange">
+                            {serviceName}
+                            {updatedExtras.map(({ name, quantity }) => (
+                              <div
+                                className="mb-2 text-sm font-medium text-onyx"
+                                key={`${serviceName}-${name}`}
+                              >
+                                <div className="grid grid-cols-2 gap-2">
+                                  <div>{name}</div>
+                                  <div className="mt-2 flex space-x-5">
+                                    {serviceName === 'Social Media Spend' && quantity !== '0' && (
+                                      <DollarIcon className="pointer-events-none mr-2 stroke-lavender-gray" />
+                                    )}
+                                    {quantity !== '0' ? quantity : ''}
+                                  </div>
+                                </div>
+                              </div>
+                            ))}
                           </div>
-                        ))}
+                        ) : (
+                          <div className="mb-2 text-sm font-medium text-halloween-orange">
+                            {serviceName}
+                            {extras.map((extra) => (
+                              <div
+                                className="mb-2 text-sm font-medium text-onyx"
+                                key={`${serviceName}-${extra}`}
+                              >
+                                {extra}
+                                {customFields}
+                              </div>
+                            ))}
+                          </div>
+                        )}
                       </div>
-                    </div>
-                  ))}
+                    )
+                  )}
                 </TitleValue>
               )}
             </div>
