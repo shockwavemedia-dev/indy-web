@@ -107,6 +107,17 @@ export const NewClientModal = ({
                       Icon={ClockIcon}
                       placeholder="Enter Timezone"
                       options={TimezoneOptions}
+                      defaultValue={(() => {
+                        const timezone = TimezoneOptions.find(
+                          ({ value }) => value === '(UTC+10:00) Canberra, Melbourne, Sydney'
+                        )
+
+                        if (timezone) {
+                          return timezone
+                        }
+
+                        return undefined
+                      })()}
                     />
                     <DateInput name="clientSince" placeholder="Enter Client Since" />
                   </div>
