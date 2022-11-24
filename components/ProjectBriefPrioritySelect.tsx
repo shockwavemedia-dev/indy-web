@@ -40,7 +40,7 @@ const SelectContainer = <Option, IsMulti extends boolean>({
         title={
           <React.Fragment>
             Let us know how urgent your project is.
-            <ul className="mt-4 text-halloween-orange">{listItems}</ul>
+            <ul className="mt-4">{listItems}</ul>
           </React.Fragment>
         }
       >
