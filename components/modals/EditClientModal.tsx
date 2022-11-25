@@ -250,6 +250,7 @@ export const EditClientModal = () => {
                 </div>
                 <div className="mb-5 flex space-x-5">
                   <Select
+                    label="Designated Animator"
                     name="designatedAnimatorId"
                     Icon={UserIcon}
                     placeholder="Enter designated animator"
@@ -276,6 +277,7 @@ export const EditClientModal = () => {
                   />
                   <Select
                     name="designatedWebEditorId"
+                    label="Designated Web Editor"
                     Icon={UserIcon}
                     placeholder="Enter designated web editor"
                     options={
@@ -302,6 +304,7 @@ export const EditClientModal = () => {
                 </div>
                 <div className="mb-5 flex space-x-5">
                   <Select
+                    label="Designated Social Media Manager"
                     name="designatedSocialMediaManagerId"
                     Icon={UserIcon}
                     placeholder="Enter designated social media manager"
@@ -328,6 +331,7 @@ export const EditClientModal = () => {
                   />
                   <Select
                     name="designatedPrinterManagerId"
+                    label="Designated Printer Manager"
                     Icon={UserIcon}
                     placeholder="Enter designated printer manager"
                     options={
