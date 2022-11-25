@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-key */
 import { Tooltip } from '@mui/material'
 import axios from 'axios'
 import { Form, Formik, useFormikContext } from 'formik'
@@ -287,7 +288,10 @@ const SelectService = () => {
       {activeService && activeService.extras.length > 0 && (
         <div
           className={`h-fit rounded-xl bg-white p-5 ${
-            activeService?.serviceId === 14 || activeService?.serviceId === 6 ? 'w-130 ' : 'w-60'
+            activeService?.serviceName === 'Print' ||
+            activeService?.serviceName === 'Social Media Spend'
+              ? 'w-130 '
+              : 'w-60'
           }`}
         >
           <div className="mb-3 text-center text-lg font-semibold text-onyx">
@@ -309,6 +313,7 @@ const SelectService = () => {
                   key={`${activeService.serviceId}-${i}-${extras}`}
                   extrasName={extras}
                   serviceId={activeService.serviceId}
+                  serviceName={activeService.serviceName}
                 />
               )
             })}
@@ -365,10 +370,12 @@ const ServiceButton = ({
 const Extras = ({
   disabled,
   serviceId,
+  serviceName,
   extrasName,
 }: {
   disabled: boolean
   serviceId: number
+  serviceName: string
   extrasName: string
 }) => {
   const services = useProjectBrief((state) => state.services)
@@ -382,7 +389,7 @@ const Extras = ({
 
   const [customPrintFieldVisible, setPrintCustomFieldVisible] = useState(false)
 
-  const togglePrintCustomField = () => setPrintCustomFieldVisible(!customPrintFieldVisible)
+  //const togglePrintCustomField = () => setPrintCustomFieldVisible(!customPrintFieldVisible)
 
   const [advertisingCustomFieldVisible, setAdvertisingCustomFieldVisible] = useState(false)
 
@@ -391,7 +398,6 @@ const Extras = ({
 
   const toggleExtras = ({ currentTarget: { checked } }: ChangeEvent<HTMLInputElement>) => {
     if (activeService) {
-      console.log(activeService)
       const service = services.find(({ serviceId }) => serviceId === activeService.serviceId)
       let payload
       if (checked) {
@@ -399,19 +405,19 @@ const Extras = ({
           activeService.serviceName === 'Print' ||
           activeService.serviceName === 'Social Media Spend'
         ) {
-          togglePrintCustomField()
+          setPrintCustomFieldVisible(true)
         }
         if (service) {
-          const extras = [...service.extras, extrasName]
-          const updated = extras?.map((extra) => ({
-            name: extra,
-            quantity: 0,
-          }))
-
           if (
             activeService.serviceName === 'Print' ||
             activeService.serviceName === 'Social Media Spend'
           ) {
+            const extras = [...service.updatedExtras, { name: extrasName, quantity: 0 }]
+            const updated = extras?.map((extra) => ({
+              name: extra.name,
+              quantity: extra.quantity,
+            }))
+
             payload = [
               ...services.filter(({ serviceId }) => serviceId !== service.serviceId),
               {
@@ -430,7 +436,15 @@ const Extras = ({
             ]
           }
         } else {
-          payload = [...services, { ...activeService, extras: [extrasName] }]
+          const extras = [{ name: extrasName, quantity: 0 }]
+          const updated = extras?.map((extra) => ({
+            name: extra.name,
+            quantity: extra.quantity,
+          }))
+          payload = [
+            ...services,
+            { ...activeService, extras: [extrasName], updatedExtras: updated },
+          ]
         }
         setServices(payload)
         setFieldValue('services', payload)
@@ -439,16 +453,28 @@ const Extras = ({
           activeService.serviceName === 'Print' ||
           activeService.serviceName === 'Social Media Spend'
         ) {
-          togglePrintCustomField()
+          setPrintCustomFieldVisible(false)
         }
         if (service) {
           const extrasPayload = service.extras.filter((extra) => extra !== extrasName)
-
           if (extrasPayload.length > 0) {
-            payload = [
-              ...services.filter(({ serviceId }) => serviceId !== service.serviceId),
-              { ...service, extras: extrasPayload },
-            ]
+            if (
+              activeService.serviceName === 'Print' ||
+              activeService.serviceName === 'Social Media Spend'
+            ) {
+              const updatedExtras = service.updatedExtras.filter(
+                (extra) => extra.name !== extrasName
+              )
+              payload = [
+                ...services.filter(({ serviceId }) => serviceId !== service.serviceId),
+                { ...service, extras: extrasPayload, updatedExtras: updatedExtras },
+              ]
+            } else {
+              payload = [
+                ...services.filter(({ serviceId }) => serviceId !== service.serviceId),
+                { ...service, extras: extrasPayload },
+              ]
+            }
           } else {
             payload = services.filter(({ serviceId }) => serviceId !== service.serviceId)
           }
@@ -461,9 +487,17 @@ const Extras = ({
       if (serviceId === 2 && extrasName === 'Custom') {
         toggleCustomField()
       }
+
       if (serviceId === 6 && extrasName === 'Custom') {
         toggleAdvertisingCustomField()
       }
+
+      // if (
+      //   activeService.serviceName === 'Print' ||
+      //   activeService.serviceName === 'Social Media Spend'
+      // ) {
+      //   togglePrintCustomField()
+      // }
     }
   }
 
@@ -530,33 +564,84 @@ const Extras = ({
             </label>
           </div>
         </div>
-        {customPrintFieldVisible && (
+        {customPrintFieldVisible ? (
           <div className="relative mt-5 flex items-center">
-            {serviceId === 14 ? (
+            {serviceName === 'Print' ? (
               <EditIcon className="pointer-events-none absolute left-5 stroke-lavender-gray" />
             ) : (
               <DollarIcon className="pointer-events-none absolute left-5 stroke-lavender-gray" />
             )}
-
             <input
               type="number"
-              onBlur={setAdditonalField}
+              onChange={setAdditonalField}
               className="h-12.5 w-full rounded-xl px-13 text-sm font-medium text-onyx placeholder-metallic-silver ring-1 ring-bright-gray read-only:cursor-auto focus:ring-2 focus:ring-halloween-orange read-only:focus:ring-1 read-only:focus:ring-bright-gray"
-              placeholder={serviceId === 14 ? 'Enter Quantity' : 'Enter Amount'}
+              placeholder={serviceName === 'Print' ? 'Enter Quantity' : 'Enter Amount'}
             />
+          </div>
+        ) : (
+          <div className="relative mt-5 flex items-center">
+            {services
+              .filter(
+                (option) => option.serviceId === serviceId && option.extras.includes(extrasName)
+              )
+              .map(
+                (service) =>
+                  service.updatedExtras &&
+                  service.updatedExtras.length > 0 &&
+                  service.updatedExtras
+                    .filter((option) => option.name === extrasName)
+                    .map((extra) => (
+                      <>
+                        {serviceName === 'Print' && (
+                          <>
+                            <EditIcon className="pointer-events-none absolute left-5 stroke-lavender-gray" />
+                            <input
+                              type="number"
+                              onChange={setAdditonalField}
+                              className="h-12.5 w-full rounded-xl px-13 text-sm font-medium text-onyx placeholder-metallic-silver ring-1 ring-bright-gray read-only:cursor-auto focus:ring-2 focus:ring-halloween-orange read-only:focus:ring-1 read-only:focus:ring-bright-gray"
+                              placeholder="Enter Quantity"
+                              defaultValue={
+                                extra.quantity !== undefined && extra.quantity !== null
+                                  ? extra.quantity
+                                  : 0
+                              }
+                            />
+                          </>
+                        )}
+                        {serviceName === 'Social Media Spend' && (
+                          <>
+                            <DollarIcon className="pointer-events-none absolute left-5 stroke-lavender-gray" />
+                            <input
+                              type="number"
+                              onChange={setAdditonalField}
+                              className="h-12.5 w-full rounded-xl px-13 text-sm font-medium text-onyx placeholder-metallic-silver ring-1 ring-bright-gray read-only:cursor-auto focus:ring-2 focus:ring-halloween-orange read-only:focus:ring-1 read-only:focus:ring-bright-gray"
+                              placeholder="Enter Amount"
+                              defaultValue={
+                                extra.quantity !== undefined && extra.quantity !== null
+                                  ? extra.quantity
+                                  : 0
+                              }
+                            />
+                          </>
+                        )}
+                      </>
+                    ))
+              )}
           </div>
         )}
       </div>
       {customFieldVisible && (
-        <div className="relative mt-5 flex items-center">
-          <EditIcon className="pointer-events-none absolute left-6 stroke-lavender-gray" />
-          <input
-            type="text"
-            className="h-12.5 w-full rounded-xl px-13 text-sm font-medium text-onyx placeholder-metallic-silver ring-1 ring-bright-gray read-only:cursor-auto focus:ring-2 focus:ring-halloween-orange read-only:focus:ring-1 read-only:focus:ring-bright-gray"
-            placeholder="Enter Custom"
-            onChange={setCustomFieldValue}
-          />
-        </div>
+        <>
+          <div className="relative mt-5 flex items-center">
+            <EditIcon className="pointer-events-none absolute left-6 stroke-lavender-gray" />
+            <input
+              type="text"
+              className="h-12.5 w-full rounded-xl px-13 text-sm font-medium text-onyx placeholder-metallic-silver ring-1 ring-bright-gray read-only:cursor-auto focus:ring-2 focus:ring-halloween-orange read-only:focus:ring-1 read-only:focus:ring-bright-gray"
+              placeholder="Enter Custom"
+              onChange={setCustomFieldValue}
+            />
+          </div>
+        </>
       )}
       {/* {advertisingCustomFieldVisible && (
         <div className="relative mt-5 flex items-center">
