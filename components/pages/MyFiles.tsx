@@ -21,7 +21,7 @@ export const MyFiles = () => {
     } = await axios.get<{
       data: Array<Client>
       page: Page
-    }>('/v1/clients')
+    }>('/v1/clients?size=500')
 
     return data
   })

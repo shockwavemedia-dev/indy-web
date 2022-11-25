@@ -55,7 +55,7 @@ export const UploadTicketFileModal = ({
                     name="file"
                     maxSize={250}
                     mimeType="image/gif"
-                    accept={['.gif', '.Graphics', '.mp4', '.png', '.jpeg', '.jpg']}
+                    accept={['.gif', '.Graphics', '.mp4', '.png', '.jpeg', '.jpg', '.pdf']}
                   />
                   <FolderSelect clientId={clientId} />
                 </div>
