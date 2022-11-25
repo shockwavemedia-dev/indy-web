@@ -596,17 +596,24 @@ const Extras = ({
                   service.updatedExtras
                     .filter((option) => option.name === extrasName)
                     .map((extra) => (
-                      <input
-                        type="number"
-                        onChange={setAdditonalField}
-                        className="h-12.5 w-full rounded-xl px-13 text-sm font-medium text-onyx placeholder-metallic-silver ring-1 ring-bright-gray read-only:cursor-auto focus:ring-2 focus:ring-halloween-orange read-only:focus:ring-1 read-only:focus:ring-bright-gray"
-                        placeholder={serviceId === 14 ? 'Enter Quantity' : 'Enter Amount'}
-                        defaultValue={
-                          extra.quantity !== undefined && extra.quantity !== null
-                            ? extra.quantity
-                            : 0
-                        }
-                      />
+                      <>
+                        {serviceId === 14 ? (
+                          <EditIcon className="pointer-events-none absolute left-5 stroke-lavender-gray" />
+                        ) : (
+                          <DollarIcon className="pointer-events-none absolute left-5 stroke-lavender-gray" />
+                        )}
+                        <input
+                          type="number"
+                          onChange={setAdditonalField}
+                          className="h-12.5 w-full rounded-xl px-13 text-sm font-medium text-onyx placeholder-metallic-silver ring-1 ring-bright-gray read-only:cursor-auto focus:ring-2 focus:ring-halloween-orange read-only:focus:ring-1 read-only:focus:ring-bright-gray"
+                          placeholder={serviceId === 14 ? 'Enter Quantity' : 'Enter Amount'}
+                          defaultValue={
+                            extra.quantity !== undefined && extra.quantity !== null
+                              ? extra.quantity
+                              : 0
+                          }
+                        />
+                      </>
                     ))
               )}
           </div>
