@@ -288,7 +288,10 @@ const SelectService = () => {
       {activeService && activeService.extras.length > 0 && (
         <div
           className={`h-fit rounded-xl bg-white p-5 ${
-            activeService?.serviceId === 14 || activeService?.serviceId === 6 ? 'w-130 ' : 'w-60'
+            activeService?.serviceName === 'Print' ||
+            activeService?.serviceName === 'Social Media Spend'
+              ? 'w-130 '
+              : 'w-60'
           }`}
         >
           <div className="mb-3 text-center text-lg font-semibold text-onyx">
@@ -310,6 +313,7 @@ const SelectService = () => {
                   key={`${activeService.serviceId}-${i}-${extras}`}
                   extrasName={extras}
                   serviceId={activeService.serviceId}
+                  serviceName={activeService.serviceName}
                 />
               )
             })}
@@ -366,10 +370,12 @@ const ServiceButton = ({
 const Extras = ({
   disabled,
   serviceId,
+  serviceName,
   extrasName,
 }: {
   disabled: boolean
   serviceId: number
+  serviceName: string
   extrasName: string
 }) => {
   const services = useProjectBrief((state) => state.services)
@@ -571,7 +577,7 @@ const Extras = ({
         </div>
         {customPrintFieldVisible ? (
           <div className="relative mt-5 flex items-center">
-            {serviceId === 14 ? (
+            {serviceName === 'Print' ? (
               <EditIcon className="pointer-events-none absolute left-5 stroke-lavender-gray" />
             ) : (
               <DollarIcon className="pointer-events-none absolute left-5 stroke-lavender-gray" />
@@ -580,7 +586,7 @@ const Extras = ({
               type="number"
               onChange={setAdditonalField}
               className="h-12.5 w-full rounded-xl px-13 text-sm font-medium text-onyx placeholder-metallic-silver ring-1 ring-bright-gray read-only:cursor-auto focus:ring-2 focus:ring-halloween-orange read-only:focus:ring-1 read-only:focus:ring-bright-gray"
-              placeholder={serviceId === 14 ? 'Enter Quantity' : 'Enter Amount'}
+              placeholder={serviceName === 'Print' ? 'Enter Quantity' : 'Enter Amount'}
             />
           </div>
         ) : (
@@ -597,22 +603,38 @@ const Extras = ({
                     .filter((option) => option.name === extrasName)
                     .map((extra) => (
                       <>
-                        {serviceId === 14 ? (
-                          <EditIcon className="pointer-events-none absolute left-5 stroke-lavender-gray" />
-                        ) : (
-                          <DollarIcon className="pointer-events-none absolute left-5 stroke-lavender-gray" />
+                        {serviceName === 'Print' && (
+                          <>
+                            <EditIcon className="pointer-events-none absolute left-5 stroke-lavender-gray" />
+                            <input
+                              type="number"
+                              onChange={setAdditonalField}
+                              className="h-12.5 w-full rounded-xl px-13 text-sm font-medium text-onyx placeholder-metallic-silver ring-1 ring-bright-gray read-only:cursor-auto focus:ring-2 focus:ring-halloween-orange read-only:focus:ring-1 read-only:focus:ring-bright-gray"
+                              placeholder="Enter Quantity"
+                              defaultValue={
+                                extra.quantity !== undefined && extra.quantity !== null
+                                  ? extra.quantity
+                                  : 0
+                              }
+                            />
+                          </>
                         )}
-                        <input
-                          type="number"
-                          onChange={setAdditonalField}
-                          className="h-12.5 w-full rounded-xl px-13 text-sm font-medium text-onyx placeholder-metallic-silver ring-1 ring-bright-gray read-only:cursor-auto focus:ring-2 focus:ring-halloween-orange read-only:focus:ring-1 read-only:focus:ring-bright-gray"
-                          placeholder={serviceId === 14 ? 'Enter Quantity' : 'Enter Amount'}
-                          defaultValue={
-                            extra.quantity !== undefined && extra.quantity !== null
-                              ? extra.quantity
-                              : 0
-                          }
-                        />
+                        {serviceName === 'Social Media Spend' && (
+                          <>
+                            <DollarIcon className="pointer-events-none absolute left-5 stroke-lavender-gray" />
+                            <input
+                              type="number"
+                              onChange={setAdditonalField}
+                              className="h-12.5 w-full rounded-xl px-13 text-sm font-medium text-onyx placeholder-metallic-silver ring-1 ring-bright-gray read-only:cursor-auto focus:ring-2 focus:ring-halloween-orange read-only:focus:ring-1 read-only:focus:ring-bright-gray"
+                              placeholder="Enter Amount"
+                              defaultValue={
+                                extra.quantity !== undefined && extra.quantity !== null
+                                  ? extra.quantity
+                                  : 0
+                              }
+                            />
+                          </>
+                        )}
                       </>
                     ))
               )}
