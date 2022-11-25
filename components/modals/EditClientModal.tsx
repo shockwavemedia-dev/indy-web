@@ -43,8 +43,32 @@ export const EditClientModal = () => {
   const client = useEditClientModal((state) => state.client)
   const toggleEditClientModal = useEditClientModal((state) => state.toggleEditClientModal)
 
-  const { data: graphicDesigners } = useQuery(['staffs', 15], async () => {
-    const { data } = await axios.get<Array<Staff>>('/v1/departments/graphic-department/staffs')
+  const { data: graphicDesigners } = useQuery(['graphicDesigners', 15], async () => {
+    const { data } = await axios.get<Array<Staff>>('/v1/departments/graphic/users')
+
+    return data
+  })
+
+  const { data: animators } = useQuery(['animators', 15], async () => {
+    const { data } = await axios.get<Array<Staff>>('/v1/departments/animation/users')
+
+    return data
+  })
+
+  const { data: webEditors } = useQuery(['webEditors', 15], async () => {
+    const { data } = await axios.get<Array<Staff>>('/v1/departments/website/users')
+
+    return data
+  })
+
+  const { data: printerUsers } = useQuery(['printerUsers', 15], async () => {
+    const { data } = await axios.get<Array<Staff>>('/v1/departments/printer/users')
+
+    return data
+  })
+
+  const { data: socialMediaManagers } = useQuery(['socialMediaManagers', 15], async () => {
+    const { data } = await axios.get<Array<Staff>>('/v1/departments/social-media/users')
 
     return data
   })
@@ -217,6 +241,110 @@ export const EditClientModal = () => {
                         return {
                           label: graphicDesigner.fullName,
                           value: graphicDesigner.adminUserId,
+                        }
+                      }
+
+                      return undefined
+                    })()}
+                  />
+                </div>
+                <div className="mb-5 flex space-x-5">
+                  <Select
+                    name="designatedAnimatorId"
+                    Icon={UserIcon}
+                    placeholder="Enter designated animator"
+                    options={
+                      animators?.map(({ fullName, adminUserId }) => ({
+                        label: fullName,
+                        value: adminUserId,
+                      })) ?? []
+                    }
+                    defaultValue={(() => {
+                      const animator = animators?.find(
+                        ({ adminUserId }) => adminUserId === client.designatedDesignerId
+                      )
+
+                      if (animator) {
+                        return {
+                          label: animator.fullName,
+                          value: animator.adminUserId,
+                        }
+                      }
+
+                      return undefined
+                    })()}
+                  />
+                  <Select
+                    name="designatedWebEditorId"
+                    Icon={UserIcon}
+                    placeholder="Enter designated web editor"
+                    options={
+                      webEditors?.map(({ fullName, adminUserId }) => ({
+                        label: fullName,
+                        value: adminUserId,
+                      })) ?? []
+                    }
+                    defaultValue={(() => {
+                      const webEditor = webEditors?.find(
+                        ({ adminUserId }) => adminUserId === client.designatedDesignerId
+                      )
+
+                      if (webEditor) {
+                        return {
+                          label: webEditor.fullName,
+                          value: webEditor.adminUserId,
+                        }
+                      }
+
+                      return undefined
+                    })()}
+                  />
+                </div>
+                <div className="mb-5 flex space-x-5">
+                  <Select
+                    name="designatedSocialMediaManagerId"
+                    Icon={UserIcon}
+                    placeholder="Enter designated social media manager"
+                    options={
+                      socialMediaManagers?.map(({ fullName, adminUserId }) => ({
+                        label: fullName,
+                        value: adminUserId,
+                      })) ?? []
+                    }
+                    defaultValue={(() => {
+                      const socialMediaManager = socialMediaManagers?.find(
+                        ({ adminUserId }) => adminUserId === client.designatedDesignerId
+                      )
+
+                      if (socialMediaManager) {
+                        return {
+                          label: socialMediaManager.fullName,
+                          value: socialMediaManager.adminUserId,
+                        }
+                      }
+
+                      return undefined
+                    })()}
+                  />
+                  <Select
+                    name="designatedPrinterManagerId"
+                    Icon={UserIcon}
+                    placeholder="Enter designated printer manager"
+                    options={
+                      printerUsers?.map(({ fullName, adminUserId }) => ({
+                        label: fullName,
+                        value: adminUserId,
+                      })) ?? []
+                    }
+                    defaultValue={(() => {
+                      const printerManager = printerUsers?.find(
+                        ({ adminUserId }) => adminUserId === client.designatedDesignerId
+                      )
+
+                      if (printerManager) {
+                        return {
+                          label: printerManager.fullName,
+                          value: printerManager.adminUserId,
                         }
                       }
 

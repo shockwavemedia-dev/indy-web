@@ -8,5 +8,9 @@ export type NewClientForm = {
   overview: string
   clientSince: Date | null
   rating: number | null
-  designatedDesignerId?: number
+  designatedDesignerId?: number | null
+  designatedAnimatorId?: number | null
+  designatedWebEditorId?: number | null
+  designatedSocialMediaManagerId?: number | null
+  designatedPrinterManagerId?: number | null
 }
