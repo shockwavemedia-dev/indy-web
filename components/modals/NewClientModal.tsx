@@ -10,6 +10,7 @@ import { Staff } from '../../types/Staff.type'
 import { get422And400ResponseError } from '../../utils/ErrorHelpers'
 import { objectWithFileToFormData } from '../../utils/FormHelpers'
 import { Button } from '../Button'
+import { Card } from '../Card'
 import { DateInput } from '../DateInput'
 import { FileDropZone } from '../FileDropZone'
 import { ClockIcon } from '../icons/ClockIcon'
@@ -30,8 +31,32 @@ export const NewClientModal = ({
   const queryClient = useQueryClient()
   const { showToast } = useToastStore()
 
-  const { data: graphicDesigners } = useQuery(['staffs', 15], async () => {
-    const { data } = await axios.get<Array<Staff>>('/v1/departments/graphic-department/staffs')
+  const { data: graphicDesigners } = useQuery(['graphicDesigners', 15], async () => {
+    const { data } = await axios.get<Array<Staff>>('/v1/departments/graphic/users')
+
+    return data
+  })
+
+  const { data: animators } = useQuery(['animators', 15], async () => {
+    const { data } = await axios.get<Array<Staff>>('/v1/departments/animation/users')
+
+    return data
+  })
+
+  const { data: webEditors } = useQuery(['webEditors', 15], async () => {
+    const { data } = await axios.get<Array<Staff>>('/v1/departments/website/users')
+
+    return data
+  })
+
+  const { data: printerUsers } = useQuery(['printerUsers', 15], async () => {
+    const { data } = await axios.get<Array<Staff>>('/v1/departments/printer/users')
+
+    return data
+  })
+
+  const { data: socialMediaManagers } = useQuery(['socialMediaManagers', 15], async () => {
+    const { data } = await axios.get<Array<Staff>>('/v1/departments/social-media/users')
 
     return data
   })
@@ -76,87 +101,143 @@ export const NewClientModal = ({
             onSubmit={submitForm}
           >
             {({ isSubmitting }) => (
-              <Form>
-                <div className="flex w-140 flex-col">
-                  <div className="mb-5 flex space-x-5">
-                    <TextInput
-                      type="text"
-                      Icon={EditIcon}
-                      placeholder="Enter Company Name"
-                      name="name"
-                    />
-                  </div>
-                  <RichTextInput
-                    Icon={EditIcon}
-                    placeholder="Enter Overview"
-                    name="overview"
-                    className="mb-5"
-                  />
-                  <div className="mb-5 flex space-x-5">
-                    <TextInput
-                      name="address"
-                      type="text"
-                      Icon={EditIcon}
-                      placeholder="Enter Address"
-                    />
-                    <TextInput type="text" Icon={EditIcon} placeholder="Enter Phone" name="phone" />
-                  </div>
-                  <div className="mb-5 flex space-x-5">
-                    <Select
-                      name="timezone"
-                      Icon={ClockIcon}
-                      placeholder="Enter Timezone"
-                      options={TimezoneOptions}
-                      defaultValue={(() => {
-                        const timezone = TimezoneOptions.find(
-                          ({ value }) => value === '(UTC+10:00) Canberra, Melbourne, Sydney'
-                        )
+              <Form className="flex max-h-130 w-175 flex-col space-y-5 overflow-y-auto">
+                <Card className="h-fit w-full">
+                  <div className="mb-8">
+                    <div className="mb-5 flex space-x-5">
+                      <TextInput
+                        type="text"
+                        Icon={EditIcon}
+                        placeholder="Enter Company Name"
+                        name="name"
+                      />
+                    </div>
 
-                        if (timezone) {
-                          return timezone
+                    <RichTextInput
+                      Icon={EditIcon}
+                      placeholder="Enter Overview"
+                      name="overview"
+                      className="mb-5"
+                    />
+                    <div className="mb-5 flex space-x-5">
+                      <TextInput
+                        name="address"
+                        type="text"
+                        Icon={EditIcon}
+                        placeholder="Enter Address"
+                      />
+                      <TextInput
+                        type="text"
+                        Icon={EditIcon}
+                        placeholder="Enter Phone"
+                        name="phone"
+                      />
+                    </div>
+                    <div className="mb-5 flex space-x-5">
+                      <Select
+                        name="timezone"
+                        Icon={ClockIcon}
+                        placeholder="Enter Timezone"
+                        options={TimezoneOptions}
+                        defaultValue={(() => {
+                          const timezone = TimezoneOptions.find(
+                            ({ value }) => value === '(UTC+10:00) Canberra, Melbourne, Sydney'
+                          )
+
+                          if (timezone) {
+                            return timezone
+                          }
+
+                          return undefined
+                        })()}
+                      />
+                      <DateInput name="clientSince" placeholder="Enter Client Since" />
+                    </div>
+                    <div className="mb-5 flex space-x-5">
+                      <Select
+                        name="rating"
+                        Icon={EditIcon}
+                        placeholder="Select Rating"
+                        options={ClientRatingOptions}
+                      />
+                      <Select
+                        name="designatedDesignerId"
+                        Icon={UserIcon}
+                        placeholder="Enter designated designer"
+                        options={
+                          graphicDesigners?.map(({ fullName, adminUserId }) => ({
+                            label: fullName,
+                            value: adminUserId,
+                          })) ?? []
                         }
-
-                        return undefined
-                      })()}
+                      />
+                    </div>
+                    <div className="mb-5 flex space-x-5">
+                      <Select
+                        name="designatedAnimatorId"
+                        Icon={UserIcon}
+                        placeholder="Enter designated animator"
+                        options={
+                          animators?.map(({ fullName, adminUserId }) => ({
+                            label: fullName,
+                            value: adminUserId,
+                          })) ?? []
+                        }
+                      />
+                      <Select
+                        name="designatedWebEditorId"
+                        Icon={UserIcon}
+                        placeholder="Enter designated web editor"
+                        options={
+                          webEditors?.map(({ fullName, adminUserId }) => ({
+                            label: fullName,
+                            value: adminUserId,
+                          })) ?? []
+                        }
+                      />
+                    </div>
+                    <div className="mb-5 flex space-x-5">
+                      <Select
+                        name="designatedSocialMediaManagerId"
+                        Icon={UserIcon}
+                        placeholder="Enter designated social media manager"
+                        options={
+                          socialMediaManagers?.map(({ fullName, adminUserId }) => ({
+                            label: fullName,
+                            value: adminUserId,
+                          })) ?? []
+                        }
+                      />
+                      <Select
+                        name="designatedPrinterManagerId"
+                        Icon={UserIcon}
+                        placeholder="Enter designated printer manager"
+                        options={
+                          printerUsers?.map(({ fullName, adminUserId }) => ({
+                            label: fullName,
+                            value: adminUserId,
+                          })) ?? []
+                        }
+                      />
+                    </div>
+                    <FileDropZone
+                      label="Logo"
+                      name="logo"
+                      accept={['.jpeg', '.png', '.jpg']}
+                      maxSize={5}
+                      mimeType="image/png"
+                      className="mb-8  ml-4 mr-4"
                     />
-                    <DateInput name="clientSince" placeholder="Enter Client Since" />
+                    <div className="flex space-x-5">
+                      <Button ariaLabel="Cancel" onClick={onClose} type="button" light>
+                        Cancel
+                      </Button>
+                      <Button ariaLabel="Submit" disabled={isSubmitting} type="submit">
+                        Submit
+                      </Button>
+                    </div>
                   </div>
-                  <div className="mb-5 flex space-x-5">
-                    <Select
-                      name="rating"
-                      Icon={EditIcon}
-                      placeholder="Select Rating"
-                      options={ClientRatingOptions}
-                    />
-                    <Select
-                      name="designatedDesignerId"
-                      Icon={UserIcon}
-                      placeholder="Enter designated designer"
-                      options={
-                        graphicDesigners?.map(({ fullName, adminUserId }) => ({
-                          label: fullName,
-                          value: adminUserId,
-                        })) ?? []
-                      }
-                    />
-                  </div>
-                  <FileDropZone
-                    label="Logo"
-                    name="logo"
-                    accept={['.jpeg', '.png', '.jpg']}
-                    maxSize={5}
-                    mimeType="image/png"
-                    className="mb-8"
-                  />
-                  <div className="flex space-x-5">
-                    <Button ariaLabel="Cancel" onClick={onClose} type="button" light>
-                      Cancel
-                    </Button>
-                    <Button ariaLabel="Submit" disabled={isSubmitting} type="submit">
-                      Submit
-                    </Button>
-                  </div>
-                </div>
+                </Card>
               </Form>
             )}
           </Formik>

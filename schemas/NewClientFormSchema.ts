@@ -11,5 +11,9 @@ export const NewClientFormSchema: SchemaOf<NewClientForm> = object().shape({
   overview: string().required(),
   clientSince: date().required().nullable(),
   rating: number().required(),
-  designatedDesignerId: number().optional(),
+  designatedDesignerId: number().optional().nullable(),
+  designatedAnimatorId: number().optional().nullable(),
+  designatedWebEditorId: number().optional().nullable(),
+  designatedSocialMediaManagerId: number().optional().nullable(),
+  designatedPrinterManagerId: number().optional().nullable(),
 })
