@@ -11,8 +11,17 @@ export type Client = {
   overview: string
   rating: number
   status: 'active' | 'inactive' | 'deleted'
-  designatedDesignerId?: number
-  designatedDesigner?: string
+  designatedDesignerId?: number | null
+  designatedDesigner?: string | null
+  designatedWebEditorId?: number | null
+  designatedWebEditor?: string | null
+  designatedPrinterManagerId?: number | null
+  designatedPrinterManager?: string | null
+  designatedSocialMediaManagerId?: number | null
+  designatedSocialMediaManager?: string | null
+  designatedAnimatorId?: number | null
+  designatedAnimator?: string | null
+
   logoUrl: string
   logoThumbnailUrl: string
   ownerId: number

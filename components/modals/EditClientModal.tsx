@@ -261,7 +261,7 @@ export const EditClientModal = () => {
                     }
                     defaultValue={(() => {
                       const animator = animators?.find(
-                        ({ adminUserId }) => adminUserId === client.designatedDesignerId
+                        ({ adminUserId }) => adminUserId === client.designatedAnimatorId
                       )
 
                       if (animator) {
@@ -286,7 +286,7 @@ export const EditClientModal = () => {
                     }
                     defaultValue={(() => {
                       const webEditor = webEditors?.find(
-                        ({ adminUserId }) => adminUserId === client.designatedDesignerId
+                        ({ adminUserId }) => adminUserId === client.designatedWebEditorId
                       )
 
                       if (webEditor) {
@@ -313,7 +313,7 @@ export const EditClientModal = () => {
                     }
                     defaultValue={(() => {
                       const socialMediaManager = socialMediaManagers?.find(
-                        ({ adminUserId }) => adminUserId === client.designatedDesignerId
+                        ({ adminUserId }) => adminUserId === client.designatedSocialMediaManagerId
                       )
 
                       if (socialMediaManager) {
@@ -338,7 +338,7 @@ export const EditClientModal = () => {
                     }
                     defaultValue={(() => {
                       const printerManager = printerUsers?.find(
-                        ({ adminUserId }) => adminUserId === client.designatedDesignerId
+                        ({ adminUserId }) => adminUserId === client.designatedPrinterManagerId
                       )
 
                       if (printerManager) {
