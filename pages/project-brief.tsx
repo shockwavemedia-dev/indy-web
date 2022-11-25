@@ -412,11 +412,12 @@ const Extras = ({
             activeService.serviceName === 'Print' ||
             activeService.serviceName === 'Social Media Spend'
           ) {
-            const extras = [...service.extras, extrasName]
+            const extras = [...service.updatedExtras, { name: extrasName, quantity: 0 }]
             const updated = extras?.map((extra) => ({
-              name: extra,
-              quantity: 0,
+              name: extra.name,
+              quantity: extra.quantity,
             }))
+
             payload = [
               ...services.filter(({ serviceId }) => serviceId !== service.serviceId),
               {
@@ -435,22 +436,10 @@ const Extras = ({
             ]
           }
         } else {
-          const extras = [extrasName]
-          let updated
-          if (activeService.updatedExtras && activeService.updatedExtras.length > 0) {
-            updated = activeService.updatedExtras?.map((extra) => ({
-              name: extra.name,
-              quantity: extra.quantity,
-            }))
-          } else {
-            updated = extras?.map((extra) => ({
-              name: extra,
-              quantity: 0,
-            }))
-          }
-          updated = extras?.map((extra) => ({
-            name: extra,
-            quantity: 0,
+          const extras = [{ name: extrasName, quantity: 0 }]
+          const updated = extras?.map((extra) => ({
+            name: extra.name,
+            quantity: extra.quantity,
           }))
           payload = [
             ...services,
