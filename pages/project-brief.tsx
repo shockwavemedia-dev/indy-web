@@ -42,6 +42,7 @@ export const useProjectBrief = create(
       activeService: undefined as Service | undefined,
       services: [] as Array<{
         serviceId: number
+        serviceName: string
         extras: Array<string>
         customFields: Array<string>
         updatedExtras: Array<{ name: string; quantity?: number | string | null }>
@@ -52,6 +53,7 @@ export const useProjectBrief = create(
       setServices: (
         services: Array<{
           serviceId: number
+          serviceName: string
           extras: Array<string>
           customFields: Array<string>
           updatedExtras: Array<{ name: string; quantity?: number | string | null }>
@@ -85,11 +87,16 @@ const ProjectBriefPage: NextPageWithLayout = () => {
         '/v1/tickets/event',
         objectWithFileToFormData({
           ...values,
-          services: values.services.map(({ serviceId, extras, customFields, updatedExtras }) => ({
-            serviceId,
-            extras: updatedExtras ?? extras,
-            customFields,
-          })),
+          services: values.services.map(
+            ({ serviceId, extras, customFields, updatedExtras, serviceName }) => ({
+              serviceId,
+              extras:
+                serviceName === 'Print' || serviceName === 'Social Media Spend'
+                  ? updatedExtras
+                  : extras,
+              customFields,
+            })
+          ),
         })
       )
       if (status === 200) {
@@ -116,8 +123,9 @@ const ProjectBriefPage: NextPageWithLayout = () => {
 
     if (ticket && ticket.services) {
       setServices(
-        ticket.services.map(({ serviceId, extras }) => ({
+        ticket.services.map(({ serviceId, serviceName, extras }) => ({
           serviceId,
+          serviceName,
           extras,
           customFields: [],
           updatedExtras: [],
@@ -248,6 +256,7 @@ const SelectService = () => {
                 payload = [
                   {
                     serviceId: service.serviceId,
+                    serviceName: service.serviceName,
                     extras: [],
                     customFields: [],
                     updatedExtras: [],
