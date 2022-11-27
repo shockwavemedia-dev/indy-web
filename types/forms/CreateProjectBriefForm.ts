@@ -4,6 +4,7 @@ export type CreateProjectBriefForm = {
   subject: string
   services: Array<{
     serviceId: number
+    serviceName: string
     extras: Array<string>
     customFields: Array<string>
     updatedExtras: Array<{ name: string; quantity?: number | string | null }>

@@ -1,10 +1,11 @@
+import { styled, Tooltip, tooltipClasses, TooltipProps } from '@mui/material'
 import axios from 'axios'
 import { format } from 'date-fns'
 import { Form, Formik } from 'formik'
 import { useSession } from 'next-auth/react'
 import Head from 'next/head'
 import Image from 'next/image'
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useQuery, useQueryClient } from 'react-query'
 import { Button } from '../../../components/Button'
 import { Card } from '../../../components/Card'
@@ -34,6 +35,7 @@ import { TicketNote } from '../../../types/TicketNote.type'
 import { TicketPageTabs } from '../../../types/TicketPageTabs.type'
 import { FileButton } from '../../FileButton'
 import { DollarIcon } from '../../icons/DollarIcon'
+import { InfoIcon } from '../../icons/InfoIcon'
 import { NotepadIcon } from '../../icons/NotepadIcon'
 import { PlusIcon } from '../../icons/PlusIcon'
 import { AddTicketAssigneeModal } from '../../modals/AddTicketAssigneeModal'
@@ -74,6 +76,15 @@ export const StaffTicket = ({ ticketId }: { ticketId: number }) => {
 
     return data
   })
+
+  const HtmlTooltip = styled(({ className, ...props }: TooltipProps) => (
+    <Tooltip {...props} classes={{ popper: className }} placement="top-end" className="ml-auto" />
+  ))(({ theme }) => ({
+    [`& .${tooltipClasses.tooltip}`]: {
+      maxWidth: 260,
+      fontSize: theme.typography.pxToRem(11),
+    },
+  }))
 
   const { data: session } = useSession()
   const { data: notes } = useQuery(
@@ -330,6 +341,22 @@ export const StaffTicket = ({ ticketId }: { ticketId: number }) => {
             >
               <PlusIcon className="stroke-halloween-orange" />
               <div className=" text-sm font-semibold text-halloween-orange">Upload File</div>
+              <div className="flex">
+                <HtmlTooltip
+                  title={
+                    <React.Fragment>
+                      <div>If you upload here, the file will be</div>
+                      <div className="mb-3">sent to the client with an approval request.</div>
+                      <div>If you do not want to submit an approval request to the client,</div>
+                      <div>please upload directly to the clients MyFiles folder and not here.</div>
+                    </React.Fragment>
+                  }
+                >
+                  <div>
+                    <InfoIcon className="h-4 stroke-bleu-de-france transition-colors hover:stroke-halloween-orange" />
+                  </div>
+                </HtmlTooltip>
+              </div>
             </button>
             <div className="flex flex-wrap gap-4">
               {!!ticketFiles ? (
