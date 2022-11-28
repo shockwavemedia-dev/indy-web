@@ -31,7 +31,7 @@ export const ClientDashboard = () => {
   const getTypesAsPayload = useTicketTypeFilter((state) => state.getAsPayload)
 
   useEffect(() => {
-    setHeader('Dashboard')
+    setHeader(`${session?.user.userType.client.name} Dashboard`)
     setSubHeader(`Welcome back, ${session?.user.firstName}`)
 
     return () => {
