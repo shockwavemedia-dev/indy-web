@@ -340,10 +340,27 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
         <div className="w-full overflow-y-auto p-6">
           <Crumbs panelName={panelName} />
           <div className="mb-10 mt-5 flex items-end justify-between">
-            <div>
-              <div className=" text-3xl font-bold text-onyx">{header}</div>
-              <div className=" font-semibold text-halloween-orange">{subHeader}</div>
-            </div>
+            {session.isClient && asPath === '/dashboard' ? (
+              <div className="flex space-x-5">
+                {session?.user.userType.client.logoUrl && (
+                  <Image
+                    src={session?.user.userType.client.logoUrl}
+                    height={100}
+                    width={100}
+                    alt={session?.user.userType.client.logoUrl}
+                  />
+                )}
+                <div>
+                  <div className="mb-5 text-3xl font-bold text-onyx">{header}</div>
+                  <div className=" font-semibold text-halloween-orange">{subHeader}</div>
+                </div>
+              </div>
+            ) : (
+              <div>
+                <div className=" text-3xl font-bold text-onyx">{header}</div>
+                <div className=" font-semibold text-halloween-orange">{subHeader}</div>
+              </div>
+            )}
             <div className="font-circular-std text-5xl text-charleston-green">
               Indy<span className="text-halloween-orange">.</span>
             </div>
