@@ -2,6 +2,7 @@ import Image from 'next/image'
 import { ReactNode } from 'react'
 import { BadgeCheckIcon } from './icons/BadgeCheckIcon'
 import { EditIcon } from './icons/EditIcon'
+import { EntryDeclineIcon } from './icons/EntryDeclineIcon'
 import { FileIcon } from './icons/FileIcon'
 import { FolderIcon } from './icons/FolderIcon'
 import { TrashIcon } from './icons/TrashIcon'
@@ -48,7 +49,7 @@ export const FileButton = ({
       onClick={!href && file && onClick ? onClick : undefined}
       target={openNewTab ? '_blank' : '_self'}
       rel="noopener noreferrer"
-      className={`relative flex h-35 w-35 flex-none cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-bright-gray p-3 hover:border-halloween-orange ${className}`}
+      className={`disabled relative flex h-35 w-35 flex-none cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-bright-gray p-3 hover:border-halloween-orange ${className}`}
     >
       <div className={`relative mb-1 ${thumbnailUrl ? 'h-16 w-16' : ''}`}>
         {thumbnailUrl ? (
@@ -65,6 +66,9 @@ export const FileButton = ({
       <div className="w-full break-words text-center text-xxs font-semibold text-onyx">{name}</div>
       {fileStatus === 'approved' && (
         <BadgeCheckIcon className="absolute top-1 right-1 h-5 text-forest-green" />
+      )}
+      {fileStatus === 'request revision' && (
+        <EntryDeclineIcon className="absolute top-1 right-1 h-5 text-red-crimson" />
       )}
     </a>
   ) : (

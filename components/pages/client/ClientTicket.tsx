@@ -464,12 +464,13 @@ export const ClientTicket = ({ ticketId }: { ticketId: number }) => {
                   return (
                     <FileButton
                       key={`ticketFile-${id}`}
-                      className="h-35 w-35"
+                      className={`h-35 w-35 ${status} === 'request revision' ? 'pointer-events-none' : ''`}
                       href={`/ticket/file/${id}`}
                       name={name}
                       thumbnailUrl={thumbnailUrl}
                       fileStatus={status}
                       file
+                      disabled={status === 'request revision'}
                     />
                   )
                 })
@@ -570,10 +571,11 @@ export const ClientTicket = ({ ticketId }: { ticketId: number }) => {
                 )}
               </Formik>
               <div className="space-y-5">
-                {notes?.map(({ id, note, createdBy, createdAt }) => (
+                {notes?.map(({ id, note, file, createdBy, createdAt }) => (
                   <TicketNoteCard
                     key={`note-${id}`}
                     note={note}
+                    file={file}
                     createdBy={createdBy}
                     createdAt={createdAt}
                   />
