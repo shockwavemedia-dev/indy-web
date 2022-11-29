@@ -17,6 +17,7 @@ export const DataTable = <T extends Record<string, unknown>>({
   tableActions,
   rowOnClick,
   initialState,
+  controlledSort = false,
 }: {
   tableQueryKey: Array<string | number | Record<string, unknown>>
   dataEndpoint: string
@@ -26,9 +27,14 @@ export const DataTable = <T extends Record<string, unknown>>({
   tableActions?: ReactNode
   rowOnClick?: (row: Row<T>) => void
   initialState?: Partial<TableState<T>>
+  controlledSort?: boolean
 }) => {
   const [queryPageIndex, setQueryPageIndex] = useState(0)
   const [pageSize, setPageSize] = useState(20)
+  const [sort, setSort] = useState<{
+    sortBy: string
+    sortOrder: 'asc' | 'desc'
+  }>()
 
   const {
     data: pagination,
@@ -36,7 +42,7 @@ export const DataTable = <T extends Record<string, unknown>>({
     isFetching,
     isLoading,
   } = useQuery(
-    [...tableQueryKey, queryPageIndex, pageSize],
+    [...tableQueryKey, queryPageIndex, pageSize, sort],
     async () => {
       const { data } = await axios.get<{
         data: Array<T>
@@ -46,6 +52,7 @@ export const DataTable = <T extends Record<string, unknown>>({
           page_number: queryPageIndex + 1,
           size: pageSize,
           ...dataParams,
+          ...sort,
         },
       })
 
@@ -68,7 +75,7 @@ export const DataTable = <T extends Record<string, unknown>>({
     gotoPage,
     nextPage,
     previousPage,
-    state: { pageIndex },
+    state: { pageIndex, sortBy },
   } = useTable<T>(
     {
       columns: memoizedColumns,
@@ -81,12 +88,21 @@ export const DataTable = <T extends Record<string, unknown>>({
       manualPagination: true,
       pageCount: isSuccess && pagination ? pagination.page.lastPage : 0,
       autoResetSortBy: false,
+      manualSortBy: controlledSort,
     },
     useSortBy,
     usePagination
   )
 
   useEffect(() => setQueryPageIndex(pageIndex), [pageIndex])
+  useEffect(() => {
+    if (sortBy.length > 0)
+      setSort({
+        sortBy: sortBy[0].id,
+        sortOrder: sortBy[0].desc ? 'desc' : 'asc',
+      })
+    else setSort(undefined)
+  }, [sortBy])
 
   const id = useId()
   const actions = [10, 15, 20, 25].map((s) => (
@@ -112,45 +128,41 @@ export const DataTable = <T extends Record<string, unknown>>({
                   // key is already provided by getHeaderGroupProps()
                   // eslint-disable-next-line react/jsx-key
                   <tr {...getHeaderGroupProps()}>
-                    {headers.map(
-                      ({
-                        render,
-                        getHeaderProps,
-                        getSortByToggleProps,
-                        canSort,
-                        isSorted,
-                        isSortedDesc,
-                      }) => (
-                        // key is already provided by getHeaderProps()
-                        // eslint-disable-next-line react/jsx-key
-                        <th
-                          className="h-7 text-left align-top"
-                          {...getHeaderProps(getSortByToggleProps({ title: undefined }))}
-                        >
-                          <div className="flex items-center space-x-2">
-                            <div className=" text-xs font-medium text-metallic-silver">
-                              {render('Header')}
-                            </div>
-                            {canSort && (
-                              <div className="space-y-1">
-                                <SortIcon
-                                  className={
-                                    isSorted && !isSortedDesc
-                                      ? 'fill-halloween-orange'
-                                      : 'fill-bright-gray'
-                                  }
-                                />
-                                <SortIcon
-                                  className={`rotate-180 ${
-                                    isSortedDesc ? 'fill-halloween-orange' : 'fill-bright-gray'
-                                  }`}
-                                />
-                              </div>
-                            )}
+                    {headers.map((column) => (
+                      // key is already provided by getHeaderProps()
+                      // eslint-disable-next-line react/jsx-key
+                      <th
+                        className="h-7 text-left align-top"
+                        {...column.getHeaderProps(column.getSortByToggleProps())}
+                        // {...(onHeaderClick
+                        //   ? {
+                        //       onClick: () => onHeaderClick(column),
+                        //     }
+                        //   : undefined)}
+                      >
+                        <div className="flex items-center space-x-2">
+                          <div className=" text-xs font-medium text-metallic-silver">
+                            {column.render('Header')}
                           </div>
-                        </th>
-                      )
-                    )}
+                          {column.canSort && (
+                            <div className="space-y-1">
+                              <SortIcon
+                                className={
+                                  column.isSorted && !column.isSortedDesc
+                                    ? 'fill-halloween-orange'
+                                    : 'fill-bright-gray'
+                                }
+                              />
+                              <SortIcon
+                                className={`rotate-180 ${
+                                  column.isSortedDesc ? 'fill-halloween-orange' : 'fill-bright-gray'
+                                }`}
+                              />
+                            </div>
+                          )}
+                        </div>
+                      </th>
+                    ))}
                   </tr>
                 ))}
               </thead>

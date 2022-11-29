@@ -45,6 +45,7 @@ const ClientPage: NextPageWithLayout = () => {
             tableQueryKey={['clients']}
             ofString="Clients"
             rowOnClick={({ original: { id } }) => replace(`/clients/${id}/details`)}
+            controlledSort
           />
         </Card>
       </div>
