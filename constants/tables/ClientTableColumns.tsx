@@ -1,4 +1,5 @@
 import { format } from 'date-fns'
+import Image from 'next/image'
 import { Column } from 'react-table'
 import { Client } from '../../types/Client.type'
 
@@ -11,7 +12,19 @@ export const ClientTableColumns: Array<Column<Client>> = [
   {
     Header: 'Company Name',
     accessor: 'name',
-    Cell: ({ value }) => <div className=" text-sm font-semibold text-onyx">{value}</div>,
+    Cell: ({
+      value,
+      row: {
+        original: { logoThumbnailUrl },
+      },
+    }) => (
+      <div className="flex items-center space-x-5 text-sm font-semibold text-onyx">
+        <div className="relative h-7 w-7">
+          <Image src={logoThumbnailUrl} layout="fill" alt="" className="rounded-lg" />
+        </div>
+        <div>{value}</div>
+      </div>
+    ),
   },
   {
     Header: 'Rating',
