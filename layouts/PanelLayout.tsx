@@ -1,3 +1,4 @@
+import { Tooltip } from '@mui/material'
 import axios from 'axios'
 import { signOut as nextAuthSignOut, useSession } from 'next-auth/react'
 import Image from 'next/image'
@@ -14,6 +15,7 @@ import { BellIcon } from '../components/icons/BellIcon'
 import { BriefcaseIcon } from '../components/icons/BriefcaseIcon'
 import { CalendarAddIcon } from '../components/icons/CalendarAddIcon'
 import { IndyIcon } from '../components/icons/IndyIcon'
+import { InfoIcon } from '../components/icons/InfoIcon'
 import { LifeBuoyIcon } from '../components/icons/LifeBuoyIcon'
 import { LogoutIcon } from '../components/icons/LogoutIcon'
 import { MagnifyingGlassIcon } from '../components/icons/MagnifyingGlassIcon'
@@ -26,6 +28,10 @@ import {
   CreateSupportTicketModal,
   useCreateSupportTicketModalStore,
 } from '../components/modals/CreateSupportTicketModal'
+import {
+  DashboadVideoModal,
+  useDashboadVideoModalStore,
+} from '../components/modals/DashboadVideoModal'
 import { RouteButton } from '../components/RouteButton'
 import {
   SocialMediaNotificationModal,
@@ -70,6 +76,7 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
   const { toggleModal: toggleSupportRequestModal } = useCreateSupportRequestModalStore()
   const { toggleModal: toggleSupportTicketModal } = useCreateSupportTicketModalStore()
   const { toggleModal: toggleNotificationModal } = useSocialMediaNotificationModalStore()
+  const { toggleDashboadVideoModal } = useDashboadVideoModalStore()
 
   const { data: ticketsAndNotifacationsCount, isLoading: ticketsAndNotifacationsCountIsLoading } =
     useQuery(
@@ -351,7 +358,16 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
                   />
                 )}
                 <div>
-                  <div className="mb-5 text-3xl font-bold text-onyx">{header}</div>
+                  <div className="flex">
+                    <div className="mb-5 mr-2 text-3xl font-bold text-onyx">{header}</div>
+                    <Tooltip title="Help me with this page" placement="top-end" className="ml-auto">
+                      <button type="button" className="flex" onClick={toggleDashboadVideoModal}>
+                        <div>
+                          <InfoIcon className="h-4 stroke-bleu-de-france transition-colors hover:stroke-halloween-orange" />
+                        </div>
+                      </button>
+                    </Tooltip>
+                  </div>
                   <div className=" font-semibold text-halloween-orange">{subHeader}</div>
                 </div>
               </div>
@@ -373,6 +389,7 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
       {session.isClient && <CreateSupportRequestModal />}
       {session.isManager && <CreateSupportTicketModal />}
       {(session.isStaff || session.isPrinterManager) && <SocialMediaNotificationModal />}
+      <DashboadVideoModal />
     </>
   )
 }
