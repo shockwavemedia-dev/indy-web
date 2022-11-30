@@ -197,7 +197,7 @@ const ClientSetting: NextPageWithLayout = () => {
                     label="Overview"
                     name="overview"
                     Icon={EditIcon}
-                    className="mb-5"
+                    className="mb-5 h-70"
                     placeholder="Enter overview"
                   />
                   <div className="mb-5 flex space-x-5">

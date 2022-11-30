@@ -151,7 +151,7 @@ const ClientLayout = ({ children }: { children: ReactNode }) => {
                 printer: 'ml-3/7',
                 'style-guide': 'ml-4/7',
                 notes: 'ml-5/7',
-                setting: 'ml-6/7',
+                setting: '!ml-6/7',
               }[asPath.split('/').pop() ?? '']
             }`}
           />
