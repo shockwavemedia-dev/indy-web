@@ -1,4 +1,4 @@
 export type UploadTicketFile = {
-  file: File | null
+  file: Array<File>
   folderId: string
 }

@@ -30,7 +30,6 @@ export const UploadTicketFileModal = ({
         `/v1/tickets/${ticketId}/upload-file`,
         objectWithFileToFormData(values)
       )
-
       if (status === 200) {
         queryClient.invalidateQueries(['ticketFiles', ticketId])
         toggleUploadTicketFileModal()
@@ -47,18 +46,20 @@ export const UploadTicketFileModal = ({
     <>
       {isUploadTicketFileModalVisible && (
         <Modal title="Upload Ticket File" onClose={toggleUploadTicketFileModal}>
-          <Formik initialValues={{ file: null, folderId: '' }} onSubmit={submitTicketFile}>
-            {({ isSubmitting }) => (
-              <Form className="w-130 space-y-8">
+          <Formik initialValues={{ file: [], folderId: '' }} onSubmit={submitTicketFile}>
+            {({ isSubmitting, values }) => (
+              <Form className="max-h-140 w-130 space-y-8 overflow-y-auto">
                 <div className="space-y-5">
-                  <FileDropZone
-                    name="file"
-                    maxSize={250}
-                    mimeType="image/gif"
-                    accept={['.gif', '.Graphics', '.mp4', '.png', '.jpeg', '.jpg', '.pdf']}
-                    multiple
-                  />
                   <FolderSelect clientId={clientId} />
+                  {values.folderId !== '' && (
+                    <FileDropZone
+                      name="file"
+                      maxSize={250}
+                      mimeType="image/gif"
+                      accept={['.gif', '.Graphics', '.mp4', '.png', '.jpeg', '.jpg', '.pdf']}
+                      multiple
+                    />
+                  )}
                 </div>
                 <div className="flex space-x-5">
                   <Button
@@ -69,9 +70,11 @@ export const UploadTicketFileModal = ({
                   >
                     Cancel
                   </Button>
-                  <Button ariaLabel="Submit" disabled={isSubmitting} type="submit">
-                    Submit
-                  </Button>
+                  {values.folderId !== '' && (
+                    <Button ariaLabel="Submit" disabled={isSubmitting} type="submit">
+                      Submit
+                    </Button>
+                  )}
                 </div>
               </Form>
             )}
