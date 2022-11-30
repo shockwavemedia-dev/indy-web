@@ -12,7 +12,6 @@ import {
   useTicketStatusFilter,
 } from '../../../components/filters/TicketStatusFilter'
 import { TicketTypeFilter, useTicketTypeFilter } from '../../../components/filters/TicketTypeFilter'
-import { EditIcon } from '../../../components/icons/EditIcon'
 import { PlusIcon } from '../../../components/icons/PlusIcon'
 import { TrashIcon } from '../../../components/icons/TrashIcon'
 import {
@@ -21,7 +20,6 @@ import {
 } from '../../../components/modals/DeleteClientModal'
 import { DeleteClientUserModal } from '../../../components/modals/DeleteClientUserModal'
 import { DeleteTicketModal } from '../../../components/modals/DeleteTicketModal'
-import { EditClientModal, useEditClientModal } from '../../../components/modals/EditClientModal'
 import { EditClientUserModal } from '../../../components/modals/EditClientUserModal'
 import { EditTicketModal } from '../../../components/modals/EditTicketModal'
 import {
@@ -42,7 +40,6 @@ const ClientDetails: NextPageWithLayout = () => {
     replace,
     query: { id },
   } = useRouter()
-  const toggleEditClientModal = useEditClientModal((state) => state.toggleEditClientModal)
   const toggleDeleteClientModal = useDeleteClientModal((state) => state.toggleDeleteClientModal)
   const toggleNewClientUserModal = useNewClientUserModal((state) => state.toggleNewClientUserModal)
   const [subject, setSubject] = useState('')
@@ -68,9 +65,6 @@ const ClientDetails: NextPageWithLayout = () => {
       <div className="mb-6 flex gap-6">
         <Card title="Company Details" className="min-w-[21.5rem]">
           <div className="absolute top-6 right-6 space-x-2">
-            <button className="group" onClick={() => toggleEditClientModal(data)}>
-              <EditIcon className="stroke-waterloo group-hover:stroke-halloween-orange" />
-            </button>
             <button className="group" onClick={() => toggleDeleteClientModal(data)}>
               <TrashIcon className="stroke-waterloo group-hover:stroke-halloween-orange" />
             </button>
@@ -175,7 +169,6 @@ const ClientDetails: NextPageWithLayout = () => {
       </Card>
       <EditTicketModal />
       <DeleteTicketModal />
-      <EditClientModal />
       <DeleteClientModal />
       <NewClientUserModal />
       <EditClientUserModal />
