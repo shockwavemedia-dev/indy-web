@@ -1,4 +1,3 @@
-import { Tooltip } from '@mui/material'
 import axios from 'axios'
 import Head from 'next/head'
 import Link from 'next/link'
@@ -6,12 +5,12 @@ import { useRouter } from 'next/router'
 import { ReactNode, useEffect } from 'react'
 import { useQuery } from 'react-query'
 import { FancyButton } from '../components/FancyButton'
+import { GearIcon } from '../components/icons/GearIcon'
 import { LifeBuoyIcon } from '../components/icons/LifeBuoyIcon'
 import { MonitorIcon } from '../components/icons/MonitorIcon'
 import { NotepadIcon } from '../components/icons/NotepadIcon'
 import { PenAndRulerIcon } from '../components/icons/PenAndRulerIcon'
 import { PrinterIcon } from '../components/icons/PrinterIcon'
-import { ReceiptIcon } from '../components/icons/ReceiptIcon'
 import { SquareDollarIcon } from '../components/icons/SquareDollarIcon'
 import { UserIcon } from '../components/icons/UserIcon'
 import {
@@ -133,12 +132,16 @@ const ClientLayout = ({ children }: { children: ReactNode }) => {
                 <span>Notes</span>
               </a>
             </Link>
-            <Tooltip title="Coming soon 🚀" placement="top">
-              <div className="flex w-1/7 cursor-default items-center justify-center space-x-2 font-semibold opacity-40">
-                <ReceiptIcon className="stroke-lavender-gray" />
-                <span>Invoices</span>
-              </div>
-            </Tooltip>
+            <Link href={`/clients/${id}/setting`}>
+              <a className="group">
+                <GearIcon
+                  className={`group-hover:stroke-halloween-orange${
+                    asPath.endsWith('setting') ? ' !stroke-halloween-orange' : ''
+                  }`}
+                />
+                <span>Setting</span>
+              </a>
+            </Link>
           </div>
           <div
             className={`-mt-0.5 h-0.75 w-1/7 rounded bg-halloween-orange transition-all ${
@@ -148,6 +151,7 @@ const ClientLayout = ({ children }: { children: ReactNode }) => {
                 printer: 'ml-3/7',
                 'style-guide': 'ml-4/7',
                 notes: 'ml-5/7',
+                setting: 'ml-6/7',
               }[asPath.split('/').pop() ?? '']
             }`}
           />
