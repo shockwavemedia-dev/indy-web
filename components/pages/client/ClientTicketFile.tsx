@@ -222,7 +222,7 @@ export const ClientTicketFile = ({ ticketFileId }: { ticketFileId: number }) => 
                     <div className="stroke-forest-green text-forest-green">Approve</div>
                   </Button>
                 )}
-                {ticketFile.status !== 'request revision' && (
+                {ticketFile.status !== 'approved' && (
                   <Button
                     ariaLabel="Request Edit"
                     type="button"
