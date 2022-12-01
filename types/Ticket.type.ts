@@ -25,4 +25,5 @@ export type Ticket = {
   assignees?: Array<TicketAssignee>
   userNotes?: string
   clientLogo?: File
+  isApprovalRequired: boolean
 }

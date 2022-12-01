@@ -1,6 +1,7 @@
 import { Tooltip } from '@mui/material'
 import { format } from 'date-fns'
 import { Column } from 'react-table'
+import { DocumentCheckIcon } from '../../components/icons/DocumentCheckIcon'
 import { EditIcon } from '../../components/icons/EditIcon'
 import { TrashIcon } from '../../components/icons/TrashIcon'
 import { useDeleteTicketModal } from '../../components/modals/DeleteTicketModal'
@@ -141,6 +142,22 @@ export const ClientTicketsTableColumns: Array<Column<Ticket>> = [
         value={value}
       />
     ),
+  },
+  {
+    Header: 'File(s) Approval',
+    accessor: 'isApprovalRequired',
+    disableSortBy: true,
+    Cell: ({ value }) => {
+      return (
+        <>
+          {value === true && (
+            <div className="flex text-center">
+              <DocumentCheckIcon className="stroke-forest-green hover:stroke-halloween-orange" />
+            </div>
+          )}
+        </>
+      )
+    },
   },
   {
     Header: '',
