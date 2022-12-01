@@ -358,17 +358,24 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
                   />
                 )}
                 <div>
+                  <div className="mb-2 text-3xl font-bold text-onyx">{header}</div>
+                  <div className="mb-2 font-semibold text-halloween-orange">{subHeader}</div>
                   <div className="flex">
-                    <div className="mb-5 mr-2 text-3xl font-bold text-onyx">{header}</div>
-                    <Tooltip title="Help me with this page" placement="top-end" className="ml-auto">
-                      <button type="button" className="flex" onClick={toggleDashboadVideoModal}>
-                        <div>
-                          <InfoIcon className="h-4 stroke-bleu-de-france transition-colors hover:stroke-halloween-orange" />
-                        </div>
-                      </button>
-                    </Tooltip>
+                    <div className="mr-1 text-xs text-halloween-orange">Explain this Page</div>
+                    <div>
+                      <Tooltip
+                        title="Click here for explainer video"
+                        placement="top"
+                        className="ml-auto"
+                      >
+                        <button type="button" className="flex" onClick={toggleDashboadVideoModal}>
+                          <div>
+                            <InfoIcon className="h-4 stroke-bleu-de-france transition-colors hover:stroke-halloween-orange" />
+                          </div>
+                        </button>
+                      </Tooltip>
+                    </div>
                   </div>
-                  <div className=" font-semibold text-halloween-orange">{subHeader}</div>
                 </div>
               </div>
             ) : (
