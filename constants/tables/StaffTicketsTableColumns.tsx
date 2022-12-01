@@ -1,5 +1,6 @@
 import { format } from 'date-fns'
 import { Column } from 'react-table'
+import { DocumentCheckIcon } from '../../components/icons/DocumentCheckIcon'
 import { Pill } from '../../components/Pill'
 import { Ticket } from '../../types/Ticket.type'
 
@@ -141,5 +142,21 @@ export const StaffTicketsTableColumns: Array<Column<Ticket>> = [
         value={value}
       />
     ),
+  },
+  {
+    Header: 'File(s) Approval',
+    accessor: 'isApprovalRequired',
+    disableSortBy: true,
+    Cell: ({ value }) => {
+      return (
+        <>
+          {value === true && (
+            <div className="flex text-center">
+              <DocumentCheckIcon className="stroke-forest-green hover:stroke-halloween-orange" />
+            </div>
+          )}
+        </>
+      )
+    },
   },
 ]
