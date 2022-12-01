@@ -361,40 +361,6 @@ export const AdminTicket = ({ ticketId }: { ticketId: number }) => {
                   </div>
                 </div>
               </TitleValue>
-              <TitleValue title="Priority" className="flex justify-between text-right">
-                <div className="flex space-x-2">
-                  <Pill
-                    twBackgroundColor={(() => {
-                      switch (ticket!.priority) {
-                        case 'Urgent':
-                          return 'bg-light-red-crimson'
-                        case 'Standard':
-                          return 'bg-light-golden-rod'
-                        case 'Relaxed':
-                          return 'bg-light-forest-green'
-                      }
-                    })()}
-                    twTextColor={(() => {
-                      switch (ticket!.priority) {
-                        case 'Urgent':
-                          return 'text-red-crimson'
-                        case 'Standard':
-                          return 'text-golden-rod'
-                        case 'Relaxed':
-                          return 'text-forest-green'
-                      }
-                    })()}
-                    value={ticket!.priority}
-                  />
-                  <div className="text-sm font-medium text-metallic-silver">
-                    {ticket!.priority === 'Relaxed'
-                      ? '7 days'
-                      : ticket!.priority === 'Standard'
-                      ? '48 hours'
-                      : '24 hours'}
-                  </div>
-                </div>
-              </TitleValue>
               <TitleValue title="Department" className="flex items-center justify-between">
                 {ticket!.departmentName}
               </TitleValue>

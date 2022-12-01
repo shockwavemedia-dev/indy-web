@@ -78,7 +78,7 @@ const ClientNotes: NextPageWithLayout = () => {
                       disabled={isSubmitting}
                     >
                       <PaperPlaneIcon className="stroke-white" />
-                      <div>Send</div>
+                      <div>Save</div>
                     </Button>
                   </div>
                 }
