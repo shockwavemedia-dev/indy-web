@@ -1,8 +1,11 @@
 import { useSession } from 'next-auth/react'
 import createStore from 'zustand'
 import { combine } from 'zustand/middleware'
+import { Button } from '../Button'
 import { FileDisplay } from '../FileDisplay'
+import { DownloadIcon } from '../icons/DownloadIcon'
 import { PrintIcon } from '../icons/PrintIcon'
+import { TrashIcon } from '../icons/TrashIcon'
 import { Modal } from '../Modal'
 import { CreatePrinterJobModal, useCreatePrinterJobModalStore } from './CreatePrinterJobModal'
 
@@ -42,12 +45,20 @@ export const FileDisplayModal = () => {
 
   const { toggleModal: toggleCreatePrinterJobModal } = useCreatePrinterJobModalStore()
 
+  const downloadFile = () => {
+    window.open(signedUrl, '_blank')
+  }
+
+  const deleteFile = () => {
+    toggleShowPhotoVideoFileModal()
+  }
+
   return (
     <>
       {fileType && name && (
         <Modal title={name} onClose={toggleShowPhotoVideoFileModal}>
           {fileType === 'application/pdf' ? (
-            <iframe src={signedUrl} className="h-163 w-280"></iframe>
+            <iframe src={signedUrl} className="h-103 w-228"></iframe>
           ) : (
             <>
               <FileDisplay
@@ -57,21 +68,44 @@ export const FileDisplayModal = () => {
                 imageWidth={560}
                 imageAlt={name}
                 className="rounded-xl"
-                videoClassName="w-140 rounded-xl"
+                videoClassName="rounded-xl w-228"
               />
               {fileType !== 'video/mp4' && session?.isClient && (
-                <button
-                  type="button"
-                  className="mb-5 flex h-12.5 w-full items-center justify-center space-x-2 rounded-xl border-1.5 border-solid border-bright-gray bg-halloween-orange text-base font-semibold text-white "
-                  aria-label="Print"
-                  onClick={(e) => {
-                    e.stopPropagation()
-                    toggleCreatePrinterJobModal(clientId, fileId)
-                  }}
-                >
-                  <PrintIcon className="stroke-white" />
-                  <div className="text-white">Print</div>
-                </button>
+                <div className="mt-6 flex w-70">
+                  <Button
+                    ariaLabel="Print"
+                    className="mr-2 w-72 bg-halloween-orange text-white"
+                    type="button"
+                    onClick={() => {
+                      toggleCreatePrinterJobModal(clientId, fileId)
+                    }}
+                  >
+                    <PrintIcon className="stroke-white" />
+                    <div>Print</div>
+                  </Button>
+
+                  <Button
+                    ariaLabel="Download"
+                    className="w-82 mr-2 bg-bleu-de-france text-white"
+                    type="button"
+                    onClick={downloadFile}
+                    light
+                  >
+                    <DownloadIcon className="stroke-white" />
+                    <div>Download</div>
+                  </Button>
+                  <Button
+                    ariaLabel="Delete"
+                    className="w-72 bg-red-crimson text-white"
+                    type="button"
+                    onClick={() => {
+                      deleteFile(fileId)
+                    }}
+                  >
+                    <TrashIcon className="stroke-white" />
+                    <div>Delete</div>
+                  </Button>
+                </div>
               )}
             </>
           )}
