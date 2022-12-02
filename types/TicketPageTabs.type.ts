@@ -1,1 +1,1 @@
-export type TicketPageTabs = 'description' | 'notes' | 'activities' | 'style_guide'
+export type TicketPageTabs = 'description' | 'notes' | 'activities' | 'style_guide' | 'my_files'
