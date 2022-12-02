@@ -53,7 +53,6 @@ import { TicketActivityCard } from '../../tickets/TicketActivityCard'
 import { TicketNoteCard } from '../../tickets/TicketNoteCard'
 
 export const ClientTicket = ({ ticketId }: { ticketId: number }) => {
-  const { replace } = useRouter()
   const { setHeader } = usePanelLayoutStore()
 
   const duplicateTicket = useProjectBrief((state) => state.setTicket)
@@ -161,7 +160,6 @@ export const ClientTicket = ({ ticketId }: { ticketId: number }) => {
     disabled?: boolean
     showCount?: boolean
   }) => {
-    const { replace } = useRouter()
     const clickTab = () => {
       setActiveTab(tabName)
 
@@ -207,6 +205,8 @@ export const ClientTicket = ({ ticketId }: { ticketId: number }) => {
       </div>
     )
   }
+
+  const { replace } = useRouter()
 
   useEffect(() => {
     toggleFileModal()
