@@ -37,14 +37,14 @@ import { Icon } from '../../../types/Icon.type'
 import { Page } from '../../../types/Page.type'
 import { Ticket } from '../../../types/Ticket.type'
 import { TicketActivity } from '../../../types/TicketActivity.type'
-import { TicketFile } from '../../../types/TicketFile.type'
+import { TicketFileVersion } from '../../../types/TicketFileVersion.type'
 import { TicketNote } from '../../../types/TicketNote.type'
 import { TicketPageTabs } from '../../../types/TicketPageTabs.type'
-import { FileButton } from '../../FileButton'
 import { DollarIcon } from '../../icons/DollarIcon'
 import { InfoIcon } from '../../icons/InfoIcon'
 import { NotepadIcon } from '../../icons/NotepadIcon'
 import { EditTicketAssigneeModal } from '../../modals/EditTicketAssigneeModal'
+import { TicketFileButton } from '../../modals/TicketFileButton'
 import {
   UploadTicketFileModal,
   useUploadTicketFileModalStore,
@@ -105,9 +105,9 @@ export const ManagerTicket = ({ ticketId }: { ticketId: number }) => {
     const {
       data: { data },
     } = await axios.get<{
-      data: Array<TicketFile>
+      data: Array<TicketFileVersion>
       page: Page
-    }>(`/v1/tickets/${ticketId}/files`)
+    }>(`/v1/tickets/${ticketId}/file-versions`)
 
     return data
   })
@@ -447,19 +447,24 @@ export const ManagerTicket = ({ ticketId }: { ticketId: number }) => {
             </button>
             <div className="flex flex-wrap gap-4">
               {!!ticketFiles ? (
-                ticketFiles.map(({ id, name, thumbnailUrl, status }) => {
-                  return (
-                    <FileButton
-                      key={`ticketFile-${id}`}
-                      className="h-35 w-35"
-                      href={`/ticket/file/${id}`}
-                      name={name}
-                      thumbnailUrl={thumbnailUrl}
-                      fileStatus={status}
-                      file
-                    />
-                  )
-                })
+                ticketFiles.map(
+                  ({ id, name, thumbnailUrl, status, ticketFileId, fileVersion, isLatest }) => {
+                    return (
+                      <TicketFileButton
+                        ticketFileId={ticketFileId}
+                        key={`ticketFile-${id}`}
+                        className="h-35 w-35"
+                        href={`/ticket/file/${ticketFileId}`}
+                        name={name}
+                        thumbnailUrl={thumbnailUrl}
+                        isLatest={isLatest}
+                        version={fileVersion}
+                        fileStatus={status}
+                        isClient={false}
+                      />
+                    )
+                  }
+                )
               ) : (
                 <div className="m-auto text-base text-metallic-silver">No files found.</div>
               )}

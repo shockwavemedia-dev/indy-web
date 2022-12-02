@@ -1,6 +1,7 @@
-export type TicketFile = {
+export type TicketFileVersion = {
   id: number
   name: string
+  ticketFileId: number
   generatedName: string
   signedUrl: string
   signedUrlExpiration: Date | null
@@ -17,6 +18,8 @@ export type TicketFile = {
   isApproved: boolean
   approvedById: number | null
   version: string
+  isLatest: boolean
+  fileVersion: number
   approvedAt: Date | null
   fileType: string
   ticketId: number
