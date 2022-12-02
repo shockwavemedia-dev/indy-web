@@ -18,6 +18,7 @@ export type Ticket = {
   duedate: Date
   type: TicketType
   status: TicketStatus
+  createdBy: string | null
   createdAt: Date
   attachments: Array<Attachment>
   services?: Array<Service>

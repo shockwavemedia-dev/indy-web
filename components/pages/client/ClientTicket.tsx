@@ -268,7 +268,10 @@ export const ClientTicket = ({ ticketId }: { ticketId: number }) => {
                 <TitleValue title="Company" className="mb-3">
                   {ticket!.clientName}
                 </TitleValue>
-                <TitleValue title="Subject">{ticket!.subject}</TitleValue>
+                <TitleValue title="Subject" className="mb-3">
+                  {ticket!.subject}
+                </TitleValue>
+                <TitleValue title="Submitted By:">{ticket!.createdBy}</TitleValue>
               </div>
             </div>
             <hr className="mb-6 border-t-bright-gray" />
