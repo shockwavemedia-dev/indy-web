@@ -7,6 +7,7 @@ import { useToastStore } from '../../../store/ToastStore'
 import { TicketFile } from '../../../types/TicketFile.type'
 import { get422And400ResponseError } from '../../../utils/ErrorHelpers'
 import { Button } from '../../Button'
+import { Card } from '../../Card'
 import { FileDisplay } from '../../FileDisplay'
 import { CheckIcon } from '../../icons/CheckIcon'
 import { DownloadIcon } from '../../icons/DownloadIcon'
@@ -157,160 +158,120 @@ export const ClientTicketFile = ({ ticketFileId }: { ticketFileId: number }) => 
             </div>
           </div>
           <div className="flex-1 space-y-5">
-            <div className="space-y-2">
-              <TitleValue title="ID" className="flex items-center justify-between">
-                {ticketFile.id}
-              </TitleValue>
-              <TitleValue title="Name" className="flex items-center justify-between">
-                {ticketFile.name}
-              </TitleValue>
-              <TitleValue title="Status" className="flex items-center justify-between">
-                <Pill
-                  twBackgroundColor={(() => {
-                    switch (ticketFile.status) {
-                      case 'approved':
-                        return 'bg-honeydew'
-                      case 'back from review':
-                        return 'bg-alice-blue'
-                      case 'deleted':
-                        return 'bg-light-tart-orange'
-                      case 'in progress':
-                        return 'bg-honeydew'
-                      case 'for review':
-                        return 'bg-light-navy'
-                      case 'new':
-                        return 'bg-alice-blue'
-                    }
-                  })()}
-                  twTextColor={(() => {
-                    switch (ticketFile.status) {
-                      case 'approved':
-                        return 'text-jungle-green'
-                      case 'back from review':
-                        return 'text-bleu-de-france'
-                      case 'deleted':
-                        return 'text-tart-orange'
-                      case 'in progress':
-                        return 'text-jungle-green'
-                      case 'for review':
-                        return 'text-bleu-de-france'
-                      case 'new':
-                        return 'text-bleu-de-france'
-                    }
-                  })()}
-                  value={ticketFile.status}
-                />
-              </TitleValue>
-              <TitleValue title="Approval Status" className="flex items-center justify-between">
-                <Pill
-                  twBackgroundColor={ticketFile.isApproved ? 'bg-honeydew' : 'bg-light-tart-orange'}
-                  twTextColor={ticketFile.isApproved ? 'text-jungle-green' : 'text-tart-orange'}
-                  value={ticketFile.isApproved ? 'Approved' : 'For Approval'}
-                />
-              </TitleValue>
-
-              <div className="flex space-x-5">
-                {!ticketFile.isApproved && ticketFile.status !== 'request revision' && (
-                  <Button
-                    className="w-1/2 text-bleu-de-france"
-                    ariaLabel="Approve Ticket File"
-                    type="button"
-                    onClick={approveTicketFile}
-                    light
-                  >
-                    <CheckIcon className="stroke-forest-green" />
-                    <div className="stroke-forest-green text-forest-green">Approve</div>
-                  </Button>
-                )}
-                {ticketFile.status !== 'approved' && (
-                  <Button
-                    ariaLabel="Request Edit"
-                    type="button"
-                    className="w-1/2 stroke-light-red-crimson"
-                    onClick={() => {
-                      toggleRequestRevisionTicketFileModal(ticketFile)
-                    }}
-                    light
-                  >
-                    <TrashIcon className="stroke-red-crimson" />
-                    <div className="stroke-light-red-crimson text-red-crimson">Request Edit</div>
-                  </Button>
-                )}
-              </div>
-              <div className="flex space-x-5">
-                <Button
-                  ariaLabel="Download"
-                  className="w-1/2 text-bleu-de-france"
-                  type="button"
-                  onClick={downloadFile}
-                  light
-                >
-                  <DownloadIcon className="stroke-bleu-de-france" />
-                  <div>Download</div>
-                </Button>
-                {ticketFile.isApproved && (
-                  <Button
-                    type="button"
-                    className="w-1/2 stroke-orchid"
-                    ariaLabel="Print"
-                    onClick={() => {
-                      toggleCreatePrinterJobModal(
-                        session!.user.userType.client.id,
-                        ticketFile.fileId
-                      )
-                    }}
-                    light
-                  >
-                    <PrintIcon className="stroke-orchid" />
-                    <div className="text-orchid">Print</div>
-                  </Button>
-                )}
-              </div>
-            </div>
-            {/* <Formik
-              validationSchema={CreateFileFeedbackFormSchema}
-              initialValues={{ feedback: '', attachment: [] }}
-              onSubmit={submitForm}
-            >
-              {({ isSubmitting }) => (
-                <Form>
-                  <RichTextInput
-                    label="Enter Feedback"
-                    Icon={EditIcon}
-                    placeholder="Enter feedback"
-                    name="feedback"
-                    className="h-86"
-                    inputActions={
-                      <div className="absolute right-6 bottom-6 z-10 flex items-center space-x-5">
-                        <input type="file" name="attachment" id="attachment" hidden />
-                        <label htmlFor="note-attachment" className="cursor-pointer">
-                          <PaperClipIcon className="stroke-waterloo" />
-                        </label>
-                        <Button
-                          ariaLabel="Submit Notes"
-                          type="submit"
-                          className="!w-fit px-10"
-                          disabled={isSubmitting}
-                        >
-                          <PaperPlaneIcon className="stroke-white" />
-                          <div>Send</div>
-                        </Button>
-                      </div>
-                    }
+            <Card>
+              <div className="space-y-2">
+                <TitleValue title="ID" className="flex items-center justify-between">
+                  {ticketFile.id}
+                </TitleValue>
+                <TitleValue title="Name" className="flex items-center justify-between">
+                  {ticketFile.name}
+                </TitleValue>
+                <TitleValue title="Status" className="flex items-center justify-between">
+                  <Pill
+                    twBackgroundColor={(() => {
+                      switch (ticketFile.status) {
+                        case 'approved':
+                          return 'bg-honeydew'
+                        case 'back from review':
+                          return 'bg-alice-blue'
+                        case 'deleted':
+                          return 'bg-light-tart-orange'
+                        case 'in progress':
+                          return 'bg-honeydew'
+                        case 'for review':
+                          return 'bg-light-navy'
+                        case 'new':
+                          return 'bg-alice-blue'
+                      }
+                    })()}
+                    twTextColor={(() => {
+                      switch (ticketFile.status) {
+                        case 'approved':
+                          return 'text-jungle-green'
+                        case 'back from review':
+                          return 'text-bleu-de-france'
+                        case 'deleted':
+                          return 'text-tart-orange'
+                        case 'in progress':
+                          return 'text-jungle-green'
+                        case 'for review':
+                          return 'text-bleu-de-france'
+                        case 'new':
+                          return 'text-bleu-de-france'
+                      }
+                    })()}
+                    value={ticketFile.status}
                   />
-                </Form>
-              )}
-            </Formik> */}
-            {/* <div className="max-h-130 space-y-5 overflow-y-auto">
-              {fileFeedbacks?.map(({ id, feedback, createdAt, feedbackBy }) => (
-                <TicketFileFeedbackCard
-                  key={`ticket-file-feedback-${id}`}
-                  feedback={feedback}
-                  createdAt={createdAt}
-                  createdBy={feedbackBy}
-                />
-              ))}
-            </div> */}
+                </TitleValue>
+                <TitleValue title="Approval Status" className="flex items-center justify-between">
+                  <Pill
+                    twBackgroundColor={
+                      ticketFile.isApproved ? 'bg-honeydew' : 'bg-light-tart-orange'
+                    }
+                    twTextColor={ticketFile.isApproved ? 'text-jungle-green' : 'text-tart-orange'}
+                    value={ticketFile.isApproved ? 'Approved' : 'For Approval'}
+                  />
+                </TitleValue>
+
+                <div className="flex space-x-5">
+                  {ticketFile.status === 'new' && (
+                    <Button
+                      className="w-1/2 text-bleu-de-france"
+                      ariaLabel="Approve Ticket File"
+                      type="button"
+                      onClick={approveTicketFile}
+                      light
+                    >
+                      <CheckIcon className="stroke-forest-green" />
+                      <div className="stroke-forest-green text-forest-green">Approve</div>
+                    </Button>
+                  )}
+                  {ticketFile.status !== 'approved' && (
+                    <Button
+                      ariaLabel="Request Edit"
+                      type="button"
+                      className="w-1/2 stroke-light-red-crimson"
+                      onClick={() => {
+                        toggleRequestRevisionTicketFileModal(ticketFile)
+                      }}
+                      light
+                    >
+                      <TrashIcon className="stroke-red-crimson" />
+                      <div className="stroke-light-red-crimson text-red-crimson">Request Edit</div>
+                    </Button>
+                  )}
+                </div>
+                <div className="flex space-x-5">
+                  <Button
+                    ariaLabel="Download"
+                    className="w-1/2 text-bleu-de-france"
+                    type="button"
+                    onClick={downloadFile}
+                    light
+                  >
+                    <DownloadIcon className="stroke-bleu-de-france" />
+                    <div>Download</div>
+                  </Button>
+                  {ticketFile.isApproved && (
+                    <Button
+                      type="button"
+                      className="w-1/2 stroke-orchid"
+                      ariaLabel="Print"
+                      onClick={() => {
+                        toggleCreatePrinterJobModal(
+                          session!.user.userType.client.id,
+                          ticketFile.fileId
+                        )
+                      }}
+                      light
+                    >
+                      <PrintIcon className="stroke-orchid" />
+                      <div className="text-orchid">Print</div>
+                    </Button>
+                  )}
+                </div>
+              </div>
+            </Card>
           </div>
         </div>
       )}

@@ -32,6 +32,7 @@ export const UploadTicketFileModal = ({
       )
       if (status === 200) {
         queryClient.invalidateQueries(['ticketFiles', ticketId])
+        queryClient.invalidateQueries(['ticketFiles'])
         toggleUploadTicketFileModal()
       }
     } catch (e) {
