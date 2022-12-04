@@ -49,7 +49,8 @@ export const FileDisplayModal = () => {
     window.open(signedUrl, '_blank')
   }
 
-  const deleteFile = () => {
+  const deleteFile = (fileId: number) => {
+    console.log(fileId)
     toggleShowPhotoVideoFileModal()
   }
 
