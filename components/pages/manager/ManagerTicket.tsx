@@ -10,7 +10,6 @@ import { Button } from '../../../components/Button'
 import { Card } from '../../../components/Card'
 import { DataTable } from '../../../components/DataTable'
 import { CalendarIcon } from '../../../components/icons/CalendarIcon'
-import { ColorsIcon } from '../../../components/icons/ColorsIcon'
 import { EditIcon } from '../../../components/icons/EditIcon'
 import { NoteIcon } from '../../../components/icons/NoteIcon'
 import { PaperClipIcon } from '../../../components/icons/PaperClipIcon'
@@ -40,7 +39,9 @@ import { TicketActivity } from '../../../types/TicketActivity.type'
 import { TicketFileVersion } from '../../../types/TicketFileVersion.type'
 import { TicketNote } from '../../../types/TicketNote.type'
 import { TicketPageTabs } from '../../../types/TicketPageTabs.type'
+import { FileBrowser } from '../../FileBrowser'
 import { DollarIcon } from '../../icons/DollarIcon'
+import { FolderIcon } from '../../icons/FolderIcon'
 import { InfoIcon } from '../../icons/InfoIcon'
 import { NotepadIcon } from '../../icons/NotepadIcon'
 import { EditTicketAssigneeModal } from '../../modals/EditTicketAssigneeModal'
@@ -231,7 +232,10 @@ export const ManagerTicket = ({ ticketId }: { ticketId: number }) => {
                 <TitleValue title="Company" className="mb-3">
                   {ticket!.clientName}
                 </TitleValue>
-                <TitleValue title="Subject">{ticket!.subject}</TitleValue>
+                <TitleValue title="Subject" className="mb-3">
+                  {ticket!.subject}
+                </TitleValue>
+                <TitleValue title="Submitted By:">{ticket!.createdBy}</TitleValue>
               </div>
             </div>
             <hr className="mb-6 border-t-bright-gray" />
@@ -475,8 +479,9 @@ export const ManagerTicket = ({ ticketId }: { ticketId: number }) => {
           <div className="flex justify-between">
             <Tab title="Description" Icon={NotepadIcon} tabName="description" />
             <Tab title="Messaging" Icon={NoteIcon} tabName="notes" />
+            <Tab title="My Files" Icon={FolderIcon} tabName="my_files" />
             <Tab title="Activities" Icon={CalendarIcon} tabName="activities" />
-            <Tab title="Style Guide" Icon={ColorsIcon} tabName="style_guide" disabled />
+            {/* <Tab title="Style Guide" Icon={ColorsIcon} tabName="style_guide" disabled /> */}
           </div>
           <div className="h-px bg-bright-gray" />
           <div
@@ -486,6 +491,8 @@ export const ManagerTicket = ({ ticketId }: { ticketId: number }) => {
                 : activeTab === 'notes'
                 ? 'ml-1/4'
                 : activeTab === 'activities'
+                ? 'ml-auto'
+                : activeTab === 'my_files'
                 ? 'ml-1/2'
                 : 'ml-auto'
             }`}
@@ -503,6 +510,16 @@ export const ManagerTicket = ({ ticketId }: { ticketId: number }) => {
               )}
             </Card>
           )}
+          {activeTab === 'my_files' && (
+            <Card>
+              <div className="mx-auto w-full">
+                <div className="flex gap-6 transition-all lg:flex-col">
+                  <FileBrowser clientId={ticket.clientId} />
+                </div>
+              </div>{' '}
+            </Card>
+          )}
+
           {activeTab === 'notes' && (
             <>
               <Formik
