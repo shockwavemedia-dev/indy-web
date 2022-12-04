@@ -5,6 +5,7 @@ import { useRouter } from 'next/router'
 import { ReactNode, useEffect } from 'react'
 import { useQuery } from 'react-query'
 import { FancyButton } from '../components/FancyButton'
+import { FolderIcon } from '../components/icons/FolderIcon'
 import { GearIcon } from '../components/icons/GearIcon'
 import { LifeBuoyIcon } from '../components/icons/LifeBuoyIcon'
 import { MonitorIcon } from '../components/icons/MonitorIcon'
@@ -102,6 +103,16 @@ const ClientLayout = ({ children }: { children: ReactNode }) => {
                 <span>Marketing Plan</span>
               </a>
             </Link>
+            <Link href={`/clients/${id}/my-files`}>
+              <a className="group">
+                <FolderIcon
+                  className={`group-hover:stroke-halloween-orange${
+                    asPath.endsWith('screens') ? ' !stroke-halloween-orange' : ''
+                  }`}
+                />
+                <span>MyFiles</span>
+              </a>
+            </Link>
             <Link href={`/clients/${id}/printer`}>
               <a className="group">
                 <PrinterIcon
@@ -144,14 +155,15 @@ const ClientLayout = ({ children }: { children: ReactNode }) => {
             </Link>
           </div>
           <div
-            className={`-mt-0.5 h-0.75 w-1/7 rounded bg-halloween-orange transition-all ${
+            className={`-mt-0.5 h-0.75 w-1/8 rounded bg-halloween-orange transition-all ${
               {
-                screens: 'ml-1/7',
-                'marketing-plan': 'ml-2/7',
-                printer: 'ml-3/7',
-                'style-guide': 'ml-4/7',
-                notes: 'ml-5/7',
-                setting: 'ml-6/7',
+                screens: 'ml-1/8',
+                'marketing-plan': 'ml-2/8',
+                'my-files': 'ml-3/8',
+                printer: 'ml-4/8',
+                'style-guide': 'ml-5/8',
+                notes: 'ml-6/8',
+                setting: 'ml-7/8',
               }[asPath.split('/').pop() ?? '']
             }`}
           />
