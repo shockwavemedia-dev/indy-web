@@ -42,7 +42,9 @@ const SocialMediaPage: NextPageWithLayout = () => {
 
   if (
     fetchedServices &&
-    fetchedServices.some(({ serviceId, isEnabled }) => serviceId === 4 && !isEnabled)
+    fetchedServices.some(
+      ({ serviceName, isEnabled }) => serviceName === 'Social Media' && !isEnabled
+    )
   ) {
     replace('/dashboard')
     return null
