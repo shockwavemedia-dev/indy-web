@@ -155,11 +155,6 @@ export const SocialMediaStatusSelect = <
           backgroundColor: '#F25D23',
         },
       }),
-      menu: (base) => ({
-        ...base,
-        zIndex: 20,
-        overflow: 'clip',
-      }),
       noOptionsMessage: (base) => ({
         ...base,
         font: '500 0.875rem/1.25rem Urbanist',

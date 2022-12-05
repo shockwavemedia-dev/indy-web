@@ -276,6 +276,7 @@ export const SocialMediaColumns: Array<Column<SocialMedia>> = [
             options={SocialMediaStatusOptions}
             placeholder=""
             menuPlacement="auto"
+            menuPortalTarget={document.body}
           />
           {/* Nice logo test test */}
         </div>
@@ -374,6 +375,7 @@ export const SocialMediaColumns: Array<Column<SocialMedia>> = [
             placeholder=""
             isMulti
             menuPlacement="auto"
+            menuPortalTarget={document.body}
           />
         </div>
       )
