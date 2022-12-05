@@ -202,7 +202,7 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
               title="Social Media"
               className="w-fit"
               disabled={clientServices.some(
-                ({ serviceId, isEnabled }) => serviceId === 4 && !isEnabled
+                ({ serviceName, isEnabled }) => serviceName === 'Social Media' && !isEnabled
               )}
             />
             <FancyButton
