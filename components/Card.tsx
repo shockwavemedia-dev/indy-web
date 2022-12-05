@@ -7,7 +7,7 @@ export const Card = ({
   titlePosition,
   titleClassName,
 }: {
-  title?: string
+  title?: ReactNode
   children?: ReactNode
   className?: string
   titlePosition?: 'center' | 'right'

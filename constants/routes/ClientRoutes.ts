@@ -54,9 +54,9 @@ export const ClientRoutes: Array<Route> = [
     pathname: '/edm',
   },
   {
-    title: 'Website Services',
+    title: 'Website',
     Icon: MonitorIcon,
-    pathname: '/website-services',
+    pathname: '/website',
   },
   {
     title: 'Animation Library',
