@@ -19,9 +19,11 @@ export const ClientTableColumns: Array<Column<Client>> = [
       },
     }) => (
       <div className="flex items-center space-x-5 text-sm font-semibold text-onyx">
-        <div className="relative h-7 w-7">
-          <Image src={logoThumbnailUrl} layout="fill" alt="" className="rounded-lg" />
-        </div>
+        {logoThumbnailUrl && (
+          <div className="relative h-7 w-7">
+            <Image src={logoThumbnailUrl} layout="fill" alt="" className="rounded-lg" />
+          </div>
+        )}
         <div>{value}</div>
       </div>
     ),
