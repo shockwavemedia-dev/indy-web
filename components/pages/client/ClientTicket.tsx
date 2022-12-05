@@ -465,16 +465,7 @@ export const ClientTicket = ({ ticketId }: { ticketId: number }) => {
             <div className="flex flex-wrap gap-4">
               {!!ticketFiles ? (
                 ticketFiles.map(
-                  ({
-                    id,
-                    name,
-                    thumbnailUrl,
-                    status,
-                    ticketFileId,
-                    fileVersion,
-                    isLatest,
-                    isApproved,
-                  }) => {
+                  ({ id, name, thumbnailUrl, status, ticketFileId, fileVersion, isLatest }) => {
                     return (
                       <TicketFileButton
                         ticketFileId={ticketFileId}
@@ -484,7 +475,7 @@ export const ClientTicket = ({ ticketId }: { ticketId: number }) => {
                         name={name}
                         thumbnailUrl={thumbnailUrl}
                         version={fileVersion}
-                        fileStatus={isApproved ? 'approved' : status}
+                        fileStatus={status}
                         isLatest={isLatest}
                         isClient={true}
                       />
