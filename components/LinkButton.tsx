@@ -5,11 +5,13 @@ export const LinkButton = ({
   href,
   light = false,
   className,
+  newTab = false,
 }: {
   title: string
   href: string
   light?: boolean
   className?: string
+  newTab?: boolean
 }) => (
   <Link href={href}>
     <a
@@ -18,6 +20,7 @@ export const LinkButton = ({
           ? 'border-1.5 border-solid border-bright-gray bg-white text-onyx'
           : 'bg-halloween-orange text-white'
       } ${className}`}
+      target={newTab ? '_blank' : '_self'}
     >
       {title}
     </a>
