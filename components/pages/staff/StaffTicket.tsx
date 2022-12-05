@@ -112,7 +112,7 @@ export const StaffTicket = ({ ticketId }: { ticketId: number }) => {
     unreadNotes = JSON.parse(ticket?.userNotes)[session?.user.id ?? 0]
   }
 
-  const { data: ticketFiles } = useQuery(['ticketFiles', ticketId], async () => {
+  const { data: ticketFiles } = useQuery(['ticketFiles'], async () => {
     const {
       data: { data },
     } = await axios.get<{
@@ -457,6 +457,7 @@ export const StaffTicket = ({ ticketId }: { ticketId: number }) => {
                       <div className="mb-3">sent to the client with an approval request.</div>
                       <div>If you do not want to submit an approval request to the client,</div>
                       <div>please upload directly to the clients MyFiles folder and not here.</div>
+                      <div className="mt-3">Only latest file version can be deleted.</div>
                     </React.Fragment>
                   }
                 >
