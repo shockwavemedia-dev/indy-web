@@ -22,7 +22,7 @@ const nextAuth = NextAuth({
           })
 
           const {
-            userType: { role, type },
+            userType: { role, type, department },
           } = user
 
           return {
@@ -32,9 +32,27 @@ const nextAuth = NextAuth({
             expiry: getTime(addDays(new Date(), expiresIn / 86400)),
             isAdmin: type === 'admin_users' && role === 'admin',
             isClient: type === 'client_users',
-            isManager: type === 'admin_users' && (role === 'account manager' || role === 'manager'),
-            isStaff: type === 'admin_users' && role === 'staff',
+            isManager:
+              type === 'admin_users' &&
+              (role === 'account manager' || role === 'manager') &&
+              department &&
+              department.name !== 'Social Media',
+            isStaff:
+              type === 'admin_users' &&
+              role === 'staff' &&
+              department &&
+              department.name !== 'Social Media',
             isPrinterManager: type === 'printer',
+            isSocialMediaStaff:
+              type === 'admin_users' &&
+              role === 'staff' &&
+              department &&
+              department.name === 'Social Media',
+            isSocialMediaManager:
+              type === 'admin_users' &&
+              role === 'manager' &&
+              department &&
+              department.name === 'Social Media',
           }
         } catch (e) {
           if (((x): x is AxiosError<{ message: string }> => axios.isAxiosError(x))(e)) {
@@ -58,6 +76,8 @@ const nextAuth = NextAuth({
         token.isManager = user.isManager
         token.isStaff = user.isStaff
         token.isPrinterManager = user.isPrinterManager
+        token.isSocialMediaStaff = user.isSocialMediaStaff
+        token.isSocialMediaManager = user.isSocialMediaManager
       }
 
       if (getTime(new Date()) >= token.expiry) {
@@ -84,6 +104,8 @@ const nextAuth = NextAuth({
       session.isManager = token.isManager
       session.isStaff = token.isStaff
       session.isPrinterManager = token.isPrinterManager
+      session.isSocialMediaStaff = token.isSocialMediaStaff
+      session.isSocialMediaManager = token.isSocialMediaManager
 
       return session
     },

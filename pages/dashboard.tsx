@@ -17,23 +17,15 @@ const DashboardPage: NextPageWithLayout = () => {
       if (session.isClient) {
         return <ClientDashboard />
       } else if (session.isManager) {
-        if (
-          session?.user.userType.department &&
-          session?.user.userType.department.name === 'Social Media'
-        ) {
-          return <ManagerSocialMediaList />
-        }
         return <ManagerDashboard />
       } else if (session.isStaff) {
-        if (
-          session?.user.userType.department &&
-          session?.user.userType.department.name === 'Social Media'
-        ) {
-          return <StaffSocialMediaList />
-        }
         return <StaffDashboard />
       } else if (session.isPrinterManager) {
         return <PrinterManagerPrinterJobsPage />
+      } else if (session.isSocialMediaManager) {
+        return <ManagerSocialMediaList />
+      } else if (session.isSocialMediaStaff) {
+        return <StaffSocialMediaList />
       }
     }
 
