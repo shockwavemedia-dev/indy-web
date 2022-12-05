@@ -5,6 +5,8 @@ import { ReactNode } from 'react'
 import { BadgeCheckIcon } from '../icons/BadgeCheckIcon'
 import { EditIcon } from '../icons/EditIcon'
 import { FileIcon } from '../icons/FileIcon'
+import { TrashIcon } from '../icons/TrashIcon'
+import { DeleteTicketFileModal, useDeleteTicketFileModal } from './DeleteTicketFileModal'
 import {
   TicketFileUploadRevisionModal,
   useTicketFileUploadRevisionModal,
@@ -43,6 +45,7 @@ export const TicketFileButton = ({
   }
 
   const { toggleTicketFileUploadRevisionModal } = useTicketFileUploadRevisionModal()
+  const { toggleDeleteTicketFileModal } = useDeleteTicketFileModal()
 
   return (
     <div className="group relative">
@@ -125,6 +128,26 @@ export const TicketFileButton = ({
           </button>
         </>
       )}
+      {fileStatus === 'new' && isLatest === true && isClient === false && (
+        <>
+          <button
+            aria-label="Delete Ticket File"
+            type="button"
+            disabled={disabled}
+            className="absolute top-3 right-3"
+            onClick={() => {
+              toggleDeleteTicketFileModal(ticketFileId)
+            }}
+          >
+            <Tooltip title="Delete File" placement="top-end" className="ml-auto">
+              <div>
+                <TrashIcon className="stroke-red-crimson" />
+              </div>
+            </Tooltip>
+          </button>
+        </>
+      )}
+      <DeleteTicketFileModal />
       <TicketFileUploadRevisionModal />
     </div>
   )

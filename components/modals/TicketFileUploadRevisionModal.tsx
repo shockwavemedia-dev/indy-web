@@ -33,7 +33,7 @@ export const TicketFileUploadRevisionModal = () => {
 
     if (status === 200) {
       toggleTicketFileUploadRevisionModal()
-      queryClient.invalidateQueries(['ticketFiles', ticketFileId])
+      queryClient.invalidateQueries('ticketFiles')
     }
   }
 
