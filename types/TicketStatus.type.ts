@@ -1,8 +1,1 @@
-export type TicketStatus =
-  | 'closed'
-  | 'new'
-  | 'pending'
-  | 'on hold'
-  | 'open'
-  | 'resolved'
-  | 'deleted'
+export type TicketStatus = 'closed' | 'new' | 'pending' | 'in_progress' | 'open' | 'deleted'

@@ -7,15 +7,7 @@ import { Dropdown } from '../Dropdown'
 import { CaretIcon } from '../icons/CaretIcon'
 import { FilterIcon } from '../icons/FilterIcon'
 
-const statusList: Array<TicketStatus> = [
-  'closed',
-  'new',
-  'pending',
-  'on hold',
-  'open',
-  'resolved',
-  'deleted',
-]
+const statusList: Array<TicketStatus> = ['closed', 'new', 'pending', 'open', 'deleted']
 
 export const useTicketStatusFilter = create(
   combine(

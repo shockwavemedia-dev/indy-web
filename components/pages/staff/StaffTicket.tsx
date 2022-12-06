@@ -33,6 +33,7 @@ import { TicketFileVersion } from '../../../types/TicketFileVersion.type'
 import { TicketNote } from '../../../types/TicketNote.type'
 import { TicketPageTabs } from '../../../types/TicketPageTabs.type'
 import { FileBrowser } from '../../FileBrowser'
+import { ColorsIcon } from '../../icons/ColorsIcon'
 import { DollarIcon } from '../../icons/DollarIcon'
 import { FolderIcon } from '../../icons/FolderIcon'
 import { InfoIcon } from '../../icons/InfoIcon'
@@ -309,8 +310,6 @@ export const StaffTicket = ({ ticketId }: { ticketId: number }) => {
                   twBackgroundColor={(() => {
                     switch (ticket!.status) {
                       case 'closed':
-                        return 'bg-light-navy'
-                      case 'resolved':
                         return 'bg-honeydew'
                       case 'open':
                         return 'bg-light-golden-rod'
@@ -318,15 +317,13 @@ export const StaffTicket = ({ ticketId }: { ticketId: number }) => {
                         return 'bg-alice-blue'
                       case 'pending':
                         return 'bg-light-tart-orange'
-                      case 'on hold':
+                      case 'in_progress':
                         return 'bg-light-deep-saffron'
                     }
                   })()}
                   twTextColor={(() => {
                     switch (ticket!.status) {
                       case 'closed':
-                        return 'text-navy'
-                      case 'resolved':
                         return 'text-jungle-green'
                       case 'open':
                         return 'text-golden-rod'
@@ -334,7 +331,7 @@ export const StaffTicket = ({ ticketId }: { ticketId: number }) => {
                         return 'text-bleu-de-france'
                       case 'pending':
                         return 'text-tart-orange'
-                      case 'on hold':
+                      case 'in_progress':
                         return 'text-deep-saffron'
                     }
                   })()}
@@ -499,22 +496,23 @@ export const StaffTicket = ({ ticketId }: { ticketId: number }) => {
             <Tab title="Messaging" Icon={NoteIcon} tabName="notes" showCount={true} />
             <Tab title="My Files" Icon={FolderIcon} tabName="my_files" />
             <Tab title="Activities" Icon={CalendarIcon} tabName="activities" />
-            {/* <Tab title="Style Guide" Icon={ColorsIcon} tabName="style_guide" disabled /> */}
+            <Tab title="Style Guide" Icon={ColorsIcon} tabName="style_guide" disabled />
           </div>
           <div className="h-px bg-bright-gray" />
           <div
-            className={`-mt-0.5 mb-4 h-0.75 w-1/4 rounded bg-halloween-orange fill-halloween-orange transition-all ${
+            className={`-mt-0.5 mb-4 h-0.75 w-1/5 rounded bg-halloween-orange fill-halloween-orange transition-all ${
               activeTab === 'description'
                 ? 'ml-0'
                 : activeTab === 'notes'
-                ? 'ml-1/4'
+                ? 'ml-1/5'
                 : activeTab === 'activities'
-                ? 'ml-auto'
+                ? 'ml-3/5'
                 : activeTab === 'my_files'
-                ? 'ml-1/2'
+                ? 'ml-2/5'
                 : 'ml-auto'
             }`}
           />
+
           {activeTab === 'description' && (
             <Card>
               {!ticket.emailHtml && <RichTextDisplay value={ticket!.description} />}
