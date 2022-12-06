@@ -14,6 +14,7 @@ export type Ticket = {
   clientName: string
   subject: string
   description: string
+  styleGuide?: string
   departmentName: string
   duedate: Date
   type: TicketType
