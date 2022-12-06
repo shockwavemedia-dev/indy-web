@@ -329,8 +329,6 @@ export const ClientTicket = ({ ticketId }: { ticketId: number }) => {
                   twBackgroundColor={(() => {
                     switch (ticket!.status) {
                       case 'closed':
-                        return 'bg-light-navy'
-                      case 'resolved':
                         return 'bg-honeydew'
                       case 'open':
                         return 'bg-light-golden-rod'
@@ -338,15 +336,13 @@ export const ClientTicket = ({ ticketId }: { ticketId: number }) => {
                         return 'bg-alice-blue'
                       case 'pending':
                         return 'bg-light-tart-orange'
-                      case 'on hold':
+                      case 'in_progress':
                         return 'bg-light-deep-saffron'
                     }
                   })()}
                   twTextColor={(() => {
                     switch (ticket!.status) {
                       case 'closed':
-                        return 'text-navy'
-                      case 'resolved':
                         return 'text-jungle-green'
                       case 'open':
                         return 'text-golden-rod'
@@ -354,7 +350,7 @@ export const ClientTicket = ({ ticketId }: { ticketId: number }) => {
                         return 'text-bleu-de-france'
                       case 'pending':
                         return 'text-tart-orange'
-                      case 'on hold':
+                      case 'in_progress':
                         return 'text-deep-saffron'
                     }
                   })()}

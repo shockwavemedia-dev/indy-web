@@ -73,8 +73,6 @@ export const ClientTicketsTableColumns: Array<Column<Ticket>> = [
         twBackgroundColor={(() => {
           switch (value) {
             case 'closed':
-              return 'bg-light-navy'
-            case 'resolved':
               return 'bg-honeydew'
             case 'open':
               return 'bg-light-golden-rod'
@@ -82,15 +80,13 @@ export const ClientTicketsTableColumns: Array<Column<Ticket>> = [
               return 'bg-alice-blue'
             case 'pending':
               return 'bg-light-tart-orange'
-            case 'on hold':
+            case 'in_progress':
               return 'bg-light-deep-saffron'
           }
         })()}
         twTextColor={(() => {
           switch (value) {
             case 'closed':
-              return 'text-navy'
-            case 'resolved':
               return 'text-jungle-green'
             case 'open':
               return 'text-golden-rod'
@@ -98,7 +94,7 @@ export const ClientTicketsTableColumns: Array<Column<Ticket>> = [
               return 'text-bleu-de-france'
             case 'pending':
               return 'text-tart-orange'
-            case 'on hold':
+            case 'in_progress':
               return 'text-deep-saffron'
           }
         })()}
