@@ -478,7 +478,7 @@ export const ManagerTicket = ({ ticketId }: { ticketId: number }) => {
             <Tab title="Messaging" Icon={NoteIcon} tabName="notes" />
             <Tab title="My Files" Icon={FolderIcon} tabName="my_files" />
             <Tab title="Activities" Icon={CalendarIcon} tabName="activities" />
-            <Tab title="Style Guide" Icon={ColorsIcon} tabName="style_guide" disabled />
+            <Tab title="Style Guide" Icon={ColorsIcon} tabName="style_guide" />
           </div>
           <div className="h-px bg-bright-gray" />
           <div
@@ -494,6 +494,11 @@ export const ManagerTicket = ({ ticketId }: { ticketId: number }) => {
                 : 'ml-auto'
             }`}
           />
+          {activeTab === 'style_guide' && (
+            <div>
+              <Card>{ticket.styleGuide && <RichTextDisplay value={ticket!.styleGuide} />}</Card>
+            </div>
+          )}
           {activeTab === 'description' && (
             <Card>
               {!ticket.emailHtml && <RichTextDisplay value={ticket!.description} />}
