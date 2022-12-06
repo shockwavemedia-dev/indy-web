@@ -73,6 +73,7 @@ const ProjectBriefPage: NextPageWithLayout = () => {
   const ticket = useProjectBrief((state) => state.ticket)
   const services = useProjectBrief((state) => state.services)
   const setServices = useProjectBrief((state) => state.setServices)
+  const setActiveService = useProjectBrief((state) => state.setActiveService)
   const setTicket = useProjectBrief((state) => state.setTicket)
   const [marketingDateVisible, setMarketingDateVisible] = useState(false)
 
@@ -120,18 +121,8 @@ const ProjectBriefPage: NextPageWithLayout = () => {
   useEffect(() => {
     setHeader('Project Brief')
     setTicket()
-
-    if (ticket && ticket.services) {
-      setServices(
-        ticket.services.map(({ serviceId, serviceName, extras }) => ({
-          serviceId,
-          serviceName,
-          extras,
-          customFields: [],
-          updatedExtras: [],
-        }))
-      )
-    }
+    setActiveService()
+    setServices([])
   }, [])
 
   return (
@@ -567,7 +558,7 @@ const Extras = ({
             }
           />
           <CheckIcon className="pointer-events-none absolute left-0.75 stroke-white" />
-          <div className="mt-2 flex space-x-5">
+          <div className="-mr-5 mt-2 flex space-x-5">
             <label htmlFor={extrasName} className=" text-sm font-medium text-onyx">
               {extrasName}
             </label>
