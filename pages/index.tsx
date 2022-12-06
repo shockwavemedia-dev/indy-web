@@ -28,12 +28,27 @@ const HomePage: NextPageWithLayout = () => {
   if (status === 'loading') return null
 
   if (status === 'authenticated') {
-    const { isAdmin, isClient, isManager, isStaff, isPrinterManager } = session
+    const {
+      isAdmin,
+      isClient,
+      isManager,
+      isStaff,
+      isPrinterManager,
+      isSocialMediaManager,
+      isSocialMediaStaff,
+    } = session
 
     if (isAdmin) {
       replace('/clients')
       return null
-    } else if (isClient || isManager || isStaff || isPrinterManager) {
+    } else if (
+      isClient ||
+      isManager ||
+      isStaff ||
+      isPrinterManager ||
+      isSocialMediaManager ||
+      isSocialMediaStaff
+    ) {
       replace('/dashboard')
       return null
     }

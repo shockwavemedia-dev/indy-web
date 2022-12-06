@@ -42,6 +42,8 @@ import { AdminRoutes } from '../constants/routes/AdminRoutes'
 import { ClientRoutes } from '../constants/routes/ClientRoutes'
 import { ManagerRoutes } from '../constants/routes/ManagerRoutes'
 import { PrinterManagerRoutes } from '../constants/routes/PrinterManagerRoutes'
+import { SocialMediaManagerRoutes } from '../constants/routes/SocialMediaManagerRoutes'
+import { SocialMediaStaffRoutes } from '../constants/routes/SocialMediaStaffRoutes'
 import { StaffRoutes } from '../constants/routes/StaffRoutes'
 import DummyAvatar from '../public/images/dummy-avatar.png'
 import IndyLogoWhite from '../public/images/indy-logo-white.png'
@@ -113,7 +115,9 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
         !session.isAdmin &&
         !session.isStaff &&
         !session.isManager &&
-        !session.isPrinterManager,
+        !session.isPrinterManager &&
+        !session.isSocialMediaManager &&
+        !session.isSocialMediaStaff,
     }
   )
 
@@ -139,7 +143,15 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
 
   const { panelName, routes } = useMemo(() => {
     if (session) {
-      const { isAdmin, isClient, isManager, isStaff, isPrinterManager } = session
+      const {
+        isAdmin,
+        isClient,
+        isManager,
+        isStaff,
+        isPrinterManager,
+        isSocialMediaManager,
+        isSocialMediaStaff,
+      } = session
 
       if (isAdmin) {
         return {
@@ -171,6 +183,20 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
         return {
           panelName: 'Printer Manager',
           routes: PrinterManagerRoutes,
+        }
+      } else if (isSocialMediaStaff) {
+        return {
+          panelName: session.user.userType.department.name
+            ? session.user.userType.department.name
+            : 'Staff Panel',
+          routes: SocialMediaStaffRoutes,
+        }
+      } else if (isSocialMediaManager) {
+        return {
+          panelName: session.user.userType.department.name
+            ? session.user.userType.department.name
+            : 'Manager Panel',
+          routes: SocialMediaManagerRoutes,
         }
       }
     }
