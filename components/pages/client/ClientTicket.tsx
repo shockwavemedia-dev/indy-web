@@ -403,7 +403,7 @@ export const ClientTicket = ({ ticketId }: { ticketId: number }) => {
                   {ticket!.services?.map(
                     ({ serviceName, extras, customFields, updatedExtras }, i) => (
                       <div key={`${serviceName}-${i}`}>
-                        {serviceName === 'Print' || serviceName === 'Social Media Spend' ? (
+                        {serviceName === 'Print' || serviceName === 'Social Media' ? (
                           <div className="mb-2 text-sm font-medium text-halloween-orange">
                             {serviceName}
                             {updatedExtras.map(({ name, quantity }) => (
@@ -415,7 +415,7 @@ export const ClientTicket = ({ ticketId }: { ticketId: number }) => {
                                   <div>{name}</div>
                                   <div>
                                     <div className="mt-2 flex space-x-5">
-                                      {serviceName === 'Social Media Spend' && quantity !== '0' && (
+                                      {quantity !== '0' && (
                                         <DollarIcon className="pointer-events-none mr-2 stroke-lavender-gray" />
                                       )}
                                       {quantity !== '0' ? quantity : ''}

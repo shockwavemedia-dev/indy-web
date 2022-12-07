@@ -92,9 +92,7 @@ const ProjectBriefPage: NextPageWithLayout = () => {
             ({ serviceId, extras, customFields, updatedExtras, serviceName }) => ({
               serviceId,
               extras:
-                serviceName === 'Print' || serviceName === 'Social Media Spend'
-                  ? updatedExtras
-                  : extras,
+                serviceName === 'Print' || serviceName === 'Social Media' ? updatedExtras : extras,
               customFields,
             })
           ),
@@ -288,8 +286,7 @@ const SelectService = () => {
       {activeService && activeService.extras.length > 0 && (
         <div
           className={`h-fit rounded-xl bg-white p-5 ${
-            activeService?.serviceName === 'Print' ||
-            activeService?.serviceName === 'Social Media Spend'
+            activeService?.serviceName === 'Print' || activeService?.serviceName === 'Social Media'
               ? 'w-130 '
               : 'w-75'
           }`}
@@ -401,16 +398,13 @@ const Extras = ({
       const service = services.find(({ serviceId }) => serviceId === activeService.serviceId)
       let payload
       if (checked) {
-        if (
-          activeService.serviceName === 'Print' ||
-          activeService.serviceName === 'Social Media Spend'
-        ) {
+        if (activeService.serviceName === 'Print' || activeService.serviceName === 'Social Media') {
           setPrintCustomFieldVisible(true)
         }
         if (service) {
           if (
             activeService.serviceName === 'Print' ||
-            activeService.serviceName === 'Social Media Spend'
+            activeService.serviceName === 'Social Media'
           ) {
             const extras = [...service.updatedExtras, { name: extrasName, quantity: 0 }]
             const updated = extras?.map((extra) => ({
@@ -449,10 +443,7 @@ const Extras = ({
         setServices(payload)
         setFieldValue('services', payload)
       } else {
-        if (
-          activeService.serviceName === 'Print' ||
-          activeService.serviceName === 'Social Media Spend'
-        ) {
+        if (activeService.serviceName === 'Print' || activeService.serviceName === 'Social Media') {
           setPrintCustomFieldVisible(false)
         }
         if (service) {
@@ -460,7 +451,7 @@ const Extras = ({
           if (extrasPayload.length > 0) {
             if (
               activeService.serviceName === 'Print' ||
-              activeService.serviceName === 'Social Media Spend'
+              activeService.serviceName === 'Social Media'
             ) {
               const updatedExtras = service.updatedExtras.filter(
                 (extra) => extra.name !== extrasName
@@ -608,7 +599,7 @@ const Extras = ({
                             />
                           </>
                         )}
-                        {serviceName === 'Social Media Spend' && (
+                        {serviceName === 'Social Media' && (
                           <>
                             <DollarIcon className="pointer-events-none absolute left-5 stroke-lavender-gray" />
                             <input

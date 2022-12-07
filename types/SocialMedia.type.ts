@@ -18,6 +18,7 @@ export type SocialMedia = {
   status: SocialMediaStatus
   clientId: number
   channels: Array<SocialMediaChannel>
+  boostedChannels?: Array<{ name: string; quantity?: number | string | null }> | null
   notes?: string | null
   activities?: Array<SocialMediaActivity>
   comments?: Array<SocialMediaComment>
