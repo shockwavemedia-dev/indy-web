@@ -33,6 +33,7 @@ import { TicketFileVersion } from '../../../types/TicketFileVersion.type'
 import { TicketNote } from '../../../types/TicketNote.type'
 import { TicketPageTabs } from '../../../types/TicketPageTabs.type'
 import { FileBrowser } from '../../FileBrowser'
+import { FileDisplay } from '../../FileDisplay'
 import { ColorsIcon } from '../../icons/ColorsIcon'
 import { DollarIcon } from '../../icons/DollarIcon'
 import { FolderIcon } from '../../icons/FolderIcon'
@@ -514,17 +515,41 @@ export const StaffTicket = ({ ticketId }: { ticketId: number }) => {
           />
 
           {activeTab === 'description' && (
-            <Card>
-              {!ticket.emailHtml && <RichTextDisplay value={ticket!.description} />}
-              {ticket.emailHtml && (
-                <p
-                  className="d-inline comment-paragraph-text"
-                  dangerouslySetInnerHTML={{
-                    __html: ticket.emailHtml,
-                  }}
-                />
-              )}
-            </Card>
+            <div>
+              <Card>
+                {!ticket.emailHtml && <RichTextDisplay value={ticket!.description} />}
+                {ticket.emailHtml && (
+                  <p
+                    className="d-inline comment-paragraph-text"
+                    dangerouslySetInnerHTML={{
+                      __html: ticket.emailHtml,
+                    }}
+                  />
+                )}
+              </Card>
+              <Card title="Attachment" className="mt-5">
+                <div className="flex h-fit w-257.5 flex-wrap gap-5">
+                  {!!ticket!.attachments && ticket!.attachments?.length > 0 ? (
+                    ticket!.attachments?.map((attachment) => (
+                      <FileDisplay
+                        key={`attachment-${attachment.id}`}
+                        src={attachment.url}
+                        type={attachment.fileType}
+                        imageHeight={176}
+                        imageWidth={314}
+                        imageAlt={attachment.url}
+                        className="rounded-xl"
+                        href={attachment.url}
+                        videoClassName="h-44 w-78.5 cursor-pointer rounded-xl"
+                        failedToLoadClassName="h-44 w-78.5"
+                      />
+                    ))
+                  ) : (
+                    <div className=" text-xs text-metallic-silver">No attachment to display.</div>
+                  )}
+                </div>
+              </Card>
+            </div>
           )}
           {activeTab === 'style_guide' && (
             <div>
