@@ -229,14 +229,14 @@ const AnimationButton = ({ animation }: { animation: Animation }) => {
     <div className="grid h-44 w-78.5 place-content-center rounded-xl border border-halloween-orange text-sm font-medium text-onyx">
       <div>
         Failed to load{' '}
-        <Link href={animation.videoLink}>
+        <Link href={animation.videoLink ? animation.videoLink : '#'}>
           <a
             target="_blank"
             className=" text-sm font-semibold text-halloween-orange underline-offset-1 hover:underline"
           >
             {animation.title}
           </a>
-        </Link>{' '}
+        </Link>
         😵
       </div>
     </div>
