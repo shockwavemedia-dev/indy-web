@@ -41,7 +41,7 @@ export const ClientAnimations = () => {
     }>('/v1/libraries', {
       params: {
         library_category_id: category?.value === -1 ? '' : category?.value,
-        size: 15,
+        size: 150,
         page_number: page,
       },
     })
