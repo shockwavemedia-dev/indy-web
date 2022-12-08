@@ -6,6 +6,8 @@ import { useRouter } from 'next/router'
 import { SetStateAction, useState } from 'react'
 import { useQuery, useQueryClient } from 'react-query'
 import { MultiValue, SingleValue } from 'react-select'
+import createStore from 'zustand'
+import { combine } from 'zustand/middleware'
 import { SocialMediaCampaignTypeOptions } from '../../constants/options/SocialMediaCampaignTypeOptions'
 import { SocialMediaChannelOptions } from '../../constants/options/SocialMediaChannelOptions'
 import { SocialMediaStatusOptions } from '../../constants/options/SocialMediaStatusOptions'
@@ -43,15 +45,18 @@ import { EditSocialMediaCommentModal } from './EditSocialMediaCommentModal'
 import { FileUploadModal, useFileUploadModal } from './FileUploadModal'
 import { SocialMediaFileModal, useSocialMediaFileModalStore } from './SocialMediaFileModal'
 
-export const EditSocialMediaModal = ({
-  isVisible,
-  onClose,
-  socialMedia,
-}: {
-  isVisible: boolean
-  onClose: () => void
-  socialMedia: SocialMedia
-}) => {
+export const useEditSocialMediaModal = createStore(
+  combine(
+    {
+      socialMedia: undefined as SocialMedia | undefined,
+    },
+    (set) => ({
+      toggleEditSocialMediaModal: (socialMedia?: SocialMedia) => set(() => ({ socialMedia })),
+    })
+  )
+)
+
+export const EditSocialMediaModal = () => {
   const queryClient = useQueryClient()
   const { showToast } = useToastStore()
   const { data: session } = useSession()
@@ -59,16 +64,9 @@ export const EditSocialMediaModal = ({
   const [taggedUsers, setTaggedUsers] = useState({})
   const { replace } = useRouter()
 
-  const { data: socialMediaDetails } = useQuery(
-    ['socialMedia', socialMedia.id],
-    async () => {
-      const { data } = await axios.get<SocialMedia>(`/v1/social-media/${socialMedia.id}`)
-
-      return data
-    },
-    {
-      enabled: !!socialMedia.id,
-    }
+  const socialMedia = useEditSocialMediaModal((state) => state.socialMedia)
+  const toggleEditSocialMediaModal = useEditSocialMediaModal(
+    (state) => state.toggleEditSocialMediaModal
   )
 
   const { data: users } = useQuery(
@@ -79,12 +77,12 @@ export const EditSocialMediaModal = ({
       } = await axios.get<{
         data: Array<User>
         page: Page
-      }>(`/v1/clients/${socialMedia.clientId}/social-media-users`)
+      }>(`/v1/clients/${socialMedia?.clientId}/social-media-users`)
 
       return data
     },
     {
-      enabled: !!socialMedia.clientId && socialMedia.clientId !== -1,
+      enabled: !!socialMedia?.clientId && socialMedia?.clientId !== -1,
     }
   )
 
@@ -113,10 +111,15 @@ export const EditSocialMediaModal = ({
     }
 
     try {
+      if (!socialMedia) {
+        return
+      }
+
       const { status } = await axios.post(
         `/v1/social-media/${socialMedia.id}`,
         objectWithFileToFormData(values)
       )
+
       if (status === 200) {
         queryClient.invalidateQueries(['socialMedia', socialMedia.id])
         queryClient.invalidateQueries(['socialMedias'])
@@ -152,6 +155,10 @@ export const EditSocialMediaModal = ({
   }
 
   const submitCommentForm = async () => {
+    if (!socialMedia) {
+      return
+    }
+
     const { status } = await axios.post(`/v1/social-media/${socialMedia.id}/comments`, {
       comment: comment,
       usersTagged: taggedUsers,
@@ -172,41 +179,42 @@ export const EditSocialMediaModal = ({
 
   const { setVisible } = useFileUploadModal()
 
-  const toggleUploadFile = () => setVisible(true, socialMediaDetails)
+  const toggleUploadFile = () => setVisible(true, socialMedia)
 
   const { toggleModal: toggleDeleteModal } = useDeleteSocialMediaModalStore()
 
   const closeModal = () => {
-    onClose()
     if (!!session && session.isClient) {
       replace('/social-media')
     } else {
       replace('/dashboard')
     }
+
+    toggleEditSocialMediaModal()
   }
 
-  if (!socialMediaDetails) return null
+  if (!socialMedia) return null
 
   return (
     <>
-      {isVisible && (
+      {socialMedia && (
         <Modal
           title="Edit Social Media"
           bgColor="bg-cultured"
           className="w-320"
-          onClose={closeModal}
+          onClose={toggleEditSocialMediaModal}
         >
           <div className="flex w-full">
             <Formik
               initialValues={{
-                post: socialMediaDetails?.post,
-                attachments: socialMediaDetails?.attachments,
-                copy: socialMediaDetails?.copy,
-                status: socialMediaDetails?.status,
-                channels: socialMediaDetails?.channels,
-                notes: socialMediaDetails?.notes,
-                postDate: socialMediaDetails?.postDate && new Date(socialMediaDetails?.postDate),
-                postTime: socialMediaDetails?.postDate && new Date(socialMediaDetails?.postDate),
+                post: socialMedia?.post,
+                attachments: socialMedia?.attachments,
+                copy: socialMedia?.copy,
+                status: socialMedia?.status,
+                channels: socialMedia?.channels,
+                notes: socialMedia?.notes,
+                postDate: socialMedia?.postDate && new Date(socialMedia?.postDate),
+                postTime: socialMedia?.postDate && new Date(socialMedia?.postDate),
                 _method: 'PUT',
               }}
               validationSchema={CreateSocialMediaFormSchema}
@@ -222,7 +230,7 @@ export const EditSocialMediaModal = ({
                             type="button"
                             onClick={(e) => {
                               e.stopPropagation()
-                              toggleDeleteModal(socialMediaDetails.id)
+                              toggleDeleteModal(socialMedia.id)
                             }}
                             className="group"
                           >
@@ -260,7 +268,7 @@ export const EditSocialMediaModal = ({
                         Icon={ClipboardIcon}
                         options={SocialMediaStatusOptions}
                         defaultValue={SocialMediaStatusOptions.find(
-                          ({ value }) => value === socialMediaDetails.status
+                          ({ value }) => value === socialMedia.status
                         )}
                         className="mb-5"
                       />
@@ -273,7 +281,7 @@ export const EditSocialMediaModal = ({
                         placeholder="Select Campaign Type"
                         name="campaignType"
                         defaultValue={SocialMediaCampaignTypeOptions.find(
-                          ({ value }) => value === socialMediaDetails.campaignType
+                          ({ value }) => value === socialMedia.campaignType
                         )}
                         onChange={(
                           campaignType: SingleValue<SelectOption<SocialMediaCampaignType>>
@@ -290,8 +298,8 @@ export const EditSocialMediaModal = ({
                         placeholder="Select Channel"
                         name="channels"
                         defaultValue={(() => {
-                          if (socialMediaDetails.channels) {
-                            const seletedChannel = socialMediaDetails.channels?.map((channel) => ({
+                          if (socialMedia.channels) {
+                            const seletedChannel = socialMedia.channels?.map((channel) => ({
                               value: channel,
                               label: channel,
                             }))
@@ -328,9 +336,8 @@ export const EditSocialMediaModal = ({
                         </div>
                       </button>
                       <div className="flex flex-wrap gap-4">
-                        {!!socialMediaDetails.attachments &&
-                        socialMediaDetails.attachments.length > 0 ? (
-                          socialMediaDetails.attachments.map(
+                        {!!socialMedia.attachments && socialMedia.attachments.length > 0 ? (
+                          socialMedia.attachments.map(
                             ({ socialMediaAttachmentId, url, thumbnailUrl, name, fileType }) => {
                               const toggleFile = () =>
                                 toggleShowSocialMediaFileModal(
@@ -338,7 +345,7 @@ export const EditSocialMediaModal = ({
                                   fileType,
                                   name,
                                   socialMediaAttachmentId,
-                                  socialMediaDetails.id
+                                  socialMedia.id
                                 )
 
                               return (
@@ -383,9 +390,9 @@ export const EditSocialMediaModal = ({
                 titlePosition="center"
                 titleClassName="text-halloween-orange"
               >
-                {!!socialMediaDetails.activities && socialMediaDetails!.activities?.length > 0 ? (
+                {!!socialMedia.activities && socialMedia!.activities?.length > 0 ? (
                   <div className="flex flex-col">
-                    {socialMediaDetails.activities?.map(({ action, user, fields, createdAt }) => (
+                    {socialMedia.activities?.map(({ action, user, fields, createdAt }) => (
                       <SocialMediaActivityCard
                         key={`activity-${action}-${createdAt}`}
                         action={action}
@@ -407,14 +414,14 @@ export const EditSocialMediaModal = ({
               >
                 <div className="flex flex-col">
                   <>
-                    {!!socialMediaDetails.comments && socialMediaDetails!.comments?.length > 0 ? (
+                    {!!socialMedia.comments && socialMedia!.comments?.length > 0 ? (
                       <div className="flex flex-col">
-                        {socialMediaDetails.comments?.map(
+                        {socialMedia.comments?.map(
                           ({ id, comment, createdBy, createdAt, createdById }) => (
                             <SocialMediaCommentCard
                               key={`comment-${id}`}
-                              socialMediaId={socialMediaDetails.id}
-                              clientId={socialMediaDetails.clientId}
+                              socialMediaId={socialMedia.id}
+                              clientId={socialMedia.clientId}
                               id={id}
                               comment={comment}
                               createdBy={createdBy}

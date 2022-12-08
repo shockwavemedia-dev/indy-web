@@ -168,6 +168,10 @@ module.exports = {
       'varela-round': ['Varela Round'],
       'circular-std': ['Circular Std'],
     },
+    listStyleType: {
+      square: 'square',
+      roman: 'upper-roman',
+    },
   },
   plugins: [
     require('@tailwindcss/line-clamp'),
