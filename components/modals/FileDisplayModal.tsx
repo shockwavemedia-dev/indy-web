@@ -57,7 +57,7 @@ export const FileDisplayModal = () => {
   return (
     <>
       {fileType && name && (
-        <Modal title={name} onClose={toggleShowPhotoVideoFileModal}>
+        <Modal title={name} onClose={toggleShowPhotoVideoFileModal} className="h-4/5">
           {fileType === 'application/pdf' ? (
             <iframe src={signedUrl} className="h-103 w-228"></iframe>
           ) : (
@@ -69,7 +69,7 @@ export const FileDisplayModal = () => {
                 imageWidth={560}
                 imageAlt={name}
                 className="rounded-xl"
-                videoClassName="rounded-xl w-228"
+                videoClassName="rounded-xl w-auto h-[95%]"
               />
               {fileType !== 'video/mp4' && session?.isClient && (
                 <div className="mt-6 flex w-70">
