@@ -11,6 +11,7 @@ import { SingleValue } from 'react-select'
 import create from 'zustand'
 import { combine } from 'zustand/middleware'
 import { Button } from '../components/Button'
+import { Checkbox } from '../components/Checkbox'
 import { CheckboxNoFormik } from '../components/CheckboxNoFormik'
 import { DateInput } from '../components/DateInput'
 import { FileDropZone } from '../components/FileDropZone'
@@ -231,6 +232,42 @@ const SelectService = () => {
     return data
   })
 
+  const selectDeselectAll = ({ currentTarget: { checked } }: ChangeEvent<HTMLInputElement>) => {
+    let payload
+    if (checked) {
+      if (activeService) {
+        const updated = activeService.extras?.map((extra) => ({
+          name: extra,
+          quantity: 0,
+        }))
+        payload = [
+          {
+            ...activeService,
+            extras: activeService.extras,
+            updatedExtras:
+              activeService.serviceName === 'Print' || activeService.serviceName === 'Social Media'
+                ? updated
+                : [],
+          },
+        ]
+        setServices(payload)
+        setFieldValue('services', payload)
+      }
+    } else {
+      if (activeService) {
+        payload = [
+          {
+            ...activeService,
+            extras: [],
+            updatedExtras: [],
+          },
+        ]
+        setServices(payload)
+        setFieldValue('services', payload)
+      }
+    }
+  }
+
   return (
     <>
       <div className="flex h-fit w-60 flex-col items-center space-y-2 rounded-xl bg-white p-5">
@@ -295,23 +332,26 @@ const SelectService = () => {
             Select {activeService.extraQuota > 0 && activeService.extraQuota} Extras
           </div>
           <div className="space-y-2">
+            <Checkbox onChange={selectDeselectAll} label="Select/Deselect All" name="selectAll" />
             {activeService.extras.map((extras, i) => {
               const foundedExtras = services.find(
                 ({ serviceId }) => serviceId === activeService.serviceId
               )?.extras
               return (
-                <Extras
-                  disabled={
-                    activeService.extraQuota === 0
-                      ? false
-                      : foundedExtras?.length === activeService.extraQuota &&
-                        !foundedExtras?.includes(extras)
-                  }
-                  key={`${activeService.serviceId}-${i}-${extras}`}
-                  extrasName={extras}
-                  serviceId={activeService.serviceId}
-                  serviceName={activeService.serviceName}
-                />
+                <>
+                  <Extras
+                    disabled={
+                      activeService.extraQuota === 0
+                        ? false
+                        : foundedExtras?.length === activeService.extraQuota &&
+                          !foundedExtras?.includes(extras)
+                    }
+                    key={`${activeService.serviceId}-${i}-${extras}`}
+                    extrasName={extras}
+                    serviceId={activeService.serviceId}
+                    serviceName={activeService.serviceName}
+                  />
+                </>
               )
             })}
           </div>
