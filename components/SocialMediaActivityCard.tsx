@@ -206,6 +206,10 @@ export const SocialMediaChannels = ({ value }: { value: string }) => {
               return 'bg-light-red-crimson'
             case 'Facebook':
               return 'bg-light-golden-rod'
+            case 'Facebook Event':
+              return 'bg-light-golden-rod'
+            case 'Facebook Post':
+              return 'bg-light-golden-rod'
             case 'Instagram':
               return 'bg-light-navy'
             case 'Twitter':

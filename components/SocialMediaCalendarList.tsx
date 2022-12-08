@@ -135,6 +135,9 @@ export const SocialMediaCalendarList = () => {
                                             'Facebook Event': (
                                               <FacebookIcon key={`icon-${socialMedia.id}-${i}`} />
                                             ),
+                                            'Facebook Post': (
+                                              <FacebookIcon key={`icon-${socialMedia.id}-${i}`} />
+                                            ),
                                             Instagram: (
                                               <InstagramIcon key={`icon-${socialMedia.id}-${i}`} />
                                             ),
