@@ -233,35 +233,106 @@ const SelectService = () => {
   })
 
   const selectDeselectAll = ({ currentTarget: { checked } }: ChangeEvent<HTMLInputElement>) => {
-    let payload
-    if (checked) {
-      if (activeService) {
-        const updated = activeService.extras?.map((extra) => ({
-          name: extra,
-          quantity: 0,
-        }))
-        payload = [
-          {
-            ...activeService,
-            extras: activeService.extras,
-            updatedExtras:
-              activeService.serviceName === 'Print' || activeService.serviceName === 'Social Media'
-                ? updated
-                : [],
-          },
-        ]
+    // let payload
+    // if (checked) {
+    //   if (activeService) {
+    //     const updated = activeService.extras?.map((extra) => ({
+    //       name: extra,
+    //       quantity: 0,
+    //     }))
+
+    // payload = [
+    //   ...services,
+    //   {
+    //     ...activeService,
+    //     extras: activeService.extras,
+    //     updatedExtras:
+    //       activeService.serviceName === 'Print' || activeService.serviceName === 'Social Media'
+    //         ? updated
+    //         : [],
+    //       },
+    //     ]
+    //     setServices(payload)
+    //     setFieldValue('services', payload)
+    //   }
+    // } else {
+    //   if (activeService) {
+    //     payload = [
+    //       {
+    //         ...activeService,
+    //         extras: [],
+    //         updatedExtras: [],
+    //       },
+    //     ]
+    //     setServices(payload)
+    //     setFieldValue('services', payload)
+    //   }
+    // }
+    if (activeService) {
+      const service = services.find(({ serviceId }) => serviceId === activeService.serviceId)
+      let payload
+      if (checked) {
+        console.log('checked')
+        if (service) {
+          const updated = service.extras?.map((extra) => ({
+            name: extra,
+            quantity: 0,
+          }))
+          payload = [
+            ...services.filter(({ serviceId }) => serviceId !== service.serviceId),
+            {
+              ...service,
+              extras: service.extras,
+              updatedExtras:
+                activeService.serviceName === 'Print' ||
+                activeService.serviceName === 'Social Media'
+                  ? updated
+                  : [],
+            },
+          ]
+        } else {
+          const updated = activeService.extras?.map((extra) => ({
+            name: extra,
+            quantity: 0,
+          }))
+          payload = [
+            ...services,
+            {
+              ...activeService,
+              extras: activeService.extras,
+              updatedExtras:
+                activeService.serviceName === 'Print' ||
+                activeService.serviceName === 'Social Media'
+                  ? updated
+                  : [],
+            },
+          ]
+        }
         setServices(payload)
         setFieldValue('services', payload)
-      }
-    } else {
-      if (activeService) {
-        payload = [
-          {
-            ...activeService,
-            extras: [],
-            updatedExtras: [],
-          },
-        ]
+      } else {
+        console.log('hindichecked')
+        if (service) {
+          console.log('pasok1')
+          payload = [
+            ...services.filter(({ serviceId }) => serviceId !== service.serviceId),
+            {
+              ...service,
+              extras: [],
+              updatedExtras: [],
+            },
+          ]
+        } else {
+          console.log('pasok2')
+          payload = [
+            ...services,
+            {
+              ...activeService,
+              extras: [],
+              updatedExtras: [],
+            },
+          ]
+        }
         setServices(payload)
         setFieldValue('services', payload)
       }
@@ -332,7 +403,11 @@ const SelectService = () => {
             Select {activeService.extraQuota > 0 && activeService.extraQuota} Extras
           </div>
           <div className="space-y-2">
-            <Checkbox onChange={selectDeselectAll} label="Select/Deselect All" name="selectAll" />
+            <Checkbox
+              onChange={selectDeselectAll}
+              label="Select/Deselect All"
+              name={activeService.serviceName}
+            />
             {activeService.extras.map((extras, i) => {
               const foundedExtras = services.find(
                 ({ serviceId }) => serviceId === activeService.serviceId
@@ -446,7 +521,7 @@ const Extras = ({
             activeService.serviceName === 'Print' ||
             activeService.serviceName === 'Social Media'
           ) {
-            const extras = [...service.updatedExtras, { name: extrasName, quantity: 0 }]
+            const extras = [...service.updatedExtras, { name: extrasName, quantity: '' }]
             const updated = extras?.map((extra) => ({
               name: extra.name,
               quantity: extra.quantity,
