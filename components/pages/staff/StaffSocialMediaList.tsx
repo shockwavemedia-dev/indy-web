@@ -9,7 +9,6 @@ import { useSocialMediaStore } from '../../../store/SocialMediaStore'
 import { Client } from '../../../types/Client.type'
 import { Page } from '../../../types/Page.type'
 import { SelectOption } from '../../../types/SelectOption.type'
-import { SocialMedia } from '../../../types/SocialMedia.type'
 import { Button } from '../../Button'
 import { Card } from '../../Card'
 import { UserIcon } from '../../icons/UserIcon'
@@ -18,31 +17,13 @@ import { EditSocialMediaModal } from '../../modals/EditSocialMediaModal'
 import { SelectNoFormik } from '../../SelectNoFormik'
 import { SocialMediaTable } from '../../SocialMediaTable'
 
-export const StaffSocialMediaList = ({ socialMediaId = -1 }: { socialMediaId?: number }) => {
+export const StaffSocialMediaList = () => {
   const { data: session } = useSession()
   const { setHeader, setSubHeader } = usePanelLayoutStore()
 
-  const {
-    activeSocialMedia,
-    isCreateSocialMediaModalVisible,
-    isEditSocialMediaModalVisible,
-    toggleCreateSocialMediaModal,
-    toggleEditSocialMediaModal,
-  } = useSocialMediaStore()
+  const { isCreateSocialMediaModalVisible, toggleCreateSocialMediaModal } = useSocialMediaStore()
 
   const queryClient = useQueryClient()
-
-  const { data: socialMediaDetails } = useQuery(
-    ['socialMedia', socialMediaId],
-    async () => {
-      const { data } = await axios.get<SocialMedia>(`/v1/social-media/${socialMediaId}`)
-
-      return data
-    },
-    {
-      enabled: !!socialMediaId && socialMediaId !== -1,
-    }
-  )
 
   const selectClient = (newValue: SingleValue<SelectOption<number>>) => {
     setClientId(newValue?.value || -1)
@@ -60,7 +41,7 @@ export const StaffSocialMediaList = ({ socialMediaId = -1 }: { socialMediaId?: n
     return data
   })
 
-  const defaultValue = clients && clients.length > 0 && clients[0].id
+  const defaultValue = clients && clients.length > 0 ? clients[0].id : -1
 
   const [selectedClientId, setClientId] = useState(defaultValue ? Number(defaultValue) : -1)
 
@@ -74,13 +55,10 @@ export const StaffSocialMediaList = ({ socialMediaId = -1 }: { socialMediaId?: n
   useEffect(() => {
     setHeader('Dashboard')
     setSubHeader(`Welcome back, ${session?.user.firstName}`)
-    if (socialMediaId !== -1) {
-      setClientId(socialMediaDetails?.clientId || -1)
-    }
     return () => {
       setSubHeader('Social Media')
     }
-  }, [selectedClientId, socialMediaDetails])
+  }, [selectedClientId])
 
   return (
     <>
@@ -121,18 +99,7 @@ export const StaffSocialMediaList = ({ socialMediaId = -1 }: { socialMediaId?: n
             onClose={toggleCreateSocialMediaModal}
             clientId={selectedClientId}
           />
-          <EditSocialMediaModal
-            isVisible={isEditSocialMediaModalVisible}
-            onClose={toggleEditSocialMediaModal}
-            socialMedia={activeSocialMedia}
-          />
-          {socialMediaDetails && (
-            <EditSocialMediaModal
-              isVisible={isEditSocialMediaModalVisible}
-              onClose={toggleEditSocialMediaModal}
-              socialMedia={socialMediaDetails}
-            />
-          )}
+          <EditSocialMediaModal />
         </>
       ) : (
         <Card>

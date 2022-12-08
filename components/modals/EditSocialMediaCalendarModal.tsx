@@ -1,13 +1,12 @@
 import { Tooltip } from '@mui/material'
 import axios from 'axios'
 import { Form, Formik } from 'formik'
-import { useQuery, useQueryClient } from 'react-query'
+import { useQueryClient } from 'react-query'
 import { MultiValue, SingleValue } from 'react-select'
 import { SocialMediaCampaignTypeOptions } from '../../constants/options/SocialMediaCampaignTypeOptions'
 import { SocialMediaChannelOptions } from '../../constants/options/SocialMediaChannelOptions'
 import { SocialMediaStatusOptions } from '../../constants/options/SocialMediaStatusOptions'
 import { CreateSocialMediaFormSchema } from '../../schemas/CreateSocialMediaFormSchema'
-import { useSocialMediaStore } from '../../store/SocialMediaStore'
 import { useToastStore } from '../../store/ToastStore'
 import { EditSocialMediaForm } from '../../types/forms/EditSocialMediaForm.type'
 import { SelectOption } from '../../types/SelectOption.type'
@@ -30,7 +29,7 @@ import { Select } from '../Select'
 import { TextInput } from '../TextInput'
 import { TimeInput } from '../TimeInput'
 import { DeleteSocialMediaModal } from './DeleteSocialMediaModal'
-import { EditSocialMediaModal } from './EditSocialMediaModal'
+import { EditSocialMediaModal, useEditSocialMediaModal } from './EditSocialMediaModal'
 import { FileUploadModal, useFileUploadModal } from './FileUploadModal'
 import { SocialMediaFileModal, useSocialMediaFileModalStore } from './SocialMediaFileModal'
 
@@ -44,24 +43,14 @@ export const EditSocialMediaCalendarModal = ({
   const queryClient = useQueryClient()
   const { showToast } = useToastStore()
 
-  const { data: socialMediaDetails } = useQuery(
-    ['socialMedia', socialMedia?.id],
-    async () => {
-      const { data } = await axios.get<SocialMedia>(`/v1/social-media/${socialMedia?.id}`)
-
-      return data
-    },
-    {
-      enabled: !!socialMedia,
-    }
+  const toggleEditSocialMediaModal = useEditSocialMediaModal(
+    (state) => state.toggleEditSocialMediaModal
   )
 
-  const { setActiveSocialMedia, isEditSocialMediaModalVisible, toggleEditSocialMediaModal } =
-    useSocialMediaStore()
-
+  toggleEditSocialMediaModal(socialMedia)
+  const socialMediaDetails = useEditSocialMediaModal((state) => state.socialMedia)
   const expandRecord = () => {
     onClose()
-    setActiveSocialMedia(socialMedia!)
     toggleEditSocialMediaModal()
   }
 
@@ -303,11 +292,7 @@ export const EditSocialMediaCalendarModal = ({
       <SocialMediaFileModal />
       <FileUploadModal />
       <DeleteSocialMediaModal />
-      <EditSocialMediaModal
-        isVisible={isEditSocialMediaModalVisible}
-        onClose={toggleEditSocialMediaModal}
-        socialMedia={socialMedia!}
-      />
+      <EditSocialMediaModal />
     </>
   )
 }
