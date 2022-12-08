@@ -50,7 +50,7 @@ const nextAuth = NextAuth({
               department.name === 'Social Media',
             isSocialMediaManager:
               type === 'admin_users' &&
-              role === 'manager' &&
+              (role === 'account manager' || role === 'manager') &&
               department &&
               department.name === 'Social Media',
           }
