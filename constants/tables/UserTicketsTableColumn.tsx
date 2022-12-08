@@ -12,6 +12,9 @@ import { useAdminUserStore } from '../../store/AdminUserStore'
 import { useTicketAssigneeStore } from '../../store/TicketAssigneeStore'
 import { Ticket } from '../../types/Ticket.type'
 
+const titleCase = (s) =>
+  s.replace(/^_*(.)|_+(.)/g, (s, c, d) => (c ? c.toUpperCase() : ' ' + d.toUpperCase()))
+
 export const UserTicketsTableColumn: Array<Column<Ticket>> = [
   {
     Header: 'Client',
@@ -106,7 +109,7 @@ export const UserTicketsTableColumn: Array<Column<Ticket>> = [
               return 'text-deep-saffron'
           }
         })()}
-        value={value}
+        value={titleCase(value)}
       />
     ),
   },
