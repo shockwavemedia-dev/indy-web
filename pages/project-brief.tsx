@@ -238,7 +238,7 @@ const SelectService = () => {
       if (service) {
         const updated = service.extras?.map((extra) => ({
           name: extra,
-          quantity: 0,
+          quantity: '',
         }))
         payload = [
           ...services.filter(({ serviceId }) => serviceId !== service.serviceId),
@@ -254,7 +254,7 @@ const SelectService = () => {
       } else {
         const updated = activeService.extras?.map((extra) => ({
           name: extra,
-          quantity: 0,
+          quantity: '',
         }))
         payload = [
           ...services,
@@ -278,26 +278,10 @@ const SelectService = () => {
       const service = services.find(({ serviceId }) => serviceId === activeService.serviceId)
       let payload
       if (service) {
-        payload = [
-          ...services.filter(({ serviceId }) => serviceId !== service.serviceId),
-          {
-            ...service,
-            extras: [],
-            updatedExtras: [],
-          },
-        ]
-      } else {
-        payload = [
-          ...services,
-          {
-            ...activeService,
-            extras: [],
-            updatedExtras: [],
-          },
-        ]
+        payload = services.filter(({ serviceId }) => serviceId !== service.serviceId)
+        setServices(payload)
+        setFieldValue('services', payload)
       }
-      setServices(payload)
-      setFieldValue('services', payload)
     }
   }
 
@@ -355,7 +339,7 @@ const SelectService = () => {
       </div>
       {activeService && activeService.extras.length > 0 && (
         <div
-          className={`h-fit rounded-xl bg-white p-5 ${
+          className={`ml-5 h-fit rounded-xl bg-white p-5 ${
             activeService?.serviceName === 'Print' || activeService?.serviceName === 'Social Media'
               ? 'w-130 '
               : 'w-75'
@@ -367,14 +351,14 @@ const SelectService = () => {
           <div className="space-y-2">
             <div className="mt-2 flex space-x-2">
               <a
-                className="block h-fit select-none pt-0.5 text-sm font-medium text-halloween-orange"
+                className="h-fit cursor-pointer select-none pt-0.5 text-sm font-medium text-halloween-orange"
                 onClick={selectAllExtrasPerService}
               >
                 Select All
               </a>
               <div>|</div>
               <a
-                className="block h-fit select-none pt-0.5 text-sm font-medium text-halloween-orange"
+                className="h-fit cursor-pointer select-none pt-0.5 text-sm font-medium text-halloween-orange"
                 onClick={deSelectAllExtrasPerService}
               >
                 Deselect All
