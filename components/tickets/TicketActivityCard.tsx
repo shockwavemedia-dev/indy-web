@@ -13,6 +13,8 @@ export const TicketActivityCard = ({
     <Image src={DummyAvatar} alt="Dummy" height={32} width={32} className="rounded-full" />
     <div className="ml-3 text-sm font-semibold text-onyx">{activity}</div>
     <div className="mx-2 h-1 w-1 rounded bg-bright-gray" />
-    <div className=" text-xs font-medium text-lavender-gray">{format(createdAt, 'dd/MM/yyyy')}</div>
+    <div className=" text-xs font-medium text-lavender-gray">
+      {format(createdAt, 'dd/MM/yyyy h:mmaaa')}
+    </div>
   </div>
 )
