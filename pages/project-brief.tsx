@@ -231,6 +231,60 @@ const SelectService = () => {
     return data
   })
 
+  const selectAllExtrasPerService = () => {
+    if (activeService) {
+      const service = services.find(({ serviceId }) => serviceId === activeService.serviceId)
+      let payload
+      if (service) {
+        const updated = service.extras?.map((extra) => ({
+          name: extra,
+          quantity: '',
+        }))
+        payload = [
+          ...services.filter(({ serviceId }) => serviceId !== service.serviceId),
+          {
+            ...service,
+            extras: service.extras,
+            updatedExtras:
+              activeService.serviceName === 'Print' || activeService.serviceName === 'Social Media'
+                ? updated
+                : [],
+          },
+        ]
+      } else {
+        const updated = activeService.extras?.map((extra) => ({
+          name: extra,
+          quantity: '',
+        }))
+        payload = [
+          ...services,
+          {
+            ...activeService,
+            extras: activeService.extras,
+            updatedExtras:
+              activeService.serviceName === 'Print' || activeService.serviceName === 'Social Media'
+                ? updated
+                : [],
+          },
+        ]
+      }
+      setServices(payload)
+      setFieldValue('services', payload)
+    }
+  }
+
+  const deSelectAllExtrasPerService = () => {
+    if (activeService) {
+      const service = services.find(({ serviceId }) => serviceId === activeService.serviceId)
+      let payload
+      if (service) {
+        payload = services.filter(({ serviceId }) => serviceId !== service.serviceId)
+        setServices(payload)
+        setFieldValue('services', payload)
+      }
+    }
+  }
+
   return (
     <>
       <div className="flex h-fit w-60 flex-col items-center space-y-2 rounded-xl bg-white p-5">
@@ -285,7 +339,7 @@ const SelectService = () => {
       </div>
       {activeService && activeService.extras.length > 0 && (
         <div
-          className={`h-fit rounded-xl bg-white p-5 ${
+          className={`ml-5 h-fit rounded-xl bg-white p-5 ${
             activeService?.serviceName === 'Print' || activeService?.serviceName === 'Social Media'
               ? 'w-130 '
               : 'w-75'
@@ -295,23 +349,40 @@ const SelectService = () => {
             Select {activeService.extraQuota > 0 && activeService.extraQuota} Extras
           </div>
           <div className="space-y-2">
+            <div className="mt-2 flex space-x-2">
+              <a
+                className="h-fit cursor-pointer select-none pt-0.5 text-sm font-medium text-halloween-orange"
+                onClick={selectAllExtrasPerService}
+              >
+                Select All
+              </a>
+              <div>|</div>
+              <a
+                className="h-fit cursor-pointer select-none pt-0.5 text-sm font-medium text-halloween-orange"
+                onClick={deSelectAllExtrasPerService}
+              >
+                Deselect All
+              </a>
+            </div>
             {activeService.extras.map((extras, i) => {
               const foundedExtras = services.find(
                 ({ serviceId }) => serviceId === activeService.serviceId
               )?.extras
               return (
-                <Extras
-                  disabled={
-                    activeService.extraQuota === 0
-                      ? false
-                      : foundedExtras?.length === activeService.extraQuota &&
-                        !foundedExtras?.includes(extras)
-                  }
-                  key={`${activeService.serviceId}-${i}-${extras}`}
-                  extrasName={extras}
-                  serviceId={activeService.serviceId}
-                  serviceName={activeService.serviceName}
-                />
+                <>
+                  <Extras
+                    disabled={
+                      activeService.extraQuota === 0
+                        ? false
+                        : foundedExtras?.length === activeService.extraQuota &&
+                          !foundedExtras?.includes(extras)
+                    }
+                    key={`${activeService.serviceId}-${i}-${extras}`}
+                    extrasName={extras}
+                    serviceId={activeService.serviceId}
+                    serviceName={activeService.serviceName}
+                  />
+                </>
               )
             })}
           </div>
@@ -406,7 +477,7 @@ const Extras = ({
             activeService.serviceName === 'Print' ||
             activeService.serviceName === 'Social Media'
           ) {
-            const extras = [...service.updatedExtras, { name: extrasName, quantity: 0 }]
+            const extras = [...service.updatedExtras, { name: extrasName, quantity: '' }]
             const updated = extras?.map((extra) => ({
               name: extra.name,
               quantity: extra.quantity,
