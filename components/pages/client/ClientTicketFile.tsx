@@ -149,7 +149,7 @@ export const ClientTicketFile = ({ ticketFileId }: { ticketFileId: number }) => 
               <FileDisplay
                 src={ticketFile.signedUrl}
                 type={ticketFile.fileType}
-                imageSize="h-175"
+                imageSize="h-175 w-175"
                 imageAlt={ticketFile.name}
                 videoClassName="w-140 rounded-xl"
               />

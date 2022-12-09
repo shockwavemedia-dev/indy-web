@@ -30,7 +30,7 @@ export const TicketNoteCard = ({
       <FileDisplay
         src={file?.url}
         type={file?.fileType ?? ''}
-        imageSize="h-32"
+        imageSize="h-32 w-32"
         imageAlt={file?.fileName}
         videoClassName="w-140 rounded-xl"
       />

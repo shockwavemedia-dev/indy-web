@@ -54,7 +54,7 @@ export const StaffTicketFile = ({ ticketFileId }: { ticketFileId: number }) => {
               <FileDisplay
                 src={ticketFile.signedUrl}
                 type={ticketFile.fileType}
-                imageSize="h-144"
+                imageSize="h-144 w-144"
                 imageAlt={ticketFile.name}
                 videoClassName="w-140 rounded-xl"
               />
