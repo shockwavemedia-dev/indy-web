@@ -308,7 +308,7 @@ export const AdminTicket = ({ ticketId }: { ticketId: number }) => {
                       case 'pending':
                         return 'bg-light-tart-orange'
                       case 'in_progress':
-                        return 'bg-light-deep-saffron'
+                        return 'bg-light-blue'
                     }
                   })()}
                   twTextColor={(() => {
@@ -322,7 +322,7 @@ export const AdminTicket = ({ ticketId }: { ticketId: number }) => {
                       case 'pending':
                         return 'text-tart-orange'
                       case 'in_progress':
-                        return 'text-deep-saffron'
+                        return 'text-dark-blue'
                     }
                   })()}
                   value={ticket!.status}
