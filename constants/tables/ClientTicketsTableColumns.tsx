@@ -9,9 +9,6 @@ import { useEditTicketModal } from '../../components/modals/EditTicketModal'
 import { Pill } from '../../components/Pill'
 import { Ticket } from '../../types/Ticket.type'
 
-const titleCase = (s) =>
-  s.replace(/^_*(.)|_+(.)/g, (s, c, d) => (c ? c.toUpperCase() : ' ' + d.toUpperCase()))
-
 export const ClientTicketsTableColumns: Array<Column<Ticket>> = [
   {
     Header: 'Code',
@@ -101,7 +98,7 @@ export const ClientTicketsTableColumns: Array<Column<Ticket>> = [
               return 'text-deep-saffron'
           }
         })()}
-        value={titleCase(value)}
+        value={value}
       />
     ),
   },
