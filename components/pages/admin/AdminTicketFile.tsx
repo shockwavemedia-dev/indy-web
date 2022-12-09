@@ -111,10 +111,8 @@ export const AdminTicketFile = ({ ticketFileId }: { ticketFileId: number }) => {
               <FileDisplay
                 src={ticketFile.signedUrl}
                 type={ticketFile.fileType}
-                imageHeight={560}
-                imageWidth={560}
+                imageHeight="h-175"
                 imageAlt={ticketFile.name}
-                className="rounded-xl"
                 videoClassName="w-140 rounded-xl"
               />
             </div>

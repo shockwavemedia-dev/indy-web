@@ -25,15 +25,13 @@ export const TicketNoteCard = ({
         {format(createdAt, 'dd/MM/yyyy')}
       </div>
     </div>
-    <RichTextDisplay value={note} className=" text-sm font-medium text-onyx" />
+    <RichTextDisplay value={note} className="text-sm font-medium text-onyx" />
     {file && (
       <FileDisplay
         src={file?.url}
         type={file?.fileType ?? ''}
-        imageHeight={130}
-        imageWidth={130}
+        imageHeight="h-32"
         imageAlt={file?.fileName}
-        className="rounded-xl"
         videoClassName="w-140 rounded-xl"
       />
     )}

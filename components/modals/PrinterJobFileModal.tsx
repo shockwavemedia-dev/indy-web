@@ -93,10 +93,8 @@ export const PrinterJobFileModal = () => {
               <FileDisplay
                 src={signedUrl}
                 type={fileType}
-                imageHeight={560}
-                imageWidth={560}
+                imageHeight="h-175"
                 imageAlt={name}
-                className="rounded-xl"
                 videoClassName="w-140 rounded-xl"
               />
               <div className="mt-5 flex space-x-5">
