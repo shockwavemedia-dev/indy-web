@@ -454,8 +454,12 @@ export const SocialMediaColumns: Array<Column<SocialMedia>> = [
             </HtmlTooltip>
           )}
           {!socialMedia.boostedChannels && (
-            <Tooltip title="Add booster" placement="top" className="ml-2 h-10">
-              <button>
+            <Tooltip title="Boost Channel(s)" placement="top" className="ml-2 h-10">
+              <button
+                onClick={() => {
+                  toggleEditSocialMediaBoostModal(socialMedia)
+                }}
+              >
                 <BoostOffIcon className=" stroke-gray-600 transition-colors hover:stroke-halloween-orange" />
               </button>
             </Tooltip>

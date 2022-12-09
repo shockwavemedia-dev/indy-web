@@ -59,7 +59,10 @@ export const EditSocialMediaBoostModal = () => {
   if (!socialMedia) return null
 
   return (
-    <Modal title={'Update Social Media Boost'} onClose={toggleEditSocialMediaBoostModal}>
+    <Modal
+      title={!socialMedia.boostedChannels ? 'Boost Social Media' : 'Update Social Media Boost'}
+      onClose={toggleEditSocialMediaBoostModal}
+    >
       <Formik
         validationSchema={EditSocialMediaBoostFormScheme}
         initialValues={{
@@ -95,6 +98,29 @@ export const EditSocialMediaBoostModal = () => {
                               }: ChangeEvent<HTMLInputElement>) =>
                                 arrayHelpers.replace(index, {
                                   name: channel.name,
+                                  quantity: value,
+                                })
+                              }
+                            />
+                          </div>
+                        </>
+                      ))}
+                    {!socialMedia.boostedChannels &&
+                      socialMedia.channels.map((channel, index) => (
+                        <>
+                          <div>{channel}</div>
+                          <div>
+                            <DollarIcon className="left-84 pointer-events-none absolute -mt-1 h-8 w-8 stroke-jungle-green" />
+                            <input
+                              type="text"
+                              className="-mt-3 h-12.5 w-full rounded-xl px-8 text-sm font-medium text-onyx placeholder-metallic-silver ring-1 ring-bright-gray read-only:cursor-auto focus:ring-2 focus:ring-halloween-orange read-only:focus:ring-1 read-only:focus:ring-bright-gray"
+                              placeholder="Enter Amount"
+                              defaultValue={0}
+                              onChange={({
+                                currentTarget: { value },
+                              }: ChangeEvent<HTMLInputElement>) =>
+                                arrayHelpers.replace(index, {
+                                  name: channel,
                                   quantity: value,
                                 })
                               }
