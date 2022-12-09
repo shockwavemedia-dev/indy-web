@@ -18,6 +18,10 @@ import {
   DeleteSocialMediaModal,
   useDeleteSocialMediaModalStore,
 } from '../../components/modals/DeleteSocialMediaModal'
+import {
+  EditSocialMediaBoostModal,
+  useEditSocialMediaBoostModal,
+} from '../../components/modals/EditSocialMediaBoostModal'
 import { useEditSocialMediaModal } from '../../components/modals/EditSocialMediaModal'
 import { FileUploadModal, useFileUploadModal } from '../../components/modals/FileUploadModal'
 import {
@@ -407,6 +411,10 @@ export const SocialMediaColumns: Array<Column<SocialMedia>> = [
         },
       }))
 
+      const toggleEditSocialMediaBoostModal = useEditSocialMediaBoostModal(
+        (state) => state.toggleEditSocialMediaBoostModal
+      )
+
       return (
         <div className="flex items-center">
           {socialMedia.boostedChannels && (
@@ -436,7 +444,11 @@ export const SocialMediaColumns: Array<Column<SocialMedia>> = [
                 </React.Fragment>
               }
             >
-              <button>
+              <button
+                onClick={() => {
+                  toggleEditSocialMediaBoostModal(socialMedia)
+                }}
+              >
                 <BoostIcon className="mr-5 h-10 stroke-jungle-green transition-colors hover:stroke-halloween-orange" />
               </button>
             </HtmlTooltip>
@@ -448,6 +460,7 @@ export const SocialMediaColumns: Array<Column<SocialMedia>> = [
               </button>
             </Tooltip>
           )}
+          <EditSocialMediaBoostModal />
         </div>
       )
     },
