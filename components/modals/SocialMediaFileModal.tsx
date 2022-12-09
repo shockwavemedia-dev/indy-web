@@ -93,7 +93,7 @@ export const SocialMediaFileModal = () => {
               <FileDisplay
                 src={signedUrl}
                 type={fileType}
-                imageHeight="h-175"
+                imageSize="h-175"
                 imageAlt={name}
                 videoClassName="w-140 rounded-xl"
               />
