@@ -7,7 +7,7 @@ export const FileDisplay = ({
   imageAlt,
   href,
   videoClassName,
-  imageHeight,
+  imageSize,
   failedToLoadClassName,
 }: {
   src?: string
@@ -15,7 +15,7 @@ export const FileDisplay = ({
   imageAlt?: string
   href?: string
   videoClassName: string
-  imageHeight: string
+  imageSize: string
   failedToLoadClassName?: string
 }) => {
   const [failedToLoad, setFailedToLoad] = useState(false)
@@ -53,12 +53,12 @@ export const FileDisplay = ({
       rel="noopener noreferrer"
       className="flex flex-none flex-col items-center justify-center space-y-1 p-3"
     >
-      <div className={`relative ${imageHeight}`}>
+      <div className={`relative ${imageSize}`}>
         <Image className="rounded" src={src} alt={imageAlt} layout="fill" objectFit="contain" />
       </div>
     </a>
   ) : (
-    <div className={`relative ${imageHeight}`}>
+    <div className={`relative ${imageSize}`}>
       <Image className="rounded" src={src} alt={imageAlt} layout="fill" objectFit="contain" />
     </div>
   )

@@ -65,7 +65,7 @@ export const FileDisplayModal = () => {
               <FileDisplay
                 src={signedUrl}
                 type={fileType}
-                imageHeight="h-175"
+                imageSize="h-175 w-175"
                 imageAlt={name}
                 videoClassName="rounded-xl w-auto h-[95%]"
               />
