@@ -3,9 +3,7 @@ import axios from 'axios'
 import { format, getDate, getYear, isSameMonth } from 'date-fns'
 import { useSession } from 'next-auth/react'
 import Image from 'next/image'
-import { useState } from 'react'
 import { useQuery } from 'react-query'
-import { SocialMedia } from '../types/SocialMedia.type'
 import { SocialMediaCalendar } from '../types/SocialMediaCalendar.type'
 import { Button } from './Button'
 import { Card } from './Card'
@@ -15,7 +13,7 @@ import { InstagramIcon } from './icons/social-medias/InstagramIcon'
 import { LinkedInIcon } from './icons/social-medias/LinkedIn'
 import { TikTokIcon } from './icons/social-medias/TikTokIcon'
 import { TwitterIcon } from './icons/social-medias/TwitterIcon'
-import { EditSocialMediaCalendarModal } from './modals/EditSocialMediaCalendarModal'
+import { EditSocialMediaModal, useEditSocialMediaModal } from './modals/EditSocialMediaModal'
 import { Pill } from './Pill'
 
 export const SocialMediaCalendarList = () => {
@@ -48,8 +46,9 @@ export const SocialMediaCalendarList = () => {
       enabled: !!session,
     }
   )
-
-  const [socialMedia, setSocialMedia] = useState<SocialMedia | undefined>(undefined)
+  const toggleEditSocialMediaModal = useEditSocialMediaModal(
+    (state) => state.toggleEditSocialMediaModal
+  )
 
   return (
     <>
@@ -122,7 +121,7 @@ export const SocialMediaCalendarList = () => {
                                 <button
                                   key={`todo-${socialMedia.id}`}
                                   type="button"
-                                  onClick={() => setSocialMedia(socialMedia)}
+                                  onClick={() => toggleEditSocialMediaModal(socialMedia)}
                                   className="w-full rounded outline outline-1 outline-slate-300 transition-all hover:-translate-y-2.5 hover:shadow-md"
                                 >
                                   <div className="flex items-center justify-between border-b border-b-slate-300 bg-slate-100 p-3">
@@ -134,6 +133,9 @@ export const SocialMediaCalendarList = () => {
                                               <FacebookIcon key={`icon-${socialMedia.id}-${i}`} />
                                             ),
                                             'Facebook Event': (
+                                              <FacebookIcon key={`icon-${socialMedia.id}-${i}`} />
+                                            ),
+                                            'Facebook Post': (
                                               <FacebookIcon key={`icon-${socialMedia.id}-${i}`} />
                                             ),
                                             Instagram: (
@@ -227,10 +229,7 @@ export const SocialMediaCalendarList = () => {
           </>
         )}
       </Card>
-      <EditSocialMediaCalendarModal
-        onClose={() => setSocialMedia(undefined)}
-        socialMedia={socialMedia}
-      />
+      <EditSocialMediaModal />
     </>
   )
 }

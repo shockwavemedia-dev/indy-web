@@ -1,11 +1,8 @@
-import axios from 'axios'
 import { useSession } from 'next-auth/react'
 import Head from 'next/head'
 import { useState } from 'react'
-import { useQuery } from 'react-query'
 import { useSocialMediaStore } from '../../../store/SocialMediaStore'
 import { Icon } from '../../../types/Icon.type'
-import { SocialMedia } from '../../../types/SocialMedia.type'
 import { SocialMediaPageTabs } from '../../../types/SocialMediaPageTabs.type'
 import { Button } from '../../Button'
 import { Card } from '../../Card'
@@ -18,7 +15,6 @@ import { SocialMediaTable } from '../../SocialMediaTable'
 
 export const ClientSocialMediaList = ({
   clientId,
-  socialMediaId = -1,
 }: {
   clientId: number
   socialMediaId?: number
@@ -26,25 +22,7 @@ export const ClientSocialMediaList = ({
   const { data: session } = useSession()
   const [activeTab, setActiveTab] = useState<SocialMediaPageTabs>('list')
 
-  const {
-    activeSocialMedia,
-    isCreateSocialMediaModalVisible,
-    isEditSocialMediaModalVisible,
-    toggleCreateSocialMediaModal,
-    toggleEditSocialMediaModal,
-  } = useSocialMediaStore()
-
-  const { data: socialMediaDetails } = useQuery(
-    ['socialMedia', socialMediaId],
-    async () => {
-      const { data } = await axios.get<SocialMedia>(`/v1/social-media/${socialMediaId}`)
-
-      return data
-    },
-    {
-      enabled: !!socialMediaId && socialMediaId !== -1,
-    }
-  )
+  const { isCreateSocialMediaModalVisible, toggleCreateSocialMediaModal } = useSocialMediaStore()
 
   const Tab = ({
     title,
@@ -138,18 +116,7 @@ export const ClientSocialMediaList = ({
         onClose={toggleCreateSocialMediaModal}
         clientId={session!.user.userType.client.id}
       />
-      <EditSocialMediaModal
-        isVisible={isEditSocialMediaModalVisible}
-        onClose={toggleEditSocialMediaModal}
-        socialMedia={activeSocialMedia}
-      />
-      {socialMediaId !== -1 && socialMediaDetails && (
-        <EditSocialMediaModal
-          isVisible={isEditSocialMediaModalVisible}
-          onClose={toggleEditSocialMediaModal}
-          socialMedia={socialMediaDetails}
-        />
-      )}
+      <EditSocialMediaModal />
     </>
   )
 }

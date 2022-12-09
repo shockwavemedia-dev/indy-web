@@ -42,7 +42,6 @@ import { TicketNote } from '../../../types/TicketNote.type'
 import { TicketPageTabs } from '../../../types/TicketPageTabs.type'
 import { FileBrowser } from '../../FileBrowser'
 import { FileDisplay } from '../../FileDisplay'
-import { ColorsIcon } from '../../icons/ColorsIcon'
 import { CopyIcon } from '../../icons/CopyIcon'
 import { DollarIcon } from '../../icons/DollarIcon'
 import { FolderIcon } from '../../icons/FolderIcon'
@@ -489,21 +488,21 @@ export const ClientTicket = ({ ticketId }: { ticketId: number }) => {
           <div className="flex justify-between">
             <Tab title="Description" Icon={NotepadIcon} tabName="description" />
             <Tab title="Messaging" Icon={NoteIcon} tabName="notes" showCount={true} />
-            <Tab title="MyFiles" Icon={FolderIcon} tabName="my_files" showCount={true} />
+            <Tab title="MyFiles" Icon={FolderIcon} tabName="my_files" />
             <Tab title="Activities" Icon={CalendarIcon} tabName="activities" />
-            <Tab title="Style Guide" Icon={ColorsIcon} tabName="style_guide" />
+            {/* <Tab title="Style Guide" Icon={ColorsIcon} tabName="style_guide" /> */}
           </div>
           <div className="h-px bg-bright-gray" />
           <div
-            className={`-mt-0.5 mb-4 h-0.75 w-1/5 rounded bg-halloween-orange fill-halloween-orange transition-all ${
+            className={`-mt-0.5 mb-4 h-0.75 w-1/4 rounded bg-halloween-orange fill-halloween-orange transition-all ${
               activeTab === 'description'
                 ? 'ml-0'
                 : activeTab === 'notes'
-                ? 'ml-1/5'
+                ? 'ml-1/4'
                 : activeTab === 'activities'
-                ? 'ml-3/5'
+                ? 'ml-3/4'
                 : activeTab === 'my_files'
-                ? 'ml-2/5'
+                ? 'ml-2/4'
                 : 'ml-auto'
             }`}
           />

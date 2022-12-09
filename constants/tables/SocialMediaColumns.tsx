@@ -1,11 +1,15 @@
-import { Tooltip } from '@mui/material'
+import { styled, Tooltip, tooltipClasses, TooltipProps } from '@mui/material'
 import { DesktopDateTimePicker } from '@mui/x-date-pickers'
 import axios from 'axios'
 import Image from 'next/image'
-import { useEffect, useId, useRef, useState } from 'react'
+import React, { useEffect, useId, useRef, useState } from 'react'
 import { useQueryClient } from 'react-query'
 import { MultiValue, SingleValue } from 'react-select'
 import { Column } from 'react-table'
+import { Card } from '../../components/Card'
+import { BoostIcon } from '../../components/icons/BoostIcon'
+import { BoostOffIcon } from '../../components/icons/BoostOffIcon'
+import { DollarIcon } from '../../components/icons/DollarIcon'
 import { EditIcon } from '../../components/icons/EditIcon'
 import { FileIcon } from '../../components/icons/FileIcon'
 import { PlusIcon } from '../../components/icons/PlusIcon'
@@ -14,6 +18,7 @@ import {
   DeleteSocialMediaModal,
   useDeleteSocialMediaModalStore,
 } from '../../components/modals/DeleteSocialMediaModal'
+import { useEditSocialMediaModal } from '../../components/modals/EditSocialMediaModal'
 import { FileUploadModal, useFileUploadModal } from '../../components/modals/FileUploadModal'
 import {
   SocialMediaFileModal,
@@ -21,7 +26,6 @@ import {
 } from '../../components/modals/SocialMediaFileModal'
 import { SocialMediaChannelSelect } from '../../components/SocialMediaChannelSelect'
 import { SocialMediaStatusSelect } from '../../components/SocialMediaStatusSelect'
-import { useSocialMediaStore } from '../../store/SocialMediaStore'
 import { useToastStore } from '../../store/ToastStore'
 import { SelectOption } from '../../types/SelectOption.type'
 import { SocialMedia } from '../../types/SocialMedia.type'
@@ -49,17 +53,20 @@ export const SocialMediaColumns: Array<Column<SocialMedia>> = [
     accessor: 'id',
     id: 'id',
     Cell: ({ value, row: { original: socialMedia } }) => {
-      const { setActiveSocialMedia, toggleEditSocialMediaModal } = useSocialMediaStore()
-
-      const editSocialMedia = () => {
-        setActiveSocialMedia(socialMedia)
-        toggleEditSocialMediaModal()
-      }
+      const toggleEditSocialMediaModal = useEditSocialMediaModal(
+        (state) => state.toggleEditSocialMediaModal
+      )
 
       return (
         <div className="text-sm font-medium text-bright-navy-blue">
           <Tooltip title="Edit Social Media" placement="right-start">
-            <button onClick={editSocialMedia}>{value}</button>
+            <button
+              onClick={() => {
+                toggleEditSocialMediaModal(socialMedia)
+              }}
+            >
+              {value}
+            </button>
           </Tooltip>
         </div>
       )
@@ -382,6 +389,70 @@ export const SocialMediaColumns: Array<Column<SocialMedia>> = [
     },
   },
   {
+    Header: 'Booster',
+    accessor: 'boostedChannels',
+    Cell: ({ row: { original: socialMedia } }) => {
+      const HtmlTooltip = styled(({ className, ...props }: TooltipProps) => (
+        <Tooltip
+          {...props}
+          classes={{ popper: className }}
+          placement="top-end"
+          className="ml-auto"
+        />
+      ))(({ theme }) => ({
+        [`& .${tooltipClasses.tooltip}`]: {
+          maxWidth: 260,
+          backgroundColor: 'white',
+          fontSize: theme.typography.pxToRem(11),
+        },
+      }))
+
+      return (
+        <div className="flex items-center">
+          {socialMedia.boostedChannels && (
+            <HtmlTooltip
+              className=""
+              title={
+                <React.Fragment>
+                  <Card className="">
+                    <ul className="list-square">
+                      <p className=" mb-2 text-lg font-bold text-halloween-orange">
+                        Boosted Channels
+                      </p>
+                      {socialMedia.boostedChannels?.map((boostedChannel) => (
+                        <li key={boostedChannel.name} className="mb-3 text-halloween-orange">
+                          {boostedChannel.name}
+                          <div className="mt-2 flex space-x-5">
+                            <DollarIcon className="-mr-2 -mt-1 stroke-jungle-green transition-colors hover:stroke-halloween-orange"></DollarIcon>
+
+                            <p className="-ml-9 text-xs text-jungle-green">
+                              {Number(boostedChannel.quantity).toLocaleString('en')}
+                            </p>
+                          </div>
+                        </li>
+                      ))}
+                    </ul>
+                  </Card>
+                </React.Fragment>
+              }
+            >
+              <button>
+                <BoostIcon className="mr-5 h-10 stroke-jungle-green transition-colors hover:stroke-halloween-orange" />
+              </button>
+            </HtmlTooltip>
+          )}
+          {!socialMedia.boostedChannels && (
+            <Tooltip title="Add booster" placement="top" className="ml-2 h-10">
+              <button>
+                <BoostOffIcon className=" stroke-gray-600 transition-colors hover:stroke-halloween-orange" />
+              </button>
+            </Tooltip>
+          )}
+        </div>
+      )
+    },
+  },
+  {
     Header: 'Notes',
     accessor: 'notes',
     Cell: ({ value, row: { original: socialMedia } }) => {
@@ -433,17 +504,19 @@ export const SocialMediaColumns: Array<Column<SocialMedia>> = [
     id: 'action',
     disableSortBy: true,
     Cell: ({ value, row: { original: socialMedia } }) => {
-      const { setActiveSocialMedia, toggleEditSocialMediaModal } = useSocialMediaStore()
+      const toggleEditSocialMediaModal = useEditSocialMediaModal(
+        (state) => state.toggleEditSocialMediaModal
+      )
 
-      const editSocialMedia = () => {
-        setActiveSocialMedia(socialMedia)
-        toggleEditSocialMediaModal()
-      }
       const { toggleModal: toggleDeleteModal } = useDeleteSocialMediaModalStore()
       return (
         <div className="mr-5 flex space-x-4">
           <Tooltip title="Edit Social Media" placement="top" className="ml-auto">
-            <button onClick={editSocialMedia}>
+            <button
+              onClick={() => {
+                toggleEditSocialMediaModal(socialMedia)
+              }}
+            >
               <EditIcon className="stroke-waterloo hover:stroke-halloween-orange" />
             </button>
           </Tooltip>

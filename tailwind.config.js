@@ -133,6 +133,9 @@ module.exports = {
         '2/5': '40%',
         '3/5': '60%',
         '4/5': '80%',
+        '1/4': '25%',
+        '2/4': '50%',
+        '3/4': '75%',
         '1/7': '14%',
         '2/7': '28%',
         '3/7': '42%',
@@ -167,6 +170,10 @@ module.exports = {
       urbanist: ['Urbanist'],
       'varela-round': ['Varela Round'],
       'circular-std': ['Circular Std'],
+    },
+    listStyleType: {
+      square: 'square',
+      roman: 'upper-roman',
     },
   },
   plugins: [

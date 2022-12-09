@@ -6,4 +6,5 @@ export type SocialMediaChannel =
   | 'Linkedin'
   | 'Video Reels'
   | 'Facebook Event'
+  | 'Facebook Post'
   | 'Tik Tok'

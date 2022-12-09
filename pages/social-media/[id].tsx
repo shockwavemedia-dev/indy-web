@@ -33,14 +33,14 @@ const SocialMediaPage: NextPageWithLayout = () => {
           session?.user.userType.department &&
           session?.user.userType.department.name === 'Social Media'
         ) {
-          return <ManagerSocialMediaList socialMediaId={Number(id)} />
+          return <ManagerSocialMediaList />
         }
       } else if (session.isStaff) {
         if (
           session?.user.userType.department &&
           session?.user.userType.department.name === 'Social Media'
         ) {
-          return <StaffSocialMediaList socialMediaId={Number(id)} />
+          return <StaffSocialMediaList />
         }
       }
     }
