@@ -61,6 +61,8 @@ module.exports = {
         'white-coffee': '#E4DEDB',
         'deep-space-sparkle': '#456972',
         saffron: '#F6B22E',
+        'dark-blue': '#009af4',
+        'light-blue': '#8dd5ff',
       },
       zIndex: {
         60: '60',
