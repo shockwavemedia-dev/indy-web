@@ -65,10 +65,8 @@ export const FileDisplayModal = () => {
               <FileDisplay
                 src={signedUrl}
                 type={fileType}
-                imageHeight={560}
-                imageWidth={560}
+                imageHeight="h-175"
                 imageAlt={name}
-                className="rounded-xl"
                 videoClassName="rounded-xl w-auto h-[95%]"
               />
               {fileType !== 'video/mp4' && session?.isClient && (

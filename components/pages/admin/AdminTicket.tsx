@@ -492,17 +492,15 @@ export const AdminTicket = ({ ticketId }: { ticketId: number }) => {
                 )}
               </Card>
               <Card title="Attachment" className="mt-5">
-                <div className="flex h-fit w-257.5 flex-wrap gap-5">
+                <div className="h flex h-fit w-257.5 flex-wrap gap-5">
                   {!!ticket!.attachments && ticket!.attachments?.length > 0 ? (
                     ticket!.attachments?.map((attachment) => (
                       <FileDisplay
                         key={`attachment-${attachment.id}`}
                         src={attachment.url}
                         type={attachment.fileType}
-                        imageHeight={176}
-                        imageWidth={314}
+                        imageHeight="h-44"
                         imageAlt={attachment.url}
-                        className="rounded-xl"
                         href={attachment.url}
                         videoClassName="h-44 w-78.5 cursor-pointer rounded-xl"
                         failedToLoadClassName="h-44 w-78.5"

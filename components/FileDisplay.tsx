@@ -4,22 +4,18 @@ import { useState } from 'react'
 export const FileDisplay = ({
   src,
   type,
-  imageHeight,
-  imageWidth,
   imageAlt,
-  className,
   href,
   videoClassName,
+  imageHeight,
   failedToLoadClassName,
 }: {
   src?: string
   type: string
-  imageHeight: number
-  imageWidth: number
   imageAlt?: string
-  className?: string
   href?: string
   videoClassName: string
+  imageHeight: string
   failedToLoadClassName?: string
 }) => {
   const [failedToLoad, setFailedToLoad] = useState(false)
@@ -57,15 +53,13 @@ export const FileDisplay = ({
       rel="noopener noreferrer"
       className="flex flex-none flex-col items-center justify-center space-y-1 p-3"
     >
-      <Image
-        className={className}
-        src={src}
-        height={imageHeight}
-        width={imageWidth}
-        alt={imageAlt}
-      />
+      <div className={`relative ${imageHeight}`}>
+        <Image className="rounded" src={src} alt={imageAlt} layout="fill" objectFit="contain" />
+      </div>
     </a>
   ) : (
-    <Image className={className} src={src} height={imageHeight} width={imageWidth} alt={imageAlt} />
+    <div className={`relative ${imageHeight}`}>
+      <Image className="rounded" src={src} alt={imageAlt} layout="fill" objectFit="contain" />
+    </div>
   )
 }
