@@ -18,9 +18,9 @@ const TicketPage: NextPageWithLayout = () => {
 
   if (session?.isClient) {
     return <ClientTicket ticketId={Number(id)} />
-  } else if (session?.isManager) {
+  } else if (session?.isManager || session?.isSocialMediaManager) {
     return <ManagerTicket ticketId={Number(id)} />
-  } else if (session?.isStaff) {
+  } else if (session?.isStaff || session?.isSocialMediaStaff) {
     return <StaffTicket ticketId={Number(id)} />
   } else if (session?.isAdmin) {
     return <AdminTicket ticketId={Number(id)} />
