@@ -521,7 +521,7 @@ export const ManagerTicket = ({ ticketId }: { ticketId: number }) => {
                         key={`attachment-${attachment.id}`}
                         src={attachment.url}
                         type={attachment.fileType}
-                        imageHeight="h-44"
+                        imageSize="h-44 w-44"
                         imageAlt={attachment.url}
                         href={attachment.url}
                         videoClassName="h-44 w-78.5 cursor-pointer rounded-xl"
