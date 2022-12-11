@@ -5,7 +5,7 @@ import { useRouter } from 'next/router'
 import { useQueryClient } from 'react-query'
 import create from 'zustand'
 import { combine } from 'zustand/middleware'
-import DummyCompany from '../../public/images/dummy-company.png'
+import DummyCompany from '../../public/images/dummy-profile-pic.png'
 import { useToastStore } from '../../store/ToastStore'
 import { Ticket } from '../../types/Ticket.type'
 import { Button } from '../Button'
@@ -51,7 +51,12 @@ export const DeleteTicketModal = ({
           <div className="flex w-175 flex-col">
             {!minimal && (
               <div className="mb-8 flex space-x-8">
-                <Image src={DummyCompany} height={100} width={100} alt={ticket.clientName} />
+                <Image
+                  src={ticket.clientLogo?.thumbnailUrl ?? DummyCompany}
+                  height={100}
+                  width={100}
+                  alt={ticket.clientName}
+                />
                 <div className="grid w-full grid-cols-4 grid-rows-2 gap-y-5">
                   <TitleValue title="ID">{ticket.id}</TitleValue>
                   <TitleValue title="Company">{ticket.clientName}</TitleValue>
