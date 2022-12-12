@@ -9,7 +9,7 @@ export const StaffRoutes: Array<Route> = [
     Icon: ChartIcon,
   },
   {
-    title: 'My Files',
+    title: 'Client MyFiles',
     pathname: '/my-files',
     Icon: FolderIcon,
   },
