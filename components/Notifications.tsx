@@ -1,5 +1,6 @@
 import { Tooltip } from '@mui/material'
 import axios from 'axios'
+import { format } from 'date-fns'
 import { useQuery, useQueryClient } from 'react-query'
 import { useToastStore } from '../store/ToastStore'
 import { Notification } from '../types/Notification.type'
@@ -79,7 +80,7 @@ export const Notifications = ({ className = '' }: { className?: string }) => {
         )}
         <div className="-ml-1 max-h-102 space-y-6 overflow-y-auto pl-1 pr-5 pt-1">
           {notifications && notifications.length > 0 ? (
-            notifications.map(({ id, title, url, status }, i) => {
+            notifications.map(({ id, title, url, status, createdAt }, i) => {
               const readNotification = async () => axios.post(`v1/notifications/${id}/mark-as-read`)
               const deleteById = async () => {
                 try {
@@ -122,6 +123,9 @@ export const Notifications = ({ className = '' }: { className?: string }) => {
                     onClick={readNotification}
                   >
                     {title}
+                    <div className=" text-xs font-medium ">
+                      {format(createdAt, 'dd/MM/yyyy h:mmaaa')}
+                    </div>
                   </a>
                   <Tooltip title="Delete" placement="top">
                     <button className="group mr-2" onClick={deleteById}>
