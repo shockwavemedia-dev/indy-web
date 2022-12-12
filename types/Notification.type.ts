@@ -3,5 +3,5 @@ export type Notification = {
   title: string
   status: 'new' | 'read' | 'deleted'
   url: string
-  created_at: Date
+  createdAt: Date
 }
