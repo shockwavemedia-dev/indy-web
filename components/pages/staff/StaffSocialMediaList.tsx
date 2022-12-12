@@ -36,7 +36,7 @@ export const StaffSocialMediaList = () => {
     } = await axios.get<{
       data: Array<Client>
       page: Page
-    }>('/v1/clients?size=500')
+    }>('/v1/clients/social-media')
 
     return data
   })
