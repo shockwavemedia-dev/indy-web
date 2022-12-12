@@ -15,7 +15,7 @@ export const SocialMediaStaffRoutes: Array<Route> = [
     pathname: '/my-ticket',
   },
   {
-    title: 'My Files',
+    title: 'Client MyFiles',
     pathname: '/my-files',
     Icon: FolderIcon,
   },

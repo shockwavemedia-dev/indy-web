@@ -110,7 +110,7 @@ const ClientLayout = ({ children }: { children: ReactNode }) => {
                     asPath.endsWith('screens') ? ' !stroke-halloween-orange' : ''
                   }`}
                 />
-                <span>MyFiles</span>
+                <span>Client MyFiles</span>
               </a>
             </Link>
             <Link href={`/clients/${id}/printer`}>
