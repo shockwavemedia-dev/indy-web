@@ -32,7 +32,7 @@ const PrinterManagerPrinterJobsPage: NextPageWithLayout = () => {
                 dataEndpoint={`/v1/printers/${session?.user.userType.id}/printer-jobs`}
                 tableQueryKey={['printerJobs']}
                 ofString="printerJobs"
-                rowOnClick={({ original: { id } }) => replace(`/printer-jobs/${id}`)}
+                rowOnClick={({ original: { id } }) => replace(`/print/${id}`)}
               />
             </Card>
           </div>
