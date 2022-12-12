@@ -16,7 +16,7 @@ export const Pill = ({
   >
     {pillColor && <div className={`h-1.5 w-1.5 rounded-full ${pillColor}`} />}
     <div className={`${twTextColor} whitespace-nowrap text-sm font-medium capitalize`}>
-      {value && value.replace(/_/, ' ')}
+      {value && value.toString().replace(/_/, ' ')}
     </div>
   </div>
 )

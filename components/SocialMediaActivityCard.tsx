@@ -55,8 +55,8 @@ export const SocialMediaActivityCard = ({
               <div className="flex flex-wrap gap-1">
                 {Array.isArray(values.new) &&
                   values.new.map((channel) => (
-                    <div key={`${channel}-channel`} className="flex flex-wrap gap-1">
-                      <SocialMediaChannels value={channel} />
+                    <div key={`${channel.name}-channel`} className="flex flex-wrap gap-1">
+                      <SocialMediaChannels value={channel.name} />
                     </div>
                   ))}
               </div>
@@ -65,8 +65,8 @@ export const SocialMediaActivityCard = ({
               <div className="flex flex-wrap gap-1">
                 {Array.isArray(values.old) &&
                   values.old.map((channel) => (
-                    <div key={`${channel}-channel`} className="flex flex-wrap gap-1">
-                      <SocialMediaChannels value={channel} />
+                    <div key={`${channel.name}-channel`} className="flex flex-wrap gap-1">
+                      <SocialMediaChannels value={channel.name} />
                     </div>
                   ))}
               </div>

@@ -1,9 +1,9 @@
-import { Tooltip } from '@mui/material'
+import { styled, Tooltip, tooltipClasses, TooltipProps } from '@mui/material'
 import axios from 'axios'
 import { Form, Formik } from 'formik'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/router'
-import { SetStateAction, useState } from 'react'
+import React, { SetStateAction, useState } from 'react'
 import { useQuery, useQueryClient } from 'react-query'
 import { MultiValue, SingleValue } from 'react-select'
 import createStore from 'zustand'
@@ -25,7 +25,10 @@ import { Button } from '../Button'
 import { Card } from '../Card'
 import { CreateSelectNoFormik } from '../CreateSelectNoFormik'
 import { DateInput } from '../DateInput'
+import { BoostIcon } from '../icons/BoostIcon'
+import { BoostOffIcon } from '../icons/BoostOffIcon'
 import { ClipboardIcon } from '../icons/ClipboardIcon'
+import { DollarIcon } from '../icons/DollarIcon'
 import { EditIcon } from '../icons/EditIcon'
 import { FloppyDiskIcon } from '../icons/FloppyDiskIcon'
 import { PaperPlaneIcon } from '../icons/PaperPlaneIcon'
@@ -41,6 +44,10 @@ import { TextInput } from '../TextInput'
 import { TimeInput } from '../TimeInput'
 import { DeleteSocialMediaCommentModal } from './DeleteSocialMediaCommentModal'
 import { DeleteSocialMediaModal, useDeleteSocialMediaModalStore } from './DeleteSocialMediaModal'
+import {
+  EditSocialMediaBoostModal,
+  useEditSocialMediaBoostModal,
+} from './EditSocialMediaBoostModal'
 import { EditSocialMediaCommentModal } from './EditSocialMediaCommentModal'
 import { FileUploadModal, useFileUploadModal } from './FileUploadModal'
 import { SocialMediaFileModal, useSocialMediaFileModalStore } from './SocialMediaFileModal'
@@ -136,6 +143,20 @@ export const EditSocialMediaModal = () => {
     }
   }
 
+  const HtmlTooltip = styled(({ className, ...props }: TooltipProps) => (
+    <Tooltip {...props} classes={{ popper: className }} placement="top-end" className="ml-auto" />
+  ))(({ theme }) => ({
+    [`& .${tooltipClasses.tooltip}`]: {
+      maxWidth: 260,
+      backgroundColor: 'white',
+      fontSize: theme.typography.pxToRem(11),
+    },
+  }))
+
+  const toggleEditSocialMediaBoostModal = useEditSocialMediaBoostModal(
+    (state) => state.toggleEditSocialMediaBoostModal
+  )
+
   const commentTagedUsers = (event: { target: { value: SetStateAction<string> } }) => {
     const comment = event.target.value
     const regex = /@\[.+?\]\(.+?\)/gm
@@ -228,15 +249,70 @@ export const EditSocialMediaModal = () => {
                         <Tooltip title="Delete Record" placement="top">
                           <button
                             type="button"
+                            className="mr-4"
                             onClick={(e) => {
                               e.stopPropagation()
                               toggleDeleteModal(socialMedia.id)
                             }}
-                            className="group"
                           >
-                            <TrashIcon className="stroke-waterloo group-hover:stroke-halloween-orange" />
+                            <TrashIcon className="stroke-halloween-orange transition-colors hover:stroke-red-crimson" />
                           </button>
                         </Tooltip>
+                        {socialMedia.boostedChannels && (
+                          <HtmlTooltip
+                            className=""
+                            title={
+                              <React.Fragment>
+                                <Card className="">
+                                  <ul className="list-square">
+                                    <p className=" mb-2 text-lg font-bold text-halloween-orange">
+                                      Boosted Channels
+                                    </p>
+                                    {socialMedia.boostedChannels?.map((boostedChannel) => (
+                                      <li
+                                        key={boostedChannel.name}
+                                        className="mb-3 text-halloween-orange"
+                                      >
+                                        {boostedChannel.name}
+                                        <div className="mt-2 flex space-x-5">
+                                          <DollarIcon className="stroke-jungle-green transition-colors hover:stroke-halloween-orange"></DollarIcon>
+
+                                          <p className="-ml-9 text-xs text-jungle-green">
+                                            {Number(boostedChannel.quantity).toLocaleString('en')}
+                                          </p>
+                                        </div>
+                                      </li>
+                                    ))}
+                                  </ul>
+                                </Card>
+                              </React.Fragment>
+                            }
+                          >
+                            <button
+                              className="group mr-2"
+                              type="button"
+                              onClick={() => {
+                                toggleEditSocialMediaBoostModal(socialMedia)
+                              }}
+                            >
+                              <BoostIcon className=" stroke-jungle-green transition-colors hover:stroke-halloween-orange" />
+                            </button>
+                          </HtmlTooltip>
+                        )}
+                        {!socialMedia.boostedChannels && (
+                          <Tooltip title="Not Boosted" placement="top" className="ml-2 h-10">
+                            <button
+                              type="button"
+                              className="group mr-2"
+                              onClick={() => {
+                                toggleEditSocialMediaBoostModal(socialMedia)
+                              }}
+                            >
+                              <BoostOffIcon className="mt-4 stroke-gray-600 transition-colors hover:stroke-halloween-orange" />
+                            </button>
+                          </Tooltip>
+                        )}
+                        <EditSocialMediaBoostModal />
                       </div>
                       <TextInput
                         type="text"

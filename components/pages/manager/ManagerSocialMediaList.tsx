@@ -17,7 +17,7 @@ import { EditSocialMediaModal } from '../../modals/EditSocialMediaModal'
 import { SelectNoFormik } from '../../SelectNoFormik'
 import { SocialMediaTable } from '../../SocialMediaTable'
 
-export const ManagerSocialMediaList = () => {
+export const ManagerSocialMediaList = ({ clientId = -1 }: { clientId?: number | null }) => {
   const { data: session } = useSession()
   const { setHeader, setSubHeader } = usePanelLayoutStore()
 
@@ -51,6 +51,14 @@ export const ManagerSocialMediaList = () => {
         value: id,
       }))
     : []
+
+  if (clientId && clientOptions) {
+    let client = clientOptions?.find((value) => value.value === clientId)
+
+    if (client) {
+      selectClient(client)
+    }
+  }
 
   useEffect(() => {
     setClientId(defaultValue ? Number(defaultValue) : -1)
