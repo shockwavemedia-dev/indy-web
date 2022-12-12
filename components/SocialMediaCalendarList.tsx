@@ -1,18 +1,24 @@
 import { useCalendar } from '@h6s/calendar'
+import { styled, Tooltip, tooltipClasses, TooltipProps } from '@mui/material'
 import axios from 'axios'
 import { format, getDate, getYear, isSameMonth } from 'date-fns'
 import { useSession } from 'next-auth/react'
 import Image from 'next/image'
+import React from 'react'
 import { useQuery } from 'react-query'
 import { SocialMediaCalendar } from '../types/SocialMediaCalendar.type'
 import { Button } from './Button'
 import { Card } from './Card'
 import { ArrowIcon } from './icons/ArrowIcon'
+import { BoostIcon } from './icons/BoostIcon'
+import { BoostOffIcon } from './icons/BoostOffIcon'
+import { DollarIcon } from './icons/DollarIcon'
 import { FacebookIcon } from './icons/social-medias/FacebookIcon'
 import { InstagramIcon } from './icons/social-medias/InstagramIcon'
 import { LinkedInIcon } from './icons/social-medias/LinkedIn'
 import { TikTokIcon } from './icons/social-medias/TikTokIcon'
 import { TwitterIcon } from './icons/social-medias/TwitterIcon'
+import { EditSocialMediaBoostModal } from './modals/EditSocialMediaBoostModal'
 import { EditSocialMediaModal, useEditSocialMediaModal } from './modals/EditSocialMediaModal'
 import { Pill } from './Pill'
 
@@ -49,6 +55,16 @@ export const SocialMediaCalendarList = () => {
   const toggleEditSocialMediaModal = useEditSocialMediaModal(
     (state) => state.toggleEditSocialMediaModal
   )
+
+  const HtmlTooltip = styled(({ className, ...props }: TooltipProps) => (
+    <Tooltip {...props} classes={{ popper: className }} placement="top-end" className="ml-auto" />
+  ))(({ theme }) => ({
+    [`& .${tooltipClasses.tooltip}`]: {
+      maxWidth: 260,
+      backgroundColor: 'white',
+      fontSize: theme.typography.pxToRem(11),
+    },
+  }))
 
   return (
     <>
@@ -163,11 +179,11 @@ export const SocialMediaCalendarList = () => {
                                   <div className="mb-3 flex justify-between p-3">
                                     <div className="text-sm line-clamp-2">{socialMedia.post}</div>
                                     {socialMedia.attachments.length > 0 &&
-                                      socialMedia.attachments[0].thumbnailUrl && (
+                                      socialMedia.attachments[1]?.thumbnailUrl && (
                                         <div className="relative aspect-square h-10">
                                           <Image
-                                            src={socialMedia.attachments[0].thumbnailUrl}
-                                            alt={socialMedia.attachments[0].name}
+                                            src={socialMedia.attachments[1].thumbnailUrl}
+                                            alt={socialMedia.attachments[1].name}
                                             layout="fill"
                                             className="rounded"
                                           />
@@ -210,6 +226,59 @@ export const SocialMediaCalendarList = () => {
                                       })()}
                                       value={socialMedia.status}
                                     />
+                                  </div>
+                                  <div className="flex items-center justify-center p-3">
+                                    {socialMedia.boostedChannels && (
+                                      <HtmlTooltip
+                                        className=""
+                                        title={
+                                          <React.Fragment>
+                                            <Card className="">
+                                              <ul className="list-square">
+                                                <p className=" mb-2 text-lg font-bold text-halloween-orange">
+                                                  Boosted Channels
+                                                </p>
+                                                {socialMedia.boostedChannels?.map(
+                                                  (boostedChannel) => (
+                                                    <li
+                                                      key={boostedChannel.name}
+                                                      className="mb-3 text-halloween-orange"
+                                                    >
+                                                      {boostedChannel.name}
+                                                      <div className="mt-2 flex space-x-5">
+                                                        <DollarIcon className="-mt-1 stroke-jungle-green transition-colors hover:stroke-halloween-orange"></DollarIcon>
+
+                                                        <p className="-ml-9 text-xs text-jungle-green">
+                                                          {Number(
+                                                            boostedChannel.quantity
+                                                          ).toLocaleString('en')}
+                                                        </p>
+                                                      </div>
+                                                    </li>
+                                                  )
+                                                )}
+                                              </ul>
+                                            </Card>
+                                          </React.Fragment>
+                                        }
+                                      >
+                                        <button>
+                                          <BoostIcon className="mr-16 h-10 stroke-jungle-green transition-colors hover:stroke-halloween-orange" />
+                                        </button>
+                                      </HtmlTooltip>
+                                    )}
+                                    {!socialMedia.boostedChannels && (
+                                      <Tooltip
+                                        title="Not Boosted"
+                                        placement="top"
+                                        className="ml-2 h-10"
+                                      >
+                                        <button>
+                                          <BoostOffIcon className=" stroke-gray-600 transition-colors hover:stroke-halloween-orange" />
+                                        </button>
+                                      </Tooltip>
+                                    )}
+                                    <EditSocialMediaBoostModal />
                                   </div>
                                 </button>
                               ))

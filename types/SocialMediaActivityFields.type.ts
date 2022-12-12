@@ -1,7 +1,7 @@
 export type SocialMediaActivityFields = Record<
   string,
   {
-    old: string | Array<string> | Date | null
-    new: string | Array<string> | Date | null
+    old: Array<{ name: string; quantity: number }>
+    new: Array<{ name: string; quantity: number }>
   }
 >
