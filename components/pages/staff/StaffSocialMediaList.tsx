@@ -53,12 +53,10 @@ export const StaffSocialMediaList = () => {
     : []
 
   useEffect(() => {
-    setHeader('Dashboard')
+    setClientId(defaultValue ? Number(defaultValue) : -1)
+    setHeader('Social Media Dashboard')
     setSubHeader(`Welcome back, ${session?.user.firstName}`)
-    return () => {
-      setSubHeader('Social Media')
-    }
-  }, [selectedClientId])
+  }, [clients])
 
   return (
     <>

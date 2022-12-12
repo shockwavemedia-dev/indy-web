@@ -26,6 +26,8 @@ declare module 'next-auth' {
     isManager: boolean
     isStaff: boolean
     isPrinter: boolean
+    isSocialMediaManager: boolean
+    isSocialMediaStaff: boolean
   }
 }
 
@@ -40,5 +42,7 @@ declare module 'next-auth/jwt' {
     isManager: boolean
     isStaff: boolean
     isPrinter: boolean
+    isSocialMediaManager: boolean
+    isSocialMediaStaff: boolean
   }
 }
