@@ -53,13 +53,10 @@ export const ManagerSocialMediaList = () => {
     : []
 
   useEffect(() => {
-    setHeader('Dashboard')
+    setClientId(defaultValue ? Number(defaultValue) : -1)
+    setHeader('Social Media Dashboard')
     setSubHeader(`Welcome back, ${session?.user.firstName}`)
-
-    return () => {
-      setSubHeader('Social Media')
-    }
-  }, [selectedClientId])
+  }, [clients])
 
   return (
     <>
@@ -74,7 +71,6 @@ export const ManagerSocialMediaList = () => {
           placeholder="Select Client"
           options={clientOptions}
           value={clientOptions.find(({ value }) => value === selectedClientId)}
-          defaultValue={clientOptions.find(({ value }) => value === defaultValue)}
         />
       </div>
       {selectedClientId !== -1 ? (
