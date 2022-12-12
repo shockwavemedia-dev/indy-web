@@ -18,10 +18,7 @@ import { InstagramIcon } from './icons/social-medias/InstagramIcon'
 import { LinkedInIcon } from './icons/social-medias/LinkedIn'
 import { TikTokIcon } from './icons/social-medias/TikTokIcon'
 import { TwitterIcon } from './icons/social-medias/TwitterIcon'
-import {
-  EditSocialMediaBoostModal,
-  useEditSocialMediaBoostModal,
-} from './modals/EditSocialMediaBoostModal'
+import { EditSocialMediaBoostModal } from './modals/EditSocialMediaBoostModal'
 import { EditSocialMediaModal, useEditSocialMediaModal } from './modals/EditSocialMediaModal'
 import { Pill } from './Pill'
 
@@ -69,9 +66,6 @@ export const SocialMediaCalendarList = () => {
     },
   }))
 
-  const toggleEditSocialMediaBoostModal = useEditSocialMediaBoostModal(
-    (state) => state.toggleEditSocialMediaBoostModal
-  )
   return (
     <>
       <svg className="sr-only">
@@ -275,7 +269,7 @@ export const SocialMediaCalendarList = () => {
                                     )}
                                     {!socialMedia.boostedChannels && (
                                       <Tooltip
-                                        title="Not Boost"
+                                        title="Not Boosted"
                                         placement="top"
                                         className="ml-2 h-10"
                                       >

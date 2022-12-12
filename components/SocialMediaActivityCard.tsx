@@ -55,8 +55,8 @@ export const SocialMediaActivityCard = ({
               <div className="flex flex-wrap gap-1">
                 {Array.isArray(values.new) &&
                   values.new.map((channel) => (
-                    <div key={`${channel.name}-channel`} className="flex flex-wrap gap-1">
-                      <SocialMediaChannels value={channel.name} />
+                    <div key={`${channel}-channel`} className="flex flex-wrap gap-1">
+                      <SocialMediaChannels value={channel} />
                     </div>
                   ))}
               </div>
@@ -65,8 +65,8 @@ export const SocialMediaActivityCard = ({
               <div className="flex flex-wrap gap-1">
                 {Array.isArray(values.old) &&
                   values.old.map((channel) => (
-                    <div key={`${channel.name}-channel`} className="flex flex-wrap gap-1">
-                      <SocialMediaChannels value={channel.name} />
+                    <div key={`${channel}-channel`} className="flex flex-wrap gap-1">
+                      <SocialMediaChannels value={channel} />
                     </div>
                   ))}
               </div>
@@ -196,12 +196,12 @@ export const SocialMediaStatus = ({ value }: { value: string }) => {
   )
 }
 
-export const SocialMediaChannels = ({ value }: { value: string }) => {
+export const SocialMediaChannels = ({ value }: { value: { name: string; quantity: number } }) => {
   return (
     <>
       <Pill
         twBackgroundColor={(() => {
-          switch (value) {
+          switch (value.name) {
             case 'Story':
               return 'bg-light-red-crimson'
             case 'Facebook':
@@ -221,7 +221,7 @@ export const SocialMediaChannels = ({ value }: { value: string }) => {
           }
         })()}
         twTextColor={(() => {
-          switch (value) {
+          switch (value.name) {
             case 'Story':
               return 'text-red-crimson'
             case 'Facebook':
@@ -236,7 +236,7 @@ export const SocialMediaChannels = ({ value }: { value: string }) => {
               return 'text-onyx'
           }
         })()}
-        value={value}
+        value={value?.name}
       />
     </>
   )
