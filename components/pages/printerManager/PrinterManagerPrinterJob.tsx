@@ -11,7 +11,7 @@ import { PrinterJob } from '../../../types/PrinterJob.type'
 import { SelectOption } from '../../../types/SelectOption.type'
 import { get422And400ResponseError } from '../../../utils/ErrorHelpers'
 import { Card } from '../../Card'
-import { CheckboxNoFormik } from '../../CheckboxNoFormik'
+import { FileDisplay } from '../../FileDisplay'
 import { ClipboardIcon } from '../../icons/ClipboardIcon'
 import { EditIcon } from '../../icons/EditIcon'
 import {
@@ -62,7 +62,7 @@ const PrinterManagerPrinterJobPage = ({ printerId }: { printerId: number }) => {
 
   useEffect(() => {
     if (printer) {
-      setHeader(`Print ${printer.customerName}`)
+      setHeader(`Print`)
     }
   }, [printer])
   if (!printer) return null
@@ -70,7 +70,7 @@ const PrinterManagerPrinterJobPage = ({ printerId }: { printerId: number }) => {
   return (
     <>
       <Head>
-        <title>{`Indy - ${printer?.customerName}`}</title>
+        <title>Indy Print</title>
       </Head>
       <div className="mx-auto flex w-full">
         <Card title="Print Details" className="w-full">
@@ -83,9 +83,9 @@ const PrinterManagerPrinterJobPage = ({ printerId }: { printerId: number }) => {
                 </div>
               </div>
               <div className="space-y-1">
-                <div className="text-sm font-medium text-halloween-orange">Customer</div>
+                <div className="text-sm font-medium text-halloween-orange">Description</div>
                 <div className="text-sm font-medium capitalize text-onyx">
-                  {printer?.customerName}
+                  {printer?.description}
                 </div>
               </div>
               <div className="space-y-1">
@@ -171,64 +171,53 @@ const PrinterManagerPrinterJobPage = ({ printerId }: { printerId: number }) => {
               <TitleValue title="Product" className="capitalize">
                 {printer?.product}
               </TitleValue>
-              <TitleValue title="Option" className="capitalize">
-                {printer?.option}
+              <TitleValue title="Stocks" className="capitalize">
+                {printer?.stocks}
               </TitleValue>
-              <TitleValue title="Format" className="capitalize">
-                {printer?.format}
-              </TitleValue>
-              <TitleValue title="Kinds" className="capitalize">
-                {printer?.kinds}
+              <TitleValue title="Coding" className="capitalize">
+                {printer?.coding}
               </TitleValue>
               <TitleValue title="Quantity" className="capitalize">
                 {printer?.quantity}
               </TitleValue>
-              <TitleValue title="Run Ons" className="capitalize">
-                {printer?.runOns}
-              </TitleValue>
             </div>
             <div className="space-y-4">
-              {printer?.additionalOptions && printer?.additionalOptions?.length > 0 && (
-                <div className="space-y-4">
-                  <div className=" text-sm font-medium text-halloween-orange">
-                    Additional Options
-                  </div>
-                  {printer?.additionalOptions?.map(({ title, quantity }) => (
-                    <TitleValue key={title} title={title ? title : ''}>
-                      {quantity}
-                    </TitleValue>
-                  ))}
-                </div>
-              )}
               <div className="space-y-1">
                 <div className="text-sm font-medium text-halloween-orange">Delivery</div>
-                <div className="text-sm font-medium capitalize text-onyx">{printer?.delivery}</div>
-              </div>
-              <div className="mb-5 flex space-x-5">
-                <CheckboxNoFormik
-                  label="Blind Shipping"
-                  className="pointer-events-none"
-                  checked={printer.blindShipping}
-                />
-                <CheckboxNoFormik
-                  label="Reseller Samples"
-                  className="pointer-events-none"
-                  checked={printer.resellerSamples}
-                />
+                <TitleValue title="Address" className="capitalize">
+                  {printer?.address}
+                </TitleValue>
               </div>
               <div className="space-y-1">
-                <div className="text-sm font-medium text-halloween-orange">Reference</div>
-                <div className="text-sm font-medium capitalize text-onyx">{printer?.reference}</div>
+                <div className="text-sm font-medium text-halloween-orange">
+                  Purchase Order Number or Name
+                </div>
+                <div className="text-sm font-medium capitalize text-onyx">
+                  {printer?.purchaseOrderNumber}
+                </div>
               </div>
               <div className="space-y-1">
                 <div className="text-sm font-medium text-halloween-orange">Notes</div>
                 <div className="text-sm font-medium capitalize text-onyx">{printer?.notes}</div>
               </div>
-              <div className="space-y-1">
-                <div className="text-sm font-medium text-halloween-orange">Description</div>
-                <div className="text-sm font-medium capitalize text-onyx">
-                  {printer?.description}
-                </div>
+              <div className="text-sm font-medium text-halloween-orange">Attachment</div>
+              <div className="flex h-fit w-257.5 flex-wrap gap-5">
+                {!!printer!.attachments && printer!.attachments?.length > 0 ? (
+                  printer!.attachments?.map((attachment) => (
+                    <FileDisplay
+                      key={`attachment-${attachment.url}`}
+                      src={attachment.url}
+                      type={attachment.fileType}
+                      imageSize="h-44 w-44"
+                      imageAlt={attachment.url}
+                      href={attachment.url}
+                      videoClassName="h-44 w-78.5 cursor-pointer rounded-xl"
+                      failedToLoadClassName="h-44 w-78.5"
+                    />
+                  ))
+                ) : (
+                  <div className=" text-xs text-metallic-silver">No attachment to display.</div>
+                )}
               </div>
             </div>
           </div>
