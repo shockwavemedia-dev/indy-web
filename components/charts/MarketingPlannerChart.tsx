@@ -61,7 +61,7 @@ export const MarketingPlannerChart = () => {
       bar: {
         horizontal: true,
         distributed: true,
-        barHeight: '90%',
+        barHeight: '15',
       },
     },
     dataLabels: {
