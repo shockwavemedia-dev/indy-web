@@ -9,6 +9,7 @@ import { useToastStore } from '../../store/ToastStore'
 import { EditSocialMediaBoostForm } from '../../types/forms/EditSocialMediaBoostForm.type'
 import { SocialMedia } from '../../types/SocialMedia.type'
 import { Button } from '../Button'
+import { FormErrorMessage } from '../FormErrorMessage'
 import { DollarIcon } from '../icons/DollarIcon'
 import { FloppyDiskIcon } from '../icons/FloppyDiskIcon'
 import { Modal } from '../Modal'
@@ -77,30 +78,43 @@ export const EditSocialMediaBoostModal = () => {
               <FieldArray
                 name="extras"
                 render={(arrayHelpers) => (
-                  <div className="mb-6 grid grid-cols-2 content-start gap-6">
+                  <div className="w-full">
                     {socialMedia.boostedChannels &&
                       socialMedia.boostedChannels.map((channel, index) => (
                         <>
-                          <div>{channel.name}</div>
-                          <div>
-                            <DollarIcon className="left-84 pointer-events-none absolute -mt-1 h-8 w-8 stroke-jungle-green" />
-                            <input
-                              type="text"
-                              className="-mt-3 h-12.5 w-full rounded-xl px-8 text-sm font-medium text-onyx placeholder-metallic-silver ring-1 ring-bright-gray read-only:cursor-auto focus:ring-2 focus:ring-halloween-orange read-only:focus:ring-1 read-only:focus:ring-bright-gray"
-                              placeholder="Enter Amount"
-                              defaultValue={
-                                channel.quantity !== undefined && channel.quantity !== null
-                                  ? Number(channel.quantity).toLocaleString('en')
-                                  : 0
-                              }
-                              onChange={({
-                                currentTarget: { value },
-                              }: ChangeEvent<HTMLInputElement>) =>
-                                arrayHelpers.replace(index, {
-                                  name: channel.name,
-                                  quantity: value,
-                                })
-                              }
+                          <div
+                            key="channel.name"
+                            className="mb-6 mt-6 grid grid-cols-2 content-start gap-6"
+                          >
+                            <div>{channel.name}</div>
+                            <div>
+                              <DollarIcon className="left-84 pointer-events-none absolute -mt-1 h-8 w-8 stroke-jungle-green" />
+                              <input
+                                type="text"
+                                name={`extras[${index}].quantity`}
+                                className="-mt-3 h-12.5 w-full rounded-xl px-8 text-sm font-medium text-onyx placeholder-metallic-silver ring-1 ring-bright-gray read-only:cursor-auto focus:ring-2 focus:ring-halloween-orange read-only:focus:ring-1 read-only:focus:ring-bright-gray"
+                                placeholder="Enter Amount"
+                                defaultValue={
+                                  channel.quantity !== undefined && channel.quantity !== null
+                                    ? channel.quantity
+                                    : 0
+                                }
+                                onChange={({
+                                  currentTarget: { value },
+                                }: ChangeEvent<HTMLInputElement>) =>
+                                  arrayHelpers.replace(index, {
+                                    name: channel.name,
+                                    quantity: value,
+                                    hasValue: value,
+                                  })
+                                }
+                              />
+                            </div>
+                          </div>
+                          <div className="">
+                            <FormErrorMessage
+                              name={`extras[${index}].quantity`}
+                              className="-mt-8"
                             />
                           </div>
                         </>
@@ -108,23 +122,36 @@ export const EditSocialMediaBoostModal = () => {
                     {!socialMedia.boostedChannels &&
                       socialMedia.channels.map((channel, index) => (
                         <>
-                          <div>{channel}</div>
-                          <div>
-                            <DollarIcon className="left-84 pointer-events-none absolute -mt-1 h-8 w-8 stroke-jungle-green" />
-                            <input
-                              type="text"
-                              className="-mt-3 h-12.5 w-full rounded-xl px-8 text-sm font-medium text-onyx placeholder-metallic-silver ring-1 ring-bright-gray read-only:cursor-auto focus:ring-2 focus:ring-halloween-orange read-only:focus:ring-1 read-only:focus:ring-bright-gray"
-                              placeholder="Enter Amount"
-                              defaultValue={0}
-                              onChange={({
-                                currentTarget: { value },
-                              }: ChangeEvent<HTMLInputElement>) =>
-                                arrayHelpers.replace(index, {
-                                  name: channel,
-                                  quantity: value,
-                                })
-                              }
-                            />
+                          <div
+                            key="channel.name"
+                            className="mb-6 mt-6 grid grid-cols-2 content-start gap-6"
+                          >
+                            <div>{channel}</div>
+                            <div>
+                              <DollarIcon className="left-84 pointer-events-none absolute -mt-1 h-8 w-8 stroke-jungle-green" />
+                              <input
+                                type="text"
+                                name={`extras[${index}].quantity`}
+                                className="-mt-3 h-12.5 w-full rounded-xl px-8 text-sm font-medium text-onyx placeholder-metallic-silver ring-1 ring-bright-gray read-only:cursor-auto focus:ring-2 focus:ring-halloween-orange read-only:focus:ring-1 read-only:focus:ring-bright-gray"
+                                placeholder="Enter Amount"
+                                defaultValue={0}
+                                onChange={({
+                                  currentTarget: { value },
+                                }: ChangeEvent<HTMLInputElement>) =>
+                                  arrayHelpers.replace(index, {
+                                    name: channel,
+                                    quantity: value,
+                                    hasValue: value,
+                                  })
+                                }
+                              />
+                            </div>
+                            <div className="">
+                              <FormErrorMessage
+                                name={`extras[${index}].quantity`}
+                                className="-mt-8"
+                              />
+                            </div>
                           </div>
                         </>
                       ))}
