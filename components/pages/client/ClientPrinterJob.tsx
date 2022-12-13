@@ -2,11 +2,12 @@ import { Tooltip } from '@mui/material'
 import axios from 'axios'
 import { Form, Formik } from 'formik'
 import Head from 'next/head'
-import { ReactElement, useEffect, useState } from 'react'
+import { ReactElement, useEffect } from 'react'
 import { useQuery, useQueryClient } from 'react-query'
 import { SingleValue } from 'react-select'
 import { CodingOptions } from '../../../constants/options/printer/CodingOptions'
-import { PrinterOptions } from '../../../constants/options/printer/PrinterOptions'
+import { FormatOptions } from '../../../constants/options/printer/FormatOptions'
+import { OptionOptions } from '../../../constants/options/printer/OptionOptions'
 import { PrinterProductOptions } from '../../../constants/options/printer/PrinterProductOptions'
 import { PrinterStatusOptions } from '../../../constants/options/printer/PrinterStatusOptions'
 import { StockOptions } from '../../../constants/options/printer/StockOptions'
@@ -48,8 +49,6 @@ const ClientPrinterJobPage = ({ printerId }: { printerId: number }) => {
   const queryClient = useQueryClient()
   const { showToast } = useToastStore()
   const { toggleModal: togglePrinterModal } = useDeleteDeletePrinterJobModalModalStore()
-  const [optionSelect, setOption] = useState<Array<{ label: string; value: string }>>([])
-  const [formatSelect, setFormat] = useState<Array<{ label: string; value: string }>>([])
 
   const { data: printer } = useQuery(
     ['printer', printerId],
@@ -61,25 +60,6 @@ const ClientPrinterJobPage = ({ printerId }: { printerId: number }) => {
       enabled: !!printerId,
     }
   )
-
-  const updateFilter = (newValue: SingleValue<SelectOption<string>>) => {
-    const filterProduct = PrinterOptions?.filter((option) => option.product === newValue?.value)
-
-    const option =
-      filterProduct[0].option.map((name) => ({
-        label: name,
-        value: name,
-      })) ?? []
-
-    const format =
-      filterProduct[0].format.map((name) => ({
-        label: name,
-        value: name,
-      })) ?? []
-
-    setOption(option)
-    setFormat(format)
-  }
 
   const submitForm = async (values: EditPrinterJobForm) => {
     try {
@@ -166,25 +146,6 @@ const ClientPrinterJobPage = ({ printerId }: { printerId: number }) => {
       })
     }
   }
-
-  // if (printer && printer.product !== null) {
-  //   const filterProduct = PrinterOptions?.filter((option) => option.product === printer.product)
-  //   console.log(filterProduct[0])
-  //   const option =
-  //     filterProduct[0].option.map((name) => ({
-  //       label: name,
-  //       value: name,
-  //     })) ?? []
-
-  //   const format =
-  //     filterProduct[0].format.map((name) => ({
-  //       label: name,
-  //       value: name,
-  //     })) ?? []
-
-  //   setOption(option)
-  //   setFormat(format)
-  // }
 
   useEffect(() => {
     if (printer) {
@@ -337,7 +298,6 @@ const ClientPrinterJobPage = ({ printerId }: { printerId: number }) => {
                     options={PrinterProductOptions}
                     onChange={(product: SingleValue<SelectOption<string>>) => {
                       setFieldValue('product', product?.value)
-                      updateFilter(product)
                     }}
                     defaultValue={PrinterProductOptions.find(
                       ({ value }) => value === printer?.product
@@ -345,30 +305,22 @@ const ClientPrinterJobPage = ({ printerId }: { printerId: number }) => {
                     className="mb-5"
                   />
                   <div className="mb-8 flex space-x-5">
-                    {optionSelect.length > 0 && (
-                      <SelectNoFormik
-                        label="Option"
-                        name="option"
-                        Icon={ClipboardIcon}
-                        options={optionSelect}
-                        onChange={(option: SingleValue<SelectOption<string>>) => {
-                          setFieldValue('option', option?.value)
-                        }}
-                        defaultValue={optionSelect.find(({ value }) => value === printer?.option)}
-                      />
-                    )}
-                    {formatSelect.length > 0 && (
-                      <SelectNoFormik
-                        label="Format"
-                        name="format"
-                        Icon={ClipboardIcon}
-                        options={formatSelect}
-                        onChange={(format: SingleValue<SelectOption<string>>) => {
-                          setFieldValue('format', format?.value)
-                        }}
-                        defaultValue={formatSelect.find(({ value }) => value === printer?.format)}
-                      />
-                    )}
+                    <Select
+                      label="Option"
+                      name="option"
+                      Icon={ClipboardIcon}
+                      options={OptionOptions}
+                      defaultValue={OptionOptions.find(({ value }) => value === printer?.option)}
+                      className="mb-5"
+                    />
+                    <Select
+                      label="Format"
+                      name="format"
+                      Icon={ClipboardIcon}
+                      options={FormatOptions}
+                      defaultValue={FormatOptions.find(({ value }) => value === printer?.format)}
+                      className="mb-5"
+                    />
                   </div>
 
                   <div className="mb-8 flex space-x-5">
@@ -480,10 +432,10 @@ const ClientPrinterJobPage = ({ printerId }: { printerId: number }) => {
                   </Card>
                   <Card className="h-fit">
                     <div className="flex space-x-5">
-                      <LinkButton title="Cancel" href="/printer-jobs" light />
+                      <LinkButton title="Cancel" href="/print" light />
                       <Button ariaLabel="Submit" disabled={isSubmitting} type="submit">
                         <FloppyDiskIcon className="stroke-white" />
-                        <div>Update Order</div>
+                        <div>Update Quote/Order</div>
                       </Button>
                     </div>
                   </Card>
