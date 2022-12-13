@@ -3,7 +3,7 @@ import { Form, Formik } from 'formik'
 import { useSession } from 'next-auth/react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import { ReactElement, useEffect, useState } from 'react'
+import { ReactElement, useEffect } from 'react'
 import { useQueryClient } from 'react-query'
 import { SingleValue } from 'react-select'
 import { Button } from '../components/Button'
@@ -18,7 +18,8 @@ import { SelectNoFormik } from '../components/SelectNoFormik'
 import { TextAreaInput } from '../components/TextAreaInput'
 import { TextInput } from '../components/TextInput'
 import { CodingOptions } from '../constants/options/printer/CodingOptions'
-import { PrinterOptions } from '../constants/options/printer/PrinterOptions'
+import { FormatOptions } from '../constants/options/printer/FormatOptions'
+import { OptionOptions } from '../constants/options/printer/OptionOptions'
 import { PrinterProductOptions } from '../constants/options/printer/PrinterProductOptions'
 import { StockOptions } from '../constants/options/printer/StockOptions'
 import PanelLayout, { usePanelLayoutStore } from '../layouts/PanelLayout'
@@ -35,8 +36,6 @@ const NewPrinterPage: NextPageWithLayout = () => {
   const { replace } = useRouter()
   const { data: session } = useSession()
   const queryClient = useQueryClient()
-  const [option, setOption] = useState<Array<{ label: string; value: string }>>([])
-  const [format, setFormat] = useState<Array<{ label: string; value: string }>>([])
 
   const submitForm = async (values: NewPrinterForm) => {
     const additionalOptions = [
@@ -76,25 +75,6 @@ const NewPrinterPage: NextPageWithLayout = () => {
         message: get422And400ResponseError(e),
       })
     }
-  }
-
-  const updateFilter = (newValue: SingleValue<SelectOption<string>>) => {
-    const filterProduct = PrinterOptions?.filter((option) => option.product === newValue?.value)
-
-    const option =
-      filterProduct[0].option.map((name) => ({
-        label: name,
-        value: name,
-      })) ?? []
-
-    const format =
-      filterProduct[0].format.map((name) => ({
-        label: name,
-        value: name,
-      })) ?? []
-
-    setOption(option)
-    setFormat(format)
   }
 
   useEffect(() => {
@@ -150,28 +130,23 @@ const NewPrinterPage: NextPageWithLayout = () => {
                     options={PrinterProductOptions}
                     onChange={(product: SingleValue<SelectOption<string>>) => {
                       setFieldValue('product', product?.value)
-                      updateFilter(product)
                     }}
                     className="mb-5"
                   />
                   <div className="mb-8 flex space-x-5">
-                    <SelectNoFormik
+                    <Select
                       label="Option"
                       name="option"
                       Icon={ClipboardIcon}
-                      options={option}
-                      onChange={(option: SingleValue<SelectOption<string>>) => {
-                        setFieldValue('option', option?.value)
-                      }}
+                      options={OptionOptions}
+                      className="mb-5"
                     />
-                    <SelectNoFormik
+                    <Select
                       label="Format"
                       name="format"
                       Icon={ClipboardIcon}
-                      options={format}
-                      onChange={(format: SingleValue<SelectOption<string>>) => {
-                        setFieldValue('format', format?.value)
-                      }}
+                      options={FormatOptions}
+                      className="mb-5"
                     />
                   </div>
                   <div className="mb-8 flex space-x-5">
@@ -246,10 +221,10 @@ const NewPrinterPage: NextPageWithLayout = () => {
                   </Card>
                   <Card className="h-fit">
                     <div className="flex space-x-5">
-                      <LinkButton title="Cancel" href="/printer-jobs" light />
+                      <LinkButton title="Cancel" href="/print" light />
                       <Button ariaLabel="Submit" disabled={isSubmitting} type="submit">
                         <FloppyDiskIcon className="stroke-white" />
-                        <div>Order</div>
+                        <div>Quote/Order</div>
                       </Button>
                     </div>
                   </Card>
