@@ -84,7 +84,7 @@ export const StaffSocialMediaList = () => {
                   className="mb-2 w-35"
                   type="button"
                 >
-                  <div>Add Social Media</div>
+                  <div>Add Post</div>
                 </Button>
               </div>
               <Card className="flex max-h-155 flex-1 flex-col">
