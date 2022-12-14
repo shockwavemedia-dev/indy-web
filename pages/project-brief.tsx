@@ -129,6 +129,16 @@ const ProjectBriefPage: NextPageWithLayout = () => {
         <title>Indy - Project Brief</title>
       </Head>
       <div className="mx-auto w-full max-w-8xl">
+        <iframe
+          src="https://player.vimeo.com/video/780934024?h=46fe704718&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+          width="784"
+          height="441"
+          frameBorder="0"
+          allow="autoplay; fullscreen; picture-in-picture"
+          allowFullScreen
+          title="Indy - How to Submit a Project Landscape"
+          className="mx-auto mb-6 rounded-lg"
+        />
         <Formik
           validationSchema={CreateProjectBriefFormSchema}
           initialValues={{
