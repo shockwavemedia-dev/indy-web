@@ -238,16 +238,18 @@ export const StaffTicket = ({ ticketId }: { ticketId: number }) => {
       <div className="mx-auto flex w-full space-x-6">
         <div className="w-86 flex-none space-y-6">
           <Card title="Details">
-            <div className="mb-6 flex space-x-5">
+            <div className="overflow-elipsis mb-6 mr-4 flex space-x-5">
               {ticket.clientLogo?.url && (
                 <Image
                   src={ticket.clientLogo.url}
-                  height={100}
-                  width={100}
+                  height={150}
+                  width={150}
                   alt={ticket!.clientName}
                 />
               )}
-              <div>
+            </div>
+            <div className="mb-6 flex space-x-5">
+              <div className="overflow-clip">
                 <TitleValue title="Company" className="mb-3">
                   {ticket!.clientName}
                 </TitleValue>
