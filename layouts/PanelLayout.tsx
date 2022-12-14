@@ -403,7 +403,7 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
                   <div className="mr-1 text-xs text-halloween-orange">Explain this Page</div>
                   <div>
                     <Tooltip
-                      title="Click here to learn on how to submit a project landscape"
+                      title="Click here to learn on how to submit a project"
                       placement="top"
                       className="ml-auto"
                     >

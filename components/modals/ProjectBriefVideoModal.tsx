@@ -20,7 +20,7 @@ export const ProjectBriefVideoModal = () => {
     <>
       {isModalVisible && (
         <Modal
-          title="How to Submit a Project Landscape"
+          title="How to Submit a Project"
           className="w-8/12"
           onClose={toggleProjectBriefVideoModal}
         >
