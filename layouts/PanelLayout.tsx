@@ -2,7 +2,6 @@ import { Tooltip } from '@mui/material'
 import axios from 'axios'
 import { signOut as nextAuthSignOut, useSession } from 'next-auth/react'
 import Image from 'next/image'
-import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { Fragment, ReactNode, useEffect, useMemo } from 'react'
 import { useQuery } from 'react-query'
@@ -18,7 +17,6 @@ import { IndyIcon } from '../components/icons/IndyIcon'
 import { InfoIcon } from '../components/icons/InfoIcon'
 import { LifeBuoyIcon } from '../components/icons/LifeBuoyIcon'
 import { LogoutIcon } from '../components/icons/LogoutIcon'
-import { MagnifyingGlassIcon } from '../components/icons/MagnifyingGlassIcon'
 import { ShareIcon } from '../components/icons/ShareIcon'
 import {
   CreateSupportRequestModal,
@@ -32,6 +30,10 @@ import {
   DashboadVideoModal,
   useDashboadVideoModalStore,
 } from '../components/modals/DashboadVideoModal'
+import {
+  ProjectBriefVideoModal,
+  useProjectBriefVideoModalStore,
+} from '../components/modals/ProjectBriefVideoModal'
 import { RouteButton } from '../components/RouteButton'
 import {
   SocialMediaNotificationModal,
@@ -79,6 +81,7 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
   const { toggleModal: toggleSupportTicketModal } = useCreateSupportTicketModalStore()
   const { toggleModal: toggleNotificationModal } = useSocialMediaNotificationModalStore()
   const { toggleDashboadVideoModal } = useDashboadVideoModalStore()
+  const { toggleProjectBriefVideoModal } = useProjectBriefVideoModalStore()
 
   const { data: ticketsAndNotifacationsCount, isLoading: ticketsAndNotifacationsCountIsLoading } =
     useQuery(
@@ -266,17 +269,6 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
     <>
       <div className="fixed z-30 flex w-full items-center bg-white py-1 px-6 shadow-md">
         <div className="mr-102 whitespace-nowrap font-semibold text-onyx lg:mr-32">Indy</div>
-        <MagnifyingGlassIcon className="mr-6 stroke-waterloo" />
-        <Link href="#">
-          <a className="mr-6 whitespace-nowrap font-semibold text-onyx underline-offset-1 hover:underline">
-            Edit Profile
-          </a>
-        </Link>
-        <Link href="#">
-          <a className="whitespace-nowrap font-semibold text-onyx underline-offset-1 hover:underline">
-            Settings
-          </a>
-        </Link>
         <IndyIcon className="m-0 ml-auto -mr-20 scale-50 p-0" />
         {session.isStaff || session.isPrinterManager ? (
           <div className="relative p-1">
@@ -404,6 +396,26 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
                   </div>
                 </div>
               </div>
+            ) : session.isClient && asPath === '/project-brief' ? (
+              <div>
+                <div className=" mb-3 text-3xl font-bold text-onyx">{header}</div>
+                <div className="flex">
+                  <div className="mr-1 text-xs text-halloween-orange">Explain this Page</div>
+                  <div>
+                    <Tooltip
+                      title="Click here to learn on how to submit a project"
+                      placement="top"
+                      className="ml-auto"
+                    >
+                      <button type="button" className="flex" onClick={toggleProjectBriefVideoModal}>
+                        <div>
+                          <InfoIcon className="h-4 stroke-bleu-de-france transition-colors hover:stroke-halloween-orange" />
+                        </div>
+                      </button>
+                    </Tooltip>
+                  </div>
+                </div>
+              </div>
             ) : (
               <div>
                 <div className=" text-3xl font-bold text-onyx">{header}</div>
@@ -423,6 +435,7 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
       {session.isManager && <CreateSupportTicketModal />}
       {(session.isStaff || session.isPrinterManager) && <SocialMediaNotificationModal />}
       <DashboadVideoModal />
+      <ProjectBriefVideoModal />
     </>
   )
 }
