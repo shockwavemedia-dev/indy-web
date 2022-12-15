@@ -1,11 +1,12 @@
 import { useCalendar } from '@h6s/calendar'
 import { styled, Tooltip, tooltipClasses, TooltipProps } from '@mui/material'
 import axios from 'axios'
-import { format, getDate, getYear, isSameMonth } from 'date-fns'
+import { format, getDate, getYear, isSameMonth, isToday } from 'date-fns'
 import { useSession } from 'next-auth/react'
 import Image from 'next/image'
 import React from 'react'
 import { useQuery } from 'react-query'
+import { useSocialMediaStore } from '../store/SocialMediaStore'
 import { SocialMediaCalendar } from '../types/SocialMediaCalendar.type'
 import { Button } from './Button'
 import { Card } from './Card'
@@ -13,6 +14,7 @@ import { ArrowIcon } from './icons/ArrowIcon'
 import { BoostIcon } from './icons/BoostIcon'
 import { BoostOffIcon } from './icons/BoostOffIcon'
 import { DollarIcon } from './icons/DollarIcon'
+import { PlusIcon } from './icons/PlusIcon'
 import { FacebookIcon } from './icons/social-medias/FacebookIcon'
 import { InstagramIcon } from './icons/social-medias/InstagramIcon'
 import { LinkedInIcon } from './icons/social-medias/LinkedIn'
@@ -22,7 +24,7 @@ import { EditSocialMediaBoostModal } from './modals/EditSocialMediaBoostModal'
 import { EditSocialMediaModal, useEditSocialMediaModal } from './modals/EditSocialMediaModal'
 import { Pill } from './Pill'
 
-export const SocialMediaCalendarList = () => {
+export const SocialMediaCalendarList = ({ clientId }: { clientId?: number }) => {
   const { data: session } = useSession()
   const {
     headers,
@@ -37,7 +39,7 @@ export const SocialMediaCalendarList = () => {
     ['social-media-calendar', { year, month: month + 1 }],
     async () => {
       const { data } = await axios.get<SocialMediaCalendar>(
-        `/v1/clients/${session!.user.userType.client.id}/social-media-calendar`,
+        `/v1/clients/${clientId ?? session!.user.userType.client.id}/social-media-calendar`,
         {
           params: {
             year,
@@ -65,6 +67,8 @@ export const SocialMediaCalendarList = () => {
       fontSize: theme.typography.pxToRem(11),
     },
   }))
+
+  const { setPostDate, toggleCreateSocialMediaModal } = useSocialMediaStore()
 
   return (
     <>
@@ -126,8 +130,29 @@ export const SocialMediaCalendarList = () => {
                 .flatMap(({ value }) => value)
                 .map(({ key, value }) =>
                   isSameMonth(value, cursorDate) ? (
-                    <div key={key} className="min-h-[9.375rem] bg-white p-2.5 font-medium">
-                      <div className="mb-4 font-semibold">{getDate(value)}</div>
+                    <div
+                      key={key}
+                      className="group relative min-h-[9.375rem] bg-white p-2.5 font-medium"
+                    >
+                      <Button
+                        type="button"
+                        ariaLabel="Add Post"
+                        onClick={() => {
+                          toggleCreateSocialMediaModal()
+                          setPostDate(value)
+                        }}
+                        className="invisible absolute right-3 h-max w-max p-2 group-hover:visible"
+                      >
+                        <PlusIcon className="stroke-white" />
+                      </Button>
+                      <div className="mb-4 flex space-x-1 font-semibold">
+                        <div>{getDate(value)}</div>
+                        {isToday(value) && (
+                          <div className="rounded bg-halloween-orange px-1.5 py-1 text-xs text-white">
+                            Today
+                          </div>
+                        )}
+                      </div>
                       <div className="space-y-3">
                         {(() => {
                           const socialMedias = data[format(value, 'yyyyMMdd')]
@@ -141,7 +166,7 @@ export const SocialMediaCalendarList = () => {
                                   className="w-full rounded outline outline-1 outline-slate-300 transition-all hover:-translate-y-2.5 hover:shadow-md"
                                 >
                                   <div className="flex items-center justify-between border-b border-b-slate-300 bg-slate-100 p-3">
-                                    <div className="flex space-x-1">
+                                    <div className="flex flex-wrap gap-1">
                                       {socialMedia.channels?.map(
                                         (c, i) =>
                                           ({
@@ -273,9 +298,9 @@ export const SocialMediaCalendarList = () => {
                                         placement="top"
                                         className="ml-2 h-10"
                                       >
-                                        <button>
+                                        <div>
                                           <BoostOffIcon className=" stroke-gray-600 transition-colors hover:stroke-halloween-orange" />
-                                        </button>
+                                        </div>
                                       </Tooltip>
                                     )}
                                     <EditSocialMediaBoostModal />

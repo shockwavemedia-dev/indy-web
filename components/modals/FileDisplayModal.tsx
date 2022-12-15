@@ -50,7 +50,6 @@ export const FileDisplayModal = () => {
   }
 
   const deleteFile = (fileId: number) => {
-    console.log(fileId)
     toggleShowPhotoVideoFileModal()
   }
 

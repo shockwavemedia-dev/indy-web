@@ -6,6 +6,7 @@ import { SocialMediaCampaignTypeOptions } from '../../constants/options/SocialMe
 import { SocialMediaChannelOptions } from '../../constants/options/SocialMediaChannelOptions'
 import { SocialMediaStatusOptions } from '../../constants/options/SocialMediaStatusOptions'
 import { CreateSocialMediaFormSchema } from '../../schemas/CreateSocialMediaFormSchema'
+import { useSocialMediaStore } from '../../store/SocialMediaStore'
 import { useToastStore } from '../../store/ToastStore'
 import { CreateSocialMediaForm } from '../../types/forms/CreateSocialMediaForm.type'
 import { SelectOption } from '../../types/SelectOption.type'
@@ -34,6 +35,7 @@ export const CreateSocialMediaModal = ({
 }) => {
   const queryClient = useQueryClient()
   const { showToast } = useToastStore()
+  const { postDate } = useSocialMediaStore()
 
   const submitForm = async (values: CreateSocialMediaForm) => {
     if (values.postDate && values.postTime) {
@@ -58,6 +60,7 @@ export const CreateSocialMediaModal = ({
       )
       if (status === 200) {
         queryClient.invalidateQueries(['socialMedias'])
+        queryClient.invalidateQueries({ queryKey: ['social-media-calendar'] })
         onClose()
         showToast({
           type: 'success',
@@ -71,6 +74,7 @@ export const CreateSocialMediaModal = ({
       })
     }
   }
+
   return (
     <>
       {isVisible && (
@@ -80,7 +84,7 @@ export const CreateSocialMediaModal = ({
               validationSchema={CreateSocialMediaFormSchema}
               initialValues={{
                 post: '',
-                postDate: null,
+                postDate,
                 postTime: null,
                 attachments: [],
                 copy: '',
@@ -90,6 +94,7 @@ export const CreateSocialMediaModal = ({
                 campaignType: '',
               }}
               onSubmit={submitForm}
+              enableReinitialize
             >
               {({ isSubmitting, setFieldValue }) => (
                 <Form className="flex w-140 flex-col">

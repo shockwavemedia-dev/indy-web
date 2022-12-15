@@ -22,7 +22,8 @@ export const ClientSocialMediaList = ({
   const { data: session } = useSession()
   const [activeTab, setActiveTab] = useState<SocialMediaPageTabs>('list')
 
-  const { isCreateSocialMediaModalVisible, toggleCreateSocialMediaModal } = useSocialMediaStore()
+  const { isCreateSocialMediaModalVisible, toggleCreateSocialMediaModal, setPostDate } =
+    useSocialMediaStore()
 
   const Tab = ({
     title,
@@ -77,7 +78,10 @@ export const ClientSocialMediaList = ({
         <div className="flex flex-col gap-6 transition-all">
           <div className="flex-1">
             <Button
-              onClick={toggleCreateSocialMediaModal}
+              onClick={() => {
+                setPostDate(null)
+                toggleCreateSocialMediaModal()
+              }}
               ariaLabel="Add Social Media"
               className="mb-2 w-35"
               type="button"

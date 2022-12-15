@@ -9,12 +9,14 @@ export const useSocialMediaStore = createStore(
       isCreateSocialMediaModalVisible: false,
       isEditSocialMediaModalVisible: true,
       isDeleteSocialMediaModalVisible: false,
+      postDate: null as unknown as Date | null,
     },
     (set, get) => ({
       setActiveSocialMedia: (socialMedia: SocialMedia) =>
         set(() => ({ activeSocialMedia: socialMedia })),
       toggleCreateSocialMediaModal: () =>
         set(() => ({ isCreateSocialMediaModalVisible: !get().isCreateSocialMediaModalVisible })),
+      setPostDate: (postDate: Date | null) => set(() => ({ postDate })),
       toggleEditSocialMediaModal: () =>
         set(() => ({ isEditSocialMediaModalVisible: !get().isEditSocialMediaModalVisible })),
       toggleDeleteSocialMediaModal: () =>
