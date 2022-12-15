@@ -146,29 +146,27 @@ const ProjectBriefPage: NextPageWithLayout = () => {
               return service.serviceName === 'Social Media'
             })
 
-            if (socialMediaServices.length === 0) {
-              submitForm
+            if (!socialMediaServices) {
+              submitForm(values)
             }
 
-            if (socialMediaServices.length !== 0) {
-              const checkSocialMediaExtra = socialMediaServices[0].updatedExtras.filter(function (
-                extra
-              ) {
-                return extra.quantity && extra.quantity < 50
+            const checkSocialMediaExtra = socialMediaServices[0].updatedExtras.filter(function (
+              extra
+            ) {
+              return extra.quantity && extra.quantity < 50
+            })
+
+            if (checkSocialMediaExtra.length !== 0) {
+              showToast({
+                type: 'error',
+                message: 'Social Media - Minimum cost is 50',
               })
-
-              if (checkSocialMediaExtra.length !== 0) {
-                showToast({
-                  type: 'error',
-                  message: 'Social Media - Minimum cost is 50',
-                })
-              } else {
-                submitForm
-              }
             }
+
+            submitForm(values)
           }}
         >
-          {({ isSubmitting, setFieldValue }) => (
+          {({ setFieldValue }) => (
             <Form className="mx-auto flex w-fit space-x-6">
               <div className="flex w-130 flex-col rounded-xl bg-white p-6">
                 <TextInput
@@ -224,7 +222,7 @@ const ProjectBriefPage: NextPageWithLayout = () => {
                   <SelectService />
                 </div>
                 <div className="flex w-60 space-x-5">
-                  <Button ariaLabel="Submit" disabled={isSubmitting} type="submit">
+                  <Button ariaLabel="Submit" type="submit">
                     Submit
                   </Button>
                 </div>
