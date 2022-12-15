@@ -63,6 +63,7 @@ module.exports = {
         saffron: '#F6B22E',
         'dark-blue': '#009af4',
         'light-blue': '#8dd5ff',
+        gray: '#a6a6a6',
       },
       zIndex: {
         60: '60',
