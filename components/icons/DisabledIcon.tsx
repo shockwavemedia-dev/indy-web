@@ -5,8 +5,8 @@ export const DisabledIcon = ({ className }: { className: string }) => (
     viewBox="0 0 24 24"
     strokeWidth="1.5"
     stroke="currentColor"
-    width="22"
-    height="22"
+    width="25"
+    height="25"
     className={className}
   >
     <path

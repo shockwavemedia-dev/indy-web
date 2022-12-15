@@ -27,11 +27,17 @@ export const StatusCountCard = ({
             {typeof value === 'number' ? Math.abs(value) + '/' + totalAvailable : value}
           </div>
         ) : (
-          <div className={`mb-5 !content-center ${classNameValue} `}>
+          <div className="mb-1  flex items-center justify-center">
             <DisabledIcon className=" stroke-white" />
           </div>
         )}
-        <div className="px-1 text-center text-xs font-medium text-white">{description}</div>
+        <div
+          className={`px-1 text-center text-xs font-medium text-white ${
+            isEnabled === false ? 'mt-3' : ''
+          }`}
+        >
+          {description}
+        </div>
       </div>
     </Tooltip>
   </div>
