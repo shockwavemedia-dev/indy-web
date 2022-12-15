@@ -49,7 +49,7 @@ export const FileDisplayModal = () => {
     window.open(signedUrl, '_blank')
   }
 
-  const deleteFile = (fileId: number) => {
+  const deleteFile = () => {
     toggleShowPhotoVideoFileModal()
   }
 
@@ -97,7 +97,7 @@ export const FileDisplayModal = () => {
                     className="w-72 bg-red-crimson text-white"
                     type="button"
                     onClick={() => {
-                      deleteFile(fileId)
+                      deleteFile()
                     }}
                   >
                     <TrashIcon className="stroke-white" />
