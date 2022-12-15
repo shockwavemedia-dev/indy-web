@@ -167,7 +167,6 @@ export const UserTicketsTableColumn: Array<Column<Ticket>> = [
         )
 
         if (assignee) {
-          console.log(assignee)
           setActiveTicketAssignee(assignee)
 
           toggleReAssignTicketModal(ticket)

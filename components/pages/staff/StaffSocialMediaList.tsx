@@ -7,21 +7,28 @@ import { SingleValue } from 'react-select'
 import { usePanelLayoutStore } from '../../../layouts/PanelLayout'
 import { useSocialMediaStore } from '../../../store/SocialMediaStore'
 import { Client } from '../../../types/Client.type'
+import { Icon } from '../../../types/Icon.type'
 import { Page } from '../../../types/Page.type'
 import { SelectOption } from '../../../types/SelectOption.type'
+import { SocialMediaPageTabs } from '../../../types/SocialMediaPageTabs.type'
 import { Button } from '../../Button'
 import { Card } from '../../Card'
+import { CalendarAddIcon } from '../../icons/CalendarAddIcon'
+import { NoteIcon } from '../../icons/NoteIcon'
 import { UserIcon } from '../../icons/UserIcon'
 import { CreateSocialMediaModal } from '../../modals/CreateSocialMediaModal'
 import { EditSocialMediaModal } from '../../modals/EditSocialMediaModal'
 import { SelectNoFormik } from '../../SelectNoFormik'
+import { SocialMediaCalendarList } from '../../SocialMediaCalendarList'
 import { SocialMediaTable } from '../../SocialMediaTable'
 
 export const StaffSocialMediaList = () => {
   const { data: session } = useSession()
   const { setHeader, setSubHeader } = usePanelLayoutStore()
+  const [activeTab, setActiveTab] = useState<SocialMediaPageTabs>('list')
 
-  const { isCreateSocialMediaModalVisible, toggleCreateSocialMediaModal } = useSocialMediaStore()
+  const { isCreateSocialMediaModalVisible, toggleCreateSocialMediaModal, setPostDate } =
+    useSocialMediaStore()
 
   const queryClient = useQueryClient()
 
@@ -58,6 +65,50 @@ export const StaffSocialMediaList = () => {
     setSubHeader(`Welcome back, ${session?.user.firstName}`)
   }, [clients])
 
+  const Tab = ({
+    title,
+    Icon,
+    tabName,
+    disabled = false,
+  }: {
+    title: string
+    Icon: Icon
+    tabName: SocialMediaPageTabs
+    disabled?: boolean
+  }) => {
+    const clickTab = () => setActiveTab(tabName)
+    const isActiveTab = activeTab === tabName
+
+    return (
+      <div className="w-full">
+        <button
+          onClick={clickTab}
+          className={`group mx-auto mb-3 flex items-center whitespace-nowrap ${
+            isActiveTab ? 'pointer-events-none cursor-default select-none' : ''
+          }`}
+          disabled={disabled}
+        >
+          <Icon
+            className={`mr-2.5 ${
+              isActiveTab
+                ? 'stroke-halloween-orange'
+                : 'stroke-lavender-gray transition-all group-hover:stroke-halloween-orange group-disabled:stroke-lavender-gray'
+            }`}
+          />
+          <div
+            className={` text-base ${
+              isActiveTab
+                ? 'font-semibold text-onyx'
+                : 'font-medium text-metallic-silver transition-all group-hover:font-semibold group-hover:text-onyx group-disabled:font-medium group-disabled:text-metallic-silver'
+            }`}
+          >
+            {title}
+          </div>
+        </button>
+      </div>
+    )
+  }
+
   return (
     <>
       <Head>
@@ -79,17 +130,41 @@ export const StaffSocialMediaList = () => {
             <div className="flex flex-col gap-6 transition-all">
               <div className="flex-1">
                 <Button
-                  onClick={toggleCreateSocialMediaModal}
+                  onClick={() => {
+                    setPostDate(null)
+                    toggleCreateSocialMediaModal()
+                  }}
                   ariaLabel="Add Social Media"
                   className="mb-2 w-35"
                   type="button"
                 >
-                  <div>Add Post</div>
+                  Add Post
                 </Button>
               </div>
-              <Card className="flex max-h-155 flex-1 flex-col">
-                <SocialMediaTable clientId={selectedClientId} />
-              </Card>
+              <div className="w-full min-w-0">
+                <div className="flex justify-between">
+                  <Tab title="List" Icon={NoteIcon} tabName="list" />
+                  <Tab title="Calendar" Icon={CalendarAddIcon} tabName="calendar" />
+                </div>
+                <div className="h-px bg-bright-gray" />
+                <div
+                  className={`-mt-0.5 mb-4 h-0.75 w-2/4 rounded bg-halloween-orange fill-halloween-orange transition-all ${
+                    activeTab === 'list' ? 'ml-0' : activeTab === 'calendar' ? '!ml-1/2' : 'ml-auto'
+                  }`}
+                />
+                {activeTab === 'list' && (
+                  <div>
+                    <Card className="flex max-h-155 flex-1 flex-col">
+                      <SocialMediaTable clientId={selectedClientId} />
+                    </Card>
+                  </div>
+                )}
+                {activeTab === 'calendar' && (
+                  <div>
+                    <SocialMediaCalendarList clientId={selectedClientId} />
+                  </div>
+                )}
+              </div>
             </div>
           </div>
           <CreateSocialMediaModal
