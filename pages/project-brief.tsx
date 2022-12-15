@@ -141,7 +141,32 @@ const ProjectBriefPage: NextPageWithLayout = () => {
             attachments: [],
             priority: '',
           }}
-          onSubmit={submitForm}
+          onSubmit={(values) => {
+            const socialMediaServices = values.services.filter(function (service) {
+              return service.serviceName === 'Social Media'
+            })
+
+            if (socialMediaServices.length === 0) {
+              submitForm
+            }
+
+            if (socialMediaServices.length !== 0) {
+              const checkSocialMediaExtra = socialMediaServices[0].updatedExtras.filter(function (
+                extra
+              ) {
+                return extra.quantity && extra.quantity < 50
+              })
+
+              if (checkSocialMediaExtra.length !== 0) {
+                showToast({
+                  type: 'error',
+                  message: 'Social Media - Minimum cost is 50',
+                })
+              } else {
+                submitForm
+              }
+            }
+          }}
         >
           {({ isSubmitting, setFieldValue }) => (
             <Form className="mx-auto flex w-fit space-x-6">
