@@ -86,7 +86,7 @@ export const ClientSocialMediaList = ({
               className="mb-2 w-35"
               type="button"
             >
-              <div>Add Social Media</div>
+              Add Post
             </Button>
           </div>
           <div className="w-full min-w-0">
