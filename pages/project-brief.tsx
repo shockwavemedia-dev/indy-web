@@ -163,7 +163,9 @@ const ProjectBriefPage: NextPageWithLayout = () => {
               })
             }
 
-            submitForm(values)
+            if (checkSocialMediaExtra.length === 0) {
+              submitForm(values)
+            }
           }}
         >
           {({ setFieldValue }) => (
