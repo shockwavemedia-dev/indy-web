@@ -29,6 +29,7 @@ import { Icon } from '../../../types/Icon.type'
 import { Page } from '../../../types/Page.type'
 import { Ticket } from '../../../types/Ticket.type'
 import { TicketActivity } from '../../../types/TicketActivity.type'
+import { TicketChat } from '../../../types/TicketChat.type'
 import { TicketFileVersion } from '../../../types/TicketFileVersion.type'
 import { TicketNote } from '../../../types/TicketNote.type'
 import { TicketPageTabs } from '../../../types/TicketPageTabs.type'
@@ -51,6 +52,7 @@ import {
 } from '../../modals/UploadTicketFileModal'
 import { Pill } from '../../Pill'
 import { TicketActivityCard } from '../../tickets/TicketActivityCard'
+import { TicketChatCard } from '../../tickets/TicketChatCard'
 import { TicketNoteCard } from '../../tickets/TicketNoteCard'
 
 export const StaffTicket = ({ ticketId }: { ticketId: number }) => {
@@ -80,6 +82,23 @@ export const StaffTicket = ({ ticketId }: { ticketId: number }) => {
 
     return data
   })
+
+  const { data: chats } = useQuery(
+    ['chats', ticketId],
+    async () => {
+      const {
+        data: { data },
+      } = await axios.get<{
+        data: Array<TicketChat>
+        page: Page
+      }>(`/v1/tickets/${ticketId}/chats`)
+
+      return data
+    },
+    {
+      enabled: activeTab === 'chats',
+    }
+  )
 
   const HtmlTooltip = styled(({ className, ...props }: TooltipProps) => (
     <Tooltip {...props} classes={{ popper: className }} placement="top-end" className="ml-auto" />
@@ -498,20 +517,23 @@ export const StaffTicket = ({ ticketId }: { ticketId: number }) => {
             <Tab title="Description" Icon={NotepadIcon} tabName="description" />
             <Tab title="Messaging" Icon={NoteIcon} tabName="notes" showCount={true} />
             <Tab title="My Files" Icon={FolderIcon} tabName="my_files" />
+            <Tab title="Chats" Icon={FolderIcon} tabName="chats" />
             <Tab title="Activities" Icon={CalendarIcon} tabName="activities" />
             <Tab title="Style Guide" Icon={ColorsIcon} tabName="style_guide" />
           </div>
           <div className="h-px bg-bright-gray" />
           <div
-            className={`-mt-0.5 mb-4 h-0.75 w-1/5 rounded bg-halloween-orange fill-halloween-orange transition-all ${
+            className={`-mt-0.5 mb-4 h-0.75 w-1/6 rounded bg-halloween-orange fill-halloween-orange transition-all ${
               activeTab === 'description'
                 ? 'ml-0'
                 : activeTab === 'notes'
-                ? 'ml-1/5'
-                : activeTab === 'activities'
-                ? 'ml-3/5'
+                ? 'ml-1/6'
                 : activeTab === 'my_files'
-                ? 'ml-2/5'
+                ? 'ml-2/6'
+                : activeTab === 'chats'
+                ? 'ml-3/6'
+                : activeTab === 'activities'
+                ? 'ml-4/6'
                 : 'ml-auto'
             }`}
           />
@@ -621,6 +643,11 @@ export const StaffTicket = ({ ticketId }: { ticketId: number }) => {
                   createdAt={createdAt}
                 />
               ))}
+            </div>
+          )}
+          {activeTab === 'chats' && (
+            <div className="space-y-5">
+              <TicketChatCard chats={chats} ticketId={ticket.id} />
             </div>
           )}
         </div>
