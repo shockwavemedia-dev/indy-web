@@ -17,7 +17,7 @@ export const RetainerInclusions = () => {
 
     return data
   })
-  
+
   const statusCardColor = [
     'bg-deep-space-sparkle',
     'bg-charleston-green',
@@ -38,7 +38,7 @@ export const RetainerInclusions = () => {
             <StatusCountCard
               key={`${retainer.serviceId}-${retainer.serviceName}`}
               value="&infin;"
-              className={statusCardColor[index]}
+              className={retainer.isEnabled === false ? 'bg-gray' : statusCardColor[index]}
               description={retainer.serviceName}
               classNameValue="!text-3xl"
               isEnabled={retainer.isEnabled}
@@ -48,7 +48,7 @@ export const RetainerInclusions = () => {
               totalAvailable={retainer.marketingQuota + retainer.extraQuota}
               key={`${retainer.serviceId}-${retainer.serviceName}`}
               value={retainer.totalUsed - (retainer.marketingQuota + retainer.extraQuota)}
-              className={statusCardColor[index]}
+              className={retainer.isEnabled === false ? 'bg-gray' : statusCardColor[index]}
               description={retainer.serviceName}
               isEnabled={retainer.isEnabled}
             />
