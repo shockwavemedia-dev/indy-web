@@ -89,32 +89,35 @@ export const TicketChatCard = ({
 
   return (
     <>
-      <div className="h-86 overflow-auto">
-        {chats?.map((chat) => (
-          <div
-            className="relative mb-3 space-y-3 rounded-sm bg-white px-6 py-5 shadow"
-            key={`chat-${chat.id}`}
-          >
-            <div className="flex items-center rounded-sm bg-white shadow">
-              {chat.profileUrl && (
-                <Image
-                  src={chat.profileUrl}
-                  alt="Dummy"
-                  height={32}
-                  width={32}
-                  className="rounded-full"
-                />
-              )}
-              <div className="ml-3 text-xs font-semibold text-onyx">{chat.createdBy}</div>
-              <div className="mx-2 h-1 w-1 rounded bg-bright-gray" />
+      {chats && chats.length > 0 && (
+        <div className="h-86 overflow-auto">
+          {chats?.map((chat) => (
+            <div
+              className="relative mb-3 space-y-3 rounded-sm bg-white px-6 py-5 shadow"
+              key={`chat-${chat.id}`}
+            >
+              <div className="flex items-center rounded-sm bg-white shadow">
+                {chat.profileUrl && (
+                  <Image
+                    src={chat.profileUrl}
+                    alt="Dummy"
+                    height={32}
+                    width={32}
+                    className="rounded-full"
+                  />
+                )}
+                <div className="ml-3 text-xs font-semibold text-onyx">{chat.createdBy}</div>
+                <div className="mx-2 h-1 w-1 rounded bg-bright-gray" />
+              </div>
+              <CommentParagraph comment={chat.message}></CommentParagraph>
+              <div className="text-xs font-medium text-lavender-gray">
+                {format(chat.createdAt, 'dd/MM/yyyy h:mmaaa')}
+              </div>
             </div>
-            <CommentParagraph comment={chat.message}></CommentParagraph>
-            <div className="text-xs font-medium text-lavender-gray">
-              {format(chat.createdAt, 'dd/MM/yyyy h:mmaaa')}
-            </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
+
       <TicketChatInput
         className=""
         value={comment}
