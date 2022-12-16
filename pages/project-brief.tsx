@@ -142,15 +142,15 @@ const ProjectBriefPage: NextPageWithLayout = () => {
             priority: '',
           }}
           onSubmit={(values) => {
-            const socialMediaServices = values.services.find(
+            const socialMediaService = values.services.find(
               ({ serviceName }) => serviceName === 'Social Media'
             )
 
-            if (!socialMediaServices) {
+            if (!socialMediaService) {
               submitForm(values)
             }
 
-            const checkSocialMediaExtra = socialMediaServices?.updatedExtras.filter(function (
+            const checkSocialMediaExtra = socialMediaService?.updatedExtras.filter(function (
               extra
             ) {
               return extra.quantity && extra.quantity < 50
