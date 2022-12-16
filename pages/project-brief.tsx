@@ -142,28 +142,28 @@ const ProjectBriefPage: NextPageWithLayout = () => {
             priority: '',
           }}
           onSubmit={(values) => {
-            const socialMediaServices = values.services.filter(function (service) {
-              return service.serviceName === 'Social Media'
-            })
+            const socialMediaServices = values.services.find(
+              ({ serviceName }) => serviceName === 'Social Media'
+            )
 
             if (!socialMediaServices) {
               submitForm(values)
             }
 
-            const checkSocialMediaExtra = socialMediaServices[0].updatedExtras.filter(function (
+            const checkSocialMediaExtra = socialMediaServices?.updatedExtras.filter(function (
               extra
             ) {
               return extra.quantity && extra.quantity < 50
             })
 
-            if (checkSocialMediaExtra.length !== 0) {
+            if (checkSocialMediaExtra && checkSocialMediaExtra.length !== 0) {
               showToast({
                 type: 'error',
                 message: 'Social Media - Minimum cost is 50',
               })
             }
 
-            if (checkSocialMediaExtra.length === 0) {
+            if (checkSocialMediaExtra && checkSocialMediaExtra.length === 0) {
               submitForm(values)
             }
           }}
