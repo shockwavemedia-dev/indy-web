@@ -128,7 +128,7 @@ const ProjectBriefPage: NextPageWithLayout = () => {
       <Head>
         <title>Indy - Project Brief</title>
       </Head>
-      <div className="mx-auto w-full max-w-8xl">
+      <div className="mx-auto w-full">
         <Formik
           validationSchema={CreateProjectBriefFormSchema}
           initialValues={{
@@ -141,9 +141,34 @@ const ProjectBriefPage: NextPageWithLayout = () => {
             attachments: [],
             priority: '',
           }}
-          onSubmit={submitForm}
+          onSubmit={(values) => {
+            const socialMediaService = values.services.find(
+              ({ serviceName }) => serviceName === 'Social Media'
+            )
+
+            if (!socialMediaService) {
+              submitForm(values)
+            }
+
+            const checkSocialMediaExtra = socialMediaService?.updatedExtras.filter(function (
+              extra
+            ) {
+              return extra.quantity && extra.quantity < 50
+            })
+
+            if (checkSocialMediaExtra && checkSocialMediaExtra.length !== 0) {
+              showToast({
+                type: 'error',
+                message: 'Social Media - Minimum cost is 50',
+              })
+            }
+
+            if (checkSocialMediaExtra && checkSocialMediaExtra.length === 0) {
+              submitForm(values)
+            }
+          }}
         >
-          {({ isSubmitting, setFieldValue }) => (
+          {({ setFieldValue }) => (
             <Form className="mx-auto flex w-fit space-x-6">
               <div className="flex w-130 flex-col rounded-xl bg-white p-6">
                 <TextInput
@@ -199,7 +224,7 @@ const ProjectBriefPage: NextPageWithLayout = () => {
                   <SelectService />
                 </div>
                 <div className="flex w-60 space-x-5">
-                  <Button ariaLabel="Submit" disabled={isSubmitting} type="submit">
+                  <Button ariaLabel="Submit" type="submit">
                     Submit
                   </Button>
                 </div>
@@ -456,6 +481,7 @@ const Extras = ({
   const toggleCustomField = () => setCustomFieldVisible(!customFieldVisible)
 
   const [customPrintFieldVisible, setPrintCustomFieldVisible] = useState(false)
+  const [socialMediaValidationVisible, setsocialMediaValidation] = useState(false)
 
   //const togglePrintCustomField = () => setPrintCustomFieldVisible(!customPrintFieldVisible)
 
@@ -553,13 +579,6 @@ const Extras = ({
       if (serviceId === 6 && extrasName === 'Custom') {
         toggleAdvertisingCustomField()
       }
-
-      // if (
-      //   activeService.serviceName === 'Print' ||
-      //   activeService.serviceName === 'Social Media Spend'
-      // ) {
-      //   togglePrintCustomField()
-      // }
     }
   }
 
@@ -581,6 +600,11 @@ const Extras = ({
   }
 
   const setAdditonalField = ({ currentTarget: { value } }: ChangeEvent<HTMLInputElement>) => {
+    if (value !== '' && Number(value) < 50) {
+      setsocialMediaValidation(true)
+    } else {
+      setsocialMediaValidation(false)
+    }
     if (activeService) {
       const service = services.find(({ serviceId }) => serviceId === activeService.serviceId)
       if (service) {
@@ -627,18 +651,25 @@ const Extras = ({
           </div>
         </div>
         {customPrintFieldVisible ? (
-          <div className="relative mt-5 flex items-center">
-            {serviceName === 'Print' ? (
-              <EditIcon className="pointer-events-none absolute left-5 stroke-lavender-gray" />
-            ) : (
-              <DollarIcon className="pointer-events-none absolute left-5 stroke-lavender-gray" />
+          <div className="flex flex-col">
+            <div className="relative mt-5 flex items-center">
+              {serviceName === 'Print' ? (
+                <EditIcon className="pointer-events-none absolute left-5 stroke-lavender-gray" />
+              ) : (
+                <DollarIcon className="pointer-events-none absolute left-5 stroke-lavender-gray" />
+              )}
+              <input
+                type="number"
+                onChange={setAdditonalField}
+                className="h-12.5 w-full rounded-xl px-13 text-sm font-medium text-onyx placeholder-metallic-silver ring-1 ring-bright-gray read-only:cursor-auto focus:ring-2 focus:ring-halloween-orange read-only:focus:ring-1 read-only:focus:ring-bright-gray"
+                placeholder={serviceName === 'Print' ? 'Enter Quantity' : 'Enter Amount'}
+              />
+            </div>
+            {socialMediaValidationVisible && (
+              <div className={`mt-1 text-xs font-medium text-tart-orange first-letter:uppercase`}>
+                Minimum cost is 50
+              </div>
             )}
-            <input
-              type="number"
-              onChange={setAdditonalField}
-              className="h-12.5 w-full rounded-xl px-13 text-sm font-medium text-onyx placeholder-metallic-silver ring-1 ring-bright-gray read-only:cursor-auto focus:ring-2 focus:ring-halloween-orange read-only:focus:ring-1 read-only:focus:ring-bright-gray"
-              placeholder={serviceName === 'Print' ? 'Enter Quantity' : 'Enter Amount'}
-            />
           </div>
         ) : (
           <div className="relative mt-5 flex items-center">
@@ -671,20 +702,29 @@ const Extras = ({
                           </>
                         )}
                         {serviceName === 'Social Media' && (
-                          <>
-                            <DollarIcon className="pointer-events-none absolute left-5 stroke-lavender-gray" />
-                            <input
-                              type="number"
-                              onChange={setAdditonalField}
-                              className="h-12.5 w-full rounded-xl px-13 text-sm font-medium text-onyx placeholder-metallic-silver ring-1 ring-bright-gray read-only:cursor-auto focus:ring-2 focus:ring-halloween-orange read-only:focus:ring-1 read-only:focus:ring-bright-gray"
-                              placeholder="Enter Amount"
-                              defaultValue={
-                                extra.quantity !== undefined && extra.quantity !== null
-                                  ? extra.quantity
-                                  : 0
-                              }
-                            />
-                          </>
+                          <div className="flex flex-col">
+                            <div className="relative mt-5 flex items-center">
+                              <DollarIcon className="pointer-events-none absolute left-5 stroke-lavender-gray" />
+                              <input
+                                type="number"
+                                onChange={setAdditonalField}
+                                className="h-12.5 w-full rounded-xl px-13 text-sm font-medium text-onyx placeholder-metallic-silver ring-1 ring-bright-gray read-only:cursor-auto focus:ring-2 focus:ring-halloween-orange read-only:focus:ring-1 read-only:focus:ring-bright-gray"
+                                placeholder="Enter Amount"
+                                defaultValue={
+                                  extra.quantity !== undefined && extra.quantity !== null
+                                    ? extra.quantity
+                                    : 0
+                                }
+                              />
+                            </div>
+                            {socialMediaValidationVisible && (
+                              <div
+                                className={`mt-1 text-xs font-medium text-tart-orange first-letter:uppercase`}
+                              >
+                                Minimum cost is 50
+                              </div>
+                            )}
+                          </div>
                         )}
                       </>
                     ))
