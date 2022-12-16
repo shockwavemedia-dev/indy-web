@@ -1,7 +1,7 @@
 import { useCalendar } from '@h6s/calendar'
 import { styled, Tooltip, tooltipClasses, TooltipProps } from '@mui/material'
 import axios from 'axios'
-import { format, getDate, getYear, isSameMonth, isToday } from 'date-fns'
+import { format, getDate, getYear, isSameDay, isSameMonth, isToday } from 'date-fns'
 import { useSession } from 'next-auth/react'
 import Image from 'next/image'
 import React from 'react'
@@ -155,7 +155,9 @@ export const SocialMediaCalendarList = ({ clientId }: { clientId?: number }) => 
                       </div>
                       <div className="space-y-3">
                         {(() => {
-                          const socialMedias = data[format(value, 'yyyyMMdd')]
+                          const socialMedias = Object.values(data)
+                            .flatMap((s) => s)
+                            .filter(({ postDate }) => isSameDay(new Date(postDate!), value))
 
                           return socialMedias
                             ? socialMedias.map((socialMedia) => (
