@@ -3,7 +3,7 @@ import { NewClientUserForm } from '../types/forms/NewClientUserForm.type'
 
 export const NewClientUserFormSchema: SchemaOf<NewClientUserForm> = object().shape({
   clientId: number().required(),
-  email: string().email().required(),
+  email: string().required(),
   sendInvite: boolean().required(),
   password: string()
     .when('sendInvite', {
@@ -11,14 +11,14 @@ export const NewClientUserFormSchema: SchemaOf<NewClientUserForm> = object().sha
       then: string().optional(),
       otherwise: string().required(),
     })
-    .min(6),
+    .min(4),
   passwordConfirmation: string()
     .when('sendInvite', {
       is: true,
       then: string().optional(),
       otherwise: string().required(),
     })
-    .min(6),
+    .min(4),
   contactNumber: string().optional(),
   firstName: string().required(),
   lastName: string().optional(),
