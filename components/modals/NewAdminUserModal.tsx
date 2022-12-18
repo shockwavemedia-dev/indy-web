@@ -156,7 +156,7 @@ export const NewAdminUserModal = ({
                   />
                 </div>
                 <TextInput
-                  type="email"
+                  type="text"
                   Icon={EmailIcon}
                   placeholder="Enter Email"
                   name="email"
