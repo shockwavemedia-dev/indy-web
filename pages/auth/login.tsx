@@ -61,7 +61,7 @@ const LoginPage: NextPageWithLayout = () => {
         {({ isSubmitting }) => (
           <Form className="flex w-103 flex-col items-center">
             <TextInput
-              type="email"
+              type="text"
               name="email"
               Icon={UserIcon}
               placeholder="Enter username"

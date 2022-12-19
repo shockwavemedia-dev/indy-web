@@ -6,6 +6,6 @@ export const EditClientUserFormSchema: SchemaOf<EditClientUserForm> = object().s
   role: string().required(),
   firstName: string().required(),
   lastName: string().optional().nullable(),
-  email: string().email().required(),
+  email: string().required(),
   password: string().optional().nullable(),
 })
