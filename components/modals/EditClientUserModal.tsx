@@ -116,7 +116,7 @@ export const EditClientUserModal = () => {
                 </div>
                 <div className="mb-3 flex w-full space-x-5">
                   <TextInput
-                    type="email"
+                    type="text"
                     Icon={EmailIcon}
                     placeholder="Enter Email"
                     name="email"

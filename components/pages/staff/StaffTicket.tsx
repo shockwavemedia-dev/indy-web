@@ -13,7 +13,6 @@ import { DataTable } from '../../../components/DataTable'
 import { CalendarIcon } from '../../../components/icons/CalendarIcon'
 import { EditIcon } from '../../../components/icons/EditIcon'
 import { NoteIcon } from '../../../components/icons/NoteIcon'
-import { PaperClipIcon } from '../../../components/icons/PaperClipIcon'
 import { PaperPlaneIcon } from '../../../components/icons/PaperPlaneIcon'
 import { CreateLinkModal } from '../../../components/modals/CreateLinkModal'
 import { ViewTicketAssigneeModal } from '../../../components/modals/ViewTicketAssigneeModal'
@@ -33,8 +32,10 @@ import { TicketChat } from '../../../types/TicketChat.type'
 import { TicketFileVersion } from '../../../types/TicketFileVersion.type'
 import { TicketNote } from '../../../types/TicketNote.type'
 import { TicketPageTabs } from '../../../types/TicketPageTabs.type'
+import { objectWithFileToFormData } from '../../../utils/FormHelpers'
 import { FileBrowser } from '../../FileBrowser'
 import { FileDisplay } from '../../FileDisplay'
+import { FileDropZone } from '../../FileDropZone'
 import { ColorsIcon } from '../../icons/ColorsIcon'
 import { DollarIcon } from '../../icons/DollarIcon'
 import { FolderIcon } from '../../icons/FolderIcon'
@@ -169,7 +170,10 @@ export const StaffTicket = ({ ticketId }: { ticketId: number }) => {
       resetForm: () => void
     }
   ) => {
-    const { status } = await axios.post(`/v1/tickets/${ticketId}/notes`, values)
+    const { status } = await axios.post(
+      `/v1/tickets/${ticketId}/notes`,
+      objectWithFileToFormData(values)
+    )
     if (status === 200) {
       queryClient.invalidateQueries(['notes', ticketId])
       resetForm()
@@ -582,7 +586,7 @@ export const StaffTicket = ({ ticketId }: { ticketId: number }) => {
             <>
               <Formik
                 validationSchema={CreateNoteFormSchema}
-                initialValues={{ note: '' }}
+                initialValues={{ note: '', attachments: [] }}
                 onSubmit={submitNoteForm}
               >
                 {({ isSubmitting }) => (
@@ -593,10 +597,6 @@ export const StaffTicket = ({ ticketId }: { ticketId: number }) => {
                       name="note"
                       inputActions={
                         <div className="absolute right-6 bottom-6 z-10 flex items-center space-x-6">
-                          <input type="file" name="attachment" id="note-attachment" hidden />
-                          <label htmlFor="note-attachment" className="cursor-pointer">
-                            <PaperClipIcon className="stroke-waterloo" />
-                          </label>
                           <Button
                             ariaLabel="Submit Notes"
                             type="submit"
@@ -609,14 +609,25 @@ export const StaffTicket = ({ ticketId }: { ticketId: number }) => {
                         </div>
                       }
                     />
+                    <FileDropZone
+                      label="Upload Attachments"
+                      name="attachments"
+                      className="mb-8 mt-5"
+                      maxSize={250}
+                      mimeType="image/gif"
+                      accept={['.gif', '.jpeg', '.mp4', '.png', '.jpg', '.pdf', '.doc', '.docx']}
+                      multiple
+                    />
                   </Form>
                 )}
               </Formik>
               <div className="space-y-5">
-                {notes?.map(({ id, note, createdBy, createdAt }) => (
+                {notes?.map(({ id, note, file, createdBy, attachments, createdAt }) => (
                   <TicketNoteCard
                     key={`note-${id}`}
+                    attachments={attachments}
                     note={note}
+                    file={file}
                     createdBy={createdBy}
                     createdAt={createdAt}
                   />

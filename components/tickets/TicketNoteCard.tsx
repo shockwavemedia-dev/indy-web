@@ -6,11 +6,13 @@ import { FileDisplay } from '../FileDisplay'
 import { RichTextDisplay } from '../RichTextDisplay'
 
 export const TicketNoteCard = ({
+  attachments,
   note,
   file,
   createdBy,
   createdAt,
 }: {
+  attachments: Array<File> | []
   note: string
   file?: File | null
   createdBy: string
@@ -34,6 +36,26 @@ export const TicketNoteCard = ({
         imageAlt={file?.fileName}
         videoClassName="w-140 rounded-xl"
       />
+    )}
+    {attachments.length > 0 && (
+      <div className="flex h-fit w-257.5 flex-wrap gap-5">
+        {attachments && attachments?.length > 0 ? (
+          attachments?.map((attachment) => (
+            <FileDisplay
+              key={`attachment-${attachment.id}`}
+              src={attachment.url}
+              type={attachment.fileType}
+              imageSize="h-44 w-44"
+              imageAlt={attachment.url}
+              href={attachment.url}
+              videoClassName="h-44 w-78.5 cursor-pointer rounded-xl"
+              failedToLoadClassName="h-44 w-78.5"
+            />
+          ))
+        ) : (
+          <div className=" text-xs text-metallic-silver">No attachment to display.</div>
+        )}
+      </div>
     )}
   </div>
 )
