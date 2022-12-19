@@ -39,6 +39,7 @@ import { TicketChat } from '../../../types/TicketChat.type'
 import { TicketFileVersion } from '../../../types/TicketFileVersion.type'
 import { TicketNote } from '../../../types/TicketNote.type'
 import { TicketPageTabs } from '../../../types/TicketPageTabs.type'
+import { objectWithFileToFormData } from '../../../utils/FormHelpers'
 import { FileBrowser } from '../../FileBrowser'
 import { FileDisplay } from '../../FileDisplay'
 import { FileDropZone } from '../../FileDropZone'
@@ -162,7 +163,10 @@ export const ManagerTicket = ({ ticketId }: { ticketId: number }) => {
       resetForm: () => void
     }
   ) => {
-    const { status } = await axios.post(`/v1/tickets/${ticketId}/notes`, values)
+    const { status } = await axios.post(
+      `/v1/tickets/${ticketId}/notes`,
+      objectWithFileToFormData(values)
+    )
     if (status === 200) {
       queryClient.invalidateQueries(['notes', ticketId])
       resetForm()
