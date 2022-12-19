@@ -12,7 +12,6 @@ import { DataTable } from '../../../components/DataTable'
 import { CalendarIcon } from '../../../components/icons/CalendarIcon'
 import { EditIcon } from '../../../components/icons/EditIcon'
 import { NoteIcon } from '../../../components/icons/NoteIcon'
-import { PaperClipIcon } from '../../../components/icons/PaperClipIcon'
 import { PaperPlaneIcon } from '../../../components/icons/PaperPlaneIcon'
 import { PlusIcon } from '../../../components/icons/PlusIcon'
 import { TrashIcon } from '../../../components/icons/TrashIcon'
@@ -42,6 +41,7 @@ import { TicketNote } from '../../../types/TicketNote.type'
 import { TicketPageTabs } from '../../../types/TicketPageTabs.type'
 import { FileBrowser } from '../../FileBrowser'
 import { FileDisplay } from '../../FileDisplay'
+import { FileDropZone } from '../../FileDropZone'
 import { ColorsIcon } from '../../icons/ColorsIcon'
 import { DollarIcon } from '../../icons/DollarIcon'
 import { FolderIcon } from '../../icons/FolderIcon'
@@ -573,7 +573,7 @@ export const ManagerTicket = ({ ticketId }: { ticketId: number }) => {
             <>
               <Formik
                 validationSchema={CreateNoteFormSchema}
-                initialValues={{ note: '' }}
+                initialValues={{ note: '', attachments: [] }}
                 onSubmit={submitNoteForm}
               >
                 {({ isSubmitting }) => (
@@ -584,10 +584,6 @@ export const ManagerTicket = ({ ticketId }: { ticketId: number }) => {
                       name="note"
                       inputActions={
                         <div className="absolute right-6 bottom-6 z-10 flex items-center space-x-6">
-                          <input type="file" name="attachment" id="note-attachment" hidden />
-                          <label htmlFor="note-attachment" className="cursor-pointer">
-                            <PaperClipIcon className="stroke-waterloo" />
-                          </label>
                           <Button
                             ariaLabel="Submit Notes"
                             type="submit"
@@ -600,14 +596,25 @@ export const ManagerTicket = ({ ticketId }: { ticketId: number }) => {
                         </div>
                       }
                     />
+                    <FileDropZone
+                      label="Upload Attachments"
+                      name="attachments"
+                      className="mb-8 mt-5"
+                      maxSize={250}
+                      mimeType="image/gif"
+                      accept={['.gif', '.jpeg', '.mp4', '.png', '.jpg', '.pdf', '.doc', '.docx']}
+                      multiple
+                    />
                   </Form>
                 )}
               </Formik>
               <div className="space-y-5">
-                {notes?.map(({ id, note, createdBy, createdAt }) => (
+                {notes?.map(({ id, note, file, createdBy, attachments, createdAt }) => (
                   <TicketNoteCard
                     key={`note-${id}`}
+                    attachments={attachments}
                     note={note}
+                    file={file}
                     createdBy={createdBy}
                     createdAt={createdAt}
                   />
