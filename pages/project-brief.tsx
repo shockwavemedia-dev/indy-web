@@ -600,12 +600,13 @@ const Extras = ({
   }
 
   const setAdditonalField = ({ currentTarget: { value } }: ChangeEvent<HTMLInputElement>) => {
-    if (value !== '' && Number(value) < 50) {
-      setsocialMediaValidation(true)
-    } else {
-      setsocialMediaValidation(false)
-    }
     if (activeService) {
+      setsocialMediaValidation(false)
+
+      if (value !== '' && Number(value) < 50 && activeService.serviceName === 'Social Media') {
+        setsocialMediaValidation(true)
+      }
+
       const service = services.find(({ serviceId }) => serviceId === activeService.serviceId)
       if (service) {
         const payload = [

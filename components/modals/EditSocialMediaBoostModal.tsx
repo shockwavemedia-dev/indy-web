@@ -167,12 +167,7 @@ export const EditSocialMediaBoostModal = () => {
                 >
                   Cancel
                 </Button>
-                <Button
-                  ariaLabel="Submit"
-                  disabled={isSubmitting}
-                  type="submit"
-                  onClick={() => submitForm}
-                >
+                <Button ariaLabel="Submit" disabled={isSubmitting} type="submit">
                   <FloppyDiskIcon className="stroke-white" />
                   <div>Save</div>
                 </Button>
