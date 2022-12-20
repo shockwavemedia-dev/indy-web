@@ -45,7 +45,7 @@ export const TicketChatCard = ({
     (users &&
       users?.map((user) => ({
         id: user.id.toString(),
-        display: user.firstName,
+        display: user.fullName,
       }))) ??
     []
 
