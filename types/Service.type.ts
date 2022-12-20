@@ -12,5 +12,5 @@ export type Service = {
   updatedBy: number
   customFields: Array<string>
   updatedExtras: Array<{ name: string; quantity?: number | string | null }>
-  socialMediaPostDate: Date | null | undefined
+  postDate: Date | null | undefined
 }

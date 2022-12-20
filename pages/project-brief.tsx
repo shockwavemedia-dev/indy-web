@@ -48,7 +48,7 @@ export const useProjectBrief = create(
         extras: Array<string>
         customFields: Array<string>
         updatedExtras: Array<{ name: string; quantity?: number | string | null }>
-        socialMediaPostDate: Date | null | undefined
+        postDate: Date | null | undefined
       }>,
     },
     (set) => ({
@@ -60,7 +60,7 @@ export const useProjectBrief = create(
           extras: Array<string>
           customFields: Array<string>
           updatedExtras: Array<{ name: string; quantity?: number | string | null }>
-          socialMediaPostDate: Date | null | undefined
+          postDate: Date | null | undefined
         }>
       ) => set({ services }),
       setActiveService: (activeService?: Service) => set({ activeService }),
@@ -93,19 +93,12 @@ const ProjectBriefPage: NextPageWithLayout = () => {
         objectWithFileToFormData({
           ...values,
           services: values.services.map(
-            ({
-              serviceId,
-              extras,
-              customFields,
-              updatedExtras,
-              serviceName,
-              socialMediaPostDate,
-            }) => ({
+            ({ serviceId, extras, customFields, updatedExtras, serviceName, postDate }) => ({
               serviceId,
               extras:
                 serviceName === 'Print' || serviceName === 'Social Media' ? updatedExtras : extras,
               customFields,
-              socialMediaPostDate,
+              postDate,
             })
           ),
         })
@@ -162,7 +155,7 @@ const ProjectBriefPage: NextPageWithLayout = () => {
               submitForm(values)
             }
 
-            if (socialMediaService && socialMediaService?.socialMediaPostDate === undefined) {
+            if (socialMediaService && socialMediaService?.postDate === undefined) {
               showToast({
                 type: 'error',
                 message: 'Social Media Post Datetime is a required field',
@@ -183,10 +176,7 @@ const ProjectBriefPage: NextPageWithLayout = () => {
             }
 
             if (checkSocialMediaExtra && checkSocialMediaExtra.length === 0) {
-              if (
-                socialMediaService &&
-                typeof socialMediaService?.socialMediaPostDate !== 'undefined'
-              ) {
+              if (socialMediaService && typeof socialMediaService?.postDate !== 'undefined') {
                 submitForm(values)
               }
             }
@@ -347,7 +337,7 @@ const SelectService = () => {
           ...services.filter(({ serviceId }) => serviceId !== service.serviceId),
           {
             ...service,
-            socialMediaPostDate: newValue,
+            postDate: newValue,
           },
         ]
       } else {
@@ -356,7 +346,7 @@ const SelectService = () => {
           ...services,
           {
             ...activeService,
-            socialMediaPostDate: newValue,
+            postDate: newValue,
           },
         ]
       }
@@ -383,7 +373,7 @@ const SelectService = () => {
                     extras: [],
                     customFields: [],
                     updatedExtras: [],
-                    socialMediaPostDate: null,
+                    postDate: null,
                   },
                   ...services,
                 ]
