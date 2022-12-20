@@ -146,9 +146,7 @@ const ProjectBriefPage: NextPageWithLayout = () => {
               ({ serviceName }) => serviceName === 'Social Media'
             )
 
-            const printService = values.services.find(({ serviceName }) => serviceName === 'Print')
-
-            if (!socialMediaService && !printService) {
+            if (!socialMediaService) {
               submitForm(values)
             }
 
@@ -165,23 +163,7 @@ const ProjectBriefPage: NextPageWithLayout = () => {
               })
             }
 
-            const checkPrintExtra = printService?.updatedExtras.filter(function (extra) {
-              return extra.quantity === ''
-            })
-
-            if (checkPrintExtra && checkPrintExtra.length !== 0) {
-              showToast({
-                type: 'error',
-                message: 'Print - Quantity is a required field',
-              })
-            }
-
-            if (
-              checkSocialMediaExtra &&
-              checkSocialMediaExtra.length === 0 &&
-              checkPrintExtra &&
-              checkPrintExtra.length === 0
-            ) {
+            if (checkSocialMediaExtra && checkSocialMediaExtra.length === 0) {
               submitForm(values)
             }
           }}
