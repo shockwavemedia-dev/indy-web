@@ -44,6 +44,7 @@ export const SocialMediaCalendarList = ({ clientId }: { clientId?: number }) => 
           params: {
             year,
             month: month + 1,
+            timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
           },
         }
       )
