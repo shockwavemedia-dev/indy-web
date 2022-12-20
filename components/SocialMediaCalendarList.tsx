@@ -36,7 +36,10 @@ export const SocialMediaCalendarList = ({ clientId }: { clientId?: number }) => 
   } = useCalendar()
 
   const { data } = useQuery(
-    ['social-media-calendar', { year, month: month + 1 }],
+    [
+      'social-media-calendar',
+      { year, month: month + 1, clientId: clientId ?? session!.user.userType.client.id },
+    ],
     async () => {
       const { data } = await axios.get<SocialMediaCalendar>(
         `/v1/clients/${clientId ?? session!.user.userType.client.id}/social-media-calendar`,
