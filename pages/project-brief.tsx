@@ -1,5 +1,6 @@
 /* eslint-disable react/jsx-key */
 import { Tooltip } from '@mui/material'
+import { DesktopDateTimePicker } from '@mui/x-date-pickers'
 import axios from 'axios'
 import { Form, Formik, useFormikContext } from 'formik'
 import { useSession } from 'next-auth/react'
@@ -14,6 +15,7 @@ import { Button } from '../components/Button'
 import { CheckboxNoFormik } from '../components/CheckboxNoFormik'
 import { DateInput } from '../components/DateInput'
 import { FileDropZone } from '../components/FileDropZone'
+import { CalendarIcon } from '../components/icons/CalendarIcon'
 import { CheckIcon } from '../components/icons/CheckIcon'
 import { DollarIcon } from '../components/icons/DollarIcon'
 import { EditIcon } from '../components/icons/EditIcon'
@@ -46,6 +48,7 @@ export const useProjectBrief = create(
         extras: Array<string>
         customFields: Array<string>
         updatedExtras: Array<{ name: string; quantity?: number | string | null }>
+        postDate: Date | null | undefined
       }>,
     },
     (set) => ({
@@ -57,6 +60,7 @@ export const useProjectBrief = create(
           extras: Array<string>
           customFields: Array<string>
           updatedExtras: Array<{ name: string; quantity?: number | string | null }>
+          postDate: Date | null | undefined
         }>
       ) => set({ services }),
       setActiveService: (activeService?: Service) => set({ activeService }),
@@ -89,11 +93,12 @@ const ProjectBriefPage: NextPageWithLayout = () => {
         objectWithFileToFormData({
           ...values,
           services: values.services.map(
-            ({ serviceId, extras, customFields, updatedExtras, serviceName }) => ({
+            ({ serviceId, extras, customFields, updatedExtras, serviceName, postDate }) => ({
               serviceId,
               extras:
                 serviceName === 'Print' || serviceName === 'Social Media' ? updatedExtras : extras,
               customFields,
+              postDate,
             })
           ),
         })
@@ -146,10 +151,15 @@ const ProjectBriefPage: NextPageWithLayout = () => {
               ({ serviceName }) => serviceName === 'Social Media'
             )
 
-            const printService = values.services.find(({ serviceName }) => serviceName === 'Print')
-
-            if (!socialMediaService && !printService) {
+            if (!socialMediaService) {
               submitForm(values)
+            }
+
+            if (socialMediaService && socialMediaService?.postDate === undefined) {
+              showToast({
+                type: 'error',
+                message: 'Social Media Post Datetime is a required field',
+              })
             }
 
             const checkSocialMediaExtra = socialMediaService?.updatedExtras.filter(function (
@@ -165,24 +175,10 @@ const ProjectBriefPage: NextPageWithLayout = () => {
               })
             }
 
-            const checkPrintExtra = printService?.updatedExtras.filter(function (extra) {
-              return extra.quantity === ''
-            })
-
-            if (checkPrintExtra && checkPrintExtra.length !== 0) {
-              showToast({
-                type: 'error',
-                message: 'Print - Quantity is a required field',
-              })
-            }
-
-            if (
-              checkSocialMediaExtra &&
-              checkSocialMediaExtra.length === 0 &&
-              checkPrintExtra &&
-              checkPrintExtra.length === 0
-            ) {
-              submitForm(values)
+            if (checkSocialMediaExtra && checkSocialMediaExtra.length === 0) {
+              if (socialMediaService && typeof socialMediaService?.postDate !== 'undefined') {
+                submitForm(values)
+              }
             }
           }}
         >
@@ -262,6 +258,8 @@ const SelectService = () => {
   const setServices = useProjectBrief((state) => state.setServices)
   const setActiveService = useProjectBrief((state) => state.setActiveService)
   const { setFieldValue } = useFormikContext<CreateProjectBriefForm>()
+  const [pickerVisible, setPickerVisible] = useState(false)
+  const [socialMediaPostDate, setSocialMediaPostDate] = useState<Date | null>(null)
 
   const { data: fetchedServices } = useQuery('services', async () => {
     const {
@@ -328,6 +326,36 @@ const SelectService = () => {
     }
   }
 
+  const socialMediaPostDateTime = (newValue: Date | null) => {
+    setSocialMediaPostDate(newValue)
+    if (activeService) {
+      const service = services.find(({ serviceId }) => serviceId === activeService.serviceId)
+      let payload
+      if (service) {
+        payload = [
+          ...services.filter(({ serviceId }) => serviceId !== service.serviceId),
+          {
+            ...service,
+            postDate: newValue,
+          },
+        ]
+      } else {
+        payload = [
+          ...services,
+          {
+            ...activeService,
+            postDate: newValue,
+            extras: [],
+            customFields: [],
+            updatedExtras: [],
+          },
+        ]
+      }
+      setServices(payload)
+      setFieldValue('services', payload)
+    }
+  }
+
   return (
     <>
       <div className="flex h-fit w-60 flex-col items-center space-y-2 rounded-xl bg-white p-5">
@@ -346,6 +374,7 @@ const SelectService = () => {
                     extras: [],
                     customFields: [],
                     updatedExtras: [],
+                    postDate: null,
                   },
                   ...services,
                 ]
@@ -407,6 +436,35 @@ const SelectService = () => {
                 Deselect All
               </a>
             </div>
+            {activeService?.serviceName === 'Social Media' && (
+              <div className="mb-10 flex space-x-5">
+                <div className="relative flex items-center">
+                  <CalendarIcon className="pointer-events-none absolute ml-6 stroke-lavender-gray" />
+                  <DesktopDateTimePicker
+                    disableMaskedInput
+                    inputFormat="dd/MM/yyyy h:mmaaa"
+                    onChange={socialMediaPostDateTime}
+                    value={socialMediaPostDate}
+                    onClose={() => {
+                      setPickerVisible(false)
+                    }}
+                    open={pickerVisible}
+                    renderInput={({ inputRef, inputProps }) => (
+                      <input
+                        {...inputProps}
+                        ref={inputRef}
+                        placeholder="Select Post Datetime"
+                        onClick={() => setPickerVisible(true)}
+                        readOnly
+                        className={`h-12.5 w-full rounded-xl bg-transparent px-13  text-sm font-medium text-onyx placeholder-metallic-silver focus:ring-2 focus:ring-halloween-orange read-only:focus:ring-1 read-only:focus:ring-bright-gray ${
+                          pickerVisible ? 'ring-2 ring-halloween-orange' : 'ring-1 ring-bright-gray'
+                        }`}
+                      />
+                    )}
+                  />
+                </div>
+              </div>
+            )}
             {activeService.extras.map((extras, i) => {
               const foundedExtras = services.find(
                 ({ serviceId }) => serviceId === activeService.serviceId
