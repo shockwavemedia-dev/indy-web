@@ -1,6 +1,5 @@
 import axios from 'axios'
 import Head from 'next/head'
-import { useRouter } from 'next/router'
 import { ReactElement, useEffect } from 'react'
 import { Card } from '../components/Card'
 import { FancyButton } from '../components/FancyButton'
@@ -12,7 +11,6 @@ import { NextPageWithLayout } from '../types/pages/NextPageWithLayout.type'
 
 const ConfigurationPage: NextPageWithLayout = () => {
   const { setHeader } = usePanelLayoutStore()
-  const { replace } = useRouter()
   const { showToast } = useToastStore()
 
   useEffect(() => {
