@@ -332,7 +332,6 @@ const SelectService = () => {
       const service = services.find(({ serviceId }) => serviceId === activeService.serviceId)
       let payload
       if (service) {
-        console.log('pasok1')
         payload = [
           ...services.filter(({ serviceId }) => serviceId !== service.serviceId),
           {
@@ -341,12 +340,14 @@ const SelectService = () => {
           },
         ]
       } else {
-        console.log('pasok2')
         payload = [
           ...services,
           {
             ...activeService,
             postDate: newValue,
+            extras: [],
+            customFields: [],
+            updatedExtras: [],
           },
         ]
       }
