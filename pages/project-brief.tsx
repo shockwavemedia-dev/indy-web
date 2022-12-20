@@ -146,14 +146,16 @@ const ProjectBriefPage: NextPageWithLayout = () => {
               ({ serviceName }) => serviceName === 'Social Media'
             )
 
-            if (!socialMediaService) {
+            const printService = values.services.find(({ serviceName }) => serviceName === 'Print')
+
+            if (!socialMediaService && !printService) {
               submitForm(values)
             }
 
             const checkSocialMediaExtra = socialMediaService?.updatedExtras.filter(function (
               extra
             ) {
-              return extra.quantity && extra.quantity < 50
+              return extra.quantity === '' || (extra.quantity && extra.quantity < 50)
             })
 
             if (checkSocialMediaExtra && checkSocialMediaExtra.length !== 0) {
@@ -163,7 +165,23 @@ const ProjectBriefPage: NextPageWithLayout = () => {
               })
             }
 
-            if (checkSocialMediaExtra && checkSocialMediaExtra.length === 0) {
+            const checkPrintExtra = printService?.updatedExtras.filter(function (extra) {
+              return extra.quantity === ''
+            })
+
+            if (checkPrintExtra && checkPrintExtra.length !== 0) {
+              showToast({
+                type: 'error',
+                message: 'Print - Quantity is a required field',
+              })
+            }
+
+            if (
+              checkSocialMediaExtra &&
+              checkSocialMediaExtra.length === 0 &&
+              checkPrintExtra &&
+              checkPrintExtra.length === 0
+            ) {
               submitForm(values)
             }
           }}
@@ -603,7 +621,7 @@ const Extras = ({
     if (activeService) {
       setsocialMediaValidation(false)
 
-      if (value !== '' && Number(value) < 50 && activeService.serviceName === 'Social Media') {
+      if (value === '' || (Number(value) < 50 && activeService.serviceName === 'Social Media')) {
         setsocialMediaValidation(true)
       }
 

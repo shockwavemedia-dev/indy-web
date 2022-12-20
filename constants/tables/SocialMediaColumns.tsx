@@ -152,7 +152,7 @@ export const SocialMediaColumns: Array<Column<SocialMedia>> = [
       return (
         <DesktopDateTimePicker
           disableMaskedInput
-          inputFormat="MM/dd/yyyy h:mmaaa"
+          inputFormat="dd/MM/yyyy h:mmaaa"
           value={postDate}
           onChange={setPostDate}
           onClose={() => {
