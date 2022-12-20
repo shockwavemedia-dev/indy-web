@@ -162,10 +162,7 @@ const ProjectBriefPage: NextPageWithLayout = () => {
               submitForm(values)
             }
 
-            if (
-              (socialMediaService && socialMediaService.socialMediaPostDate === null) ||
-              socialMediaService?.socialMediaPostDate === undefined
-            ) {
+            if (socialMediaService && socialMediaService?.socialMediaPostDate === undefined) {
               showToast({
                 type: 'error',
                 message: 'Social Media Post Datetime is a required field',
@@ -273,7 +270,6 @@ const SelectService = () => {
   const { setFieldValue } = useFormikContext<CreateProjectBriefForm>()
   const [pickerVisible, setPickerVisible] = useState(false)
   const [socialMediaPostDate, setSocialMediaPostDate] = useState<Date | null>(null)
-  const [socialMediaPostDateVisible, setsocialMediaPostDateVisible] = useState(false)
 
   const { data: fetchedServices } = useQuery('services', async () => {
     const {
