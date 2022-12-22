@@ -155,13 +155,6 @@ const ProjectBriefPage: NextPageWithLayout = () => {
               submitForm(values)
             }
 
-            if (socialMediaService && socialMediaService?.postDate === undefined) {
-              showToast({
-                type: 'error',
-                message: 'Social Media Post Datetime is a required field',
-              })
-            }
-
             const checkSocialMediaExtra = socialMediaService?.updatedExtras.filter(function (
               extra
             ) {
@@ -176,9 +169,7 @@ const ProjectBriefPage: NextPageWithLayout = () => {
             }
 
             if (checkSocialMediaExtra && checkSocialMediaExtra.length === 0) {
-              if (socialMediaService && typeof socialMediaService?.postDate !== 'undefined') {
-                submitForm(values)
-              }
+              submitForm(values)
             }
           }}
         >
