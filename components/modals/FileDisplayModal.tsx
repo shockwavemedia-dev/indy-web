@@ -68,20 +68,21 @@ export const FileDisplayModal = () => {
                 imageAlt={name}
                 videoClassName="rounded-xl w-auto h-[95%]"
               />
-              {fileType !== 'video/mp4' && session?.isClient && (
+              {session?.isClient && (
                 <div className="mt-6 flex w-70">
-                  <Button
-                    ariaLabel="Print"
-                    className="mr-2 w-72 bg-halloween-orange text-white"
-                    type="button"
-                    onClick={() => {
-                      toggleCreatePrinterJobModal(clientId, fileId)
-                    }}
-                  >
-                    <PrintIcon className="stroke-white" />
-                    <div>Print</div>
-                  </Button>
-
+                  {fileType !== 'video/mp4' && (
+                    <Button
+                      ariaLabel="Print"
+                      className="mr-2 w-72 bg-halloween-orange text-white"
+                      type="button"
+                      onClick={() => {
+                        toggleCreatePrinterJobModal(clientId, fileId)
+                      }}
+                    >
+                      <PrintIcon className="stroke-white" />
+                      <div>Print</div>
+                    </Button>
+                  )}
                   <Button
                     ariaLabel="Download"
                     className="w-82 mr-2 bg-bleu-de-france text-white"
