@@ -32,7 +32,7 @@ export const TicketChatCard = ({
       } = await axios.get<{
         data: Array<User>
         page: Page
-      }>(`/v1/users`)
+      }>(`/v1/users?size=500`)
 
       return data
     },
