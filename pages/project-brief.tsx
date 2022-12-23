@@ -19,6 +19,7 @@ import { CalendarIcon } from '../components/icons/CalendarIcon'
 import { CheckIcon } from '../components/icons/CheckIcon'
 import { DollarIcon } from '../components/icons/DollarIcon'
 import { EditIcon } from '../components/icons/EditIcon'
+import { InfoIcon } from '../components/icons/InfoIcon'
 import { ServiceCheckIcon } from '../components/icons/ServiceCheckIcon'
 import { ProjectBriefPrioritySelect } from '../components/ProjectBriefPrioritySelect'
 import { RichTextInput } from '../components/RichTextInput'
@@ -175,10 +176,12 @@ const ProjectBriefPage: NextPageWithLayout = () => {
               })
             }
 
-            if (checkSocialMediaExtra && checkSocialMediaExtra.length === 0) {
-              if (socialMediaService && typeof socialMediaService?.postDate !== 'undefined') {
-                submitForm(values)
-              }
+            if (
+              checkSocialMediaExtra &&
+              checkSocialMediaExtra.length === 0 &&
+              socialMediaService?.postDate !== undefined
+            ) {
+              submitForm(values)
             }
           }}
         >
@@ -456,12 +459,21 @@ const SelectService = () => {
                         placeholder="Select Post Datetime"
                         onClick={() => setPickerVisible(true)}
                         readOnly
-                        className={`h-12.5 w-full rounded-xl bg-transparent px-13  text-sm font-medium text-onyx placeholder-metallic-silver focus:ring-2 focus:ring-halloween-orange read-only:focus:ring-1 read-only:focus:ring-bright-gray ${
+                        className={`mr-2 h-12.5 w-full rounded-xl bg-transparent px-13  text-sm font-medium text-onyx placeholder-metallic-silver focus:ring-2 focus:ring-halloween-orange read-only:focus:ring-1 read-only:focus:ring-bright-gray ${
                           pickerVisible ? 'ring-2 ring-halloween-orange' : 'ring-1 ring-bright-gray'
                         }`}
                       />
                     )}
                   />
+                  <Tooltip
+                    title="Social Media Post Datetime"
+                    placement="top-end"
+                    className="ml-auto"
+                  >
+                    <div>
+                      <InfoIcon className="h-4 stroke-bleu-de-france transition-colors hover:stroke-halloween-orange" />
+                    </div>
+                  </Tooltip>
                 </div>
               </div>
             )}
