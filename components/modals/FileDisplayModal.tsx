@@ -5,7 +5,6 @@ import { Button } from '../Button'
 import { FileDisplay } from '../FileDisplay'
 import { DownloadIcon } from '../icons/DownloadIcon'
 import { PrintIcon } from '../icons/PrintIcon'
-import { TrashIcon } from '../icons/TrashIcon'
 import { Modal } from '../Modal'
 import { CreatePrinterJobModal, useCreatePrinterJobModalStore } from './CreatePrinterJobModal'
 
@@ -49,9 +48,9 @@ export const FileDisplayModal = () => {
     window.open(signedUrl, '_blank')
   }
 
-  const deleteFile = () => {
-    toggleShowPhotoVideoFileModal()
-  }
+  // const deleteFile = () => {
+  //   toggleShowPhotoVideoFileModal()
+  // }
 
   return (
     <>
@@ -83,6 +82,7 @@ export const FileDisplayModal = () => {
                       <div>Print</div>
                     </Button>
                   )}
+
                   <Button
                     ariaLabel="Download"
                     className="w-82 mr-2 bg-bleu-de-france text-white"
@@ -93,7 +93,7 @@ export const FileDisplayModal = () => {
                     <DownloadIcon className="stroke-white" />
                     <div>Download</div>
                   </Button>
-                  <Button
+                  {/* <Button
                     ariaLabel="Delete"
                     className="w-72 bg-red-crimson text-white"
                     type="button"
@@ -103,7 +103,7 @@ export const FileDisplayModal = () => {
                   >
                     <TrashIcon className="stroke-white" />
                     <div>Delete</div>
-                  </Button>
+                  </Button> */}
                 </div>
               )}
             </>
