@@ -89,7 +89,10 @@ const MarketingPlannerPage: NextPageWithLayout = () => {
               id,
               name,
               status,
-              assignees,
+              assignees:
+                assignees && assignees.length > 0
+                  ? assignees.map((s) => (typeof s === 'number' ? s : s.userId))
+                  : [],
               deadline,
               notify,
             })),
