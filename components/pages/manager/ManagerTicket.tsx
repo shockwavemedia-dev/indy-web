@@ -30,6 +30,7 @@ import { ManagerTicketAssigneeTableColumns } from '../../../constants/tables/Man
 import { usePanelLayoutStore } from '../../../layouts/PanelLayout'
 import { CreateNoteFormSchema } from '../../../schemas/CreateNoteFormSchema'
 import { useTicketAssigneeStore } from '../../../store/TicketAssigneeStore'
+import { useToastStore } from '../../../store/ToastStore'
 import { CreateNoteForm } from '../../../types/forms/CreateNoteForm.type'
 import { Icon } from '../../../types/Icon.type'
 import { Page } from '../../../types/Page.type'
@@ -61,7 +62,7 @@ import { TicketNoteCard } from '../../tickets/TicketNoteCard'
 export const ManagerTicket = ({ ticketId }: { ticketId: number }) => {
   const [activeTab, setActiveTab] = useState<TicketPageTabs>('description')
   const [isAddTicketAssigneeModalVisible, setAddTicketAssigneeModalVisible] = useState(false)
-
+  const { showToast } = useToastStore()
   const queryClient = useQueryClient()
   const {
     isEditTicketAssigneeModalVisible,
@@ -169,6 +170,12 @@ export const ManagerTicket = ({ ticketId }: { ticketId: number }) => {
     )
     if (status === 200) {
       queryClient.invalidateQueries(['notes', ticketId])
+
+      showToast({
+        type: 'success',
+        message: `Message sent successfully!`,
+      })
+
       resetForm()
     }
   }
