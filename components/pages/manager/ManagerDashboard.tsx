@@ -6,6 +6,8 @@ import { ManagerTicketsTableColumns } from '../../../constants/tables/ManagerTic
 import { usePanelLayoutStore } from '../../../layouts/PanelLayout'
 import { Card } from '../../Card'
 import { DataTable } from '../../DataTable'
+import { TicketPriorityFilter, useTicketPriorityFilter } from '../../filters/TicketPriorityFilter'
+import { TicketStatusFilter, useTicketStatusFilter } from '../../filters/TicketStatusFilter'
 import { DeleteTicketModal } from '../../modals/DeleteTicketModal'
 import { EditTicketModal } from '../../modals/EditTicketModal'
 import { Notifications } from '../../Notifications'
@@ -14,6 +16,10 @@ export const ManagerDashboard = () => {
   const { replace } = useRouter()
   const { data: session } = useSession()
   const { setHeader, setSubHeader } = usePanelLayoutStore()
+  const statuses = useTicketStatusFilter((state) => state.statuses)
+  const priorities = useTicketPriorityFilter((state) => state.priorities)
+  const getStatusesAsPayload = useTicketStatusFilter((state) => state.getAsPayload)
+  const getPrioritiesAsPayload = useTicketPriorityFilter((state) => state.getAsPayload)
 
   useEffect(() => {
     setHeader('Dashboard')
@@ -31,12 +37,20 @@ export const ManagerDashboard = () => {
       </Head>
       <div className="mx-auto w-full space-y-6">
         <div className="flex flex-row gap-6 lg:flex-col">
-          <Card title="Project Status Table" className="flex max-h-155 flex-1 flex-col">
+          <Card title="Tickets" className="flex max-h-155 flex-1 flex-col">
+            <div className="ml-auto mb-5 flex flex-wrap gap-3">
+              <TicketStatusFilter />
+              <TicketPriorityFilter />
+            </div>
             {session && session.user.userType.department ? (
               <DataTable
                 columns={ManagerTicketsTableColumns}
                 dataEndpoint={`/v1/departments/${session?.user.userType.department.id}/tickets`}
-                tableQueryKey={['tickets']}
+                dataParams={{
+                  ...getStatusesAsPayload(),
+                  ...getPrioritiesAsPayload(),
+                }}
+                tableQueryKey={['tickets', ...statuses, ...priorities]}
                 ofString="Projects"
                 rowOnClick={({ original: { id } }) => replace(`/ticket/${id}`)}
               />
