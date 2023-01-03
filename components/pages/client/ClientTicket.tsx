@@ -31,6 +31,7 @@ import { usePanelLayoutStore } from '../../../layouts/PanelLayout'
 import { useProjectBrief } from '../../../pages/project-brief'
 import { CreateNoteFormSchema } from '../../../schemas/CreateNoteFormSchema'
 import { useTicketAssigneeStore } from '../../../store/TicketAssigneeStore'
+import { useToastStore } from '../../../store/ToastStore'
 import { CreateNoteForm } from '../../../types/forms/CreateNoteForm.type'
 import { Icon } from '../../../types/Icon.type'
 import { Page } from '../../../types/Page.type'
@@ -60,7 +61,7 @@ export const ClientTicket = ({ ticketId }: { ticketId: number }) => {
   const duplicateTicket = useProjectBrief((state) => state.setTicket)
   const [activeTab, setActiveTab] = useState<TicketPageTabs>('description')
   const [isAddTicketAssigneeModalVisible, setAddTicketAssigneeModalVisible] = useState(false)
-
+  const { showToast } = useToastStore()
   const toggleEditTicketModal = useEditTicketModal((state) => state.toggleEditTicketModal)
   const toggleDeleteTicketModal = useDeleteTicketModal((state) => state.toggleDeleteTicketModal)
   const { toggleFileModal } = useFileModalStore()
@@ -148,6 +149,12 @@ export const ClientTicket = ({ ticketId }: { ticketId: number }) => {
     )
     if (status === 200) {
       queryClient.invalidateQueries(['notes', ticketId])
+
+      showToast({
+        type: 'success',
+        message: `Message sent successfully!`,
+      })
+
       resetForm()
     }
   }

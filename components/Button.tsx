@@ -25,7 +25,7 @@ export const Button = ({
       light
         ? 'border-1.5 border-solid border-bright-gray bg-white text-onyx'
         : 'bg-halloween-orange text-white'
-    } ${className}`}
+    } ${disabled ? 'cursor-not-allowed opacity-50' : ''} ${className}`}
     onClick={onClick}
   >
     {children}

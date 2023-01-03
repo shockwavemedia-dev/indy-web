@@ -23,6 +23,7 @@ import { StaffTicketAssigneeTableColumns } from '../../../constants/tables/Staff
 import { usePanelLayoutStore } from '../../../layouts/PanelLayout'
 import { CreateNoteFormSchema } from '../../../schemas/CreateNoteFormSchema'
 import { useTicketAssigneeStore } from '../../../store/TicketAssigneeStore'
+import { useToastStore } from '../../../store/ToastStore'
 import { CreateNoteForm } from '../../../types/forms/CreateNoteForm.type'
 import { Icon } from '../../../types/Icon.type'
 import { Page } from '../../../types/Page.type'
@@ -71,6 +72,8 @@ export const StaffTicket = ({ ticketId }: { ticketId: number }) => {
   } = useTicketAssigneeStore()
 
   const { setHeader } = usePanelLayoutStore()
+
+  const { showToast } = useToastStore()
 
   const [activeTab, setActiveTab] = useState<TicketPageTabs>('description')
 
@@ -176,6 +179,11 @@ export const StaffTicket = ({ ticketId }: { ticketId: number }) => {
     )
     if (status === 200) {
       queryClient.invalidateQueries(['notes', ticketId])
+      showToast({
+        type: 'success',
+        message: `Message sent successfully!`,
+      })
+
       resetForm()
     }
   }
