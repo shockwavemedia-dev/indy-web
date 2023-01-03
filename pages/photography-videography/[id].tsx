@@ -38,7 +38,6 @@ import PanelLayout, { usePanelLayoutStore } from '../../layouts/PanelLayout'
 import { EditPhotographyVideographyFormSchema } from '../../schemas/EditPhotographyVideographyFormSchema'
 import { useToastStore } from '../../store/ToastStore'
 import { EditPhotographyVideographyForm } from '../../types/forms/EditPhotographyVideographyForm'
-import { Page } from '../../types/Page.type'
 import { NextPageWithLayout } from '../../types/pages/NextPageWithLayout.type'
 import { Photographer } from '../../types/Photographer.type'
 import { PhotographyVideography } from '../../types/PhotographyVideography.type'
@@ -67,12 +66,7 @@ const PhotographyVideographyPage: NextPageWithLayout = () => {
   )
 
   const { data: photographers } = useQuery('photographers', async () => {
-    const {
-      data: { data },
-    } = await axios.get<{
-      data: Array<Photographer>
-      page: Page
-    }>('/v1/photographers')
+    const { data } = await axios.get<Array<Photographer>>('/v1/photographers')
 
     return data
   })
