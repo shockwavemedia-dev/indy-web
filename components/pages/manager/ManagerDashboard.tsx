@@ -1,9 +1,15 @@
+import axios from 'axios'
 import { useSession } from 'next-auth/react'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import { useQuery } from 'react-query'
+import { SingleValue } from 'react-select'
 import { ManagerTicketsTableColumns } from '../../../constants/tables/ManagerTicketsTableColumns'
 import { usePanelLayoutStore } from '../../../layouts/PanelLayout'
+import { Client } from '../../../types/Client.type'
+import { Page } from '../../../types/Page.type'
+import { SelectOption } from '../../../types/SelectOption.type'
 import { Card } from '../../Card'
 import { DataTable } from '../../DataTable'
 import { TicketPriorityFilter, useTicketPriorityFilter } from '../../filters/TicketPriorityFilter'
@@ -11,6 +17,7 @@ import { TicketStatusFilter, useTicketStatusFilter } from '../../filters/TicketS
 import { DeleteTicketModal } from '../../modals/DeleteTicketModal'
 import { EditTicketModal } from '../../modals/EditTicketModal'
 import { Notifications } from '../../Notifications'
+import { SelectNoFormik } from '../../SelectNoFormik'
 
 export const ManagerDashboard = () => {
   const { replace } = useRouter()
@@ -20,6 +27,29 @@ export const ManagerDashboard = () => {
   const priorities = useTicketPriorityFilter((state) => state.priorities)
   const getStatusesAsPayload = useTicketStatusFilter((state) => state.getAsPayload)
   const getPrioritiesAsPayload = useTicketPriorityFilter((state) => state.getAsPayload)
+  const [clientId, setClientId] = useState(-1)
+
+  const { data: clients } = useQuery('clients', async () => {
+    const {
+      data: { data },
+    } = await axios.get<{
+      data: Array<Client>
+      page: Page
+    }>('/v1/clients?size=500')
+
+    return data
+  })
+
+  const clientOptions = clients
+    ? clients.map(({ name, id }) => ({
+        label: name,
+        value: id,
+      }))
+    : []
+
+  const selectClient = (newValue: SingleValue<SelectOption<number>>) => {
+    setClientId(newValue?.value || -1)
+  }
 
   useEffect(() => {
     setHeader('Dashboard')
@@ -39,6 +69,13 @@ export const ManagerDashboard = () => {
         <div className="flex flex-row gap-6 lg:flex-col">
           <Card title="Tickets" className="flex max-h-155 flex-1 flex-col">
             <div className="ml-auto mb-5 flex flex-wrap gap-3">
+              <SelectNoFormik
+                className="!w-[15rem] rounded-md px-4"
+                onChange={selectClient}
+                placeholder="Select Client"
+                options={clientOptions}
+                value={clientOptions.find(({ value }) => value === clientId)}
+              />
               <TicketStatusFilter />
               <TicketPriorityFilter />
             </div>
