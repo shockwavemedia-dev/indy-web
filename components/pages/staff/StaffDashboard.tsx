@@ -73,8 +73,12 @@ export const StaffDashboard = () => {
               options={clientOptions}
               value={clientOptions.find(({ value }) => value === clientId)}
             />
-            <TicketStatusFilter />
-            <TicketPriorityFilter />
+            <div className="!mt-3">
+              <TicketStatusFilter />
+            </div>
+            <div className="!mt-3">
+              <TicketPriorityFilter />
+            </div>
           </div>
           <DataTable
             columns={StaffTicketsTableColumns}
