@@ -43,6 +43,7 @@ export const EditSocialMediaBoostModal = () => {
 
       if (status === 200) {
         queryClient.invalidateQueries('socialMedias')
+        queryClient.invalidateQueries('social-media-calendar')
         toggleEditSocialMediaBoostModal()
         showToast({
           type: 'success',
