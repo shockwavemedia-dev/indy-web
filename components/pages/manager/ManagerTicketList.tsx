@@ -11,6 +11,7 @@ import { Client } from '../../../types/Client.type'
 import { Page } from '../../../types/Page.type'
 import { SelectOption } from '../../../types/SelectOption.type'
 import { Card } from '../../Card'
+import { CheckboxNoFormik } from '../../CheckboxNoFormik'
 import { DataTable } from '../../DataTable'
 import { TicketPriorityFilter, useTicketPriorityFilter } from '../../filters/TicketPriorityFilter'
 import { TicketStatusFilter, useTicketStatusFilter } from '../../filters/TicketStatusFilter'
@@ -34,6 +35,8 @@ export const ManagerTicketList = ({
   const [clientId, setClientId] = useState(-1)
   const getStatusesAsPayload = useTicketStatusFilter((state) => state.getAsPayload)
   const getPrioritiesAsPayload = useTicketPriorityFilter((state) => state.getAsPayload)
+  const [hideClosed, setHideClosed] = useState(false)
+  const toggleHideClosedTicket = () => setHideClosed(!hideClosed)
 
   const { data: clients } = useQuery('clients', async () => {
     const {
@@ -90,6 +93,15 @@ export const ManagerTicketList = ({
               <div className="!mt-3">
                 <TicketPriorityFilter />
               </div>
+              {!isPendingJobs && !isNewJobs && (
+                <div className="!mt-3">
+                  <CheckboxNoFormik
+                    label="Hide Closed Ticket"
+                    onChange={toggleHideClosedTicket}
+                    checked={hideClosed}
+                  />
+                </div>
+              )}
             </div>
             {session && session.user.userType.department ? (
               <DataTable
@@ -104,8 +116,10 @@ export const ManagerTicketList = ({
                 dataParams={{
                   ...getStatusesAsPayload(),
                   ...getPrioritiesAsPayload(),
+                  client_id: clientId !== -1 ? clientId : '',
+                  hide_closed: hideClosed,
                 }}
-                tableQueryKey={['tickets', ...statuses, ...priorities]}
+                tableQueryKey={['tickets', ...statuses, ...priorities, clientId, hideClosed]}
                 ofString="Projects"
                 rowOnClick={({ original: { id } }) => replace(`/ticket/${id}`)}
               />
