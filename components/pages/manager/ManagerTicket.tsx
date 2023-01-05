@@ -40,6 +40,7 @@ import { TicketChat } from '../../../types/TicketChat.type'
 import { TicketFileVersion } from '../../../types/TicketFileVersion.type'
 import { TicketNote } from '../../../types/TicketNote.type'
 import { TicketPageTabs } from '../../../types/TicketPageTabs.type'
+import { TicketStyleGuideComment } from '../../../types/TicketStyleGuideComment.type'
 import { objectWithFileToFormData } from '../../../utils/FormHelpers'
 import { FileBrowser } from '../../FileBrowser'
 import { FileDisplay } from '../../FileDisplay'
@@ -59,6 +60,7 @@ import { Pill } from '../../Pill'
 import { TicketActivityCard } from '../../tickets/TicketActivityCard'
 import { TicketChatCard } from '../../tickets/TicketChatCard'
 import { TicketNoteCard } from '../../tickets/TicketNoteCard'
+import { TicketStyleGuideCommentCard } from '../../tickets/TicketStyleGuideCommentCard'
 export const ManagerTicket = ({ ticketId }: { ticketId: number }) => {
   const [activeTab, setActiveTab] = useState<TicketPageTabs>('description')
   const [isAddTicketAssigneeModalVisible, setAddTicketAssigneeModalVisible] = useState(false)
@@ -105,6 +107,23 @@ export const ManagerTicket = ({ ticketId }: { ticketId: number }) => {
     },
     {
       enabled: activeTab === 'notes',
+    }
+  )
+
+  const { data: styleGuideComments } = useQuery(
+    ['styleGuideComments', ticketId],
+    async () => {
+      const {
+        data: { data },
+      } = await axios.get<{
+        data: Array<TicketStyleGuideComment>
+        page: Page
+      }>(`/v1/tickets/${ticketId}/style-guide-comments`)
+
+      return data
+    },
+    {
+      enabled: activeTab === 'style_guide',
     }
   )
 
@@ -532,7 +551,15 @@ export const ManagerTicket = ({ ticketId }: { ticketId: number }) => {
           />
           {activeTab === 'style_guide' && (
             <div>
-              <Card>{ticket.styleGuide && <RichTextDisplay value={ticket!.styleGuide} />}</Card>
+              <Card className="mb-14">
+                {ticket.styleGuide && <RichTextDisplay value={ticket!.styleGuide} />}
+              </Card>
+              <div className="mb-6 text-xl font-semibold text-onyx">Comments</div>
+
+              <TicketStyleGuideCommentCard
+                styleGuideComments={styleGuideComments}
+                ticketId={ticket.id}
+              />
             </div>
           )}
           {activeTab === 'description' && (
