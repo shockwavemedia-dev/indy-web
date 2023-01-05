@@ -7,7 +7,14 @@ import { Dropdown } from '../Dropdown'
 import { CaretIcon } from '../icons/CaretIcon'
 import { FilterIcon } from '../icons/FilterIcon'
 
-const statusList: Array<TicketStatus> = ['closed', 'new', 'pending', 'open', 'deleted']
+const statusList: Array<TicketStatus> = [
+  'closed',
+  'deleted',
+  'in_progress',
+  'new',
+  'open',
+  'pending',
+]
 
 export const useTicketStatusFilter = create(
   combine(
@@ -43,17 +50,17 @@ export const TicketStatusFilter = () => {
       <CheckboxNoFormik
         key={`${statusId}-${s}`}
         checked={statuses.includes(s)}
-        label={s}
+        label={s && s.toString().replace(/_/, ' ')}
         onChange={() => toggleStatus(s)}
-        className="capitalize"
+        className="w-30 capitalize"
       />
     )),
-    <CheckboxNoFormik
-      key={`${statusId}-show_overdue`}
-      checked={statuses.includes('show_overdue')}
-      label={'Overdue'}
-      onChange={() => toggleStatus('show_overdue')}
-    />,
+    // <CheckboxNoFormik
+    //   key={`${statusId}-show_overdue`}
+    //   checked={statuses.includes('show_overdue')}
+    //   label={'Overdue'}
+    //   onChange={() => toggleStatus('show_overdue')}
+    // />,
   ]
 
   return (

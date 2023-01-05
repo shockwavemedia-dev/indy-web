@@ -6,8 +6,10 @@ import { useEffect, useState } from 'react'
 import { ClientTicketsTableColumns } from '../../../constants/tables/ClientTicketsTableColumns'
 import { usePanelLayoutStore } from '../../../layouts/PanelLayout'
 import { Card } from '../../Card'
+import { CheckboxNoFormik } from '../../CheckboxNoFormik'
 import { DataTable } from '../../DataTable'
 import { DateInputNoFormik } from '../../DateInputNoFormik'
+import { TicketPriorityFilter, useTicketPriorityFilter } from '../../filters/TicketPriorityFilter'
 import { TicketStatusFilter, useTicketStatusFilter } from '../../filters/TicketStatusFilter'
 import { TicketTypeFilter, useTicketTypeFilter } from '../../filters/TicketTypeFilter'
 import { DeleteTicketModal } from '../../modals/DeleteTicketModal'
@@ -16,7 +18,13 @@ import { Notifications } from '../../Notifications'
 import { RetainerInclusions } from '../../RetainerInclusions'
 import { TextInputNoFormik } from '../../TextInputNoFormik'
 
-export const ClientDashboard = () => {
+export const ClientDashboard = ({
+  isPendingJobs = false,
+  isNewJobs = false,
+}: {
+  isPendingJobs: boolean
+  isNewJobs: boolean
+}) => {
   const { replace } = useRouter()
   const { data: session } = useSession()
   const { setHeader, setSubHeader } = usePanelLayoutStore()
@@ -29,6 +37,10 @@ export const ClientDashboard = () => {
   const types = useTicketTypeFilter((state) => state.types)
   const getStatusesAsPayload = useTicketStatusFilter((state) => state.getAsPayload)
   const getTypesAsPayload = useTicketTypeFilter((state) => state.getAsPayload)
+  const priorities = useTicketPriorityFilter((state) => state.priorities)
+  const getPrioritiesAsPayload = useTicketPriorityFilter((state) => state.getAsPayload)
+  const [hideClosed, setHideClosed] = useState(false)
+  const toggleHideClosedTicket = () => setHideClosed(!hideClosed)
 
   useEffect(() => {
     setHeader(`${session?.user.userType.client.name} Dashboard`)
@@ -50,7 +62,13 @@ export const ClientDashboard = () => {
             <div className="absolute top-6 right-6 flex space-x-3"></div>
             <DataTable
               columns={ClientTicketsTableColumns}
-              dataEndpoint={`/v1/clients/${session?.user.userType.client.id}/tickets`}
+              dataEndpoint={
+                isPendingJobs
+                  ? `/v1/clients/${session?.user.userType.client.id}/tickets?statuses[0]=pending`
+                  : isNewJobs
+                  ? `/v1/clients/${session?.user.userType.client.id}/tickets?statuses[0]=new`
+                  : `/v1/clients/${session?.user.userType.client.id}/tickets`
+              }
               tableQueryKey={[
                 'tickets',
                 ...statuses.filter((s) => s !== 'show_overdue'),
@@ -59,6 +77,8 @@ export const ClientDashboard = () => {
                 codePayload,
                 duedate ? format(duedate, 'dd/MM/yyyy') : '',
                 { showOverdue: statuses.some((s) => s === 'show_overdue') },
+                ...priorities,
+                hideClosed,
               ]}
               ofString="Projects"
               dataParams={{
@@ -68,6 +88,8 @@ export const ClientDashboard = () => {
                 code: codePayload,
                 duedate: duedate ? format(duedate, 'dd/MM/yyyy') : '',
                 show_overdue: statuses.some((s) => s === 'show_overdue'),
+                ...getPrioritiesAsPayload(),
+                hide_closed: hideClosed,
               }}
               rowOnClick={({ original: { id } }) => replace(`/ticket/${id}`)}
               tableActions={
@@ -101,7 +123,13 @@ export const ClientDashboard = () => {
                     slim
                   />
                   <TicketTypeFilter />
-                  <TicketStatusFilter />
+                  {!isPendingJobs && !isNewJobs && <TicketStatusFilter />}
+                  <TicketPriorityFilter />
+                  <CheckboxNoFormik
+                    label="Hide Closed Ticket"
+                    onChange={toggleHideClosedTicket}
+                    checked={hideClosed}
+                  />
                 </>
               }
             />

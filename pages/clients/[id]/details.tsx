@@ -5,8 +5,13 @@ import { useRouter } from 'next/router'
 import { ReactElement, useState } from 'react'
 import { useQuery } from 'react-query'
 import { Card } from '../../../components/Card'
+import { CheckboxNoFormik } from '../../../components/CheckboxNoFormik'
 import { DataTable } from '../../../components/DataTable'
 import { DateInputNoFormik } from '../../../components/DateInputNoFormik'
+import {
+  TicketPriorityFilter,
+  useTicketPriorityFilter,
+} from '../../../components/filters/TicketPriorityFilter'
 import {
   TicketStatusFilter,
   useTicketStatusFilter,
@@ -51,6 +56,10 @@ const ClientDetails: NextPageWithLayout = () => {
   const types = useTicketTypeFilter((state) => state.types)
   const getStatusesAsPayload = useTicketStatusFilter((state) => state.getAsPayload)
   const getTypesAsPayload = useTicketTypeFilter((state) => state.getAsPayload)
+  const priorities = useTicketPriorityFilter((state) => state.priorities)
+  const getPrioritiesAsPayload = useTicketPriorityFilter((state) => state.getAsPayload)
+  const [hideClosed, setHideClosed] = useState(false)
+  const toggleHideClosedTicket = () => setHideClosed(!hideClosed)
 
   const { data } = useQuery(['clients', Number(id)], async () => {
     const { data } = await axios.get<Client>(`/v1/clients/${id}`)
@@ -141,6 +150,12 @@ const ClientDetails: NextPageWithLayout = () => {
           />
           <TicketTypeFilter />
           <TicketStatusFilter />
+          <TicketPriorityFilter />
+          <CheckboxNoFormik
+            label="Hide Closed Ticket"
+            onChange={toggleHideClosedTicket}
+            checked={hideClosed}
+          />
         </div>
         <DataTable
           columns={AdminTicketsTableColumns}
@@ -154,6 +169,8 @@ const ClientDetails: NextPageWithLayout = () => {
             codePayload,
             duedate ? format(duedate, 'dd/MM/yyyy') : '',
             { showOverdue: statuses.some((s) => s === 'show_overdue') },
+            ...priorities,
+            hideClosed,
           ]}
           ofString="Tickets"
           dataParams={{
@@ -163,6 +180,8 @@ const ClientDetails: NextPageWithLayout = () => {
             code: codePayload,
             duedate: duedate ? format(duedate, 'dd/MM/yyyy') : '',
             show_overdue: statuses.some((s) => s === 'show_overdue'),
+            ...getPrioritiesAsPayload(),
+            hide_closed: hideClosed,
           }}
           rowOnClick={({ original: { id } }) => replace(`/ticket/${id}`)}
         />

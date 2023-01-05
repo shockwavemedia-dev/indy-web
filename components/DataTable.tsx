@@ -19,7 +19,7 @@ export const DataTable = <T extends Record<string, unknown>>({
   initialState,
   controlledSort = false,
 }: {
-  tableQueryKey: Array<string | number | Record<string, unknown>>
+  tableQueryKey: Array<string | number | boolean | Record<string, unknown>>
   dataEndpoint: string
   dataParams?: Record<string, string | number | boolean>
   columns: Array<Column<T>>

@@ -17,9 +17,9 @@ const MyTicketPage: NextPageWithLayout = () => {
   const page = useMemo(() => {
     if (!!session) {
       if (session.isManager || session.isSocialMediaManager) {
-        return <ManagerTicketList />
+        return <ManagerTicketList isPendingJobs={false} isNewJobs={false} />
       } else if (session.isStaff || session.isSocialMediaStaff) {
-        return <StaffTicketList />
+        return <StaffTicketList isPendingJobs={false} isNewJobs={false} />
       }
     }
 

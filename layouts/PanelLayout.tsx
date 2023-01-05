@@ -1,4 +1,4 @@
-import { Tooltip } from '@mui/material'
+import { Link, Tooltip } from '@mui/material'
 import axios from 'axios'
 import { signOut as nextAuthSignOut, useSession } from 'next-auth/react'
 import Image from 'next/image'
@@ -270,7 +270,7 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
       <div className="fixed z-30 flex w-full items-center bg-white py-1 px-6 shadow-md">
         <div className="mr-102 whitespace-nowrap font-semibold text-onyx lg:mr-32">Indy</div>
         <IndyIcon className="m-0 ml-auto -mr-20 scale-50 p-0" />
-        {session.isStaff || session.isPrinterManager ? (
+        {session.isSocialMediaStaff || session.isPrinterManager ? (
           <div className="relative p-1">
             <button
               className="group relative"
@@ -311,16 +311,30 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
         <div>
           {!session.isAdmin && (
             <div className="mb-5 grid grid-cols-3 grid-rows-1 gap-2 px-6 transition-all 2xl:grid-cols-1 2xl:grid-rows-3 2xl:px-2 2xl:pt-6 2xl:group-hover:grid-cols-3 2xl:group-hover:grid-rows-1 2xl:group-hover:px-6 2xl:group-hover:pt-4">
-              <TicketsAndNotifacationsCountCard
-                isLoading={ticketsAndNotifacationsCountIsLoading}
-                value={ticketsAndNotifacationsCount?.openTicketCount}
-                description="Pending Jobs"
-              />
-              <TicketsAndNotifacationsCountCard
-                isLoading={ticketsAndNotifacationsCountIsLoading}
-                value={ticketsAndNotifacationsCount?.newTicketCount}
-                description="New Jobs"
-              />
+              <Link
+                style={{ textDecoration: 'none', color: 'white' }}
+                href="/pending-jobs"
+                target="_self"
+              >
+                <TicketsAndNotifacationsCountCard
+                  isLoading={ticketsAndNotifacationsCountIsLoading}
+                  value={ticketsAndNotifacationsCount?.openTicketCount}
+                  description="Pending Jobs"
+                  className="cursor-pointer"
+                />
+              </Link>
+              <Link
+                style={{ textDecoration: 'none', color: 'white' }}
+                href="/new-jobs"
+                target="_self"
+              >
+                <TicketsAndNotifacationsCountCard
+                  isLoading={ticketsAndNotifacationsCountIsLoading}
+                  value={ticketsAndNotifacationsCount?.newTicketCount}
+                  description="New Jobs"
+                  className="cursor-pointer"
+                />
+              </Link>
               <TicketsAndNotifacationsCountCard
                 isLoading={ticketsAndNotifacationsCountIsLoading}
                 value={ticketsAndNotifacationsCount?.newNotificationCount}
@@ -433,7 +447,7 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
       </div>
       {session.isClient && <CreateSupportRequestModal />}
       {session.isManager && <CreateSupportTicketModal />}
-      {(session.isStaff || session.isPrinterManager) && <SocialMediaNotificationModal />}
+      {(session.isSocialMediaStaff || session.isPrinterManager) && <SocialMediaNotificationModal />}
       <DashboadVideoModal />
       <ProjectBriefVideoModal />
     </>
