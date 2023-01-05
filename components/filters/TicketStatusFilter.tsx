@@ -9,11 +9,11 @@ import { FilterIcon } from '../icons/FilterIcon'
 
 const statusList: Array<TicketStatus> = [
   'closed',
-  'new',
-  'pending',
-  'open',
   'deleted',
   'in_progress',
+  'new',
+  'open',
+  'pending',
 ]
 
 export const useTicketStatusFilter = create(
@@ -55,12 +55,12 @@ export const TicketStatusFilter = () => {
         className="w-30 capitalize"
       />
     )),
-    <CheckboxNoFormik
-      key={`${statusId}-show_overdue`}
-      checked={statuses.includes('show_overdue')}
-      label={'Overdue'}
-      onChange={() => toggleStatus('show_overdue')}
-    />,
+    // <CheckboxNoFormik
+    //   key={`${statusId}-show_overdue`}
+    //   checked={statuses.includes('show_overdue')}
+    //   label={'Overdue'}
+    //   onChange={() => toggleStatus('show_overdue')}
+    // />,
   ]
 
   return (

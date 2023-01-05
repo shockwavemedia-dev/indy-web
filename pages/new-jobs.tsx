@@ -20,7 +20,7 @@ const NewJobsPage: NextPageWithLayout = () => {
   const page = useMemo(() => {
     if (!!session) {
       if (session.isManager) {
-        return <ManagerDashboard isPendingJobs={true} isNewJobs={false} />
+        return <ManagerDashboard isPendingJobs={false} isNewJobs={true} />
       } else if (session.isStaff) {
         return <StaffDashboard isPendingJobs={false} isNewJobs={true} />
       } else if (session.isSocialMediaManager) {

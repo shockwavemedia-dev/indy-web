@@ -15,8 +15,10 @@ import { CheckboxNoFormik } from '../../CheckboxNoFormik'
 import { DataTable } from '../../DataTable'
 import { TicketPriorityFilter, useTicketPriorityFilter } from '../../filters/TicketPriorityFilter'
 import { TicketStatusFilter, useTicketStatusFilter } from '../../filters/TicketStatusFilter'
+import { TicketTypeFilter, useTicketTypeFilter } from '../../filters/TicketTypeFilter'
 import { Notifications } from '../../Notifications'
 import { SelectNoFormik } from '../../SelectNoFormik'
+import { TextInputNoFormik } from '../../TextInputNoFormik'
 
 export const StaffDashboard = ({
   isPendingJobs = false,
@@ -31,9 +33,15 @@ export const StaffDashboard = ({
   const statuses = useTicketStatusFilter((state) => state.statuses)
   const priorities = useTicketPriorityFilter((state) => state.priorities)
   const [clientId, setClientId] = useState(-1)
+  const [hideClosed, setHideClosed] = useState(false)
+  const [subject, setSubject] = useState('')
+  const [subjectPayload, setSubjectPayload] = useState('')
+  const [code, setCode] = useState('')
+  const [codePayload, setCodePayload] = useState('')
+  const types = useTicketTypeFilter((state) => state.types)
+  const getTypesAsPayload = useTicketTypeFilter((state) => state.getAsPayload)
   const getStatusesAsPayload = useTicketStatusFilter((state) => state.getAsPayload)
   const getPrioritiesAsPayload = useTicketPriorityFilter((state) => state.getAsPayload)
-  const [hideClosed, setHideClosed] = useState(false)
   const toggleHideClosedTicket = () => setHideClosed(!hideClosed)
 
   const { data: clients } = useQuery('clients', async () => {
@@ -54,6 +62,11 @@ export const StaffDashboard = ({
       }))
     : []
 
+  const allClient = {
+    label: 'All Client',
+    value: -1,
+  }
+
   const selectClient = (newValue: SingleValue<SelectOption<number>>) => {
     setClientId(newValue?.value || -1)
   }
@@ -65,7 +78,7 @@ export const StaffDashboard = ({
     return () => {
       setSubHeader('')
     }
-  }, [])
+  }, [isPendingJobs, isNewJobs])
 
   return (
     <>
@@ -74,24 +87,51 @@ export const StaffDashboard = ({
       </Head>
       <div className="mx-auto flex w-full gap-6 lg:flex-col">
         <Card title="Tickets" className="flex max-h-155 flex-1 flex-col">
-          <div className="ml-auto mb-5 flex flex-wrap gap-3">
+          <div className=" mb-5 flex flex-wrap gap-3">
             <SelectNoFormik
-              className="!w-[15rem] rounded-md px-4"
+              className="!w-[15rem] rounded-md px-2"
               onChange={selectClient}
               placeholder="Select Client"
-              options={clientOptions}
+              options={[allClient, ...clientOptions]}
               value={clientOptions.find(({ value }) => value === clientId)}
             />
+            <div className="!mt-3">
+              <TextInputNoFormik
+                name="code"
+                placeholder="Search by Code"
+                type="text"
+                className="w-[8.25rem]"
+                onChange={setCode}
+                onEnter={() => setCodePayload(code)}
+                onBlur={() => setCodePayload(code)}
+                slim
+              />
+            </div>
+            <div className="!mt-3">
+              <TextInputNoFormik
+                name="subject"
+                placeholder="Search by Subject"
+                type="text"
+                className="w-[9rem]"
+                onChange={setSubject}
+                onEnter={() => setSubjectPayload(subject)}
+                onBlur={() => setSubjectPayload(subject)}
+                slim
+              />
+            </div>
+            <div className="!mt-4">
+              <TicketTypeFilter />
+            </div>
             {!isPendingJobs && !isNewJobs && (
-              <div className="!mt-3">
+              <div className="!mt-4">
                 <TicketStatusFilter />
               </div>
             )}
-            <div className="!mt-3">
+            <div className="!mt-4">
               <TicketPriorityFilter />
             </div>
             {!isPendingJobs && !isNewJobs && (
-              <div className="!mt-3">
+              <div className="!mt-4">
                 <CheckboxNoFormik
                   label="Hide Closed Ticket"
                   onChange={toggleHideClosedTicket}
@@ -110,12 +150,25 @@ export const StaffDashboard = ({
                 : `/v1/my-tickets`
             }
             dataParams={{
+              ...getTypesAsPayload(),
               ...getStatusesAsPayload(),
+              subject: subjectPayload,
+              code: codePayload,
               ...getPrioritiesAsPayload(),
               client_id: clientId !== -1 ? clientId : '',
               hide_closed: hideClosed,
             }}
-            tableQueryKey={['tickets', ...statuses, ...priorities, clientId, hideClosed]}
+            tableQueryKey={[
+              'tickets',
+              ...statuses,
+              ...types,
+              subjectPayload,
+              codePayload,
+              { showOverdue: statuses.some((s) => s === 'show_overdue') },
+              ...priorities,
+              clientId,
+              hideClosed,
+            ]}
             ofString="Projects"
             rowOnClick={({ original: { id } }) => replace(`/ticket/${id}`)}
           />
