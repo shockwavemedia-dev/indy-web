@@ -15,11 +15,11 @@ const DashboardPage: NextPageWithLayout = () => {
   const page = useMemo(() => {
     if (!!session) {
       if (session.isClient) {
-        return <ClientDashboard />
+        return <ClientDashboard isPendingJobs={false} isNewJobs={false} />
       } else if (session.isManager) {
-        return <ManagerDashboard />
+        return <ManagerDashboard isPendingJobs={false} isNewJobs={false} />
       } else if (session.isStaff) {
-        return <StaffDashboard />
+        return <StaffDashboard isPendingJobs={false} isNewJobs={false} />
       } else if (session.isPrinterManager) {
         return <PrinterManagerPrinterJobsPage />
       } else if (session.isSocialMediaManager) {
