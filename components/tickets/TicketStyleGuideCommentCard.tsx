@@ -89,7 +89,7 @@ export const TicketStyleGuideCommentCard = ({
           </div>
         ))
       ) : (
-        <div className=" text-xs text-metallic-silver">No attachment to display.</div>
+        <div className=" text-xs text-metallic-silver">No comments to display.</div>
       )}
       <Formik
         validationSchema={CreateStyleGuideCommentFormSchema}
