@@ -15,7 +15,7 @@ const DashboardPage: NextPageWithLayout = () => {
   const page = useMemo(() => {
     if (!!session) {
       if (session.isClient) {
-        return <ClientDashboard />
+        return <ClientDashboard isPendingJobs={false} isNewJobs={false} />
       } else if (session.isManager) {
         return <ManagerDashboard isPendingJobs={false} isNewJobs={false} />
       } else if (session.isStaff) {

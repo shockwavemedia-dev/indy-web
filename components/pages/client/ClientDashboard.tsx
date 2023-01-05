@@ -16,7 +16,13 @@ import { Notifications } from '../../Notifications'
 import { RetainerInclusions } from '../../RetainerInclusions'
 import { TextInputNoFormik } from '../../TextInputNoFormik'
 
-export const ClientDashboard = () => {
+export const ClientDashboard = ({
+  isPendingJobs = false,
+  isNewJobs = false,
+}: {
+  isPendingJobs: boolean
+  isNewJobs: boolean
+}) => {
   const { replace } = useRouter()
   const { data: session } = useSession()
   const { setHeader, setSubHeader } = usePanelLayoutStore()
@@ -50,7 +56,13 @@ export const ClientDashboard = () => {
             <div className="absolute top-6 right-6 flex space-x-3"></div>
             <DataTable
               columns={ClientTicketsTableColumns}
-              dataEndpoint={`/v1/clients/${session?.user.userType.client.id}/tickets`}
+              dataEndpoint={
+                isPendingJobs
+                  ? `/v1/clients/${session?.user.userType.client.id}/tickets?statuses[0]=pending`
+                  : isNewJobs
+                  ? `/v1/clients/${session?.user.userType.client.id}/tickets?statuses[0]=new`
+                  : `/v1/clients/${session?.user.userType.client.id}/tickets`
+              }
               tableQueryKey={[
                 'tickets',
                 ...statuses.filter((s) => s !== 'show_overdue'),
@@ -101,7 +113,7 @@ export const ClientDashboard = () => {
                     slim
                   />
                   <TicketTypeFilter />
-                  <TicketStatusFilter />
+                  {!isPendingJobs && !isNewJobs && <TicketStatusFilter />}
                 </>
               }
             />

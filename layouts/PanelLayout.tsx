@@ -311,7 +311,11 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
         <div>
           {!session.isAdmin && (
             <div className="mb-5 grid grid-cols-3 grid-rows-1 gap-2 px-6 transition-all 2xl:grid-cols-1 2xl:grid-rows-3 2xl:px-2 2xl:pt-6 2xl:group-hover:grid-cols-3 2xl:group-hover:grid-rows-1 2xl:group-hover:px-6 2xl:group-hover:pt-4">
-              <Link style={{ textDecoration: 'none', color: 'white' }} href="/pending-jobs">
+              <Link
+                style={{ textDecoration: 'none', color: 'white' }}
+                href="/pending-jobs"
+                target="_self"
+              >
                 <TicketsAndNotifacationsCountCard
                   isLoading={ticketsAndNotifacationsCountIsLoading}
                   value={ticketsAndNotifacationsCount?.openTicketCount}
@@ -319,7 +323,11 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
                   className="cursor-pointer"
                 />
               </Link>
-              <Link style={{ textDecoration: 'none', color: 'white' }} href="/new-jobs">
+              <Link
+                style={{ textDecoration: 'none', color: 'white' }}
+                href="/new-jobs"
+                target="_self"
+              >
                 <TicketsAndNotifacationsCountCard
                   isLoading={ticketsAndNotifacationsCountIsLoading}
                   value={ticketsAndNotifacationsCount?.newTicketCount}

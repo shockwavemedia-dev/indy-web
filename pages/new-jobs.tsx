@@ -1,5 +1,6 @@
 import { useSession } from 'next-auth/react'
 import { ReactElement, useEffect, useMemo } from 'react'
+import { ClientDashboard } from '../components/pages/client/ClientDashboard'
 import { ManagerDashboard } from '../components/pages/manager/ManagerDashboard'
 import { ManagerTicketList } from '../components/pages/manager/ManagerTicketList'
 import { StaffDashboard } from '../components/pages/staff/StaffDashboard'
@@ -11,7 +12,7 @@ const NewJobsPage: NextPageWithLayout = () => {
   const { setHeader } = usePanelLayoutStore()
 
   useEffect(() => {
-    setHeader('Ticket')
+    setHeader('New Jobs')
   }, [])
 
   const { data: session } = useSession()
@@ -26,6 +27,8 @@ const NewJobsPage: NextPageWithLayout = () => {
         return <ManagerTicketList isPendingJobs={false} isNewJobs={true} />
       } else if (session.isSocialMediaStaff) {
         return <StaffTicketList isPendingJobs={false} isNewJobs={true} />
+      } else if (session.isClient) {
+        return <ClientDashboard isPendingJobs={false} isNewJobs={true} />
       }
     }
 
