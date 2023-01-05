@@ -270,7 +270,7 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
       <div className="fixed z-30 flex w-full items-center bg-white py-1 px-6 shadow-md">
         <div className="mr-102 whitespace-nowrap font-semibold text-onyx lg:mr-32">Indy</div>
         <IndyIcon className="m-0 ml-auto -mr-20 scale-50 p-0" />
-        {session.isStaff || session.isPrinterManager ? (
+        {session.isSocialMediaStaff || session.isPrinterManager ? (
           <div className="relative p-1">
             <button
               className="group relative"
@@ -439,7 +439,7 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
       </div>
       {session.isClient && <CreateSupportRequestModal />}
       {session.isManager && <CreateSupportTicketModal />}
-      {(session.isStaff || session.isPrinterManager) && <SocialMediaNotificationModal />}
+      {(session.isSocialMediaStaff || session.isPrinterManager) && <SocialMediaNotificationModal />}
       <DashboadVideoModal />
       <ProjectBriefVideoModal />
     </>

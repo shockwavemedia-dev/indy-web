@@ -19,7 +19,13 @@ import { EditTicketModal } from '../../modals/EditTicketModal'
 import { Notifications } from '../../Notifications'
 import { SelectNoFormik } from '../../SelectNoFormik'
 
-export const ManagerTicketList = () => {
+export const ManagerTicketList = ({
+  isPendingJobs = false,
+  isNewJobs = false,
+}: {
+  isPendingJobs: boolean
+  isNewJobs: boolean
+}) => {
   const { replace } = useRouter()
   const { data: session } = useSession()
   const { setHeader, setSubHeader } = usePanelLayoutStore()
@@ -76,9 +82,11 @@ export const ManagerTicketList = () => {
                 options={clientOptions}
                 value={clientOptions.find(({ value }) => value === clientId)}
               />
-              <div className="!mt-3">
-                <TicketStatusFilter />
-              </div>
+              {!isPendingJobs && !isNewJobs && (
+                <div className="!mt-3">
+                  <TicketStatusFilter />
+                </div>
+              )}
               <div className="!mt-3">
                 <TicketPriorityFilter />
               </div>
@@ -86,7 +94,13 @@ export const ManagerTicketList = () => {
             {session && session.user.userType.department ? (
               <DataTable
                 columns={ManagerTicketsTableColumns}
-                dataEndpoint={`/v1/departments/${session?.user.userType.department.id}/tickets`}
+                dataEndpoint={
+                  isPendingJobs
+                    ? `/v1/departments/${session?.user.userType.department.id}/tickets?statuses[0]=pending`
+                    : isNewJobs
+                    ? `/v1/departments/${session?.user.userType.department.id}/tickets?statuses[0]=new`
+                    : `/v1/departments/${session?.user.userType.department.id}/tickets`
+                }
                 dataParams={{
                   ...getStatusesAsPayload(),
                   ...getPrioritiesAsPayload(),
