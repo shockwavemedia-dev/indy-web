@@ -19,7 +19,7 @@ const DashboardPage: NextPageWithLayout = () => {
       } else if (session.isManager) {
         return <ManagerDashboard />
       } else if (session.isStaff) {
-        return <StaffDashboard />
+        return <StaffDashboard isPendingJobs={false} isNewJobs={false} />
       } else if (session.isPrinterManager) {
         return <PrinterManagerPrinterJobsPage />
       } else if (session.isSocialMediaManager) {

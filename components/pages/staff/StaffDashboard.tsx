@@ -17,7 +17,13 @@ import { TicketStatusFilter, useTicketStatusFilter } from '../../filters/TicketS
 import { Notifications } from '../../Notifications'
 import { SelectNoFormik } from '../../SelectNoFormik'
 
-export const StaffDashboard = () => {
+export const StaffDashboard = ({
+  isPendingJobs = false,
+  isNewJobs = false,
+}: {
+  isPendingJobs: boolean
+  isNewJobs: boolean
+}) => {
   const { replace } = useRouter()
   const { data: session } = useSession()
   const { setHeader, setSubHeader } = usePanelLayoutStore()
@@ -73,16 +79,24 @@ export const StaffDashboard = () => {
               options={clientOptions}
               value={clientOptions.find(({ value }) => value === clientId)}
             />
-            <div className="!mt-3">
-              <TicketStatusFilter />
-            </div>
+            {!isPendingJobs && !isNewJobs && (
+              <div className="!mt-3">
+                <TicketStatusFilter />
+              </div>
+            )}
             <div className="!mt-3">
               <TicketPriorityFilter />
             </div>
           </div>
           <DataTable
             columns={StaffTicketsTableColumns}
-            dataEndpoint="/v1/my-tickets"
+            dataEndpoint={
+              isPendingJobs
+                ? `/v1/my-tickets?statuses[0]=pending`
+                : isNewJobs
+                ? `/v1/my-tickets?statuses[0]=new`
+                : `/v1/my-tickets`
+            }
             dataParams={{
               ...getStatusesAsPayload(),
               ...getPrioritiesAsPayload(),
