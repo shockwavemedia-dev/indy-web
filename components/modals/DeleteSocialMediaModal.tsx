@@ -4,7 +4,6 @@ import { useRouter } from 'next/router'
 import { useQuery, useQueryClient } from 'react-query'
 import create from 'zustand'
 import { combine } from 'zustand/middleware'
-import { useSocialMediaStore } from '../../store/SocialMediaStore'
 import { useToastStore } from '../../store/ToastStore'
 import { SocialMedia } from '../../types/SocialMedia.type'
 import { Button } from '../Button'
@@ -14,6 +13,7 @@ import { Modal } from '../Modal'
 import { PhotographyVideographyFileButton } from '../PhotographyVideographyFileButton'
 import { Pill } from '../Pill'
 import { TitleValue } from '../TitleValue'
+import { useEditSocialMediaModal } from './EditSocialMediaModal'
 
 export const useDeleteSocialMediaModalStore = create(
   combine(
@@ -47,7 +47,7 @@ export const DeleteSocialMediaModal = () => {
     }
   )
 
-  const toggleEditSocialMediaModal = useSocialMediaStore(
+  const toggleEditSocialMediaModal = useEditSocialMediaModal(
     (state) => state.toggleEditSocialMediaModal
   )
 
@@ -56,7 +56,7 @@ export const DeleteSocialMediaModal = () => {
       const { status } = await axios.delete(`/v1/social-media/${socialMediaId}`)
 
       if (status === 200) {
-        replace('/social-media')
+        replace('')
         queryClient.invalidateQueries(['socialMedias'])
         toggleModal()
         toggleEditSocialMediaModal()
