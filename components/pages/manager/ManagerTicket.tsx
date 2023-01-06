@@ -51,6 +51,7 @@ import { FolderIcon } from '../../icons/FolderIcon'
 import { InfoIcon } from '../../icons/InfoIcon'
 import { NotepadIcon } from '../../icons/NotepadIcon'
 import { EditTicketAssigneeModal } from '../../modals/EditTicketAssigneeModal'
+import { ReAssignTicketAssigneeModal } from '../../modals/ReAssignTicketAssigneeModal'
 import { TicketFileButton } from '../../modals/TicketFileButton'
 import {
   UploadTicketFileModal,
@@ -71,6 +72,8 @@ export const ManagerTicket = ({ ticketId }: { ticketId: number }) => {
     isDeleteTicketAssigneeModalVisible,
     toggleEditTicketAssigneeModal,
     toggleDeleteTicketAssigneeModal,
+    isReAssignTicketAssigneeModalVisible,
+    toggleReAssignTicketAssigneeModal,
   } = useTicketAssigneeStore()
   const toggleEditTicketModal = useEditTicketModal((state) => state.toggleEditTicketModal)
   const toggleDeleteTicketModal = useDeleteTicketModal((state) => state.toggleDeleteTicketModal)
@@ -680,6 +683,12 @@ export const ManagerTicket = ({ ticketId }: { ticketId: number }) => {
       </div>
       <EditTicketModal />
       <DeleteTicketModal minimal />
+      <ReAssignTicketAssigneeModal
+        isVisible={isReAssignTicketAssigneeModalVisible}
+        onClose={toggleReAssignTicketAssigneeModal}
+        ticketId={ticket!.id}
+      />
+
       <AddTicketAssigneeModal
         isVisible={isAddTicketAssigneeModalVisible}
         onClose={toggleAddTicketAssigneeModal}

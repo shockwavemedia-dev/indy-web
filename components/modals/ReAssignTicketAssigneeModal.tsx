@@ -57,12 +57,13 @@ export const ReAssignTicketAssigneeModal = ({
   const submitForm = async (values: ReAssignTicketAssigneeForm) => {
     try {
       const { status } = await axios.put(
-        `/v1/ticket-assignees/${activeTicketAssignee.ticketAssigneeId}`,
+        `/v1/ticket-assignees/${activeTicketAssignee.ticketAssigneeId}/re-assign`,
         values
       )
 
       if (status === 200) {
         queryClient.invalidateQueries(['assignees', Number(ticketId)])
+        queryClient.invalidateQueries(['ticket', Number(ticketId)])
         onClose()
         showToast({
           type: 'success',

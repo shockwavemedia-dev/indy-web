@@ -29,11 +29,12 @@ export const EditTicketAssigneeModal = ({
   const submitForm = async (values: EditTicketAssigneeForm) => {
     try {
       const { status } = await axios.put(
-        `/v1/ticket-assignees/${activeTicketAssignee.ticketAssigneeId}`,
+        `/v1/ticket-assignees/${activeTicketAssignee.ticketAssigneeId}/status`,
         values
       )
 
       if (status === 200) {
+        queryClient.invalidateQueries(['ticket', Number(ticketId)])
         queryClient.invalidateQueries(['assignees', Number(ticketId)])
         onClose()
         showToast({
