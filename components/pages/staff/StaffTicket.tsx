@@ -23,6 +23,7 @@ import { StaffTicketAssigneeTableColumns } from '../../../constants/tables/Staff
 import { usePanelLayoutStore } from '../../../layouts/PanelLayout'
 import { CreateNoteFormSchema } from '../../../schemas/CreateNoteFormSchema'
 import { useTicketAssigneeStore } from '../../../store/TicketAssigneeStore'
+import { useToastStore } from '../../../store/ToastStore'
 import { CreateNoteForm } from '../../../types/forms/CreateNoteForm.type'
 import { Icon } from '../../../types/Icon.type'
 import { Page } from '../../../types/Page.type'
@@ -32,6 +33,7 @@ import { TicketChat } from '../../../types/TicketChat.type'
 import { TicketFileVersion } from '../../../types/TicketFileVersion.type'
 import { TicketNote } from '../../../types/TicketNote.type'
 import { TicketPageTabs } from '../../../types/TicketPageTabs.type'
+import { TicketStyleGuideComment } from '../../../types/TicketStyleGuideComment.type'
 import { objectWithFileToFormData } from '../../../utils/FormHelpers'
 import { FileBrowser } from '../../FileBrowser'
 import { FileDisplay } from '../../FileDisplay'
@@ -55,7 +57,7 @@ import { Pill } from '../../Pill'
 import { TicketActivityCard } from '../../tickets/TicketActivityCard'
 import { TicketChatCard } from '../../tickets/TicketChatCard'
 import { TicketNoteCard } from '../../tickets/TicketNoteCard'
-
+import { TicketStyleGuideCommentCard } from '../../tickets/TicketStyleGuideCommentCard'
 export const StaffTicket = ({ ticketId }: { ticketId: number }) => {
   const [isAddTicketAssigneeModalVisible, setAddTicketAssigneeModalVisible] = useState(false)
   const {
@@ -71,6 +73,8 @@ export const StaffTicket = ({ ticketId }: { ticketId: number }) => {
   } = useTicketAssigneeStore()
 
   const { setHeader } = usePanelLayoutStore()
+
+  const { showToast } = useToastStore()
 
   const [activeTab, setActiveTab] = useState<TicketPageTabs>('description')
 
@@ -128,6 +132,23 @@ export const StaffTicket = ({ ticketId }: { ticketId: number }) => {
     }
   )
 
+  const { data: styleGuideComments } = useQuery(
+    ['styleGuideComments', ticketId],
+    async () => {
+      const {
+        data: { data },
+      } = await axios.get<{
+        data: Array<TicketStyleGuideComment>
+        page: Page
+      }>(`/v1/tickets/${ticketId}/style-guide-comments`)
+
+      return data
+    },
+    {
+      enabled: activeTab === 'style_guide',
+    }
+  )
+
   let unreadNotes = 0
 
   if (ticket?.userNotes) {
@@ -176,6 +197,11 @@ export const StaffTicket = ({ ticketId }: { ticketId: number }) => {
     )
     if (status === 200) {
       queryClient.invalidateQueries(['notes', ticketId])
+      showToast({
+        type: 'success',
+        message: `Message sent successfully!`,
+      })
+
       resetForm()
     }
   }
@@ -579,7 +605,15 @@ export const StaffTicket = ({ ticketId }: { ticketId: number }) => {
           )}
           {activeTab === 'style_guide' && (
             <div>
-              <Card>{ticket.styleGuide && <RichTextDisplay value={ticket!.styleGuide} />}</Card>
+              <Card className="mb-14">
+                {ticket.styleGuide && <RichTextDisplay value={ticket!.styleGuide} />}
+              </Card>
+              <div className="mb-6 text-xl font-semibold text-onyx">Comments</div>
+
+              <TicketStyleGuideCommentCard
+                styleGuideComments={styleGuideComments}
+                ticketId={ticket.id}
+              />
             </div>
           )}
           {activeTab === 'notes' && (

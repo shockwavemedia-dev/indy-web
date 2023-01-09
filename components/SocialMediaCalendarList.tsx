@@ -20,7 +20,10 @@ import { InstagramIcon } from './icons/social-medias/InstagramIcon'
 import { LinkedInIcon } from './icons/social-medias/LinkedIn'
 import { TikTokIcon } from './icons/social-medias/TikTokIcon'
 import { TwitterIcon } from './icons/social-medias/TwitterIcon'
-import { EditSocialMediaBoostModal } from './modals/EditSocialMediaBoostModal'
+import {
+  EditSocialMediaBoostModal,
+  useEditSocialMediaBoostModal,
+} from './modals/EditSocialMediaBoostModal'
 import { EditSocialMediaModal, useEditSocialMediaModal } from './modals/EditSocialMediaModal'
 import { Pill } from './Pill'
 
@@ -73,6 +76,9 @@ export const SocialMediaCalendarList = ({ clientId }: { clientId?: number }) => 
   }))
 
   const { setPostDate, toggleCreateSocialMediaModal } = useSocialMediaStore()
+  const toggleEditSocialMediaBoostModal = useEditSocialMediaBoostModal(
+    (state) => state.toggleEditSocialMediaBoostModal
+  )
 
   return (
     <>
@@ -165,13 +171,14 @@ export const SocialMediaCalendarList = ({ clientId }: { clientId?: number }) => 
 
                           return socialMedias
                             ? socialMedias.map((socialMedia) => (
-                                <button
+                                <div
                                   key={`todo-${socialMedia.id}`}
-                                  type="button"
-                                  onClick={() => toggleEditSocialMediaModal(socialMedia)}
                                   className="w-full rounded outline outline-1 outline-slate-300 transition-all hover:-translate-y-2.5 hover:shadow-md"
                                 >
-                                  <div className="flex items-center justify-between border-b border-b-slate-300 bg-slate-100 p-3">
+                                  <div
+                                    className="flex items-center justify-between border-b border-b-slate-300 bg-slate-100 p-3"
+                                    onClick={() => toggleEditSocialMediaModal(socialMedia)}
+                                  >
                                     <div className="flex flex-wrap gap-1">
                                       {socialMedia.channels?.map(
                                         (c, i) =>
@@ -207,21 +214,27 @@ export const SocialMediaCalendarList = ({ clientId }: { clientId?: number }) => 
                                         format(socialMedia.postDate, 'h:mmaaa')}
                                     </div>
                                   </div>
-                                  <div className="mb-3 flex justify-between p-3">
+                                  <div
+                                    className="mb-3 flex justify-between p-3"
+                                    onClick={() => toggleEditSocialMediaModal(socialMedia)}
+                                  >
                                     <div className="text-sm line-clamp-2">{socialMedia.post}</div>
                                     {socialMedia.attachments.length > 0 &&
-                                      socialMedia.attachments[1]?.thumbnailUrl && (
+                                      socialMedia.attachments[0]?.thumbnailUrl && (
                                         <div className="relative aspect-square h-10">
                                           <Image
-                                            src={socialMedia.attachments[1].thumbnailUrl}
-                                            alt={socialMedia.attachments[1].name}
+                                            src={socialMedia.attachments[0].thumbnailUrl}
+                                            alt={socialMedia.attachments[0].name}
                                             layout="fill"
                                             className="rounded"
                                           />
                                         </div>
                                       )}
                                   </div>
-                                  <div className="flex p-3">
+                                  <div
+                                    className="flex p-3"
+                                    onClick={() => toggleEditSocialMediaModal(socialMedia)}
+                                  >
                                     <Pill
                                       twBackgroundColor={(() => {
                                         switch (socialMedia.status) {
@@ -293,25 +306,33 @@ export const SocialMediaCalendarList = ({ clientId }: { clientId?: number }) => 
                                           </React.Fragment>
                                         }
                                       >
-                                        <button>
+                                        <button
+                                          onClick={() =>
+                                            toggleEditSocialMediaBoostModal(socialMedia)
+                                          }
+                                        >
                                           <BoostIcon className="mr-16 h-10 stroke-jungle-green transition-colors hover:stroke-halloween-orange" />
                                         </button>
                                       </HtmlTooltip>
                                     )}
+
                                     {!socialMedia.boostedChannels && (
                                       <Tooltip
                                         title="Not Boosted"
                                         placement="top"
                                         className="ml-2 h-10"
                                       >
-                                        <div>
+                                        <div
+                                          onClick={() =>
+                                            toggleEditSocialMediaBoostModal(socialMedia)
+                                          }
+                                        >
                                           <BoostOffIcon className=" stroke-gray-600 transition-colors hover:stroke-halloween-orange" />
                                         </div>
                                       </Tooltip>
                                     )}
-                                    <EditSocialMediaBoostModal />
                                   </div>
-                                </button>
+                                </div>
                               ))
                             : null
                         })()}
@@ -329,6 +350,8 @@ export const SocialMediaCalendarList = ({ clientId }: { clientId?: number }) => 
           </>
         )}
       </Card>
+
+      <EditSocialMediaBoostModal />
       <EditSocialMediaModal />
     </>
   )

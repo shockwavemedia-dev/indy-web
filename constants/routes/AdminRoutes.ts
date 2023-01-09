@@ -1,5 +1,6 @@
 import { ChartIcon } from '../../components/icons/ChartIcon'
 import { ClipboardIcon } from '../../components/icons/ClipboardIcon'
+import { DatabaseIcon } from '../../components/icons/DatabaseIcon'
 import { GearIcon } from '../../components/icons/GearIcon'
 import { MonitorIcon } from '../../components/icons/MonitorIcon'
 import { UserIcon } from '../../components/icons/UserIcon'
@@ -36,6 +37,11 @@ export const AdminRoutes: Array<Route> = [
     title: 'Services',
     Icon: GearIcon,
     pathname: '/services',
+  },
+  {
+    title: 'Data Restoration',
+    Icon: DatabaseIcon,
+    pathname: '/configuration',
   },
   {
     title: 'Providers Feature',
