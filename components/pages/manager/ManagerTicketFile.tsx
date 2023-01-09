@@ -49,12 +49,12 @@ export const ManagerTicketFile = ({ ticketFileId }: { ticketFileId: number }) =>
     <>
       {!!ticketFile && ticketFileId !== -1 && (
         <div className="mx-auto flex w-full max-w-8xl space-x-6">
-          <div className="w-140 space-y-5">
+          <div className="w-175 space-y-5">
             <div>
               <FileDisplay
                 src={ticketFile.signedUrl}
                 type={ticketFile.fileType}
-                imageSize="h-144 w-144"
+                imageSize="h-175 w-175"
                 imageAlt={ticketFile.name}
                 videoClassName="w-140 rounded-xl"
               />
