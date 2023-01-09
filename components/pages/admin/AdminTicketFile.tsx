@@ -106,7 +106,7 @@ export const AdminTicketFile = ({ ticketFileId }: { ticketFileId: number }) => {
     <>
       {!!ticketFile && ticketFileId !== -1 && (
         <div className="mx-auto flex w-full max-w-8xl space-x-6">
-          <div className="w-140 space-y-5">
+          <div className="w-175 space-y-5">
             <div>
               <FileDisplay
                 src={ticketFile.signedUrl}
