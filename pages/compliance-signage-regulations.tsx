@@ -27,7 +27,7 @@ const ComplianceSignageRegulationsPage: NextPageWithLayout = () => {
         <div className="mt-6 flex gap-6 transition-all lg:flex-col">
           <div className="flex flex-1">
             <Card className="flex">
-              <div className="mt-8 grid grid-cols-4 gap-3">
+              <div className="mt-8 grid grid-cols-5 gap-3">
                 {SignageDisplayList?.map(({ image, name }) => {
                   const downloadFile = () => {
                     const link = document.createElement('a')
