@@ -187,7 +187,7 @@ const ClientDetails: NextPageWithLayout = () => {
         />
       </Card>
       <EditTicketModal />
-      <DeleteTicketModal />
+      <DeleteTicketModal perClientTickets />
       <DeleteClientModal />
       <NewClientUserModal />
       <EditClientUserModal />
