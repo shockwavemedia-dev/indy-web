@@ -183,7 +183,7 @@ const ClientTicketsPage: NextPageWithLayout = () => {
         </div>
       </div>
       <EditTicketModal />
-      <DeleteTicketModal />
+      <DeleteTicketModal clientsTickets />
       <CreateSupportTicketModal />
     </>
   )

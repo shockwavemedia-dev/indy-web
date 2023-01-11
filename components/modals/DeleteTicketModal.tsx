@@ -29,11 +29,15 @@ export const DeleteTicketModal = ({
   graphic = false,
   animation = false,
   website = false,
+  clientsTickets = false,
+  perClientTickets = false,
 }: {
   minimal?: boolean
   graphic?: boolean
   animation?: boolean
   website?: boolean
+  clientsTickets?: boolean
+  perClientTickets?: boolean
 }) => {
   const { replace } = useRouter()
   const queryClient = useQueryClient()
@@ -103,6 +107,12 @@ export const DeleteTicketModal = ({
                       } else if (website) {
                         queryClient.invalidateQueries('websites')
                         replace('/website-services')
+                      } else if (clientsTickets) {
+                        queryClient.invalidateQueries('tickets')
+                        replace('/client-tickets')
+                      } else if (perClientTickets) {
+                        queryClient.invalidateQueries('tickets')
+                        replace(`/clients/${ticket.clientId}/details`)
                       } else {
                         queryClient.invalidateQueries('tickets')
                         replace('/dashboard')
