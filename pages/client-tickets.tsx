@@ -100,7 +100,7 @@ const ClientTicketsPage: NextPageWithLayout = () => {
   return (
     <>
       <Head>
-        <title>Indy - Visual Displays</title>
+        <title>Indy - Client Tickets</title>
       </Head>
       <div className="mx-auto w-full space-y-6">
         <div className="flex gap-6 transition-all lg:flex-col">
