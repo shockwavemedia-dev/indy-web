@@ -31,8 +31,8 @@ const ComplianceSignageRegulationsPage: NextPageWithLayout = () => {
                 {SignageDisplayList?.map(({ image, name }) => {
                   const downloadFile = () => {
                     const link = document.createElement('a')
-                    link.href = '/images/signage/Casino-gaming-signage-home-print.pdf'
-                    link.setAttribute('download', 'Casino-gaming-signage-home-print.pdf')
+                    link.href = `/images/signage/${name}`
+                    link.setAttribute('download', name)
                     document.body.appendChild(link)
                     link.click()
                     document.body.removeChild(link)
