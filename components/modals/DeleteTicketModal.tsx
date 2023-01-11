@@ -1,6 +1,5 @@
 import axios from 'axios'
 import { format } from 'date-fns'
-import { useSession } from 'next-auth/react'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { useQueryClient } from 'react-query'
@@ -30,18 +29,21 @@ export const DeleteTicketModal = ({
   graphic = false,
   animation = false,
   website = false,
+  clientsTickets = false,
+  perClientTickets = false,
 }: {
   minimal?: boolean
   graphic?: boolean
   animation?: boolean
   website?: boolean
+  clientsTickets?: boolean
+  perClientTickets?: boolean
 }) => {
   const { replace } = useRouter()
   const queryClient = useQueryClient()
   const ticket = useDeleteTicketModal((state) => state.ticket)
   const toggleDeleteTicketModal = useDeleteTicketModal((state) => state.toggleDeleteTicketModal)
   const { showToast } = useToastStore()
-  const { data: session } = useSession()
 
   return (
     <>
@@ -105,9 +107,12 @@ export const DeleteTicketModal = ({
                       } else if (website) {
                         queryClient.invalidateQueries('websites')
                         replace('/website-services')
-                      } else if (session && session.isAdmin) {
+                      } else if (clientsTickets) {
                         queryClient.invalidateQueries('tickets')
                         replace('/client-tickets')
+                      } else if (perClientTickets) {
+                        queryClient.invalidateQueries('tickets')
+                        replace(`/clients/${ticket.clientId}/details`)
                       } else {
                         queryClient.invalidateQueries('tickets')
                         replace('/dashboard')
