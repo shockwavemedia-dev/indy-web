@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { format } from 'date-fns'
+import { useSession } from 'next-auth/react'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { useQueryClient } from 'react-query'
@@ -40,6 +41,7 @@ export const DeleteTicketModal = ({
   const ticket = useDeleteTicketModal((state) => state.ticket)
   const toggleDeleteTicketModal = useDeleteTicketModal((state) => state.toggleDeleteTicketModal)
   const { showToast } = useToastStore()
+  const { data: session } = useSession()
 
   return (
     <>
@@ -103,6 +105,9 @@ export const DeleteTicketModal = ({
                       } else if (website) {
                         queryClient.invalidateQueries('websites')
                         replace('/website-services')
+                      } else if (session && session.isAdmin) {
+                        queryClient.invalidateQueries('tickets')
+                        replace('/client-tickets')
                       } else {
                         queryClient.invalidateQueries('tickets')
                         replace('/dashboard')
