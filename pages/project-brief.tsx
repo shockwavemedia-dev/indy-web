@@ -566,17 +566,8 @@ const Extras = ({
 
   const [customFieldVisible, setCustomFieldVisible] = useState(false)
 
-  const toggleCustomField = () => setCustomFieldVisible(!customFieldVisible)
-
   const [customPrintFieldVisible, setPrintCustomFieldVisible] = useState(false)
   const [socialMediaValidationVisible, setsocialMediaValidation] = useState(false)
-
-  //const togglePrintCustomField = () => setPrintCustomFieldVisible(!customPrintFieldVisible)
-
-  const [advertisingCustomFieldVisible, setAdvertisingCustomFieldVisible] = useState(false)
-
-  const toggleAdvertisingCustomField = () =>
-    setAdvertisingCustomFieldVisible(!advertisingCustomFieldVisible)
 
   const toggleExtras = ({ currentTarget: { checked } }: ChangeEvent<HTMLInputElement>) => {
     if (activeService) {
@@ -585,6 +576,9 @@ const Extras = ({
       if (checked) {
         if (activeService.serviceName === 'Print' || activeService.serviceName === 'Social Media') {
           setPrintCustomFieldVisible(true)
+        }
+        if (activeService.serviceName === 'Animation' || activeService.serviceName === 'Website') {
+          if (extrasName === 'Custom') setCustomFieldVisible(true)
         }
         if (service) {
           if (
@@ -631,6 +625,9 @@ const Extras = ({
         if (activeService.serviceName === 'Print' || activeService.serviceName === 'Social Media') {
           setPrintCustomFieldVisible(false)
         }
+        if (activeService.serviceName === 'Animation' || activeService.serviceName === 'Website') {
+          if (extrasName === 'Custom') setCustomFieldVisible(false)
+        }
         if (service) {
           const extrasPayload = service.extras.filter((extra) => extra !== extrasName)
           if (extrasPayload.length > 0) {
@@ -659,14 +656,6 @@ const Extras = ({
           setFieldValue('services', payload)
         }
       }
-
-      if (serviceId === 2 && extrasName === 'Custom') {
-        toggleCustomField()
-      }
-
-      if (serviceId === 6 && extrasName === 'Custom') {
-        toggleAdvertisingCustomField()
-      }
     }
   }
 
@@ -681,6 +670,10 @@ const Extras = ({
             customFields: [value],
           },
         ]
+        setServices(payload)
+        setFieldValue('services', payload)
+      } else {
+        const payload = [...services, { ...activeService, customFields: [value] }]
         setServices(payload)
         setFieldValue('services', payload)
       }
@@ -821,7 +814,7 @@ const Extras = ({
           </div>
         )}
       </div>
-      {customFieldVisible && (
+      {customFieldVisible ? (
         <>
           <div className="relative mt-5 flex items-center">
             <EditIcon className="pointer-events-none absolute left-6 stroke-lavender-gray" />
@@ -833,18 +826,33 @@ const Extras = ({
             />
           </div>
         </>
+      ) : (
+        extrasName === 'Custom' &&
+        services
+          .filter((option) => option.serviceId === serviceId)
+          .map(
+            (service) =>
+              service.extras &&
+              service.extras.length > 0 &&
+              service.customFields &&
+              service.customFields.map((customValue) => (
+                <>
+                  {extrasName === 'Custom' && (
+                    <div className="relative mt-5 flex items-center">
+                      <EditIcon className="pointer-events-none absolute left-6 stroke-lavender-gray" />
+                      <input
+                        type="text"
+                        className="h-12.5 w-full rounded-xl px-13 text-sm font-medium text-onyx placeholder-metallic-silver ring-1 ring-bright-gray read-only:cursor-auto focus:ring-2 focus:ring-halloween-orange read-only:focus:ring-1 read-only:focus:ring-bright-gray"
+                        placeholder="Enter Custom"
+                        onChange={setCustomFieldValue}
+                        defaultValue={customValue}
+                      />
+                    </div>
+                  )}
+                </>
+              ))
+          )
       )}
-      {/* {advertisingCustomFieldVisible && (
-        <div className="relative mt-5 flex items-center">
-          <DollarIcon className="pointer-events-none absolute left-6 stroke-lavender-gray" />
-          <input
-            type="text"
-            className="h-12.5 w-full rounded-xl px-13 text-sm font-medium text-onyx placeholder-metallic-silver ring-1 ring-bright-gray read-only:cursor-auto focus:ring-2 focus:ring-halloween-orange read-only:focus:ring-1 read-only:focus:ring-bright-gray"
-            placeholder="Enter Custom"
-            onChange={setCustomFieldValue}
-          />
-        </div>
-      )} */}
     </>
   )
 
