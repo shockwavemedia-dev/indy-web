@@ -407,8 +407,10 @@ export const AdminTicket = ({ ticketId }: { ticketId: number }) => {
                                 className="mb-2 text-sm font-medium text-onyx"
                                 key={`${serviceName}-${extra}`}
                               >
-                                {extra}
-                                {customFields}
+                                <div className="grid grid-cols-2 gap-2">
+                                  <div>{extra}</div>
+                                  {extra === 'Custom' && <div>{customFields}</div>}
+                                </div>
                               </div>
                             ))}
                           </div>
