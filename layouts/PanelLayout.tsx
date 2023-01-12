@@ -34,11 +34,8 @@ import {
   ProjectBriefVideoModal,
   useProjectBriefVideoModalStore,
 } from '../components/modals/ProjectBriefVideoModal'
+import { NotificationModal, useNotificationModalStore } from '../components/NotificationModal'
 import { RouteButton } from '../components/RouteButton'
-import {
-  SocialMediaNotificationModal,
-  useSocialMediaNotificationModalStore,
-} from '../components/SocialMediaNotificationModal'
 import { TicketsAndNotifacationsCountCard } from '../components/TicketsAndNotifacationsCountCard'
 import { AdminRoutes } from '../constants/routes/AdminRoutes'
 import { ClientRoutes } from '../constants/routes/ClientRoutes'
@@ -79,7 +76,7 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
   const { header, subHeader, buttons, setButtons } = usePanelLayoutStore()
   const { toggleModal: toggleSupportRequestModal } = useCreateSupportRequestModalStore()
   const { toggleModal: toggleSupportTicketModal } = useCreateSupportTicketModalStore()
-  const { toggleModal: toggleNotificationModal } = useSocialMediaNotificationModalStore()
+  const { toggleModal: toggleNotificationModal } = useNotificationModalStore()
   const { toggleDashboadVideoModal } = useDashboadVideoModalStore()
   const { toggleProjectBriefVideoModal } = useProjectBriefVideoModalStore()
 
@@ -270,7 +267,7 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
       <div className="fixed z-30 flex w-full items-center bg-white py-1 px-6 shadow-md">
         <div className="mr-102 whitespace-nowrap font-semibold text-onyx lg:mr-32">Indy</div>
         <IndyIcon className="m-0 ml-auto -mr-20 scale-50 p-0" />
-        {session.isSocialMediaStaff || session.isPrinterManager ? (
+        {!session.isAdmin ? (
           <div className="relative p-1">
             <button
               className="group relative"
@@ -447,7 +444,7 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
       </div>
       {session.isClient && <CreateSupportRequestModal />}
       {session.isManager && <CreateSupportTicketModal />}
-      {(session.isSocialMediaStaff || session.isPrinterManager) && <SocialMediaNotificationModal />}
+      {!session.isAdmin && <NotificationModal />}
       <DashboadVideoModal />
       <ProjectBriefVideoModal />
     </>

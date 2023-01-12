@@ -3,7 +3,7 @@ import { combine } from 'zustand/middleware'
 import { CloseModalIcon } from './icons/CloseModalIcon'
 import { Notifications } from './Notifications'
 
-export const useSocialMediaNotificationModalStore = create(
+export const useNotificationModalStore = create(
   combine(
     {
       visible: false,
@@ -14,8 +14,8 @@ export const useSocialMediaNotificationModalStore = create(
   )
 )
 
-export const SocialMediaNotificationModal = () => {
-  const { visible, toggleModal } = useSocialMediaNotificationModalStore()
+export const NotificationModal = () => {
+  const { visible, toggleModal } = useNotificationModalStore()
 
   return (
     <>
