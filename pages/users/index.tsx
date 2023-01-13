@@ -12,7 +12,7 @@ import PanelLayout, { usePanelLayoutStore } from '../../layouts/PanelLayout'
 import { useAdminUserStore } from '../../store/AdminUserStore'
 import { NextPageWithLayout } from '../../types/pages/NextPageWithLayout.type'
 const StaffUserPage: NextPageWithLayout = () => {
-  const { setHeader, setButtons } = usePanelLayoutStore()
+  const { setHeader, setButtons, setCrumbsNavigation } = usePanelLayoutStore()
   const [isNewAdminUserModalVisible, setNewAdminUserModalVisible] = useState(false)
 
   const { replace } = useRouter()
@@ -24,7 +24,7 @@ const StaffUserPage: NextPageWithLayout = () => {
 
   useEffect(() => {
     setHeader('Users')
-
+    setCrumbsNavigation([])
     setButtons(
       <FancyButton
         Icon={<UserIcon className="stroke-halloween-orange" />}

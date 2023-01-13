@@ -10,12 +10,13 @@ import { DataTable } from '../../DataTable'
 import { DeletePrinterJobModal } from '../../modals/DeletePrinterJobModal'
 
 const PrinterManagerPrinterJobsPage: NextPageWithLayout = () => {
-  const { setHeader } = usePanelLayoutStore()
+  const { setHeader, setCrumbsNavigation } = usePanelLayoutStore()
   const { data: session } = useSession()
   const { replace } = useRouter()
 
   useEffect(() => {
     setHeader('Print')
+    setCrumbsNavigation([])
   }, [])
 
   return (

@@ -14,7 +14,7 @@ import { NextPageWithLayout } from '../../types/pages/NextPageWithLayout.type'
 const ClientPage: NextPageWithLayout = () => {
   const { replace } = useRouter()
   const [isNewClientModalVisible, setNewClientModalVisible] = useState(false)
-  const { setHeader, setButtons } = usePanelLayoutStore()
+  const { setHeader, setButtons, setCrumbsNavigation } = usePanelLayoutStore()
 
   const toggleNewClientModal = () => setNewClientModalVisible(!isNewClientModalVisible)
 
@@ -22,7 +22,7 @@ const ClientPage: NextPageWithLayout = () => {
   const [search, setSearch] = useState('')
   useEffect(() => {
     setHeader('Clients')
-
+    setCrumbsNavigation([])
     setButtons(
       <FancyButton
         Icon={<UserIcon className="stroke-halloween-orange" />}

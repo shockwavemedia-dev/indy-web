@@ -24,7 +24,7 @@ import { SelectNoFormik } from '../../SelectNoFormik'
 
 export const ClientAnimations = () => {
   const [page, setPage] = useState(1)
-  const { setHeader } = usePanelLayoutStore()
+  const { setHeader, setCrumbsNavigation } = usePanelLayoutStore()
   const [category, setCategory] = useState<SingleValue<SelectOption<number>>>({
     label: 'All Categories',
     value: -1,
@@ -59,6 +59,7 @@ export const ClientAnimations = () => {
 
   useEffect(() => {
     setHeader('Animation Library')
+    setCrumbsNavigation([])
   }, [])
 
   useEffect(() => {

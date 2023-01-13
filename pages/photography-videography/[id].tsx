@@ -47,7 +47,7 @@ const PhotographyVideographyPage: NextPageWithLayout = () => {
   const {
     query: { id },
   } = useRouter()
-  const { setHeader } = usePanelLayoutStore()
+  const { setHeader, setCrumbsNavigation } = usePanelLayoutStore()
   const queryClient = useQueryClient()
   const { showToast } = useToastStore()
   const { toggleUploadPhotoVideoFileModal } = useUploadPhotoVideoFileModalStore()
@@ -79,6 +79,7 @@ const PhotographyVideographyPage: NextPageWithLayout = () => {
   useEffect(() => {
     if (booking) {
       setHeader(booking.eventName)
+      setCrumbsNavigation([])
     }
   }, [booking])
 

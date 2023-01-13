@@ -12,7 +12,7 @@ import { UserIcon } from '../icons/UserIcon'
 import { Notifications } from '../Notifications'
 import { SelectNoFormik } from '../SelectNoFormik'
 export const MyFiles = () => {
-  const { setHeader } = usePanelLayoutStore()
+  const { setHeader, setCrumbsNavigation } = usePanelLayoutStore()
   const [clientId, setClientId] = useState(-1)
 
   const { data: clients } = useQuery('clients', async () => {
@@ -28,6 +28,7 @@ export const MyFiles = () => {
 
   useEffect(() => {
     setHeader('My Files')
+    setCrumbsNavigation([])
   }, [])
 
   const selectClient = (newValue: SingleValue<SelectOption<number>>) =>

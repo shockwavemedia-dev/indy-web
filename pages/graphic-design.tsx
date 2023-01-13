@@ -22,7 +22,7 @@ import { NextPageWithLayout } from '../types/pages/NextPageWithLayout.type'
 const GraphicPage: NextPageWithLayout = () => {
   const { replace } = useRouter()
   const { data: session } = useSession()
-  const { setHeader, setButtons } = usePanelLayoutStore()
+  const { setHeader, setButtons, setCrumbsNavigation } = usePanelLayoutStore()
   const { toggleModal: toggleSupportRequestModal } = useCreateSupportRequestModalStore()
 
   const [isCreateGraphicModalVisible, setCreateeGraphicModalVisible] = useState(false)
@@ -31,6 +31,7 @@ const GraphicPage: NextPageWithLayout = () => {
 
   useEffect(() => {
     setHeader('Graphic Design')
+    setCrumbsNavigation([])
 
     setButtons(
       <>

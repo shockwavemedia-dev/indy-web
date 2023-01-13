@@ -8,11 +8,12 @@ import PanelLayout, { usePanelLayoutStore } from '../../layouts/PanelLayout'
 import { NextPageWithLayout } from '../../types/pages/NextPageWithLayout.type'
 
 const DigitalHealthCheckAnalyticsPage: NextPageWithLayout = () => {
-  const { setHeader } = usePanelLayoutStore()
+  const { setHeader, setCrumbsNavigation } = usePanelLayoutStore()
   const { data: session } = useSession()
 
   useEffect(() => {
     setHeader('Digital Health Check Analytics')
+    setCrumbsNavigation([])
   }, [])
 
   return (

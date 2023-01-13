@@ -14,10 +14,11 @@ import PanelLayout, { usePanelLayoutStore } from '../layouts/PanelLayout'
 import { NextPageWithLayout } from '../types/pages/NextPageWithLayout.type'
 
 const WebsitePage: NextPageWithLayout = () => {
-  const { setHeader } = usePanelLayoutStore()
+  const { setHeader, setCrumbsNavigation } = usePanelLayoutStore()
 
   useEffect(() => {
     setHeader('Website')
+    setCrumbsNavigation([])
   }, [])
 
   const slideImages = [

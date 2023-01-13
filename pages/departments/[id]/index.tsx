@@ -21,7 +21,7 @@ const DapartmentPage: NextPageWithLayout = () => {
   const {
     query: { id },
   } = useRouter()
-  const { setHeader } = usePanelLayoutStore()
+  const { setHeader, setCrumbsNavigation } = usePanelLayoutStore()
   const { toggleModal } = useAddDepartmentMemberModalStore()
 
   const { data: department } = useQuery(['department', Number(id)], async () => {
@@ -33,6 +33,7 @@ const DapartmentPage: NextPageWithLayout = () => {
   useEffect(() => {
     if (department) {
       setHeader(department.name)
+      setCrumbsNavigation([])
     }
   }, [department])
 

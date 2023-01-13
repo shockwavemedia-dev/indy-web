@@ -9,10 +9,11 @@ import PanelLayout, { usePanelLayoutStore } from '../layouts/PanelLayout'
 import { NextPageWithLayout } from '../types/pages/NextPageWithLayout.type'
 
 const NewJobsPage: NextPageWithLayout = () => {
-  const { setHeader } = usePanelLayoutStore()
+  const { setHeader, setCrumbsNavigation } = usePanelLayoutStore()
 
   useEffect(() => {
     setHeader('New Jobs')
+    setCrumbsNavigation([])
   }, [])
 
   const { data: session } = useSession()

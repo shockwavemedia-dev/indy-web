@@ -27,7 +27,7 @@ export const ClientDashboard = ({
 }) => {
   const { replace } = useRouter()
   const { data: session } = useSession()
-  const { setHeader, setSubHeader } = usePanelLayoutStore()
+  const { setHeader, setSubHeader, setCrumbsNavigation } = usePanelLayoutStore()
   const [subject, setSubject] = useState('')
   const [subjectPayload, setSubjectPayload] = useState('')
   const [code, setCode] = useState('')
@@ -45,6 +45,7 @@ export const ClientDashboard = ({
   useEffect(() => {
     setHeader(`${session?.user.userType.client.name} Dashboard`)
     setSubHeader(`Welcome back, ${session?.user.firstName}`)
+    setCrumbsNavigation([])
 
     return () => {
       setSubHeader('')

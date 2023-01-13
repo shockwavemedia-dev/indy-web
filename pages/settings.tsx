@@ -18,10 +18,11 @@ import { NextPageWithLayout } from '../types/pages/NextPageWithLayout.type'
 import { SettingsPageTabs } from '../types/SettingsPageTabs.type'
 
 const SettingsPage: NextPageWithLayout = () => {
-  const { setHeader } = usePanelLayoutStore()
+  const { setHeader, setCrumbsNavigation } = usePanelLayoutStore()
   const [activeTab, setActiveTab] = useState<SettingsPageTabs>('users')
   useEffect(() => {
     setHeader('Settings')
+    setCrumbsNavigation([])
   }, [])
   const { data: session } = useSession()
   const toggleNewClientUserModal = useNewClientUserModal((state) => state.toggleNewClientUserModal)

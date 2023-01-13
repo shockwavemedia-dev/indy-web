@@ -19,7 +19,7 @@ import { SocialMediaTable } from '../../SocialMediaTable'
 
 export const ManagerSocialMediaList = ({ clientId = -1 }: { clientId?: number | null }) => {
   const { data: session } = useSession()
-  const { setHeader, setSubHeader } = usePanelLayoutStore()
+  const { setHeader, setSubHeader, setCrumbsNavigation } = usePanelLayoutStore()
 
   const { isCreateSocialMediaModalVisible, toggleCreateSocialMediaModal } = useSocialMediaStore()
 
@@ -64,6 +64,7 @@ export const ManagerSocialMediaList = ({ clientId = -1 }: { clientId?: number | 
     setClientId(defaultValue ? Number(defaultValue) : -1)
     setHeader('Social Media Dashboard')
     setSubHeader(`Welcome back, ${session?.user.firstName}`)
+    setCrumbsNavigation([])
   }, [clients])
 
   return (

@@ -8,10 +8,11 @@ import PanelLayout, { usePanelLayoutStore } from '../../layouts/PanelLayout'
 import { NextPageWithLayout } from '../../types/pages/NextPageWithLayout.type'
 
 const MarketingPlannersPage: NextPageWithLayout = () => {
-  const { setHeader } = usePanelLayoutStore()
+  const { setHeader, setCrumbsNavigation } = usePanelLayoutStore()
 
   useEffect(() => {
     setHeader('Marketing Planner')
+    setCrumbsNavigation([])
   }, [])
 
   return (

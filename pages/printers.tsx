@@ -13,7 +13,7 @@ import { useAdminPrinterStore } from '../store/AdminPrinterStore'
 import { NextPageWithLayout } from '../types/pages/NextPageWithLayout.type'
 
 const PrintersPage: NextPageWithLayout = () => {
-  const { setHeader, setButtons } = usePanelLayoutStore()
+  const { setHeader, setButtons, setCrumbsNavigation } = usePanelLayoutStore()
 
   const {
     activeAdminPrinter,
@@ -27,6 +27,7 @@ const PrintersPage: NextPageWithLayout = () => {
 
   useEffect(() => {
     setHeader('Printers')
+    setCrumbsNavigation([])
 
     setButtons(
       <FancyButton

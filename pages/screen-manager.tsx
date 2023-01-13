@@ -10,10 +10,11 @@ import IndyTvAvatar from '../public/images/indy-tv.png'
 import { NextPageWithLayout } from '../types/pages/NextPageWithLayout.type'
 
 const ScreenManagerPage: NextPageWithLayout = () => {
-  const { setHeader } = usePanelLayoutStore()
+  const { setHeader, setCrumbsNavigation } = usePanelLayoutStore()
 
   useEffect(() => {
     setHeader('Screen Manager')
+    setCrumbsNavigation([])
   }, [])
 
   return (

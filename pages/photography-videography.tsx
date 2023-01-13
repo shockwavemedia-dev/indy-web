@@ -18,7 +18,7 @@ import { usePhotographyVideographyStore } from '../store/PhotographyVideographyS
 import { NextPageWithLayout } from '../types/pages/NextPageWithLayout.type'
 
 const PhotographyVideographyPage: NextPageWithLayout = () => {
-  const { setHeader } = usePanelLayoutStore()
+  const { setHeader, setCrumbsNavigation } = usePanelLayoutStore()
   const { data: session } = useSession()
 
   const {
@@ -29,6 +29,7 @@ const PhotographyVideographyPage: NextPageWithLayout = () => {
 
   useEffect(() => {
     setHeader('Photography/Videography')
+    setCrumbsNavigation([])
   }, [])
 
   return (

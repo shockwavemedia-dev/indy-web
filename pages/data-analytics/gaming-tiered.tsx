@@ -8,11 +8,12 @@ import PanelLayout, { usePanelLayoutStore } from '../../layouts/PanelLayout'
 import { NextPageWithLayout } from '../../types/pages/NextPageWithLayout.type'
 
 const GamingTieredAnalyticsPage: NextPageWithLayout = () => {
-  const { setHeader } = usePanelLayoutStore()
+  const { setHeader, setCrumbsNavigation } = usePanelLayoutStore()
   const { data: session } = useSession()
 
   useEffect(() => {
     setHeader('Gaming/Tiered Analytics')
+    setCrumbsNavigation([])
   }, [])
 
   return (

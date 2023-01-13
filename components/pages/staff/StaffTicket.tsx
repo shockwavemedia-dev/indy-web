@@ -72,7 +72,7 @@ export const StaffTicket = ({ ticketId }: { ticketId: number }) => {
     toggleReAssignTicketAssigneeModal,
   } = useTicketAssigneeStore()
 
-  const { setHeader } = usePanelLayoutStore()
+  const { setHeader, setCrumbsNavigation } = usePanelLayoutStore()
 
   const { showToast } = useToastStore()
 
@@ -271,6 +271,17 @@ export const StaffTicket = ({ ticketId }: { ticketId: number }) => {
   useEffect(() => {
     if (ticket) {
       setHeader(`Ticket ${ticket.ticketCode}`)
+      const crumbsNavigation = [
+        {
+          title: `Dashboard`,
+          url: `/dashboard`,
+        },
+        {
+          title: `Ticket ${ticket.ticketCode}`,
+          url: `/ticket/${ticket.id}`,
+        },
+      ]
+      setCrumbsNavigation(crumbsNavigation)
     }
   }, [ticket])
 

@@ -11,7 +11,7 @@ import { Pill } from '../../Pill'
 import { TitleValue } from '../../TitleValue'
 
 export const StaffTicketFile = ({ ticketFileId }: { ticketFileId: number }) => {
-  const { setHeader } = usePanelLayoutStore()
+  const { setHeader, setCrumbsNavigation } = usePanelLayoutStore()
 
   const { data: ticketFile } = useQuery(
     ['ticketFile', ticketFileId],
@@ -43,7 +43,24 @@ export const StaffTicketFile = ({ ticketFileId }: { ticketFileId: number }) => {
 
   useEffect(() => {
     setHeader('Ticket File')
-  }, [])
+    if (!!ticketFile && ticketFileId !== -1) {
+      const crumbsNavigation = [
+        {
+          title: `Dashboard`,
+          url: `/dashboard`,
+        },
+        {
+          title: `Ticket ${ticketFile.ticketCode}`,
+          url: `/ticket/${ticketFile.ticketId}`,
+        },
+        {
+          title: `Ticket File ${ticketFileId}`,
+          url: `/ticket/file/${ticketFileId}`,
+        },
+      ]
+      setCrumbsNavigation(crumbsNavigation)
+    }
+  }, [ticketFile, ticketFileId])
 
   return (
     <>

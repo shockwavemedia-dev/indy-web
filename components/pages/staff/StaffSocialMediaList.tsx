@@ -24,7 +24,7 @@ import { SocialMediaTable } from '../../SocialMediaTable'
 
 export const StaffSocialMediaList = () => {
   const { data: session } = useSession()
-  const { setHeader, setSubHeader } = usePanelLayoutStore()
+  const { setHeader, setSubHeader, setCrumbsNavigation } = usePanelLayoutStore()
   const [activeTab, setActiveTab] = useState<SocialMediaPageTabs>('list')
 
   const { isCreateSocialMediaModalVisible, toggleCreateSocialMediaModal, setPostDate } =
@@ -63,6 +63,7 @@ export const StaffSocialMediaList = () => {
     setClientId(defaultValue ? Number(defaultValue) : -1)
     setHeader('Social Media Dashboard')
     setSubHeader(`Welcome back, ${session?.user.firstName}`)
+    setCrumbsNavigation([])
   }, [clients])
 
   const Tab = ({

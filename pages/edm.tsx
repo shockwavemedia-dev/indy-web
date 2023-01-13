@@ -18,7 +18,7 @@ import { Page } from '../types/Page.type'
 import { NextPageWithLayout } from '../types/pages/NextPageWithLayout.type'
 
 const EDMPage: NextPageWithLayout = () => {
-  const { setHeader } = usePanelLayoutStore()
+  const { setHeader, setCrumbsNavigation } = usePanelLayoutStore()
   const { data: session } = useSession()
 
   const { data: edm } = useQuery('edm', async () => {
@@ -34,6 +34,7 @@ const EDMPage: NextPageWithLayout = () => {
 
   useEffect(() => {
     setHeader('EDM')
+    setCrumbsNavigation([])
   }, [])
 
   return (

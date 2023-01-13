@@ -27,7 +27,7 @@ const ClientLayout = ({ children }: { children: ReactNode }) => {
     asPath,
   } = useRouter()
 
-  const { setHeader, setButtons } = usePanelLayoutStore()
+  const { setHeader, setButtons, setCrumbsNavigation } = usePanelLayoutStore()
   const { toggleModal: toggleSupportTicketModal } = useCreateSupportTicketModalStore()
 
   const { data } = useQuery(
@@ -61,6 +61,7 @@ const ClientLayout = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     if (data) setHeader(data.name)
+    setCrumbsNavigation([])
   }, [data])
 
   if (!data) return null

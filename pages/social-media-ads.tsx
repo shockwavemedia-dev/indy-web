@@ -7,10 +7,11 @@ import PanelLayout, { usePanelLayoutStore } from '../layouts/PanelLayout'
 import { NextPageWithLayout } from '../types/pages/NextPageWithLayout.type'
 
 const SocialMediaAdsPage: NextPageWithLayout = () => {
-  const { setHeader } = usePanelLayoutStore()
+  const { setHeader, setCrumbsNavigation } = usePanelLayoutStore()
 
   useEffect(() => {
     setHeader('Social Media Ads')
+    setCrumbsNavigation([])
   }, [])
 
   return (

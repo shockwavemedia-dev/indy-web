@@ -10,11 +10,12 @@ import { useToastStore } from '../store/ToastStore'
 import { NextPageWithLayout } from '../types/pages/NextPageWithLayout.type'
 
 const ConfigurationPage: NextPageWithLayout = () => {
-  const { setHeader } = usePanelLayoutStore()
+  const { setHeader, setCrumbsNavigation } = usePanelLayoutStore()
   const { showToast } = useToastStore()
 
   useEffect(() => {
     setHeader('Services')
+    setCrumbsNavigation([])
   }, [])
 
   const restoreDB = async () => {

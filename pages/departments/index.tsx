@@ -13,14 +13,14 @@ import { NextPageWithLayout } from '../../types/pages/NextPageWithLayout.type'
 
 const DepartmentsPage: NextPageWithLayout = () => {
   const { replace } = useRouter()
-  const { setHeader, setButtons } = usePanelLayoutStore()
+  const { setHeader, setButtons, setCrumbsNavigation } = usePanelLayoutStore()
   const [isNewDepartmentModalVisible, setNewDepartmentModalVisible] = useState(false)
 
   const toggleNewDepartmentModal = () => setNewDepartmentModalVisible(!isNewDepartmentModalVisible)
 
   useEffect(() => {
     setHeader('Staffs')
-
+    setCrumbsNavigation([])
     setButtons(
       <FancyButton
         Icon={<UserIcon className="stroke-halloween-orange" />}

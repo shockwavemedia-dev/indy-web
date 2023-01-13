@@ -56,11 +56,14 @@ export const usePanelLayoutStore = createStore(
       header: '',
       subHeader: '',
       buttons: (<></>) as ReactNode,
+      crumbsNavigation: [] as Array<{ title: string; url: string }>,
     },
     (set) => ({
       setHeader: (header: string) => set(() => ({ header })),
       setSubHeader: (subHeader: string) => set(() => ({ subHeader })),
       setButtons: (buttons: ReactNode) => set(() => ({ buttons })),
+      setCrumbsNavigation: (crumbsNavigation: Array<{ title: string; url: string }>) =>
+        set(() => ({ crumbsNavigation })),
     })
   )
 )
@@ -73,7 +76,7 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
     },
   })
   const { replace, asPath } = useRouter()
-  const { header, subHeader, buttons, setButtons } = usePanelLayoutStore()
+  const { header, subHeader, buttons, crumbsNavigation, setButtons } = usePanelLayoutStore()
   const { toggleModal: toggleSupportRequestModal } = useCreateSupportRequestModalStore()
   const { toggleModal: toggleSupportTicketModal } = useCreateSupportTicketModalStore()
   const { toggleModal: toggleNotificationModal } = useNotificationModalStore()
@@ -374,7 +377,7 @@ const PanelLayout = ({ children }: { children: ReactNode }) => {
       </div>
       <div className="flex h-screen bg-cultured pt-14.5 pl-75 transition-all 2xl:pl-20">
         <div className="w-full overflow-y-auto p-6">
-          <Crumbs panelName={panelName} />
+          <Crumbs panelName={panelName} customNavigation={crumbsNavigation} />
           <div className="mb-10 mt-5 flex items-end justify-between">
             {session.isClient && asPath === '/dashboard' ? (
               <div className="flex space-x-5">
