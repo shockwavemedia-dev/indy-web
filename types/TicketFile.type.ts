@@ -22,4 +22,5 @@ export type TicketFile = {
   ticketId: number
   thumbnailUrl: string
   fileId: number
+  ticketCode: string
 }
