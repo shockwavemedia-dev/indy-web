@@ -30,7 +30,7 @@ import { get422And400ResponseError } from '../utils/ErrorHelpers'
 import { objectWithFileToFormData } from '../utils/FormHelpers'
 
 const NewSocialMediaPage: NextPageWithLayout = () => {
-  const { setHeader } = usePanelLayoutStore()
+  const { setHeader, setCrumbsNavigation } = usePanelLayoutStore()
   const { data: session } = useSession()
   const { showToast } = useToastStore()
   const { replace } = useRouter()
@@ -74,6 +74,7 @@ const NewSocialMediaPage: NextPageWithLayout = () => {
   }
   useEffect(() => {
     setHeader('New Social Media')
+    setCrumbsNavigation([])
   }, [])
 
   return (

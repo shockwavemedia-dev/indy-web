@@ -31,7 +31,7 @@ import { get422And400ResponseError } from '../utils/ErrorHelpers'
 import { objectWithFileToFormData } from '../utils/FormHelpers'
 
 const NewPrinterPage: NextPageWithLayout = () => {
-  const { setHeader } = usePanelLayoutStore()
+  const { setHeader, setCrumbsNavigation } = usePanelLayoutStore()
   const { showToast } = useToastStore()
   const { replace } = useRouter()
   const { data: session } = useSession()
@@ -79,6 +79,7 @@ const NewPrinterPage: NextPageWithLayout = () => {
 
   useEffect(() => {
     setHeader('New Printer')
+    setCrumbsNavigation([])
   }, [])
 
   return (

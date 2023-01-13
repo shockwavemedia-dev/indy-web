@@ -16,7 +16,7 @@ import { NewAnimationModal } from '../../modals/NewAnimationModal'
 export const AdminAnimations = () => {
   const [isNewAnimationCategoryModalVisible, setNewAnimationCategoryModalVisible] = useState(false)
   const [isNewAnimationModalVisible, setNewAnimationModalVisible] = useState(false)
-  const { setHeader, setButtons } = usePanelLayoutStore()
+  const { setHeader, setButtons, setCrumbsNavigation } = usePanelLayoutStore()
 
   const toggleNewAnimationCategoryModal = () =>
     setNewAnimationCategoryModalVisible(!isNewAnimationCategoryModalVisible)
@@ -33,6 +33,7 @@ export const AdminAnimations = () => {
 
   useEffect(() => {
     setHeader('Animations')
+    setCrumbsNavigation([])
 
     setButtons(
       <>

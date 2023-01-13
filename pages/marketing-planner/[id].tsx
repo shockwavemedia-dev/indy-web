@@ -42,7 +42,7 @@ import { NextPageWithLayout } from '../../types/pages/NextPageWithLayout.type'
 import { get422And400ResponseError } from '../../utils/ErrorHelpers'
 
 const MarketingPlannerPage: NextPageWithLayout = () => {
-  const { setHeader } = usePanelLayoutStore()
+  const { setHeader, setCrumbsNavigation } = usePanelLayoutStore()
   const { showToast } = useToastStore()
   const { data: session } = useSession()
   const queryClient = useQueryClient()
@@ -131,7 +131,7 @@ const MarketingPlannerPage: NextPageWithLayout = () => {
   useEffect(() => {
     if (marketingPlan) {
       setHeader(marketingPlan.eventName)
-
+      setCrumbsNavigation([])
       if (!todoLoaded) {
         cleanTodoList(marketingPlan.todoList)
         setTodoLoaded(true)

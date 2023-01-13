@@ -70,7 +70,7 @@ export const useProjectBrief = create(
 )
 
 const ProjectBriefPage: NextPageWithLayout = () => {
-  const { setHeader } = usePanelLayoutStore()
+  const { setHeader, setCrumbsNavigation } = usePanelLayoutStore()
   const { data: session } = useSession()
   const { showToast } = useToastStore()
   const { replace } = useRouter()
@@ -127,6 +127,7 @@ const ProjectBriefPage: NextPageWithLayout = () => {
     setTicket()
     setActiveService()
     setServices([])
+    setCrumbsNavigation([])
   }, [])
 
   return (

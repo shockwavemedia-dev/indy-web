@@ -11,10 +11,11 @@ import { Service } from '../types/Service.type'
 
 const SocialMediaPage: NextPageWithLayout = () => {
   const { replace } = useRouter()
-  const { setHeader } = usePanelLayoutStore()
+  const { setHeader, setCrumbsNavigation } = usePanelLayoutStore()
 
   useEffect(() => {
     setHeader('Social Media')
+    setCrumbsNavigation([])
   }, [])
 
   const { data: session, status } = useSession()

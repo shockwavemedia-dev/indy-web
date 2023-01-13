@@ -32,7 +32,7 @@ import { NextPageWithLayout } from '../types/pages/NextPageWithLayout.type'
 import { SelectOption } from '../types/SelectOption.type'
 
 const ClientTicketsPage: NextPageWithLayout = () => {
-  const { setHeader, setButtons } = usePanelLayoutStore()
+  const { setHeader, setButtons, setCrumbsNavigation } = usePanelLayoutStore()
   const { replace } = useRouter()
   const { data: session } = useSession()
   const { toggleModal: toggleSupportTicketModal } = useCreateSupportTicketModalStore()
@@ -79,6 +79,7 @@ const ClientTicketsPage: NextPageWithLayout = () => {
 
   useEffect(() => {
     setHeader('Client Tickets')
+    setCrumbsNavigation([])
     if (session?.user.userType.role === 'admin') {
       setButtons(
         <>

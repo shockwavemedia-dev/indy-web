@@ -45,7 +45,7 @@ import { TextAreaInput } from '../../TextAreaInput'
 import { TextInput } from '../../TextInput'
 
 const ClientPrinterJobPage = ({ printerId }: { printerId: number }) => {
-  const { setHeader } = usePanelLayoutStore()
+  const { setHeader, setCrumbsNavigation } = usePanelLayoutStore()
   const queryClient = useQueryClient()
   const { showToast } = useToastStore()
   const { toggleModal: togglePrinterModal } = useDeleteDeletePrinterJobModalModalStore()
@@ -150,6 +150,7 @@ const ClientPrinterJobPage = ({ printerId }: { printerId: number }) => {
   useEffect(() => {
     if (printer) {
       setHeader(`Print`)
+      setCrumbsNavigation([])
     }
   }, [printer])
 

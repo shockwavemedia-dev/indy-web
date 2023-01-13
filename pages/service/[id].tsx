@@ -24,7 +24,7 @@ const ServicePage: NextPageWithLayout = () => {
   const {
     query: { id },
   } = useRouter()
-  const { setHeader } = usePanelLayoutStore()
+  const { setHeader, setCrumbsNavigation } = usePanelLayoutStore()
 
   const { toggleModal: toggleAddServiceExtraModal } = useAddServiceExtraModalStore()
 
@@ -51,6 +51,7 @@ const ServicePage: NextPageWithLayout = () => {
 
   useEffect(() => {
     setHeader('Service')
+    setCrumbsNavigation([])
   }, [])
 
   return (

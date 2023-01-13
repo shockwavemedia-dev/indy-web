@@ -37,7 +37,7 @@ import { get422And400ResponseError } from '../utils/ErrorHelpers'
 import { objectWithFileToFormData } from '../utils/FormHelpers'
 
 const NewPhotographyVideographyPage: NextPageWithLayout = () => {
-  const { setHeader } = usePanelLayoutStore()
+  const { setHeader, setCrumbsNavigation } = usePanelLayoutStore()
   const { data: session } = useSession()
   const { showToast } = useToastStore()
   const { replace } = useRouter()
@@ -77,6 +77,7 @@ const NewPhotographyVideographyPage: NextPageWithLayout = () => {
 
   useEffect(() => {
     setHeader('New Photography/Videography')
+    setCrumbsNavigation([])
   }, [])
 
   return (

@@ -13,7 +13,7 @@ import { useAdminScreenStore } from '../store/AdminScreenStore'
 import { NextPageWithLayout } from '../types/pages/NextPageWithLayout.type'
 
 const ScreensPage: NextPageWithLayout = () => {
-  const { setHeader, setButtons } = usePanelLayoutStore()
+  const { setHeader, setButtons, setCrumbsNavigation } = usePanelLayoutStore()
 
   const {
     activeAdminScreen,
@@ -27,6 +27,7 @@ const ScreensPage: NextPageWithLayout = () => {
 
   useEffect(() => {
     setHeader('Screens')
+    setCrumbsNavigation([])
     setButtons(
       <FancyButton
         Icon={<MonitorIcon className="stroke-halloween-orange" />}

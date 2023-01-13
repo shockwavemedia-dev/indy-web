@@ -24,7 +24,7 @@ import { TitleValue } from '../../TitleValue'
 
 export const AdminTicketFile = ({ ticketFileId }: { ticketFileId: number }) => {
   const { showToast } = useToastStore()
-  const { setHeader } = usePanelLayoutStore()
+  const { setHeader, setCrumbsNavigation } = usePanelLayoutStore()
   const queryClient = useQueryClient()
 
   const { data: ticketFile } = useQuery(
@@ -100,7 +100,24 @@ export const AdminTicketFile = ({ ticketFileId }: { ticketFileId: number }) => {
 
   useEffect(() => {
     setHeader('Ticket File')
-  }, [])
+    if (!!ticketFile && ticketFileId !== -1) {
+      const crumbsNavigation = [
+        {
+          title: `Dashboard`,
+          url: `/client-tickets`,
+        },
+        {
+          title: `Ticket ${ticketFile.ticketCode}`,
+          url: `/ticket/${ticketFile.ticketId}`,
+        },
+        {
+          title: `Ticket File ${ticketFileId}`,
+          url: `/ticket/file/${ticketFileId}`,
+        },
+      ]
+      setCrumbsNavigation(crumbsNavigation)
+    }
+  }, [ticketFile, ticketFileId])
 
   return (
     <>

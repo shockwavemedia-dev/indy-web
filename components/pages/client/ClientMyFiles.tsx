@@ -7,11 +7,12 @@ import { Notifications } from '../../Notifications'
 import { RetainerInclusions } from '../../RetainerInclusions'
 
 export const ClientMyFiles = () => {
-  const { setHeader } = usePanelLayoutStore()
+  const { setHeader, setCrumbsNavigation } = usePanelLayoutStore()
   const { data: session } = useSession()
 
   useEffect(() => {
     setHeader('My Files')
+    setCrumbsNavigation([])
   }, [])
 
   return (

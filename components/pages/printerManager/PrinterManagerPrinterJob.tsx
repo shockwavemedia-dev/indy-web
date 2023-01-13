@@ -23,7 +23,7 @@ import { SelectNoFormik } from '../../SelectNoFormik'
 import { TitleValue } from '../../TitleValue'
 
 const PrinterManagerPrinterJobPage = ({ printerId }: { printerId: number }) => {
-  const { setHeader } = usePanelLayoutStore()
+  const { setHeader, setCrumbsNavigation } = usePanelLayoutStore()
   const queryClient = useQueryClient()
   const { showToast } = useToastStore()
   const { toggleModal: togglePrinterJobPriceModal } = useAddPrinterJoPricebModalModalStore()
@@ -63,6 +63,7 @@ const PrinterManagerPrinterJobPage = ({ printerId }: { printerId: number }) => {
   useEffect(() => {
     if (printer) {
       setHeader(`Print`)
+      setCrumbsNavigation([])
     }
   }, [printer])
   if (!printer) return null

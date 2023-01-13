@@ -15,7 +15,7 @@ const UserLayout = ({ children }: { children: ReactNode }) => {
     asPath,
   } = useRouter()
 
-  const { setHeader } = usePanelLayoutStore()
+  const { setHeader, setCrumbsNavigation } = usePanelLayoutStore()
 
   const { data } = useQuery(
     ['clients', Number(id)],
@@ -31,6 +31,7 @@ const UserLayout = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     if (data) setHeader('Profile Page')
+    setCrumbsNavigation([])
   }, [data])
 
   if (!data) return null

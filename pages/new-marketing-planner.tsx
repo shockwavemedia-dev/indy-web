@@ -33,7 +33,7 @@ import { get422And400ResponseError } from '../utils/ErrorHelpers'
 import { objectWithFileToFormData } from '../utils/FormHelpers'
 
 const NewMarketingPlannerPage: NextPageWithLayout = () => {
-  const { setHeader } = usePanelLayoutStore()
+  const { setHeader, setCrumbsNavigation } = usePanelLayoutStore()
   const { data: session } = useSession()
   const { showToast } = useToastStore()
   const { replace } = useRouter()
@@ -93,6 +93,7 @@ const NewMarketingPlannerPage: NextPageWithLayout = () => {
 
   useEffect(() => {
     setHeader('New Marketing Planner')
+    setCrumbsNavigation([])
     resetTodoList()
   }, [])
 

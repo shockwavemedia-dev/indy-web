@@ -65,7 +65,7 @@ export const AdminTicket = ({ ticketId }: { ticketId: number }) => {
     toggleEditTicketAssigneeModal,
     toggleDeleteTicketAssigneeModal,
   } = useTicketAssigneeStore()
-  const { setHeader } = usePanelLayoutStore()
+  const { setHeader, setCrumbsNavigation } = usePanelLayoutStore()
 
   const { data: ticket, isSuccess } = useQuery(['ticket', ticketId], async () => {
     const { data } = await axios.get<Ticket>(`/v1/tickets/${ticketId}`)
@@ -207,6 +207,17 @@ export const AdminTicket = ({ ticketId }: { ticketId: number }) => {
   useEffect(() => {
     if (ticket) {
       setHeader(`Ticket ${ticket.ticketCode}`)
+      const crumbsNavigation = [
+        {
+          title: `Dashboard`,
+          url: `/client-tickets`,
+        },
+        {
+          title: `Ticket ${ticket.ticketCode}`,
+          url: `/ticket/${ticket.id}`,
+        },
+      ]
+      setCrumbsNavigation(crumbsNavigation)
     }
   }, [ticket])
 

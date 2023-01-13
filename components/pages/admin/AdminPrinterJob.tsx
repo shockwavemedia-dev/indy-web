@@ -10,7 +10,7 @@ import { Pill } from '../../Pill'
 import { TitleValue } from '../../TitleValue'
 
 const AdminPrinterJobPage = ({ printerId }: { printerId: number }) => {
-  const { setHeader } = usePanelLayoutStore()
+  const { setHeader, setCrumbsNavigation } = usePanelLayoutStore()
 
   const { data: printer } = useQuery(
     ['printer', printerId],
@@ -26,6 +26,7 @@ const AdminPrinterJobPage = ({ printerId }: { printerId: number }) => {
   useEffect(() => {
     if (printer) {
       setHeader(`Print`)
+      setCrumbsNavigation([])
     }
   }, [printer])
   if (!printer) return null

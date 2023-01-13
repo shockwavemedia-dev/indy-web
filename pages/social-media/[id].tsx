@@ -11,10 +11,11 @@ const SocialMediaPage: NextPageWithLayout = () => {
   const {
     query: { id },
   } = useRouter()
-  const { setHeader } = usePanelLayoutStore()
+  const { setHeader, setCrumbsNavigation } = usePanelLayoutStore()
 
   useEffect(() => {
     setHeader('Social Media')
+    setCrumbsNavigation([])
   }, [])
 
   const { data: session } = useSession()

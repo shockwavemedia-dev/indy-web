@@ -29,7 +29,7 @@ export const StaffTicketList = ({
 }) => {
   const { replace } = useRouter()
   const { data: session } = useSession()
-  const { setHeader, setSubHeader } = usePanelLayoutStore()
+  const { setHeader, setSubHeader, setCrumbsNavigation } = usePanelLayoutStore()
   const statuses = useTicketStatusFilter((state) => state.statuses)
   const priorities = useTicketPriorityFilter((state) => state.priorities)
   const [clientId, setClientId] = useState(-1)
@@ -74,7 +74,7 @@ export const StaffTicketList = ({
   useEffect(() => {
     setHeader('Ticket')
     setSubHeader(`Welcome back, ${session?.user.firstName}`)
-
+    setCrumbsNavigation([])
     return () => {
       setSubHeader('')
     }
