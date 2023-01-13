@@ -271,8 +271,18 @@ export const StaffTicket = ({ ticketId }: { ticketId: number }) => {
   useEffect(() => {
     if (ticket) {
       setHeader(`Ticket ${ticket.ticketCode}`)
+      const crumbsNavigation = [
+        {
+          title: `Dashboard`,
+          url: `/dashboard`,
+        },
+        {
+          title: `Ticket ${ticket.ticketCode}`,
+          url: `/ticket/${ticket.id}`,
+        },
+      ]
+      setCrumbsNavigation(crumbsNavigation)
     }
-    setCrumbsNavigation([])
   }, [ticket])
 
   if (!isSuccess) {

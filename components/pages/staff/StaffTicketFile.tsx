@@ -46,6 +46,10 @@ export const StaffTicketFile = ({ ticketFileId }: { ticketFileId: number }) => {
     if (!!ticketFile && ticketFileId !== -1) {
       const crumbsNavigation = [
         {
+          title: `Dashboard`,
+          url: `/dashboard`,
+        },
+        {
           title: `Ticket ${ticketFile.ticketCode}`,
           url: `/ticket/${ticketFile.ticketId}`,
         },

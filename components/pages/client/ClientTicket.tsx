@@ -56,7 +56,7 @@ import { TicketActivityCard } from '../../tickets/TicketActivityCard'
 import { TicketNoteCard } from '../../tickets/TicketNoteCard'
 
 export const ClientTicket = ({ ticketId }: { ticketId: number }) => {
-  const { setHeader } = usePanelLayoutStore()
+  const { setHeader, setCrumbsNavigation } = usePanelLayoutStore()
 
   const duplicateTicket = useProjectBrief((state) => state.setTicket)
   const [activeTab, setActiveTab] = useState<TicketPageTabs>('description')
@@ -227,6 +227,17 @@ export const ClientTicket = ({ ticketId }: { ticketId: number }) => {
   useEffect(() => {
     if (ticket) {
       setHeader(`Ticket ${ticket.ticketCode}`)
+      const crumbsNavigation = [
+        {
+          title: `Dashboard`,
+          url: `/dashboard`,
+        },
+        {
+          title: `Ticket ${ticket.ticketCode}`,
+          url: `/ticket/${ticket.id}`,
+        },
+      ]
+      setCrumbsNavigation(crumbsNavigation)
     }
   }, [ticket])
 

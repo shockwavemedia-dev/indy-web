@@ -12,16 +12,11 @@ export const Crumbs = ({
 }) => {
   const { asPath } = useRouter()
 
-  const newPanelName = {
-    title: panelName,
-    url: '/',
-  }
-
   return (
     <>
       {customNavigation && customNavigation.length > 0 ? (
         <div className="flex items-center">
-          {[newPanelName, ...customNavigation].map(({ url, title }, i, paths) => (
+          {[...customNavigation].map(({ url, title }, i, paths) => (
             <Fragment key={`crumbs-${i}`}>
               <Link href={url}>
                 <a
@@ -31,7 +26,7 @@ export const Crumbs = ({
                       : 'mr-3 font-medium text-waterloo'
                   } ${i + 1 === paths.length ? 'pointer-events-none' : ''} `}
                 >
-                  {title}
+                  {i === 0 ? panelName : title}
                 </a>
               </Link>
               {i + 1 !== paths.length && (
